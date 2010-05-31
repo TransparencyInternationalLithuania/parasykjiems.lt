@@ -9,13 +9,6 @@ class SimpleTest(TestCase):
     singleRecordFile = scriptPath + "/AkmenesDistrict_singleRecord.txt"
     alytusRecordFile = scriptPath + "/AlytausMiestas.txt"
 
-    def test_basic_addition(self):
-        """
-        Tests that 1 + 1 always equals 2.
-        """
-        self.failUnlessEqual(1 + 1, 2)
-
-
     def countNumberOfRecords(self, fileName):
         file = open(fileName, "r")
         count = 0
