@@ -1,58 +1,106 @@
+import copy
 
 municipalities = "sources/apygardos.txt"
 a = "sources/a.txt"
 
+# simply introducing an enumartion, so that we can use
+# this as states when reading file.
+# Probably might be a better way to do this in python
 class State:
+    # values here does not mean anything at all
     District = "d"
     County = "c"
     ElectionDistrict = "ec"
-    
+    Addresses = "ad"
+
+
+# a DTO which is returned for eaach location read in the file
 class MunicipalityLocation:
-    def __init__(self):
-        self._district = ""
-    
-    @property
-    def District(self):
-        return self._x;
+    District = ""
+    County = ""
+    ElectionDistrict = ""
+    Addresses = ""
 
-    @District.setter
-    def District(self, value):
-        self._district = value
-        
+    # how to convert python object to string?
+    # dont know yet, so using this hack :)
+    # we could also iterate over all "fields??" in this object
+    # but how to do that??
+    def toString(self):
+        return "District: " + self.District + "\nCounty " + self.County + "\nElectionDistrict " + self.ElectionDistrict + "\nAddresses " + self.Addresses
 
 
-# a generator function which returns only non empty
+def ConsumeNonEmptyLines(file, numberOfLines):
+    for i in range(1, numberOfLines):
+        notEmptyLine(file)
+
+# a function which returns only non empty
 # lines specific for Lithuanian municipality files.
-def notEmptyLines(file):
+def notEmptyLine(file):
+
     # read a line from file
-    for line in file:
-        # for some reason, lines in a file are separated by \r
-        # so split by \r, 
-        lines = line.split('\r')
+    for s in file:
+
         # return each splitted line as separate line
-        for s in lines:
-            s = s.strip("* ")
-            yield s
+        s = removeDumbCharacters(s)
+        if (s == ""):
+            continue
+        return s
+
+    return ""
+
+def removeDumbCharacters(str):
+    return str.strip("* \n")
+
+def readAddress(file):
+    strings = []
+    # read first non empty line. This ensures that all blank lines are skipped
+    strings.append(notEmptyLine(file))
+
+    # read all non empty lines, and append to list
+    # when empty strins is found, that means addresses are finished
+    for s in file:
+        s = removeDumbCharacters(s)
+        if (s == ""):
+            break;
+        strings.append(s)
+
+    return "".join(strings)
 
 
-    
-def myF(file):
+
+# a generator which returns a MunicipalityLocation object
+# for each election district defined in the file
+def getLocations(file):
     state = State.District
-    infile = open(file, "r")
+    location = MunicipalityLocation()
+    while (1):
+        line = notEmptyLine(file)
 
-    for line in notEmptyLines(infile):
+        if (line == ""):
+            return
 
-        print line
         if state == State.District:
-            districtName = line
+            location.District = line
             state = State.County
-            print "district " + districtName
             continue
 
         if (state == State.County):
-            countyName = line
+            location.County = line
             state = State.ElectionDistrict
-            print line
-            
-        
-    
+            continue
+
+        if (state == State.ElectionDistrict):
+            location.ElectionDistrict = line
+            state = State.Addresses
+            ConsumeNonEmptyLines(file, 3)
+
+        if (state == State.Addresses):
+            location.Addresses = readAddress(file)
+            state = State.District
+
+        yield location;
+
+
+file = open(a, "r")
+for loc in getLocations(file):
+    print loc.toString()
