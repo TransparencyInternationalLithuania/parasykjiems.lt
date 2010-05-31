@@ -84,9 +84,17 @@ def getLocations(file):
             continue
 
         if (line.find("apylinkė") >=0 ):
-        #if (state == State.ElectionDistrict):
             location.ElectionDistrict = line
             state = State.Addresses
+
+            # this county is special, since it has no streets.
+            # So just instruct so skip reading streets for this county
+            # HACK for now, but works
+            # If you remove it, a test will fail
+            if (line.find("Jūreivių rinkimų apylinkė") >=0 ):
+                yield location
+                state = State.County
+
             ConsumeNonEmptyLines(file, 2)
             continue
 
@@ -103,7 +111,7 @@ def getLocations(file):
 
 
 """
-# debuggin script, remove afterwards
+# debugging script, remove afterwards
 
 scriptPath = os.path.dirname( os.path.realpath( __file__ ) )
 alytusRecordFile = scriptPath + "/tests/AlytausMiestas.txt"

@@ -8,6 +8,7 @@ scriptPath = os.path.dirname( os.path.realpath( __file__ ) )
 class SimpleTest(TestCase):
     singleRecordFile = scriptPath + "/AkmenesDistrict_singleRecord.txt"
     alytusRecordFile = scriptPath + "/AlytausMiestas.txt"
+    allRecords = scriptPath + "/Apygardos.txt"
 
     def countNumberOfRecords(self, fileName):
         file = open(fileName, "r")
@@ -16,6 +17,8 @@ class SimpleTest(TestCase):
             count += 1
         return count
 
+    def test_AllRecors_count(self):
+        self.assertEqual(self.countNumberOfRecords(self.allRecords), 2034)
 
     def test_Alytaus_count(self):
         self.assertEqual(self.countNumberOfRecords(self.alytusRecordFile), 24)
