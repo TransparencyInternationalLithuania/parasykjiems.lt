@@ -6,7 +6,8 @@ import os
 scriptPath = os.path.dirname( os.path.realpath( __file__ ) )
 
 class SimpleTest(TestCase):
-    singleRecordFile = scriptPath + "/a.txt"
+    singleRecordFile = scriptPath + "/AkmenesDistrict_singleRecord.txt"
+    alytusRecordFile = scriptPath + "/AlytausMiestas.txt"
 
     def test_basic_addition(self):
         """
@@ -14,15 +15,22 @@ class SimpleTest(TestCase):
         """
         self.failUnlessEqual(1 + 1, 2)
 
-    def test_read_single_record_count(self):
-        file = open(self.singleRecordFile, "r")
+
+    def countNumberOfRecords(self, fileName):
+        file = open(fileName, "r")
         count = 0
         for l in getLocations(file):
             count += 1
+        return count
 
-        self.assertEqual(count, 1)
 
-    def test_read_single_record(self):
+    def test_Alytaus_count(self):
+        self.assertEqual(self.countNumberOfRecords(self.alytusRecordFile), 24)
+
+    def test_Akmenes_count(self):
+        self.assertEqual(self.countNumberOfRecords(self.singleRecordFile), 1)
+
+    def test_Akmenes_read_record(self):
 
         file = open(self.singleRecordFile, "r")
         for loc in getLocations(file):
@@ -30,7 +38,3 @@ class SimpleTest(TestCase):
             self.assertEqual(loc.County, "Akmenės–Joniškio rinkimų apygarda Nr. 39")
             self.assertEqual(loc.ElectionDistrict, "Senamiesčio rinkimų apylinkė Nr. 1")
             self.assertTrue(loc.Addresses.index("Naujoji Akmenė: Algirdo g., Aušros g., Barvydžio vs.,") >= 0)
-
-
-
-

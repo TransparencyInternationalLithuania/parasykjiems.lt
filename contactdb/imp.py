@@ -1,4 +1,4 @@
-import copy
+﻿import copy
 
 municipalities = "sources/apygardos.txt"
 
@@ -78,23 +78,45 @@ def getLocations(file):
         if (line == ""):
             return
 
+        if (line.find("apygarda") >=0 ):
+            location.County = line
+            state = State.ElectionDistrict
+            continue
+
+        if (line.find("apylinkė") >=0 ):
+        #if (state == State.ElectionDistrict):
+            location.ElectionDistrict = line
+            state = State.Addresses
+            ConsumeNonEmptyLines(file, 2)
+            continue
+
         if state == State.District:
             location.District = line
             state = State.County
             continue
 
-        if (state == State.County):
-            location.County = line
-            state = State.ElectionDistrict
-            continue
-
-        if (state == State.ElectionDistrict):
-            location.ElectionDistrict = line
-            state = State.Addresses
-            ConsumeNonEmptyLines(file, 3)
-
         if (state == State.Addresses):
             location.Addresses = readAddress(file)
             state = State.District
+            yield location;
 
-        yield location;
+
+
+"""
+# debuggin script, remove afterwards
+
+scriptPath = os.path.dirname( os.path.realpath( __file__ ) )
+alytusRecordFile = scriptPath + "/tests/AlytausMiestas.txt"
+print alytusRecordFile
+
+def countNumberOfRecords(fileName):
+        file = open(fileName, "r")
+        count = 0
+        for l in getLocations(file):
+            print l.ElectionDistrict
+            count += 1
+        return count
+
+
+print countNumberOfRecords(alytusRecordFile)
+"""
