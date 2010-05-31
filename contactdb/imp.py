@@ -1,7 +1,6 @@
 import copy
 
 municipalities = "sources/apygardos.txt"
-a = "sources/a.txt"
 
 # simply introducing an enumartion, so that we can use
 # this as states when reading file.
@@ -99,8 +98,3 @@ def getLocations(file):
             state = State.District
 
         yield location;
-
-
-file = open(a, "r")
-for loc in getLocations(file):
-    print loc.toString()
