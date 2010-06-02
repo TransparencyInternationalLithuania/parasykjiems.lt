@@ -23,10 +23,14 @@ Name=tests
 
 [Project\ChildNodes\Node0\ChildNodes\Node0\ChildNodes\Node0\ChildNodes\Node0\ChildNodes\Node0]
 ClassName=TProjectFileNode
+FileName=C:\Projects\personal\parasykjiems\contactdb\tests\TestReadParliamentMembers.py
+
+[Project\ChildNodes\Node0\ChildNodes\Node0\ChildNodes\Node0\ChildNodes\Node0\ChildNodes\Node1]
+ClassName=TProjectFileNode
 FileName=C:\Projects\personal\parasykjiems\contactdb\tests\tests.py
 
 [Project\ChildNodes\Node0\ChildNodes\Node0\ChildNodes\Node0\ChildNodes\Node0\ChildNodes]
-Count=1
+Count=2
 
 [Project\ChildNodes\Node0\ChildNodes\Node0\ChildNodes\Node0\ChildNodes\Node1]
 ClassName=TProjectFileNode
@@ -38,14 +42,18 @@ FileName=C:\Projects\personal\parasykjiems\contactdb\imp.py
 
 [Project\ChildNodes\Node0\ChildNodes\Node0\ChildNodes\Node0\ChildNodes\Node3]
 ClassName=TProjectFileNode
-FileName=C:\Projects\personal\parasykjiems\contactdb\models.py
+FileName=C:\Projects\personal\parasykjiems\contactdb\import_parliamentMembers.py
 
 [Project\ChildNodes\Node0\ChildNodes\Node0\ChildNodes\Node0\ChildNodes\Node4]
+ClassName=TProjectFileNode
+FileName=C:\Projects\personal\parasykjiems\contactdb\models.py
+
+[Project\ChildNodes\Node0\ChildNodes\Node0\ChildNodes\Node0\ChildNodes\Node5]
 ClassName=TProjectFileNode
 FileName=C:\Projects\personal\parasykjiems\contactdb\views.py
 
 [Project\ChildNodes\Node0\ChildNodes\Node0\ChildNodes\Node0\ChildNodes]
-Count=5
+Count=6
 
 [Project\ChildNodes\Node0\ChildNodes\Node0\ChildNodes\Node1]
 ClassName=TProjectFolderNode
@@ -106,6 +114,30 @@ Count=1
 
 [Project\ChildNodes\Node1]
 ClassName=TProjectRunConfiguationsNode
+
+[Project\ChildNodes\Node1\ChildNodes\Node0]
+ClassName=TProjectRunConfiguationNode
+Name=Untitled
+
+[Project\ChildNodes\Node1\ChildNodes\Node0\RunConfig]
+EngineType=peRemote
+ReinitializeBeforeRun=FALSE
+WorkingDir=$[ActiveScript-Dir]
+WriteOutputToFile=FALSE
+OutputFileName=$[ActiveScript-NoExt].log
+AppendToFile=FALSE
+
+[Project\ChildNodes\Node1\ChildNodes\Node0\RunConfig\ExternalRun]
+Caption=External Run
+Description=Run script using an external Python Interpreter
+ApplicationName=$[PythonExe-Short]
+Parameters=$[ActiveScript-Short]
+WorkingDirectory=$[ActiveScript-Dir]
+ShortCut=0
+MessagesFormat=$[FileName] $[LineNumber]
+
+[Project\ChildNodes\Node1\ChildNodes]
+Count=1
 
 [Project\ChildNodes]
 Count=2
