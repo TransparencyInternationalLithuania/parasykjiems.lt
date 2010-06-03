@@ -1,3 +1,4 @@
 glob:*.pyc
 glob:db/*
 glob:settings_local.py
+glob:.idea
