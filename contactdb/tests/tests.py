@@ -1,5 +1,8 @@
-﻿from django.test import TestCase
-from parasykjiems.contactdb.imp import *
+#!/usr/bin/env python
+# -*- coding: utf8 -*-
+
+from django.test import TestCase
+from ..imp import *
 import os
 
 

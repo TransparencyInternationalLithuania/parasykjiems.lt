@@ -12,12 +12,11 @@ class TestReadParliamentMembers(TestCase):
         file = open(fileName, "r")
         count = 0
         for l in ReadParliamentMembers(file):
-            print count
             count += 1
         return count
 
     def test_AllRecors_count(self):
-        self.assertEqual(self.countNumberOfRecords(self.allRecords), 76)
+        self.assertEqual(self.countNumberOfRecords(self.allRecords), 71)
 
     def test_Read_first_record(self):
 
