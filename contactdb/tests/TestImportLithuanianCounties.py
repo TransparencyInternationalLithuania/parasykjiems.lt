@@ -8,15 +8,18 @@ import os
 
 scriptPath = os.path.dirname( os.path.realpath( __file__ ) )
 
-class SimpleTest(TestCase):
+class TestImportLithuanianCounties(TestCase):
     singleRecordFile = scriptPath + "/AkmenesDistrict_singleRecord.txt"
     alytusRecordFile = scriptPath + "/AlytausMiestas.txt"
     allRecords = scriptPath + "/Apygardos.txt"
 
+
+
     def countNumberOfRecords(self, fileName):
         file = open(fileName, "r")
+        importer = LithuanianCountyReader(file)
         count = 0
-        for l in getLocations(file):
+        for l in importer.getLocations():
             count += 1
         return count
 
@@ -32,7 +35,8 @@ class SimpleTest(TestCase):
     def test_Akmenes_read_record(self):
 
         file = open(self.singleRecordFile, "r")
-        for loc in getLocations(file):
+        importer = LithuanianCountyReader(file)
+        for loc in importer.getLocations():
             self.assertEqual(loc.District, "Akmenės rajonAS")
             self.assertEqual(loc.County, "Akmenės–Joniškio rinkimų apygarda Nr. 39")
             self.assertEqual(loc.ElectionDistrict, "Senamiesčio rinkimų apylinkė Nr. 1")

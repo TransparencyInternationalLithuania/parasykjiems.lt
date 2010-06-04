@@ -1,6 +1,17 @@
-﻿import copy
+#!/usr/bin/env python
+# -*- coding: utf8 -*-
+
+import copy
 
 municipalities = "sources/apygardos.txt"
+
+
+
+class ImportSources:
+    LithuanianCounties = "/contactdb/sources/apygardos.txt"
+
+
+
 
 # simply introducing an enumartion, so that we can use
 # this as states when reading file.
@@ -28,85 +39,89 @@ class MunicipalityLocation:
         return "District: " + self.District + "\nCounty " + self.County + "\nElectionDistrict " + self.ElectionDistrict + "\nAddresses " + self.Addresses
 
 
-def ConsumeNonEmptyLines(file, numberOfLines):
-    for i in range(1, numberOfLines):
-        notEmptyLine(file)
+class LithuanianCountyReader:
 
-# a function which returns only non empty
-# lines specific for Lithuanian municipality files.
-def notEmptyLine(file):
-
-    # read a line from file
-    for s in file:
-
-        # return each splitted line as separate line
-        s = removeDumbCharacters(s)
-        if (s == ""):
-            continue
-        return s
-
-    return ""
-
-def removeDumbCharacters(str):
-    return str.strip("* \n")
-
-def readAddress(file):
-    strings = []
-    # read first non empty line. This ensures that all blank lines are skipped
-    strings.append(notEmptyLine(file))
-
-    # read all non empty lines, and append to list
-    # when empty strins is found, that means addresses are finished
-    for s in file:
-        s = removeDumbCharacters(s)
-        if (s == ""):
-            break;
-        strings.append(s)
-
-    return "".join(strings)
+    def __init__(self, file):
+        self.file = file
 
 
+    def _ConsumeNonEmptyLines(self, numberOfLines):
+        for i in range(1, numberOfLines):
+            self._notEmptyLine()
 
-# a generator which returns a MunicipalityLocation object
-# for each election district defined in the file
-def getLocations(file):
-    state = State.District
-    location = MunicipalityLocation()
-    while (1):
-        line = notEmptyLine(file)
+    # a function which returns only non empty
+    # lines specific for Lithuanian municipality files.
+    def _notEmptyLine(self):
 
-        if (line == ""):
-            return
+        # read a line from file
+        for s in self.file:
 
-        if (line.find("apygarda") >=0 ):
-            location.County = line
-            state = State.ElectionDistrict
-            continue
+            # return each splitted line as separate line
+            s = self._removeDumbCharacters(s)
+            if (s == ""):
+                continue
+            return s
 
-        if (line.find("apylinkė") >=0 ):
-            location.ElectionDistrict = line
-            state = State.Addresses
+        return ""
 
-            # this county is special, since it has no streets.
-            # So just instruct so skip reading streets for this county
-            # HACK for now, but works
-            # If you remove it, a test will fail
-            if (line.find("Jūreivių rinkimų apylinkė") >=0 ):
-                yield location
+    def _removeDumbCharacters(self, str):
+        return str.strip("* \n")
+
+    def _readAddress(self):
+        strings = []
+        # read first non empty line. This ensures that all blank lines are skipped
+        strings.append(self._notEmptyLine())
+
+        # read all non empty lines, and append to list
+        # when empty strins is found, that means addresses are finished
+        for s in self.file:
+            s = self._removeDumbCharacters(s)
+            if (s == ""):
+                break;
+            strings.append(s)
+
+        return "".join(strings)
+
+    # a generator which returns a MunicipalityLocation object
+    # for each election district defined in the file
+    def getLocations(self):
+        state = State.District
+        location = MunicipalityLocation()
+        while (1):
+            line = self._notEmptyLine()
+
+            if (line == ""):
+                return
+
+            if (line.find("apygarda") >=0 ):
+                location.County = line
+                state = State.ElectionDistrict
+                continue
+
+            if (line.find("apylink") >=0 ):
+                location.ElectionDistrict = line
+                state = State.Addresses
+
+                # this county is special, since it has no streets.
+                # So just instruct so skip reading streets for this county
+                # HACK for now, but works
+                # If you remove it, a test will fail
+                if (line.find("Jūreivių rinkimų apylinkė") >=0 ):
+                    yield location
+                    state = State.County
+
+                self._ConsumeNonEmptyLines(2)
+                continue
+
+            if state == State.District:
+                location.District = line
                 state = State.County
+                continue
 
-            ConsumeNonEmptyLines(file, 2)
-            continue
-
-        if state == State.District:
-            location.District = line
-            state = State.County
-            continue
-
-        if (state == State.Addresses):
-            location.Addresses = readAddress(file)
-            state = State.District
-            yield location;
+            if (state == State.Addresses):
+                location.Addresses = self._readAddress()
+                state = State.District
+                yield location;
 
 
 

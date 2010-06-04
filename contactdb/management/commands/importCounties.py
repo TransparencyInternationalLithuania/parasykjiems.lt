@@ -3,8 +3,8 @@ from contactdb.imp import getLocations
 import os
 
 class Command(BaseCommand):
-    args = '<numberOfCountiesToPrint>'
-    help = 'Prints number of Lithuanian counties'
+    args = '<>'
+    help = 'Imports into database all Lithuanian counties'
 
     def handle(self, *args, **options):
         allRecords = os.getcwd() + ImportSources.LithuanianCounties
