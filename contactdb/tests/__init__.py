@@ -1,9 +1,8 @@
 from __future__ import absolute_import
-
-from .tests import *
-from .TestReadParliamentMembers import *
+from contactdb.tests.TestReadParliamentMembers import TestReadParliamentMembers
+from contactdb.tests.TestImportLithuanianCounties import TestImportLithuanianCounties
 
 __test__ = {
-    'SimpleTest' : SimpleTest,
+    'TestImportLithuanianCounties' : TestImportLithuanianCounties,
     'TestReadParliamentMembers' : TestReadParliamentMembers
 }
