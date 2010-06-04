@@ -24,7 +24,7 @@ class MunicipalityLocation:
     # dont know yet, so using this hack :)
     # we could also iterate over all "fields??" in this object
     # but how to do that??
-    def toString(self):
+    def __str__(self):
         return "District: " + self.District + "\nCounty " + self.County + "\nElectionDistrict " + self.ElectionDistrict + "\nAddresses " + self.Addresses
 
 
