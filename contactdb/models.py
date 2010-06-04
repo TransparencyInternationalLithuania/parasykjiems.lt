@@ -1,4 +1,4 @@
-from django.db import models
+ï»¿from django.db import models
 
 
 class ParliamentMember(models.Model):
@@ -16,11 +16,11 @@ class ParliamentMember(models.Model):
         return self.fullName
 
 
-class County(modesl.Model):
+class County(models.Model):
     """ Contains counties, for example:
-     County: Danës rinkimø apygarda Nr. 19
-     Baltijos rinkimø apygarda Nr. 20
-     Kauno–Këdainiø rinkimø apygarda Nr. 65
+     County: DanÄ—s rinkimÅ³ apygarda Nr. 19
+     Baltijos rinkimÅ³ apygarda Nr. 20
+     Kauno KÄ—iniÅ³ rinkimÅ³ apygarda Nr. 65
      etc
      """
     name = models.CharField(max_length = 100)
