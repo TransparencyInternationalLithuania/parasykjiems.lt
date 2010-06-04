@@ -15,3 +15,13 @@ class ParliamentMember(models.Model):
     def __unicode__(self):
         return self.fullName
 
+
+class County(modesl.Model):
+    """ Contains counties, for example:
+     County: Danës rinkimø apygarda Nr. 19
+     Baltijos rinkimø apygarda Nr. 20
+     Kauno–Këdainiø rinkimø apygarda Nr. 65
+     etc
+     """
+    name = models.CharField(max_length = 100)
+    nr = models.IntegerField()

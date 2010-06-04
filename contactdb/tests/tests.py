@@ -29,6 +29,18 @@ class SimpleTest(TestCase):
     def test_Akmenes_count(self):
         self.assertEqual(self.countNumberOfRecords(self.singleRecordFile), 1)
 
+    def _test_read(self):
+        """simply viewing all records. remove when not needed"""
+        file = open(self.allRecords, "r")
+        count = 0
+        for loc in getLocations(file):
+            print "\n"
+            print "District : " + loc.District + " \n County: " + loc.County + "\n ElectionDistrict " + loc.ElectionDistrict
+            count += 1
+            if (count == 9999990):
+                break;
+
+
     def test_Akmenes_read_record(self):
 
         file = open(self.singleRecordFile, "r")
