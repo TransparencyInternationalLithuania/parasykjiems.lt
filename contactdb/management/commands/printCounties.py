@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
-from contactdb.imp import getLocations
+from contactdb.imp import ImportSources, LithuanianCountyReader, LithuanianCountyAggregator
 import os
 
 class Command(BaseCommand):
@@ -10,14 +10,15 @@ class Command(BaseCommand):
         allRecords = os.getcwd() + ImportSources.LithuanianCounties
         file = open(allRecords, "r")
 
-
+        numberToPrint = 999999;
         if len(args) > 0:
             numberToPrint = int(args[0])
 
         count = 0
-        for loc in getLocations(file):
+        aggregator = LithuanianCountyAggregator(file)
+        for county in aggregator.GetDistinctCounties():
             print "\n"
-            print "District : " + loc.District + " \n County: " + loc.County + "\n ElectionDistrict " + loc.ElectionDistrict
+            print "County: " + county
             count += 1
-            if (count == numberToPrint):
-                break;
+            if (count >= numberToPrint):
+                break

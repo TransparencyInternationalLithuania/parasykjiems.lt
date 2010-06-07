@@ -1,6 +1,9 @@
 
 
 
+1. Installation instructions.
+
+
 Pre-requisites:
 
 1. prepare python to work with Google Docs API
@@ -14,3 +17,18 @@ If the import fails, then install ElementTree (http://pypi.python.org/pypi/eleme
 Installing the Google Data Library:
 http://code.google.com/p/gdata-python-client/downloads/list
 
+
+
+2. Available commands
+
+# prints a list of first 5 Lithuanian countries. 
+manage.py printCounties 5 
+
+# runs all tests
+manage.py test 
+
+# runs only tests for contactdb app
+manage.py test contactdb
+
+# runs an embedded web server
+manage.py runserver

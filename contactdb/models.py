@@ -1,4 +1,7 @@
-﻿from django.db import models
+#!/usr/bin/env python
+# -*- coding: utf8 -*-
+
+from django.db import models
 
 
 class ParliamentMember(models.Model):
@@ -8,9 +11,9 @@ class ParliamentMember(models.Model):
     email = models.CharField(max_length = 100)
 
     @property
-    def fullName():
+    def fullName(self):
         """returns Name + surname"""
-        return name + surname;
+        return self.name + self.surname;
 
     def __unicode__(self):
         return self.fullName

@@ -1,6 +1,10 @@
-﻿from django.test import TestCase
-from parasykjiems.contactdb.import_parliamentMembers import *
+#!/usr/bin/env python
+# -*- coding: utf8 -*-
+
+
+from django.test import TestCase
 import os
+from contactdb.import_parliamentMembers import ReadParliamentMembers
 
 
 scriptPath = os.path.dirname( os.path.realpath( __file__ ) )

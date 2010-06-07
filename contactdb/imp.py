@@ -2,6 +2,9 @@
 # -*- coding: utf8 -*-
 
 import copy
+import contactdb.tests.exc
+from contactdb.tests.exc import ChainnedException
+from contactdb.models import County
 
 municipalities = "sources/apygardos.txt"
 
@@ -27,7 +30,7 @@ class State:
 # a DTO which is returned for eaach location read in the file
 class MunicipalityLocation:
     District = ""
-    County = ""
+    County = None
     ElectionDistrict = ""
     Addresses = ""
 
@@ -39,10 +42,59 @@ class MunicipalityLocation:
         return "District: " + self.District + "\nCounty " + self.County + "\nElectionDistrict " + self.ElectionDistrict + "\nAddresses " + self.Addresses
 
 
-class LithuanianCountyReader:
-
+class LithuanianCountyAggregator:
+    """ Aggregates MunicipalityLocation objects and returns only unique Counties"""
     def __init__(self, file):
         self.file = file
+        self.importer = LithuanianCountyReader(file)
+        self.allCounties = []
+
+        self._readAll()
+
+    def _readAll(self):
+        for loc in self.importer.getLocations():
+            self.allCounties.append(loc)
+
+    def GetDistinctCounties(self):
+        """
+        Returns a list of string for each distinct County
+        """
+        counties = {}
+                           
+        for c in self.allCounties:
+            exist = c.County in counties
+            if (exist == False):
+                counties[c.County] = c
+                yield c.County
+            
+        
+        
+
+class NotFoundCountyNrException(ChainnedException):
+    def __init__(self, message, inner = None):
+        ChainnedException.__init__(self, message, inner)
+
+class LithuanianCountyParser:
+    def ConvertToCounty(self, countyString):
+        lower = countyString.lower()
+        nr = lower.find("nr")
+        if (nr < 0):
+            raise NotFoundCountyNrException("Could not parse county nr in string '%(string)s'") % {"string" : lower}
+        c = County()
+        c.name = countyString[:nr].strip(" ")
+        c.nr =  int(countyString[nr + 3: ])
+        return c
+
+
+class LithuanianCountyReader:
+    """ Reads Lithuanian counties from file. Gives a generator function
+    which returns a single MunicipalityLocation instance for each smallest object
+    defined in file( ElectionDistrict/ (rinkimų apylinkė)
+    """
+    def __init__(self, file):
+        """Pass an opened file containing Lithuanian Counties (Apygardos)."""
+        self.file = file
+        self.countyParser = LithuanianCountyParser()
 
 
     def _ConsumeNonEmptyLines(self, numberOfLines):
@@ -94,7 +146,7 @@ class LithuanianCountyReader:
                 return
 
             if (line.find("apygarda") >=0 ):
-                location.County = line
+                location.County = self.countyParser.ConvertToCounty(line)
                 state = State.ElectionDistrict
                 continue
 
@@ -121,7 +173,8 @@ class LithuanianCountyReader:
             if (state == State.Addresses):
                 location.Addresses = self._readAddress()
                 state = State.District
-                yield location;
+                clone = copy.copy(location)
+                yield clone
 
 
 

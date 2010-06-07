@@ -8,6 +8,16 @@ import os
 
 scriptPath = os.path.dirname( os.path.realpath( __file__ ) )
 
+
+class TestLithuanianCountyParser(TestCase):
+    parser = LithuanianCountyParser()
+
+    def test_ConvertToCounty(self):
+        county = self.parser.ConvertToCounty("Lazdynų rinkimų apygarda Nr. 9")
+        self.assertEqual("Lazdynų rinkimų apygarda", county.name)
+        self.assertEqual(9, county.nr)
+
+
 class TestImportLithuanianCounties(TestCase):
     singleRecordFile = scriptPath + "/AkmenesDistrict_singleRecord.txt"
     alytusRecordFile = scriptPath + "/AlytausMiestas.txt"
@@ -38,6 +48,7 @@ class TestImportLithuanianCounties(TestCase):
         importer = LithuanianCountyReader(file)
         for loc in importer.getLocations():
             self.assertEqual(loc.District, "Akmenės rajonAS")
-            self.assertEqual(loc.County, "Akmenės–Joniškio rinkimų apygarda Nr. 39")
+            self.assertEqual(loc.County.name, "Akmenės–Joniškio rinkimų apygarda")
+            self.assertEqual(loc.County.nr, 39)
             self.assertEqual(loc.ElectionDistrict, "Senamiesčio rinkimų apylinkė Nr. 1")
             self.assertTrue(loc.Addresses.index("Naujoji Akmenė: Algirdo g., Aušros g., Barvydžio vs.,") >= 0)
