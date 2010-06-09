@@ -50,7 +50,7 @@ class Command(BaseCommand):
 
 
             member.save()
-            print u"Imported MP %s %s, County %s".encode('utf-8') % (member.name, member.surname, member.county.name)
+            print (u"Imported MP %s %s, County %s %d" % (member.name, member.surname, member.county.name, member.county.nr)).encode('utf-8')
             count += 1
             if (count >= numberToPrint):
                 break;
