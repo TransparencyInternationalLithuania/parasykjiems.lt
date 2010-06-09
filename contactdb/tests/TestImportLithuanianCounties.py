@@ -12,10 +12,15 @@ scriptPath = os.path.dirname( os.path.realpath( __file__ ) )
 class TestLithuanianCountyParser(TestCase):
     parser = LithuanianCountyParser()
 
-    def test_ConvertToCounty(self):
-        county = self.parser.ConvertToCounty("Lazdynų rinkimų apygarda Nr. 9")
+    def test_ExtractCountyFromCountyFile(self):
+        county = self.parser.ExtractCountyFromCountyFile("Lazdynų rinkimų apygarda Nr. 9")
         self.assertEqual("Lazdynų rinkimų apygarda", county.name)
         self.assertEqual(9, county.nr)
+
+    def test_ExtractCountyFromMPsFile(self):
+        county = self.parser.ExtractCountyFromMPsFile("Naujamiesčio (Nr. 1)")
+        self.assertEqual("Naujamiesčio", county.name)
+        self.assertEqual(1, county.nr)
 
 
 class TestImportLithuanianCounties(TestCase):
