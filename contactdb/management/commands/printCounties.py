@@ -10,7 +10,7 @@ class Command(BaseCommand):
         allRecords = os.getcwd() + ImportSources.LithuanianCounties
         file = open(allRecords, "r")
 
-        numberToPrint = 999999;
+        numberToPrint = 999999
         if len(args) > 0:
             numberToPrint = int(args[0])
 
