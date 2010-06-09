@@ -5,12 +5,10 @@ import copy
 from contactdb.exc import ChainnedException
 from contactdb.models import County
 
-municipalities = "sources/apygardos.txt"
-
-
 
 class ImportSources:
     LithuanianCounties = "/contactdb/sources/apygardos.txt"
+    LithuanianMPs = "/contactdb/sources/parliament members.txt"
 
 
 
