@@ -17,8 +17,9 @@ class Command(BaseCommand):
         count = 0
         aggregator = LithuanianCountyAggregator(file)
         for c in aggregator.GetDistinctCounties():
-            print "\n"
-            print "County: " + c
+            c.id = c.nr
+            c.save()
             count += 1
             if (count >= numberToPrint):
                 break;
+        print "succesfully imported %d counties" % (count)

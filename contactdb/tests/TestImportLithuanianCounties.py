@@ -2,8 +2,8 @@
 # -*- coding: utf8 -*-
 
 from django.test import TestCase
-from ..imp import *
 import os
+from contactdb.imp import LithuanianCountyParser, LithuanianCountyReader
 
 
 scriptPath = os.path.dirname( os.path.realpath( __file__ ) )

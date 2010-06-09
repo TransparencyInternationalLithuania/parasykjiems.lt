@@ -2,8 +2,7 @@
 # -*- coding: utf8 -*-
 
 import copy
-import contactdb.tests.exc
-from contactdb.tests.exc import ChainnedException
+from contactdb.exc import ChainnedException
 from contactdb.models import County
 
 municipalities = "sources/apygardos.txt"
@@ -62,9 +61,9 @@ class LithuanianCountyAggregator:
         counties = {}
                            
         for c in self.allCounties:
-            exist = c.County in counties
+            exist = c.County.name in counties
             if (exist == False):
-                counties[c.County] = c
+                counties[c.County.name] = c
                 yield c.County
             
         
