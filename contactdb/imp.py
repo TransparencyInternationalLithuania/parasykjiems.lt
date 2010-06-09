@@ -72,7 +72,20 @@ class NotFoundCountyNrException(ChainnedException):
         ChainnedException.__init__(self, message, inner)
 
 class LithuanianCountyParser:
-    def ConvertToCounty(self, countyString):
+
+    def ExtractCountyFromMPsFile(self, countyString):
+        """Extracts a County object from a Lithuanian MPs file """
+        lower = countyString.lower()
+        nr = lower.find("nr")
+        if (nr < 0):
+            raise NotFoundCountyNrException("Could not parse county nr in string '%(string)s'") % {"string" : lower}
+        c = County()
+        c.name = countyString[:nr].strip(" (")
+        c.nr =  int(countyString[nr + 3: ].strip(" )"))
+        return c
+
+    def ExtractCountyFromCountyFile(self, countyString):
+        """Extracts a County object from a Lithuanian County file"""
         lower = countyString.lower()
         nr = lower.find("nr")
         if (nr < 0):
@@ -143,7 +156,7 @@ class LithuanianCountyReader:
                 return
 
             if (line.find("apygarda") >=0 ):
-                location.County = self.countyParser.ConvertToCounty(line)
+                location.County = self.countyParser.ExtractCountyFromCountyFile(line)
                 state = State.ElectionDistrict
                 continue
 

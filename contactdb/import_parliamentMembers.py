@@ -1,6 +1,9 @@
 
-from contactdb.models import ParliamentMember
+from contactdb.models import ParliamentMember, County
 from contactdb.exc import ChainnedException
+from contactdb.imp import LithuanianCountyParser
+from django.core.exceptions import ObjectDoesNotExist
+
 
 
 class ParliamentMemberImportError(ChainnedException):
@@ -21,8 +24,10 @@ class LithuanianMPsReader:
 
     def ReadParliamentMembers(self):
         """A generator which returns parliament member instances from
-    given file"""
+    given file.  A county object is fetched from the database for this specific MP"""
         header = self.ReadLine()
+
+        parser = LithuanianCountyParser()
 
         count = 0
         for line in self.file:
@@ -33,7 +38,7 @@ class LithuanianMPsReader:
 
 
             member = ParliamentMember()
-            member.electoralDistrict = self.readField(fields, 0)
+            member.county = parser.ExtractCountyFromMPsFile(self.readField(fields, 0))
             member.name = self.readField(fields, 2)
             member.surname = self.readField(fields, 1)
             member.email = self.readField(fields, 6)
@@ -46,8 +51,7 @@ class LithuanianMPsReader:
             yield member
 
     def validateMember(self, member):
-        if member.electoralDistrict.lower().find("nr") < 0:
-            raise ParliamentMemberImportError("ElectoralDistrict field does not contain number. It was '%(fieldName)s', and it did not contain letters 'nr' See stack trace for more details" % {'fieldName' : member.electoralDistrict})
+        return True
 
 
 #file = open("parliament members.txt", "r")
