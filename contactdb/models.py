@@ -13,7 +13,7 @@ class ParliamentMember(models.Model):
     @property
     def fullName(self):
         """returns Name + surname"""
-        return self.name + self.surname;
+        return self.name + self.surname
 
     def __unicode__(self):
         return self.fullName
@@ -28,3 +28,14 @@ class County(models.Model):
      """
     name = models.CharField(max_length = 100)
     nr = models.IntegerField()
+
+    def ToString(self):
+        return self.__unicode__()
+
+    def __unicode__(self):
+        if (self.nr is None):
+            number = 0
+        else:
+            number = self.nr
+        
+        return "CountyName: %s , nr: %d" % (self.name, number)
