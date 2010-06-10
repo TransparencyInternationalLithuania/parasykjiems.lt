@@ -24,10 +24,13 @@ class State:
     Addresses = "ad"
 
 
-# a DTO which is returned for eaach location read in the file
+# a DTO which is returned for eaach location read in the Lithuanian Counties file
 class MunicipalityLocation:
+    # rajonas
     District = ""
+    # apygarda
     County = None
+    # apylinkė
     ElectionDistrict = ""
     Addresses = ""
 
