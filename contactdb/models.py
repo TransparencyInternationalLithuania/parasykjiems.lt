@@ -26,6 +26,15 @@ class County(models.Model):
 
 
 
+class CountyStreet(models.Model):
+    """ Represents a mapping between a county, a district and a street in Lithuania 
+    """
+    district = models.CharField(max_length = 100)
+    county = models.ForeignKey(County)
+    street = models.CharField(max_length = 255)
+    city = models.CharField(max_length = 50)
+
+
 class ParliamentMember(models.Model):
     name = models.CharField(max_length = 50)
     surname = models.CharField(max_length = 50)
