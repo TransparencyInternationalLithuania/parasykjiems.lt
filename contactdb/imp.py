@@ -144,6 +144,7 @@ class LithuanianCountyReader:
             if (s == ""):
                 break;
             strings.append(s)
+            strings.append(" ")
 
         return "".join(strings)
 
