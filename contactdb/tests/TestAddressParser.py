@@ -9,12 +9,33 @@ from contactdb.imp import LithuanianCountyReader
 scriptPath = os.path.dirname( os.path.realpath( __file__ ) )
 
 class TestAddressParser(TestCase):
-    parser = AddressParser()
+
     singleRecordFile = scriptPath + "/AkmenesDistrict_singleRecord.txt"
+
+    def setUp(self):
+        self.parser = AddressParser()
+
+
 
     def assertCity(self, cityName, streetName, cityAddress):
         self.assertEqual(cityName, cityAddress.cityName)
         self.assertEqual(streetName, cityAddress.streetName)
+
+    def test_Street_WithPoriniai(self):
+        streetStr = "Naujoji Akmenė: Respublikos g. Nr. 19, Nr. 26, Nr. 28, numeriai nuo Nr. 1 iki Nr. 17; Respublikos a. Nr. 2."
+        parsed = list(self.parser.GetAddresses(streetStr))
+        self.assertCity("Naujoji Akmenė", "Respublikos g. Nr. 19, Nr. 26, Nr. 28, numeriai nuo Nr. 1 iki Nr. 17", parsed[0])
+        self.assertCity("Naujoji Akmenė", "Respublikos a. Nr. 2.", parsed[1])
+        self.assertEqual(2, len(parsed))
+
+    def test_Street_WithHouseNumbers(self):
+        streetStr = "Naujoji Akmenė: Respublikos g. Nr. 18, Nr. 20, Nr. 21, Nr. 23, Nr. 24, Nr. 25, Nr. 27; SB „Ąžuolas“, V. Kudirkos g."
+        parsed = list(self.parser.GetAddresses(streetStr))
+        self.assertCity("Naujoji Akmenė", "Respublikos g. Nr. 18, Nr. 20, Nr. 21, Nr. 23, Nr. 24, Nr. 25, Nr. 27", parsed[0])
+        self.assertCity("Naujoji Akmenė", "SB „Ąžuolas“", parsed[1])
+        self.assertCity("Naujoji Akmenė", "V. Kudirkos g.", parsed[2])
+        self.assertEqual(3, len(parsed))
+
 
 
     def test_TwoCities(self):
@@ -37,6 +58,7 @@ class TestAddressParser(TestCase):
         self.assertCity("Vaišupio k.", "", parsed[14])
         self.assertCity("Valiūnų k.", "", parsed[15])
         self.assertCity("Žiūkų k.", "", parsed[16])
+        self.assertEqual(17, len(parsed))
 
     def test_Villages_And_OneCity(self):
         streetStr = "Bažavos k., Kolonistų k.; Simnas: Alytaus g., Ateities g., Birutės g., Dariaus ir Girėno g., Draugystės g., Ežero g., Jaunimo g., Kaimynų g., Kreivoji g., Laisvės g., Melioratorių g., Naujoji g., Paupio g., Pavasario g., S. Nėries g., Saulėtekio g., Šviesos g., Taikos g., Vanagėlio g., Vytauto g., Žalioji g., Žemaitės g."
