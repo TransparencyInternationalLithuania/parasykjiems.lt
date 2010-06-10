@@ -33,6 +33,8 @@ class CountyStreet(models.Model):
     county = models.ForeignKey(County)
     street = models.CharField(max_length = 255)
     city = models.CharField(max_length = 50)
+    electionDistrict = models.CharField(max_length = 100)
+    
 
 
 class ParliamentMember(models.Model):
