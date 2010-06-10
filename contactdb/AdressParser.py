@@ -14,6 +14,7 @@ class AddressParser:
     pushCity = None
     popCity = None
     forceNextCity = False
+    forceNextSemicolonCity = False
 
     def _getStreets(self, streetStr):
         streets = streetStr.split(",")
@@ -25,18 +26,37 @@ class AddressParser:
                 yield s
                 continue
             split = s.split(";")
+
+            # if it contains a "g.", short for "street" int Lithuanian, then this will be new street, so push new one
+            if (split[0].find("g.") > 0):
+                self.PushSemicolonCity()
+
             yield split[0].strip()
             for semicolonStr in split[1:]:
+
+                # if it contains a "g.", short for "street" int Lithuanian, then this will be new street, so push new one
+                if (semicolonStr.find("g.") > 0):
+                    self.PushSemicolonCity()
+
+                # every semicolon divides one city from another
+                # however, not for the case with "poriniai / neporiniai"
+                # for this reason we have to pushCity flags (i.e. PushNextCity and PushSemicolonCity
                 self.PushNextCity()
                 yield semicolonStr.strip()
-            
-    def PopCity(self, last = False):
+
+    def PushSemicolonCity(self):
+        self.forceNextSemicolonCity = True
+
+
+    def PopCity(self, str ="", last = False):
         if last == True:
             return self.popCity
 
         if (self.pushCity is None):
             return
         if (self.popCity is None):
+            return
+        if (self.shouldAdd(str) == True):
             return
         returnCity = self.popCity
         self.popCity = self.pushCity
@@ -47,6 +67,50 @@ class AddressParser:
         """ a lame way to tell that next city will be a new city, and should not be added to previous"""
         self.forceNextCity = True
 
+
+    def __shouldAddPoriniai(self, streetName):
+        """ Returns true if existing street name should be appended to existing city.
+        flag forceNextSemicolonCity forces either to exclude always, or do the checking"""
+
+        # poriniai / neporiniai / numeriai nuo types of addresses ignore forceNextCity control
+        # these constructs must always come together
+        streetName = streetName.lower()
+        if (self.forceNextSemicolonCity == True):
+            return False
+
+        if (streetName.find("poriniai") >= 0):
+            return True
+        if (streetName.find("numeriai nuo") >= 0):
+            return True
+        return False
+
+    def __shouldAddNr(self, streetName):
+        streetName = streetName.lower()
+        # only if we do not request specifically a new city, try to append current city to existing
+        if (self.forceNextCity == False):
+            # new city is simply another house number in the same street, so append it and return nothing
+            if (streetName.find("nr") >= 0):
+                return True
+        return False
+
+    def shouldAdd(self, streetName):
+        """ given a steetName, tells if this should be added to current city, or to the new one"""
+        streetName = streetName.lower()
+
+        # if either of force flag is set, return false
+        if (self.forceNextSemicolonCity == True):
+            return False
+
+        if (self.__shouldAddPoriniai(streetName) == True):
+            return True
+        if (self.__shouldAddNr(streetName) == True):
+            return True
+        return False
+
+    def removeForceFlags(self):
+        self.forceNextCity = False
+        self.forceNextSemicolonCity = False
+
     def PushCity(self, city):
         """ a very lame state machine.
         If it find a new street with name "Nr" only, then it does not count it as new street,
@@ -54,18 +118,22 @@ class AddressParser:
 
         if (self.pushCity is None):
             self.pushCity = city
+            self.removeForceFlags()
+            return
+
+        # poriniai / neporiniai / numeriai nuo types of addresses ignore forceNextCity control
+        # these constructs must always come together
+        if (self.__shouldAddPoriniai(city.streetName)):
+            self.pushCity.streetName += "; " + city.streetName
             return
 
         # only if we do not request specifically a new city, try to append current city to existing
-        if (self.forceNextCity == False):
-            # new city is simply another house number in the same street, so append it and return nothing
-            if (city.streetName.lower().find("nr") >= 0):
-                self.pushCity.streetName += ", " + city.streetName
-                return
+        if (self.__shouldAddNr(city.streetName)):
+            self.pushCity.streetName += ", " + city.streetName
+            return
 
         # remove flag just before creating new city
-        if (self.forceNextCity == True):
-            self.forceNextCity = False;
+        self.removeForceFlags()
 
         self.popCity = self.pushCity
         self.pushCity = city
@@ -85,7 +153,7 @@ class AddressParser:
 
         for str in self._getStreets(addressStr):
 
-            city = self.PopCity()
+            city = self.PopCity(str)
             if (city is not None):
                 yield city
 
@@ -99,6 +167,12 @@ class AddressParser:
                 self.PushCity(c)
                 continue
 
+            # "mstl" stand for small town in Lithuanian
+            if (str.find("mstl") > 0):
+                c = CityStreet(str, "")
+                self.PushCity(c)
+                continue
+                
             # "k." stands for village, or kaimas in Lithuanian. 
             if (str.find("k.") > 0):
                 c = CityStreet(str, "")
