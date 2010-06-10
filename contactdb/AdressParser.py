@@ -13,23 +13,28 @@ class AddressParser:
 
     def _getStreets(self, streetStr):
         streets = streetStr.split(",")
+        # split by comma, we get either cities, or streets
         for s in streets:
-            yield s.strip()
+            # a village is separate by its first street by a colon
+            for s1 in s.split(";"):
+                yield s1.strip()
 
     def GetAddresses(self, addressStr):
-        cities = addressStr.split(":")
 
-        count = 0
-        # do not now how to loop normally, so i introduce
-        # a fake variable a, and use count instead
-        for a in cities:
-            if (count >= len(cities) / 2):
-                break
-            city = cities[count]
-            streets = cities[count + 1]
+        cityName = ""
 
-            for street in self._getStreets(streets):
-                contact = CityStreet(city, street)
-                yield contact
+        for str in self._getStreets(addressStr):
+            if (str.find("k.") > 0):
+                c = CityStreet(str, "")
+                yield c
+                continue
 
-            count += 1
+            if (str.find(":") > 0):
+                splitStr = str.split(":")
+                cityName = splitStr[0].strip()
+                c = CityStreet(cityName, splitStr[1].strip())
+                yield c
+                continue
+
+            c = CityStreet(cityName, str)
+            yield c
