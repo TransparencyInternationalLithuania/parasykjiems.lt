@@ -24,17 +24,23 @@ class AddressParser:
         cityName = ""
 
         for str in self._getStreets(addressStr):
-            if (str.find("k.") > 0):
-                c = CityStreet(str, "")
-                yield c
-                continue
 
+            # colon tests is this a village. After a village name, follows a colon and then
+            # a list of streets belonging to that village.
+            # test for colon must come first, before village testing (otherwise tests fail)
             if (str.find(":") > 0):
                 splitStr = str.split(":")
                 cityName = splitStr[0].strip()
                 c = CityStreet(cityName, splitStr[1].strip())
                 yield c
                 continue
+
+            # "k." stands for village, or kaimas in Lithuanian. 
+            if (str.find("k.") > 0):
+                c = CityStreet(str, "")
+                yield c
+                continue
+
 
             c = CityStreet(cityName, str)
             yield c
