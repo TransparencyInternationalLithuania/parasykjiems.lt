@@ -21,7 +21,7 @@ class TestAddressParser(TestCase):
         self.assertCity("Kaunas", "Arnavos g.", parsed[0])
         self.assertCity("Kaunas", "Baltų pr. neporiniai numeriai nuo Nr. 11A iki Nr. 85A; poriniai numeriai nuo Nr. 28 iki Nr. 38", parsed[1])
         self.assertCity("Kaunas", "Lazdynėlių g.", parsed[2])
-        self.assertCity("Kaunas", "Mosėdžio g. neporiniai numeriai nuo Nr. 1 iki Nr. 29; poriniai numeriai nuo Nr. 2 iki Nr. 18, nuo Nr. 24 iki Nr. 28", parsed[3])
+        self.assertCity("Kaunas", "Mosėdžio g. neporiniai numeriai nuo Nr. 1 iki Nr. 29; poriniai numeriai nuo Nr. 2 iki Nr. 18; nuo Nr. 24 iki Nr. 28", parsed[3])
         self.assertCity("Kaunas", "Nadruvių g.", parsed[4])
         self.assertCity("Kaunas", "Notangų g.", parsed[5])
         self.assertCity("Kaunas", "Pagudėnų g.", parsed[6])
@@ -107,14 +107,14 @@ class TestAddressParser(TestCase):
     def test_Street_WithPoriniai(self):
         streetStr = "Naujoji Akmenė: Respublikos g. Nr. 19, Nr. 26, Nr. 28, numeriai nuo Nr. 1 iki Nr. 17; Respublikos a. Nr. 2."
         parsed = list(self.parser.GetAddresses(streetStr))
-        self.assertCity("Naujoji Akmenė", "Respublikos g. Nr. 19, Nr. 26, Nr. 28; numeriai nuo Nr. 1 iki Nr. 17", parsed[0])
+        self.assertCity("Naujoji Akmenė", "Respublikos g. Nr. 19; Nr. 26; Nr. 28; numeriai nuo Nr. 1 iki Nr. 17", parsed[0])
         self.assertCity("Naujoji Akmenė", "Respublikos a. Nr. 2.", parsed[1])
         self.assertEqual(2, len(parsed))
 
     def test_Street_WithHouseNumbers(self):
         streetStr = "Naujoji Akmenė: Respublikos g. Nr. 18, Nr. 20, Nr. 21, Nr. 23, Nr. 24, Nr. 25, Nr. 27; SB „Ąžuolas“, V. Kudirkos g."
         parsed = list(self.parser.GetAddresses(streetStr))
-        self.assertCity("Naujoji Akmenė", "Respublikos g. Nr. 18, Nr. 20, Nr. 21, Nr. 23, Nr. 24, Nr. 25, Nr. 27", parsed[0])
+        self.assertCity("Naujoji Akmenė", "Respublikos g. Nr. 18; Nr. 20; Nr. 21; Nr. 23; Nr. 24; Nr. 25; Nr. 27", parsed[0])
         self.assertCity("Naujoji Akmenė", "SB „Ąžuolas“", parsed[1])
         self.assertCity("Naujoji Akmenė", "V. Kudirkos g.", parsed[2])
         self.assertEqual(3, len(parsed))

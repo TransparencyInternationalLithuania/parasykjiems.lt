@@ -143,7 +143,7 @@ class AddressParser:
 
         # only if we do not request specifically a new city, try to append current city to existing
         if (self.__shouldAddNr(city.streetName)):
-            self.pushCity.streetName += ", " + city.streetName
+            self.pushCity.streetName += "; " + city.streetName
             return
 
         # remove flag just before creating new city
