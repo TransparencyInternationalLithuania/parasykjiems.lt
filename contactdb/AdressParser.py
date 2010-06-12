@@ -16,6 +16,17 @@ class AddressParser:
     forceNextCity = False
     forceNextSemicolonCity = False
 
+    def _containsOneOfStreets(self, street):
+        """returns True if street name contains a lithuanian shortened form of street: g for garve,
+        pl for plentas, pr for prospektas, etc"""
+        if (street.find("g.") > 0):
+            return True
+        if (street.find("pr.") > 0):
+            return True
+        if (street.find("pl.") > 0):
+            return True
+        return False
+
     def _getStreets(self, streetStr):
         streets = streetStr.split(",")
         # split by comma, we get either cities, or streets
@@ -28,14 +39,14 @@ class AddressParser:
             split = s.split(";")
 
             # if it contains a "g.", short for "street" int Lithuanian, then this will be new street, so push new one
-            if (split[0].find("g.") > 0):
+            if (self._containsOneOfStreets(split[0])):
                 self.PushSemicolonCity()
 
             yield split[0].strip()
             for semicolonStr in split[1:]:
 
                 # if it contains a "g.", short for "street" int Lithuanian, then this will be new street, so push new one
-                if (semicolonStr.find("g.") > 0):
+                if (self._containsOneOfStreets(semicolonStr) > 0):
                     self.PushSemicolonCity()
 
                 # every semicolon divides one city from another
@@ -96,6 +107,9 @@ class AddressParser:
     def shouldAdd(self, streetName):
         """ given a steetName, tells if this should be added to current city, or to the new one"""
         streetName = streetName.lower()
+
+        if (self._containsOneOfStreets(streetName)):
+            return False;
 
         # if either of force flag is set, return false
         if (self.forceNextSemicolonCity == True):

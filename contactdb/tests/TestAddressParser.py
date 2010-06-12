@@ -15,6 +15,26 @@ class TestAddressParser(TestCase):
     def setUp(self):
         self.parser = AddressParser()
 
+    def test_plentas(self):
+        streetStr = "Kaunas: Arnavos g.; Baltų pr. neporiniai numeriai nuo Nr. 11A iki Nr. 85A, poriniai numeriai nuo Nr. 28 iki Nr. 38; Lazdynėlių g.; Mosėdžio g. neporiniai numeriai nuo Nr. 1 iki Nr. 29, poriniai numeriai nuo Nr. 2 iki Nr. 18, nuo Nr. 24 iki Nr. 28; Nadruvių g., Notangų g., Pagudėnų g., Pamedėnų g., Pilupėnų g., Šateikių g., Sembų g., Skalvių g., Stalupėnų g., Tolminkiemio g., Žemaičių pl. neporiniai numeriai nuo Nr. 23 iki Nr. 25."
+        parsed = list(self.parser.GetAddresses(streetStr))
+        self.assertCity("Kaunas", "Arnavos g.", parsed[0])
+        self.assertCity("Kaunas", "Baltų pr. neporiniai numeriai nuo Nr. 11A iki Nr. 85A; poriniai numeriai nuo Nr. 28 iki Nr. 38", parsed[1])
+        self.assertCity("Kaunas", "Lazdynėlių g.", parsed[2])
+        self.assertCity("Kaunas", "Mosėdžio g. neporiniai numeriai nuo Nr. 1 iki Nr. 29; poriniai numeriai nuo Nr. 2 iki Nr. 18, nuo Nr. 24 iki Nr. 28", parsed[3])
+        self.assertCity("Kaunas", "Nadruvių g.", parsed[4])
+        self.assertCity("Kaunas", "Notangų g.", parsed[5])
+        self.assertCity("Kaunas", "Pagudėnų g.", parsed[6])
+        self.assertCity("Kaunas", "Pamedėnų g.", parsed[7])
+        self.assertCity("Kaunas", "Pilupėnų g.", parsed[8])
+        self.assertCity("Kaunas", "Šateikių g.", parsed[9])
+        self.assertCity("Kaunas", "Sembų g.", parsed[10]) 
+        self.assertCity("Kaunas", "Skalvių g.", parsed[11])
+        self.assertCity("Kaunas", "Stalupėnų g.", parsed[12])
+        self.assertCity("Kaunas", "Tolminkiemio g.", parsed[13])
+        self.assertCity("Kaunas", "Žemaičių pl. neporiniai numeriai nuo Nr. 23 iki Nr. 25.", parsed[14])
+        self.assertEqual(15, len(parsed))
+
     def test_Poriniai_Neporiniai(self):
         streetStr = "Alytus: A. Baranausko g., A. Matučio g., A. Žmuidzinavičiaus g., Alyvų Tako g. neporiniai numeriai nuo Nr. 17 iki galo; poriniai numeriai nuo Nr. 10 iki galo; numeriai nuo Nr. 1 iki Nr. 8; Alyvų Tako 2 g., Dzūkų g., J. Basanavičiaus g., J. Tumo-Vaižganto g., Kranto g., Kurorto g., Lelijų g., M. K. Čiurlionio g., Maironio g., Nemuno g., Pliažo g., Pušyno g.; S. Dariaus ir S. Girėno g. neporiniai numeriai nuo Nr. 1 iki galo; poriniai numeriai nuo Nr. 4 iki galo; Savanorių g., Šilelio g., Šilo g., Sporto g., Tako I g., Tako II g., Tilto g., Užuovėjos g., V. Krėvės g., V. Kudirkos g., Žemaitės g."
         parsed = list(self.parser.GetAddresses(streetStr))
