@@ -12,7 +12,7 @@ urlpatterns = patterns('parasykjiems.polls.views',
 	# to INSTALLED_APPS to enable admin documentation:
 	# (r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
-	(r'^$', 'index'),
+
 	(r'^(?P<poll_id>\d+)/$', 'detail'),
 	(r'^(?P<poll_id>\d+)/results/$', 'results'),
 	(r'^(?P<poll_id>\d+)/vote/$', 'vote'),
