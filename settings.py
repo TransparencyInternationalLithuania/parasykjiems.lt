@@ -68,5 +68,6 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'parasykjiems.polls',
     'parasykjiems.contactdb',
+    'parasykjiems.pjweb',
     'django.contrib.admin'
 )
