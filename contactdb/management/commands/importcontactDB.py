@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand
 from django.core import management
+from contactdb.timemeasurement import TimeMeasurer
 
 
 class Command(BaseCommand):
@@ -10,7 +11,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         
-
+        time = TimeMeasurer()
         imports = ["importCounties", "importMPs", "importStreets"]
 
         print "Will import followind data:"
@@ -21,7 +22,7 @@ class Command(BaseCommand):
             print "importing %s" % (i)
             management.call_command(i)
 
-        print "finished importing ContactDB"
+        print "finished importing ContactDB. Took %s seconds" % time.ElapsedSeconds()
 
             
 
