@@ -187,6 +187,9 @@ class LithuanianCountyReader:
                 location.ElectionDistrict = line
                 state = State.Addresses
 
+                if (line.find("S. Daukanto rinkimų apylinkė Nr. 64") >= 0):
+                    print state
+
                 # this county is special, since it has no streets.
                 # So just instruct so skip reading streets for this county
                 # HACK for now, but works
@@ -194,6 +197,7 @@ class LithuanianCountyReader:
                 if (line.find("Jūreivių rinkimų apylinkė") >=0 ):
                     yield location
                     state = State.County
+                    continue
 
                 location.pollingDistrictAddress = self.readParagraph()
                 location.numberOfVoters = self.readParagraph()
