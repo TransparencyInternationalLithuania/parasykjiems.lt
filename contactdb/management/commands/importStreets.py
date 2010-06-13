@@ -6,6 +6,8 @@ from contactdb.imp import LithuanianCountyReader, ImportSources
 from contactdb.models import CountyStreet, County   
 from contactdb.AdressParser import AddressParser
 from datetime import datetime
+from django.db import connection, transaction
+from contactdb.timemeasurement import TimeMeasurer
 
 import os
 
@@ -18,21 +20,83 @@ importStreets 5 - will import streets for first 5 Election Districts. If run rep
 importStreets 5:8 - will import streets for counties from 5 to 8 county inclusive  """
 
     def deleteElectionDistrictIfExists(self, electionDistrict):
-        # not sure how to format this line in Python
-        # method chaining is nice, but how to format this nicely?
         CountyStreet.objects.filter(electionDistrict = electionDistrict).delete()
-        
+
+    def deleteElectionDistrictIfExistsInBatch(self, names):
+        """ pass a collection of polling district names in names. They will
+        get deleted with delete from table in () statemenet """
+        dbTable = CountyStreet.objects.model._meta.db_table
+        # why 5?  Because it is ElectionDistrict field. And also since i do not know how to get it automatically
+        columnName = CountyStreet.objects.model._meta.fields[5].column
+        sql = "delete from %s where %s in (%s)" % (dbTable, columnName, names)
+        cursor = connection.cursor()
+        cursor.execute(sql)
+        transaction.commit_unless_managed()
+
     @transaction.commit_on_success
+    def deleteElectionDistrictsIfExists(self, pollingDistricts):
+        time = TimeMeasurer()
+        print "deleting previous data"
+
+        batch = 20
 
 
-    def getLocations(self, fromPrint, toPrint):
-        pass
-    
+
+        districtNames = []
+        currentBatch = 0
+        for pol in pollingDistricts.itervalues():
+            if (currentBatch >= batch):
+                currentBatch = 0
+                names = "', '".join(districtNames)
+                self.deleteElectionDistrictIfExistsInBatch(names)
+                districtNames = []
+
+            districtNames.append("'%s'" % pol.ElectionDistrict)
+            currentBatch += 1
+            #self.deleteElectionDistrictIfExists(pol.ElectionDistrict)
+
+        names = "', '".join(districtNames)
+        self.deleteElectionDistrictIfExistsInBatch(names)
+        print "finished deleting. Took %s seconds" % time.ElapsedSeconds()
+
+
+    def getPollingDistricts(self, aggregator, fromPrint, toPrint):
+        count = 0
+
+        pollingDistricts = {}
+
+        for pollingDistrict in aggregator.getLocations():
+            if (count + 1 > toPrint):
+                break
+            count += 1
+            if (count + 1 <= fromPrint):
+                continue
+            pollingDistricts[count] = pollingDistrict
+        return pollingDistricts
+
+
+
+    def preFetchAllConstituencies(self, pollingDistricts):
+        time = TimeMeasurer()
+        # fetch all counties in pseudo batch,
+        constituencies = {}
+
+        for pol in pollingDistricts.itervalues():
+            if (constituencies.has_key(pol.County.nr) == False):
+                constituencies[pol.County.nr] = County.objects.get(nr = pol.County.nr)
+
+            county = constituencies[pol.County.nr]
+            # re-assign old constituency to new constituency fetched from database
+            pol.County = county
+        print "finished pre-fetching. Took %s seconds" % time.ElapsedSeconds()
+
 
     @transaction.commit_on_success    
     def handle(self, *args, **options):
         allRecords = os.getcwd() + ImportSources.LithuanianCounties
         file = open(allRecords, "r")
+        aggregator = LithuanianCountyReader(file)
+
 
         fromPrint = 0
         toPrint = 9999999
@@ -47,50 +111,44 @@ importStreets 5:8 - will import streets for counties from 5 to 8 county inclusiv
 
         streetParser = AddressParser() 
 
-        count = 0
+
         imported = 0
         totalNumberOfStreets = 0
-        aggregator = LithuanianCountyReader(file)
+
 
 
         start = datetime.now()
-        for location in aggregator.getLocations():
+        print "reading all polling districts"
+        allPollingDistricts = self.getPollingDistricts(aggregator, fromPrint, toPrint)
 
+        self.deleteElectionDistrictsIfExists(allPollingDistricts)
+        print "pre-fetching constituencies"
+        self.preFetchAllConstituencies(allPollingDistricts)
 
-            if (count + 1 > toPrint):
-                break
-            count += 1
-            if (count + 1 <= fromPrint):
-                continue
-                
-
-            
-            self.deleteElectionDistrictIfExists(location.ElectionDistrict)
-            county = County.objects.get(nr = location.County.nr)
-
+        print "starting to import streets"
+        for count, pollingDistrict in allPollingDistricts.iteritems():
             imported += 1
             numberOfStreets = 0
-            for street in streetParser.GetAddresses(location.Addresses):
+            for street in streetParser.GetAddresses(pollingDistrict.Addresses):
                 countyStreet = CountyStreet()
-                countyStreet.county = county
-                countyStreet.district = location.District
+                countyStreet.county = pollingDistrict.County
+                countyStreet.district = pollingDistrict.District
                 countyStreet.city = street.cityName
                 countyStreet.street = street.streetName
-                countyStreet.electionDistrict = location.ElectionDistrict
+                countyStreet.electionDistrict = pollingDistrict.ElectionDistrict
                 countyStreet.save()
                 numberOfStreets += 1
 
             totalNumberOfStreets += numberOfStreets
-            now = datetime.now()
-            seconds = (now - start).seconds
+            seconds = (datetime.now() - start).seconds
             if (seconds == 0):
                 rate = "unknown"
             else:
                 rate = str(totalNumberOfStreets / seconds)
-            print (u"%d: saved County '%s %d', \nElectoral District '%s' streets (%d). \nTotal streets so far %d" % (count, county.name, county.nr, location.ElectionDistrict, numberOfStreets, totalNumberOfStreets)).encode('utf-8')
+            print (u"%d: saved County '%s %d', \nElectoral District '%s' streets (%d). \nTotal streets so far %d" % (count, pollingDistrict.County.name, pollingDistrict.County.nr, pollingDistrict.ElectionDistrict, numberOfStreets, totalNumberOfStreets)).encode('utf-8')
             print "inserting at %s rows per second (total sec: %d, rows: %d)" % (rate, seconds, totalNumberOfStreets)
             print "\n\n"
 
 
-
         print "succesfully imported %d counties, total %d streets" % (imported, totalNumberOfStreets)
+        print "total spent time %d seconds" % (datetime.now() - start).seconds

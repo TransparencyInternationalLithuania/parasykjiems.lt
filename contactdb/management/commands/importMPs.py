@@ -3,6 +3,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from contactdb.import_parliamentMembers import LithuanianMPsReader
 from contactdb.models import ParliamentMember, County
 from contactdb.imp import ImportSources
+from django.db import transaction
 import os
 
 class Command(BaseCommand):
@@ -18,6 +19,7 @@ class Command(BaseCommand):
         return True
 
 
+    @transaction.commit_on_success
     def handle(self, *args, **options):
         allRecords = os.getcwd() + ImportSources.LithuanianMPs
         file = open(allRecords, "r")

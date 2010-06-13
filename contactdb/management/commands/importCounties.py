@@ -1,11 +1,13 @@
 from django.core.management.base import BaseCommand
 from contactdb.imp import LithuanianCountyAggregator, ImportSources
+from django.db import transaction
 import os
 
 class Command(BaseCommand):
     args = '<>'
     help = 'Imports into database all Lithuanian counties'
 
+    @transaction.commit_on_success
     def handle(self, *args, **options):
         allRecords = os.getcwd() + ImportSources.LithuanianCounties
         file = open(allRecords, "r")
