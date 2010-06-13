@@ -1,9 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf8 -*-
 from django.core.management.base import BaseCommand
+from django.db import transaction
 from contactdb.imp import LithuanianCountyReader, ImportSources
 from contactdb.models import CountyStreet, County   
 from contactdb.AdressParser import AddressParser
+from datetime import datetime
+
 import os
 
 class Command(BaseCommand):
@@ -19,7 +22,14 @@ importStreets 5:8 - will import streets for counties from 5 to 8 county inclusiv
         # method chaining is nice, but how to format this nicely?
         CountyStreet.objects.filter(electionDistrict = electionDistrict).delete()
         
+    @transaction.commit_on_success
 
+
+    def getLocations(self, fromPrint, toPrint):
+        pass
+    
+
+    @transaction.commit_on_success    
     def handle(self, *args, **options):
         allRecords = os.getcwd() + ImportSources.LithuanianCounties
         file = open(allRecords, "r")
@@ -41,6 +51,9 @@ importStreets 5:8 - will import streets for counties from 5 to 8 county inclusiv
         imported = 0
         totalNumberOfStreets = 0
         aggregator = LithuanianCountyReader(file)
+
+
+        start = datetime.now()
         for location in aggregator.getLocations():
 
 
@@ -68,8 +81,14 @@ importStreets 5:8 - will import streets for counties from 5 to 8 county inclusiv
                 numberOfStreets += 1
 
             totalNumberOfStreets += numberOfStreets
-
+            now = datetime.now()
+            seconds = (now - start).seconds
+            if (seconds == 0):
+                rate = "unknown"
+            else:
+                rate = str(totalNumberOfStreets / seconds)
             print (u"%d: saved County '%s %d', \nElectoral District '%s' streets (%d). \nTotal streets so far %d" % (count, county.name, county.nr, location.ElectionDistrict, numberOfStreets, totalNumberOfStreets)).encode('utf-8')
+            print "inserting at %s rows per second (total sec: %d, rows: %d)" % (rate, seconds, totalNumberOfStreets)
             print "\n\n"
 
 
