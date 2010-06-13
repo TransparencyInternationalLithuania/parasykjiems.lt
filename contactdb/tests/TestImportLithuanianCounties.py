@@ -85,6 +85,8 @@ class TestImportLithuanianCounties(TestCase):
         self.assertPollingDistrict(allPollingDistricts, "Lomenos rinkimų apylinkė Nr. 4", "Kaišiadorių–Elektrėnų rinkimų apygarda Nr. 59", "Kaišiadorių rajonAS")
         self.assertPollingDistrict(allPollingDistricts, "Girelės rinkimų apylinkė Nr. 3", "Kaišiadorių–Elektrėnų rinkimų apygarda Nr. 59", "Kaišiadorių rajonAS", "Adresas *Girelės g. 53, Kaišiadorys, Technologijų ir verslo mokyklos bendrabučio salė.", "Rinkėjų skaičius *2789.")
 
+        self.assertPollingDistrict(allPollingDistricts, "S. Daukanto rinkimų apylinkė Nr. 64", "Danės rinkimų apygarda Nr. 19", "Klaipėdos miestas", "Adresas *S.Daukanto g. 5, Klaipėda.", "Rinkėjų skaičius *1001.")
+
 
 
     def test_Akmenes_read_record(self):
