@@ -4,7 +4,7 @@
 import copy
 from contactdb.exc import ChainnedException
 from contactdb.models import County
-
+from contactdb.deprecated import deprecated
 
 class ImportSources:
     LithuanianCounties = "/contactdb/sources/apygardos.txt"
@@ -33,6 +33,8 @@ class MunicipalityLocation:
     # apylinkė
     ElectionDistrict = ""
     Addresses = ""
+    pollingDistrictAddress = None
+    numberOfVoters = None
 
     # how to convert python object to string?
     # dont know yet, so using this hack :)
@@ -109,7 +111,7 @@ class LithuanianCountyReader:
         self.file = file
         self.countyParser = LithuanianCountyParser()
 
-
+    @deprecated
     def _ConsumeNonEmptyLines(self, numberOfLines):
         for i in range(1, numberOfLines):
             self._notEmptyLine()
@@ -121,7 +123,7 @@ class LithuanianCountyReader:
         # read a line from file
         for s in self.file:
 
-            # return each splitted line as separate line
+            # return each splited line as separate line
             s = self._removeDumbCharacters(s)
             if (s == ""):
                 continue
@@ -142,11 +144,28 @@ class LithuanianCountyReader:
         for s in self.file:
             s = self._removeDumbCharacters(s)
             if (s == ""):
-                break;
+                break
             strings.append(s)
             strings.append(" ")
 
         return "".join(strings)
+
+    def readParagraph(self):
+        s = ""
+        for s in self.file:
+            s = self._removeDumbCharacters(s)
+            if s != "":
+                break
+
+        adr = []
+        adr.append(s)
+        for s in self.file:
+            s = self._removeDumbCharacters(s)
+            if s == "":
+                break
+            adr.append(s)
+
+        return " ".join(adr)
 
     # a generator which returns a MunicipalityLocation object
     # for each election district defined in the file
@@ -176,7 +195,15 @@ class LithuanianCountyReader:
                     yield location
                     state = State.County
 
-                self._ConsumeNonEmptyLines(2)
+                location.pollingDistrictAddress = self.readParagraph()
+                location.numberOfVoters = self.readParagraph()
+                #self._ConsumeNonEmptyLines(2)
+
+                location.Addresses = self._readAddress()
+                state = State.District
+                clone = copy.copy(location)
+                yield clone
+
                 continue
 
             if state == State.District:
@@ -184,12 +211,7 @@ class LithuanianCountyReader:
                 state = State.County
                 continue
 
-            if (state == State.Addresses):
-                location.Addresses = self._readAddress()
-                state = State.District
-                clone = copy.copy(location)
-                yield clone
-
+            
 
 
 """
