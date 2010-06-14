@@ -2,7 +2,7 @@
 # -*- coding: utf8 -*-
 
 import copy
-from contactdb.exc import ChainnedException
+from pjutils.exc import ChainnedException
 from contactdb.models import County
 from contactdb.deprecated import deprecated
 
