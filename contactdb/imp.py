@@ -214,25 +214,3 @@ class LithuanianCountyReader:
                 location.District = line
                 state = State.County
                 continue
-
-            
-
-
-"""
-# debugging script, remove afterwards
-
-scriptPath = os.path.dirname( os.path.realpath( __file__ ) )
-alytusRecordFile = scriptPath + "/tests/AlytausMiestas.txt"
-print alytusRecordFile
-
-def countNumberOfRecords(fileName):
-        file = open(fileName, "r")
-        count = 0
-        for l in getLocations(file):
-            print l.ElectionDistrict
-            count += 1
-        return count
-
-
-print countNumberOfRecords(alytusRecordFile)
-"""
