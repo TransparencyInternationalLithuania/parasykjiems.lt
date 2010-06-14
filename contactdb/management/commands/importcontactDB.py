@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 from django.core import management
-from contactdb.timemeasurement import TimeMeasurer
+from pjutils.timemeasurement import TimeMeasurer
 
 
 class Command(BaseCommand):
