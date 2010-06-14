@@ -1,6 +1,6 @@
 
 from contactdb.models import ParliamentMember, County
-from contactdb.exc import ChainnedException
+from pjutils.exc import ChainnedException
 from contactdb.imp import LithuanianCountyParser
 from django.core.exceptions import ObjectDoesNotExist
 
