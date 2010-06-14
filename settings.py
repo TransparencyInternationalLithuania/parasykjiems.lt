@@ -69,5 +69,7 @@ INSTALLED_APPS = (
     'parasykjiems.polls',
     'parasykjiems.contactdb',
     'parasykjiems.pjweb',
+    'parasykjiems.pjutils',
+
     'django.contrib.admin'
 )

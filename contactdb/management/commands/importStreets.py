@@ -7,7 +7,7 @@ from contactdb.models import CountyStreet, County
 from contactdb.AdressParser import AddressParser
 from datetime import datetime
 from django.db import connection, transaction
-from contactdb.timemeasurement import TimeMeasurer
+from pjutils.timemeasurement import TimeMeasurer
 
 import os
 

@@ -4,7 +4,7 @@
 import copy
 from pjutils.exc import ChainnedException
 from contactdb.models import County
-from contactdb.deprecated import deprecated
+from pjutils.deprecated import deprecated
 
 class ImportSources:
     LithuanianCounties = "/contactdb/sources/apygardos.txt"
