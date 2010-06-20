@@ -132,7 +132,7 @@ class LithuanianCountyReader:
         return ""
 
     def _removeDumbCharacters(self, str):
-        return str.strip("* \n")
+        return str.strip("* \r\n")
 
     def _readAddress(self):
         strings = []
