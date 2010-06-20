@@ -145,7 +145,8 @@ importStreets 5:8 - will import streets for counties from 5 to 8 county inclusiv
                 rate = "unknown"
             else:
                 rate = str(totalNumberOfStreets / seconds)
-            print (u"%d: saved County '%s %d', \nElectoral District '%s' streets (%d). \nTotal streets so far %d" % (count, pollingDistrict.County.name, pollingDistrict.County.nr, pollingDistrict.ElectionDistrict, numberOfStreets, totalNumberOfStreets)).encode('utf-8')
+            #print (u"%d: saved County '%s %d', \nElectoral District '%s' streets (%d). \nTotal streets so far %d" % (count, pollingDistrict.County.name, pollingDistrict.County.nr, pollingDistrict.ElectionDistrict, numberOfStreets, totalNumberOfStreets)).encode('utf-8')
+            print (u"%d: saved County '%d', \nTotal streets so far %d" % (count, numberOfStreets, totalNumberOfStreets)).encode('utf-8')
             print "inserting at %s rows per second (total sec: %d, rows: %d)" % (rate, seconds, totalNumberOfStreets)
             print "\n\n"
 
