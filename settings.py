@@ -1,5 +1,4 @@
 # Django settings for parasykjiems project.
-from settings_local import *
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -73,3 +72,16 @@ INSTALLED_APPS = (
 
     'django.contrib.admin'
 )
+
+
+def prepareSettingsLocal():
+    import os
+    import shutil
+    if (os.path.exists("settings_local.py") == False):
+        print "settings_local.py does not exist"
+        print "creating new settings from settings_local.py.template"
+        shutil.copy("settings_local.py.template", "settings_local.py")
+    
+
+prepareSettingsLocal()
+from settings_local import *
