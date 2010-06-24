@@ -69,12 +69,10 @@ INSTALLED_APPS = (
     'parasykjiems.contactdb',
     'parasykjiems.pjweb',
     'parasykjiems.pjutils',
-    'django_nose',
 
     'django.contrib.admin'
 )
 
-TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 def prepareSettingsLocal():
     import os
