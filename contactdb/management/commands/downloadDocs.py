@@ -2,6 +2,10 @@ from django.core.management.base import BaseCommand
 from django.db import transaction
 from contactdb.gdocs import SpreadSheetClient
 from settings import *
+
+import uniconsole
+
+
 import os
 
 class Command(BaseCommand):
