@@ -8,16 +8,31 @@ class ContactForm(forms.Form):
     message = forms.CharField()
     sender = forms.EmailField()
 
-#def index(request):    
+class IndexForm(forms.Form):
+    address = forms.CharField(max_length=255)
+
+def index(request):
+    address = ''
+    if request.method == 'POST':
+        form = IndexForm(request.POST)
+        if form.is_valid():
+            address = form.cleaned_data['address']
+
+    else:
+        form = IndexForm()
+    return render_to_response('pjweb/index.html', {
+        'form': form,
+        'address': address,
+    })
 #    return HttpResponse("Hello, world. You're at the index.")
 
 def thanks(request):    
     return HttpResponse("Thank you. Your email has been sent.")
 
 def smtp_error(request):    
-    return HttpResponse("There was a problem, when trying to send email. Is smtp configured?")
+    return HttpResponse("There was a problem, trying to send email. Is smtp configured?")
 
-def index(request):
+def contact(request):
     if request.method == 'POST': # If the form has been submitted...
         form = ContactForm(request.POST) # A form bound to the POST data
         if form.is_valid():
