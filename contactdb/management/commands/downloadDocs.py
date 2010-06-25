@@ -3,7 +3,7 @@ from django.db import transaction
 from contactdb.gdocs import SpreadSheetClient
 from settings import *
 
-import uniconsole
+from pjutils import uniconsole
 
 
 import os
