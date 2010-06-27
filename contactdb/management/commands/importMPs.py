@@ -21,9 +21,8 @@ class Command(BaseCommand):
 
     @transaction.commit_on_success
     def handle(self, *args, **options):
-        allRecords = os.getcwd() + ImportSources.LithuanianMPs
-        file = open(allRecords, "r")
-        reader = LithuanianMPsReader(file)
+        allRecords = os.path.join(os.getcwd(), ImportSources.LithuanianMPs)
+        reader = LithuanianMPsReader(allRecords)
 
         numberToPrint = 9999
         if len(args) > 0:

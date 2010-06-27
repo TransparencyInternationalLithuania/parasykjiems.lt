@@ -9,7 +9,7 @@ class Command(BaseCommand):
 
     @transaction.commit_on_success
     def handle(self, *args, **options):
-        allRecords = os.getcwd() + ImportSources.LithuanianCounties
+        allRecords = os.path.join(os.getcwd(), ImportSources.LithuanianCounties)
         file = open(allRecords, "r")
 
         numberToPrint = 9999

@@ -3,6 +3,7 @@ from contactdb.models import ParliamentMember, County
 from pjutils.exc import ChainnedException
 from contactdb.imp import LithuanianCountyParser
 from django.core.exceptions import ObjectDoesNotExist
+import csv
 
 
 
@@ -11,37 +12,26 @@ class ParliamentMemberImportError(ChainnedException):
         ChainnedException.__init__(self, message, inner)
 
 class LithuanianMPsReader:
-    def __init__(self, file):
-        self.file = file
+    def __init__(self, fileName):
+        self.dictReader = csv.DictReader(open(fileName, "rt"), delimiter = "\t")
 
-    def ReadLine(self):
-        return self.file.readline().strip("/n")
-
-    def readField(self, fields, index):
-        if (index >= len(fields)):
-            return ""
-        return fields[index]
 
     def ReadParliamentMembers(self):
         """A generator which returns parliament member instances from
     given file.  A county object is fetched from the database for this specific MP"""
-        header = self.ReadLine()
 
         parser = LithuanianCountyParser()
 
         count = 0
-        for line in self.file:
-            if (line == ""):
-                break
+        for row in self.dictReader:
             count += 1
-            fields = line.split("\t")
 
 
             member = ParliamentMember()
-            member.county = parser.ExtractCountyFromMPsFile(self.readField(fields, 0))
-            member.name = self.readField(fields, 2)
-            member.surname = self.readField(fields, 1)
-            member.email = self.readField(fields, 6)
+            member.county = parser.ExtractCountyFromMPsFile(row["electoraldistrict"])
+            member.name = row["name"]
+            member.surname = row["surname"]
+            member.email = row["e-mail"]
 
             try:
                 self.validateMember(member)

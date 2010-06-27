@@ -7,8 +7,16 @@ from contactdb.models import County
 from pjutils.deprecated import deprecated
 
 class ImportSources:
-    LithuanianCounties = "/contactdb/sources/apygardos.txt"
-    LithuanianMPs = "/contactdb/sources/parliament members.txt"
+    LithuanianCounties = "contactdb/sources/apygardos.txt"
+    LithuanianMPs = "contactdb/sources/parliament members.txt"
+
+class GoogleDocsSources:
+    """ collection of google docs documents for Lithuanian data"""
+
+    # parliament members
+    LithuanianMPs = "parasykjiems.lt 2"
+
+
 
 
 
@@ -83,7 +91,7 @@ class LithuanianCountyParser:
         lower = countyString.lower()
         nr = lower.find("nr")
         if (nr < 0):
-            raise NotFoundCountyNrException("Could not parse county nr in string '%(string)s'") % {"string" : lower}
+            raise NotFoundCountyNrException("Could not parse county nr in string '%(s)s'" % {"s" : lower})
         c = County()
         c.name = countyString[:nr].strip(" (")
         c.nr =  int(countyString[nr + 3: ].strip(" )"))
