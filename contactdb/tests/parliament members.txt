@@ -1,4 +1,4 @@
-﻿Electoral district	Surname	Name	Institution	Party affiliation 	Position	e-mail	Telephone number	Bureau address	Link
+electoraldistrict	surname	name	Institution	Party affiliation 	Position	e-mail	Telephone number	Bureau address	Link
 Naujamiesčio (Nr. 1)	Degutienė	Irena	Seimas	TS-LKD	Seimo pirmininkė	Irena.Degutiene@lrs.lt, irdegu@lrs.lt	(8-5) 2396001	S. Moniuškos g. 27, 08115 Vilnius	http://www3.lrs.lt/pls/inter/w5_show?p_r=6113&p_k=1&p_a=5&p_asm_id=7207&p_kade_id=6
 Senamiesčio (Nr. 2)	Adomėnas	Mantas	Seimas	TS-LKD	Švietimo, mokslo ir kultūros komiteto narys	Mantas.Adomenas@lrs.lt	(8-5) 2396631	Odminių g. 3, 01122 Vilnius	http://www3.lrs.lt/pls/inter/w5_show?p_r=6113&p_k=1&p_a=5&p_asm_id=48690&p_kade_id=6
 Antakalnio (Nr. 3)	Kubilius	Andrius	Vyriausybė	TS-LKD	Ministras Pirmininkas			Antakalnio g. 36, 10305 Vilnius 
