@@ -32,3 +32,22 @@ manage.py test contactdb
 
 # runs an embedded web server
 manage.py runserver
+
+# cleans all database from contact data
+manage.py clearcontactDB
+
+
+3. After installation
+
+# creates database
+manage.py syncdb
+
+# downloads data from google docs to be ready for import:
+manage.py downloadDocs
+
+# imports all database with contact data
+manage.py importcontactDB
+
+
+
+
