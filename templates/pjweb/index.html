@@ -1,0 +1,9 @@
+<form action="/pjweb/" method="post">
+{{ form.as_p }}
+<input type="submit" value="Submit" />
+</form>
+<p><b>You entered:</b> {{ entered }}</p>
+<p><b>We found these addresses:</b></p>
+{% for suggestion in suggestions %}
+<p>{{ suggestion }}</p>
+{% endfor %}
