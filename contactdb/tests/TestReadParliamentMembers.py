@@ -13,8 +13,7 @@ class TestReadParliamentMembers(TestCase):
     allRecords = scriptPath + "/parliament members.txt"
 
     def countNumberOfRecords(self, fileName):
-        file = open(fileName, "r")
-        reader = LithuanianMPsReader(file)
+        reader = LithuanianMPsReader(fileName)
         count = 0
         for l in reader.ReadParliamentMembers():
             count += 1
@@ -25,8 +24,7 @@ class TestReadParliamentMembers(TestCase):
 
     def test_Read_first_record(self):
 
-        file = open(self.allRecords, "r")
-        reader = LithuanianMPsReader(file)
+        reader = LithuanianMPsReader(self.allRecords)
         for loc in reader.ReadParliamentMembers():
             self.assertEqual(loc.county.nr, 1)
             self.assertEqual(loc.county.name, "Naujamiesčio")
