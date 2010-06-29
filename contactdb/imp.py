@@ -32,13 +32,20 @@ class State:
     Addresses = "ad"
 
 
-# a DTO which is returned for eaach location read in the Lithuanian Counties file
+
 class MunicipalityLocation:
+    """a DTO which is returned for eaach location read in the Lithuanian Counties file.
+    The difference from PollingDistrictStreet is that this class contains non-parsed
+    street data. Before inserting into database we need to parse Addresses field into
+    separate streets.
+
+    TODO Should be renamed to PollingDistrictLocation.
+    """
     # rajonas
     District = ""
     # apygarda
     County = None
-    # apylinkė
+    # apylinkė. TODO rename to PollingDistrict
     ElectionDistrict = ""
     Addresses = ""
     pollingDistrictAddress = None
@@ -66,7 +73,7 @@ class LithuanianCountyAggregator:
             self.allCounties.append(loc)
 
     def GetDistinctCounties(self):
-        """
+        """                                                                                          pksvdd1199aatg1a
         Returns a list of string for each distinct County
         """
         counties = {}

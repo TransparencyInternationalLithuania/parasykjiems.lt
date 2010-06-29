@@ -17,4 +17,22 @@ Enhancments:
 Some files should be renamed to reflect python style.
 There are probably quite a few naming inconsistencies, camelcase vs normal case. This should be standartized
 No license headers at the moment
+
+
+
+Terminology used in this module:
+District - a biggest region in a country.
+City
+Street
+
+
+
+Political division in country:
+County - each County has exactly one elected member of parliament
+PollingDistrict - one county is usually sub-divided into many smaller regions called polling districts.
+
+
+Other term
+MPs - members of parliament
+
 """
