@@ -3,7 +3,7 @@
 from django.core.management.base import BaseCommand
 from django.db import transaction
 from contactdb.imp import LithuanianCountyReader, ImportSources
-from contactdb.models import CountyStreet, County   
+from contactdb.models import PollingDistrictStreet, County
 from contactdb.AdressParser import AddressParser
 from datetime import datetime
 from django.db import connection, transaction
@@ -19,22 +19,22 @@ Examples:
 importStreets 5 - will import streets for first 5 Election Districts. If run repeatedly, result will be the same, except that manually entered data will be deleted
 importStreets 5:8 - will import streets for counties from 5 to 8 county inclusive  """
 
-    def deleteElectionDistrictIfExists(self, electionDistrict):
-        CountyStreet.objects.filter(electionDistrict = electionDistrict).delete()
+    def deletePollingDistrictIfExists(self, electionDistrict):
+        PollingDistrictStreet.objects.filter(electionDistrict = electionDistrict).delete()
 
     def deleteElectionDistrictIfExistsInBatch(self, names):
         """ pass a collection of polling district names in names. They will
         get deleted with delete from table in () statemenet """
-        dbTable = CountyStreet.objects.model._meta.db_table
+        dbTable = PollingDistrictStreet.objects.model._meta.db_table
         # why 5?  Because it is PollingDistrict field. And also since i do not know how to get it automatically
-        columnName = CountyStreet.objects.model._meta.fields[5].column
+        columnName = PollingDistrictStreet.objects.model._meta.fields[5].column
         sql = "delete from %s where %s in (%s)" % (dbTable, columnName, names)
         cursor = connection.cursor()
         cursor.execute(sql)
         transaction.commit_unless_managed()
 
     @transaction.commit_on_success
-    def deleteElectionDistrictsIfExists(self, pollingDistricts):
+    def deletePollingDistrictsIfExists(self, pollingDistricts):
         time = TimeMeasurer()
         print "deleting previous data"
 
@@ -121,7 +121,7 @@ importStreets 5:8 - will import streets for counties from 5 to 8 county inclusiv
         print "reading all polling districts"
         allPollingDistricts = self.getPollingDistricts(aggregator, fromPrint, toPrint)
 
-        self.deleteElectionDistrictsIfExists(allPollingDistricts)
+        self.deletePollingDistrictsIfExists(allPollingDistricts)
         print "pre-fetching constituencies"
         self.preFetchAllConstituencies(allPollingDistricts)
 
@@ -130,7 +130,7 @@ importStreets 5:8 - will import streets for counties from 5 to 8 county inclusiv
             imported += 1
             numberOfStreets = 0
             for street in streetParser.GetAddresses(pollingDistrict.Addresses):
-                countyStreet = CountyStreet()
+                countyStreet = PollingDistrictStreet()
                 countyStreet.county = pollingDistrict.County
                 countyStreet.district = pollingDistrict.District
                 countyStreet.city = street.cityName

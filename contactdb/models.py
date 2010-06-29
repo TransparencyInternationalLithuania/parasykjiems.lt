@@ -9,6 +9,8 @@ class County(models.Model):
      Baltijos rinkimų apygarda Nr. 20
      Kauno Kėinių rinkimų apygarda Nr. 65
      etc
+
+     TODO should be renamed to constituency
      """
     name = models.CharField(max_length = 100)
     nr = models.IntegerField()
@@ -26,7 +28,7 @@ class County(models.Model):
 
 
 
-class CountyStreet(models.Model):
+class PollingDistrictStreet(models.Model):
     """ Represents a mapping between a county, a district and a street in Lithuania
     TODO rename to PollingDistrictStreet
     """

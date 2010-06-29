@@ -2,7 +2,7 @@
 from django import forms
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response
-from parasykjiems.contactdb.models import CountyStreet, County, ParliamentMember
+from parasykjiems.contactdb.models import PollingDistrictStreet, County, ParliamentMember
 from pjutils import address_search
 
 class ContactForm(forms.Form):

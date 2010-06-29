@@ -12,7 +12,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         cursor = connection.cursor()
 
-        models = [CountyStreet, ParliamentMember, County]
+        models = [PollingDistrictStreet, ParliamentMember, County]
 
         print "Will clear %d models" % (len(models))
 
