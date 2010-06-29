@@ -50,8 +50,7 @@ importStreets 5:8 - will import streets for counties from 5 to 8 county inclusiv
                 names = "', '".join(districtNames)
                 self.deleteElectionDistrictIfExistsInBatch(names)
                 districtNames = []
-
-            districtNames.append("'%s'" % pol.ElectionDistrict)
+            districtNames.append("'%s'" % pol.PollingDistrict)
             currentBatch += 1
             #self.deleteElectionDistrictIfExists(pol.PollingDistrict)
 
@@ -135,7 +134,7 @@ importStreets 5:8 - will import streets for counties from 5 to 8 county inclusiv
                 countyStreet.district = pollingDistrict.District
                 countyStreet.city = street.cityName
                 countyStreet.street = street.streetName
-                countyStreet.electionDistrict = pollingDistrict.ElectionDistrict
+                countyStreet.electionDistrict = pollingDistrict.PollingDistrict
                 countyStreet.save()
                 numberOfStreets += 1
 
