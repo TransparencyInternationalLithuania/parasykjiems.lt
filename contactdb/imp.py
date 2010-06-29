@@ -43,7 +43,7 @@ class PollingDistrictLocation:
     District = ""
     # apygarda
     County = None
-    # apylinkė. TODO rename to PollingDistrict
+    # apylinkė
     PollingDistrict = ""
     Addresses = ""
     pollingDistrictAddress = None
