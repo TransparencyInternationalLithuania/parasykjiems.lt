@@ -26,7 +26,7 @@ importStreets 5:8 - will import streets for counties from 5 to 8 county inclusiv
         """ pass a collection of polling district names in names. They will
         get deleted with delete from table in () statemenet """
         dbTable = CountyStreet.objects.model._meta.db_table
-        # why 5?  Because it is ElectionDistrict field. And also since i do not know how to get it automatically
+        # why 5?  Because it is PollingDistrict field. And also since i do not know how to get it automatically
         columnName = CountyStreet.objects.model._meta.fields[5].column
         sql = "delete from %s where %s in (%s)" % (dbTable, columnName, names)
         cursor = connection.cursor()
@@ -53,7 +53,7 @@ importStreets 5:8 - will import streets for counties from 5 to 8 county inclusiv
 
             districtNames.append("'%s'" % pol.ElectionDistrict)
             currentBatch += 1
-            #self.deleteElectionDistrictIfExists(pol.ElectionDistrict)
+            #self.deleteElectionDistrictIfExists(pol.PollingDistrict)
 
         names = "', '".join(districtNames)
         self.deleteElectionDistrictIfExistsInBatch(names)
@@ -145,7 +145,7 @@ importStreets 5:8 - will import streets for counties from 5 to 8 county inclusiv
                 rate = "unknown"
             else:
                 rate = str(totalNumberOfStreets / seconds)
-            #print (u"%d: saved County '%s %d', \nElectoral District '%s' streets (%d). \nTotal streets so far %d" % (count, pollingDistrict.County.name, pollingDistrict.County.nr, pollingDistrict.ElectionDistrict, numberOfStreets, totalNumberOfStreets)).encode('utf-8')
+            #print (u"%d: saved County '%s %d', \nElectoral District '%s' streets (%d). \nTotal streets so far %d" % (count, pollingDistrict.County.name, pollingDistrict.County.nr, pollingDistrict.PollingDistrict, numberOfStreets, totalNumberOfStreets)).encode('utf-8')
             print (u"%d: saved County '%d', \nTotal streets so far %d" % (count, numberOfStreets, totalNumberOfStreets)).encode('utf-8')
             print "inserting at %s rows per second (total sec: %d, rows: %d)" % (rate, seconds, totalNumberOfStreets)
             print "\n\n"
