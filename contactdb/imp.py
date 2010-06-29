@@ -28,7 +28,7 @@ class State:
     # values here does not mean anything at all
     District = "d"
     County = "c"
-    ElectionDistrict = "ec"
+    PollingDistrict = "ec"
     Addresses = "ad"
 
 
@@ -38,15 +38,13 @@ class PollingDistrictLocation:
     The difference from PollingDistrictStreet is that this class contains non-parsed
     street data. Before inserting into database we need to parse Addresses field into
     separate streets.
-
-    TODO Should be renamed to PollingDistrictLocation.
     """
     # rajonas
     District = ""
     # apygarda
     County = None
     # apylinkė. TODO rename to PollingDistrict
-    ElectionDistrict = ""
+    PollingDistrict = ""
     Addresses = ""
     pollingDistrictAddress = None
     numberOfVoters = None
@@ -56,7 +54,7 @@ class PollingDistrictLocation:
     # we could also iterate over all "fields??" in this object
     # but how to do that??
     def __str__(self):
-        return "District: " + self.District + "\nCounty " + self.County + "\nElectionDistrict " + self.ElectionDistrict + "\nAddresses " + self.Addresses
+        return "District: " + self.District + "\nCounty " + self.County + "\nPollingDistrict " + self.PollingDistrict + "\nAddresses " + self.Addresses
 
 
 class LithuanianCountyAggregator:
@@ -119,7 +117,7 @@ class LithuanianCountyParser:
 class LithuanianCountyReader:
     """ Reads Lithuanian counties from file. Gives a generator function
     which returns a single PollingDistrictLocation instance for each smallest object
-    defined in file( ElectionDistrict/ (rinkimų apylinkė)
+    defined in file( PollingDistrict/ (rinkimų apylinkė)
     """
     def __init__(self, file):
         """Pass an opened file containing Lithuanian Counties (Apygardos)."""
@@ -195,11 +193,11 @@ class LithuanianCountyReader:
 
             if (line.find("apygarda") >=0 ):
                 location.County = self.countyParser.ExtractCountyFromCountyFile(line)
-                state = State.ElectionDistrict
+                state = State.PollingDistrict
                 continue
 
             if (line.find("apylink") >=0 ):
-                location.ElectionDistrict = line
+                location.PollingDistrict = line
                 state = State.Addresses
 
                 if (line.find("S. Daukanto rinkimų apylinkė Nr. 64") >= 0):

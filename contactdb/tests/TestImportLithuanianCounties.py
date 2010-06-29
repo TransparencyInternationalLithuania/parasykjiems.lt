@@ -59,7 +59,7 @@ class TestImportLithuanianCounties(TestCase):
 
         self.assertEqual(constituency.nr, pd.County.nr)
         self.assertEqual(constituency.name, pd.County.name)
-        self.assertEqual(pollingDistrict, pd.ElectionDistrict)
+        self.assertEqual(pollingDistrict, pd.PollingDistrict)
         self.assertEqual(district, pd.District)
 
         if (pollingDistrictAddress is not None):
@@ -79,7 +79,7 @@ class TestImportLithuanianCounties(TestCase):
 
         # probably this line can be even further reduced in length, help would be welcome
         for pollingDistrict in LithuanianCountyReader(file).getLocations():
-            allPollingDistricts[self.getKey(pollingDistrict.ElectionDistrict, pollingDistrict.County)] = pollingDistrict
+            allPollingDistricts[self.getKey(pollingDistrict.PollingDistrict, pollingDistrict.County)] = pollingDistrict
 
         self.assertPollingDistrict(allPollingDistricts, "Senamiesčio rinkimų apylinkė Nr. 1", "Akmenės–Joniškio rinkimų apygarda Nr. 39", "Akmenės rajonAS", "Adresas *Vytauto g. 3, Naujoji Akmenė.", "Rinkėjų skaičius *2632.")
         self.assertPollingDistrict(allPollingDistricts, "Lomenos rinkimų apylinkė Nr. 4", "Kaišiadorių–Elektrėnų rinkimų apygarda Nr. 59", "Kaišiadorių rajonAS")
@@ -97,5 +97,5 @@ class TestImportLithuanianCounties(TestCase):
             self.assertEqual(loc.District, "Akmenės rajonAS")
             self.assertEqual(loc.County.name, "Akmenės–Joniškio rinkimų apygarda")
             self.assertEqual(loc.County.nr, 39)
-            self.assertEqual(loc.ElectionDistrict, "Senamiesčio rinkimų apylinkė Nr. 1")
+            self.assertEqual(loc.PollingDistrict, "Senamiesčio rinkimų apylinkė Nr. 1")
             self.assertTrue(loc.Addresses.index("Naujoji Akmenė: Algirdo g., Aušros g., Barvydžio vs.,") >= 0)
