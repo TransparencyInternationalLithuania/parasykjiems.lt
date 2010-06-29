@@ -3,7 +3,7 @@ from django import forms
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response
 from parasykjiems.contactdb.models import PollingDistrictStreet, County, ParliamentMember
-from pjutils import address_search
+from pjutils.address_search import AddressSearch
 
 class ContactForm(forms.Form):
     subject = forms.CharField(max_length=100)
@@ -16,11 +16,12 @@ class IndexForm(forms.Form):
 def index(request):
     entered = ''
     suggestions = []
+    a_s = AddressSearch()
     if request.method == 'POST':
         form = IndexForm(request.POST)
         if form.is_valid():
             entered = form.cleaned_data['address']
-        suggestions = address_search.get_addr_suggests(CountyStreet, entered)
+        suggestions = a_s.get_addr_suggests(PollingDistrictStreet, entered)
     else:
         form = IndexForm()
     if not suggestions:
