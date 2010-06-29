@@ -33,7 +33,7 @@ class State:
 
 
 
-class MunicipalityLocation:
+class PollingDistrictLocation:
     """a DTO which is returned for eaach location read in the Lithuanian Counties file.
     The difference from PollingDistrictStreet is that this class contains non-parsed
     street data. Before inserting into database we need to parse Addresses field into
@@ -60,7 +60,7 @@ class MunicipalityLocation:
 
 
 class LithuanianCountyAggregator:
-    """ Aggregates MunicipalityLocation objects and returns only unique Counties"""
+    """ Aggregates PollingDistrictLocation objects and returns only unique Counties"""
     def __init__(self, file):
         self.file = file
         self.importer = LithuanianCountyReader(file)
@@ -118,7 +118,7 @@ class LithuanianCountyParser:
 
 class LithuanianCountyReader:
     """ Reads Lithuanian counties from file. Gives a generator function
-    which returns a single MunicipalityLocation instance for each smallest object
+    which returns a single PollingDistrictLocation instance for each smallest object
     defined in file( ElectionDistrict/ (rinkimų apylinkė)
     """
     def __init__(self, file):
@@ -182,11 +182,11 @@ class LithuanianCountyReader:
 
         return " ".join(adr)
 
-    # a generator which returns a MunicipalityLocation object
+    # a generator which returns a PollingDistrictLocation object
     # for each election district defined in the file
     def getLocations(self):
         state = State.District
-        location = MunicipalityLocation()
+        location = PollingDistrictLocation()
         while (1):
             line = self._notEmptyLine()
 
