@@ -81,12 +81,12 @@ importStreets 5:8 - will import streets for counties from 5 to 8 county inclusiv
         constituencies = {}
 
         for pol in pollingDistricts.itervalues():
-            if (constituencies.has_key(pol.County.nr) == False):
-                constituencies[pol.County.nr] = Constituency.objects.get(nr = pol.County.nr)
+            if (constituencies.has_key(pol.Constituency.nr) == False):
+                constituencies[pol.Constituency.nr] = Constituency.objects.get(nr = pol.Constituency.nr)
 
-            county = constituencies[pol.County.nr]
+            constituency = constituencies[pol.Constituency.nr]
             # re-assign old constituency to new constituency fetched from database
-            pol.County = county
+            pol.Constituency = constituency
         print "finished pre-fetching. Took %s seconds" % time.ElapsedSeconds()
 
 
@@ -130,7 +130,7 @@ importStreets 5:8 - will import streets for counties from 5 to 8 county inclusiv
             numberOfStreets = 0
             for street in streetParser.GetAddresses(pollingDistrict.Addresses):
                 countyStreet = PollingDistrictStreet()
-                countyStreet.county = pollingDistrict.County
+                countyStreet.constituency = pollingDistrict.Constituency
                 countyStreet.district = pollingDistrict.District
                 countyStreet.city = street.cityName
                 countyStreet.street = street.streetName

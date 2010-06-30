@@ -24,7 +24,7 @@ class Constituency(models.Model):
         else:
             number = self.nr
         
-        return "CountyName: %s , nr: %d" % (self.name, number)
+        return "Constituency: %s , nr: %d" % (self.name, number)
 
 
 
@@ -33,7 +33,7 @@ class PollingDistrictStreet(models.Model):
     TODO rename to PollingDistrictStreet
     """
     district = models.CharField(max_length = 100)
-    county = models.ForeignKey(Constituency)
+    constituency = models.ForeignKey(Constituency)
     street = models.CharField(max_length = 255)
     city = models.CharField(max_length = 50)
     # should be renamed to polling district
@@ -45,7 +45,7 @@ class ParliamentMember(models.Model):
     name = models.CharField(max_length = 50)
     surname = models.CharField(max_length = 50)
     email = models.CharField(max_length = 100)
-    county = models.ForeignKey(Constituency)
+    constituency = models.ForeignKey(Constituency)
 
     @property
     def fullName(self):

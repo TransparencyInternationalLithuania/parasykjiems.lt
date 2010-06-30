@@ -9,18 +9,18 @@ from contactdb.imp import LithuanianConstituencyParser, LithuanianConstituencyRe
 scriptPath = os.path.dirname( os.path.realpath( __file__ ) )
 
 
-class TestLithuanianCountyParser(TestCase):
+class TestLithuanianConstituencyParser(TestCase):
     parser = LithuanianConstituencyParser()
 
-    def test_ExtractCountyFromCountyFile(self):
-        county = self.parser.ExtractConstituencyFromCountyFile("Lazdynų rinkimų apygarda Nr. 9")
-        self.assertEqual("Lazdynų rinkimų apygarda", county.name)
-        self.assertEqual(9, county.nr)
+    def test_ExtractConstituencyFromConstituencyFile(self):
+        Constituency = self.parser.ExtractConstituencyFromConstituencyFile("Lazdynų rinkimų apygarda Nr. 9")
+        self.assertEqual("Lazdynų rinkimų apygarda", Constituency.name)
+        self.assertEqual(9, Constituency.nr)
 
-    def test_ExtractCountyFromMPsFile(self):
-        county = self.parser.ExtractConstituencyFromMPsFile("Naujamiesčio (Nr. 1)")
-        self.assertEqual("Naujamiesčio", county.name)
-        self.assertEqual(1, county.nr)
+    def test_ExtractConstituencyFromMPsFile(self):
+        Constituency = self.parser.ExtractConstituencyFromMPsFile("Naujamiesčio (Nr. 1)")
+        self.assertEqual("Naujamiesčio", Constituency.name)
+        self.assertEqual(1, Constituency.nr)
 
 
 class TestImportLithuanianCounties(TestCase):
@@ -51,14 +51,14 @@ class TestImportLithuanianCounties(TestCase):
                               pollingDistrictAddress = None, numberOfVoters = None):
 
         parser = LithuanianConstituencyParser()
-        constituency = parser.ExtractConstituencyFromCountyFile(constituency)
+        constituency = parser.ExtractConstituencyFromConstituencyFile(constituency)
 
         pd = allPollingDistricts[self.getKey(pollingDistrict, constituency)]
         if (pd == None):
             self.fail("Could not find polling district %s" % pollingDistrict)
 
-        self.assertEqual(constituency.nr, pd.County.nr)
-        self.assertEqual(constituency.name, pd.County.name)
+        self.assertEqual(constituency.nr, pd.Constituency.nr)
+        self.assertEqual(constituency.name, pd.Constituency.name)
         self.assertEqual(pollingDistrict, pd.PollingDistrict)
         self.assertEqual(district, pd.District)
 
@@ -79,7 +79,7 @@ class TestImportLithuanianCounties(TestCase):
 
         # probably this line can be even further reduced in length, help would be welcome
         for pollingDistrict in LithuanianConstituencyReader(file).getLocations():
-            allPollingDistricts[self.getKey(pollingDistrict.PollingDistrict, pollingDistrict.County)] = pollingDistrict
+            allPollingDistricts[self.getKey(pollingDistrict.PollingDistrict, pollingDistrict.Constituency)] = pollingDistrict
 
         self.assertPollingDistrict(allPollingDistricts, "Senamiesčio rinkimų apylinkė Nr. 1", "Akmenės–Joniškio rinkimų apygarda Nr. 39", "Akmenės rajonAS", "Adresas *Vytauto g. 3, Naujoji Akmenė.", "Rinkėjų skaičius *2632.")
         self.assertPollingDistrict(allPollingDistricts, "Lomenos rinkimų apylinkė Nr. 4", "Kaišiadorių–Elektrėnų rinkimų apygarda Nr. 59", "Kaišiadorių rajonAS")
@@ -95,7 +95,7 @@ class TestImportLithuanianCounties(TestCase):
         importer = LithuanianConstituencyReader(file)
         for loc in importer.getLocations():
             self.assertEqual(loc.District, "Akmenės rajonAS")
-            self.assertEqual(loc.County.name, "Akmenės–Joniškio rinkimų apygarda")
-            self.assertEqual(loc.County.nr, 39)
+            self.assertEqual(loc.Constituency.name, "Akmenės–Joniškio rinkimų apygarda")
+            self.assertEqual(loc.Constituency.nr, 39)
             self.assertEqual(loc.PollingDistrict, "Senamiesčio rinkimų apylinkė Nr. 1")
             self.assertTrue(loc.Addresses.index("Naujoji Akmenė: Algirdo g., Aušros g., Barvydžio vs.,") >= 0)

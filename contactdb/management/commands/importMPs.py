@@ -44,7 +44,7 @@ class Command(BaseCommand):
 
             # relate existing county to an MP
             try:
-                member.county = Constituency.objects.get(nr = member.county.nr)
+                member.constituency = Constituency.objects.get(nr = member.county.nr)
             except ObjectDoesNotExist:
                 print "Constituency with nr '%d' could not be found in database. Either the database is not yet populated with Counties, or it is missing (probably because import data does not contain it)" % (member.county.nr)
                 print "Skipping this MPs. Continuing with the rest"

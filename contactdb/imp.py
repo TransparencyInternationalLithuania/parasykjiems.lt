@@ -34,7 +34,7 @@ class State:
 
 
 class PollingDistrictLocation:
-    """a DTO which is returned for eaach location read in the Lithuanian Counties file.
+    """a DTO which is returned for eaach location read in the Lithuanian Constituencies file.
     The difference from PollingDistrictStreet is that this class contains non-parsed
     street data. Before inserting into database we need to parse Addresses field into
     separate streets.
@@ -58,29 +58,29 @@ class PollingDistrictLocation:
 
 
 class LithuanianConstituencyAggregator:
-    """ Aggregates PollingDistrictLocation objects and returns only unique Counties"""
+    """ Aggregates PollingDistrictLocation objects and returns only unique Constituencies"""
     def __init__(self, file):
         self.file = file
         self.importer = LithuanianConstituencyReader(file)
-        self.allCounties = []
+        self._allConstituencies = []
 
         self._readAll()
 
     def _readAll(self):
         for loc in self.importer.getLocations():
-            self.allCounties.append(loc)
+            self._allConstituencies.append(loc)
 
     def GetDistinctConstituencies(self):
         """                                                                                          pksvdd1199aatg1a
         Returns a list of string for each distinct Constituency
         """
-        counties = {}
+        constituencies = {}
                            
-        for c in self.allCounties:
-            exist = c.County.name in counties
+        for c in self._allConstituencies:
+            exist = c.Constituency.name in constituencies
             if (exist == False):
-                counties[c.County.name] = c
-                yield c.County
+                constituencies[c.Constituency.name] = c
+                yield c.Constituency
             
         
         
@@ -96,13 +96,13 @@ class LithuanianConstituencyParser:
         lower = constituencyString.lower()
         nr = lower.find("nr")
         if (nr < 0):
-            raise NotFoundCountyNrException("Could not parse county nr in string '%(s)s'" % {"s" : lower})
+            raise NotFoundConstituencyNrException("Could not parse Constituency nr in string '%(s)s'" % {"s" : lower})
         c = Constituency()
         c.name = constituencyString[:nr].strip(" (")
         c.nr =  int(constituencyString[nr + 3: ].strip(" )"))
         return c
 
-    def ExtractConstituencyFromCountyFile(self, constituencyString):
+    def ExtractConstituencyFromConstituencyFile(self, constituencyString):
         """Extracts a Constituency object from a Lithuanian Constituency file"""
         lower =  constituencyString.lower()
         nr = lower.find("nr")
@@ -122,7 +122,7 @@ class LithuanianConstituencyReader:
     def __init__(self, file):
         """Pass an opened file containing Lithuanian Counties (Apygardos)."""
         self.file = file
-        self.countyParser = LithuanianConstituencyParser()
+        self.constituencyParser = LithuanianConstituencyParser()
 
     @deprecated
     def _ConsumeNonEmptyLines(self, numberOfLines):
@@ -192,7 +192,7 @@ class LithuanianConstituencyReader:
                 return
 
             if (line.find("apygarda") >=0 ):
-                location.County = self.countyParser.ExtractConstituencyFromCountyFile(line)
+                location.Constituency = self.constituencyParser.ExtractConstituencyFromConstituencyFile(line)
                 state = State.PollingDistrict
                 continue
 
@@ -203,8 +203,8 @@ class LithuanianConstituencyReader:
                 if (line.find("S. Daukanto rinkimų apylinkė Nr. 64") >= 0):
                     print state
 
-                # this county is special, since it has no streets.
-                # So just instruct so skip reading streets for this county
+                # this Constituency is special, since it has no streets.
+                # So just instruct so skip reading streets for this Constituency
                 # HACK for now, but works
                 # If you remove it, a test will fail
                 if (line.find("Jūreivių rinkimų apylinkė") >=0 ):
