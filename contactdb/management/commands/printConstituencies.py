@@ -16,9 +16,9 @@ class Command(BaseCommand):
 
         count = 0
         aggregator = LithuanianConstituencyAggregator(file)
-        for county in aggregator.GetDistinctConstituencies():
+        for constituency in aggregator.GetDistinctConstituencies():
             print "\n"
-            print "Constituency: " + county.ToString()
+            print "Constituency: " + constituency.ToString()
             count += 1
             if (count >= numberToPrint):
                 break

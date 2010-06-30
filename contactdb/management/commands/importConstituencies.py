@@ -25,4 +25,4 @@ class Command(BaseCommand):
             if (count >= numberToPrint):
                 break;
             print "saved Constituency %s %d" % (c.name, c.nr)
-        print "succesfully imported %d counties" % (count)
+        print "succesfully imported %d constituencies" % (count)
