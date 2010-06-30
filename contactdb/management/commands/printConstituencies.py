@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
-from contactdb.imp import ImportSources, LithuanianCountyReader, LithuanianCountyAggregator
+from contactdb.imp import ImportSources, LithuanianCountyReader, LithuanianConstituencyAggregator
 import os
 
 class Command(BaseCommand):
@@ -15,7 +15,7 @@ class Command(BaseCommand):
             numberToPrint = int(args[0])
 
         count = 0
-        aggregator = LithuanianCountyAggregator(file)
+        aggregator = LithuanianConstituencyAggregator(file)
         for county in aggregator.GetDistinctCounties():
             print "\n"
             print "Constituency: " + county.ToString()

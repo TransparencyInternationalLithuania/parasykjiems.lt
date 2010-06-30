@@ -54,10 +54,10 @@ class PollingDistrictLocation:
     # we could also iterate over all "fields??" in this object
     # but how to do that??
     def __str__(self):
-        return "District: " + self.District + "\nConstituency " + self.County + "\nPollingDistrict " + self.PollingDistrict + "\nAddresses " + self.Addresses
+        return "District: " + self.District + "\nConstituency " + self.Constituency + "\nPollingDistrict " + self.PollingDistrict + "\nAddresses " + self.Addresses
 
 
-class LithuanianCountyAggregator:
+class LithuanianConstituencyAggregator:
     """ Aggregates PollingDistrictLocation objects and returns only unique Counties"""
     def __init__(self, file):
         self.file = file
