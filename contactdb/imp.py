@@ -3,7 +3,7 @@
 
 import copy
 from pjutils.exc import ChainnedException
-from contactdb.models import County
+from contactdb.models import Constituency
 from pjutils.deprecated import deprecated
 
 class ImportSources:
@@ -27,7 +27,7 @@ class GoogleDocsSources:
 class State:
     # values here does not mean anything at all
     District = "d"
-    County = "c"
+    Constituency = "c"
     PollingDistrict = "ec"
     Addresses = "ad"
 
@@ -42,7 +42,7 @@ class PollingDistrictLocation:
     # rajonas
     District = ""
     # apygarda
-    County = None
+    Constituency = None
     # apylinkė
     PollingDistrict = ""
     Addresses = ""
@@ -54,7 +54,7 @@ class PollingDistrictLocation:
     # we could also iterate over all "fields??" in this object
     # but how to do that??
     def __str__(self):
-        return "District: " + self.District + "\nCounty " + self.County + "\nPollingDistrict " + self.PollingDistrict + "\nAddresses " + self.Addresses
+        return "District: " + self.District + "\nConstituency " + self.County + "\nPollingDistrict " + self.PollingDistrict + "\nAddresses " + self.Addresses
 
 
 class LithuanianCountyAggregator:
@@ -72,7 +72,7 @@ class LithuanianCountyAggregator:
 
     def GetDistinctCounties(self):
         """                                                                                          pksvdd1199aatg1a
-        Returns a list of string for each distinct County
+        Returns a list of string for each distinct Constituency
         """
         counties = {}
                            
@@ -92,23 +92,23 @@ class NotFoundCountyNrException(ChainnedException):
 class LithuanianCountyParser:
 
     def ExtractCountyFromMPsFile(self, countyString):
-        """Extracts a County object from a Lithuanian MPs file """
+        """Extracts a Constituency object from a Lithuanian MPs file """
         lower = countyString.lower()
         nr = lower.find("nr")
         if (nr < 0):
             raise NotFoundCountyNrException("Could not parse county nr in string '%(s)s'" % {"s" : lower})
-        c = County()
+        c = Constituency()
         c.name = countyString[:nr].strip(" (")
         c.nr =  int(countyString[nr + 3: ].strip(" )"))
         return c
 
     def ExtractCountyFromCountyFile(self, countyString):
-        """Extracts a County object from a Lithuanian County file"""
+        """Extracts a Constituency object from a Lithuanian Constituency file"""
         lower = countyString.lower()
         nr = lower.find("nr")
         if (nr < 0):
             raise NotFoundCountyNrException("Could not parse county nr in string '%(string)s'") % {"string" : lower}
-        c = County()
+        c = Constituency()
         c.name = countyString[:nr].strip(" ")
         c.nr =  int(countyString[nr + 3: ])
         return c
@@ -209,7 +209,7 @@ class LithuanianCountyReader:
                 # If you remove it, a test will fail
                 if (line.find("Jūreivių rinkimų apylinkė") >=0 ):
                     yield location
-                    state = State.County
+                    state = State.Constituency
                     continue
 
                 location.pollingDistrictAddress = self.readParagraph()
@@ -225,5 +225,5 @@ class LithuanianCountyReader:
 
             if state == State.District:
                 location.District = line
-                state = State.County
+                state = State.Constituency
                 continue

@@ -3,7 +3,7 @@
 from django.core.management.base import BaseCommand
 from django.db import transaction
 from contactdb.imp import LithuanianCountyReader, ImportSources
-from contactdb.models import PollingDistrictStreet, County
+from contactdb.models import PollingDistrictStreet, Constituency
 from contactdb.AdressParser import AddressParser
 from datetime import datetime
 from django.db import connection, transaction
@@ -82,7 +82,7 @@ importStreets 5:8 - will import streets for counties from 5 to 8 county inclusiv
 
         for pol in pollingDistricts.itervalues():
             if (constituencies.has_key(pol.County.nr) == False):
-                constituencies[pol.County.nr] = County.objects.get(nr = pol.County.nr)
+                constituencies[pol.County.nr] = Constituency.objects.get(nr = pol.County.nr)
 
             county = constituencies[pol.County.nr]
             # re-assign old constituency to new constituency fetched from database
@@ -144,8 +144,8 @@ importStreets 5:8 - will import streets for counties from 5 to 8 county inclusiv
                 rate = "unknown"
             else:
                 rate = str(totalNumberOfStreets / seconds)
-            #print (u"%d: saved County '%s %d', \nElectoral District '%s' streets (%d). \nTotal streets so far %d" % (count, pollingDistrict.County.name, pollingDistrict.County.nr, pollingDistrict.PollingDistrict, numberOfStreets, totalNumberOfStreets)).encode('utf-8')
-            print (u"%d: saved County '%d', \nTotal streets so far %d" % (count, numberOfStreets, totalNumberOfStreets)).encode('utf-8')
+            #print (u"%d: saved Constituency '%s %d', \nElectoral District '%s' streets (%d). \nTotal streets so far %d" % (count, pollingDistrict.Constituency.name, pollingDistrict.Constituency.nr, pollingDistrict.PollingDistrict, numberOfStreets, totalNumberOfStreets)).encode('utf-8')
+            print (u"%d: saved Constituency '%d', \nTotal streets so far %d" % (count, numberOfStreets, totalNumberOfStreets)).encode('utf-8')
             print "inserting at %s rows per second (total sec: %d, rows: %d)" % (rate, seconds, totalNumberOfStreets)
             print "\n\n"
 
