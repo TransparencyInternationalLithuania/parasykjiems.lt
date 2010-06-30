@@ -29,7 +29,7 @@ class Constituency(models.Model):
 
 
 class PollingDistrictStreet(models.Model):
-    """ Represents a mapping between a county, a district and a street in Lithuania
+    """ Represents a mapping between a constituency, a district and a street in Lithuania
     TODO rename to PollingDistrictStreet
     """
     district = models.CharField(max_length = 100)

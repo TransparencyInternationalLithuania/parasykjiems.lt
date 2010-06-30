@@ -28,8 +28,8 @@ Street
 
 
 Political division in country:
-County / constituency - each County has exactly one elected member of parliament
-PollingDistrict - one county is usually sub-divided into many smaller regions called polling districts.
+Constituency - each constituency has exactly one elected member of parliament
+PollingDistrict - one constituency is usually sub-divided into many smaller regions called polling districts.
 
 
 Other term
