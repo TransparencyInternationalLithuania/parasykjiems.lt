@@ -36,24 +36,24 @@ class Command(BaseCommand):
 
             # check if already such member exists. Name and surname are primary keys
             if (self.alreadyExists(member) == True):
-                print "member %s %s already exists, Constituency %s %d " % (member.name, member.surname, member.county.name, member.county.nr)
+                print "member %s %s already exists, Constituency %s %d " % (member.name, member.surname, member.constituency.name, member.constituency.nr)
                 continue
 
             # if does not exist, create it
 
 
-            # relate existing county to an MP
+            # relate existing constituency to an MP
             try:
-                member.constituency = Constituency.objects.get(nr = member.county.nr)
+                member.constituency = Constituency.objects.get(nr = member.constituency.nr)
             except ObjectDoesNotExist:
-                print "Constituency with nr '%d' could not be found in database. Either the database is not yet populated with Counties, or it is missing (probably because import data does not contain it)" % (member.county.nr)
+                print "Constituency with nr '%d' could not be found in database. Either the database is not yet populated with contstituencies, or it is missing (probably because import data does not contain it)" % (member.constituency.nr)
                 print "Skipping this MPs. Continuing with the rest"
                 continue
 
 
             member.save()
-            print (u"Imported MP, Constituency %s %d" % (member.county.name, member.county.nr))
-                   #% (member.name, member.surname, member.county.name, member.county.nr))
+            print (u"Imported MP, Constituency %s %d" % (member.constituency.name, member.constituency.nr))
+                   #% (member.name, member.surname, member.constituency.name, member.constituency.nr))
             count += 1
             if (count >= numberToPrint):
                 break;

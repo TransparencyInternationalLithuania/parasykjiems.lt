@@ -6,6 +6,6 @@ from contactdb.tests.TestAddressParser import TestAddressParser
 __test__ = {
     'TestImportLithuanianCounties' : TestImportLithuanianCounties,
     'TestReadParliamentMembers' : TestReadParliamentMembers,
-    'TestLithuanianCountyParser' : TestLithuanianConstituencyParser,
+    'TestLithuanianConstituencyParser' : TestLithuanianConstituencyParser,
     'TestAddressParser' : TestAddressParser
 }

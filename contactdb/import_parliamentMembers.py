@@ -18,7 +18,7 @@ class LithuanianMPsReader:
 
     def ReadParliamentMembers(self):
         """A generator which returns parliament member instances from
-    given file.  A county object is fetched from the database for this specific MP"""
+    given file.  A constituency object is fetched from the database for this specific MP"""
 
         parser = LithuanianConstituencyParser()
 
@@ -28,7 +28,7 @@ class LithuanianMPsReader:
 
 
             member = ParliamentMember()
-            member.county = parser.ExtractConstituencyFromMPsFile(row["electoraldistrict"])
+            member.constituency = parser.ExtractConstituencyFromMPsFile(row["electoraldistrict"])
             member.name = row["name"]
             member.surname = row["surname"]
             member.email = row["e-mail"]

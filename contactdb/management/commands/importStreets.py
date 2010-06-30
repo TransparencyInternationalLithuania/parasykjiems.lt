@@ -17,7 +17,7 @@ class Command(BaseCommand):
 It is safe to run this command more than once. Before inserting new electoral districts streets, previous streets for same electoral district will be deleted
 Examples:
 importStreets 5 - will import streets for first 5 Election Districts. If run repeatedly, result will be the same, except that manually entered data will be deleted
-importStreets 5:8 - will import streets for counties from 5 to 8 county inclusive  """
+importStreets 5:8 - will import streets for counties from 5 to 8 constituencies inclusive  """
 
     def deletePollingDistrictIfExists(self, electionDistrict):
         PollingDistrictStreet.objects.filter(electionDistrict = electionDistrict).delete()
@@ -129,13 +129,13 @@ importStreets 5:8 - will import streets for counties from 5 to 8 county inclusiv
             imported += 1
             numberOfStreets = 0
             for street in streetParser.GetAddresses(pollingDistrict.Addresses):
-                countyStreet = PollingDistrictStreet()
-                countyStreet.constituency = pollingDistrict.Constituency
-                countyStreet.district = pollingDistrict.District
-                countyStreet.city = street.cityName
-                countyStreet.street = street.streetName
-                countyStreet.electionDistrict = pollingDistrict.PollingDistrict
-                countyStreet.save()
+                pollingDistrictStreet = PollingDistrictStreet()
+                pollingDistrictStreet.constituency = pollingDistrict.Constituency
+                pollingDistrictStreet.district = pollingDistrict.District
+                pollingDistrictStreet.city = street.cityName
+                pollingDistrictStreet.street = street.streetName
+                pollingDistrictStreet.electionDistrict = pollingDistrict.PollingDistrict
+                pollingDistrictStreet.save()
                 numberOfStreets += 1
 
             totalNumberOfStreets += numberOfStreets
