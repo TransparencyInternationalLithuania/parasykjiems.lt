@@ -7,7 +7,7 @@ from contactdb.models import Constituency
 from pjutils.deprecated import deprecated
 
 class ImportSources:
-    LithuanianCounties = "contactdb/sources/apygardos.txt"
+    LithuanianConstituencies = "contactdb/sources/apygardos.txt"
     LithuanianMPs = "contactdb/sources/parliament members.txt"
 
 class GoogleDocsSources:

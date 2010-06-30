@@ -92,7 +92,7 @@ importStreets 5:8 - will import streets for counties from 5 to 8 county inclusiv
 
     @transaction.commit_on_success    
     def handle(self, *args, **options):
-        allRecords = os.path.join(os.getcwd(), ImportSources.LithuanianCounties)
+        allRecords = os.path.join(os.getcwd(), ImportSources.LithuanianConstituencies)
         file = open(allRecords, "r")
         aggregator = LithuanianCountyReader(file)
 
