@@ -70,7 +70,7 @@ class LithuanianConstituencyAggregator:
         for loc in self.importer.getLocations():
             self.allCounties.append(loc)
 
-    def GetDistinctCounties(self):
+    def GetDistinctConstituencies(self):
         """                                                                                          pksvdd1199aatg1a
         Returns a list of string for each distinct Constituency
         """
