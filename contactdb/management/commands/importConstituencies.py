@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from contactdb.imp import LithuanianCountyAggregator, ImportSources
+from contactdb.imp import LithuanianConstituencyAggregator, ImportSources
 from django.db import transaction
 import os
 
@@ -17,7 +17,7 @@ class Command(BaseCommand):
             numberToPrint = int(args[0])
 
         count = 0
-        aggregator = LithuanianCountyAggregator(file)
+        aggregator = LithuanianConstituencyAggregator(file)
         for c in aggregator.GetDistinctCounties():
             c.id = c.nr
             c.save()
