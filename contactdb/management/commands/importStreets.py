@@ -2,7 +2,7 @@
 # -*- coding: utf8 -*-
 from django.core.management.base import BaseCommand
 from django.db import transaction
-from contactdb.imp import LithuanianCountyReader, ImportSources
+from contactdb.imp import LithuanianConstituencyReader, ImportSources
 from contactdb.models import PollingDistrictStreet, Constituency
 from contactdb.AdressParser import AddressParser
 from datetime import datetime
@@ -94,7 +94,7 @@ importStreets 5:8 - will import streets for counties from 5 to 8 county inclusiv
     def handle(self, *args, **options):
         allRecords = os.path.join(os.getcwd(), ImportSources.LithuanianConstituencies)
         file = open(allRecords, "r")
-        aggregator = LithuanianCountyReader(file)
+        aggregator = LithuanianConstituencyReader(file)
 
 
         fromPrint = 0

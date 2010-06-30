@@ -61,7 +61,7 @@ class LithuanianConstituencyAggregator:
     """ Aggregates PollingDistrictLocation objects and returns only unique Counties"""
     def __init__(self, file):
         self.file = file
-        self.importer = LithuanianCountyReader(file)
+        self.importer = LithuanianConstituencyReader(file)
         self.allCounties = []
 
         self._readAll()
@@ -102,19 +102,19 @@ class LithuanianConstituencyParser:
         c.nr =  int(constituencyString[nr + 3: ].strip(" )"))
         return c
 
-    def ExtractConstituencyFromCountyFile(self, countyString):
+    def ExtractConstituencyFromCountyFile(self, constituencyString):
         """Extracts a Constituency object from a Lithuanian Constituency file"""
-        lower = countyString.lower()
+        lower =  constituencyString.lower()
         nr = lower.find("nr")
         if (nr < 0):
-            raise NotFoundCountyNrException("Could not parse county nr in string '%(string)s'") % {"string" : lower}
+            raise NotFoundConstituencyNrException("Could not parse constituency nr in string '%(string)s'") % {"string" : lower}
         c = Constituency()
-        c.name = countyString[:nr].strip(" ")
-        c.nr =  int(countyString[nr + 3: ])
+        c.name =  constituencyString[:nr].strip(" ")
+        c.nr =  int( constituencyString[nr + 3: ])
         return c
 
 
-class LithuanianCountyReader:
+class LithuanianConstituencyReader:
     """ Reads Lithuanian counties from file. Gives a generator function
     which returns a single PollingDistrictLocation instance for each smallest object
     defined in file( PollingDistrict/ (rinkimų apylinkė)

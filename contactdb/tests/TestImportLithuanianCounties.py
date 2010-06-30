@@ -3,7 +3,7 @@
 
 from django.test import TestCase
 import os
-from contactdb.imp import LithuanianConstituencyParser, LithuanianCountyReader
+from contactdb.imp import LithuanianConstituencyParser, LithuanianConstituencyReader
 
 
 scriptPath = os.path.dirname( os.path.realpath( __file__ ) )
@@ -32,7 +32,7 @@ class TestImportLithuanianCounties(TestCase):
 
     def countNumberOfRecords(self, fileName):
         file = open(fileName, "r")
-        importer = LithuanianCountyReader(file)
+        importer = LithuanianConstituencyReader(file)
         count = 0
         for l in importer.getLocations():
             count += 1
@@ -78,7 +78,7 @@ class TestImportLithuanianCounties(TestCase):
         file = open(self.allRecords, "r")
 
         # probably this line can be even further reduced in length, help would be welcome
-        for pollingDistrict in LithuanianCountyReader(file).getLocations():
+        for pollingDistrict in LithuanianConstituencyReader(file).getLocations():
             allPollingDistricts[self.getKey(pollingDistrict.PollingDistrict, pollingDistrict.County)] = pollingDistrict
 
         self.assertPollingDistrict(allPollingDistricts, "Senamiesčio rinkimų apylinkė Nr. 1", "Akmenės–Joniškio rinkimų apygarda Nr. 39", "Akmenės rajonAS", "Adresas *Vytauto g. 3, Naujoji Akmenė.", "Rinkėjų skaičius *2632.")
@@ -92,7 +92,7 @@ class TestImportLithuanianCounties(TestCase):
     def test_Akmenes_read_record(self):
 
         file = open(self.singleRecordFile, "r")
-        importer = LithuanianCountyReader(file)
+        importer = LithuanianConstituencyReader(file)
         for loc in importer.getLocations():
             self.assertEqual(loc.District, "Akmenės rajonAS")
             self.assertEqual(loc.County.name, "Akmenės–Joniškio rinkimų apygarda")
