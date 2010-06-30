@@ -1,7 +1,7 @@
 
 from contactdb.models import ParliamentMember, Constituency
 from pjutils.exc import ChainnedException
-from contactdb.imp import LithuanianCountyParser
+from contactdb.imp import LithuanianConstituencyParser
 from django.core.exceptions import ObjectDoesNotExist
 import csv
 
@@ -20,7 +20,7 @@ class LithuanianMPsReader:
         """A generator which returns parliament member instances from
     given file.  A county object is fetched from the database for this specific MP"""
 
-        parser = LithuanianCountyParser()
+        parser = LithuanianConstituencyParser()
 
         count = 0
         for row in self.dictReader:

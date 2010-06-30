@@ -85,11 +85,11 @@ class LithuanianConstituencyAggregator:
         
         
 
-class NotFoundCountyNrException(ChainnedException):
+class NotFoundConstituencyNrException(ChainnedException):
     def __init__(self, message, inner = None):
         ChainnedException.__init__(self, message, inner)
 
-class LithuanianCountyParser:
+class LithuanianConstituencyParser:
 
     def ExtractCountyFromMPsFile(self, countyString):
         """Extracts a Constituency object from a Lithuanian MPs file """
@@ -122,7 +122,7 @@ class LithuanianCountyReader:
     def __init__(self, file):
         """Pass an opened file containing Lithuanian Counties (Apygardos)."""
         self.file = file
-        self.countyParser = LithuanianCountyParser()
+        self.countyParser = LithuanianConstituencyParser()
 
     @deprecated
     def _ConsumeNonEmptyLines(self, numberOfLines):
