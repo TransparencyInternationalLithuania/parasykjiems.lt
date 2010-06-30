@@ -6,5 +6,5 @@
 <p><b>You entered:</b> {{ entered }}</p>
 <p><b>We found these addresses:</b></p>
 {% for suggestion in suggestions %}
-<p>{{ suggestion }}</p>
+<p>{{ suggestion.street }}, {{ suggestion.city }}, {{ suggestion.district }}</p>
 {% endfor %}
