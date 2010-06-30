@@ -18,7 +18,7 @@ class Command(BaseCommand):
 
         count = 0
         aggregator = LithuanianConstituencyAggregator(file)
-        for c in aggregator.GetDistinctCounties():
+        for c in aggregator.GetDistinctConstituencies():
             c.id = c.nr
             c.save()
             count += 1
