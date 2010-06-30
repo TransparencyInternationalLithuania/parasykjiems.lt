@@ -4,7 +4,7 @@
 from django.test import TestCase
 import os
 from contactdb.AdressParser import AddressParser
-from contactdb.imp import LithuanianCountyReader
+from contactdb.imp import LithuanianConstituencyReader
 
 scriptPath = os.path.dirname( os.path.realpath( __file__ ) )
 
@@ -163,7 +163,7 @@ class TestAddressParser(TestCase):
 
     def test_OneCity_ManyStreets(self):
         file = open(self.singleRecordFile, "r")
-        importer = LithuanianCountyReader(file)
+        importer = LithuanianConstituencyReader(file)
         loc = list(importer.getLocations())[0]
 
         addressStr = loc.Addresses
