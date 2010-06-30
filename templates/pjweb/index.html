@@ -6,5 +6,5 @@
 <p><b>You entered:</b> {{ entered }}</p>
 <p><b>We found these addresses:</b></p>
 {% for suggestion in suggestions %}
-<p>{{ suggestion.street }}, {{ suggestion.city }}, {{ suggestion.district }}</p>
+<p><a href="/pjweb/{{ suggestion.constituency_id }}/">{{ suggestion.street }}, {{ suggestion.city }}, {{ suggestion.district }}</a></p>
 {% endfor %}
