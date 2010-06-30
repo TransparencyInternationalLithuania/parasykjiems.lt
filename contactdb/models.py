@@ -3,9 +3,9 @@
 
 from django.db import models
 
-class County(models.Model):
+class Constituency(models.Model):
     """ Contains counties, for example:
-     County: Danės rinkimų apygarda Nr. 19
+     Constituency: Danės rinkimų apygarda Nr. 19
      Baltijos rinkimų apygarda Nr. 20
      Kauno Kėinių rinkimų apygarda Nr. 65
      etc
@@ -33,7 +33,7 @@ class PollingDistrictStreet(models.Model):
     TODO rename to PollingDistrictStreet
     """
     district = models.CharField(max_length = 100)
-    county = models.ForeignKey(County)
+    county = models.ForeignKey(Constituency)
     street = models.CharField(max_length = 255)
     city = models.CharField(max_length = 50)
     # should be renamed to polling district
@@ -45,7 +45,7 @@ class ParliamentMember(models.Model):
     name = models.CharField(max_length = 50)
     surname = models.CharField(max_length = 50)
     email = models.CharField(max_length = 100)
-    county = models.ForeignKey(County)
+    county = models.ForeignKey(Constituency)
 
     @property
     def fullName(self):
