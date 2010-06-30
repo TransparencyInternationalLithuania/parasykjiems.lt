@@ -12,7 +12,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         
         time = TimeMeasurer()
-        imports = ["importCounties", "importMPs", "importStreets"]
+        imports = ["importConstituencies", "importMPs", "importStreets"]
 
         print "Will import followind data:"
         for i in imports: print i
