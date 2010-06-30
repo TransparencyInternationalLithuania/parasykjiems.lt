@@ -7,7 +7,7 @@ class Command(BaseCommand):
     help = 'Prints Lithuanian counties. Pass a number to print only the first x counties'
 
     def handle(self, *args, **options):
-        allRecords = os.getcwd() + ImportSources.LithuanianCounties
+        allRecords = os.path.join(os.getcwd(), ImportSources.LithuanianCounties)
         file = open(allRecords, "r")
 
         numberToPrint = 999999
