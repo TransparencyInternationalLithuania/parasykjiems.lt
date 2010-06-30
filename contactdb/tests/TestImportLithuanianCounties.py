@@ -3,14 +3,14 @@
 
 from django.test import TestCase
 import os
-from contactdb.imp import LithuanianCountyParser, LithuanianCountyReader
+from contactdb.imp import LithuanianConstituencyParser, LithuanianCountyReader
 
 
 scriptPath = os.path.dirname( os.path.realpath( __file__ ) )
 
 
 class TestLithuanianCountyParser(TestCase):
-    parser = LithuanianCountyParser()
+    parser = LithuanianConstituencyParser()
 
     def test_ExtractCountyFromCountyFile(self):
         county = self.parser.ExtractCountyFromCountyFile("Lazdynų rinkimų apygarda Nr. 9")
@@ -50,7 +50,7 @@ class TestImportLithuanianCounties(TestCase):
     def assertPollingDistrict(self, allPollingDistricts, pollingDistrict, constituency, district,
                               pollingDistrictAddress = None, numberOfVoters = None):
 
-        parser = LithuanianCountyParser()
+        parser = LithuanianConstituencyParser()
         constituency = parser.ExtractCountyFromCountyFile(constituency)
 
         pd = allPollingDistricts[self.getKey(pollingDistrict, constituency)]
