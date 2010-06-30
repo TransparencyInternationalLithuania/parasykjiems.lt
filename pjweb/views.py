@@ -39,6 +39,18 @@ def thanks(request):
 def smtp_error(request):    
     return HttpResponse("There was a problem, trying to send email. Is smtp configured?")
 
+def constituency(request, constituency_id):
+    constituencies = Constituency.objects.all().filter(
+                id__exact=constituency_id
+            )
+    members = ParliamentMember.objects.all().filter(
+                constituency__exact=constituency_id
+            )
+    return render_to_response('pjweb/const.html', {
+        'constituencies': constituencies,
+        'members': members,
+    })
+    
 def contact(request):
     if request.method == 'POST': # If the form has been submitted...
         form = ContactForm(request.POST) # A form bound to the POST data
