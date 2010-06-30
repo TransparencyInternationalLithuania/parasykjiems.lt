@@ -28,7 +28,7 @@ class LithuanianMPsReader:
 
 
             member = ParliamentMember()
-            member.county = parser.ExtractCountyFromMPsFile(row["electoraldistrict"])
+            member.county = parser.ExtractConstituencyFromMPsFile(row["electoraldistrict"])
             member.name = row["name"]
             member.surname = row["surname"]
             member.email = row["e-mail"]

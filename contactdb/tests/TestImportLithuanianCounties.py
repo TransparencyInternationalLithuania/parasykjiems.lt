@@ -13,12 +13,12 @@ class TestLithuanianCountyParser(TestCase):
     parser = LithuanianConstituencyParser()
 
     def test_ExtractCountyFromCountyFile(self):
-        county = self.parser.ExtractCountyFromCountyFile("Lazdynų rinkimų apygarda Nr. 9")
+        county = self.parser.ExtractConstituencyFromCountyFile("Lazdynų rinkimų apygarda Nr. 9")
         self.assertEqual("Lazdynų rinkimų apygarda", county.name)
         self.assertEqual(9, county.nr)
 
     def test_ExtractCountyFromMPsFile(self):
-        county = self.parser.ExtractCountyFromMPsFile("Naujamiesčio (Nr. 1)")
+        county = self.parser.ExtractConstituencyFromMPsFile("Naujamiesčio (Nr. 1)")
         self.assertEqual("Naujamiesčio", county.name)
         self.assertEqual(1, county.nr)
 
@@ -51,7 +51,7 @@ class TestImportLithuanianCounties(TestCase):
                               pollingDistrictAddress = None, numberOfVoters = None):
 
         parser = LithuanianConstituencyParser()
-        constituency = parser.ExtractCountyFromCountyFile(constituency)
+        constituency = parser.ExtractConstituencyFromCountyFile(constituency)
 
         pd = allPollingDistricts[self.getKey(pollingDistrict, constituency)]
         if (pd == None):
