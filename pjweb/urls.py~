@@ -15,7 +15,7 @@ urlpatterns = patterns('parasykjiems.pjweb.views',
     (r'^$', 'index'),
     (r'^thanks/$', 'thanks'),
     (r'^contact/$', 'contact'),
-    (r'^contact/smtp_error/$', 'smtp_error'),
+    (r'^smtp_error/$', 'smtp_error'),
     (r'^(?P<constituency_id>\d+)/$', 'constituency'),
     #(r'^(?P<poll_id>\d+)/vote/$', 'vote'),
 )
