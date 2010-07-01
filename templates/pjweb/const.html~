@@ -1,8 +1,0 @@
-<p><b>Your Constituency is:</b></p>
-{% for constituency in constituencies %}
-<p>{{ constituency.name }}</p>
-{% endfor %}
-<p><b>You can write to:</b></p>
-{% for parliament_member in parliament_members %}
-<p>{{ parliament_member.name }} {{ parliament_member.surname }} {{ parliament_member.email }}</p>
-{% endfor %}
