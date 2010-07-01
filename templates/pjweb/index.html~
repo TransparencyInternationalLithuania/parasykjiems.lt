@@ -3,12 +3,8 @@
 {{ form.as_p }}
 <input type="submit" value="Submit" />
 </form>
-{% if entered %}
 <p><b>You entered:</b> {{ entered }}</p>
-{% endif %}
-
-{% if suggestions %}
 <p><b>We found these addresses:</b></p>
 {% for suggestion in suggestions %}
 <p><a href="/pjweb/{{ suggestion.constituency_id }}/">{{ suggestion.street }}, {{ suggestion.city }}, {{ suggestion.district }}</a></p>
-{% endfor %}{% endif %}
+{% endfor %}

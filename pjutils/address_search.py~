@@ -53,6 +53,7 @@ class AddressSearch:
             if self.isnumeric(street_list[-1]):
                 street_list.pop()
             street = ' '.join(street_list)
+            print street
             records = self.search_for_addr(table.objects.all(), street, 'street')
             if not records:
                 records = self.search_for_addr(table.objects.all(), street, 'city')
