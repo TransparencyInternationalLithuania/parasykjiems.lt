@@ -7,6 +7,7 @@ import pjutils.uniconsole
 from contactdb.imp import GoogleDocsSources, ImportSources
 
 
+
 import os
 
 class Command(BaseCommand):
@@ -62,7 +63,7 @@ class Command(BaseCommand):
         """ Downloads documents as csv (tab-delimited) files from google docs"""
         allRecords = os.getcwd()
 
-        self.client = SpreadSheetClient(GOOGLE_DOCS_USER, GOOGLE_DOCS_PASSWORD)
+        self.client = SpreadSheetClient(GlobalSettings.GOOGLE_DOCS_USER, GlobalSettings.GOOGLE_DOCS_PASSWORD)
 
         self.downloadDoc(GoogleDocsSources.LithuanianMPs, ImportSources.LithuanianMPs)
 
