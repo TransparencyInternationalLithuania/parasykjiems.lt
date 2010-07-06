@@ -13,9 +13,10 @@ urlpatterns = patterns('parasykjiems.pjweb.views',
     # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     (r'^$', 'index'),
-    (r'^thanks/$', 'thanks'),
-    (r'^contact/$', 'contact'),
-    (r'^contact/smtp_error/$', 'smtp_error'),
+    (r'^contact/(\w+)/thanks/$', 'thanks'),
+    (r'^contact/(\w+)/no_email/$', 'no_email'),
+    (r'^contact/(\w+)/smtp_error/$', 'smtp_error'),
     (r'^(?P<constituency_id>\d+)/$', 'constituency'),
+    (r'^contact/(\w+)/$', 'contact'),
     #(r'^(?P<poll_id>\d+)/vote/$', 'vote'),
 )

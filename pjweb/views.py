@@ -17,6 +17,7 @@ def index(request):
     entered = ''
     suggestions = []
     a_s = AddressSearch()
+    all_mps = ParliamentMember.objects.all()
     if request.method == 'POST':
         form = IndexForm(request.POST)
         if form.is_valid():
@@ -27,16 +28,35 @@ def index(request):
     else:
         form = IndexForm()
     return render_to_response('pjweb/index.html', {
+        'all_mps': all_mps,
         'form': form,
         'entered': entered,
         'suggestions': suggestions,
     })
 
-def thanks(request):    
-    return HttpResponse("Thank you. Your email has been sent.")
+def no_email(request, mp_id):
+    parliament_member = ParliamentMember.objects.all().filter(
+                id__exact=mp_id
+            )
+    NoEmailMsg = "%s %s email couldn't be found in database." % (parliament_member[0].name, parliament_member[0].surname)
+    return render_to_response('pjweb/no_email.html', {
+        'NoEmailMsg': NoEmailMsg,
+    })
+    
+def thanks(request, mp_id):
+    parliament_member = ParliamentMember.objects.all().filter(
+                id__exact=mp_id
+            )
+    ThanksMessage = 'Thank you. Your email to %s %s has been sent.' % (parliament_member[0].name, parliament_member[0].surname)
+    return render_to_response('pjweb/thanks.html', {
+        'ThanksMessage': ThanksMessage,
+    })
 
-def smtp_error(request):
-    ErrorMessage = 'Problem, when trying to send Email. Please try again later.'
+def smtp_error(request, mp_id):
+    parliament_member = ParliamentMember.objects.all().filter(
+                id__exact=mp_id
+            )
+    ErrorMessage = 'Problem occurred. Your Email to %s %s has not been sent. Please try again later.' % (parliament_member[0].name, parliament_member[0].surname)
     return render_to_response('pjweb/error.html', {
         'ErrorMessage': ErrorMessage,
     })
@@ -54,7 +74,7 @@ def constituency(request, constituency_id):
     })
     
 def contact(request, mp_id):
-    parliament_members = ParliamentMember.objects.all().filter(
+    parliament_member = ParliamentMember.objects.all().filter(
                 id__exact=mp_id
             )
     if request.method == 'POST': # If the form has been submitted...
@@ -63,17 +83,21 @@ def contact(request, mp_id):
             subject = form.cleaned_data['subject']
             message = form.cleaned_data['message']
             sender = form.cleaned_data['sender']
-            recipients = ['test@test.lt']
-
-            from django.core.mail import send_mail
-            try:
-                sendmail = send_mail(subject, message, sender, recipients)
-            except:
-                return HttpResponseRedirect('smtp_error')
+            recipients = [parliament_member[0].email]
+            print recipients[0]
+            if not recipients[0]:
+                return HttpResponseRedirect('no_email')
+            else:
+                from django.core.mail import send_mail
+                try:
+                    sendmail = send_mail(subject, message, sender, recipients)
+                except:
+                    return HttpResponseRedirect('smtp_error')
             return HttpResponseRedirect('thanks') # Redirect after POST
     else:
         form = ContactForm() # An unbound form
 
     return render_to_response('pjweb/contact.html', {
         'form': form,
+        'mp_id': mp_id,
     })
