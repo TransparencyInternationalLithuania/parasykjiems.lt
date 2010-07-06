@@ -4,5 +4,5 @@
 {% endfor %}
 <p><b>You can write to:</b></p>
 {% for parliament_member in parliament_members %}
-<p>{{ parliament_member.name }} {{ parliament_member.surname }}</p>
+<p><a href="/pjweb/contact/{{ parliament_member.id }}/">{{ parliament_member.name }} {{ parliament_member.surname }}</a></p>
 {% endfor %}
