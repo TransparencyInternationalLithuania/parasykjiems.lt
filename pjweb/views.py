@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadReque
 from django.shortcuts import render_to_response
 from parasykjiems.contactdb.models import PollingDistrictStreet, Constituency, ParliamentMember
 from pjutils.address_search import AddressSearch
+from django.utils.translation import ugettext as _
 
 class ContactForm(forms.Form):
     subject = forms.CharField(max_length=100)
@@ -24,7 +25,7 @@ def index(request):
             entered = form.cleaned_data['address']
             suggestions = a_s.get_addr_suggests(PollingDistrictStreet, entered)
         if not suggestions:
-            entered = 'Street, City and District have to be separated with ","'
+            entered = _('Street, City and District have to be separated with ","')
     else:
         form = IndexForm()
     return render_to_response('pjweb/index.html', {
@@ -38,7 +39,9 @@ def no_email(request, mp_id):
     parliament_member = ParliamentMember.objects.all().filter(
                 id__exact=mp_id
             )
-    NoEmailMsg = "%s %s email couldn't be found in database." % (parliament_member[0].name, parliament_member[0].surname)
+    NoEmailMsg = _('%(name)s %(surname)s email cannot be found in database.') % {
+        'name':parliament_member[0].name, 'surname':parliament_member[0].surname
+    }
     return render_to_response('pjweb/no_email.html', {
         'NoEmailMsg': NoEmailMsg,
     })
@@ -47,7 +50,9 @@ def thanks(request, mp_id):
     parliament_member = ParliamentMember.objects.all().filter(
                 id__exact=mp_id
             )
-    ThanksMessage = 'Thank you. Your email to %s %s has been sent.' % (parliament_member[0].name, parliament_member[0].surname)
+    ThanksMessage = _('Thank you. Your email to %(name)s %(surname)s has been sent.') % {
+        'name':parliament_member[0].name, 'surname':parliament_member[0].surname
+    }
     return render_to_response('pjweb/thanks.html', {
         'ThanksMessage': ThanksMessage,
     })
@@ -56,7 +61,11 @@ def smtp_error(request, mp_id):
     parliament_member = ParliamentMember.objects.all().filter(
                 id__exact=mp_id
             )
-    ErrorMessage = 'Problem occurred. Your Email to %s %s has not been sent. Please try again later.' % (parliament_member[0].name, parliament_member[0].surname)
+    ErrorMessage = _(
+        'Problem occurred. Your Email to %(name)s %(surname)s has not been sent. Please try again later.'
+    ) % {
+        'name':parliament_member[0].name, 'surname':parliament_member[0].surname
+    }
     return render_to_response('pjweb/error.html', {
         'ErrorMessage': ErrorMessage,
     })

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- coding: utf8 -*-
+# -*- coding: utf-8 -*-
 from django.core.management.base import BaseCommand
 from django.db import transaction
 from contactdb.imp import LithuanianConstituencyReader, ImportSources

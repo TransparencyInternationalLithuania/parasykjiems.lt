@@ -9,18 +9,18 @@ class GlobalSettingsClass():
     def __repr__(self):
         return "A global settings repository. Provides some nice help information for undefined names"
 
-    def describeA(self):
-        print "Wooo hooo"
-
-    def __getattr__(self, name):
-
+    def printHelpForSetting(self, name):
         print "\n\n\n"
         # define a dictionary of functions.  emulating switch here
         printMoreInfo = {'GOOGLE_DOCS_USER' : self.googleDocsUsers,
-                         'GOOGLE_DOCS_PASSWORD' : self.googleDocsUsers,
-                         'abc' : self.describeA}
+                         'GOOGLE_DOCS_PASSWORD' : self.googleDocsUsers}
         if (name in printMoreInfo):
             printMoreInfo[name]()
+
+
+    def __getattr__(self, name):
+
+        self.printHelpForSetting(name)
 
         print "\n\n\n"
 
