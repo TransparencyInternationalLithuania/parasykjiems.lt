@@ -36,7 +36,7 @@ class LithuanianMPsReader:
             try:
                 self.validateMember(member)
             except ParliamentMemberImportError as e:
-                raise ParliamentMemberImportError("error importing line \n %(lineNumber)s \n %(line)s" % {'lineNumber' : count, 'line': line}, e)
+                raise ParliamentMemberImportError("error importing line \n %(lineNumber)s \n %(line)s" % {'lineNumber' : count, 'line': row}, e)
 
             yield member
 
