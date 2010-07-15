@@ -1,0 +1,9 @@
+{% load i18n %}
+<p><b>{% trans "Your Constituency is:" %}</b></p>
+{% for constituency in constituencies %}
+<p>{{ constituency.name }}</p>
+{% endfor %}
+<p><b>{% trans "You can write to:" %}</b></p>
+{% for parliament_member in parliament_members %}
+<p><a href="/pjweb/contact/{{ parliament_member.id }}/">{{ parliament_member.name }} {{ parliament_member.surname }}</a></p>
+{% endfor %}
