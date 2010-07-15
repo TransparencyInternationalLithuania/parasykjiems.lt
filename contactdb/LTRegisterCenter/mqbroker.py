@@ -28,18 +28,32 @@ class MQServer:
 class LTRegisterQueue(Component):
     mqServer = RequiredFeature("MQServer", IsInstanceOf(MQServer))
     queueName = "po_box"
+    exchangeName = "sorting_room"
+    routingKey = "jason"
+    rootRegisterCenterAddress = "http://www.registrucentras.lt/adr/p/index.php"
+    persistentMessageMode = 2
 
     def __init__(self):
         pass
+
+    def InitialiseImport(self):
+        """ Will initialise queue with a single message, witch will mean that a specific URL must be parsed
+        and inserted as LT Geo Data. The page will contain links to deeper levels, which will be
+        later inserted as other messoges"""
+        msg = amqp.Message(self.rootRegisterCenterAddress)
+        msg.properties["delivery_mode"] = self.persistentMessageMode
+        self.mqServer.Channel.basic_publish(msg, exchange=self.exchangeName, routing_key= self.routingKey)
+
+        
 
     def CreateQueues(self):
         """ Creates all neded queues and bindings needed to work with RegistruCentras.lt """
         # create a queue used for reading from http://www.registrucentras.lt/adr/p/index.php
         self.mqServer.Channel.queue_declare(queue=self.queueName, durable=True, exclusive=False, auto_delete=False)
-        self.mqServer.Channel.exchange_declare(exchange="sorting_room", type="direct", durable=True, auto_delete=False,)
+        self.mqServer.Channel.exchange_declare(exchange = self.exchangeName, type="direct", durable=True, auto_delete=False,)
 
         # create binding - from po_box to sorting room
-        self.mqServer.Channel.queue_bind(queue=self.queueName, exchange="sorting_room", routing_key="jason")
+        self.mqServer.Channel.queue_bind(queue=self.queueName, exchange= self.exchangeName, routing_key= self.routingKey)
 
     def __ReadMessage(self):
         return self.mqServer.Channel.basic_get(self.queueName)

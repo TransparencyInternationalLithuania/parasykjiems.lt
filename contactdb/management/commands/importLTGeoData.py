@@ -19,9 +19,13 @@ class Command(BaseCommand):
         queue = LTRegisterQueue()
         empty = queue.IsEmpty()
         if (empty):
-            print "queue is empty"
-        else:
-            print "queue not empty"
+            print "Queue is empty"
+            print "Initialising import procedure"
+            queue.InitialiseImport()
+
+        print "starting import procedure"
+
+
 
 
 
