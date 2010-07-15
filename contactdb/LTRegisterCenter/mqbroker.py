@@ -42,7 +42,16 @@ class LTRegisterQueue(Component):
         later inserted as other messoges"""
         msg = amqp.Message(self.rootRegisterCenterAddress)
         msg.properties["delivery_mode"] = self.persistentMessageMode
+
         self.mqServer.Channel.basic_publish(msg, exchange=self.exchangeName, routing_key= self.routingKey)
+
+
+        msg = amqp.Message("http://www.registrucentras.lt/adr/p/index.php?sen_id=5")
+        msg.properties["delivery_mode"] = self.persistentMessageMode
+
+        self.mqServer.Channel.basic_publish(msg, exchange=self.exchangeName, routing_key= self.routingKey)
+
+
 
         
 
@@ -55,24 +64,28 @@ class LTRegisterQueue(Component):
         # create binding - from po_box to sorting room
         self.mqServer.Channel.queue_bind(queue=self.queueName, exchange= self.exchangeName, routing_key= self.routingKey)
 
-    def __ReadMessage(self):
+    def ConsumeMessage(self, msg):
+        self.mqServer.Channel.basic_ack(msg.delivery_tag)
+
+
+    def ReadMessage(self):
         return self.mqServer.Channel.basic_get(self.queueName)
 
     def Clear(self):
         """ Clear the queue of any pending messages. This is done by reading manually all messages
         until there is none"""
         while (True):
-            msg = self.__ReadMessage()
+            msg = self.ReadMessage()
             if (msg is None):
                 break;
-            self.mqServer.Channel.basic_ack(msg.delivery_tag)
+            self.ConsumeMessage(msg)
 
 
     def IsEmpty(self):
         """ Tells if RegisterQueue is empty.
         If queue is empty, then it means that either processing has finished, or has not started at all.
         Initiaiate processing by inserting new Root message"""
-        msg = self.__ReadMessage()
+        msg = self.ReadMessage()
         empty = msg is None
 
         # force to resend a message, so that we don't accidentally consume it
