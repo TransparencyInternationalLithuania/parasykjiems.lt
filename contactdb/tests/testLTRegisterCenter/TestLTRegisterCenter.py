@@ -47,14 +47,41 @@ class TestLTRegisterCenterLinks(TestCase):
 "Vilties g.",
 "Vingio g."]
         cells = [LinkCell(street, "") for street in streets]
-
-
         self.assertPage(page, cells)
 
     def testAlytausSavAlytausSenHtml(self):
         file = open(AlytausSavAlytausSenHtml)
         lines = "\n".join(file.readlines())
         page = RegisterCenterParser(lines).parse()
+
+        villages = [
+("Aniškio k.", ""),
+("Arminų I k.", ""),
+("Arminų II k.", ""),
+("Bakšių k.", ""),
+("Bernotiškių k.", ""),
+("Bundorių k.", ""),
+("Butkūnų k.", ""),
+("Butrimiškių k.", ""),
+("Daugirdėlių k.", ""),
+("Daujotiškių k.", ""),
+("Dubenkos k.", ""),
+("Dubėnų k.", ""),
+("Dubių k.", ""),
+("Genių k.", "") ,
+("Jasunskų k.", ""),
+("Jovaišonių k.", ""),
+("Junonių k.", ""),
+("Jurgiškių k.", ""),
+("Kaniūkų k.", ""),
+("Karklynų k.", ""),
+("Kelmanonių k.", ""),
+("Kibirkščių k.", ""),
+("Kriaunių k.", ""),
+("Likiškėlių k.", "http://www.registrucentras.lt/adr/p/index.php?gyv_id=339"),
+("Likiškių k.", "")]
+        cells = [LinkCell(tuple[0], tuple[1]) for tuple in villages]
+        self.assertPage(page, cells)
 
         
 
