@@ -98,6 +98,13 @@ LIETUVOS RESPUBLIKA / Tauragės apskr. / Pagėgių sav. / Natkiškių sen. / Nat
                 break
         return location
 
+    def _constructHyperlink(self, href):
+        """ When downloading document from online, the urls are relative, not absolute.
+        So fix this to be always absolute"""
+        if (href.startswith("http") == True):
+            return href
+        return "%s%s" % ("http://www.registrucentras.lt", href)
+
     def ExtractLinkCell(self, cellTag):
         cell = LinkCell()
         cell.text = self._removeLineBreaks(cellTag.text)
@@ -106,7 +113,7 @@ LIETUVOS RESPUBLIKA / Tauragės apskr. / Pagėgių sav. / Natkiškių sen. / Nat
             href = cellTag.next
             if (hasattr(href, "attrs") == True):
                 hrefAttr = href.attrs[0]
-                cell.href = hrefAttr[1]
+                cell.href = self._constructHyperlink(hrefAttr[1])
         return cell
 
     def GetLinks(self):
@@ -116,7 +123,7 @@ LIETUVOS RESPUBLIKA / Tauragės apskr. / Pagėgių sav. / Natkiškių sen. / Nat
         headingCell = locationFirstTag.findNext(text=re.compile("Apskrities|Savivaldybės|Seniūnijos|centras|Pavadinimo|vardininkas|Gatv"))
 
         if (headingCell is None):
-            print self.soupForm.prettify()
+            #print self.soupForm.prettify()
             raise PageParseException("Could not find table heading cell tag, page has been changed. Damn")
 
         tableTag = headingCell.parent.parent.parent
@@ -144,7 +151,7 @@ LIETUVOS RESPUBLIKA / Tauragės apskr. / Pagėgių sav. / Natkiškių sen. / Nat
 
         # attrs[0] is the first and only attribute. Then we take second argument from the tuple.
         # first will be attribute name, i.e. href, second will be the actual url
-        url = res.attrs[0][1]
+        url = self._constructHyperlink(res.attrs[0][1])
         link = LinkCell(text = res.text, href = url)
         return link
 

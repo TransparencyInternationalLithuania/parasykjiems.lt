@@ -17,14 +17,15 @@ PagegiuSavNaktiskiuVillageHtml = scriptPath + "/test data/PagegiuSavNaktiskiuVil
 
 
 # if enabled, then tests will run against existing website http://www.registrucentras.lt/
-enableWWW = False
+enableWWW = True
 
 def ReadSource(sourceTag):
     """ Reads html file or URL address, or both, and returns it for testing routines """
     if (enableWWW == True):
-        response = urlopen(sourceTag[1])
-        lines = "".join(response.readlines())
-        yield lines
+        if (len(sourceTag) > 1):
+            response = urlopen(sourceTag[1])
+            lines = "".join(response.readlines())
+            yield lines
 
     file = open(sourceTag[0])
     lines = "".join(file.readlines())
