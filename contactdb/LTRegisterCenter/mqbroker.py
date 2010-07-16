@@ -14,7 +14,16 @@ class MQServer:
         # open connection to localhost server
         self.Connection = amqp.Connection(host="localhost:5672", userid="guest", password="guest", virtual_host="/", insist=False)
         self.Channel = self.Connection.channel()
+        
 
+    def BeginTransaction(self):
+        self.Channel.tx_select()
+
+    def Commit(self):
+        self.Channel.tx_commit()
+
+    def Rollback(self):
+        self.Channel.tx_rollback()
 
 
     def __del__(self):
@@ -33,24 +42,24 @@ class LTRegisterQueue(Component):
     rootRegisterCenterAddress = "http://www.registrucentras.lt/adr/p/index.php"
     persistentMessageMode = 2
 
+
     def __init__(self):
+        # define properties
+        self.MQServer = self.mqServer
         pass
 
     def InitialiseImport(self):
         """ Will initialise queue with a single message, witch will mean that a specific URL must be parsed
         and inserted as LT Geo Data. The page will contain links to deeper levels, which will be
         later inserted as other messoges"""
-        msg = amqp.Message(self.rootRegisterCenterAddress)
+        self.SendMessage(self.rootRegisterCenterAddress)
+        self.SendMessage("http://www.registrucentras.lt/adr/p/index.php?sen_id=5")
+
+
+    def SendMessage(self, msgBody):
+        msg = amqp.Message(msgBody)
         msg.properties["delivery_mode"] = self.persistentMessageMode
-
         self.mqServer.Channel.basic_publish(msg, exchange=self.exchangeName, routing_key= self.routingKey)
-
-
-        msg = amqp.Message("http://www.registrucentras.lt/adr/p/index.php?sen_id=5")
-        msg.properties["delivery_mode"] = self.persistentMessageMode
-
-        self.mqServer.Channel.basic_publish(msg, exchange=self.exchangeName, routing_key= self.routingKey)
-
 
 
         
@@ -66,7 +75,6 @@ class LTRegisterQueue(Component):
 
     def ConsumeMessage(self, msg):
         self.mqServer.Channel.basic_ack(msg.delivery_tag)
-
 
     def ReadMessage(self):
         return self.mqServer.Channel.basic_get(self.queueName)
