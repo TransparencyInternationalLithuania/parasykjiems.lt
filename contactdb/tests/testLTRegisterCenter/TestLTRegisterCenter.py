@@ -6,6 +6,7 @@ import os
 from contactdb.AdressParser import AddressParser
 from contactdb.imp import LithuanianConstituencyReader
 from contactdb.LTRegisterCenter.webparser import RegisterCenterParser, RegisterCenterPage, LinkCell
+from settings import *
 
 from urllib2 import urlopen
 
@@ -16,12 +17,9 @@ AlytausSavAlytausSenHtml = scriptPath + "/test data/AlytausSavAlytausSen.htm", "
 PagegiuSavNaktiskiuVillageHtml = scriptPath + "/test data/PagegiuSavNaktiskiuVillage.htm",
 
 
-# if enabled, then tests will run against existing website http://www.registrucentras.lt/
-enableWWW = True
-
 def ReadSource(sourceTag):
     """ Reads html file or URL address, or both, and returns it for testing routines """
-    if (enableWWW == True):
+    if (GlobalSettings.EnableWWWForLTGeoTests == True):
         if (len(sourceTag) > 1):
             response = urlopen(sourceTag[1])
             lines = "".join(response.readlines())
