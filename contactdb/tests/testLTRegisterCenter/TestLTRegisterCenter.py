@@ -21,14 +21,34 @@ class TestLTRegisterCenterLinks(TestCase):
         pass
 
     def assertPage(self, page, cells):
-        self.assertEqual(len(cells), len(page.links))
+
         joined = zip(page.links, cells)
 
         for p, c in joined:
+            if (c.href == ""):
+                c.href = None 
             self.assertEqual(p.text, c.text)
             self.assertEqual(p.href, c.href)
 
-        
+        self.assertEqual(len(cells), len(page.links))
+
+    def testPagegiuSavNaktiskiuVillageHtml(self):
+        file = open(PagegiuSavNaktiskiuVillageHtml)
+        lines = "\n".join(file.readlines())
+        page = RegisterCenterParser(lines).parse()
+
+        cells = [
+            LinkCell(text="Alyvų g.",     href=""),
+            LinkCell(text="Ąžuolo g.",     href=""),
+            LinkCell(text="Zosės Petraitienės g.",     href=""),
+            LinkCell(text="Pievų g.",     href=""),
+            LinkCell(text="Putinų g.",     href=""),
+            LinkCell(text="Saulėtekio g.",     href=""),
+            LinkCell(text="Sodo g.",     href=""),
+            LinkCell(text="Vilties g.",     href=""),
+            LinkCell(text="Vingio g.",     href=""),
+                ]
+        self.assertPage(page, cells)
 
     def testLietuvosRespublika(self):
         file = open(LietuvosRespublikaHtml)
