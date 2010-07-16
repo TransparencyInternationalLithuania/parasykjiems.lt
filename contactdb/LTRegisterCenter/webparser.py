@@ -135,6 +135,55 @@ LIETUVOS RESPUBLIKA / Tauragės apskr. / Pagėgių sav. / Natkiškių sen. / Nat
 
         return links
 
+    def _otherPageResult(self, res):
+        """ returns LinkCell object if it is a hyperlink. Returns None otherwise"""
+        if res.name == "b":
+            return None
+        if (res.name != "a"):
+            raise PageParseException("found tag '%s'  instead of <a>. This should not have happened") % res.name
+
+        # attrs[0] is the first and only attribute. Then we take second argument from the tuple.
+        # first will be attribute name, i.e. href, second will be the actual url
+        url = res.attrs[0][1]
+        link = LinkCell(text = res.text, href = url)
+        return link
+
+        
+
+    def GetOtherPages(self):
+        """ Sometimes a city has many streets. Then results are splitted into pages.
+        Here we will get links to those other result pages. """
+        locationFirstTag = self._GetLocationsFirstTag()
+        rez = locationFirstTag.findNext(text=re.compile("Rezultatų|puslapiai"))
+        otherLinks = []
+        
+        if (rez is None):
+            # Could not find results section. This is ok, since not all pages will hve that
+            return otherLinks
+
+        firstResult = rez.next
+
+
+        while (True):
+            # extract either hyperlink, either get None if it is bold tag
+            otherLink = self._otherPageResult(firstResult)
+            if (otherLink is not None):
+                otherLinks.append(otherLink)
+
+            # when we encounter page break, break loop
+            twoforward = firstResult.next.next
+            if (hasattr(twoforward, "name")):
+                if (twoforward.name == "br"):
+                    break;
+
+            # loop to next hyperlink
+            firstResult = firstResult.next.next.next
+        return otherLinks
+            
+
+
+        
+
     def parse(self):
         """ Parses a RegisterCenter page and returns a RegisterCenterPage object
         containing extracted info"""
@@ -144,6 +193,8 @@ LIETUVOS RESPUBLIKA / Tauragės apskr. / Pagėgių sav. / Natkiškių sen. / Nat
         page.location = self.GetLocation()
 
         page.links = self.GetLinks()
+
+        page.otherPages = self.GetOtherPages()
 
 
         """
