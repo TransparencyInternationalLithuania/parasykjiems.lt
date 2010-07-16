@@ -49,7 +49,10 @@ class RegisterCenterParser:
 
     def _removeLineBreaks(self, string):
         rootLocation = re.sub(r'\n', ' ', str(string))
+        # removing unecessary white spaces
+        # this is soooo lame that i do it twice here. Anyone knows how to do better? 
         rootLocation = rootLocation.replace("   ", " ")
+        rootLocation = rootLocation.replace("  ", " ")
         return rootLocation
 
     def _GetLocationsFirstTag(self):
@@ -98,6 +101,7 @@ LIETUVOS RESPUBLIKA / Tauragės apskr. / Pagėgių sav. / Natkiškių sen. / Nat
     def ExtractLinkCell(self, cellTag):
         cell = LinkCell()
         cell.text = self._removeLineBreaks(cellTag.text)
+
         if (cellTag.next is not None):
             href = cellTag.next
             if (hasattr(href, "attrs") == True):
