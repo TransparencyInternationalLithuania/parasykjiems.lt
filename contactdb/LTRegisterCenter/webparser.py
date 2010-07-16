@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from urllib2 import urlopen
 from ClientForm import ParseResponse
 from BeautifulSoup import BeautifulSoup
@@ -16,6 +19,10 @@ class RegisterCenterParser:
         return rootLocation
 
     def GetLocation(self, lt):
+        """ extracts from a register page a list of locations.
+        A location looks something like this (without all the htmls tags of course)       
+LIETUVOS RESPUBLIKA / Tauragės apskr. / Pagėgių sav. / Natkiškių sen. / Natkiškių k.
+        """
         location = []
 
         # always add first location. also remove any \n characters with regexp
@@ -46,15 +53,18 @@ class RegisterCenterParser:
         return location
 
     def parse(self):
+        """ Parses a RegisterCenter page and returns a RegisterCenterPage object
+        containing extracted info"""
         soupForm = BeautifulSoup(self.htmlText)
+        page = RegisterCenterPage()
 
-
+        # find first location tage
         lt = soupForm.find(text=re.compile("LIETUVOS|RESPUBLIKA"))
-
         if (lt is None):
             print "Could not find 'LIETUVOS RESPUBLIKA' tag, page has been changed. Damn"
             return
-        page = RegisterCenterPage()
+
+        # extract locations from web page
         page.location = self.GetLocation(lt)
 
 
