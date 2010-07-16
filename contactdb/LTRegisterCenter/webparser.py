@@ -147,7 +147,7 @@ LIETUVOS RESPUBLIKA / Tauragės apskr. / Pagėgių sav. / Natkiškių sen. / Nat
         if res.name == "b":
             return None
         if (res.name != "a"):
-            raise PageParseException("found tag '%s'  instead of <a>. This should not have happened") % res.name
+            raise PageParseException("found tag '%s'  instead of <a>. This should not have happened" % (res.name))
 
         # attrs[0] is the first and only attribute. Then we take second argument from the tuple.
         # first will be attribute name, i.e. href, second will be the actual url
@@ -181,6 +181,11 @@ LIETUVOS RESPUBLIKA / Tauragės apskr. / Pagėgių sav. / Natkiškių sen. / Nat
             twoforward = firstResult.next.next
             if (hasattr(twoforward, "name")):
                 if (twoforward.name == "br"):
+                    break;
+            # sometimes page breaks is a bit further the line. just check again
+            # yes, lame. but works, and fixes unit test
+            if (hasattr(twoforward.next, "name")):
+                if (twoforward.next.name == "br"):
                     break;
 
             # loop to next hyperlink

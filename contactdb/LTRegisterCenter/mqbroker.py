@@ -52,7 +52,7 @@ class LTRegisterQueue(Component):
         """ Will initialise queue with a single message, witch will mean that a specific URL must be parsed
         and inserted as LT Geo Data. The page will contain links to deeper levels, which will be
         later inserted as other messoges"""
-        self.SendMessage(self.rootRegisterCenterAddress)
+        #self.SendMessage(self.rootRegisterCenterAddress)
         self.SendMessage("http://www.registrucentras.lt/adr/p/index.php?sen_id=5")
 
 
@@ -77,7 +77,8 @@ class LTRegisterQueue(Component):
         self.mqServer.Channel.basic_ack(msg.delivery_tag)
 
     def ReadMessage(self):
-        return self.mqServer.Channel.basic_get(self.queueName)
+        msg = self.mqServer.Channel.basic_get(self.queueName)
+        return msg
 
     def Clear(self):
         """ Clear the queue of any pending messages. This is done by reading manually all messages

@@ -15,6 +15,7 @@ scriptPath = os.path.dirname( os.path.realpath( __file__ ) )
 LietuvosRespublikaHtml = scriptPath + "/test data/LietuvosRespublika.htm", "http://www.registrucentras.lt/adr/p/index.php"
 AlytausSavAlytausSenHtml = scriptPath + "/test data/AlytausSavAlytausSen.htm", "http://www.registrucentras.lt/adr/p/index.php?sen_id=5"
 PagegiuSavNaktiskiuVillageHtml = scriptPath + "/test data/PagegiuSavNaktiskiuVillage.htm",
+AlytausSavAlytausSenLastPageHtml = scriptPath + "/test data/AlytausSavAlytausSenLastPage.htm", "http://www.registrucentras.lt/adr/p/index.php?sen_id=5&p=3"
 
 
 def ReadSource(sourceTag):
@@ -50,6 +51,13 @@ class TestLTRegisterCenterOtherLinks(TestCase):
             self.assertEqual(p.href, c.href)
 
         self.assertEqual(len(cells), len(pageLinks))
+
+
+
+    def testAlytausSavAlytausSenLastPageHtml(self):
+        for lines in ReadSource(AlytausSavAlytausSenLastPageHtml):
+            page = RegisterCenterParser(lines).parse()
+            self.assertEqual(len(page.otherPages), 2)
 
     def testPagegiuSavNaktiskiuVillageHtml(self):
         for lines in ReadSource(PagegiuSavNaktiskiuVillageHtml):

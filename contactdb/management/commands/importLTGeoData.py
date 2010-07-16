@@ -4,7 +4,6 @@ from pjutils.timemeasurement import TimeMeasurer
 from parasykjiems.FeatureBroker.configs import defaultConfig
 from contactdb.LTRegisterCenter.mqbroker import LTRegisterQueue
 from contactdb.LTRegisterCenter.webparser import RegisterCenterParser, RegisterCenterPage
-
 from urllib2 import urlopen
 
 class Command(BaseCommand):
@@ -13,36 +12,53 @@ class Command(BaseCommand):
 \nThe data is not in geographic coordinates though, it is simply a hierarchical structure of districts / counties / cities / streets/ etc"""
 
 
+    def SendPageMessages(self, page):
+        """ Puts messages into queue for all additional links found in page"""
+        for link in page.links:
+            if (link.href is None):
+                continue
+            print "creating message for object '%s' " % (link)
+            self.queue.SendMessage(link.href)
+
+        for link in page.otherPages:
+            if (link.href is None):
+                continue
+            # add links only on first page. So that we dount end up browsing through paged data forever
+            if (link.text == "1"):
+                break
+            print "creating message for other page \n'%s' " % (link)
+            self.queue.SendMessage(link.href)
+
 
     def handle(self, *args, **options):
 
         print "Checking if MQ is empty"
 
-        queue = LTRegisterQueue()
-        empty = queue.IsEmpty()
+        self.queue = LTRegisterQueue()
+        empty = self.queue.IsEmpty()
         if (empty):
             print "Queue is empty"
             print "Initialising import procedure"
-            queue.InitialiseImport()
+            self.queue.InitialiseImport()
 
         print "starting import procedure"
 
         msgCount = 0
 
         while (True):
-            msg = queue.ReadMessage()
+            msg = self.queue.ReadMessage()
             if (msg is None):
                 print "no more messages, quitting"
                 break
 
 
             msgCount += 1
-            if (msgCount > 2):
+            if (msgCount > 2000):
                 print "maximum 2 messages can be processed"
                 break
 
             
-            queue.MQServer.BeginTransaction()
+            self.queue.MQServer.BeginTransaction()
             url = msg.body
             print "parsing url %s" % url
 
@@ -52,9 +68,8 @@ class Command(BaseCommand):
             pageParser = RegisterCenterParser(lines)
             page = pageParser.parse()
 
-            for link in page.links:
-                print "creating message for object '%s' " % (link)
-                queue.SendMessage(link.href)
+            self.SendPageMessages(page)
 
-            queue.ConsumeMessage(msg)
-            queue.MQServer.Commit()
+
+            #queue.ConsumeMessage(msg)
+            self.queue.MQServer.Commit()
