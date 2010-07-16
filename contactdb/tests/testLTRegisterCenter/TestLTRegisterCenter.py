@@ -13,9 +13,22 @@ class TestLTRegisterCenter(TestCase):
 
     LietuvosRespublikaHtml = scriptPath + "/test data/LietuvosRespublika.htm"
     AlytausSavAlytausSenHtml = scriptPath + "/test data/AlytausSavAlytausSen.htm"
+    PagegiuSavNaktiskiuVillageHtml = scriptPath + "/test data/PagegiuSavNaktiskiuVillage.htm"
 
     def setUp(self):
         pass
+
+    def testPagegiuSavNaktiskiuVillageHtml(self):
+        file = open(self.PagegiuSavNaktiskiuVillageHtml)
+        lines = "\n".join(file.readlines())
+        page = RegisterCenterParser(lines).parse()
+
+        self.assertEqual(5, len(page.location))
+        self.assertEqual("LIETUVOS RESPUBLIKA", page.location[0])
+        self.assertEqual("Tauragės apskr.", page.location[1])
+        self.assertEqual("Pagėgių sav.", page.location[2])
+        self.assertEqual("Natkiškių sen.", page.location[3])
+        self.assertEqual("Natkiškių k.", page.location[4])
 
     def testAlytausSavAlytausSenHtml(self):
         file = open(self.AlytausSavAlytausSenHtml)
