@@ -15,22 +15,75 @@ PagegiuSavNaktiskiuVillageHtml = scriptPath + "/test data/PagegiuSavNaktiskiuVil
 
 
 
+
+
+class TestLTRegisterCenterOtherLinks(TestCase):
+
+    def setUp(self):
+        pass
+        
+    def assertPage(self, pageLinks, cells):
+        """ Check that give collection of links is equal to cells collection
+        pageLinks is a collection of LinkCell objects taken from RegisterCenterPage object
+        cells is a list of LinkCell objects.
+        """
+        joined = zip(pageLinks, cells)
+
+        for p, c in joined:
+            if (c.href == ""):
+                c.href = None
+            self.assertEqual(p.text, c.text)
+            self.assertEqual(p.href, c.href)
+
+        self.assertEqual(len(cells), len(pageLinks))
+
+    def testPagegiuSavNaktiskiuVillageHtml(self):
+        file = open(PagegiuSavNaktiskiuVillageHtml)
+        lines = "\n".join(file.readlines())
+        page = RegisterCenterParser(lines).parse()
+
+        self.assertEqual(len(page.otherPages), 0)
+
+    def testLietuvosRespublika(self):
+        file = open(LietuvosRespublikaHtml)
+        lines = "\n".join(file.readlines())
+        page = RegisterCenterParser(lines).parse()
+        self.assertEqual(len(page.otherPages), 0)
+
+
+    def testAlytausSavAlytausSenHtml(self):
+        file = open(AlytausSavAlytausSenHtml)
+        lines = "\n".join(file.readlines())
+        page = RegisterCenterParser(lines).parse()
+
+        links = [
+("2", "http://www.registrucentras.lt/adr/p/index.php?sen_id=5&p=2"),
+("3", "http://www.registrucentras.lt/adr/p/index.php?sen_id=5&p=3")]
+        
+        cells = [LinkCell(tuple[0], tuple[1]) for tuple in links]
+        self.assertPage(page.otherPages, cells)
+
+
 class TestLTRegisterCenterLinks(TestCase):
 
     def setUp(self):
         pass
 
-    def assertPage(self, page, cells):
+    def assertPage(self, pageLinks, cells):
+        """ Check that give collection of links is equal to cells collection
+        pageLinks is a collection of LinkCell objects taken from RegisterCenterPage object
+        cells is a list of LinkCell objects.
+        """
 
-        joined = zip(page.links, cells)
+        joined = zip(pageLinks, cells)
 
         for p, c in joined:
             if (c.href == ""):
-                c.href = None 
+                c.href = None
             self.assertEqual(p.text, c.text)
             self.assertEqual(p.href, c.href)
 
-        self.assertEqual(len(cells), len(page.links))
+        self.assertEqual(len(cells), len(pageLinks))
 
     def testPagegiuSavNaktiskiuVillageHtml(self):
         file = open(PagegiuSavNaktiskiuVillageHtml)
@@ -47,7 +100,7 @@ class TestLTRegisterCenterLinks(TestCase):
 "Vilties g.",
 "Vingio g."]
         cells = [LinkCell(street, "") for street in streets]
-        self.assertPage(page, cells)
+        self.assertPage(page.links, cells)
 
     def testAlytausSavAlytausSenHtml(self):
         file = open(AlytausSavAlytausSenHtml)
@@ -81,7 +134,7 @@ class TestLTRegisterCenterLinks(TestCase):
 ("Likiškėlių k.", "http://www.registrucentras.lt/adr/p/index.php?gyv_id=339"),
 ("Likiškių k.", "")]
         cells = [LinkCell(tuple[0], tuple[1]) for tuple in villages]
-        self.assertPage(page, cells)
+        self.assertPage(page.links, cells)
 
         
 
@@ -101,7 +154,7 @@ class TestLTRegisterCenterLinks(TestCase):
             LinkCell(text="Utenos apskr.",      href="http://www.registrucentras.lt/adr/p/index.php?aps_id=392"),
             LinkCell(text="Vilniaus apskr.",    href="http://www.registrucentras.lt/adr/p/index.php?aps_id=460"),
         ]
-        self.assertPage(page, cells)
+        self.assertPage(page.links, cells)
 
 
 
