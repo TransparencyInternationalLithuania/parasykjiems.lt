@@ -9,11 +9,16 @@ class GlobalSettingsClass():
     def __repr__(self):
         return "A global settings repository. Provides some nice help information for undefined names"
 
+    def EnableWWWForLTGeoTests(self):
+        print "Define EnableWWWForLTGeoTests settings. Needed to check if run geo tests against real world data. Default is False "
+    
+
     def printHelpForSetting(self, name):
         print "\n\n\n"
         # define a dictionary of functions.  emulating switch here
         printMoreInfo = {'GOOGLE_DOCS_USER' : self.googleDocsUsers,
-                         'GOOGLE_DOCS_PASSWORD' : self.googleDocsUsers}
+                         'GOOGLE_DOCS_PASSWORD' : self.googleDocsUsers,
+                         'EnableWWWForLTGeoTests' : self.EnableWWWForLTGeoTests}
         if (name in printMoreInfo):
             printMoreInfo[name]()
 

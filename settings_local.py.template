@@ -31,3 +31,6 @@ GlobalSettings = GlobalSettingsClass()
 # variables for accessing Lithuanian contact db documents on google docs
 #GlobalSettings.GOOGLE_DOCS_USER = 'parasykjiems@gmail.com'
 #GlobalSettings.GOOGLE_DOCS_PASSWORD = 'enter password here'
+
+# set this to True if you want to run geo tests for Lithuanian data against real world data / real www servers
+GlobalSettings.EnableWWWForLTGeoTests = False
