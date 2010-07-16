@@ -27,31 +27,34 @@ class Command(BaseCommand):
 
         print "starting import procedure"
 
+        msgCount = 0
+
         while (True):
             msg = queue.ReadMessage()
             if (msg is None):
                 print "no more messages, quitting"
                 break
 
+
+            msgCount += 1
+            if (msgCount > 2):
+                print "maximum 2 messages can be processed"
+                break
+
+            
+            queue.MQServer.BeginTransaction()
             url = msg.body
             print "parsing url %s" % url
 
             response = urlopen(url)
             lines = "".join(response.readlines())
 
-
-
             pageParser = RegisterCenterParser(lines)
             page = pageParser.parse()
 
-            for l in page.location:
-                print l
+            for link in page.links:
+                print "creating message for object '%s' " % (link)
+                queue.SendMessage(link.href)
 
             queue.ConsumeMessage(msg)
-
-
-
-
-
-
-
+            queue.MQServer.Commit()

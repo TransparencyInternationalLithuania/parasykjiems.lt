@@ -24,7 +24,7 @@ class Command(BaseCommand):
             msg = queue.ReadMessage()
             if (msg is None):
                 break;
-            print msg.Body
+            print msg.body
 
         print "finished printing"
 
