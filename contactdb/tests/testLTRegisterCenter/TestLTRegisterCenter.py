@@ -37,18 +37,26 @@ class TestLTRegisterCenterLinks(TestCase):
         lines = "\n".join(file.readlines())
         page = RegisterCenterParser(lines).parse()
 
-        cells = [
-            LinkCell(text="Alyvų g.",     href=""),
-            LinkCell(text="Ąžuolo g.",     href=""),
-            LinkCell(text="Zosės Petraitienės g.",     href=""),
-            LinkCell(text="Pievų g.",     href=""),
-            LinkCell(text="Putinų g.",     href=""),
-            LinkCell(text="Saulėtekio g.",     href=""),
-            LinkCell(text="Sodo g.",     href=""),
-            LinkCell(text="Vilties g.",     href=""),
-            LinkCell(text="Vingio g.",     href=""),
-                ]
+        streets = ["Alyvų g.",
+"Ąžuolo g.",
+"Zosės Petraitienės g.",
+"Pievų g.",
+"Putinų g.",
+"Saulėtekio g.",
+"Sodo g.",
+"Vilties g.",
+"Vingio g."]
+        cells = [LinkCell(street, "") for street in streets]
+
+
         self.assertPage(page, cells)
+
+    def testAlytausSavAlytausSenHtml(self):
+        file = open(AlytausSavAlytausSenHtml)
+        lines = "\n".join(file.readlines())
+        page = RegisterCenterParser(lines).parse()
+
+        
 
     def testLietuvosRespublika(self):
         file = open(LietuvosRespublikaHtml)
