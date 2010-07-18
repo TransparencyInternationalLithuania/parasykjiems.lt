@@ -5,8 +5,10 @@ from django.shortcuts import render_to_response
 from parasykjiems.contactdb.models import PollingDistrictStreet, Constituency, ParliamentMember
 from pjutils.address_search import AddressSearch
 from django.utils.translation import ugettext as _
+from parasykjiems.pjweb.models import Emails
 
 class ContactForm(forms.Form):
+    sender_name = forms.CharField(max_length=128)
     subject = forms.CharField(max_length=100)
     message = forms.CharField(widget=forms.Textarea)
     sender = forms.EmailField()
@@ -86,25 +88,37 @@ def contact(request, mp_id):
     parliament_member = ParliamentMember.objects.all().filter(
                 id__exact=mp_id
             )
-    if request.method == 'POST': # If the form has been submitted...
-        form = ContactForm(request.POST) # A form bound to the POST data
+
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
         if form.is_valid():
+            sender_name = form.cleaned_data['sender_name']
             subject = form.cleaned_data['subject']
             message = form.cleaned_data['message']
             sender = form.cleaned_data['sender']
             recipients = [parliament_member[0].email]
-            print recipients[0]
+            #print recipients[0]
             if not recipients[0]:
                 return HttpResponseRedirect('no_email')
             else:
-                from django.core.mail import send_mail
-                try:
-                    sendmail = send_mail(subject, message, sender, recipients)
-                except:
-                    return HttpResponseRedirect('smtp_error')
-            return HttpResponseRedirect('thanks') # Redirect after POST
+                #from django.core.mail import send_mail
+                #try:
+                mail = Emails(
+                    sender_name = sender_name,
+                    sender = sender,
+                    recipient = recipients[0],
+                    subject = subject,
+                    message = message,
+                    state = 'W',
+                )
+                print mail
+                mail.save()
+                    #sendmail = send_mail(subject, message, sender, recipients)
+                #except:
+                #    return HttpResponseRedirect('smtp_error')
+            return HttpResponseRedirect('thanks')
     else:
-        form = ContactForm() # An unbound form
+        form = ContactForm()
 
     return render_to_response('pjweb/contact.html', {
         'form': form,

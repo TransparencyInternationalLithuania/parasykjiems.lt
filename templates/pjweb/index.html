@@ -13,7 +13,10 @@
 {% for suggestion in suggestions %}
 <p><a href="/pjweb/{{ suggestion.constituency_id }}/">{{ suggestion.street }}, {{ suggestion.city }}, {{ suggestion.district }}</a></p>
 {% endfor %}{% endif %}
+
+{% if not suggestions %}
 <p>{% trans "Or you can select one from all Members of Parliament" %}</p>
 {% for mp in all_mps %}
 <p><a href="/pjweb/contact/{{ mp.id }}/">{{ mp.name }} {{ mp.surname }}</a></p>
 {% endfor %}
+{% endif %}
