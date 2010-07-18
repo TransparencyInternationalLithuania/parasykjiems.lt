@@ -22,8 +22,11 @@ EMAIL_HOST = ''
 EMAIL_PORT = '25'
 EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
-
-
+#email sending backend - works only from django 1.2
+# to console
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#real one
+#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 # Setttings repository for ParašykJiems.LT
 GlobalSettings = GlobalSettingsClass()

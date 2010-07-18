@@ -7,7 +7,6 @@ import pjutils.uniconsole
 from contactdb.imp import GoogleDocsSources, ImportSources
 
 
-
 import os
 
 class Command(BaseCommand):

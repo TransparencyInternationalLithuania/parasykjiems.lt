@@ -24,8 +24,8 @@ class GlobalSettingsClass():
 
         print "\n\n\n"
 
-        print "'%s' was not found in GlobalSettings. Perhaps in the settings_local.pu this value is not yet defined" % name
-        print "Look in settings_local.py.template how to set up this variable Then open settins_local.py and define that variable"
+        print "'%s' was not found in GlobalSettings. Perhaps in the settings_local.py this value is not yet defined" % name
+        print "Look in settings_local.py.template how to set up this variable Then open settings_local.py and define that variable"
         print "\n\n\n"
     
         raise Exception("Please define GlobalSettings.%s  setting" % name)
