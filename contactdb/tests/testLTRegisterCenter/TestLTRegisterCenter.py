@@ -16,6 +16,7 @@ LietuvosRespublikaHtml = scriptPath + "/test data/LietuvosRespublika.htm", "http
 AlytausSavAlytausSenHtml = scriptPath + "/test data/AlytausSavAlytausSen.htm", "http://www.registrucentras.lt/adr/p/index.php?sen_id=5"
 PagegiuSavNaktiskiuVillageHtml = scriptPath + "/test data/PagegiuSavNaktiskiuVillage.htm",
 AlytausSavAlytausSenLastPageHtml = scriptPath + "/test data/AlytausSavAlytausSenLastPage.htm", "http://www.registrucentras.lt/adr/p/index.php?sen_id=5&p=3"
+AlytausSavHtml = scriptPath + "/test data/AlytausSav.htm", "http://www.registrucentras.lt/adr/p/index.php?sav_id=4"
 
 
 def ReadSource(sourceTag):
@@ -118,6 +119,13 @@ class TestLTRegisterCenterLinks(TestCase):
         for lines in ReadSource(PagegiuSavNaktiskiuVillageHtml):
             page = RegisterCenterParser(lines).parse()
             self.assertPage(page.links, cells)
+
+    def testAlytausSavHtml(self):
+        for lines in ReadSource(AlytausSavHtml):
+            #print "page \n %s" % lines
+            page = RegisterCenterParser(lines).parse()
+            self.assertEqual(len(page.links), 11)
+
 
     def testAlytausSavAlytausSenHtml(self):
         villages = [

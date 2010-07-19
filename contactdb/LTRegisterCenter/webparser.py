@@ -8,6 +8,9 @@ import re
 from pjutils.exc import ChainnedException
 from pjutils.uniconsole import *
 
+# forcing BeautifulSoup to allow <b> tag to have nested table and other tags
+BeautifulSoup.RESET_NESTING_TAGS['b'] = []
+
 class PageParseException(ChainnedException):
     pass
 
