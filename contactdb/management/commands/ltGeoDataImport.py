@@ -5,6 +5,7 @@ from parasykjiems.FeatureBroker.configs import defaultConfig
 from contactdb.LTRegisterCenter.mqbroker import LTRegisterQueue
 from contactdb.LTRegisterCenter.webparser import RegisterCenterParser, RegisterCenterPage
 from urllib2 import urlopen
+import time
 
 class Command(BaseCommand):
     args = '<>'
@@ -39,6 +40,16 @@ class Command(BaseCommand):
 
         print "Checking if MQ is empty"
 
+        # by default every second will be fetched 1 message.
+        # so it will be 1 url fetch per 1 second
+        # usually you will want to set it to lower values, such as 0.5 (a url fetch in every 2 seconds)
+        # or extremely slow 0.1 (in 10 seconds only 1 page fetch)
+        # or maximum 2 (2 messages per second).
+        throttleMessagesPerSecond = 1
+        if (len(args) > 0):
+            throttleMessagesPerSecond = float(args[0])
+
+
         self.queue = LTRegisterQueue()
         empty = self.queue.IsEmpty()
         if (empty):
@@ -48,14 +59,31 @@ class Command(BaseCommand):
 
         print "starting import procedure"
 
-        time = TimeMeasurer()
+        elapsedTime = TimeMeasurer()
+        lastMessageTime = elapsedTime.ElapsedSeconds()
         totalCreatedMessages = 0
         totalParsedMessages = 0
+
         while (True):
             msg = self.queue.ReadMessage()
             if (msg is None):
                 print "no more messages, quitting"
                 break
+
+            # if timeDiff is greater than zero, then last message was processed
+            # in longer time than requested,  so no sleep needed
+            timeToProcessLastMessage = elapsedTime.ElapsedSeconds() - lastMessageTime
+            throttleSpeed = 1 / throttleMessagesPerSecond
+            timeDiff = timeToProcessLastMessage - throttleSpeed
+            if (timeDiff < 0):
+                toSleep = timeDiff * -1
+                print "will sleep for %s seconds" % toSleep
+                time.sleep(toSleep)
+
+            # reset the counter for this message
+            lastMessageTime = elapsedTime.ElapsedSeconds()
+
+
 
             totalParsedMessages += 1
 
@@ -75,6 +103,6 @@ class Command(BaseCommand):
             #queue.ConsumeMessage(msg)
             self.queue.MQServer.Commit()
 
-        print "Took %s seconds" % time.ElapsedSeconds()
+        print "Took %s seconds" % elapsedTime.ElapsedSeconds()
         print "Created total %s additional messages" % totalCreatedMessages
-        print "Made %s requirests. Avg %s fetches per second" % (totalParsedMessages, totalParsedMessages / time.ElapsedSeconds()) 
+        print "Made %s requirests. Avg %s fetches per second" % (totalParsedMessages, totalParsedMessages / elapsedTime.ElapsedSeconds())
