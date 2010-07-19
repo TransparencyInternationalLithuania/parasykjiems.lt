@@ -20,11 +20,13 @@ class Command(BaseCommand):
             print "Queue is empty"
             return
 
+        count = 0
         while (True):
             msg = queue.ReadMessage()
             if (msg is None):
                 break;
+            count +=1
             print msg.body
 
-        print "finished printing"
+        print "finished printing, total %s messages" % count
 
