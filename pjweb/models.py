@@ -7,15 +7,22 @@ class Emails(models.Model):
     """ Table, where all emails are stored, and admin have to confirm them
     """
     
-    EMAIL_STATES = (
+    MSG_STATES = (
         ('W', 'Waiting'),
         ('A', 'Approved'),
-        ('S', 'Sent'),
+        ('R', 'Rejected'),
     )
     
+    EMAIL_STATES = (
+        ('S', 'Sent'),
+        ('N', 'Not Sent'),
+        ('F', 'Failed Permanently'),
+    )
+
     sender = models.EmailField()
     sender_name = models.CharField(max_length = 128)
     recipient = models.CharField(max_length = 255)
     message = models.TextField()
     subject = models.CharField(max_length = 100)
-    state = models.CharField(max_length=1, choices=EMAIL_STATES)
+    msg_state = models.CharField(max_length=1, choices=MSG_STATES)
+    email_state = models.CharField(max_length=1, choices=EMAIL_STATES)
