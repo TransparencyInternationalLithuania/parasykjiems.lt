@@ -5,7 +5,7 @@ from django.shortcuts import render_to_response
 from parasykjiems.contactdb.models import PollingDistrictStreet, Constituency, ParliamentMember
 from pjutils.address_search import AddressSearch
 from django.utils.translation import ugettext as _
-from parasykjiems.pjweb.models import Emails
+from parasykjiems.pjweb.models import Email
 
 class ContactForm(forms.Form):
     sender_name = forms.CharField(max_length=128)
@@ -103,13 +103,13 @@ def contact(request, mp_id):
             else:
                 #from django.core.mail import send_mail
                 #try:
-                mail = Emails(
+                mail = Email(
                     sender_name = sender_name,
                     sender = sender,
                     recipient = recipients[0],
                     subject = subject,
                     message = message,
-                    state = 'W',
+                    msg_state = 'W',
                 )
                 print mail
                 mail.save()

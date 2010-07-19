@@ -3,7 +3,7 @@
 
 from django.db import models
 
-class Emails(models.Model):
+class Email(models.Model):
     """ Table, where all emails are stored, and admin have to confirm them
     """
     
@@ -26,3 +26,4 @@ class Emails(models.Model):
     subject = models.CharField(max_length = 100)
     msg_state = models.CharField(max_length=1, choices=MSG_STATES)
     email_state = models.CharField(max_length=1, choices=EMAIL_STATES)
+    req_date = models.DateTimeField(auto_now = True)
