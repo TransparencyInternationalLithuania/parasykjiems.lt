@@ -13,12 +13,14 @@ class Command(BaseCommand):
 
 
     def SendPageMessages(self, page):
+        count = 0
         """ Puts messages into queue for all additional links found in page"""
         for link in page.links:
             if (link.href is None):
                 continue
             print "creating message for object '%s' " % (link)
             self.queue.SendMessage(link.href)
+            count += 1
 
         for link in page.otherPages:
             if (link.href is None):
@@ -28,6 +30,9 @@ class Command(BaseCommand):
                 break
             print "creating message for other page \n'%s' " % (link)
             self.queue.SendMessage(link.href)
+            count += 1
+
+        return count
 
 
     def handle(self, *args, **options):
@@ -43,21 +48,17 @@ class Command(BaseCommand):
 
         print "starting import procedure"
 
-        msgCount = 0
-
+        time = TimeMeasurer()
+        totalCreatedMessages = 0
+        totalParsedMessages = 0
         while (True):
             msg = self.queue.ReadMessage()
             if (msg is None):
                 print "no more messages, quitting"
                 break
 
+            totalParsedMessages += 1
 
-            msgCount += 1
-            if (msgCount > 2000):
-                print "maximum 2 messages can be processed"
-                break
-
-            
             self.queue.MQServer.BeginTransaction()
             url = msg.body
             print "parsing url %s" % url
@@ -68,8 +69,12 @@ class Command(BaseCommand):
             pageParser = RegisterCenterParser(lines)
             page = pageParser.parse()
 
-            self.SendPageMessages(page)
+            totalCreatedMessages += self.SendPageMessages(page)
 
 
             #queue.ConsumeMessage(msg)
             self.queue.MQServer.Commit()
+
+        print "Took %s seconds" % time.ElapsedSeconds()
+        print "Created total %s additional messages" % totalCreatedMessages
+        print "Made %s requirests. Avg %s fetches per second" % (totalParsedMessages, totalParsedMessages / time.ElapsedSeconds()) 
