@@ -53,7 +53,9 @@ class LTRegisterQueue(Component):
         and inserted as LT Geo Data. The page will contain links to deeper levels, which will be
         later inserted as other messoges"""
         #self.SendMessage(self.rootRegisterCenterAddress)
-        self.SendMessage("http://www.registrucentras.lt/adr/p/index.php?sen_id=5")
+        #self.SendMessage("http://www.registrucentras.lt/adr/p/index.php?sen_id=5")
+
+        self.SendMessage("http://www.registrucentras.lt/adr/p/index.php?sav_id=4")
 
 
     def SendMessage(self, msgBody):
