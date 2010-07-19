@@ -40,6 +40,7 @@ class AddressSearch:
             else:
                 district = ''
             records = self.search_for_addr(table.objects.all(), district, 'district')
+            
             records = self.search_for_addr(records, city, 'city')
             records = self.search_for_addr(records, street, 'street')
             if not records:
