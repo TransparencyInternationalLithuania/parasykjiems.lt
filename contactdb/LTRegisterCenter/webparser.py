@@ -181,12 +181,12 @@ LIETUVOS RESPUBLIKA / Tauragės apskr. / Pagėgių sav. / Natkiškių sen. / Nat
             twoforward = firstResult.next.next
             if (hasattr(twoforward, "name")):
                 if (twoforward.name == "br"):
-                    break;
+                    break
             # sometimes page breaks is a bit further the line. just check again
             # yes, lame. but works, and fixes unit test
             if (hasattr(twoforward.next, "name")):
                 if (twoforward.next.name == "br"):
-                    break;
+                    break
 
             # loop to next hyperlink
             firstResult = firstResult.next.next.next
