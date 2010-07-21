@@ -17,24 +17,26 @@ class IndexForm(forms.Form):
     address = forms.CharField(max_length=255)
 
 def index(request):
-    entered = ''
-    suggestions = []
     a_s = AddressSearch()
+    query_string = ' '
+    found_entries = None
     all_mps = ParliamentMember.objects.all()
     if request.method == 'POST':
         form = IndexForm(request.POST)
         if form.is_valid():
-            entered = form.cleaned_data['address']
-            suggestions = a_s.get_addr_suggests(PollingDistrictStreet, entered)
-        if not suggestions:
-            entered = _('Street, City and District have to be separated with ","')
+            query_string = form.cleaned_data['address']
+        else:
+            query_string = '*'
+        entry_query = a_s.get_query(query_string, ['street', 'city', 'district'])
+        
+        found_entries = PollingDistrictStreet.objects.filter(entry_query).order_by('street')
     else:
         form = IndexForm()
     return render_to_response('pjweb/index.html', {
         'all_mps': all_mps,
         'form': form,
-        'entered': entered,
-        'suggestions': suggestions,
+        'entered': query_string,
+        'suggestions': found_entries,
     })
 
 def no_email(request, mp_id):
@@ -124,3 +126,4 @@ def contact(request, mp_id):
         'form': form,
         'mp_id': mp_id,
     })
+

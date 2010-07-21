@@ -70,9 +70,12 @@ INSTALLED_APPS = (
     'parasykjiems.pjweb',
     'parasykjiems.pjutils',
 
-    'django.contrib.admin'
+    'django.contrib.admin',
 )
 
+HAYSTACK_SITECONF = 'parasykjiems.search_sites'
+HAYSTACK_SEARCH_ENGINE = 'whoosh'
+HAYSTACK_WHOOSH_PATH = '/home/vytautas/mano/django/parasykjiems/index'
 
 def prepareSettingsLocal():
     import os
