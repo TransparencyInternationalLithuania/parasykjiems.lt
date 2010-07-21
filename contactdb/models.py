@@ -9,8 +9,6 @@ class Constituency(models.Model):
      Baltijos rinkimų apygarda Nr. 20
      Kauno Kėinių rinkimų apygarda Nr. 65
      etc
-
-     TODO should be renamed to constituency
      """
     name = models.CharField(max_length = 100)
     nr = models.IntegerField()
