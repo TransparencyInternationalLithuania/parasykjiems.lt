@@ -54,7 +54,7 @@ def thanks(request, mp_id):
     parliament_member = ParliamentMember.objects.all().filter(
                 id__exact=mp_id
             )
-    ThanksMessage = _('Thank you. Your email to %(name)s %(surname)s has been sent.') % {
+    ThanksMessage = _('Thank you. You will be informed, when %(name)s %(surname)s get the message.') % {
         'name':parliament_member[0].name, 'surname':parliament_member[0].surname
     }
     return render_to_response('pjweb/thanks.html', {
