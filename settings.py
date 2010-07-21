@@ -58,8 +58,6 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'parasykjiems.urls'
 
-
-
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
