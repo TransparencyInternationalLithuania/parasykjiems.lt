@@ -14,19 +14,7 @@ class Command(BaseCommand):
 
         models = [PollingDistrictStreet, ParliamentMember, Constituency]
 
-        print "Will clear %d models" % (len(models))
-
-        for model in models:
-            dbTable = model.objects.model._meta.db_table
-
-            print "Clearing data from %s. (%s)" % (model.objects.model._meta.object_name, dbTable)
-            rowCount = model.objects.count()
-            print "Total %d rows" % rowCount
-
-            cursor.execute("delete from %s" % (dbTable))
-            transaction.commit_unless_managed()
-
-            print "Now it has %d rows" % model.objects.count()
-
+        ClearTablesData(models)
+        
         print "successfully cleared all data. ContactDB empty"
 

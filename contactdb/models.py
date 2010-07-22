@@ -3,6 +3,32 @@
 
 from django.db import models
 
+
+class HierarchicalGeoData(models.Model):
+    """ A hierarchical geo data structure """
+
+
+    # types of hierarchical data. Note that correctness is not enforced programitcally
+    # Which means that Country can be put below City, and vice-versa.
+    # Import tools must ensure that data is logically inserted
+    HierarchicalGeoDataType = (
+        ('Country', 'Country'),
+        ('County', 'County'), # Apskritis
+        ('Municipality', 'Municipality'), # Savivaldybė
+        ('Parish', 'Parish'), # Seniūnija
+        ('City', 'City')
+    )
+
+
+
+    name = models.CharField(max_length = 100)
+    parent = models.ForeignKey('self', blank=True, null=True, related_name="children", help_text="Parent data, if this is a child node.")
+    type = models.CharField(max_length=20, choices=HierarchicalGeoDataType)
+
+    
+
+
+
 class Constituency(models.Model):
     """ Contains counties, for example:
      Constituency: Danės rinkimų apygarda Nr. 19
