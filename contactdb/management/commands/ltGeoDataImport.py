@@ -55,7 +55,7 @@ class Command(BaseCommand):
 
             if (locationInDB is None):
                 # that means we have to create it
-                self._CreateNewLocationObject(location.text, location.type, parentLocationObject)
+                locationInDB = self._CreateNewLocationObject(location.text, location.type, parentLocationObject)
                 insertedRows += 1
 
             parentLocationName = location
@@ -68,6 +68,7 @@ class Command(BaseCommand):
         locationInDB.name = text
         locationInDB.type = type
         locationInDB.save()
+        return locationInDB
 
 
     def _InsertContentRows(self, page):
