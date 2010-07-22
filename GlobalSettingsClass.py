@@ -9,11 +9,11 @@ class GlobalSettingsClass():
     def __repr__(self):
         return "A global settings repository. Provides some nice help information for undefined names"
 
-    def EnableWWWForLTGeoTests(self):
+    def _EnableWWWForLTGeoTests(self):
         print "Define EnableWWWForLTGeoTests settings. Needed to check if run geo tests against real world data. Default is False "
 
 
-    def LTGeoDataParseUrl(self):
+    def _LTGeoDataParseUrl(self):
         print """Define an URL for Lithuanian RegisterCenter root page. From that page data will be extracted
         hierarchicaly from top to bottom. Don't set this variable to root url, unless you are on production.
         We dont want to bomb RegisterCetnter.lt with too many uneccesary requests"""
@@ -23,8 +23,8 @@ class GlobalSettingsClass():
         # define a dictionary of functions.  emulating switch here
         printMoreInfo = {'GOOGLE_DOCS_USER' : self.googleDocsUsers,
                          'GOOGLE_DOCS_PASSWORD' : self.googleDocsUsers,
-                         'EnableWWWForLTGeoTests' : self.EnableWWWForLTGeoTests,
-                         'LTGeoDataParseUrl' : self.LTGeoDataParseUrl}
+                         'EnableWWWForLTGeoTests' : self._EnableWWWForLTGeoTests,
+                         'LTGeoDataParseUrl' : self._LTGeoDataParseUrl}
         if (name in printMoreInfo):
             printMoreInfo[name]()
 

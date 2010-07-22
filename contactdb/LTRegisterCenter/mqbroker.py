@@ -59,6 +59,7 @@ class LTRegisterQueue(Component):
 
 
     def SendMessage(self, msgBody):
+        msgBody = str(msgBody)
         msg = amqp.Message(msgBody)
         msg.properties["delivery_mode"] = self.persistentMessageMode
         self.mqServer.Channel.basic_publish(msg, exchange=self.exchangeName, routing_key= self.routingKey)
