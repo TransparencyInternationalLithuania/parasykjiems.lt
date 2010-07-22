@@ -64,7 +64,7 @@ class Command(BaseCommand):
 
             if (locationInDB is None):
                 # that means we have to create it
-                self._CreateNewLocationObject(location.text, locatoin.type, parentLocationObject)
+                self._CreateNewLocationObject(location.text, location.type, parentLocationObject)
                 insertedRows += 1
 
             parentLocationName = location

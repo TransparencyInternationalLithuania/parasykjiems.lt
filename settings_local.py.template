@@ -39,7 +39,10 @@ GlobalSettings.EnableWWWForLTGeoTests = False
 
 # more than 2k request
 # GlobalSettings.LTGeoDataParseUrl = "http://www.registrucentras.lt/adr/p/index.php"
-# around 40 web pages
+# Whole Alytaus Apskritis. 218 requests
+# GlobalSettings.LTGeoDataParseUrl = "http://www.registrucentras.lt/adr/p/index.php?aps_id=1"
+# around 47 web pages
 # GlobalSettings.LTGeoDataParseUrl = "http://www.registrucentras.lt/adr/p/index.php?sav_id=4"
 # around 8 web pages
+
 GlobalSettings.LTGeoDataParseUrl = "http://www.registrucentras.lt/adr/p/index.php?sen_id=5"
