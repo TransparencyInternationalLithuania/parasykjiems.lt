@@ -11,14 +11,20 @@ class GlobalSettingsClass():
 
     def EnableWWWForLTGeoTests(self):
         print "Define EnableWWWForLTGeoTests settings. Needed to check if run geo tests against real world data. Default is False "
-    
+
+
+    def LTGeoDataParseUrl(self):
+        print """Define an URL for Lithuanian RegisterCenter root page. From that page data will be extracted
+        hierarchicaly from top to bottom. Don't set this variable to root url, unless you are on production.
+        We dont want to bomb RegisterCetnter.lt with too many uneccesary requests"""
 
     def printHelpForSetting(self, name):
         print "\n\n\n"
         # define a dictionary of functions.  emulating switch here
         printMoreInfo = {'GOOGLE_DOCS_USER' : self.googleDocsUsers,
                          'GOOGLE_DOCS_PASSWORD' : self.googleDocsUsers,
-                         'EnableWWWForLTGeoTests' : self.EnableWWWForLTGeoTests}
+                         'EnableWWWForLTGeoTests' : self.EnableWWWForLTGeoTests,
+                         'LTGeoDataParseUrl' : self.LTGeoDataParseUrl}
         if (name in printMoreInfo):
             printMoreInfo[name]()
 

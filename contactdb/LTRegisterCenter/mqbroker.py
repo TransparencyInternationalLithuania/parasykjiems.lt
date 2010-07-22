@@ -1,5 +1,6 @@
 from amqplib import client_0_8 as amqp
 from FeatureBroker import *
+from settings import *
 
 
 
@@ -39,7 +40,7 @@ class LTRegisterQueue(Component):
     queueName = "po_box"
     exchangeName = "sorting_room"
     routingKey = "jason"
-    rootRegisterCenterAddress = "http://www.registrucentras.lt/adr/p/index.php"
+    
     persistentMessageMode = 2
 
 
@@ -53,14 +54,8 @@ class LTRegisterQueue(Component):
         and inserted as LT Geo Data. The page will contain links to deeper levels, which will be
         later inserted as other messoges"""
 
-        # whole Lithuania
-        #self.SendMessage(self.rootRegisterCenterAddress)
-
-        # around 8 web pages
-        self.SendMessage("http://www.registrucentras.lt/adr/p/index.php?sen_id=5")
-
-        # around 40 web pages
-        #self.SendMessage("http://www.registrucentras.lt/adr/p/index.php?sav_id=4")
+        # send initial message with a defined URL in GlobalSettings
+        self.SendMessage(GlobalSettings.LTGeoDataParseUrl)
 
 
     def SendMessage(self, msgBody):
