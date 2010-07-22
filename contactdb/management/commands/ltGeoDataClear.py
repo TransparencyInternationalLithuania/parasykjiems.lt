@@ -17,5 +17,9 @@ class Command(BaseCommand):
         print "Clearing queue from any messages that were left unprocessed"
 
         queue = LTRegisterQueue()
+        if (queue.IsEmpty()):
+            print "queue is already empty"
+            return
+            
         queue.Clear()
         print "queue has been cleared"
