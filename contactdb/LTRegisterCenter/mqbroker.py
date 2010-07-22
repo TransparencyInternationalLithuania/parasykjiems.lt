@@ -52,9 +52,14 @@ class LTRegisterQueue(Component):
         """ Will initialise queue with a single message, witch will mean that a specific URL must be parsed
         and inserted as LT Geo Data. The page will contain links to deeper levels, which will be
         later inserted as other messoges"""
+
+        # whole Lithuania
         #self.SendMessage(self.rootRegisterCenterAddress)
+
+        # around 8 web pages
         self.SendMessage("http://www.registrucentras.lt/adr/p/index.php?sen_id=5")
 
+        # around 40 web pages
         #self.SendMessage("http://www.registrucentras.lt/adr/p/index.php?sav_id=4")
 
 
@@ -84,12 +89,17 @@ class LTRegisterQueue(Component):
 
     def Clear(self):
         """ Clear the queue of any pending messages. This is done by reading manually all messages
-        until there is none"""
+        until there is none.
+        """
+
+        count = 0
         while (True):
             msg = self.ReadMessage()
             if (msg is None):
                 break;
+            count += 1
             self.ConsumeMessage(msg)
+        print "cleared  total %s messages " % count
 
 
     def IsEmpty(self):
