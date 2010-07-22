@@ -49,6 +49,9 @@ class Command(BaseCommand):
 
         # ensure all location objects are created in database
         #PollingDistrictStreet.objects.filter(electionDistrict = electionDistrict).delete()
+
+        insertedRows = 0
+
         parentLocationName = None
         parentLocationObject = None
         for location in page.location:
@@ -68,9 +71,11 @@ class Command(BaseCommand):
                 locationInDB.name = location.text
                 locationInDB.type = location.type
                 locationInDB.save()
+                insertedRows += 1
 
             parentLocationName = location
             parentLocationObject = locationInDB
+        return insertedRows
 
         
 
@@ -101,6 +106,7 @@ class Command(BaseCommand):
         lastMessageTime = elapsedTime.ElapsedSeconds()
         totalCreatedMessages = 0
         totalParsedMessages = 0
+        totalInsertedRows = 0
 
 
 
@@ -140,14 +146,14 @@ class Command(BaseCommand):
             # add external links as messages
             totalCreatedMessages += self.SendPageMessages(page)
             # create rows in database
-            self.CreateGeoRows(page)
+            totalInsertedRows += self.CreateGeoRows(page)
 
 
             self.queue.ConsumeMessage(msg)
             self.queue.MQServer.Commit()
-            print "Created total %s additional messages" % totalCreatedMessages
+            print "Created total %s additional messages. Inserted %s rows into db" % (totalCreatedMessages, totalInsertedRows)
             print "Made %s requirests. Avg %s fetches per second" % (totalParsedMessages, totalParsedMessages / elapsedTime.ElapsedSeconds())
 
         print "Took %s seconds" % elapsedTime.ElapsedSeconds()
-        print "Created total %s additional messages" % totalCreatedMessages
+        print "Created total %s additional messages. Inserted %s rows into db" % (totalCreatedMessages, totalInsertedRows)
         print "Made %s requirests. Avg %s fetches per second" % (totalParsedMessages, totalParsedMessages / elapsedTime.ElapsedSeconds())
