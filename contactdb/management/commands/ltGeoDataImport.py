@@ -53,15 +53,6 @@ class Command(BaseCommand):
                 parentLocationText = parentLocationName.text
             locationInDB = HierarchicalGeoData.FindByName(location.text, parentName = parentLocationText)
 
-#            if (parentLocationName is not None):
-#                locationInDB = HierarchicalGeoData.objects.filter(parent__name = parentLocationName.text).filter(name = location.text)
-#            else:
-#                locationInDB = HierarchicalGeoData.objects.filter(name = location.text)
-#            try:
-#                locationInDB = locationInDB[0:1].get()
-#            except contactdb.models.HierarchicalGeoData.DoesNotExist:
-#                locationInDB = None
-
             if (locationInDB is None):
                 # that means we have to create it
                 self._CreateNewLocationObject(location.text, location.type, parentLocationObject)
