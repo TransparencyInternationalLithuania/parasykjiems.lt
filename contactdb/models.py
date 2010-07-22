@@ -16,7 +16,8 @@ class HierarchicalGeoData(models.Model):
         ('County', 'County'), # Apskritis
         ('Municipality', 'Municipality'), # Savivaldybė
         ('Parish', 'Parish'), # Seniūnija
-        ('City', 'City')
+        ('City', 'City'),
+        ('Street', 'Street')
     )
 
 
@@ -24,6 +25,21 @@ class HierarchicalGeoData(models.Model):
     name = models.CharField(max_length = 100)
     parent = models.ForeignKey('self', blank=True, null=True, related_name="children", help_text="Parent data, if this is a child node.")
     type = models.CharField(max_length=20, choices=HierarchicalGeoDataType)
+
+    @classmethod
+    def FindByName(cls, name, type=None, parentName = None):
+        locationInDB = HierarchicalGeoData.objects.filter(name = name)
+        if (parentName is not None):
+            locationInDB = locationInDB.filter(parent__name = parentName)
+        if (type is not None):
+            locationInDB = locationInDB.filter(type = type)
+
+        try:
+            locationInDB = locationInDB[0:1].get()
+        except HierarchicalGeoData.DoesNotExist:
+            locationInDB = None
+
+        return locationInDB
 
     
 

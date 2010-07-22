@@ -7,8 +7,12 @@ from parasykjiems.FeatureBroker.configs import defaultConfig
 from contactdb.LTRegisterCenter.mqbroker import LTRegisterQueue
 from contactdb.LTRegisterCenter.webparser import RegisterCenterParser, RegisterCenterPage
 from urllib2 import urlopen
+from pjutils.exc import ChainnedException
 import time
 import contactdb.models
+
+class LTGeoDataImportException(ChainnedException):
+    pass
 
 class Command(BaseCommand):
     args = '<>'
@@ -38,6 +42,70 @@ class Command(BaseCommand):
 
         return count
 
+    def _InsertLocationRows(self, page):
+        insertedRows = 0
+        parentLocationName = None
+        parentLocationObject = None
+        for location in page.location:
+
+            parentLocationText = None
+            if (parentLocationName is not None):
+                parentLocationText = parentLocationName.text
+            locationInDB = HierarchicalGeoData.FindByName(location.text, parentName = parentLocationText)
+
+#            if (parentLocationName is not None):
+#                locationInDB = HierarchicalGeoData.objects.filter(parent__name = parentLocationName.text).filter(name = location.text)
+#            else:
+#                locationInDB = HierarchicalGeoData.objects.filter(name = location.text)
+#            try:
+#                locationInDB = locationInDB[0:1].get()
+#            except contactdb.models.HierarchicalGeoData.DoesNotExist:
+#                locationInDB = None
+
+            if (locationInDB is None):
+                # that means we have to create it
+                self._CreateNewLocationObject(location.text, locatoin.type, parentLocationObject)
+                insertedRows += 1
+
+            parentLocationName = location
+            parentLocationObject = locationInDB
+        return insertedRows
+
+    def _CreateNewLocationObject(self, text, type, parentLocationObject):
+        locationInDB = HierarchicalGeoData()
+        locationInDB.parent = parentLocationObject
+        locationInDB.name = text
+        locationInDB.type = type
+        locationInDB.save()
+
+
+    def _InsertContentRows(self, page):
+        insertedRows = 0
+
+        # extract location hierarchical type
+        # Since page.location is a top-down hierarchy, so next element
+        # will be the deeper element in hierarchy (at least in Lithuanian hierarhchy version)
+        pageLocationLength = len(page.location)
+        type = HierarchicalGeoData.HierarchicalGeoDataType[pageLocationLength][0]
+        parentType = HierarchicalGeoData.HierarchicalGeoDataType[pageLocationLength - 1][0]
+        parentName = page.location[len(page.location) -1].text
+
+        parentLocationObject = HierarchicalGeoData.FindByName(name = parentName, type = parentType)
+        if (parentLocationObject is None):
+            raise LTGeoDataImportException("Could not find parent object by name %s and type " % (parentName, parentType) )
+
+        for link in page.links:
+            locationInDB = HierarchicalGeoData.FindByName(link.text, parentName = parentName)
+            if (locationInDB is not None):
+                continue
+            # create new location object
+            self._CreateNewLocationObject(link.text, type, parentLocationObject)
+            insertedRows += 1
+
+
+        return insertedRows
+
+
     @transaction.commit_on_success
     def CreateGeoRows(self, page):
         # create all rows in database for given page.
@@ -52,29 +120,10 @@ class Command(BaseCommand):
 
         insertedRows = 0
 
-        parentLocationName = None
-        parentLocationObject = None
-        for location in page.location:
-            if (parentLocationName is not None):
-                locationInDB = HierarchicalGeoData.objects.filter(parent__name = parentLocationName.text).filter(name = location.text)
-            else:
-                locationInDB = HierarchicalGeoData.objects.filter(name = location.text)
-            try:
-                locationInDB = locationInDB[0:1].get()
-            except contactdb.models.HierarchicalGeoData.DoesNotExist:
-                locationInDB = None
+        insertedRows += self._InsertLocationRows(page)
+        insertedRows += self._InsertContentRows(page)
 
-            if (locationInDB is None):
-                # that means we have to create it
-                locationInDB = HierarchicalGeoData()
-                locationInDB.parent = parentLocationObject
-                locationInDB.name = location.text
-                locationInDB.type = location.type
-                locationInDB.save()
-                insertedRows += 1
 
-            parentLocationName = location
-            parentLocationObject = locationInDB
         return insertedRows
 
         
