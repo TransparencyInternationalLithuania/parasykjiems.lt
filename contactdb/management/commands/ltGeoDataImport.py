@@ -1,11 +1,14 @@
 from django.core.management.base import BaseCommand
 from django.core import management
 from pjutils.timemeasurement import TimeMeasurer
+from django.db import transaction
+from contactdb.models import HierarchicalGeoData
 from parasykjiems.FeatureBroker.configs import defaultConfig
 from contactdb.LTRegisterCenter.mqbroker import LTRegisterQueue
 from contactdb.LTRegisterCenter.webparser import RegisterCenterParser, RegisterCenterPage
 from urllib2 import urlopen
 import time
+import contactdb.models
 
 class Command(BaseCommand):
     args = '<>'
@@ -35,6 +38,41 @@ class Command(BaseCommand):
 
         return count
 
+    @transaction.commit_on_success
+    def CreateGeoRows(self, page):
+        # create all rows in database for given page.
+        # A row is a hierarchical data node.
+        # page object must be RegisterCenterPage object
+        # page.locations refers to a hierarchical order where our new nodes will have to be put
+        # page.links is an actual data which we will insert into databse.
+        # page.links is a collection of LinkCell objects, so we will insert only the text part of it, not href
+
+        # ensure all location objects are created in database
+        #PollingDistrictStreet.objects.filter(electionDistrict = electionDistrict).delete()
+        parentLocationName = None
+        parentLocationObject = None
+        for location in page.location:
+            if (parentLocationName is not None):
+                locationInDB = HierarchicalGeoData.objects.filter(parent__name = parentLocationName.text).filter(name = location.text)
+            else:
+                locationInDB = HierarchicalGeoData.objects.filter(name = location.text)
+            try:
+                locationInDB = locationInDB[0:1].get()
+            except contactdb.models.HierarchicalGeoData.DoesNotExist:
+                locationInDB = None
+
+            if (locationInDB is None):
+                # that means we have to create it
+                locationInDB = HierarchicalGeoData()
+                locationInDB.parent = parentLocationObject
+                locationInDB.name = location.text
+                locationInDB.type = location.type
+                locationInDB.save()
+
+            parentLocationName = location
+            parentLocationObject = locationInDB
+
+        
 
     def handle(self, *args, **options):
 
@@ -63,6 +101,8 @@ class Command(BaseCommand):
         lastMessageTime = elapsedTime.ElapsedSeconds()
         totalCreatedMessages = 0
         totalParsedMessages = 0
+
+
 
         while (True):
             msg = self.queue.ReadMessage()
@@ -97,11 +137,16 @@ class Command(BaseCommand):
             pageParser = RegisterCenterParser(lines)
             page = pageParser.parse()
 
+            # add external links as messages
             totalCreatedMessages += self.SendPageMessages(page)
+            # create rows in database
+            self.CreateGeoRows(page)
 
 
-            #queue.ConsumeMessage(msg)
+            self.queue.ConsumeMessage(msg)
             self.queue.MQServer.Commit()
+            print "Created total %s additional messages" % totalCreatedMessages
+            print "Made %s requirests. Avg %s fetches per second" % (totalParsedMessages, totalParsedMessages / elapsedTime.ElapsedSeconds())
 
         print "Took %s seconds" % elapsedTime.ElapsedSeconds()
         print "Created total %s additional messages" % totalCreatedMessages

@@ -7,8 +7,10 @@ from contactdb.AdressParser import AddressParser
 from contactdb.imp import LithuanianConstituencyReader
 from contactdb.LTRegisterCenter.webparser import RegisterCenterParser, RegisterCenterPage, LinkCell
 from settings import *
+from contactdb.models import HierarchicalGeoData
 
 from urllib2 import urlopen
+import contactdb.models
 
 scriptPath = os.path.dirname( os.path.realpath( __file__ ) )
 
@@ -190,28 +192,36 @@ class TestLTRegisterCenterLocations(TestCase):
     def setUp(self):
         pass
 
+    def testPagegiuSavNaktiskiuVillageHtml_Types(self):
+       for lines in ReadSource(PagegiuSavNaktiskiuVillageHtml):
+           page = RegisterCenterParser(lines).parse()
+
+           self.assertEqual(5, len(page.location))
+           for i in range(0, len(page.location)):
+               self.assertEqual(HierarchicalGeoData.HierarchicalGeoDataType[i][0], page.location[i].type)
+
     def testPagegiuSavNaktiskiuVillageHtml(self):
         for lines in ReadSource(PagegiuSavNaktiskiuVillageHtml):
             page = RegisterCenterParser(lines).parse()
 
             self.assertEqual(5, len(page.location))
-            self.assertEqual("LIETUVOS RESPUBLIKA", page.location[0])
-            self.assertEqual("Tauragės apskr.", page.location[1])
-            self.assertEqual("Pagėgių sav.", page.location[2])
-            self.assertEqual("Natkiškių sen.", page.location[3])
-            self.assertEqual("Natkiškių k.", page.location[4])
+            self.assertEqual("LIETUVOS RESPUBLIKA", page.location[0].text)
+            self.assertEqual("Tauragės apskr.", page.location[1].text)
+            self.assertEqual("Pagėgių sav.", page.location[2].text)
+            self.assertEqual("Natkiškių sen.", page.location[3].text)
+            self.assertEqual("Natkiškių k.", page.location[4].text)
 
     def testAlytausSavAlytausSenHtml(self):
         for lines in ReadSource(AlytausSavAlytausSenHtml):
             page = RegisterCenterParser(lines).parse()
             self.assertEqual(4, len(page.location))
-            self.assertEqual("LIETUVOS RESPUBLIKA", page.location[0])
-            self.assertEqual("Alytaus apskr.", page.location[1])
-            self.assertEqual("Alytaus r. sav.", page.location[2])
-            self.assertEqual("Alytaus sen.", page.location[3])
+            self.assertEqual("LIETUVOS RESPUBLIKA", page.location[0].text)
+            self.assertEqual("Alytaus apskr.", page.location[1].text)
+            self.assertEqual("Alytaus r. sav.", page.location[2].text)
+            self.assertEqual("Alytaus sen.", page.location[3].text)
 
     def testLietuvosRespublika(self):
         for lines in ReadSource(LietuvosRespublikaHtml):
             page = RegisterCenterParser(lines).parse()
             self.assertEqual(1, len(page.location))
-            self.assertEqual("LIETUVOS RESPUBLIKA", page.location[0])
+            self.assertEqual("LIETUVOS RESPUBLIKA", page.location[0].text)

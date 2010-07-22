@@ -5,10 +5,13 @@ from urllib2 import urlopen
 from ClientForm import ParseResponse
 from BeautifulSoup import BeautifulSoup
 import re
+from contactdb.models import HierarchicalGeoData
 from pjutils.exc import ChainnedException
 from pjutils.uniconsole import *
 
 # forcing BeautifulSoup to allow <b> tag to have nested table and other tags
+import contactdb.models
+
 BeautifulSoup.RESET_NESTING_TAGS['b'] = []
 
 class PageParseException(ChainnedException):
@@ -17,13 +20,14 @@ class PageParseException(ChainnedException):
 class RegisterCenterPage:
     """ a class describing a RegisterCenter page.
     A parsed page will consist of 3 main parts:
-    * a location part, which will describe which geographical part this page is describing
+    * a location part, which will describe which geographical part this page is describing. A collection of PageLocation
+      objects
     * a links part - this is the main data that the page holds. This will be either district or street names, etc
     * additional links part - a link to "more results". Some cities are very big, so streets will be displayed on
     several pages. So this will contain links to those other pages."""
 
 
-    # a list of str objects
+    # a list of PageLocation objects
     location = []
     # a list of LinkCell objects
     links = []
@@ -46,6 +50,26 @@ class LinkCell:
     def __str__(self):
         return "text: %s  url: %s" % (self.text, self.href)
 
+
+class PageLocation:
+    """ Each RegisterCenterPage is located in some place in hierarchical order. This class describes
+    a single location object in that hierarchical order.
+    So RegisterCenterPage will contain a list of PageLocation objects in hierarchical order top to bottom,
+    where each level will have a name and a type"""
+
+    # A name of the location, such a street name, or city name, or country name
+    name = ""
+    # a string describing a location type. It will be a string from data structure defined in
+    # HierarchicalGeoData.HierarchicalGeoDataType
+    type = ""
+
+    def __init__(self, text, type):
+        self.text = text
+        self.type = type
+
+
+
+
 class RegisterCenterParser:
     def __init__(self, htmlText):
         self.soupForm = BeautifulSoup(htmlText)
@@ -66,6 +90,11 @@ class RegisterCenterParser:
             raise PageParseException("Could not find 'Lietuvos Respublika' tag, can not continue")
         return lt
 
+    def _GetNewLocationObject(self, text, hierarchicalLocationPosition):
+        type = HierarchicalGeoData.HierarchicalGeoDataType[hierarchicalLocationPosition][0]
+        return PageLocation(text, type)
+
+
     def GetLocation(self):
         """ extracts from a register page a list of locations.
         A location looks something like this (without all the htmls tags of course)       
@@ -74,9 +103,12 @@ LIETUVOS RESPUBLIKA / Tauragės apskr. / Pagėgių sav. / Natkiškių sen. / Nat
         location = []
         lt = self._GetLocationsFirstTag()
 
-        # always add first location. also remove any \n characters with regexp
+        # this will determine position in code hierarchy
+        hierarchicalLocationPosition = 0
 
-        location.append(self._removeLineBreaks(lt))
+        # always add first location. also remove any \n characters with regexp
+        location.append(self._GetNewLocationObject(self._removeLineBreaks(lt), hierarchicalLocationPosition))
+
 
         # if first location is contained in bold tag, then no other tags will be present
         if (lt.parent.name == 'b'):
@@ -91,7 +123,11 @@ LIETUVOS RESPUBLIKA / Tauragės apskr. / Pagėgių sav. / Natkiškių sen. / Nat
 
             # add location name
             nextName = root.next.next
-            location.append(self._removeLineBreaks(nextName))
+
+            # go down in the hierarchy
+            hierarchicalLocationPosition += 1
+            # add new location object
+            location.append(self._GetNewLocationObject(self._removeLineBreaks(nextName), hierarchicalLocationPosition))
 
             # check if this is the last tag by searching for <br> tags
             brTag = root.next.next.next
