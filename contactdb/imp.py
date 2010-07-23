@@ -15,6 +15,8 @@ class GoogleDocsSources:
 
     # parliament members
     LithuanianMPs = "parasykjiems.lt 2"
+    # Seniūnai / Foreman
+    LithuanianForemen = "parasykjiems.lt 3 seniunai" 
 
 
 
