@@ -69,11 +69,12 @@ INSTALLED_APPS = (
     'parasykjiems.pjutils',
 
     'django.contrib.admin',
+    'haystack',
 )
 
 HAYSTACK_SITECONF = 'parasykjiems.search_sites'
-HAYSTACK_SEARCH_ENGINE = 'whoosh'
-HAYSTACK_WHOOSH_PATH = '/home/vytautas/mano/django/parasykjiems/index'
+HAYSTACK_SEARCH_ENGINE = 'solr'
+HAYSTACK_SOLR_URL = 'http://127.0.0.1:8983/solr'
 
 def prepareSettingsLocal():
     import os

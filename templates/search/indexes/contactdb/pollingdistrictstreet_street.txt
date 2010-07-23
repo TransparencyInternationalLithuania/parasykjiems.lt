@@ -1,0 +1,3 @@
+{{ object.city }}
+{{ object.district }}
+
