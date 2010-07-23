@@ -27,7 +27,7 @@ class Command(BaseCommand):
             return None
 
 
-    #@transaction.commit_on_success
+    @transaction.commit_on_success
     def handle(self, *args, **options):
         fileName = os.path.join(os.getcwd(), ImportSources.LithuanianCivilParishMembers)
         reader = CivilParishMembersReader(fileName)

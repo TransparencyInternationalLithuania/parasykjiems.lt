@@ -1,5 +1,5 @@
 
-from contactdb.models import Constituency, CivilParishMember, ParliamentMember
+from contactdb.models import MunicipalityMember
 from pjutils.exc import ChainnedException
 from contactdb.imp import LithuanianConstituencyParser
 from django.core.exceptions import ObjectDoesNotExist
@@ -10,6 +10,24 @@ import csv
 class ParliamentMemberImportError(ChainnedException):
     def __init__(self, message, inner = None):
         ChainnedException.__init__(self, message, inner)
+
+
+class MunicipalityMembersReader:
+    def __init__(self, fileName):
+        self.dictReader = csv.DictReader(open(fileName, "rt"), delimiter = "\t")
+
+
+    def ReadMembers(self):
+        for row in self.dictReader:
+            member = MunicipalityMember()
+            member.name = row["name"].strip()
+            member.surname = row["surname"].strip()
+            member.email = row["e-mail"]
+            member.phone = row["telephonenumber"].strip()
+            member.mobilePhone = row["mobilenumber"].strip()
+            member.address = row["address"].strip()
+            member.municipalityStr = row["municipality"].strip()
+            yield member
 
 
 class CivilParishMembersReader:
