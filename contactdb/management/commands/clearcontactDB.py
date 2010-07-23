@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand
 from contactdb.models import *
 from django.db import connection, transaction
+from contactdb.management.commands.ltGeoDataDBClear import ClearTablesData
 
 
 class Command(BaseCommand):

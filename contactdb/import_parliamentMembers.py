@@ -20,14 +20,14 @@ class CivilParishMembersReader:
     def ReadMembers(self):
         for row in self.dictReader:
             member = CivilParishMember()
-            member.name = row["name"]
-            member.surname = row["surname"]
+            member.name = row["name"].strip()
+            member.surname = row["surname"].strip()
             #member.email = row["e-mail"]
-            member.personalPhone = row["personaltelephonenumber"]
-            member.officeEmail = row["officee-mail"]
-            member.officePhone = row["officetelephonenumber"]
-            member.officeAddress = row["officeaddress"]
-            member.civilParishStr = row["institution"]
+            member.personalPhone = row["personaltelephonenumber"].strip()
+            member.officeEmail = row["officee-mail"].strip()
+            member.officePhone = row["officetelephonenumber"].strip()
+            member.officeAddress = row["officeaddress"].strip()
+            member.civilParishStr = row["institution"].strip()
             yield member
 
 
