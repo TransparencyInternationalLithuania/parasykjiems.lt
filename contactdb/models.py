@@ -86,7 +86,7 @@ class CivilParishMember(models.Model):
     name = models.CharField(max_length = 50)
     surname = models.CharField(max_length = 50)
     email = models.CharField(max_length = 100)
-    civilParish = models.ForeignKey(HierarchicalGeoData)
+    civilParish = models.ForeignKey(HierarchicalGeoData, null=True)
     personalPhone = models.CharField(max_length = 20)
     officeEmail = models.EmailField()
     officePhone = models.CharField(max_length = 20)

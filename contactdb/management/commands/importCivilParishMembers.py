@@ -22,13 +22,12 @@ class Command(BaseCommand):
 
     def alreadyExists(self, name, surname):
         try:
-            CivilParishMember.objects.get(name = name, surname = surname)
+            return CivilParishMember.objects.get(name = name, surname = surname)
         except ObjectDoesNotExist:
-            return False
-        return True
+            return None
 
 
-    @transaction.commit_on_success
+    #@transaction.commit_on_success
     def handle(self, *args, **options):
         fileName = os.path.join(os.getcwd(), ImportSources.LithuanianCivilParishMembers)
         reader = CivilParishMembersReader(fileName)
@@ -42,23 +41,26 @@ class Command(BaseCommand):
         for member in reader.ReadMembers():
 
             # check if already such member exists. Name and surname are primary keys
-            if (self.alreadyExists(member.name, member.surname) == True):
-                print "member %s %s already exists, CivilParish %s %d " % (member.name, member.surname, member.civilParish.name)
+            m = self.alreadyExists(member.name, member.surname)
+            if (m is not None):
+                print "already exists: %s %s %s " % (m.name, m.surname, m.civilParish.name)
                 continue
 
             # if does not exist, create it
             # relate existing constituency to an MP
             try:
-                member.civilParish = HierarchicalGeoData.objects.get(name = member.civilParishStr, type = HierarchicalGeoData.HierarchicalGeoDataType[3][1])
+                type = HierarchicalGeoData.HierarchicalGeoDataType[3][0]
+                name = member.civilParishStr
+                member.civilParish = HierarchicalGeoData.objects.filter(name = name).filter(type = type)[0:1].get()
             except ObjectDoesNotExist:
-                raise ImportCivilParishMemberException("""Parish with name '%s' and type %s could not be found in database. Either the database is
+                raise ImportCivilParishMemberException("""Parish with name '%s' and type '%s' could not be found in database. Either the database is
 not yet populated with Parish, or it is missing (probably because import data does not contain it)""" % \
-                    (member.civilParishStr, HierarchicalGeoData.HierarchicalGeoDataType[3][1]))
+                    (name, type))
 
 
             member.save()
-            print (u"Imported parish member %s %s %s" % (member.name, member.surname, member.civilParish.text))
+            print (u"Imported parish member %s %s %s" % (member.name, member.surname, member.civilParish.name))
             count += 1
-            if (count >= numberToPrint):
-                break;
+            if (count >= maxNumberToImport):
+                break
         print "succesfully imported %d Parish Members" % (count)
