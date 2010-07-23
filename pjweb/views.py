@@ -6,6 +6,7 @@ from parasykjiems.contactdb.models import PollingDistrictStreet, Constituency, P
 from pjutils.address_search import AddressSearch
 from django.utils.translation import ugettext as _
 from parasykjiems.pjweb.models import Email
+from haystack.query import SearchQuerySet
 
 class ContactForm(forms.Form):
     sender_name = forms.CharField(max_length=128)
@@ -27,9 +28,10 @@ def index(request):
             query_string = form.cleaned_data['address']
         else:
             query_string = '*'
-        entry_query = a_s.get_query(query_string, ['street', 'city', 'district'])
+        #entry_query = a_s.get_query(query_string, ['street', 'city', 'district'])
         
-        found_entries = PollingDistrictStreet.objects.filter(entry_query).order_by('street')
+        #found_entries = PollingDistrictStreet.objects.filter(entry_query).order_by('street')
+        found_entries = SearchQuerySet().auto_query(query_string)
     else:
         form = IndexForm()
     return render_to_response('pjweb/index.html', {
