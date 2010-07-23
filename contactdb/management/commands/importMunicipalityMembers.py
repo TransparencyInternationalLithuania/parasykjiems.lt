@@ -50,7 +50,7 @@ class Command(BaseCommand):
             # relate existing constituency to an MP
             try:
                 type = HierarchicalGeoData.HierarchicalGeoDataType[2][0]
-                name = member.municipalityStr
+                name = member.municipalityStr.replace('rajono', '').strip()
                 member.municipality = HierarchicalGeoData.objects.filter(name__contains=name).filter(type = type)[0:1].get()
             except ObjectDoesNotExist:
                 raise ImportMunicipalityMemberException("""Municipality with name '%s' and type '%s' could not be found in database. Either the database is
@@ -59,7 +59,7 @@ not yet populated with Municipalities, or it is missing (probably because import
 
 
             member.save()
-            print (u"Imported parish member %s %s %s" % (member.name, member.surname, member.municipality.name))
+            print (u"Imported municipality member %s %s %s" % (member.name, member.surname, member.municipality.name))
             count += 1
             if (count >= maxNumberToImport):
                 break

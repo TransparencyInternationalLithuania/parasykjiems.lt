@@ -97,6 +97,7 @@ class RegisterCenterParser:
         text = text.replace("k.", "kaimas")
         text = text.replace("r.", "rajono")
         text = text.replace("g.", "gatvė")
+        text = text.replace("m.", "miesto")
         return text
 
 
