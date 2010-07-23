@@ -78,6 +78,17 @@ class PollingDistrictStreet(models.Model):
     city = models.CharField(max_length = 50)
     # should be renamed to polling district
     electionDistrict = models.CharField(max_length = 100)
+
+
+class MunicipalityMember(models.Model):
+    name = models.CharField(max_length = 50)
+    surname = models.CharField(max_length = 50)
+    email = models.EmailField(max_length = 100)
+    municipality = models.ForeignKey(HierarchicalGeoData, null=True)
+    phone = models.CharField(max_length = 20)
+    mobilePhone = models.CharField(max_length = 20)
+    officeAddress = models.CharField(max_length = 100)
+
     
 
 class CivilParishMember(models.Model):
