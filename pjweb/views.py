@@ -5,8 +5,10 @@ from django.shortcuts import render_to_response
 from parasykjiems.contactdb.models import PollingDistrictStreet, Constituency, ParliamentMember
 from pjutils.address_search import AddressSearch
 from django.utils.translation import ugettext as _
+from parasykjiems.pjweb.models import Email
 
 class ContactForm(forms.Form):
+    sender_name = forms.CharField(max_length=128)
     subject = forms.CharField(max_length=100)
     message = forms.CharField(widget=forms.Textarea)
     sender = forms.EmailField()
@@ -15,24 +17,26 @@ class IndexForm(forms.Form):
     address = forms.CharField(max_length=255)
 
 def index(request):
-    entered = ''
-    suggestions = []
     a_s = AddressSearch()
+    query_string = ' '
+    found_entries = None
     all_mps = ParliamentMember.objects.all()
     if request.method == 'POST':
         form = IndexForm(request.POST)
         if form.is_valid():
-            entered = form.cleaned_data['address']
-            suggestions = a_s.get_addr_suggests(PollingDistrictStreet, entered)
-        if not suggestions:
-            entered = _('Street, City and District have to be separated with ","')
+            query_string = form.cleaned_data['address']
+        else:
+            query_string = '*'
+        entry_query = a_s.get_query(query_string, ['street', 'city', 'district'])
+        
+        found_entries = PollingDistrictStreet.objects.filter(entry_query).order_by('street')
     else:
         form = IndexForm()
     return render_to_response('pjweb/index.html', {
         'all_mps': all_mps,
         'form': form,
-        'entered': entered,
-        'suggestions': suggestions,
+        'entered': query_string,
+        'suggestions': found_entries,
     })
 
 def no_email(request, mp_id):
@@ -50,7 +54,7 @@ def thanks(request, mp_id):
     parliament_member = ParliamentMember.objects.all().filter(
                 id__exact=mp_id
             )
-    ThanksMessage = _('Thank you. Your email to %(name)s %(surname)s has been sent.') % {
+    ThanksMessage = _('Thank you. You will be informed, when %(name)s %(surname)s get the message.') % {
         'name':parliament_member[0].name, 'surname':parliament_member[0].surname
     }
     return render_to_response('pjweb/thanks.html', {
@@ -86,27 +90,40 @@ def contact(request, mp_id):
     parliament_member = ParliamentMember.objects.all().filter(
                 id__exact=mp_id
             )
-    if request.method == 'POST': # If the form has been submitted...
-        form = ContactForm(request.POST) # A form bound to the POST data
+
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
         if form.is_valid():
+            sender_name = form.cleaned_data['sender_name']
             subject = form.cleaned_data['subject']
             message = form.cleaned_data['message']
             sender = form.cleaned_data['sender']
             recipients = [parliament_member[0].email]
-            print recipients[0]
+            #print recipients[0]
             if not recipients[0]:
                 return HttpResponseRedirect('no_email')
             else:
-                from django.core.mail import send_mail
-                try:
-                    sendmail = send_mail(subject, message, sender, recipients)
-                except:
-                    return HttpResponseRedirect('smtp_error')
-            return HttpResponseRedirect('thanks') # Redirect after POST
+                #from django.core.mail import send_mail
+                #try:
+                mail = Email(
+                    sender_name = sender_name,
+                    sender = sender,
+                    recipient = recipients[0],
+                    subject = subject,
+                    message = message,
+                    msg_state = 'W',
+                )
+                print mail
+                mail.save()
+                    #sendmail = send_mail(subject, message, sender, recipients)
+                #except:
+                #    return HttpResponseRedirect('smtp_error')
+            return HttpResponseRedirect('thanks')
     else:
-        form = ContactForm() # An unbound form
+        form = ContactForm()
 
     return render_to_response('pjweb/contact.html', {
         'form': form,
         'mp_id': mp_id,
     })
+
