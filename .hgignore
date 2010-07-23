@@ -3,3 +3,4 @@ glob:*.*~
 glob:db/*
 glob:settings_local.py
 glob:.idea
+glob:contactdb/sources/*.csv
