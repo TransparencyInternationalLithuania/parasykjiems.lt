@@ -90,8 +90,19 @@ class RegisterCenterParser:
             raise PageParseException("Could not find 'Lietuvos Respublika' tag, can not continue")
         return lt
 
+    def _NormaliseLocationText(self, text):
+        text = text.replace("apskr.", "apskritis")
+        text = text.replace("sav.", "savivaldybė")
+        text = text.replace("sen.", "seniūnija")
+        text = text.replace("k.", "kaimas")
+        text = text.replace("r.", "rajono")
+        text = text.replace("g.", "gatvė")
+        return text
+
+
     def _GetNewLocationObject(self, text, hierarchicalLocationPosition):
         type = HierarchicalGeoData.HierarchicalGeoDataType[hierarchicalLocationPosition][0]
+        text = self._NormaliseLocationText(text)
         return PageLocation(text, type)
 
 
@@ -147,6 +158,7 @@ LIETUVOS RESPUBLIKA / Tauragės apskr. / Pagėgių sav. / Natkiškių sen. / Nat
     def ExtractLinkCell(self, cellTag):
         cell = LinkCell()
         cell.text = self._removeLineBreaks(cellTag.text)
+        cell.text = self._NormaliseLocationText(cell.text)
 
         if (cellTag.next is not None):
             href = cellTag.next

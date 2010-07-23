@@ -40,6 +40,9 @@ GlobalSettings.EnableWWWForLTGeoTests = False
 
 
 
+# Do not forget that it is possible to specify --max-depth n parameter, where n is the number of times
+#   parser goes down the hierarchy. So for example --max-depth 1 will take only the top first Lithuanian hierarchical
+#   administration order. --max-depth 3 will take only CivilParish data (seniūnijos), which will be only 66 requests
 # more than 2k request
 # GlobalSettings.LTGeoDataParseUrl = "http://www.registrucentras.lt/adr/p/index.php"
 # Whole Alytaus Apskritis. 218 requests
