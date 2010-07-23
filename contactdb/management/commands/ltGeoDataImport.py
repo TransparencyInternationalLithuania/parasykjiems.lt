@@ -1,4 +1,4 @@
-from django.core.management.base import BaseCommand
+from django.core.management.base import BaseCommand, make_option
 from django.core import management
 from pjutils.timemeasurement import TimeMeasurer
 from django.db import transaction
@@ -9,27 +9,38 @@ from contactdb.LTRegisterCenter.webparser import RegisterCenterParser, RegisterC
 from urllib2 import urlopen
 from pjutils.exc import ChainnedException
 import time
+from optparse import make_option
 import contactdb.models
 
 class LTGeoDataImportException(ChainnedException):
     pass
 
 class Command(BaseCommand):
-    args = '<>'
+    args = '<speed>'
     help = """Imports Geographical data for Lithuanian contact db from website http://www.registrucentras.lt/adr/p/index.php
 \nThe data is not in geographic coordinates though, it is simply a hierarchical structure of districts / counties / cities / streets/ etc"""
 
+    option_list = BaseCommand.option_list + (
+        make_option('-d', '--max-depth',
+            dest='max-depth',
+            metavar="depth-level",
+            default = "99",
+            help='Specify a maximum depth-level to parse. Counts from root location, even though current url might be deep in hierarchy'),
+        )
 
-    def SendPageMessages(self, page):
+
+    def _SendPageMessagesLinks(self, page):
         count = 0
-        """ Puts messages into queue for all additional links found in page"""
         for link in page.links:
             if (link.href is None):
                 continue
             print "creating message for object '%s' " % (link)
             self.queue.SendMessage(link.href)
             count += 1
+        return count
 
+    def _SendPageMessagesOtherPages(self, page):
+        count = 0
         for link in page.otherPages:
             if (link.href is None):
                 continue
@@ -39,6 +50,18 @@ class Command(BaseCommand):
             print "creating message for other page \n'%s' " % (link)
             self.queue.SendMessage(link.href)
             count += 1
+        return count
+
+    def SendPageMessages(self, page):
+        count = 0
+        """ Puts messages into queue for all additional links found in page"""
+        l = len(page.location)
+        if (l + 1> self.options['max-depth']):
+            print "reaached max-depth level, will not send any messages for sub-urls"
+        else:
+            count += self._SendPageMessagesLinks(page)
+
+        count += self._SendPageMessagesOtherPages(page)
 
         return count
 
@@ -123,6 +146,8 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         print "Checking if MQ is empty"
+        self.options = options
+        self.options['max-depth'] = int(self.options['max-depth'])
 
         # by default every second will be fetched 1 message.
         # so it will be 1 url fetch per 1 second
