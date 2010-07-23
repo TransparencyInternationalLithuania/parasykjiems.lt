@@ -17,6 +17,8 @@ If the import fails, then install ElementTree (http://pypi.python.org/pypi/eleme
 Installing the Google Data Library:
 http://code.google.com/p/gdata-python-client/downloads/list
 
+# install enum library
+pip install enum
 
 
 2. Available commands

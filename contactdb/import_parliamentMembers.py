@@ -1,5 +1,5 @@
 
-from contactdb.models import ParliamentMember, Constituency
+from contactdb.models import Constituency, CivilParishMember
 from pjutils.exc import ChainnedException
 from contactdb.imp import LithuanianConstituencyParser
 from django.core.exceptions import ObjectDoesNotExist
@@ -10,6 +10,26 @@ import csv
 class ParliamentMemberImportError(ChainnedException):
     def __init__(self, message, inner = None):
         ChainnedException.__init__(self, message, inner)
+
+
+class CivilParishMembersReader:
+    def __init__(self, fileName):
+        self.dictReader = csv.DictReader(open(fileName, "rt"), delimiter = "\t")
+
+
+    def ReadMembers(self):
+        for row in self.dictReader:
+            member = CivilParishMember()
+            member.name = row["name"]
+            member.surname = row["surname"]
+            #member.email = row["e-mail"]
+            member.personalPhone = row["personaltelephonenumber"]
+            member.officeEmail = row["officee-mail"]
+            member.officePhone = row["officetelephonenumber"]
+            member.officeAddress = row["officeaddress"]
+            member.civilParishStr = row["institution"]
+            yield member
+
 
 class LithuanianMPsReader:
     def __init__(self, fileName):
@@ -22,9 +42,7 @@ class LithuanianMPsReader:
 
         parser = LithuanianConstituencyParser()
 
-        count = 0
         for row in self.dictReader:
-            count += 1
 
 
             member = ParliamentMember()
@@ -33,17 +51,4 @@ class LithuanianMPsReader:
             member.surname = row["surname"]
             member.email = row["e-mail"]
 
-            try:
-                self.validateMember(member)
-            except ParliamentMemberImportError as e:
-                raise ParliamentMemberImportError("error importing line \n %(lineNumber)s \n %(line)s" % {'lineNumber' : count, 'line': row}, e)
-
             yield member
-
-    def validateMember(self, member):
-        return True
-
-
-#file = open("parliament members.txt", "r")
-#for p in ReadParliamentMembers(file):
-#    print p

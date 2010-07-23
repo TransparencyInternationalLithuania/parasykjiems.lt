@@ -10,12 +10,12 @@ class HierarchicalGeoData(models.Model):
 
     # types of hierarchical data. Note that correctness is not enforced programitcally
     # Which means that Country can be put below City, and vice-versa.
-    # Import tools must ensure that data is logically inserted
+    # Import tools must ensure that data is logically insert
     HierarchicalGeoDataType = (
         ('Country', 'Country'),
         ('County', 'County'), # Apskritis
         ('Municipality', 'Municipality'), # Savivaldybė
-        ('Parish', 'Parish'), # Seniūnija
+        ('CivilParish', 'Civil parish'), # Seniūnija
         ('City', 'City'),
         ('Street', 'Street')
     )
@@ -79,6 +79,18 @@ class PollingDistrictStreet(models.Model):
     # should be renamed to polling district
     electionDistrict = models.CharField(max_length = 100)
     
+
+class CivilParishMember(models.Model):
+    """ Seniūnas.  A CivilParish member is a regional representative, which helps solve local problems. He usually
+    manages a district in a city, or a bigger district out of town"""
+    name = models.CharField(max_length = 50)
+    surname = models.CharField(max_length = 50)
+    email = models.CharField(max_length = 100)
+    civilParish = models.ForeignKey(HierarchicalGeoData)
+    personalPhone = models.CharField(max_length = 20)
+    officeEmail = models.EmailField()
+    officePhone = models.CharField(max_length = 20)
+    officeAddress = models.CharField(max_length = 100)
 
 
 class ParliamentMember(models.Model):

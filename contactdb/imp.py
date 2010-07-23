@@ -9,6 +9,7 @@ from pjutils.deprecated import deprecated
 class ImportSources:
     LithuanianConstituencies = "contactdb/sources/apygardos.txt"
     LithuanianMPs = "contactdb/sources/parliament members.txt"
+    LithuanianCivilParishMembers = "contactdb/sources/LithuanianCivilParishMembers.csv"
 
 class GoogleDocsSources:
     """ collection of google docs documents for Lithuanian data"""
@@ -16,7 +17,7 @@ class GoogleDocsSources:
     # parliament members
     LithuanianMPs = "parasykjiems.lt 2"
     # Seniūnai / Foreman
-    LithuanianForemen = "parasykjiems.lt 3 seniunai" 
+    LithuanianCivilParishMembers = "parasykjiems.lt 3 seniunai"
 
 
 
