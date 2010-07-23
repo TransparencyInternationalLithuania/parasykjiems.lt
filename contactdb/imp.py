@@ -10,6 +10,7 @@ class ImportSources:
     LithuanianConstituencies = "contactdb/sources/apygardos.txt"
     LithuanianMPs = "contactdb/sources/parliament members.txt"
     LithuanianCivilParishMembers = "contactdb/sources/LithuanianCivilParishMembers.csv"
+    LithuanianMunicipalityMembers = "contactdb/sources/LithuanianMunicipalityMembers.csv"
 
 class GoogleDocsSources:
     """ collection of google docs documents for Lithuanian data"""
@@ -18,6 +19,8 @@ class GoogleDocsSources:
     LithuanianMPs = "parasykjiems.lt 2"
     # Seniūnai / Foreman
     LithuanianCivilParishMembers = "parasykjiems.lt 3 seniunai"
+    # Municipality mayors
+    LithuanianMunicipalityMembers = "parasykjiems.lt 4 merai" 
 
 
 

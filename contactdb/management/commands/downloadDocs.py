@@ -66,6 +66,7 @@ class Command(BaseCommand):
 
         self.downloadDoc(GoogleDocsSources.LithuanianMPs, ImportSources.LithuanianMPs)
         self.downloadDoc(GoogleDocsSources.LithuanianCivilParishMembers, ImportSources.LithuanianCivilParishMembers)
+        self.downloadDoc(GoogleDocsSources.LithuanianMunicipalityMembers, ImportSources.LithuanianMunicipalityMembers)
 
 
             
