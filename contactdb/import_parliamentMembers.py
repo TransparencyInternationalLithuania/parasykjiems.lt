@@ -31,6 +31,14 @@ class MunicipalityMembersReader:
 
 
 
+class SeniunaitijaStreetParser:
+
+    def GetStreets(self, streetStr):
+        str = streetStr.split(',')
+
+        for s in str:
+            yield s.strip() 
+
 
 
 class SeniunaitijaMembersReader:
