@@ -32,6 +32,7 @@ class Command(BaseCommand):
         for k in d.iterkeys():
             if d[k] is None:
                 continue
+            d[k] = d[k].replace("\n", " ")
 
             d[k] = d[k].encode("utf-8")
         return d
