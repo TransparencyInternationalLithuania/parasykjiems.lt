@@ -5,7 +5,7 @@ from django.db import transaction
 from contactdb.models import HierarchicalGeoData
 from parasykjiems.FeatureBroker.configs import defaultConfig
 from contactdb.LTRegisterCenter.mqbroker import LTRegisterQueue
-from contactdb.LTRegisterCenter.webparser import RegisterCenterParser, RegisterCenterPage
+from contactdb.LTRegisterCenter.webparser import RegisterCenterParser, RegisterCenterPage, LTGeoDataHierarchy
 from urllib2 import urlopen
 from pjutils.exc import ChainnedException
 import time
@@ -101,8 +101,8 @@ class Command(BaseCommand):
         # Since page.location is a top-down hierarchy, so next element
         # will be the deeper element in hierarchy (at least in Lithuanian hierarhchy version)
         pageLocationLength = len(page.location)
-        type = HierarchicalGeoData.HierarchicalGeoDataType[pageLocationLength][0]
-        parentType = HierarchicalGeoData.HierarchicalGeoDataType[pageLocationLength - 1][0]
+        type = LTGeoDataHierarchy.Hierarchy[pageLocationLength]
+        parentType = LTGeoDataHierarchy.Hierarchy[pageLocationLength - 1]
         parentName = page.location[len(page.location) -1].text
 
         parentLocationObject = HierarchicalGeoData.FindByName(name = parentName, type = parentType)
@@ -148,6 +148,8 @@ class Command(BaseCommand):
         print "Checking if MQ is empty"
         self.options = options
         self.options['max-depth'] = int(self.options['max-depth'])
+
+        print "max-depth is set to %d" % self.options['max-depth']
 
         # by default every second will be fetched 1 message.
         # so it will be 1 url fetch per 1 second
