@@ -1,5 +1,5 @@
 
-from contactdb.models import MunicipalityMember, SeniunaitijaMember, ParliamentMember
+from contactdb.models import MunicipalityMember, SeniunaitijaMember, ParliamentMember, CivilParishMember
 from pjutils.exc import ChainnedException
 from contactdb.imp import LithuanianConstituencyParser
 from django.core.exceptions import ObjectDoesNotExist
