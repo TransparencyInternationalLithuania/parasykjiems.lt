@@ -9,8 +9,16 @@ class PhoneField(CharField):
     description = _("Phone field")
 
     def __init__(self, *args, **kwargs):
-        kwargs['max_length'] = kwargs.get('max_length', 30)
+        kwargs['max_length'] = kwargs.get('max_length', 20)
         CharField.__init__(self, *args, **kwargs)
+
+class PersonNameField(CharField):
+    description = _("A person name field")
+
+    def __init__(self, *args, **kwargs):
+        kwargs['max_length'] = kwargs.get('max_length', 50)
+        CharField.__init__(self, *args, **kwargs)
+
 
 class HierarchicalGeoData(models.Model):
     """ A hierarchical geo data structure """
@@ -89,8 +97,8 @@ class PollingDistrictStreet(models.Model):
 
 
 class MunicipalityMember(models.Model):
-    name = models.CharField(max_length = 50)
-    surname = models.CharField(max_length = 50)
+    name = PersonNameField()
+    surname = PersonNameField()
     email = models.EmailField(max_length = 100)
     municipality = models.ForeignKey(HierarchicalGeoData, null=True)
     phone = PhoneField()
@@ -100,8 +108,8 @@ class MunicipalityMember(models.Model):
 class SeniunaitijaMember(models.Model):
     """ Seniunaitis. Is accountable to CivilParishMember. Basically he performs any sub-management
     compared to CivilParishMember. One hierarchy level deeper """
-    name = models.CharField(max_length = 50)
-    surname = models.CharField(max_length = 50)
+    name = PersonNameField()
+    surname = PersonNameField()
     email = models.EmailField()
     seniunaitija = models.ForeignKey(HierarchicalGeoData, null=True)
     role = models.CharField(max_length = 20)
@@ -114,8 +122,8 @@ class SeniunaitijaMember(models.Model):
 class CivilParishMember(models.Model):
     """ Seniūnas.  A CivilParish member is a regional representative, which helps solve local problems. He usually
     manages a district in a city, or a bigger district out of town"""
-    name = models.CharField(max_length = 50)
-    surname = models.CharField(max_length = 50)
+    name = PersonNameField()
+    surname = PersonNameField()
     email = models.EmailField()
     civilParish = models.ForeignKey(HierarchicalGeoData, null=True)
     personalPhone = PhoneField()
@@ -125,8 +133,8 @@ class CivilParishMember(models.Model):
 
 
 class ParliamentMember(models.Model):
-    name = models.CharField(max_length = 50)
-    surname = models.CharField(max_length = 50)
+    name = PersonNameField()
+    surname = PersonNameField()
     email = models.EmailField()
     constituency = models.ForeignKey(Constituency)
 
