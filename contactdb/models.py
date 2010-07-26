@@ -2,7 +2,15 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
+from django.db.models.fields import CharField
 
+
+class PhoneField(CharField):
+    description = _("Phone field")
+
+    def __init__(self, *args, **kwargs):
+        kwargs['max_length'] = kwargs.get('max_length', 30)
+        CharField.__init__(self, *args, **kwargs)
 
 class HierarchicalGeoData(models.Model):
     """ A hierarchical geo data structure """
@@ -85,10 +93,22 @@ class MunicipalityMember(models.Model):
     surname = models.CharField(max_length = 50)
     email = models.EmailField(max_length = 100)
     municipality = models.ForeignKey(HierarchicalGeoData, null=True)
-    phone = models.CharField(max_length = 20)
-    mobilePhone = models.CharField(max_length = 20)
+    phone = PhoneField()
+    mobilePhone = PhoneField()
     officeAddress = models.CharField(max_length = 100)
 
+class SeniunaitijaMember(models.Model):
+    """ Seniunaitis. Is accountable to CivilParishMember. Basically he performs any sub-management
+    compared to CivilParishMember. One hierarchy level deeper """
+    name = models.CharField(max_length = 50)
+    surname = models.CharField(max_length = 50)
+    email = models.EmailField()
+    seniunaitija = models.ForeignKey(HierarchicalGeoData, null=True)
+    role = models.CharField(max_length = 20)
+    phone = PhoneField()
+    homePhone = PhoneField()
+
+    
     
 
 class CivilParishMember(models.Model):
@@ -96,18 +116,18 @@ class CivilParishMember(models.Model):
     manages a district in a city, or a bigger district out of town"""
     name = models.CharField(max_length = 50)
     surname = models.CharField(max_length = 50)
-    email = models.CharField(max_length = 100)
+    email = models.EmailField()
     civilParish = models.ForeignKey(HierarchicalGeoData, null=True)
-    personalPhone = models.CharField(max_length = 20)
+    personalPhone = PhoneField()
     officeEmail = models.EmailField()
-    officePhone = models.CharField(max_length = 20)
+    officePhone = PhoneField()
     officeAddress = models.CharField(max_length = 100)
 
 
 class ParliamentMember(models.Model):
     name = models.CharField(max_length = 50)
     surname = models.CharField(max_length = 50)
-    email = models.CharField(max_length = 100)
+    email = models.EmailField()
     constituency = models.ForeignKey(Constituency)
 
     @property
