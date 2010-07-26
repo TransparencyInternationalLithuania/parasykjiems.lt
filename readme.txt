@@ -17,6 +17,8 @@ If the import fails, then install ElementTree (http://pypi.python.org/pypi/eleme
 Installing the Google Data Library:
 http://code.google.com/p/gdata-python-client/downloads/list
 
+2. Solr and django-haystack (http://haystacksearch.org/) are required. Solr also requires pysolr library.
+If you prefer not Solr, but some other search engine, read here: http://docs.haystacksearch.org/dev/installing_search_engines.html
 
 
 2. Available commands
