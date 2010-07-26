@@ -5,7 +5,7 @@ from django.test import TestCase
 import os
 from contactdb.AdressParser import AddressParser
 from contactdb.imp import LithuanianConstituencyReader
-from contactdb.LTRegisterCenter.webparser import RegisterCenterParser, RegisterCenterPage, LinkCell
+from contactdb.LTRegisterCenter.webparser import RegisterCenterParser, RegisterCenterPage, LinkCell, LTGeoDataHierarchy
 from settings import *
 from contactdb.models import HierarchicalGeoData
 
@@ -124,7 +124,6 @@ class TestLTRegisterCenterLinks(TestCase):
 
     def testAlytausSavHtml(self):
         for lines in ReadSource(AlytausSavHtml):
-            #print "page \n %s" % lines
             page = RegisterCenterParser(lines).parse()
             self.assertEqual(len(page.links), 11)
 
@@ -198,7 +197,7 @@ class TestLTRegisterCenterLocations(TestCase):
 
            self.assertEqual(5, len(page.location))
            for i in range(0, len(page.location)):
-               self.assertEqual(HierarchicalGeoData.HierarchicalGeoDataType[i][0], page.location[i].type)
+               self.assertEqual(LTGeoDataHierarchy.Hierarchy[i], page.location[i].type)
 
     def testPagegiuSavNaktiskiuVillageHtml(self):
         for lines in ReadSource(PagegiuSavNaktiskiuVillageHtml):

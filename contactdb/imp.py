@@ -11,7 +11,7 @@ class ImportSources:
     LithuanianMPs = "contactdb/sources/parliament members.txt"
     LithuanianCivilParishMembers = "contactdb/sources/LithuanianCivilParishMembers.csv"
     LithuanianMunicipalityMembers = "contactdb/sources/LithuanianMunicipalityMembers.csv"
-    LithuanianSeniunaitija  = "contactdb/sources/LithuanianSeniunaitijaMembers.csv"
+    LithuanianSeniunaitijaMembers  = "contactdb/sources/LithuanianSeniunaitijaMembers.csv"
 
 class GoogleDocsSources:
     """ collection of google docs documents for Lithuanian data"""

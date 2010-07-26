@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from django.utils.translation import ugettext as _
 from django.db import models
 from django.db.models.fields import CharField
+from enum import Enum
 
 
 class PhoneField(CharField):
@@ -20,27 +22,42 @@ class PersonNameField(CharField):
         CharField.__init__(self, *args, **kwargs)
 
 
+
+
+
 class HierarchicalGeoData(models.Model):
     """ A hierarchical geo data structure """
+
+
+    class HierarchicalGeoDataType:
+        Country = 'Country'
+        County = 'County' # Apskritis
+        Municipality = 'Municipality'  # Savivaldybė
+        CivilParish = 'CivilParish'  # Seniūnija
+        City = 'City'
+        Street = 'Street'
+        Seniunaitija = 'Seniunaitija'
+
 
 
     # types of hierarchical data. Note that correctness is not enforced programitcally
     # Which means that Country can be put below City, and vice-versa.
     # Import tools must ensure that data is logically insert
-    HierarchicalGeoDataType = (
-        ('Country', 'Country'),
-        ('County', 'County'), # Apskritis
-        ('Municipality', 'Municipality'), # Savivaldybė
-        ('CivilParish', 'Civil parish'), # Seniūnija
-        ('City', 'City'),
-        ('Street', 'Street')
-    )
+    HierarchicalGeoDataTypeChoices = (
+        (HierarchicalGeoDataType.Country, 'Country'),
+        (HierarchicalGeoDataType.County, 'County'), # Apskritis
+        (HierarchicalGeoDataType.Municipality, 'Municipality'), # Savivaldybė
+        (HierarchicalGeoDataType.CivilParish, 'Civil parish'), # Seniūnija
+        (HierarchicalGeoDataType.City, 'City'),
+        (HierarchicalGeoDataType.Street, 'Street'),
+        (HierarchicalGeoDataType.Seniunaitija, 'Seniunaitija')
+        )
 
 
 
     name = models.CharField(max_length = 100)
     parent = models.ForeignKey('self', blank=True, null=True, related_name="children", help_text="Parent data, if this is a child node.")
-    type = models.CharField(max_length=20, choices=HierarchicalGeoDataType)
+    type = models.CharField(max_length=20, choices=HierarchicalGeoDataTypeChoices)
 
     @classmethod
     def FindByName(cls, name, type=None, parentName = None):

@@ -17,6 +17,18 @@ BeautifulSoup.RESET_NESTING_TAGS['b'] = []
 class PageParseException(ChainnedException):
     pass
 
+
+class LTGeoDataHierarchy:
+    """ Each country might have a different hierarchy structure.
+    Lithuania has a pre-defined one. Note that there are more possible HierarchicalGeoDataType values
+    that are used here"""
+    Hierarchy = (HierarchicalGeoData.HierarchicalGeoDataType.Country,
+                     HierarchicalGeoData.HierarchicalGeoDataType.County,
+                     HierarchicalGeoData.HierarchicalGeoDataType.Municipality,
+                     HierarchicalGeoData.HierarchicalGeoDataType.CivilParish,
+                     HierarchicalGeoData.HierarchicalGeoDataType.City,
+                     HierarchicalGeoData.HierarchicalGeoDataType.Street)
+
 class RegisterCenterPage:
     """ a class describing a RegisterCenter page.
     A parsed page will consist of 3 main parts:
@@ -102,7 +114,7 @@ class RegisterCenterParser:
 
 
     def _GetNewLocationObject(self, text, hierarchicalLocationPosition):
-        type = HierarchicalGeoData.HierarchicalGeoDataType[hierarchicalLocationPosition][0]
+        type = LTGeoDataHierarchy.Hierarchy[hierarchicalLocationPosition]
         text = self._NormaliseLocationText(text)
         return PageLocation(text, type)
 

@@ -1,5 +1,5 @@
 
-from contactdb.models import MunicipalityMember
+from contactdb.models import MunicipalityMember, SeniunaitijaMember, ParliamentMember
 from pjutils.exc import ChainnedException
 from contactdb.imp import LithuanianConstituencyParser
 from django.core.exceptions import ObjectDoesNotExist
@@ -29,6 +29,24 @@ class MunicipalityMembersReader:
             member.municipalityStr = row["municipality"].strip()
             yield member
 
+
+
+
+
+class SeniunaitijaMembersReader:
+    def __init__(self, fileName):
+        self.dictReader = csv.DictReader(open(fileName, "rt"), delimiter = "\t")
+
+    def ReadMembers(self):
+        for row in self.dictReader:
+            member = SeniunaitijaMember()
+            member.name = row["name"].strip()
+            member.surname = row["surname"].strip()
+            member.email = row["e-mail"]
+            member.role = row["pareigos"]
+            
+            member.seniunaitijaStr = row["seniunaitija"].strip()
+            yield member
 
 class CivilParishMembersReader:
     def __init__(self, fileName):
