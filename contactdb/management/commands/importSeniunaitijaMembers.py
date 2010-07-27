@@ -55,12 +55,12 @@ class Command(BaseCommand):
                 member.seniunaitija = HierarchicalGeoData.objects.filter(name = name).filter(type = type)[0:1].get()
             except ObjectDoesNotExist:
                 raise ImportCivilParishMemberException("""Seniunaitija with name '%s' and type '%s' could not be found in database. Either the database is
-not yet populated with Parish, or it is missing (probably because import data does not contain it)""" % \
+not yet populated with seniunaitija, or it is missing (probably because import data does not contain it)""" % \
                     (name, type))
 
 
             member.save()
-            print (u"Imported seniunaitija member %s %s %s" % (member.name, member.surname, member.civilParish.name))
+            print (u"Imported seniunaitija member %s %s %s" % (member.name, member.surname, member.seniunaitija.name))
             count += 1
             if (count >= maxNumberToImport):
                 break
