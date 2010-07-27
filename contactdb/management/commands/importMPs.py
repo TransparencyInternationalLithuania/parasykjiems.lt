@@ -44,7 +44,10 @@ class Command(BaseCommand):
 
             # relate existing constituency to an MP
             try:
-                member.constituency = Constituency.objects.get(nr = member.constituency.nr)
+                if (member.constituency is None):
+                    member.constituency = None
+                else:
+                    member.constituency = Constituency.objects.get(nr = member.constituency.nr)
             except ObjectDoesNotExist:
                 print "Constituency with nr '%d' could not be found in database. Either the database is not yet populated with contstituencies, or it is missing (probably because import data does not contain it)" % (member.constituency.nr)
                 print "Skipping this MPs. Continuing with the rest"
@@ -52,8 +55,10 @@ class Command(BaseCommand):
 
 
             member.save()
-            print (u"Imported MP, Constituency %s %d" % (member.constituency.name, member.constituency.nr))
-                   #% (member.name, member.surname, member.constituency.name, member.constituency.nr))
+            if (member.constituency is None):
+                print "Imported MP %s %s" % (member.name, member.surname)
+            else:
+                print u"Imported MP %s %s, Constituency %s %d" % (member.name, member.surname, member.constituency.name, member.constituency.nr)
             count += 1
             if (count >= numberToPrint):
                 break;
