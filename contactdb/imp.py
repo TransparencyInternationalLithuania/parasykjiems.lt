@@ -103,6 +103,10 @@ class LithuanianConstituencyParser:
     def ExtractConstituencyFromMPsFile(self, constituencyString):
         """Extracts a Constituency object from a Lithuanian MPs file """
         lower = constituencyString.lower()
+
+        # išrinktas pagal sąrašą means that MP does not have a constituency
+        if (lower.find("pagal sąrašą") > 0):
+            return None
         nr = lower.find("nr")
         if (nr < 0):
             raise NotFoundConstituencyNrException("Could not parse Constituency nr in string '%(s)s'" % {"s" : lower})

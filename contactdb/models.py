@@ -153,7 +153,7 @@ class ParliamentMember(models.Model):
     name = PersonNameField()
     surname = PersonNameField()
     email = models.EmailField()
-    constituency = models.ForeignKey(Constituency)
+    constituency = models.ForeignKey(Constituency, null=True)
 
     @property
     def fullName(self):
