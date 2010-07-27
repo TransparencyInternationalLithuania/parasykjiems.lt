@@ -216,7 +216,7 @@ class TestLTRegisterCenterLocations(TestCase):
             self.assertEqual(4, len(page.location))
             self.assertEqual("LIETUVOS RESPUBLIKA", page.location[0].text)
             self.assertEqual("Alytaus apskritis", page.location[1].text)
-            self.assertEqual("Alytaus rajono savivaldybė", page.location[2].text)
+            self.assertEqual("Alytaus savivaldybė", page.location[2].text)
             self.assertEqual("Alytaus seniūnija", page.location[3].text)
 
     def testLietuvosRespublika(self):
