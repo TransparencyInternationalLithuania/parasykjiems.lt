@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 from contactdb.models import MunicipalityMember, SeniunaitijaMember, ParliamentMember, CivilParishMember
 from pjutils.exc import ChainnedException
@@ -52,8 +54,7 @@ class SeniunaitijaMembersReader:
             member.surname = row["surname"].strip()
             member.email = row["e-mail"]
             member.role = row["pareigos"]
-            
-            member.seniunaitijaStr = row["seniunaitija"].strip()
+            member.seniunaitijaStr = row["seniūnaitija"].strip()
             yield member
 
 class CivilParishMembersReader:
