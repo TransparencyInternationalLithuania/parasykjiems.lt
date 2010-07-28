@@ -12,11 +12,15 @@ class TestPollingDistrictStreetExpander(TestCase):
     parser = PollingDistrictStreetExpander()
 
     def assertTuplesEqual(self, original, toTest):
-        both = zip(original, toTest)
+
+        generated = list(toTest)
+        both = zip(original, generated)
 
         for o, t in both:
             self.assertEqual(o[0], t[0])
             self.assertEqual(o[1], t[1])
+
+        self.assertEqual(len(list(original)), len(generated))
 
 
 
@@ -25,6 +29,19 @@ class TestPollingDistrictStreetExpander(TestCase):
 
         self.assertTuplesEqual(original, self.parser.ExpandStreet(""))
         self.assertTuplesEqual(original, self.parser.ExpandStreet(None))
+        self.assertTuplesEqual(original, self.parser.ExpandStreet("    "))
+
+        original = [("Mano g.", "")]
+        self.assertTuplesEqual(original, self.parser.ExpandStreet("Mano g."))
+
+    def test_OneHouse(self):
+
+        vec = ["18", "20", "22", "24", "26", "27", "29"]
+        original = [("Respublikos g.", x) for x in vec]
+
+        self.assertTuplesEqual(original, self.parser.ExpandStreet("Respublikos g. Nr. 18; Nr. 20; Nr. 22; Nr. 24; Nr. 26; Nr. 27; Nr. 29"))
+
+
 
 class TestAddressParser(TestCase):
 
