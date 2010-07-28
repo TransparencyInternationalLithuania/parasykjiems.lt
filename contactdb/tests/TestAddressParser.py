@@ -4,9 +4,27 @@
 from django.test import TestCase
 import os
 from contactdb.AdressParser import AddressParser
-from contactdb.imp import LithuanianConstituencyReader
+from contactdb.imp import LithuanianConstituencyReader, PollingDistrictStreetExpander
 
 scriptPath = os.path.dirname( os.path.realpath( __file__ ) )
+
+class TestPollingDistrictStreetExpander(TestCase):
+    parser = PollingDistrictStreetExpander()
+
+    def assertTuplesEqual(self, original, toTest):
+        both = zip(original, toTest)
+
+        for o, t in both:
+            self.assertEqual(o[0], t[0])
+            self.assertEqual(o[1], t[1])
+
+
+
+    def test_Empty(self):
+        original = [("", "")]
+
+        self.assertTuplesEqual(original, self.parser.ExpandStreet(""))
+        self.assertTuplesEqual(original, self.parser.ExpandStreet(None))
 
 class TestAddressParser(TestCase):
 
