@@ -64,6 +64,10 @@ class TestPollingDistrictStreetExpander(TestCase):
 
         self.assertTuplesEqual(original, self.parser.ExpandStreet("AlyvųTako g. neporiniai numeriai nuo Nr. 17 iki galo; poriniai numeriai nuo Nr. 10 iki galo; numeriai nuo Nr. 1 iki Nr. 8"))
 
+    def test_OneHouse_WithSquare(self):
+        original = [("Respublikos a.", "2")]
+        self.assertTuplesEqual(original, self.parser.ExpandStreet("Respublikos a. Nr. 2"))
+
 
 class TestAddressParser(TestCase):
 

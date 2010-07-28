@@ -57,13 +57,20 @@ class PollingDistrictStreetExpander:
 
         parts = street.split(';')
 
+        print "expand: %s"  % street
         for part in parts:
             if (part.find('g.') > 0):
                 noName = part.split('g.')
                 str = noName[0].strip()
                 str = "%s g." % str
-
                 part = noName[1]
+
+            if (part.find('a.') > 0):
+                noName = part.split('a.')
+                str = noName[0].strip()
+                str = "%s a." % str
+                part = noName[1]
+
 
             if (part.find('numeriai nuo') > 0):
                 noName = part.replace("Nr.", "").replace("numeriai nuo", "")
