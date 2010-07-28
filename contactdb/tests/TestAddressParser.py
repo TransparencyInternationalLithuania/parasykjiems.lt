@@ -55,7 +55,14 @@ class TestPollingDistrictStreetExpander(TestCase):
 
         self.assertTuplesEqual(original, self.parser.ExpandStreet("S. Dariaus ir S. Girėno g. neporiniai numeriai nuo Nr. 1 iki galo; poriniai numeriai nuo Nr. 4 iki galo"))
 
+    def test_OneHouse_ThreeRanges(self):
+        vec = [str(x) for x in range(17, PollingDistrictStreetExpander.IkiGaloValue, 2)]
+        vec2 = [str(x) for x in range(10, PollingDistrictStreetExpander.IkiGaloValue + 1, 2)]
+        vec3 = [str(x) for x in range(1, 8 + 1)]
+        vec = vec + vec2 + vec3
+        original = [("AlyvųTako g.", x) for x in vec]
 
+        self.assertTuplesEqual(original, self.parser.ExpandStreet("AlyvųTako g. neporiniai numeriai nuo Nr. 17 iki galo; poriniai numeriai nuo Nr. 10 iki galo; numeriai nuo Nr. 1 iki Nr. 8"))
 
 
 class TestAddressParser(TestCase):
