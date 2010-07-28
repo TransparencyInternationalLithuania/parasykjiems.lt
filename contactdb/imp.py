@@ -26,7 +26,31 @@ class GoogleDocsSources:
     LithuanianSeniunaitijaMembers = "parasykjiems.lt 5 seniunaiciai"
 
 
+class PollingDistrictStreetExpander:
+    """ When PollingDistrictStreets are parsed from txt file, some streets are subidivied into house numbers.
+    Here are a few examples of how these look like:
+    Stoties g.
+    Respublikos g. Nr. 18; Nr. 20; Nr. 21; Nr. 23; Nr. 24; Nr. 25; Nr. 27
+    Respublikos g. Nr. 19; Nr. 26; Nr. 28; numeriai nuo Nr.1 iki Nr. 17
+    S. Dariaus ir S. Girėno g. neporiniai numeriai nuo Nr. 1 iki galo; poriniai numeriai nuo Nr. 4 iki galo
+    etc
 
+    Expander will parse and return a tuple for each row separately
+    """
+
+    def ExpandStreet(self, street):
+        """ yield a tuple(street, house numbe) for each house number found in street """
+
+        if (street == "" or street == None):
+            yield ("", "")
+            return
+
+        # if no street nr, return single tuple
+        if (street.find("Nr") < 0):
+            yield (street, "")
+            return
+
+        nrs = street.split("nr")
 
 
 
