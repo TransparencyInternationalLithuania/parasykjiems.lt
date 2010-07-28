@@ -52,16 +52,46 @@ class PollingDistrictStreetExpander:
             yield (street, "")
             return
 
-        streets = street.split("g.")
-        str = streets[0].strip()
-        str = "%s g." % str
-        nrs = streets[1].split("Nr.")
-        for nr in nrs:
-            nr = nr.replace(";", "")
-            nr = nr.strip()
-            if (nr == ""):
-                continue
-            yield (str, nr)
+        parts = street.split(';')
+
+        for part in parts:
+            if (part.find('g.') > 0):
+                noName = part.split('g.')
+                str = noName[0].strip()
+                str = "%s g." % str
+
+                part = noName[1]
+
+            if (part.find('numeriai nuo') > 0):
+                noName = part.replace("Nr.", "").replace("numeriai nuo", "")
+                noName = noName.split('iki')
+                fromNumber = noName[0].strip()
+                fromNumber = int(fromNumber)
+                toNumber = noName[1].strip()
+                toNumber = int(toNumber)
+
+                for x in range(fromNumber, toNumber + 1, 2):
+                    yield (str, "%s" % x)
+
+            elif part.find('Nr.'):
+                noName = part.replace("Nr.", "")
+                noName = noName.strip()
+
+                yield (str, noName)
+
+
+
+
+#        streets = street.split("g.")
+#        str = streets[0].strip()
+#        str = "%s g." % str
+#        nrs = streets[1].split("Nr.")
+#        for nr in nrs:
+#            nr = nr.replace(";", "")
+#            nr = nr.strip()
+#            if (nr == ""):
+#                continue
+#            yield (str, nr)
 
 
 
