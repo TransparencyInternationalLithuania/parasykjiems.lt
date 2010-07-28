@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from django.core.management.base import BaseCommand
 from django.db import transaction
-from contactdb.imp import LithuanianConstituencyReader, ImportSources
+from contactdb.imp import LithuanianConstituencyReader, ImportSources, PollingDistrictStreetExpander
 from contactdb.models import PollingDistrictStreet, Constituency
 from contactdb.AdressParser import AddressParser
 from datetime import datetime
@@ -108,7 +108,8 @@ importStreets 5:8 - will import streets for counties from 5 to 8 constituencies 
             else:
                 toPrint = int(args[0])
 
-        streetParser = AddressParser() 
+        streetParser = AddressParser()
+        streetExpander = PollingDistrictStreetExpander()
 
 
         imported = 0
@@ -120,7 +121,7 @@ importStreets 5:8 - will import streets for counties from 5 to 8 constituencies 
         print "reading all polling districts"
         allPollingDistricts = self.getPollingDistricts(aggregator, fromPrint, toPrint)
 
-        self.deletePollingDistrictsIfExists(allPollingDistricts)
+        #self.deletePollingDistrictsIfExists(allPollingDistricts)
         print "pre-fetching constituencies"
         self.preFetchAllConstituencies(allPollingDistricts)
 
@@ -129,14 +130,16 @@ importStreets 5:8 - will import streets for counties from 5 to 8 constituencies 
             imported += 1
             numberOfStreets = 0
             for street in streetParser.GetAddresses(pollingDistrict.Addresses):
-                pollingDistrictStreet = PollingDistrictStreet()
-                pollingDistrictStreet.constituency = pollingDistrict.Constituency
-                pollingDistrictStreet.district = pollingDistrict.District
-                pollingDistrictStreet.city = street.cityName
-                pollingDistrictStreet.street = street.streetName
-                pollingDistrictStreet.electionDistrict = pollingDistrict.PollingDistrict
-                pollingDistrictStreet.save()
-                numberOfStreets += 1
+                for expandedStreet in streetExpander.ExpandStreet(street.streetName):
+                    pollingDistrictStreet = PollingDistrictStreet()
+                    pollingDistrictStreet.constituency = pollingDistrict.Constituency
+                    pollingDistrictStreet.district = pollingDistrict.District
+                    pollingDistrictStreet.city = street.cityName
+                    pollingDistrictStreet.street = street.streetName
+                    pollingDistrictStreet.electionDistrict = pollingDistrict.PollingDistrict
+                    print street.streetName
+                    #pollingDistrictStreet.save()
+                    numberOfStreets += 1
 
             totalNumberOfStreets += numberOfStreets
             seconds = (datetime.now() - start).seconds
