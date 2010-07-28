@@ -38,6 +38,9 @@ class PollingDistrictStreetExpander:
     Expander will parse and return a tuple for each row separately
     """
 
+    # sometimes street definition says "from 4th house till the end". This value will tell when is the end :)
+    IkiGaloValue = 100
+
     def ExpandStreet(self, street):
         """ yield a tuple(street, house numbe) for each house number found in street """
 
@@ -64,11 +67,17 @@ class PollingDistrictStreetExpander:
 
             if (part.find('numeriai nuo') > 0):
                 noName = part.replace("Nr.", "").replace("numeriai nuo", "")
+                noName = noName.replace("neporiniai", "")
+                noName = noName.replace("poriniai", "")
+                noName = noName.strip()
                 noName = noName.split('iki')
                 fromNumber = noName[0].strip()
                 fromNumber = int(fromNumber)
                 toNumber = noName[1].strip()
-                toNumber = int(toNumber)
+                if (toNumber == "galo"):
+                    toNumber = self.IkiGaloValue
+                else:
+                    toNumber = int(toNumber)
 
                 for x in range(fromNumber, toNumber + 1, 2):
                     yield (str, "%s" % x)
