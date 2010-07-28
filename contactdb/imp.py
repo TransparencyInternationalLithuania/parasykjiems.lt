@@ -41,16 +41,27 @@ class PollingDistrictStreetExpander:
     def ExpandStreet(self, street):
         """ yield a tuple(street, house numbe) for each house number found in street """
 
+
         if (street == "" or street == None):
             yield ("", "")
             return
 
+        street = street.strip()
         # if no street nr, return single tuple
         if (street.find("Nr") < 0):
             yield (street, "")
             return
 
-        nrs = street.split("nr")
+        streets = street.split("g.")
+        str = streets[0].strip()
+        str = "%s g." % str
+        nrs = streets[1].split("Nr.")
+        for nr in nrs:
+            nr = nr.replace(";", "")
+            nr = nr.strip()
+            if (nr == ""):
+                continue
+            yield (str, nr)
 
 
 
