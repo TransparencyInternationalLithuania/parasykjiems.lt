@@ -67,8 +67,12 @@ class PollingDistrictStreetExpander:
 
             if (part.find('numeriai nuo') > 0):
                 noName = part.replace("Nr.", "").replace("numeriai nuo", "")
-                noName = noName.replace("neporiniai", "")
-                noName = noName.replace("poriniai", "")
+                step = 1
+                if (noName.find('poriniai') > 0):
+                    noName = noName.replace("neporiniai", "")
+                    noName = noName.replace("poriniai", "")
+                    step = 2
+
                 noName = noName.strip()
                 noName = noName.split('iki')
                 fromNumber = noName[0].strip()
@@ -79,7 +83,7 @@ class PollingDistrictStreetExpander:
                 else:
                     toNumber = int(toNumber)
 
-                for x in range(fromNumber, toNumber + 1, 2):
+                for x in range(fromNumber, toNumber + 1, step):
                     yield (str, "%s" % x)
 
             elif part.find('Nr.'):
