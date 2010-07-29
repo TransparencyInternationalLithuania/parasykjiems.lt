@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import copy
+import re
 from pjutils.exc import ChainnedException
 from contactdb.models import Constituency
 from pjutils.deprecated import deprecated
@@ -80,18 +81,28 @@ class PollingDistrictStreetExpander:
                     noName = noName.replace("poriniai", "")
                     step = 2
 
+                letter = None
                 noName = noName.strip()
                 noName = noName.split('iki')
                 fromNumber = noName[0].strip()
                 fromNumber = int(fromNumber)
-                toNumber = noName[1].strip()
+                toNumber = noName[1].strip().strip('.')
                 if (toNumber == "galo"):
                     toNumber = self.IkiGaloValue
                 else:
-                    toNumber = int(toNumber)
+                    m = re.search('[a-zA-Z]', toNumber)
+                    if (m is not None):
+                        group = m.group()
+                        letter = group
+                        toNumber = toNumber.replace(group, "")
+                        toNumber = int(toNumber)
+                    else:
+                        toNumber = int(toNumber)
 
                 for x in range(fromNumber, toNumber + 1, step):
                     yield (str, "%s" % x)
+                if (letter is not None):
+                    yield (str, "%s%s" % (x, letter))
 
             elif part.find('Nr.'):
                 noName = part.replace("Nr.", "")
