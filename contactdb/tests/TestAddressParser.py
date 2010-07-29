@@ -34,6 +34,11 @@ class TestPollingDistrictStreetExpander(TestCase):
         original = [("Mano g.", "")]
         self.assertTuplesEqual(original, self.parser.ExpandStreet("Mano g."))
 
+        original = [("Baltų pr.", "1"), ("Baltų pr.", "2")]
+        self.assertTuplesEqual(original, self.parser.ExpandStreet("Baltų pr. Nr.1; Nr. 2"))
+
+
+
     def test_OneHouse(self):
 
         vec = ["18", "20", "22", "24", "26", "27", "29"]
