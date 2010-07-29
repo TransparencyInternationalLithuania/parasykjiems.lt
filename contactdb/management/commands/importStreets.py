@@ -135,9 +135,9 @@ importStreets 5:8 - will import streets for counties from 5 to 8 constituencies 
                     pollingDistrictStreet.constituency = pollingDistrict.Constituency
                     pollingDistrictStreet.district = pollingDistrict.District
                     pollingDistrictStreet.city = street.cityName
-                    pollingDistrictStreet.street = street.streetName
+                    pollingDistrictStreet.street = expandedStreet
                     pollingDistrictStreet.electionDistrict = pollingDistrict.PollingDistrict
-                    print street.streetName
+                    print expandedStreet
                     #pollingDistrictStreet.save()
                     numberOfStreets += 1
 

@@ -68,6 +68,18 @@ class TestPollingDistrictStreetExpander(TestCase):
         original = [("Respublikos a.", "2")]
         self.assertTuplesEqual(original, self.parser.ExpandStreet("Respublikos a. Nr. 2"))
 
+    def test_OneHouse_HouseNumber_WithLetter(self):
+
+        original = [("S. Dariaus ir S. Girėno g.", "2"), ("S. Dariaus ir S. Girėno g.", "2A")]
+        self.assertTuplesEqual(original, self.parser.ExpandStreet("S. Dariaus ir S. Girėno g. numeriai nuo Nr. 2 iki Nr. 2A"))
+
+    def test_OneHouse_WithDotInTheEnd(self):
+
+        vec = [str(x) for x in range(4, 42 + 1, 2)]
+        original = [("Naujosios g.", x) for x in vec]
+
+        self.assertTuplesEqual(original, self.parser.ExpandStreet("Naujosios g. poriniai numeriai nuo Nr. 4 iki Nr. 42."))
+
 
 class TestAddressParser(TestCase):
 
