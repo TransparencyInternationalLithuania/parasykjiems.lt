@@ -26,6 +26,8 @@ class GoogleDocsSources:
     # Seniūnaičiai
     LithuanianSeniunaitijaMembers = "parasykjiems.lt 5 seniunaiciai"
 
+class PollingDistrictStreetExpanderException(ChainnedException):
+    pass
 
 class PollingDistrictStreetExpander:
     """ When PollingDistrictStreets are parsed from txt file, some streets are subidivied into house numbers.
@@ -41,6 +43,17 @@ class PollingDistrictStreetExpander:
 
     # sometimes street definition says "from 4th house till the end". This value will tell when is the end :)
     IkiGaloValue = 100
+
+    def _RemoveStreetPart(self, part, streetPartName):
+        if (part.find(streetPartName) >= 0):
+            noName = part.split(streetPartName)
+            str = noName[0].strip()
+            str = "%s %s" % (str, streetPartName)
+            part = noName[1]
+            return (part, str)
+        return None
+
+
 
     def ExpandStreet(self, street):
         """ yield a tuple(street, house numbe) for each house number found in street """
@@ -60,24 +73,16 @@ class PollingDistrictStreetExpander:
 
         print "expand: %s"  % street
         for part in parts:
-            if (part.find('g.') >= 0):
-                noName = part.split('g.')
-                str = noName[0].strip()
-                str = "%s g." % str
-                part = noName[1]
+            streetTuple = self._RemoveStreetPart(part, "g.")
+            if (streetTuple is None):
+                streetTuple = self._RemoveStreetPart(part, "a.")
+            if (streetTuple is None):
+                streetTuple = self._RemoveStreetPart(part, "pr.")
+            if (streetTuple is None):
+                streetTuple = self._RemoveStreetPart(part, "pl.")
 
-            if (part.find('a.') >= 0):
-                noName = part.split('a.')
-                str = noName[0].strip()
-                str = "%s a." % str
-                part = noName[1]
-
-            if (part.find('pr.') >= 0):
-                noName = part.split('pr.')
-                str = noName[0].strip()
-                str = "%s pr." % str
-                part = noName[1]
-
+            if (streetTuple is not None):
+                part, str = streetTuple
 
             if (part.find('numeriai nuo') >= 0):
                 noName = part.replace("Nr.", "").replace("numeriai nuo", "")
