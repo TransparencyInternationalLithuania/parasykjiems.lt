@@ -86,6 +86,12 @@ class TestPollingDistrictStreetExpander(TestCase):
         original = [("Vytauto g.", x) for x in vec]
         self.assertTuplesEqual(original, self.parser.ExpandStreet("Vytauto g. neporiniai numeriai nuo Nr. 3A iki Nr. 11; poriniai numeriai nuo Nr. 4 iki Nr. 10"))
 
+    def test_NoSpaceBetweenStreet(self):
+        vec = [str(x) for x in range(46, PollingDistrictStreetExpander.IkiGaloValue + 1, 2)]
+        original = [("Kuršių g.", x) for x in vec]
+
+        self.assertTuplesEqual(original, self.parser.ExpandStreet("Kuršių g.poriniai numeriai nuo Nr. 46 iki galo"))
+
 
 class TestAddressParser(TestCase):
 
