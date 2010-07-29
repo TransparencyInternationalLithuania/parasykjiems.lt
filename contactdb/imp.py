@@ -81,28 +81,43 @@ class PollingDistrictStreetExpander:
                     noName = noName.replace("poriniai", "")
                     step = 2
 
-                letter = None
+                letterTo = None
+                letterFrom = None
                 noName = noName.strip()
                 noName = noName.split('iki')
+
+                # parse fromNumber
                 fromNumber = noName[0].strip()
+                # maybe it contains letter
+                m = re.search('[a-zA-Z]', fromNumber)
+                if (m is not None):
+                    group = m.group()
+                    letterFrom = group
+                    fromNumber = fromNumber.replace(group, "")
                 fromNumber = int(fromNumber)
+
+
+                # parse toNumber
                 toNumber = noName[1].strip().strip('.')
                 if (toNumber == "galo"):
                     toNumber = self.IkiGaloValue
                 else:
+                    # maybe it contains letter
                     m = re.search('[a-zA-Z]', toNumber)
                     if (m is not None):
+                        # it contains letter, remember it and remove
                         group = m.group()
-                        letter = group
+                        letterTo = group
                         toNumber = toNumber.replace(group, "")
-                        toNumber = int(toNumber)
-                    else:
-                        toNumber = int(toNumber)
+
+                    toNumber = int(toNumber)
 
                 for x in range(fromNumber, toNumber + 1, step):
                     yield (str, "%s" % x)
-                if (letter is not None):
-                    yield (str, "%s%s" % (x, letter))
+                if (letterTo is not None):
+                    yield (str, "%s%s" % (toNumber, letterTo))
+                if (letterFrom is not None):
+                    yield (str, "%s%s" % (fromNumber, letterFrom))
 
             elif part.find('Nr.'):
                 noName = part.replace("Nr.", "")

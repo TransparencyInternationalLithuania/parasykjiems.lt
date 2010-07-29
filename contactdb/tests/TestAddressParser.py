@@ -80,6 +80,12 @@ class TestPollingDistrictStreetExpander(TestCase):
 
         self.assertTuplesEqual(original, self.parser.ExpandStreet("Naujosios g. poriniai numeriai nuo Nr. 4 iki Nr. 42."))
 
+    def test_OneHouse_WithLetter_InStart(self):
+
+        vec = ["3", "5", "7", "9", "11", "3A", "4", "6", "8", "10"]
+        original = [("Vytauto g.", x) for x in vec]
+        self.assertTuplesEqual(original, self.parser.ExpandStreet("Vytauto g. neporiniai numeriai nuo Nr. 3A iki Nr. 11; poriniai numeriai nuo Nr. 4 iki Nr. 10"))
+
 
 class TestAddressParser(TestCase):
 
