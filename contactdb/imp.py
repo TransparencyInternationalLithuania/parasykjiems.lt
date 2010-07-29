@@ -71,6 +71,9 @@ class PollingDistrictStreetExpander:
 
         parts = street.split(';')
 
+        if (street.find("Panerių g. poriniai") >= 0):
+            a = 5
+
         print "expand: %s"  % street
         for part in parts:
             streetTuple = self._RemoveStreetPart(part, "g.")
