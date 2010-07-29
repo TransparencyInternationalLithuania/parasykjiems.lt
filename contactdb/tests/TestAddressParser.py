@@ -107,6 +107,16 @@ class TestAddressParser(TestCase):
     def setUp(self):
         self.parser = AddressParser()
 
+    def test_Bug001(self):
+        streetStr = "Kaunas: A. Stulginskio g. neporiniai numeriai nuo Nr. 61 iki galo; poriniai numeriai nuo Nr. 54 iki galo; Bajorų g., Panerių g. poriniai numeriai nuo Nr. 72 iki Nr. 90; Sąjungos a. neporiniai numeriai nuo Nr. 1 iki Nr. 3, nuo Nr. 5 iki galo; Varnių g. poriniai numeriai nuo Nr. 22 iki Nr. 38."
+        parsed = list(self.parser.GetAddresses(streetStr))
+        self.assertCity("Kaunas", "A. Stulginskio g. neporiniai numeriai nuo Nr. 61 iki galo; poriniai numeriai nuo Nr. 54 iki galo", parsed[0])
+        self.assertCity("Kaunas", "Bajorų g.", parsed[1])
+        self.assertCity("Kaunas", "Panerių g. poriniai numeriai nuo Nr. 72 iki Nr. 90", parsed[2])
+        self.assertCity("Kaunas", "Sąjungos a. neporiniai numeriai nuo Nr. 1 iki Nr. 3; nuo Nr. 5 iki galo", parsed[3])
+        self.assertCity("Kaunas", "Varnių g. poriniai numeriai nuo Nr. 22 iki Nr. 38.", parsed[4])
+        self.assertEqual(5, len(parsed))
+
     def test_plentas(self):
         streetStr = "Kaunas: Arnavos g.; Baltų pr. neporiniai numeriai nuo Nr. 11A iki Nr. 85A, poriniai numeriai nuo Nr. 28 iki Nr. 38; Lazdynėlių g.; Mosėdžio g. neporiniai numeriai nuo Nr. 1 iki Nr. 29, poriniai numeriai nuo Nr. 2 iki Nr. 18, nuo Nr. 24 iki Nr. 28; Nadruvių g., Notangų g., Pagudėnų g., Pamedėnų g., Pilupėnų g., Šateikių g., Sembų g., Skalvių g., Stalupėnų g., Tolminkiemio g., Žemaičių pl. neporiniai numeriai nuo Nr. 23 iki Nr. 25."
         parsed = list(self.parser.GetAddresses(streetStr))

@@ -25,6 +25,8 @@ class AddressParser:
             return True
         if (street.find("pl.") > 0):
             return True
+        if (street.find("a.") > 0):
+            return True
         return False
 
     def _getStreets(self, streetStr):
