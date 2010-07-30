@@ -130,19 +130,31 @@ class AddressParser:
         self.forceNextCity = False
         self.forceNextSemicolonCity = False
 
+    def _addStreetNameToCurrentCity(self, city):
+        if (self.pushCity is not None):
+            self.pushCity.streetName = "%s; %s" % (self.pushCity.streetName, city.streetName)
+            return
+        self.popCity.streetName = "%s; %s" % (self.popCity.streetName, city.streetName)
+
+
     def PushCity(self, city):
         """ a very lame state machine.
         If it finds a new street with name "Nr" only, then it does not count it as new street,
         but adds it to the previous street name """
+
+        city.streetName = city.streetName.strip()
+        if (city.streetName.find("nuo Nr. 70") >=0 ):
+            a = 5
+        if (city.streetName.startswith("nuo") == True):
+            self._addStreetNameToCurrentCity(city)
+            return
 
         if (self.pushCity is None):
             self.pushCity = city
             self.removeForceFlags()
             return
 
-        if (city.streetName.startswith("nuo") == True):
-            self.pushCity.streetName = "%s; %s" % (self.pushCity.streetName, city.streetName)
-            return
+
 
         # poriniai / neporiniai / numeriai nuo types of addresses ignore forceNextCity control
         # these constructs must always come together
