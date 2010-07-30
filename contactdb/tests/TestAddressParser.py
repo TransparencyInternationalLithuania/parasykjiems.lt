@@ -107,6 +107,12 @@ class TestAddressParser(TestCase):
     def setUp(self):
         self.parser = AddressParser()
 
+    def test_Bug002(self):
+        streetStr = "Kaunas: Naujakurių g. neporiniai numeriai nuo Nr. 37 iki galo; poriniai numeriai nuo Nr. 58 iki Nr. 58A, nuo Nr. 70 iki galo;"
+        parsed = list(self.parser.GetAddresses(streetStr))
+        self.assertCity("Kaunas", "Naujakurių g. neporiniai numeriai nuo Nr. 37 iki galo; poriniai numeriai nuo Nr. 58 iki Nr. 58A; nuo Nr. 70 iki galo", parsed[0])
+        self.assertEqual(1, len(parsed))
+
     def test_Bug001(self):
         streetStr = "Kaunas: A. Stulginskio g. neporiniai numeriai nuo Nr. 61 iki galo; poriniai numeriai nuo Nr. 54 iki galo; Bajorų g., Panerių g. poriniai numeriai nuo Nr. 72 iki Nr. 90; Sąjungos a. neporiniai numeriai nuo Nr. 1 iki Nr. 3, nuo Nr. 5 iki galo; Varnių g. poriniai numeriai nuo Nr. 22 iki Nr. 38."
         parsed = list(self.parser.GetAddresses(streetStr))
