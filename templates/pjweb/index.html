@@ -11,7 +11,7 @@
 {% if suggestions %}
 <p><b>{% trans "We found these addresses:" %}</b></p>
 {% for suggestion in suggestions %}
-<p><a href="/pjweb/{{ suggestion.constituency_id }}/">{{ suggestion.street }}, {{ suggestion.city }}, {{ suggestion.district }}</a></p>
+<p><a href="/pjweb/{{ suggestion.object.constituency_id }}/">{{ suggestion.street }}</a></p>
 {% endfor %}{% endif %}
 
 {% if not suggestions %}

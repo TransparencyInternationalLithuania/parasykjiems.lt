@@ -17,5 +17,5 @@ urlpatterns = patterns('',
 	(r'^pjweb/', include('parasykjiems.pjweb.urls')),
 	# Uncomment the next line to enable the admin:
 	(r'^admin/', include(admin.site.urls)),
-
+    (r'^search/', include('haystack.urls')),
 )
