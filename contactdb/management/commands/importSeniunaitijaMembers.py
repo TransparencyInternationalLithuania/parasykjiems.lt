@@ -52,7 +52,8 @@ class Command(BaseCommand):
             try:
                 type = HierarchicalGeoData.HierarchicalGeoDataType.Seniunaitija
                 name = member.seniunaitijaStr
-                member.seniunaitija = HierarchicalGeoData.objects.filter(name = name).filter(type = type)[0:1].get()
+                #print "query: %s" % HierarchicalGeoData.objects.filter(name__contains = name).filter(type = type)[0:1].query
+                member.seniunaitija = HierarchicalGeoData.objects.filter(name__contains = name).filter(type = type)[0:1].get()
             except ObjectDoesNotExist:
                 raise ImportCivilParishMemberException("""Seniunaitija with name '%s' and type '%s' could not be found in database. Either the database is
 not yet populated with seniunaitija, or it is missing (probably because import data does not contain it)""" % \

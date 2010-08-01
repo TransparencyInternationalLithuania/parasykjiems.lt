@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from django.core.management.base import BaseCommand, make_option
 from django.core import management
 from pjutils.timemeasurement import TimeMeasurer
@@ -65,6 +68,8 @@ class Command(BaseCommand):
 
         return count
 
+
+
     def _InsertLocationRows(self, page):
         insertedRows = 0
         parentLocationName = None
@@ -84,6 +89,17 @@ class Command(BaseCommand):
             parentLocationName = location
             parentLocationObject = locationInDB
         return insertedRows
+
+    def CreateRowIfNotExist(self, text, type, parentLocationText, parentLocationType):
+        locationInDB = HierarchicalGeoData.FindByName(text, parentName = parentLocationText)
+        if (locationInDB is not None):
+            return
+        try:
+            parent = HierarchicalGeoData.objects.filter(name__contains = parentLocationText, type = parentLocationType)[0:1].get()
+        except HierarchicalGeoData.DoesNotExist:
+            raise LTGeoDataImportException("Could not find location with name '%s' and type '%s'" % (parentLocationText, parentLocationType))
+        self._CreateNewLocationObject(text, type, parent)
+
 
     def _CreateNewLocationObject(self, text, type, parentLocationObject):
         locationInDB = HierarchicalGeoData()
@@ -141,6 +157,12 @@ class Command(BaseCommand):
 
         return insertedRows
 
+    def CreateAdditionalGeoData(self):
+        self.CreateRowIfNotExist("Palangos miesto seniūnija", HierarchicalGeoData.HierarchicalGeoDataType.CivilParish,
+            "Palangos miesto", HierarchicalGeoData.HierarchicalGeoDataType.Municipality)
+
+        self.CreateRowIfNotExist("Šventosios seniūnija", HierarchicalGeoData.HierarchicalGeoDataType.CivilParish,
+            "Palangos miesto", HierarchicalGeoData.HierarchicalGeoDataType.Municipality)
         
 
     def handle(self, *args, **options):
@@ -225,3 +247,6 @@ class Command(BaseCommand):
         print "Took %s seconds" % elapsedTime.ElapsedSeconds()
         print "Created total %s additional messages. Inserted %s rows into db" % (totalCreatedMessages, totalInsertedRows)
         print "Made %s requirests. Avg %s fetches per second" % (totalParsedMessages, totalParsedMessages / elapsedTime.ElapsedSeconds())
+
+        print "Creating additional data, not availbe in www server"
+        self.CreateAdditionalGeoData()
