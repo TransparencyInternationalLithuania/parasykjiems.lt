@@ -17,6 +17,9 @@ from contactdb.LTRegisterCenter.webparser import LTGeoDataHierarchy
 class ImportSeniunaitijaException(ChainnedException):
     pass
 
+class SeniunaitijaNotFoundException(ChainnedException):
+    pass
+
 class Command(BaseCommand):
     args = '<>'
     help = 'Imports into database all Lithuanian Seniunaitija / seniūnaitijos'
@@ -27,9 +30,9 @@ class Command(BaseCommand):
             # TODO: how to do a normal method chaining in Python so that line would not be that long??
             civilParish = HierarchicalGeoData.objects.filter(name__contains = self.civilParishStr).filter(type = HierarchicalGeoData.HierarchicalGeoDataType.CivilParish).filter(parent__name__contains = self.municipalityStr).get()
         except HierarchicalGeoData.DoesNotExist:
-            raise ImportSeniunaitijaException("Could not find Civil parish with name '%s' and type '%s'. \n Municipality '%s'" % (self.civilParishStr, HierarchicalGeoData.HierarchicalGeoDataType.CivilParish, self.civilParishStrmunicipalityStr))
+            raise SeniunaitijaNotFoundException("Could not find Civil parish with name '%s' and type '%s'. \n Municipality '%s'" % (self.civilParishStr, HierarchicalGeoData.HierarchicalGeoDataType.CivilParish, self.municipalityStr))
         except HierarchicalGeoData.MultipleObjectsReturned:
-            raise ImportSeniunaitijaException("Found multiple Civil parish with name '%s' and type '%s'. \n Municipality '%s'" % (self.civilParishStr, HierarchicalGeoData.HierarchicalGeoDataType.CivilParish, self.civilParishStrmunicipalityStr))
+            raise ImportSeniunaitijaException("Found multiple Civil parish with name '%s' and type '%s'. \n Municipality '%s'" % (self.civilParishStr, HierarchicalGeoData.HierarchicalGeoDataType.CivilParish, self.municipalityStr))
         return civilParish
 
 
@@ -62,33 +65,41 @@ class Command(BaseCommand):
 
         count = 0
         self.dictReader = csv.DictReader(open(fileName, "rt"), delimiter = "\t")
-        for row in self.dictReader:
-            # i use class instance variables here on purpose. Might be tricky if the class grows too much,
-            # but handy for now
-            
-            self.seniunaitijaStr = row["seniūnaitija"].strip()
-            self.civilParishStr = row["townshipseniūnija"].strip()
-            streets = row["territorycoveredbyseniūnaitija"].strip()
-            self.municipalityStr = row["municipality"].strip()
+
+        try:
+            for row in self.dictReader:
+                # i use class instance variables here on purpose. Might be tricky if the class grows too much,
+                # but handy for now
+
+                self.seniunaitijaStr = row["seniūnaitija"].strip()
+                self.civilParishStr = row["townshipseniūnija"].strip()
+                streets = row["territorycoveredbyseniūnaitija"].strip()
+                self.municipalityStr = row["municipality"].strip()
 
 
-            # remove some keywords from strings, and add others
-            # this is to conform to a de-facto data naming standard
-            self.municipalityStr = self.municipalityStr.replace("rajono", "").strip()
-            if (self.civilParishStr.find("seniūnija") < 0):
-                self.civilParishStr = "%s seniūnija" % self.civilParishStr
+                # remove some keywords from strings, and add others
+                # this is to conform to a de-facto data naming standard
+                self.municipalityStr = self.municipalityStr.replace("rajono", "").strip()
+                if (self.civilParishStr.find("seniūnija") < 0):
+                    self.civilParishStr = "%s seniūnija" % self.civilParishStr
 
 
-            # check that current Seniunaitija object does not already exist
-            seniunaitija = self._GetOrCreateSeniunaitija()
+                # check that current Seniunaitija object does not already exist
+                seniunaitija = self._GetOrCreateSeniunaitija()
 
-            # no importin of streets so far
-            #for s in parser.GetStreets(streets):
-            #    print s
+                # no importin of streets so far
+                #for s in parser.GetStreets(streets):
+                #    print s
 
 
 
-            count += 1
-            if (count >= maxNumberToImport):
-                break
+                count += 1
+                if (count >= maxNumberToImport):
+                    break
+        except SeniunaitijaNotFoundException as e:
+            raise ImportSeniunaitijaException("""
+Seniunaitija was not found in HierarchicalGeoData. That probabl means that hierarchical geo data was not yet
+imported. Issue this command to import    \n:  ltGeoDataImport --max-depth 3
+Another option is that the data is wrong, such as a misspeled Seniunaitija name""", e)
+
         print "succesfully imported %d seniunaitija" % (count)
