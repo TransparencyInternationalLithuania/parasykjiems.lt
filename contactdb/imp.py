@@ -47,13 +47,22 @@ class PollingDistrictStreetExpander:
     def _RemoveStreetPart(self, part, streetPartName):
         if (part.find(streetPartName) >= 0):
             noName = part.split(streetPartName)
-            str = noName[0].strip()
+            noName = [s.strip() for s in noName]
+            str = "".join(noName[0:-1])
             str = "%s %s" % (str, streetPartName)
-            part = noName[1]
+            part = noName[-1]
             return (part, str)
         return None
 
-
+    def _RemoveStreetPartSB(self, part, streetPartName):
+        if (part.find(streetPartName) >= 0):
+            noName = part.split("Nr.")
+            noName = [s.strip() for s in noName]
+            str = "".join(noName[0:-1])
+            str = "%s" % (str)
+            part = "%s %s" % (noName[-1], "Nr.")
+            return (part, str)
+        return None
 
     def ExpandStreet(self, street):
         """ yield a tuple(street, house numbe) for each house number found in street """
@@ -85,6 +94,9 @@ class PollingDistrictStreetExpander:
                 streetTuple = self._RemoveStreetPart(part, "pl.")
             if (streetTuple is None):
                 streetTuple = self._RemoveStreetPart(part, "al.")
+            if (streetTuple is None):
+                streetTuple = self._RemoveStreetPartSB(part, "SB")
+
 
             if (streetTuple is not None):
                 part, str = streetTuple
@@ -135,7 +147,7 @@ class PollingDistrictStreetExpander:
                 if (letterFrom is not None):
                     yield (str, "%s%s" % (fromNumber, letterFrom))
 
-            elif part.find('Nr.'):
+            elif part.find('Nr.') >= 0:
                 noName = part.replace("Nr.", "")
                 noName = noName.strip()
 
