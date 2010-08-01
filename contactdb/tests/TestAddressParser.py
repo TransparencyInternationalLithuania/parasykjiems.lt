@@ -31,17 +31,27 @@ class TestPollingDistrictStreetExpander(TestCase):
         self.assertTuplesEqual(original, self.parser.ExpandStreet(None))
         self.assertTuplesEqual(original, self.parser.ExpandStreet("    "))
 
+    def test_street_g(self):
         original = [("Mano g.", "")]
         self.assertTuplesEqual(original, self.parser.ExpandStreet("Mano g."))
 
+    def test_street_pr(self):
         original = [("Baltų pr.", "1"), ("Baltų pr.", "2")]
         self.assertTuplesEqual(original, self.parser.ExpandStreet("Baltų pr. Nr.1; Nr. 2"))
 
+    def test_street_pl(self):
         original = [("Baltų pl.", "1"), ("Baltų pl.", "2")]
         self.assertTuplesEqual(original, self.parser.ExpandStreet("Baltų pl. Nr.1; Nr. 2"))
 
+    def test_street_al(self):
         original = [("Baltų al.", "1"), ("Baltų al.", "2")]
         self.assertTuplesEqual(original, self.parser.ExpandStreet("Baltų al. Nr.1; Nr. 2"))
+
+    def test_SB(self):
+        original = [("SB Dailė.", "1"), ("SB Dailė.", "2")]
+        self.assertTuplesEqual(original, self.parser.ExpandStreet("SB Dailė. Nr.1; Nr. 2"))
+        #SB „Dailė“ Nr. 1, Nr. 27, Nr. 30, Nr. 50, Nr. 52, Nr. 56
+
 
 
     def test_OneHouse(self):
