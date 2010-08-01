@@ -83,6 +83,8 @@ class PollingDistrictStreetExpander:
                 streetTuple = self._RemoveStreetPart(part, "pr.")
             if (streetTuple is None):
                 streetTuple = self._RemoveStreetPart(part, "pl.")
+            if (streetTuple is None):
+                streetTuple = self._RemoveStreetPart(part, "al.")
 
             if (streetTuple is not None):
                 part, str = streetTuple
