@@ -26,7 +26,8 @@ class AddressParser:
             return True
         if (street.find("pl.") > 0):
             return True
-        if (street.find("a.") > 0):
+        if (re.search("\sa.", street) is not None):
+        #if (street.find("a.") > 0):
             return True
         if (street.find("al.") > 0):
             return True
@@ -146,8 +147,8 @@ class AddressParser:
         but adds it to the previous street name """
 
         city.streetName = city.streetName.strip()
-        if (city.streetName.find("nuo Nr. 70") >=0 ):
-            a = 5
+        #if (city.streetName.find("nuo Nr. 70") >=0 ):
+        #    a = 5
         if (city.streetName.startswith("nuo") == True):
             self._addStreetNameToCurrentCity(city)
             return
