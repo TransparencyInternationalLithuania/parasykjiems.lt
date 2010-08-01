@@ -19,6 +19,8 @@ http://code.google.com/p/gdata-python-client/downloads/list
 
 # install enum library
 pip install enum
+2. Solr and django-haystack (http://haystacksearch.org/) are required. Solr also requires pysolr library.
+If you prefer not Solr, but some other search engine, read here: http://docs.haystacksearch.org/dev/installing_search_engines.html
 
 
 2. Available commands
