@@ -20,16 +20,15 @@ class AddressParser:
     def _containsOneOfStreets(self, street):
         """returns True if street name contains a lithuanian shortened form of street: g for garve,
         pl for plentas, pr for prospektas, etc"""
-        if (street.find("g.") > 0):
+        if (re.search("\sg\.", street) is not None):
             return True
-        if (street.find("pr.") > 0):
+        if (re.search("\spr\.", street) is not None):
             return True
-        if (street.find("pl.") > 0):
+        if (re.search("\spl\.", street) is not None):
             return True
-        if (re.search("\sa.", street) is not None):
-        #if (street.find("a.") > 0):
+        if (re.search("\sa\.", street) is not None):
             return True
-        if (street.find("al.") > 0):
+        if (re.search("\sal\.", street) is not None):
             return True
         return False
 
