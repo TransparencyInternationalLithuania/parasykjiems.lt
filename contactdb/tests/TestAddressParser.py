@@ -120,6 +120,20 @@ class TestAddressParser(TestCase):
     def setUp(self):
         self.parser = AddressParser()
 
+    def test_Bug006(self):
+        streetStr = "Vilnius: Apkasų g. neporiniai numeriai nuo Nr. 3 iki Nr. 5, poriniai numeriai nuo Nr. 2 iki Nr. 12A; J. Treinio g.; S. Žukausko g. Nr. 1, Nr. 2, poriniai numeriai nuo Nr. 16 iki Nr. 20A; Verkių g. Nr. 7, neporiniai numeriai nuo Nr. 13 iki Nr. 25B, poriniai numeriai nuo Nr. 14 iki Nr. 30A."
+
+        parsed = list(self.parser.GetAddresses(streetStr))
+
+        streets = ["Apkasų g. neporiniai numeriai nuo Nr. 3 iki Nr. 5; poriniai numeriai nuo Nr. 2 iki Nr. 12A",
+                   "J. Treinio g.",
+                   "S. Žukausko g. Nr. 1; Nr. 2; poriniai numeriai nuo Nr. 16 iki Nr. 20A",
+                   "Verkių g. Nr. 7; neporiniai numeriai nuo Nr. 13 iki Nr. 25B; poriniai numeriai nuo Nr. 14 iki Nr. 30A."]
+        for i in range(0, len(streets)):
+            self.assertCity("Vilnius", streets[i], parsed[i])
+
+        self.assertEqual(len(streets), len(parsed))
+
     def test_Bug005(self):
         """ some streets are not parsed"""
         streetStr = "Panevėžys: Aldonos g.; Danutės g. neporiniai numeriai nuo Nr. 1 iki Nr. 27, poriniai numeriai nuo Nr. 2 iki Nr. 16; J. Tilvyčio g. neporiniai numeriai nuo Nr. 1 iki Nr. 35, poriniai numeriai nuo Nr. 2 iki Nr. 10; Katedros g., Katedros a.; Klaipėdos g. neporiniai numeriai nuo Nr. 3 iki Nr. 19; Krekenavos g. neporiniai numeriai nuo Nr. 1 iki galo; Nemuno g. poriniai numeriai nuo Nr. 2 iki Nr. 6; Nepriklausomybės a.; Ramygalos g. poriniai numeriai nuo Nr. 14 iki Nr. 50; S. Daukanto g. neporiniai numeriai nuo Nr. 39 iki Nr. 51; Sodų g., Vaižganto g., Varnaičių g.; Vysk. K. Paltaroko g. neporiniai numeriai nuo Nr. 1 iki galo; poriniai numeriai nuo Nr. 2 iki Nr. 16."
