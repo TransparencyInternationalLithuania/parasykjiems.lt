@@ -130,6 +130,8 @@ importStreets 5:8 - will import streets for counties from 5 to 8 constituencies 
             imported += 1
             numberOfStreets = 0
             for street in streetParser.GetAddresses(pollingDistrict.Addresses):
+                if (street.streetName.find("A. Jonyno g.") >= 0):
+                    a = 5
                 for expandedStreet in streetExpander.ExpandStreet(street.streetName):
                     pollingDistrictStreet = PollingDistrictStreet()
                     pollingDistrictStreet.constituency = pollingDistrict.Constituency

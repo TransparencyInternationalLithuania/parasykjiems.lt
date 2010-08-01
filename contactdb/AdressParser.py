@@ -213,7 +213,7 @@ class AddressParser:
                 
             # "k." stands for village, or kaimas in Lithuanian. 
             #if (str.find("k.") >= 0):
-            if (re.search("\sk.", str) is not None):
+            if (re.search("\sk\.", str) is not None):
                 c = CityStreet(str, "")
                 self.PushCity(c)
                 continue

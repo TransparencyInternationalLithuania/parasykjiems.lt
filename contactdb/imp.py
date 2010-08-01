@@ -310,8 +310,9 @@ class LithuanianConstituencyReader:
             s = self._removeDumbCharacters(s)
             if (s == ""):
                 break
-            strings.append(s)
             strings.append(" ")
+            strings.append(s)
+
 
         return "".join(strings)
 
