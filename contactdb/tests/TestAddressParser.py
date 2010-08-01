@@ -107,6 +107,52 @@ class TestAddressParser(TestCase):
     def setUp(self):
         self.parser = AddressParser()
 
+    def test_Bug004(self):
+        """ some streets are not recognized correctly"""
+        streetStr = "Kaunas: A. Jakšto g., Aleksoto g., Bernardinų skg., Birštono g., D. Poškos g., Druskininkų g.; I. Kanto g. neporiniai numeriai nuo Nr. 1 iki galo; J. Gruodžio g., J. Naugardo g., Jėzuitų skg.; Karaliaus Mindaugo pr. neporiniai numeriai nuo Nr. 1 iki Nr. 25, poriniai numeriai nuo Nr. 2 iki Nr. 26; Kurpių g., L. Zamenhofo g.; Laisvės al. neporiniai numeriai nuo Nr. 95 iki galo; M. Daukšos g. neporiniai numeriai nuo Nr. 1 iki Nr. 17, poriniai numeriai nuo Nr. 2 iki Nr. 12; M. Valančiaus g. neporiniai numeriai nuo Nr. 1 iki galo; Muitinės g., Muziejaus g., Nemuno g., Palangos g., Papilio g., Pilies g., Prieplaukos Krantinės g., Puodžių g.; Raguvos g. neporiniai numeriai nuo Nr. 7 iki Nr. 11, poriniai numeriai nuo Nr. 2 iki Nr. 10A; Rotušės a., Santakos g., Šilutės g., Smalininkų g., T. Daugirdo g., Trimito g., V. Kuzmos g.; Vilniaus g. poriniai numeriai nuo Nr. 2 iki galo."
+
+        parsed = list(self.parser.GetAddresses(streetStr))
+
+        streets = ["A. Jakšto g.",
+                   "Aleksoto g.",
+                   "Bernardinų skg.",
+                   "Birštono g.",
+                   "D. Poškos g.",
+                   "Druskininkų g.",
+                   "I. Kanto g. neporiniai numeriai nuo Nr. 1 iki galo",
+                   "J. Gruodžio g.",
+                   "J. Naugardo g.",
+                   "Jėzuitų skg.",
+                   "Karaliaus Mindaugo pr. neporiniai numeriai nuo Nr. 1 iki Nr. 25; poriniai numeriai nuo Nr. 2 iki Nr. 26",
+                   "Kurpių g.",
+                   "L. Zamenhofo g.",
+                   "Laisvės al. neporiniai numeriai nuo Nr. 95 iki galo",
+                   "M. Daukšos g. neporiniai numeriai nuo Nr. 1 iki Nr. 17; poriniai numeriai nuo Nr. 2 iki Nr. 12",
+                   "M. Valančiaus g. neporiniai numeriai nuo Nr. 1 iki galo",
+                   "Muitinės g.",
+                   "Muziejaus g.",
+                   "Nemuno g.",
+                   "Palangos g.",
+                   "Papilio g.",
+                   "Pilies g.",
+                   "Prieplaukos Krantinės g.",
+                   "Puodžių g.",
+                   "Raguvos g. neporiniai numeriai nuo Nr. 7 iki Nr. 11; poriniai numeriai nuo Nr. 2 iki Nr. 10A",
+                   "Rotušės a.",
+                   "Santakos g.",
+                   "Šilutės g.",
+                   "Smalininkų g.",
+                   "T. Daugirdo g.",
+                   "Trimito g.",
+                   "V. Kuzmos g.",
+                   "Vilniaus g. poriniai numeriai nuo Nr. 2 iki galo."]
+
+        for i in range(0, len(streets)):
+            self.assertCity("Kaunas", streets[i], parsed[i])
+
+        self.assertEqual(len(streets), len(parsed))
+
+
     def test_Bug003(self):
         """ endings with "nuo nr 70 iki galo" are treated as sepearete streats """
         streetStr = "Kaunas: 9-ojo Forto g. poriniai numeriai nuo Nr. 2 iki Nr. 18; A. Šapokos g., A. Žmuidzinavičiaus g., Adomynės g., Adutiškio g., Alytaus g., B. Brazdžionio g., Bačkonių g., Baisiogalos g.; Baltijos g. poriniai numeriai nuo Nr. 106 iki galo; Bernatonių g., Bražuolės g., E. Cinzo g., Eidintų g., Eigirgalos g., Gabijos g., Girios g., J. Bielinio g.; J. Semaškos g. neporiniai numeriai nuo Nr. 37 iki galo; poriniai numeriai nuo Nr. 36 iki galo; J. Skvirecko g.; Josvainių g. Nr. 1; Klovainių g., Knygnešių g., Kražių g., Kriaučiūnų g., Labūnavos g., Lapkalnio g., Liucernų g.; Liucijanavos g. poriniai numeriai nuo Nr. 2 iki galo; Miežėnų g.; Mosėdžio g. neporiniai numeriai nuo Nr. 65 iki galo; Naujakurių g. neporiniai numeriai nuo Nr. 37 iki galo; poriniai numeriai nuo Nr. 58 iki Nr. 58A, nuo Nr. 70 iki galo; P. Rusecko g., Pakalnučių g., Pakaunės g., Pokšniabalio g., Prūsų g. neporiniai numeriai nuo Nr. 1 iki galo; Rainių g., S. Banaičio g., Šalčininkų g., Šaltupio g., Sėlių g., Šėtos g., Šilagirio g.; Šilainių pl. neporiniai numeriai nuo Nr. 1 iki Nr. 21P, poriniai numeriai nuo Nr. 2 iki galo; Šilo g., Šiluvos g., Ugnės g., Vakarinio Aplinkkelio g., Žalčio Karūnos al., Žemynos g."
