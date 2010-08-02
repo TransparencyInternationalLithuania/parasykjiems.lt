@@ -73,8 +73,9 @@ INSTALLED_APPS = (
 )
 
 HAYSTACK_SITECONF = 'parasykjiems.search_sites'
-HAYSTACK_SEARCH_ENGINE = 'solr'
-HAYSTACK_SOLR_URL = 'http://127.0.0.1:8983/solr'
+HAYSTACK_SEARCH_ENGINE = 'whoosh'
+HAYSTACK_WHOOSH_PATH = '/home/vytautas/mano/django/parasykjiems/parasyk_index'
+#HAYSTACK_SOLR_URL = 'http://127.0.0.1:8983/solr'
 HAYSTACK_INCLUDE_SPELLING = True
 
 def prepareSettingsLocal():

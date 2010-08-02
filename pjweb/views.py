@@ -29,17 +29,18 @@ def index(request):
             query_string = form.cleaned_data['address']
         else:
             query_string = '*'
-        #entry_query = a_s.get_query(query_string, ['street', 'city', 'district'])
-        
-        #found_entries = PollingDistrictStreet.objects.filter(entry_query).order_by('street')
-        found_entries = SearchQuerySet().auto_query(query_string)#filter(content=query_string)
+        found_entries = SearchQuerySet().auto_query(query_string)
+        if not found_entries:
+            suggestion = SearchQuerySet().spelling_suggestion(query_string)
+            found_entries = SearchQuerySet().auto_query(suggestion)
+        print found_entries
     else:
         form = IndexForm()
     return render_to_response('pjweb/index.html', {
         'all_mps': all_mps,
         'form': form,
         'entered': query_string,
-        'suggestions': found_entries,
+        'found_entries': found_entries,
     })
 
 def no_email(request, mp_id):
