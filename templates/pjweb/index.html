@@ -1,0 +1,22 @@
+{% load i18n %}
+<form action="/pjweb/" method="post">
+<p>{% trans "Try to use national letters." %}</p>
+{{ form.as_p }}
+<input type="submit" value="Submit" />
+</form>
+{% if entered %}
+<p><b>{% trans "You entered:" %}</b> {{ entered }}</p>
+{% endif %}
+
+{% if found_entries %}
+<p><b>{% trans "We found these addresses:" %}</b></p>
+{% for found_entry in found_entries %}
+<p><a href="/pjweb/{{ found_entry.object.constituency_id }}/">{{ found_entry.street }}</a></p>
+{% endfor %}{% endif %}
+
+{% if not found_entries %}
+<p>{% trans "Or you can select one from all Members of Parliament" %}</p>
+{% for mp in all_mps %}
+<p><a href="/pjweb/contact/{{ mp.id }}/">{{ mp.name }} {{ mp.surname }}</a></p>
+{% endfor %}
+{% endif %}

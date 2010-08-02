@@ -1,0 +1,5 @@
+glob:*.pyc
+glob:*.*~
+glob:db/*
+glob:settings_local.py
+glob:.idea
