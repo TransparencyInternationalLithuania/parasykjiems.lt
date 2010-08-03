@@ -1,30 +1,63 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from django.utils.translation import ugettext as _
 from django.db import models
+from django.db.models.fields import CharField
+from enum import Enum
+
+
+class PhoneField(CharField):
+    description = _("Phone field")
+
+    def __init__(self, *args, **kwargs):
+        kwargs['max_length'] = kwargs.get('max_length', 20)
+        CharField.__init__(self, *args, **kwargs)
+
+class PersonNameField(CharField):
+    description = _("A person name field")
+
+    def __init__(self, *args, **kwargs):
+        kwargs['max_length'] = kwargs.get('max_length', 50)
+        CharField.__init__(self, *args, **kwargs)
+
+
+
 
 
 class HierarchicalGeoData(models.Model):
     """ A hierarchical geo data structure """
 
 
+    class HierarchicalGeoDataType:
+        Country = 'Country'
+        County = 'County' # Apskritis
+        Municipality = 'Municipality'  # Savivaldybė
+        CivilParish = 'CivilParish'  # Seniūnija
+        City = 'City'
+        Street = 'Street'
+        Seniunaitija = 'Seniunaitija'
+
+
+
     # types of hierarchical data. Note that correctness is not enforced programitcally
     # Which means that Country can be put below City, and vice-versa.
-    # Import tools must ensure that data is logically inserted
-    HierarchicalGeoDataType = (
-        ('Country', 'Country'),
-        ('County', 'County'), # Apskritis
-        ('Municipality', 'Municipality'), # Savivaldybė
-        ('Parish', 'Parish'), # Seniūnija
-        ('City', 'City'),
-        ('Street', 'Street')
-    )
+    # Import tools must ensure that data is logically insert
+    HierarchicalGeoDataTypeChoices = (
+        (HierarchicalGeoDataType.Country, 'Country'),
+        (HierarchicalGeoDataType.County, 'County'), # Apskritis
+        (HierarchicalGeoDataType.Municipality, 'Municipality'), # Savivaldybė
+        (HierarchicalGeoDataType.CivilParish, 'Civil parish'), # Seniūnija
+        (HierarchicalGeoDataType.City, 'City'),
+        (HierarchicalGeoDataType.Street, 'Street'),
+        (HierarchicalGeoDataType.Seniunaitija, 'Seniunaitija')
+        )
 
 
 
     name = models.CharField(max_length = 100)
     parent = models.ForeignKey('self', blank=True, null=True, related_name="children", help_text="Parent data, if this is a child node.")
-    type = models.CharField(max_length=20, choices=HierarchicalGeoDataType)
+    type = models.CharField(max_length=20, choices=HierarchicalGeoDataTypeChoices)
 
     @classmethod
     def FindByName(cls, name, type=None, parentName = None):
@@ -78,14 +111,49 @@ class PollingDistrictStreet(models.Model):
     city = models.CharField(max_length = 50)
     # should be renamed to polling district
     electionDistrict = models.CharField(max_length = 100)
+
+
+class MunicipalityMember(models.Model):
+    name = PersonNameField()
+    surname = PersonNameField()
+    email = models.EmailField(max_length = 100)
+    municipality = models.ForeignKey(HierarchicalGeoData, null=True)
+    phone = PhoneField()
+    mobilePhone = PhoneField()
+    officeAddress = models.CharField(max_length = 100)
+
+class SeniunaitijaMember(models.Model):
+    """ Seniunaitis. Is accountable to CivilParishMember. Basically he performs any sub-management
+    compared to CivilParishMember. One hierarchy level deeper """
+    name = PersonNameField()
+    surname = PersonNameField()
+    email = models.EmailField()
+    seniunaitija = models.ForeignKey(HierarchicalGeoData, null=True)
+    role = models.CharField(max_length = 20)
+    phone = PhoneField()
+    homePhone = PhoneField()
+
     
+    
+
+class CivilParishMember(models.Model):
+    """ Seniūnas.  A CivilParish member is a regional representative, which helps solve local problems. He usually
+    manages a district in a city, or a bigger district out of town"""
+    name = PersonNameField()
+    surname = PersonNameField()
+    email = models.EmailField()
+    civilParish = models.ForeignKey(HierarchicalGeoData, null=True)
+    personalPhone = PhoneField()
+    officeEmail = models.EmailField()
+    officePhone = PhoneField()
+    officeAddress = models.CharField(max_length = 100)
 
 
 class ParliamentMember(models.Model):
-    name = models.CharField(max_length = 50)
-    surname = models.CharField(max_length = 50)
-    email = models.CharField(max_length = 100)
-    constituency = models.ForeignKey(Constituency)
+    name = PersonNameField()
+    surname = PersonNameField()
+    email = models.EmailField()
+    constituency = models.ForeignKey(Constituency, null=True)
 
     @property
     def fullName(self):

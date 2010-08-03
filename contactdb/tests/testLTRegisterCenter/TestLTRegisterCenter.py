@@ -5,7 +5,7 @@ from django.test import TestCase
 import os
 from contactdb.AdressParser import AddressParser
 from contactdb.imp import LithuanianConstituencyReader
-from contactdb.LTRegisterCenter.webparser import RegisterCenterParser, RegisterCenterPage, LinkCell
+from contactdb.LTRegisterCenter.webparser import RegisterCenterParser, RegisterCenterPage, LinkCell, LTGeoDataHierarchy
 from settings import *
 from contactdb.models import HierarchicalGeoData
 
@@ -107,15 +107,15 @@ class TestLTRegisterCenterLinks(TestCase):
         self.assertEqual(len(cells), len(pageLinks))
 
     def testPagegiuSavNaktiskiuVillageHtml(self):
-        streets = ["Alyvų g.",
-"Ąžuolo g.",
-"Zosės Petraitienės g.",
-"Pievų g.",
-"Putinų g.",
-"Saulėtekio g.",
-"Sodo g.",
-"Vilties g.",
-"Vingio g."]
+        streets = ["Alyvų gatvė",
+"Ąžuolo gatvė",
+"Zosės Petraitienės gatvė",
+"Pievų gatvė",
+"Putinų gatvė",
+"Saulėtekio gatvė",
+"Sodo gatvė",
+"Vilties gatvė",
+"Vingio gatvė"]
         cells = [LinkCell(street, "") for street in streets]
 
         for lines in ReadSource(PagegiuSavNaktiskiuVillageHtml):
@@ -124,38 +124,37 @@ class TestLTRegisterCenterLinks(TestCase):
 
     def testAlytausSavHtml(self):
         for lines in ReadSource(AlytausSavHtml):
-            #print "page \n %s" % lines
             page = RegisterCenterParser(lines).parse()
             self.assertEqual(len(page.links), 11)
 
 
     def testAlytausSavAlytausSenHtml(self):
         villages = [
-("Aniškio k.", ""),
-("Arminų I k.", ""),
-("Arminų II k.", ""),
-("Bakšių k.", ""),
-("Bernotiškių k.", ""),
-("Bundorių k.", ""),
-("Butkūnų k.", ""),
-("Butrimiškių k.", ""),
-("Daugirdėlių k.", ""),
-("Daujotiškių k.", ""),
-("Dubenkos k.", ""),
-("Dubėnų k.", ""),
-("Dubių k.", ""),
-("Genių k.", "") ,
-("Jasunskų k.", ""),
-("Jovaišonių k.", ""),
-("Junonių k.", ""),
-("Jurgiškių k.", ""),
-("Kaniūkų k.", ""),
-("Karklynų k.", ""),
-("Kelmanonių k.", ""),
-("Kibirkščių k.", ""),
-("Kriaunių k.", ""),
-("Likiškėlių k.", "http://www.registrucentras.lt/adr/p/index.php?gyv_id=339"),
-("Likiškių k.", "")]
+("Aniškio kaimas", ""),
+("Arminų I kaimas", ""),
+("Arminų II kaimas", ""),
+("Bakšių kaimas", ""),
+("Bernotiškių kaimas", ""),
+("Bundorių kaimas", ""),
+("Butkūnų kaimas", ""),
+("Butrimiškių kaimas", ""),
+("Daugirdėlių kaimas", ""),
+("Daujotiškių kaimas", ""),
+("Dubenkos kaimas", ""),
+("Dubėnų kaimas", ""),
+("Dubių kaimas", ""),
+("Genių kaimas", "") ,
+("Jasunskų kaimas", ""),
+("Jovaišonių kaimas", ""),
+("Junonių kaimas", ""),
+("Jurgiškių kaimas", ""),
+("Kaniūkų kaimas", ""),
+("Karklynų kaimas", ""),
+("Kelmanonių kaimas", ""),
+("Kibirkščių kaimas", ""),
+("Kriaunių kaimas", ""),
+("Likiškėlių kaimas", "http://www.registrucentras.lt/adr/p/index.php?gyv_id=339"),
+("Likiškių kaimas", "")]
         cells = [LinkCell(tuple[0], tuple[1]) for tuple in villages]
 
 
@@ -168,16 +167,16 @@ class TestLTRegisterCenterLinks(TestCase):
 
     def testLietuvosRespublika(self):
         cells = [
-            LinkCell(text="Alytaus apskr.",     href="http://www.registrucentras.lt/adr/p/index.php?aps_id=1"),
-            LinkCell(text="Kauno apskr.",       href="http://www.registrucentras.lt/adr/p/index.php?aps_id=41"),
-            LinkCell(text="Klaipėdos apskr.",   href="http://www.registrucentras.lt/adr/p/index.php?aps_id=111"),
-            LinkCell(text="Marijampolės apskr.",href="http://www.registrucentras.lt/adr/p/index.php?aps_id=161"),
-            LinkCell(text="Panevėžio apskr.",   href="http://www.registrucentras.lt/adr/p/index.php?aps_id=204"),
-            LinkCell(text="Šiaulių apskr.",     href="http://www.registrucentras.lt/adr/p/index.php?aps_id=258"),
-            LinkCell(text="Tauragės apskr.",    href="http://www.registrucentras.lt/adr/p/index.php?aps_id=322"),
-            LinkCell(text="Telšių apskr.",      href="http://www.registrucentras.lt/adr/p/index.php?aps_id=358"),
-            LinkCell(text="Utenos apskr.",      href="http://www.registrucentras.lt/adr/p/index.php?aps_id=392"),
-            LinkCell(text="Vilniaus apskr.",    href="http://www.registrucentras.lt/adr/p/index.php?aps_id=460"),
+            LinkCell(text="Alytaus apskritis",     href="http://www.registrucentras.lt/adr/p/index.php?aps_id=1"),
+            LinkCell(text="Kauno apskritis",       href="http://www.registrucentras.lt/adr/p/index.php?aps_id=41"),
+            LinkCell(text="Klaipėdos apskritis",   href="http://www.registrucentras.lt/adr/p/index.php?aps_id=111"),
+            LinkCell(text="Marijampolės apskritis",href="http://www.registrucentras.lt/adr/p/index.php?aps_id=161"),
+            LinkCell(text="Panevėžio apskritis",   href="http://www.registrucentras.lt/adr/p/index.php?aps_id=204"),
+            LinkCell(text="Šiaulių apskritis",     href="http://www.registrucentras.lt/adr/p/index.php?aps_id=258"),
+            LinkCell(text="Tauragės apskritis",    href="http://www.registrucentras.lt/adr/p/index.php?aps_id=322"),
+            LinkCell(text="Telšių apskritis",      href="http://www.registrucentras.lt/adr/p/index.php?aps_id=358"),
+            LinkCell(text="Utenos apskritis",      href="http://www.registrucentras.lt/adr/p/index.php?aps_id=392"),
+            LinkCell(text="Vilniaus apskritis",    href="http://www.registrucentras.lt/adr/p/index.php?aps_id=460"),
         ]
 
         for lines in ReadSource(LietuvosRespublikaHtml):
@@ -198,7 +197,7 @@ class TestLTRegisterCenterLocations(TestCase):
 
            self.assertEqual(5, len(page.location))
            for i in range(0, len(page.location)):
-               self.assertEqual(HierarchicalGeoData.HierarchicalGeoDataType[i][0], page.location[i].type)
+               self.assertEqual(LTGeoDataHierarchy.Hierarchy[i], page.location[i].type)
 
     def testPagegiuSavNaktiskiuVillageHtml(self):
         for lines in ReadSource(PagegiuSavNaktiskiuVillageHtml):
@@ -206,19 +205,19 @@ class TestLTRegisterCenterLocations(TestCase):
 
             self.assertEqual(5, len(page.location))
             self.assertEqual("LIETUVOS RESPUBLIKA", page.location[0].text)
-            self.assertEqual("Tauragės apskr.", page.location[1].text)
-            self.assertEqual("Pagėgių sav.", page.location[2].text)
-            self.assertEqual("Natkiškių sen.", page.location[3].text)
-            self.assertEqual("Natkiškių k.", page.location[4].text)
+            self.assertEqual("Tauragės apskritis", page.location[1].text)
+            self.assertEqual("Pagėgių savivaldybė", page.location[2].text)
+            self.assertEqual("Natkiškių seniūnija", page.location[3].text)
+            self.assertEqual("Natkiškių kaimas", page.location[4].text)
 
     def testAlytausSavAlytausSenHtml(self):
         for lines in ReadSource(AlytausSavAlytausSenHtml):
             page = RegisterCenterParser(lines).parse()
             self.assertEqual(4, len(page.location))
             self.assertEqual("LIETUVOS RESPUBLIKA", page.location[0].text)
-            self.assertEqual("Alytaus apskr.", page.location[1].text)
-            self.assertEqual("Alytaus r. sav.", page.location[2].text)
-            self.assertEqual("Alytaus sen.", page.location[3].text)
+            self.assertEqual("Alytaus apskritis", page.location[1].text)
+            self.assertEqual("Alytaus savivaldybė", page.location[2].text)
+            self.assertEqual("Alytaus seniūnija", page.location[3].text)
 
     def testLietuvosRespublika(self):
         for lines in ReadSource(LietuvosRespublikaHtml):
