@@ -30,10 +30,9 @@ def index(request):
         else:
             query_string = '*'
         found_entries = SearchQuerySet().auto_query(query_string)
+        suggestion = found_entries.spelling_suggestion()
         if not found_entries:
-            suggestion = SearchQuerySet().spelling_suggestion(query_string)
             found_entries = SearchQuerySet().auto_query(suggestion)
-        print found_entries
     else:
         form = IndexForm()
     return render_to_response('pjweb/index.html', {
