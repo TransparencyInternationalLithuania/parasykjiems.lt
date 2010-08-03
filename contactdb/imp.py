@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import copy
+import re
 from pjutils.exc import ChainnedException
 from contactdb.models import Constituency
 from pjutils.deprecated import deprecated
@@ -9,6 +10,9 @@ from pjutils.deprecated import deprecated
 class ImportSources:
     LithuanianConstituencies = "contactdb/sources/apygardos.txt"
     LithuanianMPs = "contactdb/sources/parliament members.txt"
+    LithuanianCivilParishMembers = "contactdb/sources/LithuanianCivilParishMembers.csv"
+    LithuanianMunicipalityMembers = "contactdb/sources/LithuanianMunicipalityMembers.csv"
+    LithuanianSeniunaitijaMembers  = "contactdb/sources/LithuanianSeniunaitijaMembers.csv"
 
 class GoogleDocsSources:
     """ collection of google docs documents for Lithuanian data"""
@@ -16,10 +20,149 @@ class GoogleDocsSources:
     # parliament members
     LithuanianMPs = "parasykjiems.lt 2"
     # Seniūnai / Foreman
-    LithuanianForemen = "parasykjiems.lt 3 seniunai" 
+    LithuanianCivilParishMembers = "parasykjiems.lt 3 seniunai"
+    # Municipality mayors
+    LithuanianMunicipalityMembers = "parasykjiems.lt 4 merai"
+    # Seniūnaičiai
+    LithuanianSeniunaitijaMembers = "parasykjiems.lt 5 seniunaiciai"
+
+class PollingDistrictStreetExpanderException(ChainnedException):
+    pass
+
+class PollingDistrictStreetExpander:
+    """ When PollingDistrictStreets are parsed from txt file, some streets are subidivied into house numbers.
+    Here are a few examples of how these look like:
+    Stoties g.
+    Respublikos g. Nr. 18; Nr. 20; Nr. 21; Nr. 23; Nr. 24; Nr. 25; Nr. 27
+    Respublikos g. Nr. 19; Nr. 26; Nr. 28; numeriai nuo Nr.1 iki Nr. 17
+    S. Dariaus ir S. Girėno g. neporiniai numeriai nuo Nr. 1 iki galo; poriniai numeriai nuo Nr. 4 iki galo
+    etc
+
+    Expander will parse and return a tuple for each row separately
+    """
+
+    # sometimes street definition says "from 4th house till the end". This value will tell when is the end :)
+    IkiGaloValue = 100
+
+    def _RemoveStreetPart(self, part, streetPartName):
+        if (part.find(streetPartName) >= 0):
+            noName = part.split(streetPartName)
+            noName = [s.strip() for s in noName]
+            str = "".join(noName[0:-1])
+            str = "%s %s" % (str, streetPartName)
+            part = noName[-1]
+            return (part, str)
+        return None
+
+    def _RemoveStreetPartSB(self, part, streetPartName):
+        if (part.find(streetPartName) >= 0):
+            noName = part.split("Nr.")
+            noName = [s.strip() for s in noName]
+            str = "".join(noName[0:-1])
+            str = "%s" % (str)
+            part = "%s %s" % (noName[-1], "Nr.")
+            return (part, str)
+        return None
+
+    def ExpandStreet(self, street):
+        """ yield a tuple(street, house numbe) for each house number found in street """
+
+
+        if (street == "" or street == None):
+            yield ("", "")
+            return
+
+        street = street.strip()
+        # if no street nr, return single tuple
+        if (street.find("Nr") < 0):
+            yield (street, "")
+            return
+
+        parts = street.split(';')
+
+        #print "expand: %s"  % street
+        for part in parts:
+            streetTuple = self._RemoveStreetPart(part, "g.")
+            if (streetTuple is None):
+                streetTuple = self._RemoveStreetPart(part, "a.")
+            if (streetTuple is None):
+                streetTuple = self._RemoveStreetPart(part, "pr.")
+            if (streetTuple is None):
+                streetTuple = self._RemoveStreetPart(part, "pl.")
+            if (streetTuple is None):
+                streetTuple = self._RemoveStreetPart(part, "al.")
+            if (streetTuple is None):
+                streetTuple = self._RemoveStreetPartSB(part, "SB")
+
+
+            if (streetTuple is not None):
+                part, str = streetTuple
+
+            if (part.find('numeriai nuo') >= 0):
+                noName = part.replace("Nr.", "").replace("numeriai nuo", "")
+                step = 1
+                if (noName.find('poriniai') >= 0):
+                    noName = noName.replace("neporiniai", "")
+                    noName = noName.replace("poriniai", "")
+                    step = 2
+
+                letterTo = None
+                letterFrom = None
+                noName = noName.strip()
+                noName = noName.split('iki')
+
+                # parse fromNumber
+                fromNumber = noName[0].strip()
+                # maybe it contains letter
+                m = re.search('[a-zA-Z]', fromNumber)
+                if (m is not None):
+                    group = m.group()
+                    letterFrom = group
+                    fromNumber = fromNumber.replace(group, "")
+                fromNumber = int(fromNumber)
+
+
+                # parse toNumber
+                toNumber = noName[1].strip().strip('.')
+                if (toNumber == "galo"):
+                    toNumber = self.IkiGaloValue
+                else:
+                    # maybe it contains letter
+                    m = re.search('[a-zA-Z]', toNumber)
+                    if (m is not None):
+                        # it contains letter, remember it and remove
+                        group = m.group()
+                        letterTo = group
+                        toNumber = toNumber.replace(group, "")
+
+                    toNumber = int(toNumber)
+
+                for x in range(fromNumber, toNumber + 1, step):
+                    yield (str, "%s" % x)
+                if (letterTo is not None):
+                    yield (str, "%s%s" % (toNumber, letterTo))
+                if (letterFrom is not None):
+                    yield (str, "%s%s" % (fromNumber, letterFrom))
+
+            elif part.find('Nr.') >= 0:
+                noName = part.replace("Nr.", "")
+                noName = noName.strip()
+
+                yield (str, noName)
 
 
 
+
+#        streets = street.split("g.")
+#        str = streets[0].strip()
+#        str = "%s g." % str
+#        nrs = streets[1].split("Nr.")
+#        for nr in nrs:
+#            nr = nr.replace(";", "")
+#            nr = nr.strip()
+#            if (nr == ""):
+#                continue
+#            yield (str, nr)
 
 
 
@@ -96,6 +239,10 @@ class LithuanianConstituencyParser:
     def ExtractConstituencyFromMPsFile(self, constituencyString):
         """Extracts a Constituency object from a Lithuanian MPs file """
         lower = constituencyString.lower()
+
+        # išrinktas pagal sąrašą means that MP does not have a constituency
+        if (lower.find("pagal sąrašą") > 0):
+            return None
         nr = lower.find("nr")
         if (nr < 0):
             raise NotFoundConstituencyNrException("Could not parse Constituency nr in string '%(s)s'" % {"s" : lower})
@@ -160,8 +307,9 @@ class LithuanianConstituencyReader:
             s = self._removeDumbCharacters(s)
             if (s == ""):
                 break
-            strings.append(s)
             strings.append(" ")
+            strings.append(s)
+
 
         return "".join(strings)
 

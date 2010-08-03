@@ -1,3 +1,4 @@
+import re
 
 class CityStreet:
     cityName = ""
@@ -19,11 +20,15 @@ class AddressParser:
     def _containsOneOfStreets(self, street):
         """returns True if street name contains a lithuanian shortened form of street: g for garve,
         pl for plentas, pr for prospektas, etc"""
-        if (street.find("g.") > 0):
+        if (re.search("\sg\.", street) is not None):
             return True
-        if (street.find("pr.") > 0):
+        if (re.search("\spr\.", street) is not None):
             return True
-        if (street.find("pl.") > 0):
+        if (re.search("\spl\.", street) is not None):
+            return True
+        if (re.search("\sa\.", street) is not None):
+            return True
+        if (re.search("\sal\.", street) is not None):
             return True
         return False
 
@@ -44,6 +49,9 @@ class AddressParser:
 
             yield split[0].strip()
             for semicolonStr in split[1:]:
+                semicolonStr = semicolonStr.strip()
+                if (semicolonStr == ""):
+                    continue
 
                 # if it contains a "g.", short for "street" int Lithuanian, then this will be new street, so push new one
                 if (self._containsOneOfStreets(semicolonStr) > 0):
@@ -125,15 +133,31 @@ class AddressParser:
         self.forceNextCity = False
         self.forceNextSemicolonCity = False
 
+    def _addStreetNameToCurrentCity(self, city):
+        if (self.pushCity is not None):
+            self.pushCity.streetName = "%s; %s" % (self.pushCity.streetName, city.streetName)
+            return
+        self.popCity.streetName = "%s; %s" % (self.popCity.streetName, city.streetName)
+
+
     def PushCity(self, city):
         """ a very lame state machine.
-        If it find a new street with name "Nr" only, then it does not count it as new street,
+        If it finds a new street with name "Nr" only, then it does not count it as new street,
         but adds it to the previous street name """
+
+        city.streetName = city.streetName.strip()
+        #if (city.streetName.find("nuo Nr. 70") >=0 ):
+        #    a = 5
+        if (city.streetName.startswith("nuo") == True):
+            self._addStreetNameToCurrentCity(city)
+            return
 
         if (self.pushCity is None):
             self.pushCity = city
             self.removeForceFlags()
             return
+
+
 
         # poriniai / neporiniai / numeriai nuo types of addresses ignore forceNextCity control
         # these constructs must always come together
@@ -174,7 +198,7 @@ class AddressParser:
             # colon tests is this a village. After a village name, follows a colon and then
             # a list of streets belonging to that village.
             # test for colon must come first, before village testing (otherwise tests fail)
-            if (str.find(":") > 0):
+            if (str.find(":") >= 0):
                 splitStr = str.split(":")
                 cityName = splitStr[0].strip()
                 c = CityStreet(cityName, splitStr[1].strip())
@@ -182,13 +206,14 @@ class AddressParser:
                 continue
 
             # "mstl" stand for small town in Lithuanian
-            if (str.find("mstl") > 0):
+            if (str.find("mstl") >= 0):
                 c = CityStreet(str, "")
                 self.PushCity(c)
                 continue
                 
             # "k." stands for village, or kaimas in Lithuanian. 
-            if (str.find("k.") > 0):
+            #if (str.find("k.") >= 0):
+            if (re.search("\sk\.", str) is not None):
                 c = CityStreet(str, "")
                 self.PushCity(c)
                 continue

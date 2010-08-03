@@ -4,9 +4,114 @@
 from django.test import TestCase
 import os
 from contactdb.AdressParser import AddressParser
-from contactdb.imp import LithuanianConstituencyReader
+from contactdb.imp import LithuanianConstituencyReader, PollingDistrictStreetExpander
 
 scriptPath = os.path.dirname( os.path.realpath( __file__ ) )
+
+class TestPollingDistrictStreetExpander(TestCase):
+    parser = PollingDistrictStreetExpander()
+
+    def assertTuplesEqual(self, original, toTest):
+
+        generated = list(toTest)
+        both = zip(original, generated)
+
+        for o, t in both:
+            self.assertEqual(o[0], t[0])
+            self.assertEqual(o[1], t[1])
+
+        self.assertEqual(len(list(original)), len(generated))
+
+
+
+    def test_Empty(self):
+        original = [("", "")]
+
+        self.assertTuplesEqual(original, self.parser.ExpandStreet(""))
+        self.assertTuplesEqual(original, self.parser.ExpandStreet(None))
+        self.assertTuplesEqual(original, self.parser.ExpandStreet("    "))
+
+    def test_street_g(self):
+        original = [("Mano g.", "")]
+        self.assertTuplesEqual(original, self.parser.ExpandStreet("Mano g."))
+
+    def test_street_pr(self):
+        original = [("Baltų pr.", "1"), ("Baltų pr.", "2")]
+        self.assertTuplesEqual(original, self.parser.ExpandStreet("Baltų pr. Nr.1; Nr. 2"))
+
+    def test_street_pl(self):
+        original = [("Baltų pl.", "1"), ("Baltų pl.", "2")]
+        self.assertTuplesEqual(original, self.parser.ExpandStreet("Baltų pl. Nr.1; Nr. 2"))
+
+    def test_street_al(self):
+        original = [("Baltų al.", "1"), ("Baltų al.", "2")]
+        self.assertTuplesEqual(original, self.parser.ExpandStreet("Baltų al. Nr.1; Nr. 2"))
+
+    def test_SB(self):
+        original = [("SB Dailė.", "1"), ("SB Dailė.", "2")]
+        self.assertTuplesEqual(original, self.parser.ExpandStreet("SB Dailė. Nr.1; Nr. 2"))
+        #SB „Dailė“ Nr. 1, Nr. 27, Nr. 30, Nr. 50, Nr. 52, Nr. 56
+
+
+
+    def test_OneHouse(self):
+
+        vec = ["18", "20", "22", "24", "26", "27", "29"]
+        original = [("Respublikos g.", x) for x in vec]
+
+        self.assertTuplesEqual(original, self.parser.ExpandStreet("Respublikos g. Nr. 18; Nr. 20; Nr. 22; Nr. 24; Nr. 26; Nr. 27; Nr. 29"))
+
+    def test_OneHouse_TwoRanges(self):
+        vec = ["19", "26", "28", "1", "3", "5", "7", "9", "11", "13", "15", "17"]
+        original = [("Respublikos g.", x) for x in vec]
+
+        self.assertTuplesEqual(original, self.parser.ExpandStreet("Respublikos g. Nr. 19; Nr. 26; Nr. 28; numeriai nuo Nr.1 iki Nr. 17"))
+
+    def test_OneHouse_TwoRanges(self):
+        vec = [str(x) for x in range(1, PollingDistrictStreetExpander.IkiGaloValue, 2)]
+        vec2 = [str(x) for x in range(4, PollingDistrictStreetExpander.IkiGaloValue + 1, 2)]
+        vec = vec + vec2
+        original = [("S. Dariaus ir S. Girėno g.", x) for x in vec]
+
+        self.assertTuplesEqual(original, self.parser.ExpandStreet("S. Dariaus ir S. Girėno g. neporiniai numeriai nuo Nr. 1 iki galo; poriniai numeriai nuo Nr. 4 iki galo"))
+
+    def test_OneHouse_ThreeRanges(self):
+        vec = [str(x) for x in range(17, PollingDistrictStreetExpander.IkiGaloValue, 2)]
+        vec2 = [str(x) for x in range(10, PollingDistrictStreetExpander.IkiGaloValue + 1, 2)]
+        vec3 = [str(x) for x in range(1, 8 + 1)]
+        vec = vec + vec2 + vec3
+        original = [("AlyvųTako g.", x) for x in vec]
+
+        self.assertTuplesEqual(original, self.parser.ExpandStreet("AlyvųTako g. neporiniai numeriai nuo Nr. 17 iki galo; poriniai numeriai nuo Nr. 10 iki galo; numeriai nuo Nr. 1 iki Nr. 8"))
+
+    def test_OneHouse_WithSquare(self):
+        original = [("Respublikos a.", "2")]
+        self.assertTuplesEqual(original, self.parser.ExpandStreet("Respublikos a. Nr. 2"))
+
+    def test_OneHouse_HouseNumber_WithLetter(self):
+
+        original = [("S. Dariaus ir S. Girėno g.", "2"), ("S. Dariaus ir S. Girėno g.", "2A")]
+        self.assertTuplesEqual(original, self.parser.ExpandStreet("S. Dariaus ir S. Girėno g. numeriai nuo Nr. 2 iki Nr. 2A"))
+
+    def test_OneHouse_WithDotInTheEnd(self):
+
+        vec = [str(x) for x in range(4, 42 + 1, 2)]
+        original = [("Naujosios g.", x) for x in vec]
+
+        self.assertTuplesEqual(original, self.parser.ExpandStreet("Naujosios g. poriniai numeriai nuo Nr. 4 iki Nr. 42."))
+
+    def test_OneHouse_WithLetter_InStart(self):
+
+        vec = ["3", "5", "7", "9", "11", "3A", "4", "6", "8", "10"]
+        original = [("Vytauto g.", x) for x in vec]
+        self.assertTuplesEqual(original, self.parser.ExpandStreet("Vytauto g. neporiniai numeriai nuo Nr. 3A iki Nr. 11; poriniai numeriai nuo Nr. 4 iki Nr. 10"))
+
+    def test_NoSpaceBetweenStreet(self):
+        vec = [str(x) for x in range(46, PollingDistrictStreetExpander.IkiGaloValue + 1, 2)]
+        original = [("Kuršių g.", x) for x in vec]
+
+        self.assertTuplesEqual(original, self.parser.ExpandStreet("Kuršių g.poriniai numeriai nuo Nr. 46 iki galo"))
+
 
 class TestAddressParser(TestCase):
 
@@ -14,6 +119,187 @@ class TestAddressParser(TestCase):
 
     def setUp(self):
         self.parser = AddressParser()
+
+    def test_Bug007(self):
+        streetStr = "Alytus: A. Jonyno g. neporiniai numeriai nuo Nr. 1 iki Nr. 17; Šaltinių g. neporiniai numeriai nuo Nr. 1 iki Nr. 17, Nr. 47, poriniai numeriai nuo Nr. 16 iki galo; numeriai nuo Nr. 2 iki Nr. 14; Žuvinto g. Nr. 13."
+
+        parsed = list(self.parser.GetAddresses(streetStr))
+
+        streets = ["A. Jonyno g. neporiniai numeriai nuo Nr. 1 iki Nr. 17",
+                   "Šaltinių g. neporiniai numeriai nuo Nr. 1 iki Nr. 17; Nr. 47; poriniai numeriai nuo Nr. 16 iki galo; numeriai nuo Nr. 2 iki Nr. 14",
+                   "Žuvinto g. Nr. 13."]
+
+        for i in range(0, len(streets)):
+            self.assertCity("Alytus", streets[i], parsed[i])
+
+        self.assertEqual(len(streets), len(parsed))
+
+
+    def test_Bug006(self):
+        streetStr = "Vilnius: Apkasų g. neporiniai numeriai nuo Nr. 3 iki Nr. 5, poriniai numeriai nuo Nr. 2 iki Nr. 12A; J. Treinio g.; S. Žukausko g. Nr. 1, Nr. 2, poriniai numeriai nuo Nr. 16 iki Nr. 20A; Verkių g. Nr. 7, neporiniai numeriai nuo Nr. 13 iki Nr. 25B, poriniai numeriai nuo Nr. 14 iki Nr. 30A."
+
+        parsed = list(self.parser.GetAddresses(streetStr))
+
+        streets = ["Apkasų g. neporiniai numeriai nuo Nr. 3 iki Nr. 5; poriniai numeriai nuo Nr. 2 iki Nr. 12A",
+                   "J. Treinio g.",
+                   "S. Žukausko g. Nr. 1; Nr. 2; poriniai numeriai nuo Nr. 16 iki Nr. 20A",
+                   "Verkių g. Nr. 7; neporiniai numeriai nuo Nr. 13 iki Nr. 25B; poriniai numeriai nuo Nr. 14 iki Nr. 30A."]
+        for i in range(0, len(streets)):
+            self.assertCity("Vilnius", streets[i], parsed[i])
+
+        self.assertEqual(len(streets), len(parsed))
+
+    def test_Bug005(self):
+        """ some streets are not parsed"""
+        streetStr = "Panevėžys: Aldonos g.; Danutės g. neporiniai numeriai nuo Nr. 1 iki Nr. 27, poriniai numeriai nuo Nr. 2 iki Nr. 16; J. Tilvyčio g. neporiniai numeriai nuo Nr. 1 iki Nr. 35, poriniai numeriai nuo Nr. 2 iki Nr. 10; Katedros g., Katedros a.; Klaipėdos g. neporiniai numeriai nuo Nr. 3 iki Nr. 19; Krekenavos g. neporiniai numeriai nuo Nr. 1 iki galo; Nemuno g. poriniai numeriai nuo Nr. 2 iki Nr. 6; Nepriklausomybės a.; Ramygalos g. poriniai numeriai nuo Nr. 14 iki Nr. 50; S. Daukanto g. neporiniai numeriai nuo Nr. 39 iki Nr. 51; Sodų g., Vaižganto g., Varnaičių g.; Vysk. K. Paltaroko g. neporiniai numeriai nuo Nr. 1 iki galo; poriniai numeriai nuo Nr. 2 iki Nr. 16."
+
+        parsed = list(self.parser.GetAddresses(streetStr))
+
+        streets = ["Aldonos g.",
+                   "Danutės g. neporiniai numeriai nuo Nr. 1 iki Nr. 27; poriniai numeriai nuo Nr. 2 iki Nr. 16",
+                   "J. Tilvyčio g. neporiniai numeriai nuo Nr. 1 iki Nr. 35; poriniai numeriai nuo Nr. 2 iki Nr. 10",
+                   "Katedros g.",
+                   "Katedros a.",
+                   "Klaipėdos g. neporiniai numeriai nuo Nr. 3 iki Nr. 19",
+                   "Krekenavos g. neporiniai numeriai nuo Nr. 1 iki galo",
+                   "Nemuno g. poriniai numeriai nuo Nr. 2 iki Nr. 6",
+                   "Nepriklausomybės a.",
+                   "Ramygalos g. poriniai numeriai nuo Nr. 14 iki Nr. 50",
+                   "S. Daukanto g. neporiniai numeriai nuo Nr. 39 iki Nr. 51",
+                   "Sodų g.",
+                   "Vaižganto g.",
+                   "Varnaičių g.",
+                   "Vysk. K. Paltaroko g. neporiniai numeriai nuo Nr. 1 iki galo; poriniai numeriai nuo Nr. 2 iki Nr. 16."]
+
+        for i in range(0, len(streets)):
+            self.assertCity("Panevėžys", streets[i], parsed[i])
+
+        self.assertEqual(len(streets), len(parsed))
+
+    def test_Bug004(self):
+        """ some streets are not recognized correctly"""
+        streetStr = "Kaunas: A. Jakšto g., Aleksoto g., Bernardinų skg., Birštono g., D. Poškos g., Druskininkų g.; I. Kanto g. neporiniai numeriai nuo Nr. 1 iki galo; J. Gruodžio g., J. Naugardo g., Jėzuitų skg.; Karaliaus Mindaugo pr. neporiniai numeriai nuo Nr. 1 iki Nr. 25, poriniai numeriai nuo Nr. 2 iki Nr. 26; Kurpių g., L. Zamenhofo g.; Laisvės al. neporiniai numeriai nuo Nr. 95 iki galo; M. Daukšos g. neporiniai numeriai nuo Nr. 1 iki Nr. 17, poriniai numeriai nuo Nr. 2 iki Nr. 12; M. Valančiaus g. neporiniai numeriai nuo Nr. 1 iki galo; Muitinės g., Muziejaus g., Nemuno g., Palangos g., Papilio g., Pilies g., Prieplaukos Krantinės g., Puodžių g.; Raguvos g. neporiniai numeriai nuo Nr. 7 iki Nr. 11, poriniai numeriai nuo Nr. 2 iki Nr. 10A; Rotušės a., Santakos g., Šilutės g., Smalininkų g., T. Daugirdo g., Trimito g., V. Kuzmos g.; Vilniaus g. poriniai numeriai nuo Nr. 2 iki galo."
+
+        parsed = list(self.parser.GetAddresses(streetStr))
+
+        streets = ["A. Jakšto g.",
+                   "Aleksoto g.",
+                   "Bernardinų skg.",
+                   "Birštono g.",
+                   "D. Poškos g.",
+                   "Druskininkų g.",
+                   "I. Kanto g. neporiniai numeriai nuo Nr. 1 iki galo",
+                   "J. Gruodžio g.",
+                   "J. Naugardo g.",
+                   "Jėzuitų skg.",
+                   "Karaliaus Mindaugo pr. neporiniai numeriai nuo Nr. 1 iki Nr. 25; poriniai numeriai nuo Nr. 2 iki Nr. 26",
+                   "Kurpių g.",
+                   "L. Zamenhofo g.",
+                   "Laisvės al. neporiniai numeriai nuo Nr. 95 iki galo",
+                   "M. Daukšos g. neporiniai numeriai nuo Nr. 1 iki Nr. 17; poriniai numeriai nuo Nr. 2 iki Nr. 12",
+                   "M. Valančiaus g. neporiniai numeriai nuo Nr. 1 iki galo",
+                   "Muitinės g.",
+                   "Muziejaus g.",
+                   "Nemuno g.",
+                   "Palangos g.",
+                   "Papilio g.",
+                   "Pilies g.",
+                   "Prieplaukos Krantinės g.",
+                   "Puodžių g.",
+                   "Raguvos g. neporiniai numeriai nuo Nr. 7 iki Nr. 11; poriniai numeriai nuo Nr. 2 iki Nr. 10A",
+                   "Rotušės a.",
+                   "Santakos g.",
+                   "Šilutės g.",
+                   "Smalininkų g.",
+                   "T. Daugirdo g.",
+                   "Trimito g.",
+                   "V. Kuzmos g.",
+                   "Vilniaus g. poriniai numeriai nuo Nr. 2 iki galo."]
+
+        for i in range(0, len(streets)):
+            self.assertCity("Kaunas", streets[i], parsed[i])
+
+        self.assertEqual(len(streets), len(parsed))
+
+
+    def test_Bug003(self):
+        """ endings with "nuo nr 70 iki galo" are treated as sepearete streats """
+        streetStr = "Kaunas: 9-ojo Forto g. poriniai numeriai nuo Nr. 2 iki Nr. 18; A. Šapokos g., A. Žmuidzinavičiaus g., Adomynės g., Adutiškio g., Alytaus g., B. Brazdžionio g., Bačkonių g., Baisiogalos g.; Baltijos g. poriniai numeriai nuo Nr. 106 iki galo; Bernatonių g., Bražuolės g., E. Cinzo g., Eidintų g., Eigirgalos g., Gabijos g., Girios g., J. Bielinio g.; J. Semaškos g. neporiniai numeriai nuo Nr. 37 iki galo; poriniai numeriai nuo Nr. 36 iki galo; J. Skvirecko g.; Josvainių g. Nr. 1; Klovainių g., Knygnešių g., Kražių g., Kriaučiūnų g., Labūnavos g., Lapkalnio g., Liucernų g.; Liucijanavos g. poriniai numeriai nuo Nr. 2 iki galo; Miežėnų g.; Mosėdžio g. neporiniai numeriai nuo Nr. 65 iki galo; Naujakurių g. neporiniai numeriai nuo Nr. 37 iki galo; poriniai numeriai nuo Nr. 58 iki Nr. 58A, nuo Nr. 70 iki galo; P. Rusecko g., Pakalnučių g., Pakaunės g., Pokšniabalio g., Prūsų g. neporiniai numeriai nuo Nr. 1 iki galo; Rainių g., S. Banaičio g., Šalčininkų g., Šaltupio g., Sėlių g., Šėtos g., Šilagirio g.; Šilainių pl. neporiniai numeriai nuo Nr. 1 iki Nr. 21P, poriniai numeriai nuo Nr. 2 iki galo; Šilo g., Šiluvos g., Ugnės g., Vakarinio Aplinkkelio g., Žalčio Karūnos al., Žemynos g."
+
+        parsed = list(self.parser.GetAddresses(streetStr))
+
+        streets= ["9-ojo Forto g. poriniai numeriai nuo Nr. 2 iki Nr. 18",
+                  "A. Šapokos g.",
+                  "A. Žmuidzinavičiaus g.",
+                  "Adomynės g.",
+                  "Adutiškio g.",
+                  "Alytaus g.",
+                  "B. Brazdžionio g.",
+                  "Bačkonių g.",
+                  "Baisiogalos g.",
+                  "Baltijos g. poriniai numeriai nuo Nr. 106 iki galo",
+                  "Bernatonių g.",
+                  "Bražuolės g.",
+                  "E. Cinzo g.",
+                  "Eidintų g.",
+                  "Eigirgalos g.",
+                  "Gabijos g.",
+                  "Girios g.",
+                  "J. Bielinio g.",
+                  "J. Semaškos g. neporiniai numeriai nuo Nr. 37 iki galo; poriniai numeriai nuo Nr. 36 iki galo",
+                  "J. Skvirecko g.",
+                  "Josvainių g. Nr. 1",
+                  "Klovainių g.",
+                  "Knygnešių g.",
+                  "Kražių g.",
+                  "Kriaučiūnų g.",
+                  "Labūnavos g.",
+                  "Lapkalnio g.",
+                  "Liucernų g.",
+                  "Liucijanavos g. poriniai numeriai nuo Nr. 2 iki galo",
+                  "Miežėnų g.",
+                  "Mosėdžio g. neporiniai numeriai nuo Nr. 65 iki galo",
+                  "Naujakurių g. neporiniai numeriai nuo Nr. 37 iki galo; poriniai numeriai nuo Nr. 58 iki Nr. 58A; nuo Nr. 70 iki galo",
+                  "P. Rusecko g.",
+                  "Pakalnučių g.",
+                  "Pakaunės g.",
+                  "Pokšniabalio g.",
+                  "Prūsų g. neporiniai numeriai nuo Nr. 1 iki galo",
+                  "Rainių g.",
+                  "S. Banaičio g.",
+                  "Šalčininkų g.",
+                  "Šaltupio g.",
+                  "Sėlių g.",
+                  "Šėtos g.",
+                  "Šilagirio g.",
+                  "Šilainių pl. neporiniai numeriai nuo Nr. 1 iki Nr. 21P; poriniai numeriai nuo Nr. 2 iki galo",
+                  "Šilo g.",
+                  "Šiluvos g.",
+                  "Ugnės g.",
+                  "Vakarinio Aplinkkelio g.",
+                  "Žalčio Karūnos al.",
+                  "Žemynos g."]
+
+        for i in range(0, len(streets)):
+            self.assertCity("Kaunas", streets[i], parsed[i])
+
+        self.assertEqual(len(streets), len(parsed))
+
+    def test_Bug002(self):
+        streetStr = "Kaunas: Naujakurių g. neporiniai numeriai nuo Nr. 37 iki galo; poriniai numeriai nuo Nr. 58 iki Nr. 58A, nuo Nr. 70 iki galo;"
+        parsed = list(self.parser.GetAddresses(streetStr))
+        self.assertCity("Kaunas", "Naujakurių g. neporiniai numeriai nuo Nr. 37 iki galo; poriniai numeriai nuo Nr. 58 iki Nr. 58A; nuo Nr. 70 iki galo", parsed[0])
+        self.assertEqual(1, len(parsed))
+
+    def test_Bug001(self):
+        streetStr = "Kaunas: A. Stulginskio g. neporiniai numeriai nuo Nr. 61 iki galo; poriniai numeriai nuo Nr. 54 iki galo; Bajorų g., Panerių g. poriniai numeriai nuo Nr. 72 iki Nr. 90; Sąjungos a. neporiniai numeriai nuo Nr. 1 iki Nr. 3, nuo Nr. 5 iki galo; Varnių g. poriniai numeriai nuo Nr. 22 iki Nr. 38."
+        parsed = list(self.parser.GetAddresses(streetStr))
+        self.assertCity("Kaunas", "A. Stulginskio g. neporiniai numeriai nuo Nr. 61 iki galo; poriniai numeriai nuo Nr. 54 iki galo", parsed[0])
+        self.assertCity("Kaunas", "Bajorų g.", parsed[1])
+        self.assertCity("Kaunas", "Panerių g. poriniai numeriai nuo Nr. 72 iki Nr. 90", parsed[2])
+        self.assertCity("Kaunas", "Sąjungos a. neporiniai numeriai nuo Nr. 1 iki Nr. 3; nuo Nr. 5 iki galo", parsed[3])
+        self.assertCity("Kaunas", "Varnių g. poriniai numeriai nuo Nr. 22 iki Nr. 38.", parsed[4])
+        self.assertEqual(5, len(parsed))
 
     def test_plentas(self):
         streetStr = "Kaunas: Arnavos g.; Baltų pr. neporiniai numeriai nuo Nr. 11A iki Nr. 85A, poriniai numeriai nuo Nr. 28 iki Nr. 38; Lazdynėlių g.; Mosėdžio g. neporiniai numeriai nuo Nr. 1 iki Nr. 29, poriniai numeriai nuo Nr. 2 iki Nr. 18, nuo Nr. 24 iki Nr. 28; Nadruvių g., Notangų g., Pagudėnų g., Pamedėnų g., Pilupėnų g., Šateikių g., Sembų g., Skalvių g., Stalupėnų g., Tolminkiemio g., Žemaičių pl. neporiniai numeriai nuo Nr. 23 iki Nr. 25."

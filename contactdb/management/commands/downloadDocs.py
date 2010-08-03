@@ -32,6 +32,7 @@ class Command(BaseCommand):
         for k in d.iterkeys():
             if d[k] is None:
                 continue
+            d[k] = d[k].replace("\n", " ")
 
             d[k] = d[k].encode("utf-8")
         return d
@@ -65,6 +66,9 @@ class Command(BaseCommand):
         self.client = SpreadSheetClient(GlobalSettings.GOOGLE_DOCS_USER, GlobalSettings.GOOGLE_DOCS_PASSWORD)
 
         self.downloadDoc(GoogleDocsSources.LithuanianMPs, ImportSources.LithuanianMPs)
+        self.downloadDoc(GoogleDocsSources.LithuanianCivilParishMembers, ImportSources.LithuanianCivilParishMembers)
+        self.downloadDoc(GoogleDocsSources.LithuanianMunicipalityMembers, ImportSources.LithuanianMunicipalityMembers)
+        self.downloadDoc(GoogleDocsSources.LithuanianSeniunaitijaMembers, ImportSources.LithuanianSeniunaitijaMembers)
 
 
             
