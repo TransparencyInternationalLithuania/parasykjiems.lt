@@ -17,12 +17,10 @@ class SimpleTest(unittest.TestCase):
             'Žygio 90, Vilnius',
             'Žvejų 16, Antanašė, Rokiškio raj.',
             'Mindaugo 16, Kaunas',
-            'Antanašė, Rokiškio raj.',
+            'Antanašė, Rokiškio raj',
         ]
         for test in test_addresses:
+            print test
             response = self.client.post('/pjweb/', {'address':test})
-
-            response = self.client.get('/pjweb/')
-
             # Check that the response is 200 OK.
             ok = self.failUnlessEqual(response.status_code, 200)
