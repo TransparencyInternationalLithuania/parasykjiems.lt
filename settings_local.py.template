@@ -17,6 +17,11 @@ DATABASE_PASSWORD = ''         # Not used with sqlite3.
 DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
 DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
 
+HAYSTACK_SITECONF = 'parasykjiems.search_sites'
+HAYSTACK_SEARCH_ENGINE = 'whoosh'
+HAYSTACK_WHOOSH_PATH = os.path.join(scriptPath, 'parasykindex')
+#HAYSTACK_XAPIAN_PATH = os.path.join(scriptPath, 'parasyk_index')
+
 #variables for email sending
 EMAIL_HOST = ''
 EMAIL_PORT = '25'
