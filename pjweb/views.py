@@ -30,8 +30,8 @@ def index(request):
         else:
             query_string = '*'
         found_entries = SearchQuerySet().auto_query(query_string)
-        suggestion = found_entries.spelling_suggestion()
         if not found_entries:
+            suggestion = found_entries.spelling_suggestion()
             found_entries = SearchQuerySet().auto_query(suggestion)
     else:
         form = IndexForm()
