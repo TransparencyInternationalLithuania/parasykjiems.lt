@@ -92,6 +92,7 @@ importStreets 5:8 - will import streets for counties from 5 to 8 constituencies 
 
     @transaction.commit_on_success    
     def handle(self, *args, **options):
+        ImportSources.EsnureExists(ImportSources.LithuanianConstituencies)
         allRecords = os.path.join(os.getcwd(), ImportSources.LithuanianConstituencies)
         file = open(allRecords, "r")
         aggregator = LithuanianConstituencyReader(file)

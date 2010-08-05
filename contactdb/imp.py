@@ -3,16 +3,30 @@
 
 import copy
 import re
+import os
 from pjutils.exc import ChainnedException
 from contactdb.models import Constituency
 from pjutils.deprecated import deprecated
 
+class ImportSourceNotExistsException(ChainnedException):
+    pass
+
 class ImportSources:
-    LithuanianConstituencies = "contactdb/sources/apygardos.txt"
-    LithuanianMPs = "contactdb/sources/parliament members.txt"
-    LithuanianCivilParishMembers = "contactdb/sources/LithuanianCivilParishMembers.csv"
-    LithuanianMunicipalityMembers = "contactdb/sources/LithuanianMunicipalityMembers.csv"
-    LithuanianSeniunaitijaMembers  = "contactdb/sources/LithuanianSeniunaitijaMembers.csv"
+    LithuanianConstituencies = os.path.join("contactdb", "sources", "apygardos.txt")
+    LithuanianMPs = os.path.join("contactdb", "sources", "parliament members.txt")
+    LithuanianCivilParishMembers = os.path.join("contactdb", "sources", "LithuanianCivilParishMembers.csv")
+    LithuanianMunicipalityMembers = os.path.join("contactdb", "sources", "LithuanianMunicipalityMembers.csv")
+    LithuanianSeniunaitijaMembers  = os.path.join("contactdb", "sources", "LithuanianSeniunaitijaMembers.csv")
+
+    @classmethod
+    def EsnureExists(clas, importSource):
+        """ Checks that a given import source exists on file system. if not, throw an exception,
+         so that user would know how to donwload that source"""
+        file = os.path.join(os.getcwd(), importSource)
+        exists = os.path.exists(file)
+        if (exists == False):
+            raise ImportSourceNotExistsException("""File '%s' does not exist on your file system. Usually this means
+that an appropriate google doc was not downloaded yet.  You can do that by calling manage.py downloadDocs """ % file) 
 
 class GoogleDocsSources:
     """ collection of google docs documents for Lithuanian data"""
