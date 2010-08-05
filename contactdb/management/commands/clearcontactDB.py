@@ -1,8 +1,21 @@
 from django.core.management.base import BaseCommand
 from contactdb.models import *
 from django.db import connection, transaction
-from contactdb.management.commands.ltGeoDataDBClear import ClearTablesData
 
+def ClearTablesData(listOfDjangoModels):
+    print "Will clear %d models" % (len(listOfDjangoModels))
+    cursor = connection.cursor()
+    for model in listOfDjangoModels:
+        dbTable = model.objects.model._meta.db_table
+
+        print "Clearing data from %s. (%s)" % (model.objects.model._meta.object_name, dbTable)
+        rowCount = model.objects.count()
+        print "Total %d rows" % rowCount
+
+        cursor.execute("delete from %s" % (dbTable))
+        transaction.commit_unless_managed()
+
+        print "Now it has %d rows" % model.objects.count()
 
 class Command(BaseCommand):
     args = '<>'
@@ -13,7 +26,13 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         cursor = connection.cursor()
 
-        models = [PollingDistrictStreet, ParliamentMember, Constituency]
+        models = [PollingDistrictStreet,
+                  ParliamentMember,
+                  Constituency,
+                  CivilParishMember,
+                  HierarchicalGeoData,
+                  MunicipalityMember,
+                  SeniunaitijaMember]
 
         ClearTablesData(models)
         
