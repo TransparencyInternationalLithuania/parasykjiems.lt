@@ -158,11 +158,17 @@ class Command(BaseCommand):
         return insertedRows
 
     def CreateAdditionalGeoData(self):
-        self.CreateRowIfNotExist("Palangos miesto seniūnija", HierarchicalGeoData.HierarchicalGeoDataType.CivilParish,
-            "Palangos miesto", HierarchicalGeoData.HierarchicalGeoDataType.Municipality)
+        try:
+            self.CreateRowIfNotExist("Palangos miesto seniūnija", HierarchicalGeoData.HierarchicalGeoDataType.CivilParish,
+                "Palangos miesto", HierarchicalGeoData.HierarchicalGeoDataType.Municipality)
 
-        self.CreateRowIfNotExist("Šventosios seniūnija", HierarchicalGeoData.HierarchicalGeoDataType.CivilParish,
-            "Palangos miesto", HierarchicalGeoData.HierarchicalGeoDataType.Municipality)
+            self.CreateRowIfNotExist("Šventosios seniūnija", HierarchicalGeoData.HierarchicalGeoDataType.CivilParish,
+                "Palangos miesto", HierarchicalGeoData.HierarchicalGeoDataType.Municipality)
+        except (HierarchicalGeoData.DoesNotExist, LTGeoDataImportException):
+            print "Could not create addition geo data"
+            print """This might happen if you have called with max-depth 1.  In that case appropriate data was simply
+not created, so it is normal to receive HierarchicalGeoData.DoesNotExist exception. Please import
+more data with at least max-depth 2"""
         
 
     def handle(self, *args, **options):
