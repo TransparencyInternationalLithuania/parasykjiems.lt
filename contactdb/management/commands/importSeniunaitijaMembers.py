@@ -42,6 +42,10 @@ class Command(BaseCommand):
 
         for member in reader.ReadMembers():
 
+            if (member.name.strip() == ""):
+                print "member name was empty. "
+                print "Probably that means that in seniunaitija %s a member was not yet elected" % member.seniunaitijaStr
+
             # check if already such member exists. Name and surname are primary keys
             m = self.alreadyExists(member.name, member.surname)
             if (m is not None):

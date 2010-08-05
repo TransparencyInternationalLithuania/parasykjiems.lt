@@ -50,7 +50,7 @@ class Command(BaseCommand):
             # if does not exist, create it
             # relate existing constituency to an MP
             try:
-                type = HierarchicalGeoData.HierarchicalGeoDataType[2][0]
+                type = HierarchicalGeoData.HierarchicalGeoDataType.Municipality
                 name = member.municipalityStr.replace('rajono', '').strip()
                 member.municipality = HierarchicalGeoData.objects.filter(name__contains=name).filter(type = type)[0:1].get()
             except ObjectDoesNotExist:
