@@ -4,7 +4,7 @@
 from django.test import TestCase
 import os
 from contactdb.AdressParser import AddressParser
-from contactdb.imp import LithuanianConstituencyReader, PollingDistrictStreetExpander
+from contactdb.imp import LithuanianConstituencyReader, PollingDistrictStreetExpander, ExpandedStreet
 
 scriptPath = os.path.dirname( os.path.realpath( __file__ ) )
 
@@ -17,38 +17,39 @@ class TestPollingDistrictStreetExpander(TestCase):
         both = zip(original, generated)
 
         for o, t in both:
-            self.assertEqual(o[0], t[0])
-            self.assertEqual(o[1], t[1])
+            self.assertEqual(o.street, t.street)
+            self.assertEqual(o.numberFrom, t.numberFrom)
+            self.assertEqual(o.numberTo, t.numberTo)
 
         self.assertEqual(len(list(original)), len(generated))
 
 
 
     def test_Empty(self):
-        original = [("", "")]
+        original = [ExpandedStreet("")]
 
         self.assertTuplesEqual(original, self.parser.ExpandStreet(""))
         self.assertTuplesEqual(original, self.parser.ExpandStreet(None))
         self.assertTuplesEqual(original, self.parser.ExpandStreet("    "))
 
     def test_street_g(self):
-        original = [("Mano g.", "")]
+        original = [ExpandedStreet(street = "Mano g.")]
         self.assertTuplesEqual(original, self.parser.ExpandStreet("Mano g."))
 
     def test_street_pr(self):
-        original = [("Baltų pr.", "1"), ("Baltų pr.", "2")]
+        original = [ExpandedStreet("Baltų pr.", "1"), ExpandedStreet("Baltų pr.", "2")]
         self.assertTuplesEqual(original, self.parser.ExpandStreet("Baltų pr. Nr.1; Nr. 2"))
 
     def test_street_pl(self):
-        original = [("Baltų pl.", "1"), ("Baltų pl.", "2")]
+        original = [ExpandedStreet("Baltų pl.", "1"), ExpandedStreet("Baltų pl.", "2")]
         self.assertTuplesEqual(original, self.parser.ExpandStreet("Baltų pl. Nr.1; Nr. 2"))
 
     def test_street_al(self):
-        original = [("Baltų al.", "1"), ("Baltų al.", "2")]
+        original = [ExpandedStreet("Baltų al.", "1"), ExpandedStreet("Baltų al.", "2")]
         self.assertTuplesEqual(original, self.parser.ExpandStreet("Baltų al. Nr.1; Nr. 2"))
 
     def test_SB(self):
-        original = [("SB Dailė.", "1"), ("SB Dailė.", "2")]
+        original = [ExpandedStreet("SB Dailė.", "1"), ExpandedStreet("SB Dailė.", "2")]
         self.assertTuplesEqual(original, self.parser.ExpandStreet("SB Dailė. Nr.1; Nr. 2"))
         #SB „Dailė“ Nr. 1, Nr. 27, Nr. 30, Nr. 50, Nr. 52, Nr. 56
 
@@ -57,58 +58,59 @@ class TestPollingDistrictStreetExpander(TestCase):
     def test_OneHouse(self):
 
         vec = ["18", "20", "22", "24", "26", "27", "29"]
-        original = [("Respublikos g.", x) for x in vec]
+        original = [ExpandedStreet("Respublikos g.", x) for x in vec]
 
         self.assertTuplesEqual(original, self.parser.ExpandStreet("Respublikos g. Nr. 18; Nr. 20; Nr. 22; Nr. 24; Nr. 26; Nr. 27; Nr. 29"))
 
-    def test_OneHouse_TwoRanges(self):
-        vec = ["19", "26", "28", "1", "3", "5", "7", "9", "11", "13", "15", "17"]
-        original = [("Respublikos g.", x) for x in vec]
+    def test_OneHouse_OneContinuosRange(self):
+        original = [ExpandedStreet("Respublikos g.", 1, 17)]
+        self.assertTuplesEqual(original, self.parser.ExpandStreet("Respublikos g. poriniai numeriai nuo Nr.1 iki Nr. 17"))
+
+    def test_OneHouse_TwoRanges_2(self):
+        vec = ["19", "26", "28"]
+        original = [ExpandedStreet("Respublikos g.", x) for x in vec]
+        original += [ExpandedStreet("Respublikos g.", 1, 17),
+                     ExpandedStreet("Respublikos g.", 2, 16)]
 
         self.assertTuplesEqual(original, self.parser.ExpandStreet("Respublikos g. Nr. 19; Nr. 26; Nr. 28; numeriai nuo Nr.1 iki Nr. 17"))
 
     def test_OneHouse_TwoRanges(self):
-        vec = [str(x) for x in range(1, PollingDistrictStreetExpander.IkiGaloValue, 2)]
-        vec2 = [str(x) for x in range(4, PollingDistrictStreetExpander.IkiGaloValue + 1, 2)]
-        vec = vec + vec2
-        original = [("S. Dariaus ir S. Girėno g.", x) for x in vec]
+        original = [ExpandedStreet("S. Dariaus ir S. Girėno g.", 1, ExpandedStreet.MaxOddValue),
+                    ExpandedStreet("S. Dariaus ir S. Girėno g.", 4, ExpandedStreet.MaxEvenValue)]
 
         self.assertTuplesEqual(original, self.parser.ExpandStreet("S. Dariaus ir S. Girėno g. neporiniai numeriai nuo Nr. 1 iki galo; poriniai numeriai nuo Nr. 4 iki galo"))
 
     def test_OneHouse_ThreeRanges(self):
-        vec = [str(x) for x in range(17, PollingDistrictStreetExpander.IkiGaloValue, 2)]
-        vec2 = [str(x) for x in range(10, PollingDistrictStreetExpander.IkiGaloValue + 1, 2)]
-        vec3 = [str(x) for x in range(1, 8 + 1)]
-        vec = vec + vec2 + vec3
-        original = [("AlyvųTako g.", x) for x in vec]
+        original = [ExpandedStreet("AlyvųTako g.", 17, ExpandedStreet.MaxOddValue),
+                    ExpandedStreet("AlyvųTako g.", 10, ExpandedStreet.MaxEvenValue),
+                    ExpandedStreet("AlyvųTako g.", 1, 7),
+                    ExpandedStreet("AlyvųTako g.", 2, 8)]
 
         self.assertTuplesEqual(original, self.parser.ExpandStreet("AlyvųTako g. neporiniai numeriai nuo Nr. 17 iki galo; poriniai numeriai nuo Nr. 10 iki galo; numeriai nuo Nr. 1 iki Nr. 8"))
 
     def test_OneHouse_WithSquare(self):
-        original = [("Respublikos a.", "2")]
+        original = [ExpandedStreet("Respublikos a.", "2")]
         self.assertTuplesEqual(original, self.parser.ExpandStreet("Respublikos a. Nr. 2"))
 
     def test_OneHouse_HouseNumber_WithLetter(self):
 
-        original = [("S. Dariaus ir S. Girėno g.", "2"), ("S. Dariaus ir S. Girėno g.", "2A")]
+        original = [ExpandedStreet("S. Dariaus ir S. Girėno g.", 2)]
         self.assertTuplesEqual(original, self.parser.ExpandStreet("S. Dariaus ir S. Girėno g. numeriai nuo Nr. 2 iki Nr. 2A"))
 
     def test_OneHouse_WithDotInTheEnd(self):
 
-        vec = [str(x) for x in range(4, 42 + 1, 2)]
-        original = [("Naujosios g.", x) for x in vec]
+        original = [ExpandedStreet("Naujosios g.", 4, 42)]
 
         self.assertTuplesEqual(original, self.parser.ExpandStreet("Naujosios g. poriniai numeriai nuo Nr. 4 iki Nr. 42."))
 
     def test_OneHouse_WithLetter_InStart(self):
 
-        vec = ["3", "5", "7", "9", "11", "3A", "4", "6", "8", "10"]
-        original = [("Vytauto g.", x) for x in vec]
+        original = [ExpandedStreet("Vytauto g.", 3, 11),
+                    ExpandedStreet("Vytauto g.", 4, 10)]
         self.assertTuplesEqual(original, self.parser.ExpandStreet("Vytauto g. neporiniai numeriai nuo Nr. 3A iki Nr. 11; poriniai numeriai nuo Nr. 4 iki Nr. 10"))
 
     def test_NoSpaceBetweenStreet(self):
-        vec = [str(x) for x in range(46, PollingDistrictStreetExpander.IkiGaloValue + 1, 2)]
-        original = [("Kuršių g.", x) for x in vec]
+        original = [ExpandedStreet("Kuršių g.", 46, ExpandedStreet.MaxEvenValue)]
 
         self.assertTuplesEqual(original, self.parser.ExpandStreet("Kuršių g.poriniai numeriai nuo Nr. 46 iki galo"))
 

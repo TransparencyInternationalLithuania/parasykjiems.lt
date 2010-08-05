@@ -43,6 +43,21 @@ class GoogleDocsSources:
 class PollingDistrictStreetExpanderException(ChainnedException):
     pass
 
+
+class ExpandedStreet(object):
+
+
+    """ The biggest house number that can possibly exist. This is usually used
+    when in address range is refered in this form "from number 5 till the end".
+    So the end in this case is this number"""
+    MaxOddValue = 999999
+    MaxEvenValue = 999999 - 1
+
+    def __init__(self, street, numberFrom = None, numberTo = None):
+        self.street = street
+        self.numberFrom = numberFrom
+        self.numberTo = numberTo
+
 class PollingDistrictStreetExpander:
     """ When PollingDistrictStreets are parsed from txt file, some streets are subidivied into house numbers.
     Here are a few examples of how these look like:
@@ -52,11 +67,8 @@ class PollingDistrictStreetExpander:
     S. Dariaus ir S. Girėno g. neporiniai numeriai nuo Nr. 1 iki galo; poriniai numeriai nuo Nr. 4 iki galo
     etc
 
-    Expander will parse and return a tuple for each row separately
+    Expander will parse and return a ExpandedStreet object for each row separately
     """
-
-    # sometimes street definition says "from 4th house till the end". This value will tell when is the end :)
-    IkiGaloValue = 100
 
     def _RemoveStreetPart(self, part, streetPartName):
         if (part.find(streetPartName) >= 0):
@@ -83,13 +95,13 @@ class PollingDistrictStreetExpander:
 
 
         if (street == "" or street == None):
-            yield ("", "")
+            yield ExpandedStreet(street = "")
             return
 
         street = street.strip()
         # if no street nr, return single tuple
         if (street.find("Nr") < 0):
-            yield (street, "")
+            yield ExpandedStreet(street = street)
             return
 
         parts = street.split(';')
@@ -114,11 +126,14 @@ class PollingDistrictStreetExpander:
 
             if (part.find('numeriai nuo') >= 0):
                 noName = part.replace("Nr.", "").replace("numeriai nuo", "")
-                step = 1
+
+                # None means that range contains both odd and even numbers
+                # True means that contains either of them
+                oddNumbers = None
                 if (noName.find('poriniai') >= 0):
                     noName = noName.replace("neporiniai", "")
                     noName = noName.replace("poriniai", "")
-                    step = 2
+                    oddNumbers = True
 
                 letterTo = None
                 letterFrom = None
@@ -139,7 +154,11 @@ class PollingDistrictStreetExpander:
                 # parse toNumber
                 toNumber = noName[1].strip().strip('.')
                 if (toNumber == "galo"):
-                    toNumber = self.IkiGaloValue
+                    odd = fromNumber % 2
+                    if (odd == 0):
+                        toNumber = ExpandedStreet.MaxEvenValue
+                    else:
+                        toNumber = ExpandedStreet.MaxOddValue
                 else:
                     # maybe it contains letter
                     m = re.search('[a-zA-Z]', toNumber)
@@ -151,18 +170,44 @@ class PollingDistrictStreetExpander:
 
                     toNumber = int(toNumber)
 
-                for x in range(fromNumber, toNumber + 1, step):
-                    yield (str, "%s" % x)
-                if (letterTo is not None):
-                    yield (str, "%s%s" % (toNumber, letterTo))
-                if (letterFrom is not None):
-                    yield (str, "%s%s" % (fromNumber, letterFrom))
+                if (fromNumber == toNumber):
+                    yield ExpandedStreet(str, fromNumber)
+                    continue
+
+                if (oddNumbers is None):
+                    odd = fromNumber % 2
+
+                    if (odd == 1):
+                        oddLow = fromNumber
+                        evenLow = fromNumber + 1
+                    else:
+                        oddLow = fromNumber + 1
+                        evenLow = fromNumber
+
+                    odd = toNumber % 2
+                    if (odd == 1):
+                        oddHigh = toNumber
+                        evenHigh = toNumber - 1
+                    else:
+                        oddHigh = toNumber - 1
+                        evenHigh = toNumber
+
+                    yield ExpandedStreet(str, oddLow, oddHigh)
+                    yield ExpandedStreet(str, evenLow, evenHigh)
+                else:
+                    yield ExpandedStreet(str, fromNumber, toNumber)
+
+                #for x in range(fromNumber, toNumber + 1, step):
+                #    yield (str, "%s" % x)
+#                if (letterTo is not None):
+#                    yield (str, "%s%s" % (toNumber, letterTo))
+#                if (letterFrom is not None):
+#                    yield (str, "%s%s" % (fromNumber, letterFrom))
 
             elif part.find('Nr.') >= 0:
                 noName = part.replace("Nr.", "")
                 noName = noName.strip()
-
-                yield (str, noName)
+                yield ExpandedStreet(street = str, numberFrom = noName)
 
 
 
