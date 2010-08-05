@@ -5,7 +5,8 @@ import os
 
 class Command(BaseCommand):
     args = '<>'
-    help = 'Imports into database all Lithuanian counties'
+    help = """Imports into database all Lithuanian counties. Does not delete any data, only inserts additional.
+    Does not update existing data either, as there is no unique-key by which to identify"""
 
     @transaction.commit_on_success
     def handle(self, *args, **options):
