@@ -14,55 +14,57 @@ import os
 class Command(BaseCommand):
     args = '<number of elelctoral districts (sub-units of counties) to import streets into db>'
     help = """Imports into database all Lithuanian streets and relates to Lithuanian Counties
-It is safe to run this command more than once. Before inserting new electoral districts streets, previous streets for same electoral district will be deleted
+It is safe to run this command more than once. Does not delete any data, only inserts additional.
+Does not update existing data either, as there is no unique-key by which to identify.
+
 Examples:
 importStreets 5 - will import streets for first 5 Election Districts. If run repeatedly, result will be the same, except that manually entered data will be deleted
 importStreets 5:8 - will import streets for counties from 5 to 8 constituencies inclusive  """
 
-    def deletePollingDistrictIfExists(self, electionDistrict):
-        PollingDistrictStreet.objects.filter(electionDistrict = electionDistrict).delete()
-
-    def deleteElectionDistrictIfExistsInBatch(self, names):
-        """ pass a collection of polling district names in names. They will
-        get deleted with delete from table in () statemenet """
-        dbTable = PollingDistrictStreet.objects.model._meta.db_table
-        # why 5?  Because it is PollingDistrict field. And also since i do not know how to get it automatically
-        columnName = PollingDistrictStreet.objects.model._meta.fields[5].column
-        sql = "delete from %s where %s in (%s)" % (dbTable, columnName, names)
-        cursor = connection.cursor()
-        cursor.execute(sql)
-        transaction.commit_unless_managed()
-
-    @transaction.commit_on_success
-    def deletePollingDistrictsIfExists(self, pollingDistricts):
-        time = TimeMeasurer()
-        print "deleting previous data"
-
-        batch = 20
-
-
-
-        districtNames = []
-        currentBatch = 0
-        for pol in pollingDistricts.itervalues():
-            if (currentBatch >= batch):
-                currentBatch = 0
-                names = "', '".join(districtNames)
-                self.deleteElectionDistrictIfExistsInBatch(names)
-                districtNames = []
-            districtNames.append("'%s'" % pol.PollingDistrict)
-            currentBatch += 1
-            #self.deleteElectionDistrictIfExists(pol.PollingDistrict)
-
-        names = "', '".join(districtNames)
-        self.deleteElectionDistrictIfExistsInBatch(names)
-        print "finished deleting. Took %s seconds" % time.ElapsedSeconds()
+#    def deletePollingDistrictIfExists(self, electionDistrict):
+#        PollingDistrictStreet.objects.filter(electionDistrict = electionDistrict).delete()
+#
+#    def deleteElectionDistrictIfExistsInBatch(self, names):
+#        """ pass a collection of polling district names in names. They will
+#        get deleted with delete from table in () statemenet """
+#        dbTable = PollingDistrictStreet.objects.model._meta.db_table
+#        # why 5?  Because it is PollingDistrict field. And also since i do not know how to get it automatically
+#        columnName = PollingDistrictStreet.objects.model._meta.fields[5].column
+#        sql = "delete from %s where %s in (%s)" % (dbTable, columnName, names)
+#        cursor = connection.cursor()
+#        cursor.execute(sql)
+#        transaction.commit_unless_managed()
+#
+#    @transaction.commit_on_success
+#    def deletePollingDistrictsIfExists(self, pollingDistricts):
+#        time = TimeMeasurer()
+#        print "deleting previous data"
+#
+#        batch = 20
+#
+#
+#
+#        districtNames = []
+#        currentBatch = 0
+#        for pol in pollingDistricts.itervalues():
+#            if (currentBatch >= batch):
+#                currentBatch = 0
+#                names = "', '".join(districtNames)
+#                self.deleteElectionDistrictIfExistsInBatch(names)
+#                districtNames = []
+#            districtNames.append("'%s'" % pol.PollingDistrict)
+#            currentBatch += 1
+#            #self.deletePollingDistrictIfExists(pol.PollingDistrict)
+#
+#        names = "', '".join(districtNames)
+#        self.deleteElectionDistrictIfExistsInBatch(names)
+#        print "finished deleting. Took %s seconds" % time.ElapsedSeconds()
 
 
     def getPollingDistricts(self, aggregator, fromPrint, toPrint):
         count = 0
 
-        pollingDistricts = {}
+        pollingDistricts = []
 
         for pollingDistrict in aggregator.getLocations():
             if (count + 1 > toPrint):
@@ -70,7 +72,7 @@ importStreets 5:8 - will import streets for counties from 5 to 8 constituencies 
             count += 1
             if (count + 1 <= fromPrint):
                 continue
-            pollingDistricts[count] = pollingDistrict
+            pollingDistricts.append(pollingDistrict)
         return pollingDistricts
 
 
@@ -80,7 +82,7 @@ importStreets 5:8 - will import streets for counties from 5 to 8 constituencies 
         # fetch all counties in pseudo batch,
         constituencies = {}
 
-        for pol in pollingDistricts.itervalues():
+        for pol in pollingDistricts:
             if (constituencies.has_key(pol.Constituency.nr) == False):
                 constituencies[pol.Constituency.nr] = Constituency.objects.get(nr = pol.Constituency.nr)
 
@@ -127,11 +129,14 @@ importStreets 5:8 - will import streets for counties from 5 to 8 constituencies 
         self.preFetchAllConstituencies(allPollingDistricts)
 
         print "starting to import streets"
-        for count, pollingDistrict in allPollingDistricts.iteritems():
+        count = 0
+        for pollingDistrict in allPollingDistricts:
+            count += 1
             imported += 1
             numberOfStreets = 0
             for street in streetParser.GetAddresses(pollingDistrict.Addresses):
-                for expandedStreet in streetExpander.ExpandStreet(street.streetName):
+                expandedStreets = list(streetExpander.ExpandStreet(street.streetName))
+                for expandedStreet in expandedStreets:            
                     pollingDistrictStreet = PollingDistrictStreet()
                     pollingDistrictStreet.constituency = pollingDistrict.Constituency
                     pollingDistrictStreet.district = pollingDistrict.District

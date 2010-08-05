@@ -4,6 +4,19 @@ from pjutils.timemeasurement import TimeMeasurer
 import types
 
 
+def ExecManagementCommand(commands):
+    for i in commands:
+        commandName = i
+        commandArgs = {}
+        if (isinstance(i, types.TupleType)):
+            commandName = i[0]
+            commandArgs = i[1]
+
+        print "importing %s" % commandName
+        management.call_command(name = commandName, **commandArgs)
+
+
+
 class Command(BaseCommand):
     args = '<>'
     help = 'Imports data to contact db database'
@@ -23,18 +36,12 @@ class Command(BaseCommand):
                    "importSeniunaitijaMembers"]
         #imports = imports[8:9]
 
-        print "Will import followind data:"
-        for i in imports: print i
+        print "Will import following data:"
+        for i in imports:
+            print i
 
         print "Starting import"
-        for i in imports:
-            commandName = i
-            commandArgs = {}
-            if (isinstance(i, types.TupleType)):
-                commandName = i[0]
-                commandArgs = i[1]
 
-            print "importing %s" % commandName
-            management.call_command(name = commandName, **commandArgs)
+        ExecManagementCommand(imports)
 
         print "finished importing ContactDB. Took %s seconds" % time.ElapsedSeconds()
