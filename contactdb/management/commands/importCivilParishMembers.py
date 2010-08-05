@@ -29,6 +29,7 @@ class Command(BaseCommand):
 
     @transaction.commit_on_success
     def handle(self, *args, **options):
+        ImportSources.EsnureExists(ImportSources.LithuanianCivilParishMembers)
         fileName = os.path.join(os.getcwd(), ImportSources.LithuanianCivilParishMembers)
         reader = CivilParishMembersReader(fileName)
 
