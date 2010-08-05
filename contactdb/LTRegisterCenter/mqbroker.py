@@ -54,6 +54,11 @@ class LTRegisterQueue(Component):
     def __init__(self):
         # define properties
         self.MQServer = self.mqServer
+
+        # we create the queues and exchanges everytime we create and instance of this class
+        # this way client code does not need to worry whether exchanges have been created or not
+        # this will work since the exchanges are reused, if they already exists
+        self.CreateQueues()
         pass
 
     def InitialiseImport(self):
