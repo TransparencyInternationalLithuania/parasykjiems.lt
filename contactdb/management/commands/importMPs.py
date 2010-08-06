@@ -35,6 +35,10 @@ class Command(BaseCommand):
 
         for member in reader.ReadParliamentMembers():
 
+            # skipping empty members
+            if (member.name.strip() == ""):
+                continue
+
             # check if already such member exists. Name and surname are primary keys
             if (self.alreadyExists(member) == True):
                 print "member %s %s already exists" % (member.name, member.surname)

@@ -123,6 +123,7 @@ class MunicipalityMember(models.Model):
     phone = PhoneField()
     mobilePhone = PhoneField()
     officeAddress = models.CharField(max_length = 100)
+    uniqueKey = models.IntegerField()
 
 class SeniunaitijaMember(models.Model):
     """ Seniunaitis. Is accountable to CivilParishMember. Basically he performs any sub-management
@@ -134,6 +135,7 @@ class SeniunaitijaMember(models.Model):
     role = models.CharField(max_length = 20)
     phone = PhoneField()
     homePhone = PhoneField()
+    uniqueKey = models.IntegerField()
 
     
     
@@ -149,6 +151,7 @@ class CivilParishMember(models.Model):
     officeEmail = models.EmailField()
     officePhone = PhoneField()
     officeAddress = models.CharField(max_length = 100)
+    uniqueKey = models.IntegerField()
 
 
 class ParliamentMember(models.Model):
@@ -156,6 +159,7 @@ class ParliamentMember(models.Model):
     surname = PersonNameField()
     email = models.EmailField()
     constituency = models.ForeignKey(Constituency, null=True)
+    uniqueKey = models.IntegerField()
 
     @property
     def fullName(self):
