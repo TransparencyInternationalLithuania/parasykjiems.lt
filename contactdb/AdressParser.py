@@ -22,6 +22,8 @@ class AddressParser:
         pl for plentas, pr for prospektas, etc"""
         if (re.search("\sg\.", street) is not None):
             return True
+        if (re.search("SB\s", street, flags = re.IGNORECASE) is not None):
+            return True
         if (re.search("\spr\.", street) is not None):
             return True
         if (re.search("\spl\.", street) is not None):

@@ -74,6 +74,15 @@ class TestPollingDistrictStreetExpander(TestCase):
 
         self.assertTuplesEqual(original, self.parser.ExpandStreet("Respublikos g. Nr. 19; Nr. 26; Nr. 28; numeriai nuo Nr.1 iki Nr. 17"))
 
+    def test_(self):
+        str = "Chemikų g. neporiniai numeriai nuo Nr. 13 iki Nr. 31; nuo Nr. 130 iki Nr. 134."
+        original = [ExpandedStreet("Chemikų g.", 13, 31),
+                    ExpandedStreet("Chemikų g.", 131, 133),
+                    ExpandedStreet("Chemikų g.", 130, 134)]
+
+        self.assertTuplesEqual(original, self.parser.ExpandStreet(str))
+
+
     def test_OneHouse_TwoRanges(self):
         original = [ExpandedStreet("S. Dariaus ir S. Girėno g.", 1, ExpandedStreet.MaxOddValue),
                     ExpandedStreet("S. Dariaus ir S. Girėno g.", 4, ExpandedStreet.MaxEvenValue)]
@@ -131,6 +140,20 @@ class TestAddressParser(TestCase):
 
     def setUp(self):
         self.parser = AddressParser()
+
+    def test_BugSBParsedIncorrectly(self):
+        streetStr = "Vilnius: SB „Baldai“ Nr. 20, Nr. 27, Nr. 34A; SB „Ekspresas“, SB „Erškėtrožė“ Nr. 31, SB „Giedra“"
+        parsed = list(self.parser.GetAddresses(streetStr))
+
+        streets = ["SB „Baldai“ Nr. 20; Nr. 27; Nr. 34A",
+                   "SB „Ekspresas“",
+                   "SB „Erškėtrožė“ Nr. 31",
+                   "SB „Giedra“"]
+
+        for i in range(0, len(streets)):
+            self.assertCity("Vilnius", streets[i], parsed[i])
+
+        self.assertEqual(len(streets), len(parsed))
 
     def test_Bug007(self):
         streetStr = "Alytus: A. Jonyno g. neporiniai numeriai nuo Nr. 1 iki Nr. 17; Šaltinių g. neporiniai numeriai nuo Nr. 1 iki Nr. 17, Nr. 47, poriniai numeriai nuo Nr. 16 iki galo; numeriai nuo Nr. 2 iki Nr. 14; Žuvinto g. Nr. 13."
