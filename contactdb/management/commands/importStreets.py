@@ -108,7 +108,7 @@ importStreets 5:8 - will import streets for counties from 5 to 8 constituencies 
             query = PollingDistrictStreet.objects.filter(constituency = pollingDistrict.Constituency)
             query = query.filter(district = pollingDistrict.District)
             query = query.filter(city = street.cityName)
-            query = query.filter(street = street.streetName)
+            query = query.filter(street = expandedStreet.street)
             query = query.filter(pollingDistrict = pollingDistrict.PollingDistrict)
             query = query.filter(numberFrom = expandedStreet.numberFrom)
             query = query.filter(numberTo = expandedStreet.numberTo)
@@ -150,7 +150,7 @@ importStreets 5:8 - will import streets for counties from 5 to 8 constituencies 
 
 
         start = datetime.now()
-        print "reading all polling districts"
+        print "reading polling districts from %s to %s" % (fromPrint, toPrint)
         allPollingDistricts = self.getPollingDistricts(aggregator, fromPrint, toPrint)
 
         #self.deletePollingDistrictsIfExists(allPollingDistricts)
