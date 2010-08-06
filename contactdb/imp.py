@@ -90,6 +90,16 @@ class PollingDistrictStreetExpander:
             return (part, str)
         return None
 
+    def RemoveLetter(self, fromNumber):
+        # maybe it contains letter
+        m = re.search('[a-zA-Z]', fromNumber)
+        if (m is not None):
+            group = m.group()
+            letterFrom = group
+            fromNumber = fromNumber.replace(group, "")
+        return fromNumber
+
+
     def ExpandStreet(self, street):
         """ yield a tuple(street, house numbe) for each house number found in street """
 
@@ -142,12 +152,7 @@ class PollingDistrictStreetExpander:
 
                 # parse fromNumber
                 fromNumber = noName[0].strip()
-                # maybe it contains letter
-                m = re.search('[a-zA-Z]', fromNumber)
-                if (m is not None):
-                    group = m.group()
-                    letterFrom = group
-                    fromNumber = fromNumber.replace(group, "")
+                fromNumber = self.RemoveLetter(fromNumber)
                 fromNumber = int(fromNumber)
 
 
@@ -161,13 +166,7 @@ class PollingDistrictStreetExpander:
                         toNumber = ExpandedStreet.MaxOddValue
                 else:
                     # maybe it contains letter
-                    m = re.search('[a-zA-Z]', toNumber)
-                    if (m is not None):
-                        # it contains letter, remember it and remove
-                        group = m.group()
-                        letterTo = group
-                        toNumber = toNumber.replace(group, "")
-
+                    toNumber = self.RemoveLetter(toNumber)
                     toNumber = int(toNumber)
 
                 if (fromNumber == toNumber):
@@ -207,6 +206,7 @@ class PollingDistrictStreetExpander:
             elif part.find('Nr.') >= 0:
                 noName = part.replace("Nr.", "")
                 noName = noName.strip(" .")
+                noName = self.RemoveLetter(noName)
                 noName = int(noName)
                 yield ExpandedStreet(street = str, numberFrom = noName)
 
