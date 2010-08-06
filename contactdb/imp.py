@@ -207,6 +207,7 @@ class PollingDistrictStreetExpander:
             elif part.find('Nr.') >= 0:
                 noName = part.replace("Nr.", "")
                 noName = noName.strip()
+                noName = int(noName)
                 yield ExpandedStreet(street = str, numberFrom = noName)
 
 
