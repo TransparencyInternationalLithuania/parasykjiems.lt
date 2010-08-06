@@ -99,6 +99,27 @@ importStreets 5:8 - will import streets for counties from 5 to 8 constituencies 
             pol.Constituency = constituency
         print "finished pre-fetching. Took %s seconds" % time.ElapsedSeconds()
 
+    def RemoveExistingStreets(self, expandedStreets, street, pollingDistrict):
+        nonExisting = []
+
+        # will execute looots of selectes against database
+        # it will be veerry slow, but works for now
+        for expandedStreet in expandedStreets:
+            query = PollingDistrictStreet.objects.filter(constituency = pollingDistrict.Constituency)
+            query = query.filter(district = pollingDistrict.District)
+            query = query.filter(city = street.cityName)
+            query = query.filter(street = street.streetName)
+            query = query.filter(pollingDistrict = pollingDistrict.PollingDistrict)
+            query = query.filter(numberFrom = expandedStreet.numberFrom)
+            query = query.filter(numberTo = expandedStreet.numberTo)
+            #print query.query
+            results = list(query)
+
+            if (len(results) == 0):
+                nonExisting.append(expandedStreet)
+
+        return nonExisting
+
 
     @transaction.commit_on_success    
     def handle(self, *args, **options):
@@ -144,6 +165,7 @@ importStreets 5:8 - will import streets for counties from 5 to 8 constituencies 
             numberOfStreets = 0
             for street in streetParser.GetAddresses(pollingDistrict.Addresses):
                 expandedStreets = list(streetExpander.ExpandStreet(street.streetName))
+                expandedStreets = self.RemoveExistingStreets(expandedStreets, street, pollingDistrict)
                 for expandedStreet in expandedStreets:            
                     pollingDistrictStreet = PollingDistrictStreet()
                     pollingDistrictStreet.constituency = pollingDistrict.Constituency
@@ -166,7 +188,7 @@ importStreets 5:8 - will import streets for counties from 5 to 8 constituencies 
             else:
                 rate = str(totalNumberOfStreets / seconds)
             #print (u"%d: saved Constituency '%s %d', \nElectoral District '%s' streets (%d). \nTotal streets so far %d" % (count, pollingDistrict.Constituency.name, pollingDistrict.Constituency.nr, pollingDistrict.PollingDistrict, numberOfStreets, totalNumberOfStreets)).encode('utf-8')
-            print (u"%d: saved Constituency '%d', \nTotal streets so far %d" % (count, numberOfStreets, totalNumberOfStreets)).encode('utf-8')
+            print (u"%d: saved Constituency. Number of streets: '%d', \nTotal streets so far %d" % (count, numberOfStreets, totalNumberOfStreets)).encode('utf-8')
             print "inserting at %s rows per second (total sec: %d, rows: %d)" % (rate, seconds, totalNumberOfStreets)
             print "\n\n"
 

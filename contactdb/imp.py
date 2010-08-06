@@ -104,7 +104,7 @@ class PollingDistrictStreetExpander:
         """ yield a tuple(street, house numbe) for each house number found in street """
 
 
-        print "street %s" % street
+        #print "street %s" % street
 
 
         if (street == "" or street == None):
