@@ -20,9 +20,9 @@ class Command(BaseCommand):
     help = 'Imports into database all Lithuanian CivilParishMembers / seniūnai'
 
 
-    def alreadyExists(self, name, surname):
+    def alreadyExists(self, member):
         try:
-            return CivilParishMember.objects.get(name = name, surname = surname)
+            return CivilParishMember.objects.get(uniqueKey = member.uniqueKey)
         except ObjectDoesNotExist:
             return None
 
@@ -41,8 +41,11 @@ class Command(BaseCommand):
 
         for member in reader.ReadMembers():
 
+            if (member.name.strip() == ""):
+                continue
+
             # check if already such member exists. Name and surname are primary keys
-            m = self.alreadyExists(member.name, member.surname)
+            m = self.alreadyExists(member)
             if (m is not None):
                 print "already exists: %s %s %s " % (m.name, m.surname, m.civilParish.name)
                 continue
