@@ -10,6 +10,10 @@ from django.db import connection, transaction
 from pjutils.timemeasurement import TimeMeasurer
 import pjutils.uniconsole
 import os
+from pjutils.exc import ChainnedException
+
+class ImportStreetsConstituencyDoesNotExist(ChainnedException):
+    pass
 
 class Command(BaseCommand):
     args = '<number of elelctoral districts (sub-units of counties) to import streets into db>'
@@ -84,7 +88,11 @@ importStreets 5:8 - will import streets for counties from 5 to 8 constituencies 
 
         for pol in pollingDistricts:
             if (constituencies.has_key(pol.Constituency.nr) == False):
-                constituencies[pol.Constituency.nr] = Constituency.objects.get(nr = pol.Constituency.nr)
+                try:
+                    constituencies[pol.Constituency.nr] = Constituency.objects.get(nr = pol.Constituency.nr)
+                except Constituency.DoesNotExist as e:
+                    raise ImportStreetsConstituencyDoesNotExist("constituency '%s' was not found in DB. Maybe you forgot to import them : manage.py importConstituencies?  Or else it might not exist in source data, in which case you will have to resolve manually this issue", e)
+
 
             constituency = constituencies[pol.Constituency.nr]
             # re-assign old constituency to new constituency fetched from database
@@ -141,12 +149,13 @@ importStreets 5:8 - will import streets for counties from 5 to 8 constituencies 
                     pollingDistrictStreet.constituency = pollingDistrict.Constituency
                     pollingDistrictStreet.district = pollingDistrict.District
                     pollingDistrictStreet.city = street.cityName
-                    if (expandedStreet[1] != ""):
-                        expandedStreetStr = "%s Nr. %s" % (expandedStreet[0], expandedStreet[1])
-                    else:
-                        expandedStreetStr = "%s" % (expandedStreet[0])
+                    expandedStreetStr = expandedStreet.street
                     pollingDistrictStreet.street = expandedStreetStr
-                    pollingDistrictStreet.electionDistrict = pollingDistrict.PollingDistrict
+                    pollingDistrictStreet.numberFrom =  expandedStreet.numberFrom
+                    pollingDistrictStreet.numberTo = expandedStreet.numberTo
+                    if (expandedStreet.numberFrom is not None):
+                        pollingDistrictStreet.numberOdd = expandedStreet.numberFrom % 2
+                    pollingDistrictStreet.pollingDistrict = pollingDistrict.PollingDistrict
                     pollingDistrictStreet.save()
                     numberOfStreets += 1
 
