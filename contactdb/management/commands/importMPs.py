@@ -14,7 +14,7 @@ class Command(BaseCommand):
 
     def alreadyExists(self, parliamentMember):
         try:
-            ParliamentMember.objects.get(name = parliamentMember.name, surname = parliamentMember.surname)
+            ParliamentMember.objects.get(uniqueKey = parliamentMember.uniqueKey)
         except ObjectDoesNotExist:
             return False
         return True
