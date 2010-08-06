@@ -95,5 +95,6 @@ class LithuanianMPsReader:
             member.name = row["name"]
             member.surname = row["surname"]
             member.email = row["e-mail"]
+            member.uniqueKey = row["uniquekeynotchangeable"]
 
             yield member
