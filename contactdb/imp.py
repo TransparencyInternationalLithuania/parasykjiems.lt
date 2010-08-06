@@ -104,6 +104,9 @@ class PollingDistrictStreetExpander:
         """ yield a tuple(street, house numbe) for each house number found in street """
 
 
+        print "street %s" % street
+
+
         if (street == "" or street == None):
             yield ExpandedStreet(street = "")
             return
@@ -134,8 +137,8 @@ class PollingDistrictStreetExpander:
             if (streetTuple is not None):
                 part, str = streetTuple
 
-            if (part.find('numeriai nuo') >= 0):
-                noName = part.replace("Nr.", "").replace("numeriai nuo", "")
+            if (part.find('nuo') >= 0):
+                noName = part.replace("Nr.", "").replace("numeriai", "").replace("nuo", "").strip()
 
                 # None means that range contains both odd and even numbers
                 # True means that contains either of them
@@ -204,10 +207,14 @@ class PollingDistrictStreetExpander:
 #                    yield (str, "%s%s" % (fromNumber, letterFrom))
 
             elif part.find('Nr.') >= 0:
+
                 noName = part.replace("Nr.", "")
                 noName = noName.strip(" .")
                 noName = self.RemoveLetter(noName)
+                if (noName.find("uo  39 iki  57") >= 0):
+                    a = 5
                 noName = int(noName)
+
                 yield ExpandedStreet(street = str, numberFrom = noName)
 
 
