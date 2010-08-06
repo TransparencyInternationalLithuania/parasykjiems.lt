@@ -92,6 +92,11 @@ class TestPollingDistrictStreetExpander(TestCase):
         original = [ExpandedStreet("Respublikos a.", 2)]
         self.assertTuplesEqual(original, self.parser.ExpandStreet("Respublikos a. Nr. 2"))
 
+    def test_HouseNumberWithDot(self):
+        original = [ExpandedStreet("Respublikos a.", 2)]
+        self.assertTuplesEqual(original, self.parser.ExpandStreet("Respublikos a. Nr. 2."))
+
+
     def test_OneHouse_HouseNumber_WithLetter(self):
 
         original = [ExpandedStreet("S. Dariaus ir S. Girėno g.", 2)]
