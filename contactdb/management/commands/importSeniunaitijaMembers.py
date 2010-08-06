@@ -21,9 +21,9 @@ class Command(BaseCommand):
     help = 'Imports into database all Lithuanian SeniunaitijaMember  / seniūnaičiai'
 
 
-    def alreadyExists(self, name, surname):
+    def alreadyExists(self, member):
         try:
-            return SeniunaitijaMember.objects.get(name = name, surname = surname)
+            return SeniunaitijaMember.objects.get(uniqueKey = member.uniqueKey)
         except ObjectDoesNotExist:
             return None
 
@@ -47,7 +47,7 @@ class Command(BaseCommand):
                 print "Probably that means that in seniunaitija %s a member was not yet elected" % member.seniunaitijaStr
 
             # check if already such member exists. Name and surname are primary keys
-            m = self.alreadyExists(member.name, member.surname)
+            m = self.alreadyExists(member)
             if (m is not None):
                 print "already exists: %s %s %s " % (m.name, m.surname, m.seniunaitija.name)
                 continue

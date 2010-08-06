@@ -29,6 +29,7 @@ class MunicipalityMembersReader:
             member.mobilePhone = row["mobilenumber"].strip()
             member.address = row["address"].strip()
             member.municipalityStr = row["municipality"].strip()
+            member.uniqueKey = row["uniquekeynotchangeable"]
             yield member
 
 
@@ -55,6 +56,7 @@ class SeniunaitijaMembersReader:
             member.email = row["e-mail"]
             member.role = row["pareigos"]
             member.seniunaitijaStr = row["seniūnaitija"].strip()
+            member.uniqueKey = row["uniquekeynotchangeable"]
             yield member
 
 class CivilParishMembersReader:
@@ -73,6 +75,8 @@ class CivilParishMembersReader:
             member.officePhone = row["officetelephonenumber"].strip()
             member.officeAddress = row["officeaddress"].strip()
             member.civilParishStr = row["institution"].strip()
+            member.uniqueKey = row["uniquekeynotchangeable"]
+
             yield member
 
 

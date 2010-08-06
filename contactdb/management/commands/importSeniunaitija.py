@@ -49,7 +49,7 @@ class Command(BaseCommand):
             seniunaitija.save()
             print "creating new Seniunatija object %s %s" % (self.seniunaitijaStr, civilParish.name)
         else:
-            print "Seniunatija object %s %s already exists" % (self.seniunaitijaStr, self.civilParishStr)
+            print "already exists Seniunatija object %s %s " % (self.seniunaitijaStr, self.civilParishStr)
         return seniunaitija
 
 
@@ -77,6 +77,9 @@ class Command(BaseCommand):
                 self.municipalityStr = row["municipality"].strip()
 
 
+                # skipt empty entries
+                if (self.seniunaitijaStr == ""):
+                    continue
                 # remove some keywords from strings, and add others
                 # this is to conform to a de-facto data naming standard
                 self.municipalityStr = self.municipalityStr.replace("rajono", "").strip()

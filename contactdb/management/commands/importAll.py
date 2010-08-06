@@ -26,10 +26,8 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         time = TimeMeasurer()
-        imports = ["importConstituencies",
-                   "importMPs",
-                   "importStreets",
-                   ("ltGeoDataImport", {"max-depth" :3}),
+        imports = ["importMPs",
+                   #("ltGeoDataImport", {"max-depth" :3}),
                    "importCivilParishMembers",
                    "importMunicipalityMembers",
                    "importSeniunaitija",
