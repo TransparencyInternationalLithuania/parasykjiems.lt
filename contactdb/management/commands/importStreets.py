@@ -25,45 +25,7 @@ Examples:
 importStreets 5 - will import streets for first 5 Election Districts. If run repeatedly, result will be the same, except that manually entered data will be deleted
 importStreets 5:8 - will import streets for counties from 5 to 8 constituencies inclusive  """
 
-#    def deletePollingDistrictIfExists(self, electionDistrict):
-#        PollingDistrictStreet.objects.filter(electionDistrict = electionDistrict).delete()
-#
-#    def deleteElectionDistrictIfExistsInBatch(self, names):
-#        """ pass a collection of polling district names in names. They will
-#        get deleted with delete from table in () statemenet """
-#        dbTable = PollingDistrictStreet.objects.model._meta.db_table
-#        # why 5?  Because it is PollingDistrict field. And also since i do not know how to get it automatically
-#        columnName = PollingDistrictStreet.objects.model._meta.fields[5].column
-#        sql = "delete from %s where %s in (%s)" % (dbTable, columnName, names)
-#        cursor = connection.cursor()
-#        cursor.execute(sql)
-#        transaction.commit_unless_managed()
-#
-#    @transaction.commit_on_success
-#    def deletePollingDistrictsIfExists(self, pollingDistricts):
-#        time = TimeMeasurer()
-#        print "deleting previous data"
-#
-#        batch = 20
-#
-#
-#
-#        districtNames = []
-#        currentBatch = 0
-#        for pol in pollingDistricts.itervalues():
-#            if (currentBatch >= batch):
-#                currentBatch = 0
-#                names = "', '".join(districtNames)
-#                self.deleteElectionDistrictIfExistsInBatch(names)
-#                districtNames = []
-#            districtNames.append("'%s'" % pol.PollingDistrict)
-#            currentBatch += 1
-#            #self.deletePollingDistrictIfExists(pol.PollingDistrict)
-#
-#        names = "', '".join(districtNames)
-#        self.deleteElectionDistrictIfExistsInBatch(names)
-#        print "finished deleting. Took %s seconds" % time.ElapsedSeconds()
-
+    previousDBRowCount = None
 
     def getPollingDistricts(self, aggregator, fromPrint, toPrint):
         count = 0
@@ -101,6 +63,17 @@ importStreets 5:8 - will import streets for counties from 5 to 8 constituencies 
 
     def RemoveExistingStreets(self, expandedStreets, street, pollingDistrict):
         nonExisting = []
+
+        # a minor optimization hack, to improve speed when inserting data first time
+
+        # check how many rows we have initially
+        if (self.previousDBRowCount is None):
+            self.previousDBRowCount = PollingDistrictStreet.objects.count()
+
+        # if we have none rows, then just return list, and do any checks,
+        # no need to do that, right
+        if (self.previousDBRowCount == 0):
+            return expandedStreets
 
         # will execute looots of selectes against database
         # it will be veerry slow, but works for now
