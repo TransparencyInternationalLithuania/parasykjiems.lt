@@ -27,7 +27,7 @@ class Command(BaseCommand):
 
         time = TimeMeasurer()
         imports = ["importMPs",
-                   #("ltGeoDataImport", {"max-depth" :3}),
+                   ("ltGeoDataImport", {"max-depth" :3}),
                    "importCivilParishMembers",
                    "importMunicipalityMembers",
                    "importSeniunaitija",

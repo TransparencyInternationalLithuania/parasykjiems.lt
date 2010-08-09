@@ -96,9 +96,9 @@ class LithuanianMPsReader:
 
             member = ParliamentMember()
             member.constituency = parser.ExtractConstituencyFromMPsFile(row["electoraldistrict"])
-            member.name = row["name"]
-            member.surname = row["surname"]
-            member.email = row["e-mail"]
-            member.uniqueKey = row["uniquekeynotchangeable"]
+            member.name = unicode(row["name"], 'utf-8')
+            member.surname = unicode(row["surname"], 'utf-8')
+            member.email = unicode(row["e-mail"], 'utf-8')
+            member.uniqueKey = unicode(row["uniquekeynotchangeable"], 'utf-8')
 
             yield member
