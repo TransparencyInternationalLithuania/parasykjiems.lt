@@ -107,15 +107,15 @@ class TestLTRegisterCenterLinks(TestCase):
         self.assertEqual(len(cells), len(pageLinks))
 
     def testPagegiuSavNaktiskiuVillageHtml(self):
-        streets = ["Alyvų gatvė",
-"Ąžuolo gatvė",
-"Zosės Petraitienės gatvė",
-"Pievų gatvė",
-"Putinų gatvė",
-"Saulėtekio gatvė",
-"Sodo gatvė",
-"Vilties gatvė",
-"Vingio gatvė"]
+        streets = [u"Alyvų gatvė",
+u"Ąžuolo gatvė",
+u"Zosės Petraitienės gatvė",
+u"Pievų gatvė",
+u"Putinų gatvė",
+u"Saulėtekio gatvė",
+u"Sodo gatvė",
+u"Vilties gatvė",
+u"Vingio gatvė"]
         cells = [LinkCell(street, "") for street in streets]
 
         for lines in ReadSource(PagegiuSavNaktiskiuVillageHtml):
@@ -130,31 +130,31 @@ class TestLTRegisterCenterLinks(TestCase):
 
     def testAlytausSavAlytausSenHtml(self):
         villages = [
-("Aniškio kaimas", ""),
-("Arminų I kaimas", ""),
-("Arminų II kaimas", ""),
-("Bakšių kaimas", ""),
-("Bernotiškių kaimas", ""),
-("Bundorių kaimas", ""),
-("Butkūnų kaimas", ""),
-("Butrimiškių kaimas", ""),
-("Daugirdėlių kaimas", ""),
-("Daujotiškių kaimas", ""),
-("Dubenkos kaimas", ""),
-("Dubėnų kaimas", ""),
-("Dubių kaimas", ""),
-("Genių kaimas", "") ,
-("Jasunskų kaimas", ""),
-("Jovaišonių kaimas", ""),
-("Junonių kaimas", ""),
-("Jurgiškių kaimas", ""),
-("Kaniūkų kaimas", ""),
-("Karklynų kaimas", ""),
-("Kelmanonių kaimas", ""),
-("Kibirkščių kaimas", ""),
-("Kriaunių kaimas", ""),
-("Likiškėlių kaimas", "http://www.registrucentras.lt/adr/p/index.php?gyv_id=339"),
-("Likiškių kaimas", "")]
+(u"Aniškio kaimas", ""),
+(u"Arminų I kaimas", ""),
+(u"Arminų II kaimas", ""),
+(u"Bakšių kaimas", ""),
+(u"Bernotiškių kaimas", ""),
+(u"Bundorių kaimas", ""),
+(u"Butkūnų kaimas", ""),
+(u"Butrimiškių kaimas", ""),
+(u"Daugirdėlių kaimas", ""),
+(u"Daujotiškių kaimas", ""),
+(u"Dubenkos kaimas", ""),
+(u"Dubėnų kaimas", ""),
+(u"Dubių kaimas", ""),
+(u"Genių kaimas", "") ,
+(u"Jasunskų kaimas", ""),
+(u"Jovaišonių kaimas", ""),
+(u"Junonių kaimas", ""),
+(u"Jurgiškių kaimas", ""),
+(u"Kaniūkų kaimas", ""),
+(u"Karklynų kaimas", ""),
+(u"Kelmanonių kaimas", ""),
+(u"Kibirkščių kaimas", ""),
+(u"Kriaunių kaimas", ""),
+(u"Likiškėlių kaimas", "http://www.registrucentras.lt/adr/p/index.php?gyv_id=339"),
+(u"Likiškių kaimas", "")]
         cells = [LinkCell(tuple[0], tuple[1]) for tuple in villages]
 
 
@@ -167,16 +167,16 @@ class TestLTRegisterCenterLinks(TestCase):
 
     def testLietuvosRespublika(self):
         cells = [
-            LinkCell(text="Alytaus apskritis",     href="http://www.registrucentras.lt/adr/p/index.php?aps_id=1"),
-            LinkCell(text="Kauno apskritis",       href="http://www.registrucentras.lt/adr/p/index.php?aps_id=41"),
-            LinkCell(text="Klaipėdos apskritis",   href="http://www.registrucentras.lt/adr/p/index.php?aps_id=111"),
-            LinkCell(text="Marijampolės apskritis",href="http://www.registrucentras.lt/adr/p/index.php?aps_id=161"),
-            LinkCell(text="Panevėžio apskritis",   href="http://www.registrucentras.lt/adr/p/index.php?aps_id=204"),
-            LinkCell(text="Šiaulių apskritis",     href="http://www.registrucentras.lt/adr/p/index.php?aps_id=258"),
-            LinkCell(text="Tauragės apskritis",    href="http://www.registrucentras.lt/adr/p/index.php?aps_id=322"),
-            LinkCell(text="Telšių apskritis",      href="http://www.registrucentras.lt/adr/p/index.php?aps_id=358"),
-            LinkCell(text="Utenos apskritis",      href="http://www.registrucentras.lt/adr/p/index.php?aps_id=392"),
-            LinkCell(text="Vilniaus apskritis",    href="http://www.registrucentras.lt/adr/p/index.php?aps_id=460"),
+            LinkCell(text=u"Alytaus apskritis",     href="http://www.registrucentras.lt/adr/p/index.php?aps_id=1"),
+            LinkCell(text=u"Kauno apskritis",       href="http://www.registrucentras.lt/adr/p/index.php?aps_id=41"),
+            LinkCell(text=u"Klaipėdos apskritis",   href="http://www.registrucentras.lt/adr/p/index.php?aps_id=111"),
+            LinkCell(text=u"Marijampolės apskritis",href="http://www.registrucentras.lt/adr/p/index.php?aps_id=161"),
+            LinkCell(text=u"Panevėžio apskritis",   href="http://www.registrucentras.lt/adr/p/index.php?aps_id=204"),
+            LinkCell(text=u"Šiaulių apskritis",     href="http://www.registrucentras.lt/adr/p/index.php?aps_id=258"),
+            LinkCell(text=u"Tauragės apskritis",    href="http://www.registrucentras.lt/adr/p/index.php?aps_id=322"),
+            LinkCell(text=u"Telšių apskritis",      href="http://www.registrucentras.lt/adr/p/index.php?aps_id=358"),
+            LinkCell(text=u"Utenos apskritis",      href="http://www.registrucentras.lt/adr/p/index.php?aps_id=392"),
+            LinkCell(text=u"Vilniaus apskritis",    href="http://www.registrucentras.lt/adr/p/index.php?aps_id=460"),
         ]
 
         for lines in ReadSource(LietuvosRespublikaHtml):
@@ -204,23 +204,23 @@ class TestLTRegisterCenterLocations(TestCase):
             page = RegisterCenterParser(lines).parse()
 
             self.assertEqual(5, len(page.location))
-            self.assertEqual("LIETUVOS RESPUBLIKA", page.location[0].text)
-            self.assertEqual("Tauragės apskritis", page.location[1].text)
-            self.assertEqual("Pagėgių savivaldybė", page.location[2].text)
-            self.assertEqual("Natkiškių seniūnija", page.location[3].text)
-            self.assertEqual("Natkiškių kaimas", page.location[4].text)
+            self.assertEqual(u"LIETUVOS RESPUBLIKA", page.location[0].text)
+            self.assertEqual(u"Tauragės apskritis", page.location[1].text)
+            self.assertEqual(u"Pagėgių savivaldybė", page.location[2].text)
+            self.assertEqual(u"Natkiškių seniūnija", page.location[3].text)
+            self.assertEqual(u"Natkiškių kaimas", page.location[4].text)
 
     def testAlytausSavAlytausSenHtml(self):
         for lines in ReadSource(AlytausSavAlytausSenHtml):
             page = RegisterCenterParser(lines).parse()
             self.assertEqual(4, len(page.location))
-            self.assertEqual("LIETUVOS RESPUBLIKA", page.location[0].text)
-            self.assertEqual("Alytaus apskritis", page.location[1].text)
-            self.assertEqual("Alytaus savivaldybė", page.location[2].text)
-            self.assertEqual("Alytaus seniūnija", page.location[3].text)
+            self.assertEqual(u"LIETUVOS RESPUBLIKA", page.location[0].text)
+            self.assertEqual(u"Alytaus apskritis", page.location[1].text)
+            self.assertEqual(u"Alytaus savivaldybė", page.location[2].text)
+            self.assertEqual(u"Alytaus seniūnija", page.location[3].text)
 
     def testLietuvosRespublika(self):
         for lines in ReadSource(LietuvosRespublikaHtml):
             page = RegisterCenterParser(lines).parse()
             self.assertEqual(1, len(page.location))
-            self.assertEqual("LIETUVOS RESPUBLIKA", page.location[0].text)
+            self.assertEqual(u"LIETUVOS RESPUBLIKA", page.location[0].text)

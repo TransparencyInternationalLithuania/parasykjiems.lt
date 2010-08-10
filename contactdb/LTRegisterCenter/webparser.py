@@ -87,7 +87,8 @@ class RegisterCenterParser:
         self.soupForm = BeautifulSoup(htmlText)
 
     def _removeLineBreaks(self, string):
-        rootLocation = re.sub(r'\n', ' ', str(string))
+        strstr = u"%s" % string
+        rootLocation = re.sub(r'\n', ' ', strstr)
         # removing unecessary white spaces
         # this is soooo lame that i do it twice here. Anyone knows how to do better? 
         rootLocation = rootLocation.replace("   ", " ")
@@ -103,13 +104,13 @@ class RegisterCenterParser:
         return lt
 
     def _NormaliseLocationText(self, text):
-        text = text.replace("apskr.", "apskritis")
-        text = text.replace("sav.", "savivaldybė")
-        text = text.replace("sen.", "seniūnija")
-        text = text.replace("k.", "kaimas")
-        text = text.replace("r. ", "")
-        text = text.replace("g.", "gatvė")
-        text = text.replace("m.", "miesto")
+        text = text.replace(u"apskr.", u"apskritis")
+        text = text.replace(u"sav.", u"savivaldybė")
+        text = text.replace(u"sen.", u"seniūnija")
+        text = text.replace(u"k.", u"kaimas")
+        text = text.replace(u"r. ", u"")
+        text = text.replace(u"g.", u"gatvė")
+        text = text.replace(u"m.", u"miesto")
         return text
 
 

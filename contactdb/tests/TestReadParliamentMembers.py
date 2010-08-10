@@ -29,6 +29,6 @@ class TestReadParliamentMembers(TestCase):
             self.assertEqual(loc.constituency.nr, 1)
             self.assertEqual(loc.constituency.name, "Naujamiesčio")
             self.assertEqual(loc.name, "Irena")
-            self.assertEqual(loc.surname, "Degutienė")
+            self.assertEqual(loc.surname, u"Degutienė")
             self.assertEqual(loc.email, "Irena.Degutiene@lrs.lt, irdegu@lrs.lt")
             break;
