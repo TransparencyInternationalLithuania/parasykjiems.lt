@@ -85,6 +85,7 @@ class PageLocation:
 class RegisterCenterParser:
     def __init__(self, htmlText):
         self.soupForm = BeautifulSoup(htmlText)
+        #print self.soupForm.prettify()
 
     def _removeLineBreaks(self, string):
         strstr = u"%s" % string
@@ -217,7 +218,8 @@ LIETUVOS RESPUBLIKA / Tauragės apskr. / Pagėgių sav. / Natkiškių sen. / Nat
         # attrs[0] is the first and only attribute. Then we take second argument from the tuple.
         # first will be attribute name, i.e. href, second will be the actual url
         url = self._constructHyperlink(res.attrs[0][1])
-        link = LinkCell(text = res.text, href = url)
+        text = "%s" % res.next
+        link = LinkCell(text = text, href = url)
         return link
 
         
