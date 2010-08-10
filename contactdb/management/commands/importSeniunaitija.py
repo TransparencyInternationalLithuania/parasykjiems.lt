@@ -71,10 +71,10 @@ class Command(BaseCommand):
                 # i use class instance variables here on purpose. Might be tricky if the class grows too much,
                 # but handy for now
 
-                self.seniunaitijaStr = row["seniūnaitija"].strip()
-                self.civilParishStr = row["townshipseniūnija"].strip()
-                streets = row["territorycoveredbyseniūnaitija"].strip()
-                self.municipalityStr = row["municipality"].strip()
+                self.seniunaitijaStr = unicode(row["seniunaitija"].strip(), 'utf-8')
+                self.civilParishStr = unicode(row["townshipseniunija"].strip(), 'utf-8')
+                streets = unicode(row["territorycoveredbyseniunaitija"].strip(), 'utf-8')
+                self.municipalityStr = unicode(row["municipality"].strip(), 'utf-8')
 
 
                 # skipt empty entries
@@ -83,8 +83,8 @@ class Command(BaseCommand):
                 # remove some keywords from strings, and add others
                 # this is to conform to a de-facto data naming standard
                 self.municipalityStr = self.municipalityStr.replace("rajono", "").strip()
-                if (self.civilParishStr.find("seniūnija") < 0):
-                    self.civilParishStr = "%s seniūnija" % self.civilParishStr
+                if (self.civilParishStr.find(u"seniūnija") < 0):
+                    self.civilParishStr = u"%s seniūnija" % self.civilParishStr
 
 
                 # check that current Seniunaitija object does not already exist

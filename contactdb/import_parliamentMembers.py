@@ -22,8 +22,8 @@ class MunicipalityMembersReader:
     def ReadMembers(self):
         for row in self.dictReader:
             member = MunicipalityMember()
-            member.name = row["name"].strip()
-            member.surname = row["surname"].strip()
+            member.name = unicode(row["name"].strip(), 'utf-8')
+            member.surname = unicode(row["surname"].strip(), 'utf-8')
             member.email = row["e-mail"]
             member.phone = row["telephonenumber"].strip()
             member.mobilePhone = row["mobilenumber"].strip()
@@ -51,11 +51,11 @@ class SeniunaitijaMembersReader:
     def ReadMembers(self):
         for row in self.dictReader:
             member = SeniunaitijaMember()
-            member.name = row["name"].strip()
-            member.surname = row["surname"].strip()
+            member.name = unicode(row["name"].strip(), 'utf-8')
+            member.surname = unicode(row["surname"].strip(), 'utf-8')
             member.email = row["e-mail"]
             member.role = row["pareigos"]
-            member.seniunaitijaStr = row["seniūnaitija"].strip()
+            member.seniunaitijaStr = row["seniunaitija"].strip()
             member.uniqueKey = row["uniquekeynotchangeable"]
             yield member
 
@@ -67,8 +67,8 @@ class CivilParishMembersReader:
     def ReadMembers(self):
         for row in self.dictReader:
             member = CivilParishMember()
-            member.name = row["name"].strip()
-            member.surname = row["surname"].strip()
+            member.name = unicode(row["name"].strip(), 'utf-8')
+            member.surname = unicode(row["surname"].strip(), 'utf-8')
             #member.email = row["e-mail"]
             member.personalPhone = row["personaltelephonenumber"].strip()
             member.officeEmail = row["officee-mail"].strip()
