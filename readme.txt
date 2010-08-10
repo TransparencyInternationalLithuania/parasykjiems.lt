@@ -19,7 +19,9 @@ http://code.google.com/p/gdata-python-client/downloads/list
 
 # install enum library
 pip install enum
-2. Solr and django-haystack (http://haystacksearch.org/) are required. Solr also requires pysolr library.
+
+
+# Solr and django-haystack (http://haystacksearch.org/) are required. Solr also requires pysolr library.
 If you prefer not Solr, but some other search engine, read here: http://docs.haystacksearch.org/dev/installing_search_engines.html
 
 
@@ -49,9 +51,14 @@ manage.py syncdb
 # downloads data from google docs to be ready for import:
 manage.py downloadDocs
 
-# imports all database with contact data
-manage.py importcontactDB
+# imports initial data, such as data, which changes only every years
+manage.py importInitial
+
+# imports other data, which can be updated quite often (even daily)
+manage.py importAll
 
 
+3. Help and bug fixes
+If you have any problems setting up the project, or get unexpected exsceptions, dont hesistate to report everything at http://bitbucket.org/dariusdamalakas/parasykjiems
 
-
+This project is part of http://manovalstybe.lt/ initiative
