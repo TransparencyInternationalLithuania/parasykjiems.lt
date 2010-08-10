@@ -89,7 +89,7 @@ class RegisterCenterParser:
 
     def _removeLineBreaks(self, string):
         strstr = u"%s" % string
-        rootLocation = re.sub(r'\n', ' ', strstr)
+        rootLocation = re.sub(r'\r\n', ' ', strstr)
         # removing unecessary white spaces
         # this is soooo lame that i do it twice here. Anyone knows how to do better? 
         rootLocation = rootLocation.replace("   ", " ")
