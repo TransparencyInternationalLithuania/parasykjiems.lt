@@ -170,16 +170,36 @@ LIETUVOS RESPUBLIKA / Tauragės apskr. / Pagėgių sav. / Natkiškių sen. / Nat
             return href
         return "%s%s" % ("http://www.registrucentras.lt", href)
 
+    def ExtractUrlFromATag(self, href):
+        hrefAttr = href.attrs[0]
+        hrefTxt = self._constructHyperlink(hrefAttr[1])
+        return hrefTxt
+
+
     def ExtractLinkCell(self, cellTag):
         cell = LinkCell()
-        cell.text = self._removeLineBreaks(cellTag.next)
-        cell.text = self._NormaliseLocationText(cell.text)
+        #cell.text = self._removeLineBreaks(cellTag.next)
+        #cell.text = self._NormaliseLocationText(cell.text)
 
-        if (cellTag.next is not None):
-            href = cellTag.next
-            if (hasattr(href, "attrs") == True):
-                hrefAttr = href.attrs[0]
-                cell.href = self._constructHyperlink(hrefAttr[1])
+        if (cellTag.next is None):
+            raise PageParseException("cell tag should contain a next property, which should be either text of a link, or a href and a text")
+        href = cellTag.next
+        if (hasattr(href, "attrs") == True):
+            cell.href = self.ExtractUrlFromATag(href)
+
+            # registrucentras.lt is very bad at constructing valid html. Here the a tag is double nested.
+            # here is the original html code that we try to parse with if logic here:
+            # <td><a href="/adr/p/index.php?gyv_id=339"><b><a href="/adr/p/index.php?gyv_id=339"><b>Likiškėlių k.</b></a></b></a></td>
+            # notice a tag is repeated twice.  So in our logic we will try to move also forward two times if needed
+            textSibling = href.nextSibling.next
+            if (hasattr(textSibling, "attrs")):
+                # go to next tag
+                textSibling = textSibling.next.next
+                # remove bold
+                textSibling = textSibling.next
+            cell.text = self._NormaliseLocationText(self._removeLineBreaks(textSibling))
+        else:
+            cell.text = self._NormaliseLocationText(self._removeLineBreaks(href))
         return cell
 
     def GetLinks(self):
