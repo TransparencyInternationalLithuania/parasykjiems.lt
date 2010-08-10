@@ -172,7 +172,7 @@ LIETUVOS RESPUBLIKA / Tauragės apskr. / Pagėgių sav. / Natkiškių sen. / Nat
 
     def ExtractLinkCell(self, cellTag):
         cell = LinkCell()
-        cell.text = self._removeLineBreaks(cellTag.text)
+        cell.text = self._removeLineBreaks(cellTag.next)
         cell.text = self._NormaliseLocationText(cell.text)
 
         if (cellTag.next is not None):
