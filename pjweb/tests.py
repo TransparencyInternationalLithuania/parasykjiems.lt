@@ -14,10 +14,7 @@ class SimpleTest(unittest.TestCase):
     def test_details(self):
         # Issue a GET request.
         test_addresses = [
-            'Žygio 90, Vilnius',
-            'Žvejų 16, Antanašė, Rokiškio raj.',
-            'Mindaugo 16, Kaunas',
-            'Antanašė, Rokiškio raj',
+            '',
         ]
         for test in test_addresses:
             print test

@@ -11,7 +11,26 @@
 {% if found_entries %}
 <p><b>{% trans "We found these addresses:" %}</b></p>
 {% for found_entry in found_entries %}
+
+{% if found_entry.constituency_id %}
+<p><a href="/pjweb/{{ found_entry.constituency_id }}/">
+{% if found_entry.street %} {{ found_entry.street }}, {% endif %}
+{% if found_entry.city %} {{ found_entry.city }}, {% endif %}
+{% if found_entry.district %} {{ found_entry.district }}{% endif %}
+</a></p>
+{% else %}
 <p><a href="/pjweb/{{ found_entry.object.constituency_id }}/">{{ found_entry.street }}</a></p>
+{% endif %}
+
+{% endfor %}
+{% endif %}
+
+{% if found_geodata %}
+{% for found_entry in found_geodata %}
+<p><a href="/pjweb/{{ found_entry.id }}/">
+{% if found_entry.name %} {{ found_entry.name }}, {% endif %}
+</a></p>
+
 {% endfor %}{% endif %}
 
 {% if not found_entries %}

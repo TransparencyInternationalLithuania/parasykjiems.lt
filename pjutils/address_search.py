@@ -15,7 +15,7 @@ class AddressSearch:
     	    ['some', 'random', 'words', 'with quotes', 'and', 'spaces']
     	
     	'''
-        print findterms(query_string)
+#        print findterms(query_string)
     	return [normspace(' ', (t[0] or t[1]).strip(',')) for t in findterms(query_string)] 
 
     def get_query(self, query_string, search_fields):
@@ -25,7 +25,7 @@ class AddressSearch:
         '''
         query = None # Query to search for every search term
         terms = self.normalize_query(query_string)
-        print terms
+#        print terms
         for term in terms:
             or_query = None # Query to search for a given term in each field
             for field_name in search_fields:
