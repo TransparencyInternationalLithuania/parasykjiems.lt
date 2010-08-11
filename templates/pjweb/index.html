@@ -1,9 +1,17 @@
+{% extends "pjweb/base.html" %}
 {% load i18n %}
+{% block content %}
+
 <form action="/pjweb/" method="post">
 <p>{% trans "Try to use national letters." %}</p>
-{{ form.as_p }}
+  <div class="fieldWrapper">
+    {{ form.address.errors }}
+    <label for="id_address">{% trans "Enter Your Address:" %}</label>
+    {{ form.address }}
+  </div>
 <input type="submit" value="Submit" />
 </form>
+
 {% if entered %}
 <p><b>{% trans "You entered:" %}</b> {{ entered }}</p>
 {% endif %}
@@ -39,3 +47,4 @@
 <p><a href="/pjweb/contact/{{ mp.id }}/">{{ mp.name }} {{ mp.surname }}</a></p>
 {% endfor %}
 {% endif %}
+{% endblock %}

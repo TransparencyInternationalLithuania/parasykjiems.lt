@@ -1,0 +1,14 @@
+{% extends "pjweb/base.html" %}
+{% load i18n %}
+{% block content %}
+
+<form action="/pjweb/contact/{{ mp_id.id }}/" method="post">
+<p>{% trans "Try to use national letters." %}</p>
+  <div class="fieldWrapper">
+    <label for="id_private">{% trans "Check, if you want your email to be private." %}</label>
+    {{ form.private }}
+  </div>
+<input type="submit" value="Submit" />
+</form>
+
+{% endblock %}

@@ -1,21 +1,28 @@
+{% extends "pjweb/base.html" %}
 {% load i18n %}
+{% block content %}
+
 <p><b>{% trans "Your Constituency is:" %}</b></p>
 {% for constituency in constituencies %}
 <p>{{ constituency.name }}</p>
 {% endfor %}
+
 <p><b>{% trans "Your Municipality is:" %}</b></p>
 {% for municipality in municipalities %}
 <p>{{ municipality.name }}</p>
 {% endfor %}
+
 <p><b>{% trans "Your Civil Parish is:" %}</b></p>
 {% for civilparish in civilparishes %}
 <p>{{ civilparish.name }}</p>
 {% endfor %}
 
 <p><b>{% trans "You can write to:" %}</b></p>
+
 {% for parliament_member in parliament_members %}
 <p>{% trans "Member of parliament:" %} <a href="/pjweb/contact/{{ parliament_member.id }}/">{{ parliament_member.name }} {{ parliament_member.surname }}</a></p>
 {% endfor %}
+
 {% for municipality_member in municipality_members %}
 <p>{% trans "Member of municipality:" %} <a href="/pjweb/contact/{{ municipality_member.id }}/">{{ municipality_member.name }} {{ municipality_member.surname }}</a></p>
 {% endfor %}
@@ -23,4 +30,5 @@
 {% for civilparish_member in civilparish_members %}
 <p>{% trans "Member of civil parish:" %} <a href="/pjweb/contact/{{ civilparish_member.id }}/">{{ civilparish_member.name }} {{ civilparish_member.surname }}</a></p>
 {% endfor %}
-</div>
+
+{% endblock %}
