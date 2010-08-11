@@ -1,4 +1,6 @@
-# Create your views here.
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from django import forms
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render_to_response
@@ -17,6 +19,9 @@ class ContactForm(forms.Form):
 
 class IndexForm(forms.Form):
     address = forms.CharField(max_length=255)
+
+class PrivateForm(forms.Form):
+    private = forms.BooleanField()
 
 def index(request):
     a_s = AddressSearch()
@@ -89,6 +94,18 @@ def smtp_error(request, mp_id):
         'ErrorMessage': ErrorMessage,
     })
 
+def select_privacy(request, mp_id):
+    parliament_member = ParliamentMember.objects.all().filter(
+                id__exact=mp_id
+            )
+    form = PrivateForm(request.POST)
+
+    return render_to_response('pjweb/private.html', {
+        #'privacy': privacy,
+        'mp_id': mp_id,
+        'form': form,
+    })
+
 def constituency(request, constituency_id):
     constituencies = Constituency.objects.all().filter(
                 id__exact=constituency_id
@@ -128,13 +145,20 @@ def constituency(request, constituency_id):
         'civilparish_members': civilparish_members,
     })
     
-def contact(request, mp_id):
+def contact(request, mp_id, private=None):
     parliament_member = ParliamentMember.objects.all().filter(
                 id__exact=mp_id
             )
     if not parliament_member[0].email:
         return HttpResponseRedirect('no_email')
         
+    if private==None:
+        return HttpResponseRedirect('select_privacy')
+    elif private==True:
+        print 'Privatus'
+    else:
+        print 'Viešas'
+
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
