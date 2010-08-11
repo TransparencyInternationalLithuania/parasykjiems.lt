@@ -2,6 +2,7 @@ from amqplib import client_0_8 as amqp
 from FeatureBroker import *
 from settings import *
 import socket
+from amqplib.client_0_8.exceptions import *
 from pjutils.exc import ChainnedException
 
 
@@ -114,7 +115,13 @@ class LTRegisterQueue(Component):
         """ Tells if RegisterQueue is empty.
         If queue is empty, then it means that either processing has finished, or has not started at all.
         Initiaiate processing by inserting new Root message"""
-        msg = self.ReadMessage()
+        try:
+            msg = self.ReadMessage()
+        except AMQPChannelException as e:
+            if (e.amqp_reply_code == 404):
+                return True   
+            raise e
+
         empty = msg is None
 
         # force to resend a message, so that we don't accidentally consume it
