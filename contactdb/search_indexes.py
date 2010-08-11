@@ -1,7 +1,7 @@
 import datetime
 from haystack import indexes
 from haystack import site
-from parasykjiems.contactdb.models import PollingDistrictStreet
+from parasykjiems.contactdb.models import PollingDistrictStreet, HierarchicalGeoData
 
 class PollingDistrictStreetIndex(indexes.SearchIndex):
     street = indexes.CharField(use_template=True, document=True)
