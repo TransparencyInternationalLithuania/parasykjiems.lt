@@ -2,7 +2,7 @@
 {% load i18n %}
 {% block content %}
 
-<form action="/pjweb/contact/{{ mp_id }}/" method="post">
+<form action="/pjweb/contact/{{ mtype }}/{{ mp_id }}/{{ private }}/" method="post">
   <div class="fieldWrapper">
     {{ form.sender_name.errors }}
     <label for="id_sender_name">{% trans "Sender Name:" %}</label><br>

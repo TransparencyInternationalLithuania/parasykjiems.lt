@@ -43,11 +43,15 @@ def index(request):
         found_geodata = HierarchicalGeoData.objects.filter(entry_query1).order_by('name')
 #        found_entries = SearchQuerySet().auto_query(query_string)
         if not found_entries:
-            suggestion = SearchQuerySet().auto_query(query_string).spelling_suggestion()
-            print 'suggest', suggestion
-            entry_query = a_s.get_query(suggestion, ['street', 'city', 'district'])
+            found_by_index = SearchQuerySet().auto_query(query_string)
+            if not found_by_index:
+                suggestion = found_by_index.spelling_suggestion()
+                print 'suggest', suggestion
+                entry_query = a_s.get_query(suggestion, ['street', 'city', 'district'])
             #found_entries = SearchQuerySet().auto_query(suggestion)
-            found_entries = PollingDistrictStreet.objects.filter(entry_query).order_by('street')
+                found_entries = PollingDistrictStreet.objects.filter(entry_query).order_by('street')
+            else:
+                found_entries = found_by_index
 
     else:
         form = IndexForm()
@@ -70,7 +74,7 @@ def no_email(request, mp_id):
         'NoEmailMsg': NoEmailMsg,
     })
     
-def thanks(request, mp_id):
+def thanks(request, mtype, mp_id, private=None):
     parliament_member = ParliamentMember.objects.all().filter(
                 id__exact=mp_id
             )
@@ -81,7 +85,7 @@ def thanks(request, mp_id):
         'ThanksMessage': ThanksMessage,
     })
 
-def smtp_error(request, mp_id):
+def smtp_error(request, mtype, mp_id, private=None):
     parliament_member = ParliamentMember.objects.all().filter(
                 id__exact=mp_id
             )
@@ -94,15 +98,16 @@ def smtp_error(request, mp_id):
         'ErrorMessage': ErrorMessage,
     })
 
-def select_privacy(request, mp_id):
+def select_privacy(request, mtype, mp_id):
     parliament_member = ParliamentMember.objects.all().filter(
                 id__exact=mp_id
             )
     form = PrivateForm(request.POST)
-
+    
     return render_to_response('pjweb/private.html', {
         #'privacy': privacy,
         'mp_id': mp_id,
+        'mtype': mtype,
         'form': form,
     })
 
@@ -145,16 +150,26 @@ def constituency(request, constituency_id):
         'civilparish_members': civilparish_members,
     })
     
-def contact(request, mp_id, private=None):
-    parliament_member = ParliamentMember.objects.all().filter(
+def contact(request, mtype, mp_id, private=None):
+    if mtype=='mp':    
+        receiver = ParliamentMember.objects.all().filter(
                 id__exact=mp_id
             )
-    if not parliament_member[0].email:
+    elif mtype=='mn':
+    	  receiver = MunicipalityMember.objects.all().filter(
+                id__exact=mp_id
+            )
+    elif mtype=='cp':
+    	  receiver = CivilParishMember.objects.all().filter(
+                id__exact=mp_id
+            )
+            
+    if not receiver[0].email:
         return HttpResponseRedirect('no_email')
         
     if private==None:
         return HttpResponseRedirect('select_privacy')
-    elif private==True:
+    elif private=='private':
         print 'Privatus'
     else:
         print 'Viešas'
@@ -166,7 +181,7 @@ def contact(request, mp_id, private=None):
             subject = form.cleaned_data['subject']
             message = form.cleaned_data['message']
             sender = form.cleaned_data['sender']
-            recipients = [parliament_member[0].email]
+            recipients = [receiver[0].email]
             #print recipients[0]
             if not recipients[0]:
                 return HttpResponseRedirect('no_email')
@@ -193,5 +208,7 @@ def contact(request, mp_id, private=None):
     return render_to_response('pjweb/contact.html', {
         'form': form,
         'mp_id': mp_id,
+        'mtype': mtype,
+        'private': private,
     })
 

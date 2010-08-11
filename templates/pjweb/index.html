@@ -44,7 +44,7 @@
 {% if not found_entries %}
 <p>{% trans "Or you can select one from all Members of Parliament" %}</p>
 {% for mp in all_mps %}
-<p><a href="/pjweb/contact/{{ mp.id }}/">{{ mp.name }} {{ mp.surname }}</a></p>
+<p><a href="/pjweb/contact/mp/{{ mp.id }}/">{{ mp.name }} {{ mp.surname }}</a></p>
 {% endfor %}
 {% endif %}
 {% endblock %}
