@@ -27,3 +27,4 @@ class Email(models.Model):
     msg_state = models.CharField(max_length=1, choices=MSG_STATES)
     email_state = models.CharField(max_length=1, choices=EMAIL_STATES)
     req_date = models.DateTimeField(auto_now = True)
+    public = models.BooleanField()
