@@ -1,0 +1,7 @@
+{% extends "pjweb/base.html" %}
+{% load i18n %}
+{% block content %}
+
+<p>{% trans "Click here, if you want to send private email" %} <a href="/pjweb/contact/{{ mtype }}/{{ mp_id }}/private/">Private</a></p>
+<p>{% trans "Click here, if you want to send public email" %} <a href="/pjweb/contact/{{ mtype }}/{{ mp_id }}/public/">Public</a></p>
+{% endblock %}
