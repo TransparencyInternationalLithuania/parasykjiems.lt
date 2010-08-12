@@ -7,9 +7,11 @@ class ChainnedException(Exception):
     Imagine a situation where a file is being read. Then an IO exception is raised.
     However, in the routine that reads the file we catch this exception, and raise
     new ImportFromFile exception. So far python has no support for containing
-    stack traces for both of the exceptions.
+    stack traces for both of the exceptions. Update - Python 3 has support for this,
+    but Django will not move to Py3 soon enough. When this happens,
+    mark this class as deprecated
 
-    This class does exactly that. When exception is not caught, it is printed out
+    When exception is not caught, it is printed out
     to console with all stack-traces, no matter how many nested exceptions are.
 
     P.s. there is one bug still:
