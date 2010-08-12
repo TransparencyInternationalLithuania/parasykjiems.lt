@@ -1,3 +1,7 @@
+""" Import this package if your host os does not support printing Unicode characters out of the box.
+It will replace sys.stdout stream with a stream which automaticall converts to utf-8 before printing
+to output"""
+
 import sys, os
 
 if sys.platform == "win32":
