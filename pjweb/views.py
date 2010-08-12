@@ -73,7 +73,21 @@ def no_email(request, mp_id):
     return render_to_response('pjweb/no_email.html', {
         'NoEmailMsg': NoEmailMsg,
     })
-    
+
+def public_mails(request):
+    all_mails = Email.objects.all().filter(public__exact=True)
+
+    return render_to_response('pjweb/public_mails.html', {
+        'all_mails': all_mails,
+    })
+
+def public(request, mail_id):
+    mails = Email.objects.all().filter(id__exact=mail_id)
+    mail = mails[0]
+    return render_to_response('pjweb/public.html', {
+        'mail': mail,
+    })
+
 def thanks(request, mtype, mp_id, private=None):
     parliament_member = ParliamentMember.objects.all().filter(
                 id__exact=mp_id
@@ -156,23 +170,23 @@ def contact(request, mtype, mp_id, private=None):
                 id__exact=mp_id
             )
     elif mtype=='mn':
-    	  receiver = MunicipalityMember.objects.all().filter(
+        receiver = MunicipalityMember.objects.all().filter(
                 id__exact=mp_id
             )
     elif mtype=='cp':
-    	  receiver = CivilParishMember.objects.all().filter(
+        receiver = CivilParishMember.objects.all().filter(
                 id__exact=mp_id
             )
             
     if not receiver[0].email:
         return HttpResponseRedirect('no_email')
         
-    if private==None:
+    if private is None:
         return HttpResponseRedirect('select_privacy')
     elif private=='private':
-        print 'Privatus'
+        publ = False
     else:
-        print 'Viešas'
+        publ = True
 
     if request.method == 'POST':
         form = ContactForm(request.POST)
@@ -195,6 +209,7 @@ def contact(request, mtype, mp_id, private=None):
                     subject = subject,
                     message = message,
                     msg_state = 'W',
+                    public = publ,
                 )
                 print mail
                 mail.save()
