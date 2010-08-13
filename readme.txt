@@ -42,8 +42,16 @@ manage.py runserver
 # cleans all database from contact data
 manage.py clearcontactDB
 
+3. Creating a database with mysql
+Connect as root
+	mysql -u root
 
-3. After installation
+and create database with utf8 character set:
+	create database writetothem character set utf8;
+
+issue manage.py syncdb to populate database with tables
+
+4. After installation
 
 # creates database
 manage.py syncdb
@@ -57,8 +65,7 @@ manage.py importInitial
 # imports other data, which can be updated quite often (even daily)
 manage.py importAll
 
-
-3. Help and bug fixes
+5. Help and bug fixes
 If you have any problems setting up the project, or get unexpected exsceptions, dont hesistate to report everything at http://bitbucket.org/dariusdamalakas/parasykjiems
 
 This project is part of http://manovalstybe.lt/ initiative
