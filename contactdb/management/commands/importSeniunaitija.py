@@ -77,7 +77,7 @@ class Command(BaseCommand):
                 self.municipalityStr = unicode(row["municipality"].strip(), 'utf-8')
 
 
-                # skipt empty entries
+                # skip empty entries
                 if (self.seniunaitijaStr == ""):
                     continue
                 # remove some keywords from strings, and add others
