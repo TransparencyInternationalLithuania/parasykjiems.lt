@@ -12,7 +12,8 @@ class Command(BaseCommand):
 
         time = TimeMeasurer()
         imports = ["importConstituencies",
-                   "importStreets"]
+                   "importStreets",
+                   ("ltGeoDataImport", {"max-depth" :3})]
         #imports = imports[8:9]
 
         print "Will import following data:"
