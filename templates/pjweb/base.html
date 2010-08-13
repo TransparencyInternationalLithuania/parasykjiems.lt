@@ -1,0 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <link rel="stylesheet" href="{{ media_url }}css/style.css" />
+    <title>{% block title %}Parašyk Jiems{% endblock %}</title>
+</head>
+
+<body>
+    <div id="top" align="center">
+      <p><a href="/">Home</a></p>
+    </div>
+    <div id="header" align="center">
+        {% block header %}<p><a href="/pjweb/public_mails/">Public mails</a></p>{% endblock %}
+    </div>
+    <div id="content" align="center">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
