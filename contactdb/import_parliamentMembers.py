@@ -56,6 +56,8 @@ class SeniunaitijaMembersReader:
             member.name = unicode(row["name"].strip(), 'utf-8')
             member.surname = unicode(row["surname"].strip(), 'utf-8')
             member.email = row["e-mail"]
+            member.phone = row["telephonenumber"]
+            member.homePhone = row["hometelephonenumber"]
             member.role = row["pareigos"]
             member.seniunaitijaStr = row["seniunaitija"].strip()
             member.uniqueKey = row["uniquekeynotchangeable"]
