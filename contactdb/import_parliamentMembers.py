@@ -25,7 +25,9 @@ class MunicipalityMembersReader:
             member.name = unicode(row["name"].strip(), 'utf-8')
             member.surname = unicode(row["surname"].strip(), 'utf-8')
             member.email = row["e-mail"]
+            member.email2 = row["e-mail2"]
             member.phone = row["telephonenumber"].strip()
+            member.phone2 = row["telephonenumber2"].strip()
             member.mobilePhone = row["mobilenumber"].strip()
             member.address = row["address"].strip()
             member.municipalityStr = row["municipality"].strip()
