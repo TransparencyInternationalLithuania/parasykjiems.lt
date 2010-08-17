@@ -22,13 +22,13 @@
 {% for found_entry in found_entries %}
 
 {% if found_entry.constituency_id %}
-<p><a href="/pjweb/{{ found_entry.constituency_id }}/">
+<p><a href="/pjweb/{{ found_entry.constituency_id }}/mp/">
 {% if found_entry.street %} {{ found_entry.street }}, {% endif %}
 {% if found_entry.city %} {{ found_entry.city }}, {% endif %}
 {% if found_entry.district %} {{ found_entry.district }}{% endif %}
 </a></p>
 {% else %}
-<p><a href="/pjweb/{{ found_entry.object.constituency_id }}/">{{ found_entry.street }}</a></p>
+<p><a href="/pjweb/{{ found_entry.object.constituency_id }}/mp/">{{ found_entry.street }}</a></p>
 {% endif %}
 
 {% endfor %}
@@ -38,7 +38,7 @@
 
 {% if found_geodata %}
 {% for found_entry in found_geodata %}
-<p><a href="/pjweb/{{ found_entry.id }}/">
+<p><a href="/pjweb/{{ found_entry.id }}/cp/">
 {% if found_entry.name %} {{ found_entry.name }}, {% endif %}
 </a></p>
 

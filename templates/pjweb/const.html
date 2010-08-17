@@ -2,20 +2,26 @@
 {% load i18n %}
 {% block content %}
 
+{% if constituencies %}
 <p><b>{% trans "Your Constituency is:" %}</b></p>
 {% for constituency in constituencies %}
 <p>{{ constituency.name }}</p>
 {% endfor %}
+{% endif %}
 
+{% if municipalities %}
 <p><b>{% trans "Your Municipality is:" %}</b></p>
 {% for municipality in municipalities %}
 <p>{{ municipality.name }}</p>
 {% endfor %}
+{% endif %}
 
+{% if civilparishes %}
 <p><b>{% trans "Your Civil Parish is:" %}</b></p>
 {% for civilparish in civilparishes %}
 <p>{{ civilparish.name }}</p>
 {% endfor %}
+{% endif %}
 
 <p><b>{% trans "You can write to:" %}</b></p>
 
