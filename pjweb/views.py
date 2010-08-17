@@ -142,44 +142,52 @@ def select_privacy(request, mtype, mp_id):
         'form': form,
     })
 
-def constituency(request, constituency_id):
-    logging.debug('Constituency no %s' % (constituency_id))
-    constituencies = Constituency.objects.all().filter(
-                id__exact=constituency_id
-            )
-    parliament_members = ParliamentMember.objects.all().filter(
-                constituency__exact=constituency_id
-            )
-    municipalities = HierarchicalGeoData.objects.all().filter(
-                id__exact=constituency_id
-            )
-    if municipalities[0].type=='City':
+def constituency(request, constituency_id, rtype):
+    print constituency_id
+    constituencies = []
+    parliament_members = []
+    municipalities = []
+    civilparishes = []
+    municipality_members = []
+    civilparish_members = []
+    if rtype=='mp':
+        constituencies = Constituency.objects.all().filter(
+                    id__exact=constituency_id
+                )
+        parliament_members = ParliamentMember.objects.all().filter(
+                    constituency__exact=constituency_id
+                )
+    elif rtype=='cp':
         municipalities = HierarchicalGeoData.objects.all().filter(
+                    id__exact=constituency_id
+                )
+        if municipalities[0].type=='City':
+            municipalities = HierarchicalGeoData.objects.all().filter(
+                        id__exact=municipalities[0].parent.id
+                    )
+        if municipalities[0].type=='CivilParish':
+            municipalities = HierarchicalGeoData.objects.all().filter(
                     id__exact=municipalities[0].parent.id
                 )
-    if municipalities[0].type=='CivilParish':
-        municipalities = HierarchicalGeoData.objects.all().filter(
-                id__exact=municipalities[0].parent.id
-            )
 
-    civilparishes = HierarchicalGeoData.objects.all().filter(
-                id__exact=constituency_id
-            )
-    if civilparishes[0].type=='City':
         civilparishes = HierarchicalGeoData.objects.all().filter(
-                    id__exact=civilparishes[0].parent.id
+                    id__exact=constituency_id
                 )
+        if civilparishes[0].type=='City':
+            civilparishes = HierarchicalGeoData.objects.all().filter(
+                        id__exact=civilparishes[0].parent.id
+                    )
 
-    municipality_members = MunicipalityMember.objects.all().filter(
-                municipality__exact=municipalities[0].id
-            )
-    if not municipality_members:
         municipality_members = MunicipalityMember.objects.all().filter(
-                municipality__exact=municipalities[0].parent.id
-            )
-    civilparish_members = CivilParishMember.objects.all().filter(
-                civilParish__exact=constituency_id
-            )
+                    municipality__exact=municipalities[0].id
+                )
+        if not municipality_members:
+            municipality_members = MunicipalityMember.objects.all().filter(
+                    municipality__exact=municipalities[0].parent.id
+                )
+        civilparish_members = CivilParishMember.objects.all().filter(
+                    civilParish__exact=constituency_id
+                )
 
     return render_to_response('pjweb/const.html', {
         'constituencies': constituencies,
