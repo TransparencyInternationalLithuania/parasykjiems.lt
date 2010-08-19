@@ -1,2 +1,6 @@
+{% extends "pjweb/base.html" %}
 {% load i18n %}
-<p>{{ ErrorMessage }}</p><p><a href="/pjweb/">{% trans "Go back" %}</a></p>
+{% block content %}
+<p>{{ ErrorMessage }}</p>
+<p><a href="/pjweb/">{% trans "Go back" %}</a></p>
+{% endblock %}

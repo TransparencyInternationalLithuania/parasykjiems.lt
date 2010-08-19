@@ -11,6 +11,7 @@ from parasykjiems.pjweb.models import Email
 from haystack.query import SearchQuerySet
 from haystack.views import SearchView
 import logging
+from django.core.mail import send_mail
 
 LOG_FILENAME = 'pjweb.log'
 logging.basicConfig(filename=LOG_FILENAME,level=logging.DEBUG)
@@ -39,7 +40,7 @@ def index(request):
             query_string = form.cleaned_data['address']
         else:
             query_string = '*'
-	
+
         entry_query = a_s.get_query(query_string, ['street', 'city', 'district'])
 
         entry_query1 = a_s.get_query(query_string, ['name'])
@@ -225,11 +226,12 @@ def contact(request, mtype, mp_id, private=None):
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
-            sender_name = form.cleaned_data['sender_name']
-            subject = form.cleaned_data['subject']
-            message = form.cleaned_data['message']
-            sender = form.cleaned_data['sender']
-            recipients = [receiver[0].email]
+            sender_name = form.cleaned_data[u'sender_name']
+            subject = form.cleaned_data[u'subject']
+            message = form.cleaned_data[u'message']
+            sender = form.cleaned_data[u'sender']
+            #recipients = [receiver[0].email]
+            recipients = [u'testinis@pashtas.lt']
             #print recipients[0]
             if not recipients[0]:
                 logging.debug('%s has no email' % (receiver[0].name, receiver[0].surname))
@@ -246,9 +248,12 @@ def contact(request, mtype, mp_id, private=None):
                     msg_state = 'W',
                     public = publ,
                 )
-                print mail
-                mail.save()
-                    #sendmail = send_mail(subject, message, sender, recipients)
+                
+                sendmail = send_mail(subject, message, sender, recipients)
+                print 'email sent', sendmail
+                if publ:
+                    mail.save()
+                    print 'public mail saved'
                 #except:
                 #    return HttpResponseRedirect('smtp_error')
             return HttpResponseRedirect('thanks')
