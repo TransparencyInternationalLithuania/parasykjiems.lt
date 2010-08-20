@@ -23,7 +23,7 @@ class ContactForm(forms.Form):
     sender = forms.EmailField()
 
 class IndexForm(forms.Form):
-    address = forms.CharField(max_length=255)
+    address_input = forms.CharField(max_length=255)
 
 class PrivateForm(forms.Form):
     private = forms.BooleanField()
