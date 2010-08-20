@@ -7,7 +7,7 @@
   <div class="fieldWrapper">
     {{ form.address.errors }}
     <label for="id_address">{% trans "Enter Your Address:" %}</label>
-    {{ form.address }}
+    {{ form.address_input }}
   </div>
 <input type="submit" value="Submit" />
 </form>
@@ -42,12 +42,7 @@
 {% if found_entry.name %} {{ found_entry.name }}, {% endif %}
 </a></p>
 
-{% endfor %}{% endif %}
-
-{% if not found_entries %}
-<p>{% trans "Or you can select one from all Members of Parliament" %}</p>
-{% for mp in all_mps %}
-<p><a href="/pjweb/contact/mp/{{ mp.id }}/">{{ mp.name }} {{ mp.surname }}</a></p>
 {% endfor %}
 {% endif %}
+
 {% endblock %}

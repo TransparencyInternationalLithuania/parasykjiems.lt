@@ -1,20 +1,26 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html>
 <head>
     <link rel="stylesheet" href="/static/css/style.css" />
-    <title>{% block title %}Parašyk Jiems{% endblock %}</title>
+    <title>{% block title %}ParašykJiems{% endblock %}</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
 
 <body>
-    <div id="top" align="center">
-      <p><a href="/">Home</a></p>
-    </div>
-    <div id="header" align="center">
-        {% block header %}<p><a href="/pjweb/public_mails/">Public mails</a></p>{% endblock %}
-    </div>
-    <div id="content" align="center">
-        {% block content %}{% endblock %}
-    </div>
+<div id="top">
+<div>
+	<a href="/" id="logo"><img width="359" height="50" src="/static/img/logo.png" alt="ParašykJiems - Greitas būdas rasti atsakingus valdžios atstovus ir su jais susisiekti."></a>
+	<a href="#" id="about">Apie projektą</a>	
+	<a href="/pjweb/public_mails/" id="archive"><img src="/static/img/info.png" align="absmiddle">Viešai publikuotų laiškų archyvas</a>
+</div>
+</div>
+<div id="content">
+<img class="step" src="/static/img/step1.png" alt="Raskite reikiamą atstovą (nustatysime pagal adresą)">
+<img class="step" src="/static/img/step2.png" alt="Laiško turinys (galite rašyti viešą arba privatų laišką)">
+<img class="step" src="/static/img/step3.png" alt="Peržiūra ir siuntimas (pasitikrinkite klaidas ;-))">
+{% block content %}{% endblock %}
+</form>
+</div>
+
 </body>
 </html>
