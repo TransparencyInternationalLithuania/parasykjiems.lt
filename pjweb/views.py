@@ -37,7 +37,7 @@ def index(request):
     if request.method == 'POST':
         form = IndexForm(request.POST)
         if form.is_valid():
-            query_string = form.cleaned_data['address']
+            query_string = form.cleaned_data['address_input']
         else:
             query_string = '*'
 
@@ -66,6 +66,9 @@ def index(request):
         'entered': query_string,
         'found_entries': found_entries,
         'found_geodata': found_geodata,
+        'step1': 'step1_active.png',
+        'step2': 'step2_inactive.png',
+        'step3': 'step3_inactive.png',
     })
 
 def no_email(request, mp_id):
@@ -78,6 +81,9 @@ def no_email(request, mp_id):
     logging.debug('%s' % (NoEmailMsg))
     return render_to_response('pjweb/no_email.html', {
         'NoEmailMsg': NoEmailMsg,
+        'step1': 'step1_inactive.png',
+        'step2': 'step2_active.png',
+        'step3': 'step3_inactive.png',
     })
 
 def public_mails(request):
@@ -85,6 +91,9 @@ def public_mails(request):
 
     return render_to_response('pjweb/public_mails.html', {
         'all_mails': all_mails,
+        'step1': 'step1_active.png',
+        'step2': 'step2_inactive.png',
+        'step3': 'step3_inactive.png',
     })
 
 def public(request, mail_id):
@@ -92,6 +101,9 @@ def public(request, mail_id):
     mail = mails[0]
     return render_to_response('pjweb/public.html', {
         'mail': mail,
+        'step1': 'step1_inactive.png',
+        'step2': 'step2_active.png',
+        'step3': 'step3_inactive.png',
     })
 
 def thanks(request, mtype, mp_id, private=None):
@@ -113,6 +125,9 @@ def thanks(request, mtype, mp_id, private=None):
     logging.debug('%s' % (ThanksMessage))
     return render_to_response('pjweb/thanks.html', {
         'ThanksMessage': ThanksMessage,
+        'step1': 'step1_inactive.png',
+        'step2': 'step2_inactive.png',
+        'step3': 'step3_active.png',
     })
 
 def smtp_error(request, mtype, mp_id, private=None):
@@ -127,6 +142,9 @@ def smtp_error(request, mtype, mp_id, private=None):
     logging.debug('Error: %s' % (ErrorMessage))
     return render_to_response('pjweb/error.html', {
         'ErrorMessage': ErrorMessage,
+        'step1': 'step1_inactive.png',
+        'step2': 'step2_inactive.png',
+        'step3': 'step3_active.png',
     })
 
 def select_privacy(request, mtype, mp_id):
@@ -141,10 +159,13 @@ def select_privacy(request, mtype, mp_id):
         'mp_id': mp_id,
         'mtype': mtype,
         'form': form,
+        'step1': 'step1_inactive.png',
+        'step2': 'step2_active.png',
+        'step3': 'step3_inactive.png',
     })
 
 def constituency(request, constituency_id, rtype):
-    print constituency_id
+    #print constituency_id
     constituencies = []
     parliament_members = []
     municipalities = []
@@ -197,6 +218,9 @@ def constituency(request, constituency_id, rtype):
         'parliament_members': parliament_members,
         'municipality_members': municipality_members,
         'civilparish_members': civilparish_members,
+        'step1': 'step1_active.png',
+        'step2': 'step2_inactive.png',
+        'step3': 'step3_inactive.png',
     })
     
 def contact(request, mtype, mp_id, private=None):
@@ -215,7 +239,7 @@ def contact(request, mtype, mp_id, private=None):
             
     if not receiver[0].email:
         return HttpResponseRedirect('no_email')
-    print receiver[0].name
+    #print receiver[0].name
     if private is None:
         return HttpResponseRedirect('select_privacy')
     elif private=='private':
@@ -250,10 +274,10 @@ def contact(request, mtype, mp_id, private=None):
                 )
                 
                 sendmail = send_mail(subject, message, sender, recipients)
-                print 'email sent', sendmail
+                #print 'email sent', sendmail
                 if publ:
                     mail.save()
-                    print 'public mail saved'
+                    #print 'public mail saved'
                 #except:
                 #    return HttpResponseRedirect('smtp_error')
             return HttpResponseRedirect('thanks')
@@ -265,5 +289,8 @@ def contact(request, mtype, mp_id, private=None):
         'mp_id': mp_id,
         'mtype': mtype,
         'private': private,
+        'step1': 'step1_inactive.png',
+        'step2': 'step2_active.png',
+        'step3': 'step3_inactive.png',
     })
 
