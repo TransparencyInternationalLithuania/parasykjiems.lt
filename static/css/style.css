@@ -77,7 +77,7 @@ a:hover {
 		
 		}
 		
-		#address-input {
+		#id_address_input {
 			background-color: #fffdda;
 			border-width: 1px;
 			width: 513px;
@@ -88,4 +88,45 @@ a:hover {
 		#address-button {
 			margin-left: 4px;
 			margin-top: -4px;
+			}
+	
+	#address_table {
+		font-size: 14px;
+		padding: 57px 97px;
+		}
+		
+		#addresses_line {
+			border: 1px dotted #d7d5a7;
+			width: 100%;
+			background-color: #fffba5;			
+			}
+			
+			tr {
+				height:30px;
+				}
+	
+	#rep_list_header {
+		padding: 73px 57px;
+		}
+		
+		#bigger_font {
+			font-size: 20px;
+			}
+		#smaller_font {
+			font-size: 12px;
+			}
+			
+	#rep_table {
+		border: 1px dotted #c9c9c9;
+		width: 100%;
+		color: #606b5c;
+		padding: 30px;
+		}
+		
+		td {
+			vertical-align: top;
+			}
+			
+		#head_font {
+			font-size: 16px;
 			}
