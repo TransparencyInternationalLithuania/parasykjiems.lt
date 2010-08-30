@@ -17,6 +17,12 @@ LOG_FILENAME = 'pjweb.log'
 logging.basicConfig(filename=LOG_FILENAME,level=logging.DEBUG)
 
 class ContactForm(forms.Form):
+    pub_choices = (
+        ('',''),
+        ('private','Private'),
+        ('public','Public'),
+    )
+    public = forms.ChoiceField(choices = pub_choices)
     sender_name = forms.CharField(max_length=128)
     subject = forms.CharField(max_length=100)
     message = forms.CharField(widget=forms.Textarea)
@@ -223,7 +229,7 @@ def constituency(request, constituency_id, rtype):
         'step3': 'step3_inactive.png',
     })
     
-def contact(request, mtype, mp_id, private=None):
+def contact(request, mtype, mp_id):
     if mtype=='mp':    
         receiver = ParliamentMember.objects.all().filter(
                 id__exact=mp_id
@@ -239,17 +245,15 @@ def contact(request, mtype, mp_id, private=None):
             
     if not receiver[0].email:
         return HttpResponseRedirect('no_email')
-    #print receiver[0].name
-    if private is None:
-        return HttpResponseRedirect('select_privacy')
-    elif private=='private':
-        publ = False
-    else:
-        publ = True
 
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
+            public = form.cleaned_data[u'public']
+            if public=='public':
+                publ = True
+            else:
+                publ = False
             sender_name = form.cleaned_data[u'sender_name']
             subject = form.cleaned_data[u'subject']
             message = form.cleaned_data[u'message']
@@ -288,7 +292,6 @@ def contact(request, mtype, mp_id, private=None):
         'form': form,
         'mp_id': mp_id,
         'mtype': mtype,
-        'private': private,
         'step1': 'step1_inactive.png',
         'step2': 'step2_active.png',
         'step3': 'step3_inactive.png',
