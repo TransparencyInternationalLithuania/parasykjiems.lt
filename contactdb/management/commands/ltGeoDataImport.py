@@ -164,6 +164,9 @@ class Command(BaseCommand):
 
             self.CreateRowIfNotExist("Šventosios seniūnija", HierarchicalGeoData.HierarchicalGeoDataType.CivilParish,
                 "Palangos miesto", HierarchicalGeoData.HierarchicalGeoDataType.Municipality)
+
+            self.CreateRowIfNotExist("""Teritorija aptarnaujama UAB ""Paslaugos būstui"" """, HierarchicalGeoData.HierarchicalGeoDataType.CivilParish,
+                "Klaipėdos miesto", HierarchicalGeoData.HierarchicalGeoDataType.Municipality)
         except (HierarchicalGeoData.DoesNotExist, LTGeoDataImportException):
             print "Could not create addition geo data"
             print """This might happen if you have called with max-depth 1.  In that case appropriate data was simply
