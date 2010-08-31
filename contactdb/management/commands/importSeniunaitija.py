@@ -5,7 +5,7 @@ from django.core.management.base import BaseCommand
 from django.core.exceptions import ObjectDoesNotExist
 from contactdb.import_parliamentMembers import SeniunaitijaMembersReader, SeniunaitijaStreetParser
 from contactdb.models import HierarchicalGeoData, SeniunaitijaMember
-from contactdb.imp import ImportSources
+from contactdb.imp import ImportSources, GoogleDocsSources
 from django.db import transaction
 from pjutils import uniconsole
 import os
@@ -13,6 +13,8 @@ import csv
 from pjutils.exc import ChainnedException
 from contactdb.management.commands.importCivilParishMembers import ImportCivilParishMemberException
 from contactdb.LTRegisterCenter.webparser import LTGeoDataHierarchy
+from contactdb.imp import GoogleDocsSources
+import logging
 
 class ImportSeniunaitijaException(ChainnedException):
     pass
@@ -30,7 +32,13 @@ class Command(BaseCommand):
             # TODO: how to do a normal method chaining in Python so that line would not be that long??
             civilParish = HierarchicalGeoData.objects.filter(name__contains = self.civilParishStr).filter(type = HierarchicalGeoData.HierarchicalGeoDataType.CivilParish).filter(parent__name__contains = self.municipalityStr).get()
         except HierarchicalGeoData.DoesNotExist:
-            raise SeniunaitijaNotFoundException("Could not find Civil parish with name '%s' and type '%s'. \n Municipality '%s'" % (self.civilParishStr, HierarchicalGeoData.HierarchicalGeoDataType.CivilParish, self.municipalityStr))
+            str = """Could not find Civil parish with name '%s' and type '%s'. \n Municipality '%s'
+Database table: %s. Data source taken from GoogleDoc '%s'. Unique key '%s' """ % \
+                (self.civilParishStr, HierarchicalGeoData.HierarchicalGeoDataType.CivilParish, self.municipalityStr,
+                HierarchicalGeoData.objects.model._meta.db_table, GoogleDocsSources.LithuanianSeniunaitijaMembers,
+                self.uniqueKey)
+            logging.error(str)
+            raise SeniunaitijaNotFoundException(str)
         except HierarchicalGeoData.MultipleObjectsReturned:
             raise ImportSeniunaitijaException("Found multiple Civil parish with name '%s' and type '%s'. \n Municipality '%s'" % (self.civilParishStr, HierarchicalGeoData.HierarchicalGeoDataType.CivilParish, self.municipalityStr))
         return civilParish
@@ -75,6 +83,7 @@ class Command(BaseCommand):
                 self.civilParishStr = unicode(row["townshipseniunija"].strip(), 'utf-8')
                 streets = unicode(row["territorycoveredbyseniunaitija"].strip(), 'utf-8')
                 self.municipalityStr = unicode(row["municipality"].strip(), 'utf-8')
+                self.uniqueKey = row["uniquekeynotchangeable"].strip()
 
 
                 # skip empty entries
