@@ -44,7 +44,8 @@ class SeniunaitijaStreetParser:
         for s in str:
             yield s.strip() 
 
-
+def toUnicode(str):
+    return unicode(str, 'utf-8')
 
 class SeniunaitijaMembersReader:
     def __init__(self, fileName):
@@ -59,7 +60,7 @@ class SeniunaitijaMembersReader:
             member.phone = row["telephonenumber"]
             member.homePhone = row["hometelephonenumber"]
             member.role = row["pareigos"]
-            member.seniunaitijaStr = row["seniunaitija"].strip()
+            member.seniunaitijaStr = toUnicode(row["seniunaitija"].strip())
             member.uniqueKey = row["uniquekeynotchangeable"]
             yield member
 
