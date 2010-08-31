@@ -49,7 +49,7 @@ class Command(BaseCommand):
             # check if already such member exists. Name and surname are primary keys
             m = self.alreadyExists(member)
             if (m is None):
-                print (u"Importing seniunaitija member %s %s %s" % (member.name, member.surname, member.seniunaitijaStr))
+                print (u"Importing seniunaitija member %s %s %s" % (member.uniqueKey, member.name, member.surname))
 
                 # if does not exist, create it
                 # relate existing seniunaitija to an MP
@@ -64,7 +64,7 @@ class Command(BaseCommand):
                         (name, type))
             else:
                 member.id = m.id
-                print "updating : %s %s %s " % (member.name, member.surname, member.uniqueKey)
+                print "updating : %s %s %s " % (member.uniqueKey, member.name, member.surname)
 
 
             member.save()
