@@ -61,6 +61,18 @@ Database table: %s. Data source taken from GoogleDoc '%s'. Unique key '%s' """ %
         return seniunaitija
 
 
+    def FixNames(self):
+        # remove some keywords from strings, and add others
+        # this is to conform to a de-facto data naming standard
+        self.municipalityStr = self.municipalityStr.replace("rajono", "").strip()
+
+        # if it is not an UAB / LTD company
+        if (self.civilParishStr.find(u'UAB') < 0):
+            # add a kewyword "seniūnija" unless it is already there
+            if (self.civilParishStr.find(u"seniūnija") < 0):
+                self.civilParishStr = u"%s seniūnija" % self.civilParishStr
+
+
     @transaction.commit_on_success
     def handle(self, *args, **options):
         fileName = os.path.join(os.getcwd(), ImportSources.LithuanianSeniunaitijaMembers)
@@ -89,11 +101,7 @@ Database table: %s. Data source taken from GoogleDoc '%s'. Unique key '%s' """ %
                 # skip empty entries
                 if (self.seniunaitijaStr == ""):
                     continue
-                # remove some keywords from strings, and add others
-                # this is to conform to a de-facto data naming standard
-                self.municipalityStr = self.municipalityStr.replace("rajono", "").strip()
-                if (self.civilParishStr.find(u"seniūnija") < 0):
-                    self.civilParishStr = u"%s seniūnija" % self.civilParishStr
+                self.FixNames()
 
 
                 # check that current Seniunaitija object does not already exist

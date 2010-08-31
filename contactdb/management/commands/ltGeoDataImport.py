@@ -160,13 +160,32 @@ class Command(BaseCommand):
     def CreateAdditionalGeoData(self):
         try:
             self.CreateRowIfNotExist("Palangos miesto seniūnija", HierarchicalGeoData.HierarchicalGeoDataType.CivilParish,
-                "Palangos miesto", HierarchicalGeoData.HierarchicalGeoDataType.Municipality)
+                "Palangos miesto savivaldybė", HierarchicalGeoData.HierarchicalGeoDataType.Municipality)
 
             self.CreateRowIfNotExist("Šventosios seniūnija", HierarchicalGeoData.HierarchicalGeoDataType.CivilParish,
-                "Palangos miesto", HierarchicalGeoData.HierarchicalGeoDataType.Municipality)
+                "Palangos miesto savivaldybė", HierarchicalGeoData.HierarchicalGeoDataType.Municipality)
 
-            self.CreateRowIfNotExist("""Teritorija aptarnaujama UAB ""Paslaugos būstui"" """, HierarchicalGeoData.HierarchicalGeoDataType.CivilParish,
-                "Klaipėdos miesto", HierarchicalGeoData.HierarchicalGeoDataType.Municipality)
+
+            klaipedaCompanies = ['Teritorija aptarnaujama UAB "Paslaugos būstui"',
+                                 'Teritorija aptarnaujama UAB "Vitės valdos"',
+                                 'Teritorija aptarnaujama UAB "Mūsų namų valdos"',
+                                 'Teritorija aptarnaujama UAB "Marių valdos"',
+                                 'Teritorija aptarnaujama UAB "Ąžuolyno valda"',
+                                 'Teritorija aptarnaujama UAB "Pempininkų valdos"',
+                                 'Teritorija aptarnaujama UAB "Debreceno valda"',
+                                 'Teritorija aptanaujama UAB "Buitis be rūpesčių"',
+                                 'Teritorija aptanaujama UAB "Vingio valdos"',
+                                 'Teritorija aptarnaujama UAB "Laukininkų valdos"']
+
+            for company in klaipedaCompanies:
+                self.CreateRowIfNotExist(company, HierarchicalGeoData.HierarchicalGeoDataType.CivilParish,
+                    "Klaipėdos miesto savivaldybė", HierarchicalGeoData.HierarchicalGeoDataType.Municipality)
+
+
+
+
+
+
         except (HierarchicalGeoData.DoesNotExist, LTGeoDataImportException):
             print "Could not create addition geo data"
             print """This might happen if you have called with max-depth 1.  In that case appropriate data was simply
