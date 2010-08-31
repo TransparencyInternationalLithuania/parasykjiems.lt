@@ -25,7 +25,7 @@ DATABASE_PASSWORD = ''         # Not used with sqlite3.
 DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
 DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
 
-indexPath = os.path.join(dbPath, "parasyk_index")
+indexPath = os.path.join(scriptPath, "parasyk_index")
 dir_util.mkpath(indexPath)
 
 HAYSTACK_SITECONF = 'parasykjiems.search_sites'
@@ -33,19 +33,29 @@ HAYSTACK_SEARCH_ENGINE = 'whoosh'
 HAYSTACK_WHOOSH_PATH = os.path.join(dbPath, 'parasyk_index')
 #HAYSTACK_XAPIAN_PATH = os.path.join(scriptPath, 'parasyk_index')
 
-#variables for email sending
+# variables for email sending
 EMAIL_HOST = ''
 EMAIL_PORT = '25'
 EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
-#email sending backend - works only from django 1.2
+# email sending backend - works only from django 1.2
 # to console
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-#real one
+# real one
 #EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
-#where the static media files are
+# where the static media files are
 STATIC_DOC_ROOT = '/path/to/media/folder/'
+
+# enable logging
+logPath = os.path.join(scriptPath, "logs")
+dir_util.mkpath(logPath)
+LOG_FILENAME = os.path.join(logPath, 'pjweb.log')
+logging.basicConfig(filename=LOG_FILENAME,level=logging.DEBUG)
+
+
+
+
 
 # Setttings repository for ParašykJiems.LT
 GlobalSettings = GlobalSettingsClass()

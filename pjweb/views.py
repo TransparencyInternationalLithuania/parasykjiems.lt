@@ -13,9 +13,6 @@ from haystack.views import SearchView
 import logging
 from django.core.mail import send_mail
 
-LOG_FILENAME = 'pjweb.log'
-logging.basicConfig(filename=LOG_FILENAME,level=logging.DEBUG)
-
 class ContactForm(forms.Form):
     pub_choices = (
         ('',''),
