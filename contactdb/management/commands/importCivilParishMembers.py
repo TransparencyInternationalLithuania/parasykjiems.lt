@@ -5,12 +5,13 @@ from django.core.management.base import BaseCommand
 from django.core.exceptions import ObjectDoesNotExist
 from contactdb.import_parliamentMembers import LithuanianMPsReader, CivilParishMembersReader
 from contactdb.models import HierarchicalGeoData, CivilParishMember
-from contactdb.imp import ImportSources
+from contactdb.imp import ImportSources, GoogleDocsSources
 from django.db import transaction
 from pjutils import uniconsole
 import os
 import csv
 from pjutils.exc import ChainnedException
+import logging
 
 class ImportCivilParishMemberException(ChainnedException):
     pass
@@ -54,9 +55,12 @@ class Command(BaseCommand):
                     name = member.civilParishStr
                     member.civilParish = HierarchicalGeoData.objects.filter(name = name).filter(type = type)[0:1].get()
                 except ObjectDoesNotExist:
-                    raise ImportCivilParishMemberException("""Parish with name '%s' and type '%s' could not be found in database. Either the database is
-    not yet populated with Parish, or it is missing (probably because import data does not contain it)""" % \
-                        (name, type))
+                    str = """Parish with name '%s' and type '%s' could not be found in database table
+%s while import CivilParishMembers. Data source taken from Google doc '%s'. Unique key '%s'  )""" % \
+                        (name, type, HierarchicalGeoData.objects.model._meta.db_table,
+                        GoogleDocsSources.LithuanianCivilParishMembers, member.uniqueKey)
+                    logging.error(str)
+                    raise ImportCivilParishMemberException(str)
 
                 print (u"Imported parish member %s %s %s" % (member.name, member.surname, member.civilParish.name))
             else:
