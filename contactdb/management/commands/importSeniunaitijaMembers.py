@@ -43,13 +43,13 @@ class Command(BaseCommand):
         for member in reader.ReadMembers():
 
             if (member.name.strip() == ""):
-                print "member name was empty. "
-                print "Probably that means that in seniunaitija %s a member was not yet elected" % member.seniunaitijaStr
+                print u"member name was empty. "
+                print u"Probably that means that in seniunaitija %s a member was not yet elected" % member.seniunaitijaStr
 
             # check if already such member exists. Name and surname are primary keys
             m = self.alreadyExists(member)
             if (m is None):
-                print (u"Importing seniunaitija member %s %s %s" % (member.name, member.surname, member.seniunaitija.name))
+                print (u"Importing seniunaitija member %s %s %s" % (member.name, member.surname, member.seniunaitijaStr))
 
                 # if does not exist, create it
                 # relate existing seniunaitija to an MP
