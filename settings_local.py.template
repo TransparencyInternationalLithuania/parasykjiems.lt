@@ -44,6 +44,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 #real one
 #EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
+#where the static media files are
+STATIC_DOC_ROOT = '/path/to/media/folder/'
+
 # Setttings repository for ParašykJiems.LT
 GlobalSettings = GlobalSettingsClass()
 

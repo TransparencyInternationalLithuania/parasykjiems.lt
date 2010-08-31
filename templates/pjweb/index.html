@@ -2,49 +2,43 @@
 {% load i18n %}
 {% block content %}
 
-<form action="/pjweb/" method="post">
-<p>{% trans "Try to use national letters." %}</p>
-  <div class="fieldWrapper">
-    {{ form.address.errors }}
-    <label for="id_address">{% trans "Enter Your Address:" %}</label>
-    {{ form.address }}
-  </div>
-<input type="submit" value="Submit" />
+<form action="/pjweb/" method="post" id="address">
+<strong>{% trans "Enter Your Address for search:" %}</strong><br>
+  {{ form.address_input }}
+<input type="image" src="/static/img/btn-ieskoti.png" align="absmiddle" id="address-button"><br>
+<em>Pvz.: Gedimino pr. 9-115, Vilnius</em>
 </form>
 
-{% if entered %}
-<p><b>{% trans "You entered:" %}</b> {{ entered }}</p>
-{% endif %}
-
 {% if found_entries %}
-<p><b>{% trans "We found these addresses:" %}</b></p>
+<div id="address_table">
+<strong>{% trans "Several addresses were found. Choose:" %}</strong>
+<table id="addresses_line">
+
+<tr><td><b>{% trans "Found Addresses for constituency" %}</b></td></tr>
 {% for found_entry in found_entries %}
 
 {% if found_entry.constituency_id %}
-<p><a href="/pjweb/{{ found_entry.constituency_id }}/">
+<tr><td><a href="/pjweb/{{ found_entry.constituency_id }}/mp/">
 {% if found_entry.street %} {{ found_entry.street }}, {% endif %}
 {% if found_entry.city %} {{ found_entry.city }}, {% endif %}
 {% if found_entry.district %} {{ found_entry.district }}{% endif %}
-</a></p>
+</a></td></tr>
 {% else %}
-<p><a href="/pjweb/{{ found_entry.object.constituency_id }}/">{{ found_entry.street }}</a></p>
+<tr><td><a href="/pjweb/{{ found_entry.object.constituency_id }}/mp/">{{ found_entry.street }}</a></td></tr>
 {% endif %}
 
 {% endfor %}
 {% endif %}
 
 {% if found_geodata %}
+<tr><td><b>{% trans "Found Addresses for civil parish:" %}</b></td></tr>
 {% for found_entry in found_geodata %}
-<p><a href="/pjweb/{{ found_entry.id }}/">
+<tr><td><a href="/pjweb/{{ found_entry.id }}/cp/">
 {% if found_entry.name %} {{ found_entry.name }}, {% endif %}
-</a></p>
+</a></td></tr>
 
-{% endfor %}{% endif %}
-
-{% if not found_entries %}
-<p>{% trans "Or you can select one from all Members of Parliament" %}</p>
-{% for mp in all_mps %}
-<p><a href="/pjweb/contact/mp/{{ mp.id }}/">{{ mp.name }} {{ mp.surname }}</a></p>
 {% endfor %}
+</table>
+</div>
 {% endif %}
 {% endblock %}
