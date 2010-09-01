@@ -1,7 +1,7 @@
 from __future__ import absolute_import
 from contactdb.tests.TestReadParliamentMembers import TestReadParliamentMembers
 from contactdb.tests.TestImportLithuanianCounties import TestImportLithuanianCounties, TestLithuanianConstituencyParser, TestSeniunaitijaStreetParser
-from contactdb.tests.TestAddressParser import TestAddressParser, TestPollingDistrictStreetExpander
+from contactdb.tests.TestAddressParser import TestAddressParser, TestPollingDistrictStreetExpander, TestSeniunaitijaAddressExpander
 from contactdb.tests.testLTRegisterCenter.TestLTRegisterCenter import TestLTRegisterCenterLocations, TestLTRegisterCenterLinks, TestLTRegisterCenterOtherLinks
 
 __test__ = {
@@ -13,5 +13,6 @@ __test__ = {
     'TestLTRegisterCenterLinks' : TestLTRegisterCenterLinks,
     'TestLTRegisterCenterOtherLinks' : TestLTRegisterCenterOtherLinks,
     'TestSeniunaitijaStreetParser' : TestSeniunaitijaStreetParser,
-    'TestPollingDistrictStreetExpander' : TestPollingDistrictStreetExpander
+    'TestPollingDistrictStreetExpander' : TestPollingDistrictStreetExpander,
+    'TestSeniunaitijaAddressExpander' : TestSeniunaitijaAddressExpander
 }
