@@ -40,9 +40,26 @@ class GoogleDocsSources:
     # Seniūnaičiai
     LithuanianSeniunaitijaMembers = "parasykjiems.lt 5 seniunaiciai"
 
+
+class SeniunaitijaAddressExpander:
+    def ExpandStreet(self, street):
+        """ yield a ExpandedStreet object for each house number found in street """
+        if (street == "" or street == None):
+            yield ExpandedStreet(street = "")
+            return
+
+        if (street.strip() == ""):
+            yield ExpandedStreet(street = "")
+            return
+
+        splitted = street.split(',')
+        for s in splitted:
+            s = s.strip()
+            yield ExpandedStreet(street = s)
+
+
 class PollingDistrictStreetExpanderException(ChainnedException):
     pass
-
 
 class ExpandedStreet(object):
 
@@ -101,7 +118,7 @@ class PollingDistrictStreetExpander:
 
 
     def ExpandStreet(self, street):
-        """ yield a tuple(street, house numbe) for each house number found in street """
+        """ yield a ExpandedStreet object for each house number found in street """
 
 
         #print "street %s" % street

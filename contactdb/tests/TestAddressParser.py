@@ -4,9 +4,38 @@
 from django.test import TestCase
 import os
 from contactdb.AdressParser import AddressParser
-from contactdb.imp import LithuanianConstituencyReader, PollingDistrictStreetExpander, ExpandedStreet
+from contactdb.imp import LithuanianConstituencyReader, PollingDistrictStreetExpander, ExpandedStreet, SeniunaitijaAddressExpander
 
 scriptPath = os.path.dirname( os.path.realpath( __file__ ) )
+
+class TestSeniunaitijaAddressExpander(TestCase):
+    parser = SeniunaitijaAddressExpander()
+    def assertTuplesEqual(self, original, toTest):
+
+        generated = list(toTest)
+        both = zip(original, generated)
+
+        for o, t in both:
+            self.assertEqual(o.street, t.street)
+            self.assertEqual(o.numberFrom, t.numberFrom)
+            self.assertEqual(o.numberTo, t.numberTo)
+
+        self.assertEqual(len(list(original)), len(generated))
+
+    def test_Empty(self):
+        original = [ExpandedStreet("")]
+
+        self.assertTuplesEqual(original, self.parser.ExpandStreet(""))
+        self.assertTuplesEqual(original, self.parser.ExpandStreet(None))
+        self.assertTuplesEqual(original, self.parser.ExpandStreet("    "))
+
+    def test_street_g(self):
+        original = [ExpandedStreet(street = "Mankiškės k."),
+                    ExpandedStreet(street = "Palaimos k."),
+                    ExpandedStreet(street = "Tūjainių k.")]
+        self.assertTuplesEqual(original, self.parser.ExpandStreet("Mankiškės k., Palaimos k., Tūjainių k."))
+
+
 
 class TestPollingDistrictStreetExpander(TestCase):
     parser = PollingDistrictStreetExpander()
