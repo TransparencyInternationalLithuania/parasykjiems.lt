@@ -62,7 +62,7 @@ class SeniunaitijaMembersReader:
             member.role = row["pareigos"]
             member.seniunaitijaStr = toUnicode(row["seniunaitija"].strip())
             member.territoryStr = toUnicode(row["territorycoveredbyseniunaitija"].strip())
-            member.uniqueKey = row["uniquekeynotchangeable"]
+            member.uniqueKey = int(row["uniquekeynotchangeable"])
             yield member
 
 class CivilParishMembersReader:

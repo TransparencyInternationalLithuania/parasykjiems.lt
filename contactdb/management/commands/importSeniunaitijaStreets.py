@@ -122,15 +122,15 @@ class Command(BaseCommand):
         #self.preFetchAllConstituencies(allPollingDistricts)
 
         print "starting to import seniunaitija streets"
-        wasError = False
+        wasError = 0
         count = 0
         for member in reader.ReadMembers():
             if (member.territoryStr == ""):
                 continue
             count += 1
-            if (fromPrint > count):
+            if (fromPrint > member.uniqueKey):
                 continue
-            if (toPrint < count):
+            if (toPrint < member.uniqueKey):
                 break
             numberOfStreets = 0
             print "territory for: %s %s" % (member.uniqueKey, member.seniunaitijaStr)
@@ -142,7 +142,7 @@ class Command(BaseCommand):
             except SeniunaitijaAddressExpanderException as e:
                 logging.error("""Error in seniunaitija teritory nr '%s'
 ErrorDetails = %s""" % (member.uniqueKey, e.message))
-                wasError = True
+                wasError = wasError + 1
                 continue
 
             imported += 1
@@ -157,9 +157,10 @@ ErrorDetails = %s""" % (member.uniqueKey, e.message))
             #print "\n\n"
 
 
-        if (wasError == False):
+        if (wasError == 0):
             print "succesfully imported %d seniunaitija territories, total %d streets" % (imported, totalNumberOfStreets)
         else:
             print "Errors. Imported only part of the seniunaitija territories"
             print "Imported %d seniunaitija territories, total %d streets" % (imported, totalNumberOfStreets)
+            print "There was %s errors" % (wasError)
         print "total spent time %d seconds" % (start.ElapsedSeconds())

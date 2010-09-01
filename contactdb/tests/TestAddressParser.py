@@ -31,33 +31,45 @@ class TestSeniunaitijaAddressExpander(TestCase):
         self.assertTuplesEqual(original, self.parser.ExpandStreet("    "))
 
     def test_WithCityAndStreets(self):
-        original = [ExpandedStreet(street = "Ateities g.", city = "Vandžiogalos miestelis"),
-                    ExpandedStreet(street = "Kauno g.", city = "Vandžiogalos miestelis")]
-        self.assertTuplesEqual(original, self.parser.ExpandStreet("Vandžiogalos mstl. Ateities g., Kauno g."))
+        original = [ExpandedStreet(street = "Ateities g.", city = u"Vandžiogalos miestelis"),
+                    ExpandedStreet(street = "Kauno g.", city = u"Vandžiogalos miestelis")]
+        self.assertTuplesEqual(original, self.parser.ExpandStreet(u"Vandžiogalos mstl. Ateities g., Kauno g."))
 
+
+
+    def test_CityNamesNotInGenitive(self):
+        str = [u"Baliuliai", u"Gužiai", u"Kalviškė", u"Katelninkai", u"Merionys I", u"Padvarė", u"Pamerionys", u"Sarokpolis"]
+        original = [ExpandedStreet(city = city) for city in str]
+        self.assertTuplesEqual(original, self.parser.ExpandStreet(u"Baliuliai, Gužiai, Kalviškė, Katelninkai, Merionys I, Padvarė, Pamerionys, Sarokpolis"))
+
+
+        
+    def test_HouseRanges(self):
+        original = [ExpandedStreet(street = u"Vytauto g.", numberFrom = 2, numberTo = 36)]
+        self.assertTuplesEqual(original, self.parser.ExpandStreet(u"Vytauto g. 2-36"))
 
     def test_NoCityStreetNumbers(self):
 
-        original = [ExpandedStreet(street = "Žeimių g.", numberFrom = 2),
-                    ExpandedStreet(street = "Žeimių g.", numberFrom = 2),
-                    ExpandedStreet(street = "Žeimių g.", numberFrom = 4),
-                    ExpandedStreet(street = "Žeimių g.", numberFrom = 6),
-                    ExpandedStreet(street = "Žeimių g.", numberFrom = 6),]
-        self.assertTuplesEqual(original, self.parser.ExpandStreet("Žeimių g. 2,2a,4,6,6a"))
+        original = [ExpandedStreet(street = u"Žeimių g.", numberFrom = 2),
+                    ExpandedStreet(street = u"Žeimių g.", numberFrom = 2),
+                    ExpandedStreet(street = u"Žeimių g.", numberFrom = 4),
+                    ExpandedStreet(street = u"Žeimių g.", numberFrom = 6),
+                    ExpandedStreet(street = u"Žeimių g.", numberFrom = 6),]
+        self.assertTuplesEqual(original, self.parser.ExpandStreet(u"Žeimių g. 2,2a,4,6,6a"))
 
-    def test_HouseRanges(self):
-        original = [ExpandedStreet(street = "Vilniaus g.", numberFrom = 1, numberTo = 45),
-                    ExpandedStreet(street = "Vilniaus g.", numberFrom = 2, numberTo = 66),
-                    ExpandedStreet(street = "Kranto g.")]
+    def test_HouseRangesWithWords(self):
+        original = [ExpandedStreet(street = u"Vilniaus g.", numberFrom = 1, numberTo = 45),
+                    ExpandedStreet(street = u"Vilniaus g.", numberFrom = 2, numberTo = 66),
+                    ExpandedStreet(street = u"Kranto g.")]
 
-        self.assertTuplesEqual(original, self.parser.ExpandStreet("Vilniaus g. neporiniai nuo Nr.1 iki Nr. 45, poriniai nuo Nr. 2 iki Nr. 66, Kranto g."))
+        self.assertTuplesEqual(original, self.parser.ExpandStreet(u"Vilniaus g. neporiniai nuo Nr.1 iki Nr. 45, poriniai nuo Nr. 2 iki Nr. 66, Kranto g."))
 
 
     def test_street_g(self):
-        original = [ExpandedStreet(city = "Mankiškės k."),
-                    ExpandedStreet(city = "Palaimos k."),
-                    ExpandedStreet(city = "Tūjainių k.")]
-        self.assertTuplesEqual(original, self.parser.ExpandStreet("Mankiškės k., Palaimos k., Tūjainių k."))
+        original = [ExpandedStreet(city = u"Mankiškės k."),
+                    ExpandedStreet(city = u"Palaimos k."),
+                    ExpandedStreet(city = u"Tūjainių k.")]
+        self.assertTuplesEqual(original, self.parser.ExpandStreet(u"Mankiškės k., Palaimos k., Tūjainių k."))
 
     #Vilniaus g. individualiųjų namų dalis (nuo namo Nr.1 iki Nr. 45 ir nuo Nr. 2 iki Nr. 66), Kranto g., Svajonių g., Upės g., Žeimenos g.
     #Vidiškių kaimo Melioratorių g. gyv. namai Nr.: 4, 5, 6, 9, 10, 13, 15, 7, 14, 16, 18.
