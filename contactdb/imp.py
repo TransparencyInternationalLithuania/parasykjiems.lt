@@ -61,7 +61,8 @@ class SeniunaitijaAddressExpander:
                 streetNew = street[index + len(prefix):].strip()
                 return (streetNew, city)
         return (None, None)
-                
+
+
 
     def RemoveStreetParts(self, street):
         streetTuple = None
@@ -81,9 +82,25 @@ class SeniunaitijaAddressExpander:
             streetTuple = self._RemoveStreetPart(street, u"takas")
         if (streetTuple is None):
             streetTuple = self._RemoveStreetPart(street, u"alėja")
+        if (streetTuple is None):
+            streetTuple = self._RemoveStreetPartSB(street, "SB")
+        if (streetTuple is None):
+            streetTuple = self._RemoveStreetPartSB(street, "sb")
+        if (streetTuple is None):
+            streetTuple = self._RemoveStreetPartSB(street, "s/b")
 
             
         return streetTuple
+
+    def _RemoveStreetPartSB(self, part, streetPartName):
+        if (part.find(streetPartName) >= 0):
+            noName = part.split("Nr.")
+            noName = [s.strip() for s in noName]
+            str = "".join(noName[0:-1])
+            str = "%s" % (str)
+            part = "%s %s" % (noName[-1], "Nr.")
+            return (part, str)
+        return None
 
     def _RemoveStreetPart(self, street, streetPartName):
         if (street.find(streetPartName) >= 0):
@@ -113,10 +130,6 @@ class SeniunaitijaAddressExpander:
     def ExpandStreet(self, streets):
         """ yield a ExpandedStreet object for each house number found in street """
 
-        if (streets.find(u"išskyrus") >=0 ):
-            raise SeniunaitijaAddressExpanderException(u"territory contains 'except' / 'išskyrus' expressions. string '%s'" % streets)
-
-
         if (streets == "" or streets is None):
             yield ExpandedStreet(street = u"")
             return
@@ -124,6 +137,10 @@ class SeniunaitijaAddressExpander:
         if (streets.strip() == ""):
             yield ExpandedStreet(street = u"")
             return
+
+        if (streets.find(u"išskyrus") >=0 ):
+            raise SeniunaitijaAddressExpanderException(u"territory contains 'except' / 'išskyrus' expressions. string '%s'" % streets)
+
 
         city = None
         lastStreet = None
@@ -171,11 +188,14 @@ class SeniunaitijaAddressExpander:
                     odd = 1
                 elif (streetProperties.find(u"poriniai") >= 0):
                     odd = 0
+                streetProperties = streetProperties.lower()
 
                 streetProperties = streetProperties.replace(u"neporiniai", u"") \
                     .replace(u"poriniai", u"").replace(u"nuo", u"") \
-                    .replace("Nr.:", u"") \
-                    .replace("Nr.", u"").replace("nr.", u"") \
+                    .replace(u"nr.:", u"") \
+                    .replace(u"nr.", u"")\
+                    .replace(u"nr", u"") \
+                    .replace(u"numeriai", u"") \
                     .replace(u"individualiųjų namų dalis", u"").replace(u"namo", u"") \
                     .replace(u"namai", u"") \
                     .replace(u"gyv. namai", u"").replace(u"gyv. namas", u"") \
@@ -188,6 +208,8 @@ class SeniunaitijaAddressExpander:
                     # sometimes we might have more than one range
                     # so split it into individual
                     for numberFrom, numberTo in self.SplitToRanges(streetProperties):
+                        numberFrom = numberFrom.strip()
+                        numberTo = numberTo.strip()
                         try:
                             numberFrom = self.RemoveLetter(numberFrom)
                             numberFrom = int(numberFrom)
@@ -195,8 +217,15 @@ class SeniunaitijaAddressExpander:
                             raise SeniunaitijaAddressExpanderException("could not convert string '%s' to number" % numberFrom)
 
                         try:
-                            numberTo = self.RemoveLetter(numberTo)
-                            numberTo = int(numberTo)
+                            if (numberTo == u"galo"):
+                                isOdd = numberFrom % 2
+                                if (isOdd == 0):
+                                    numberTo = ExpandedStreet.MaxEvenValue
+                                else:
+                                    numberTo = ExpandedStreet.MaxOddValue
+                            else:
+                                numberTo = self.RemoveLetter(numberTo)
+                                numberTo = int(numberTo)
                         except:
                             raise SeniunaitijaAddressExpanderException("could not convert string '%s' to number" % numberTo)
 
@@ -241,7 +270,7 @@ class SeniunaitijaAddressExpander:
                     yield r
                     
                 else:
-                    raise SeniunaitijaAddressExpanderException("string '%s' did not contain any ranges" % s)
+                    raise SeniunaitijaAddressExpanderException("string '%s' did not contain any ranges. Whole string '%s'" % (s, streetProperties))
 
 
 

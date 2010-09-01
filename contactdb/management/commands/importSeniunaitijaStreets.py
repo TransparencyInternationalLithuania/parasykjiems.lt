@@ -101,7 +101,10 @@ class Command(BaseCommand):
             if (args[0].find(":") > 0):
                 split = args[0].split(':')
                 fromPrint = int(split[0])
-                toPrint = int(split[1])
+                try:
+                    toPrint = int(split[1])
+                except:
+                    pass
             else:
                 toPrint = int(args[0])
 
