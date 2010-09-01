@@ -62,6 +62,8 @@ importStreets 5:8 - will import streets for counties from 5 to 8 constituencies 
         print "finished pre-fetching. Took %s seconds" % time.ElapsedSeconds()
 
     def RemoveExistingStreets(self, expandedStreets, street, pollingDistrict):
+        """ filters a list of streets and returns a list only with those streets,
+        which do not exist already in database. Does not delete anything in database"""
         nonExisting = []
 
         # a minor optimization hack, to improve speed when inserting data first time
@@ -75,8 +77,8 @@ importStreets 5:8 - will import streets for counties from 5 to 8 constituencies 
         if (self.previousDBRowCount == 0):
             return expandedStreets
 
-        # will execute looots of selectes against database
-        # it will be veerry slow, but works for now
+        # will execute lots of selects against database
+        # it will be very slow, but works for now
         for expandedStreet in expandedStreets:
             query = PollingDistrictStreet.objects.filter(constituency = pollingDistrict.Constituency)
             query = query.filter(district = pollingDistrict.District)
