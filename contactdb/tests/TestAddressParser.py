@@ -48,6 +48,13 @@ class TestSeniunaitijaAddressExpander(TestCase):
         original = [ExpandedStreet(street = u"Vytauto g.", numberFrom = 2, numberTo = 36)]
         self.assertTuplesEqual(original, self.parser.ExpandStreet(u"Vytauto g. 2-36"))
 
+    def test_HouseRanges_Tillinfinity(self):
+
+       original = [ExpandedStreet(street = u"Technikos g.", numberFrom = 78, numberTo= ExpandedStreet.MaxEvenValue)]
+       self.assertTuplesEqual(original, self.parser.ExpandStreet(u"Technikos g. poriniai numeriai nuo Nr. 78 iki galo"))
+
+
+
     def test_NoCityStreetNumbers(self):
 
         original = [ExpandedStreet(street = u"Žeimių g.", numberFrom = 2),
