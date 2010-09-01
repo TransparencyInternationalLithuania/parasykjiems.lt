@@ -42,20 +42,93 @@ class GoogleDocsSources:
 
 
 class SeniunaitijaAddressExpander:
-    def ExpandStreet(self, street):
+    streetPrefixes = ['mstl.', 'k.']
+
+    def GetCityPrefix(self, city, prefix):
+        if (prefix == "mstl."):
+            return "%s %s" % (city, "miestelis")
+        return "%s %s" % (city, prefix)
+
+    def ContainsCity(self, street):
+        for prefix in self.streetPrefixes:
+            index = street.find(prefix)
+            if (index >= 0):
+                city = street[0:index].strip()
+                city = self.GetCityPrefix(city, prefix)
+                streetNew = street[index + len(prefix):].strip()
+                return (streetNew, city)
+        return (None, None)
+                
+
+    def _RemoveStreetPart(self, street, streetPartName):
+        if (street.find(streetPartName) >= 0):
+            noName = street.split(streetPartName)
+            noName = [s.strip() for s in noName]
+            str = "".join(noName[0:-1])
+            str = "%s %s" % (str, streetPartName)
+            part = noName[-1]
+            return (str, part)
+        return None
+
+    def RemoveLetter(self, fromNumber):
+        # maybe it contains letter
+        m = re.search('[a-zA-Z]', fromNumber)
+        if (m is not None):
+            group = m.group()
+            letterFrom = group
+            fromNumber = fromNumber.replace(group, "")
+        return fromNumber
+
+    def ExpandStreet(self, streets):
         """ yield a ExpandedStreet object for each house number found in street """
-        if (street == "" or street == None):
+        if (streets == "" or streets is None):
             yield ExpandedStreet(street = "")
             return
 
-        if (street.strip() == ""):
+        if (streets.strip() == ""):
             yield ExpandedStreet(street = "")
             return
 
-        splitted = street.split(',')
-        for s in splitted:
-            s = s.strip()
-            yield ExpandedStreet(street = s)
+        city = None
+        lastStreet = None
+        streetProperties = None
+        
+        splitted = streets.split(',')
+        for street in splitted:
+            street = street.strip()
+
+            # separate city from street
+            streetNew, cityNew = self.ContainsCity(street)
+            if (cityNew is not None):
+                street, city  = streetNew, cityNew
+
+            # separate street number from street
+            streetTuple = self._RemoveStreetPart(street, "g.")
+            if (streetTuple is None):
+                streetTuple = self._RemoveStreetPart(street, "a.")
+            if (streetTuple is None):
+                streetTuple = self._RemoveStreetPart(street, "pr.")
+            if (streetTuple is None):
+                streetTuple = self._RemoveStreetPart(street, "pl.")
+            if (streetTuple is None):
+                streetTuple = self._RemoveStreetPart(street, "al.")
+
+            # if no street prefix found, then whole street is actually a street number
+            if (streetTuple is not None):
+                street, streetProperties = streetTuple
+            else:
+                streetProperties = self.RemoveLetter(street)
+                street = lastStreet
+
+            # parse street number
+            if (streetProperties == ""):
+                numberFrom = None
+            else:
+                numberFrom = int(streetProperties)
+
+            lastStreet = street
+
+            yield ExpandedStreet(street = street, city = city, numberFrom = numberFrom)
 
 
 class PollingDistrictStreetExpanderException(ChainnedException):
@@ -70,10 +143,11 @@ class ExpandedStreet(object):
     MaxOddValue = 999999
     MaxEvenValue = 999999 - 1
 
-    def __init__(self, street, numberFrom = None, numberTo = None):
+    def __init__(self, street = None, numberFrom = None, numberTo = None, city = None):
         self.street = street
         self.numberFrom = numberFrom
         self.numberTo = numberTo
+        self.city = city
 
 class PollingDistrictStreetExpander:
     """ When PollingDistrictStreets are parsed from txt file, some streets are subidivied into house numbers.
