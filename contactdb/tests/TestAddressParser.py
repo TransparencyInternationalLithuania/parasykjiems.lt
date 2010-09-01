@@ -45,6 +45,13 @@ class TestSeniunaitijaAddressExpander(TestCase):
                     ExpandedStreet(street = "Žeimių g.", numberFrom = 6),]
         self.assertTuplesEqual(original, self.parser.ExpandStreet("Žeimių g. 2,2a,4,6,6a"))
 
+    def test_HouseRanges(self):
+        original = [ExpandedStreet(street = "Vilniaus g.", numberFrom = 1, numberTo = 45),
+                    ExpandedStreet(street = "Vilniaus g.", numberFrom = 2, numberTo = 66),
+                    ExpandedStreet(street = "Kranto g.")]
+
+        self.assertTuplesEqual(original, self.parser.ExpandStreet("Vilniaus g. neporiniai nuo Nr.1 iki Nr. 45, poriniai nuo Nr. 2 iki Nr. 66, Kranto g."))
+
 
     def test_street_g(self):
         original = [ExpandedStreet(city = "Mankiškės k."),
