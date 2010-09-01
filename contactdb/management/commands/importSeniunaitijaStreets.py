@@ -134,7 +134,7 @@ class Command(BaseCommand):
             numberOfStreets = 0
             print "territory for: %s %s" % (member.uniqueKey, member.seniunaitijaStr)
             for street in streetExpander.ExpandStreet(member.territoryStr):
-                print "street %s %s %s" % (street.street, street.numberFrom, street.numberTo)
+                print "street \t %s \t %s \t %s \t %s" % (street.city, street.street, street.numberFrom, street.numberTo)
                 numberOfStreets += 1
 
             totalNumberOfStreets += numberOfStreets
@@ -143,10 +143,9 @@ class Command(BaseCommand):
                 rate = "unknown"
             else:
                 rate = str(totalNumberOfStreets / seconds)
-            #print (u"%d: saved Constituency '%s %d', \nElectoral District '%s' streets (%d). \nTotal streets so far %d" % (count, pollingDistrict.Constituency.name, pollingDistrict.Constituency.nr, pollingDistrict.PollingDistrict, numberOfStreets, totalNumberOfStreets)).encode('utf-8')
-            print (u"%d: saved seniunaitija territory. Number of streets: '%d', \nTotal streets so far %d" % (count, numberOfStreets, totalNumberOfStreets)).encode('utf-8')
-            print "inserting at %s rows per second (total sec: %d, rows: %d)" % (rate, seconds, totalNumberOfStreets)
-            print "\n\n"
+            #print (u"%d: saved seniunaitija territory. Number of streets: '%d', \nTotal streets so far %d" % (count, numberOfStreets, totalNumberOfStreets)).encode('utf-8')
+            #print "inserting at %s rows per second (total sec: %d, rows: %d)" % (rate, seconds, totalNumberOfStreets)
+            #print "\n\n"
 
 
         print "succesfully imported %d seniunaitija territories, total %d streets" % (imported, totalNumberOfStreets)

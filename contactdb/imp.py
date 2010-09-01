@@ -42,7 +42,7 @@ class GoogleDocsSources:
 
 
 class SeniunaitijaAddressExpander:
-    streetPrefixes = ['mstl.', 'k.']
+    streetPrefixes = [u'mstl.', u'k.', u'vs.']
 
     def GetCityPrefix(self, city, prefix):
         if (prefix == "mstl."):
@@ -59,6 +59,18 @@ class SeniunaitijaAddressExpander:
                 return (streetNew, city)
         return (None, None)
                 
+
+    def RemoveStreetParts(self, street):
+        streetTuple = self._RemoveStreetPart(street, u"g.")
+        if (streetTuple is None):
+            streetTuple = self._RemoveStreetPart(street, u"a.")
+        if (streetTuple is None):
+            streetTuple = self._RemoveStreetPart(street, u"pr.")
+        if (streetTuple is None):
+            streetTuple = self._RemoveStreetPart(street, u"pl.")
+        if (streetTuple is None):
+            streetTuple = self._RemoveStreetPart(street, u"al.")
+        return streetTuple
 
     def _RemoveStreetPart(self, street, streetPartName):
         if (street.find(streetPartName) >= 0):
@@ -82,19 +94,23 @@ class SeniunaitijaAddressExpander:
     def ExpandStreet(self, streets):
         """ yield a ExpandedStreet object for each house number found in street """
         if (streets == "" or streets is None):
-            yield ExpandedStreet(street = "")
+            yield ExpandedStreet(street = u"")
             return
 
         if (streets.strip() == ""):
-            yield ExpandedStreet(street = "")
+            yield ExpandedStreet(street = u"")
             return
 
         city = None
         lastStreet = None
         streetProperties = None
+
         
-        splitted = streets.split(',')
+        splitted = streets.split(u',')
         for street in splitted:
+            numberTo = None
+            numberFrom = None
+            
             street = street.strip()
 
             # separate city from street
@@ -103,32 +119,54 @@ class SeniunaitijaAddressExpander:
                 street, city  = streetNew, cityNew
 
             # separate street number from street
-            streetTuple = self._RemoveStreetPart(street, "g.")
-            if (streetTuple is None):
-                streetTuple = self._RemoveStreetPart(street, "a.")
-            if (streetTuple is None):
-                streetTuple = self._RemoveStreetPart(street, "pr.")
-            if (streetTuple is None):
-                streetTuple = self._RemoveStreetPart(street, "pl.")
-            if (streetTuple is None):
-                streetTuple = self._RemoveStreetPart(street, "al.")
+            streetTuple = self.RemoveStreetParts(street)
 
             # if no street prefix found, then whole street is actually a street number
             if (streetTuple is not None):
                 street, streetProperties = streetTuple
             else:
-                streetProperties = self.RemoveLetter(street)
+                streetProperties = street
                 street = lastStreet
 
             # parse street number
-            if (streetProperties == ""):
+            if (streetProperties == u""):
                 numberFrom = None
             else:
-                numberFrom = int(streetProperties)
+
+                odd = None
+                if (streetProperties.find(u"neporiniai") >= 0):
+                    odd = 1
+                elif (streetProperties.find(u"poriniai") >= 0):
+                    odd = 0
+
+                streetProperties = streetProperties.replace(u"neporiniai", u"") \
+                    .replace(u"poriniai", u"").replace(u"nuo", u"").replace("Nr.", u"") \
+                    .replace(u"individualiųjų namų dalis", u"").replace(u"namo", u"") \
+                    .replace(u"(", u"").replace(u")", u"").strip()
+                #print streetProperties
+                # the numbers will contain ranges
+
+                if (streetProperties.find("iki") >= 0):
+                    # sometimes we might have more than one range
+                    # so split it into individual
+                    ranges = streetProperties.split("ir")
+                    for range in ranges:
+                        numberFrom , numberTo = range.split("iki")
+                        numberFrom = int(numberFrom)
+                        numberTo = int(numberTo)
+                        yield ExpandedStreet(street = street, city = city, numberFrom = numberFrom, numberTo = numberTo)
+                    # we have yielded already, continue
+                    continue
+
+                else:
+                    # else it will be simple number
+                    streetProperties = self.RemoveLetter(streetProperties)
+                    print streetProperties
+                    numberFrom = int(streetProperties)
 
             lastStreet = street
 
-            yield ExpandedStreet(street = street, city = city, numberFrom = numberFrom)
+            yield ExpandedStreet(street = street, city = city, numberFrom = numberFrom, numberTo = numberTo)
 
 
 class PollingDistrictStreetExpanderException(ChainnedException):
@@ -510,8 +548,8 @@ class LithuanianConstituencyReader:
                 location.PollingDistrict = line
                 state = State.Addresses
 
-                if (line.find("S. Daukanto rinkimų apylinkė Nr. 64") >= 0):
-                    print state
+                #if (line.find("S. Daukanto rinkimų apylinkė Nr. 64") >= 0):
+                #    print state
 
                 # this Constituency is special, since it has no streets.
                 # So just instruct so skip reading streets for this Constituency
