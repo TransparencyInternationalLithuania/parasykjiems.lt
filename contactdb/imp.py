@@ -41,6 +41,9 @@ class GoogleDocsSources:
     LithuanianSeniunaitijaMembers = "parasykjiems.lt 5 seniunaiciai"
 
 
+class SeniunaitijaAddressExpanderException(ChainnedException):
+    pass
+
 class SeniunaitijaAddressExpander:
     streetPrefixes = [u'mstl.', u'k.', u'vs.']
 
@@ -152,7 +155,10 @@ class SeniunaitijaAddressExpander:
                     ranges = streetProperties.split("ir")
                     for range in ranges:
                         numberFrom , numberTo = range.split("iki")
-                        numberFrom = int(numberFrom)
+                        try:
+                            numberFrom = int(numberFrom)
+                        except:
+                            raise SeniunaitijaAddressExpanderException("could not convert string '%s' to number" % numberFrom)
                         numberTo = int(numberTo)
                         yield ExpandedStreet(street = street, city = city, numberFrom = numberFrom, numberTo = numberTo)
                     # we have yielded already, continue
@@ -162,7 +168,10 @@ class SeniunaitijaAddressExpander:
                     # else it will be simple number
                     streetProperties = self.RemoveLetter(streetProperties)
                     print streetProperties
-                    numberFrom = int(streetProperties)
+                    try:
+                        numberFrom = int(streetProperties)
+                    except:
+                        raise SeniunaitijaAddressExpanderException("could not convert string '%s' to number" % streetProperties)
 
             lastStreet = street
 

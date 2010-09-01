@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from django.core.management.base import BaseCommand
 from django.db import transaction
-from contactdb.imp import LithuanianConstituencyReader, ImportSources, PollingDistrictStreetExpander, SeniunaitijaAddressExpander
+from contactdb.imp import LithuanianConstituencyReader, ImportSources, PollingDistrictStreetExpander, SeniunaitijaAddressExpander, SeniunaitijaAddressExpanderException
 from contactdb.models import PollingDistrictStreet, Constituency
 from contactdb.AdressParser import AddressParser
 from datetime import datetime
@@ -13,6 +13,7 @@ import os
 from pjutils.exc import ChainnedException
 from test.test_iterlen import len
 from contactdb.import_parliamentMembers import SeniunaitijaMembersReader
+import logging
 
 class Command(BaseCommand):
     args = '<>'
@@ -121,6 +122,7 @@ class Command(BaseCommand):
         #self.preFetchAllConstituencies(allPollingDistricts)
 
         print "starting to import seniunaitija streets"
+        wasError = False
         count = 0
         for member in reader.ReadMembers():
             if (member.territoryStr == ""):
@@ -130,13 +132,20 @@ class Command(BaseCommand):
                 continue
             if (toPrint < count):
                 break
-            imported += 1
             numberOfStreets = 0
             print "territory for: %s %s" % (member.uniqueKey, member.seniunaitijaStr)
-            for street in streetExpander.ExpandStreet(member.territoryStr):
-                print "street \t %s \t %s \t %s \t %s" % (street.city, street.street, street.numberFrom, street.numberTo)
-                numberOfStreets += 1
 
+            try:
+                for street in streetExpander.ExpandStreet(member.territoryStr):
+                    print "street \t %s \t %s \t %s \t %s" % (street.city, street.street, street.numberFrom, street.numberTo)
+                    numberOfStreets += 1
+            except SeniunaitijaAddressExpanderException as e:
+                logging.error("""Error in seniunaitija teritory nr '%s'
+ErrorDetails = %s""" % (member.uniqueKey, e.message))
+                wasError = True
+                continue
+
+            imported += 1
             totalNumberOfStreets += numberOfStreets
             seconds = start.ElapsedSeconds()
             if (seconds == 0):
@@ -148,5 +157,9 @@ class Command(BaseCommand):
             #print "\n\n"
 
 
-        print "succesfully imported %d seniunaitija territories, total %d streets" % (imported, totalNumberOfStreets)
+        if (wasError == False):
+            print "succesfully imported %d seniunaitija territories, total %d streets" % (imported, totalNumberOfStreets)
+        else:
+            print "Errors. Imported only part of the seniunaitija territories"
+            print "Imported %d seniunaitija territories, total %d streets" % (imported, totalNumberOfStreets)
         print "total spent time %d seconds" % (start.ElapsedSeconds())
