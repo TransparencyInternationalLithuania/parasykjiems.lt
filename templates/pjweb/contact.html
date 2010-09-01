@@ -1,0 +1,33 @@
+{% extends "pjweb/base.html" %}
+{% load i18n %}
+{% block content %}
+
+<form action="/pjweb/contact/{{ mtype }}/{{ mp_id }}/" method="post">
+  <div class="fieldWrapper">
+    {{ form.public.errors }}
+    <label for="id_public">{% trans "Public Mail:" %}</label><br>
+    {{ form.public }}
+  </div>
+  <div class="fieldWrapper">
+    {{ form.sender_name.errors }}
+    <label for="id_sender_name">{% trans "Sender Name:" %}</label><br>
+    {{ form.sender_name }}
+  </div>
+  <div class="fieldWrapper">
+    {{ form.sender.errors }}
+    <label for="id_sender">{% trans "Your Email:" %}</label><br>
+    {{ form.sender }}
+  </div>
+  <div class="fieldWrapper">
+    {{ form.subject.errors }}
+    <label for="id_subject">{% trans "Subject of the Letter:" %}</label><br>
+    {{ form.subject }}
+  </div>
+  <div class="fieldWrapper">
+    {{ form.message.errors }}
+    <label for="id_message">{% trans "Message Text:" %}</label><br>
+    {{ form.message }}
+  </div>
+<input type="submit" value="Submit" />
+</form>
+{% endblock %}

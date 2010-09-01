@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <title>{% block title %}ParašykJiems{% endblock %}</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body>
+<div id="top">
+<div>
+	<a href="/" id="logo"><img width="359" height="50" src="/static/img/logo.png" alt="ParašykJiems - Greitas būdas rasti atsakingus valdžios atstovus ir su jais susisiekti."></a>
+	<a href="#" id="about">Apie projektą</a>	
+	<a href="/pjweb/public_mails/" id="archive"><img src="/static/img/info.png" align="absmiddle">Viešai publikuotų laiškų archyvas</a>
+</div>
+</div>
+<div id="content">
+<img class="step" src="/static/img/{{ step1 }}" alt="Raskite reikiamą atstovą (nustatysime pagal adresą)">
+<img class="step" src="/static/img/{{ step2 }}" alt="Laiško turinys (galite rašyti viešą arba privatų laišką)">
+<img class="step" src="/static/img/{{ step3 }}" alt="Peržiūra ir siuntimas (pasitikrinkite klaidas ;-))">
+{% block content %}{% endblock %}
+</form>
+</div>
+
+</body>
+</html>
