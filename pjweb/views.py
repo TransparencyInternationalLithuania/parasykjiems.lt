@@ -21,7 +21,7 @@ class ContactForm(forms.Form):
     )
     public = forms.ChoiceField(choices = pub_choices)
     sender_name = forms.CharField(max_length=128)
-    subject = forms.CharField(max_length=100)
+    phone = forms.CharField(max_length=100)
     message = forms.CharField(widget=forms.Textarea)
     sender = forms.EmailField()
 
@@ -284,11 +284,27 @@ def contact(request, mtype, mp_id):
             return HttpResponseRedirect('thanks')
     else:
         form = ContactForm()
-
+    municipality_members = MunicipalityMember.objects.all().filter(
+                id__exact=mp_id
+            )
+    civilparish_members = CivilParishMember.objects.all().filter(
+                id__exact=mp_id
+            )
+    parliament_members = ParliamentMember.objects.all().filter(
+                id__exact=mp_id
+            )
+    if mtype=='cp':
+        representative = civilparish_members[0]
+    elif mtype=='mp':
+        representative = parliament_members[0]
+    elif mtype=='mn':
+        representative = municipality_members[0]
+        
     return render_to_response('pjweb/contact.html', {
         'form': form,
         'mp_id': mp_id,
         'mtype': mtype,
+        'representative': representative,
         'step1': 'step1_inactive.png',
         'step2': 'step2_active.png',
         'step3': 'step3_inactive.png',

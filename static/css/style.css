@@ -131,22 +131,38 @@ a:hover {
 			font-size: 16px;
 			}
 
-#id_sender_name, #id_sender, #id_phone {
-	background-color: #fffdda;
-	border-width: 1px;
-	width: 325px;
-	height: 24px;
-	padding-left: 4px;
-	float: right;
-	}
+	#letter {
+		border: 1px dotted #c9c9c9;
+		width: 100%;
+		color: #606b5c;
 
-#id_message {
-	background-color: #fffdda;
-	border-width: 1px;
-	border-color: #e6e8e5;
-	width: 756px;
-	height: 212px;
-	padding-left: 4px;
-	padding-top: 4px;
-	margin-top: 14px;
-	}
+		}
+	
+		#id_public {
+			float: right;
+			margin-right: 28px;
+			}
+	
+		#id_sender_name, #id_sender, #id_phone {
+			background-color: #fffdda;
+			border-width: 1px;
+			width: 325px;
+			height: 24px;
+			padding-left: 4px;
+			margin-right: 28px;
+			float: right;
+			}
+
+		#id_message {
+			background-color: #fffdda;
+			border-width: 1px;
+			border-color: #e6e8e5;
+			width: 756px;
+			height: 212px;
+			padding-left: 4px;
+			padding-top: 4px;
+			margin-top: 14px;
+			margin-right: 28px;
+			margin-left: 28px;
+			float: right;
+			}

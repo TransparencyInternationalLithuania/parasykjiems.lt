@@ -2,18 +2,14 @@
 {% load i18n %}
 {% block content %}
 
-<table id="rep_table">
-<tr>
-<td width="40%" >
+<div>
 <p id="head_font"><b>{{ representative.name }} {{ representative.surname }}</b> <br></p>
 {{ representative.email }}<br>
 {{ representative.phone }}
-</td>
-</tr>
-</table>
-
+</div>
+<br>
 <form action="/pjweb/contact/{{ mtype }}/{{ mp_id }}/" method="post">
-<table>
+<table id="letter">
   <tr>
 	<td>
   		<div class="fieldWrapper">
