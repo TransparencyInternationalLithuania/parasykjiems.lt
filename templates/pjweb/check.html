@@ -1,0 +1,19 @@
+{% extends "pjweb/base.html" %}
+{% load i18n %}
+{% block content %}
+
+<div>
+<p id="head_font"><b>{{ representative.name }} {{ representative.surname }}</b> <br></p>
+{{ representative.email }}<br>
+{{ representative.phone }}
+</div>
+<br>
+<form action="/pjweb/check/{{ mtype }}/{{ mp_id }}/send/" method="post">
+  <p>{{ sender_name }}</p>
+  <p>{{ phone }}</p>
+  <p>{{ message }}</p>
+  <p>{{ sender }}</p>
+  <input type="image" src="/static/img/btn-next_step.png" align="absmiddle" id="address-button"><br>
+</form>
+
+{% endblock %}

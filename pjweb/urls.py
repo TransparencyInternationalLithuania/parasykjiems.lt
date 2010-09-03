@@ -19,6 +19,8 @@ urlpatterns = patterns('parasykjiems.pjweb.views',
     #(r'^contact/(\w+)/(\d+)/select_privacy/$', 'select_privacy'),
     (r'^(\d+)/(\w+)/$', 'constituency'),
     (r'^contact/(\w+)/(\d+)/$', 'contact'),
+    (r'^check/(\w+)/(\d+)/$', 'check'),
+    (r'^check/(\w+)/(\d+)/(\w+)/$', 'check'),
     (r'^public_mails/$', 'public_mails'),
     (r'^public/(\d+)/$', 'public'),
 
