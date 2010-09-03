@@ -62,5 +62,21 @@
 </td>
 </tr>
 {% endfor %}
+
+{% for seniunaitija_member in seniunaitija_members %}
+<tr>
+<td width="30%" >
+<p id="head_font"><b>{{ seniunaitija_member.name }} {{ seniunaitija_member.surname }}</b> <br>
+{% trans "Member of seniunaitija" %} </p>
+{{ seniunaitija_member.mail }}<br>
+{{ seniunaitija_member.phone }}<br>
+</td>
+<td width="70%"><p id="head_font">{% trans "Member of civil parish" %} </p>
+<p>{% trans "Responsible for your civil parish" %}</p>
+<a href="/pjweb/contact/sn/{{ seniunaitija_member.id }}/">
+<img class="step" src="/static/img/btn-write.png" alt="Rašyti laišką {{ seniunaitija_member.name }} {{ seniunaitija_member.surname }}"></a>
+</td>
+</tr>
+{% endfor %}
 </table>
 {% endblock %}
