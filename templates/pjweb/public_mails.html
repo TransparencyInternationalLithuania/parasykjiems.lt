@@ -1,0 +1,16 @@
+{% extends "pjweb/base.html" %}
+{% load i18n %}
+{% block content %}
+
+<p>{% trans "Here you can see all public emails" %}</p>
+<table>
+{% for mail in all_mails %}
+<tr>
+<td><p>{{ mail.sender_name }}</p></td>
+<td><p><a href="/pjweb/public/{{ mail.id }}/">{{ mail.subject }}</a></p></td>
+<td><p>{{ mail.message }}</p></td>
+</tr>
+{% endfor %}
+</table>
+
+{% endblock %}

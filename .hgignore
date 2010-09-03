@@ -1,0 +1,7 @@
+glob:*.pyc
+glob:*.*~
+glob:*.log
+glob:db/*
+glob:settings_local.py
+glob:.idea
+glob:contactdb/sources/*.csv

@@ -1,0 +1,65 @@
+{% extends "pjweb/base.html" %}
+{% load i18n %}
+{% block content %}
+
+<div>
+<p id="head_font"><b>{{ representative.name }} {{ representative.surname }}</b> <br></p>
+{{ representative.email }}<br>
+{{ representative.phone }}
+</div>
+<br>
+<form action="/pjweb/contact/{{ mtype }}/{{ mp_id }}/" method="post">
+<table id="letter">
+  <tr>
+	<td>
+  		<div class="fieldWrapper">
+    	{{ form.public.errors }}
+    	<label for="id_public">{% trans "Public Mail:" %}</label>
+    	{{ form.public }}
+  		</div>
+	</td>
+  </tr>
+  <tr>
+	<td>
+  		<div class="fieldWrapper">
+    	{{ form.sender_name.errors }}
+	   <label for="id_sender_name">{% trans "Sender Name:" %}</label>
+    	{{ form.sender_name }}
+  		</div>
+	</td>
+  </tr>
+  <tr>
+	<td>
+  		<div class="fieldWrapper">
+    	{{ form.sender.errors }}
+    	<label for="id_sender">{% trans "Your Email:" %}</label>
+    	{{ form.sender }}
+  		</div>
+	</td>
+  </tr>
+  <tr>
+	<td>
+  		<div class="fieldWrapper">
+    	{{ form.phone.errors }}
+    	<label for="id_phone">{% trans "Phone Number:" %}</label>
+    	{{ form.phone }}
+  		</div>
+	</td>
+  </tr>
+  <tr>
+	<td>
+  		<div class="fieldWrapper">
+    	{{ form.message.errors }}
+    	{{ form.message }}
+  		</div>
+	</td>
+  </tr>
+  <tr>
+	<td>
+		<input type="image" src="/static/img/btn-next_step.png" align="absmiddle" id="address-button"><br>
+	</td>
+  </tr>
+</table>
+</form>
+
+{% endblock %}
