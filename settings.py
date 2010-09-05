@@ -63,11 +63,11 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
+    'django.contrib.formtools',
 #    'parasykjiems.polls',
     'parasykjiems.contactdb',
     'parasykjiems.pjweb',
     'parasykjiems.pjutils',
-
     'django.contrib.admin',
     'haystack',
 )
