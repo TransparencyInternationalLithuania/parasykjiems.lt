@@ -131,20 +131,10 @@ def public(request, mail_id):
     })
 
 def thanks(request, rtype, mp_id, private=None):
-    if rtype=='mp':    
-        receiver = ParliamentMember.objects.all().filter(
-                id__exact=mp_id
-            )
-    elif rtype=='mn':
-        receiver = MunicipalityMember.objects.all().filter(
-                id__exact=mp_id
-            )
-    elif rtype=='cp':
-        receiver = CivilParishMember.objects.all().filter(
-                id__exact=mp_id
-            )
-    ThanksMessage = _('Thank you. You will be informed, when %(name)s %(surname)s get the message.') % {
-        'name':receiver[0].name, 'surname':receiver[0].surname
+    receiver = get_rep(mp_id, rtype)
+
+    ThanksMessage = _('Thank you. Your message to %(name)s %(surname)s has been sent.') % {
+        'name':receiver.name, 'surname':receiver.surname
     }
     logging.debug('%s' % (ThanksMessage))
     return render_to_response('pjweb/thanks.html', {

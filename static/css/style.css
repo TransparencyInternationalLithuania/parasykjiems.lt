@@ -166,3 +166,21 @@ a:hover {
 			margin-left: 28px;
 			float: right;
 			}
+
+    #sendok {
+	    margin: 117px 196px 196px;
+        }
+        
+        #sendok-img {
+            margin-left: -60px;
+            }
+
+        #sendok-large {
+            clear: both;
+            font-size: 20px;
+            margin-left: 60px;
+            }
+
+        #sendok-font {
+            margin-left: 60px;
+            }
