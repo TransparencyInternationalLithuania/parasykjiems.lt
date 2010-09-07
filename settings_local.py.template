@@ -4,6 +4,7 @@
 import os
 from GlobalSettingsClass import *
 from distutils import dir_util
+import logging
 
 scriptPath = os.path.dirname( os.path.realpath( __file__ ) )
 

@@ -1,17 +1,17 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import logging
 from django import forms
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render_to_response
-from parasykjiems.contactdb.models import PollingDistrictStreet, Constituency, ParliamentMember, HierarchicalGeoData, MunicipalityMember, CivilParishMember
-from pjutils.address_search import AddressSearch
 from django.utils.translation import ugettext as _
-from parasykjiems.pjweb.models import Email
 from haystack.query import SearchQuerySet
 from haystack.views import SearchView
-import logging
 from django.core.mail import send_mail
+from parasykjiems.contactdb.models import PollingDistrictStreet, Constituency, ParliamentMember, HierarchicalGeoData, MunicipalityMember, CivilParishMember, SeniunaitijaMember
+from parasykjiems.pjweb.models import Email
+from pjutils.address_search import AddressSearch
 
 class ContactForm(forms.Form):
     pub_choices = (
@@ -30,6 +30,26 @@ class IndexForm(forms.Form):
 
 class PrivateForm(forms.Form):
     private = forms.BooleanField()
+    
+def get_rep(rep_id, rtype):
+    if rtype=='mp':    
+        receiver = ParliamentMember.objects.all().filter(
+                id__exact=rep_id
+            )
+    elif rtype=='mn':
+        receiver = MunicipalityMember.objects.all().filter(
+                id__exact=rep_id
+            )
+    elif rtype=='cp':
+        receiver = CivilParishMember.objects.all().filter(
+                id__exact=rep_id
+            )
+    elif rtype=='sn':
+        receiver = SeniunaitijaMember.objects.all().filter(
+                id__exact=rep_id
+            )
+
+    return receiver[0]
 
 def index(request):
     a_s = AddressSearch()
@@ -63,6 +83,7 @@ def index(request):
 
     else:
         form = IndexForm()
+    print found_geodata
     return render_to_response('pjweb/index.html', {
         'all_mps': all_mps,
         'form': form,
@@ -74,7 +95,7 @@ def index(request):
         'step3': 'step3_inactive.png',
     })
 
-def no_email(request, mp_id):
+def no_email(request, rtype, mp_id):
     parliament_member = ParliamentMember.objects.all().filter(
                 id__exact=mp_id
             )
@@ -109,21 +130,11 @@ def public(request, mail_id):
         'step3': 'step3_inactive.png',
     })
 
-def thanks(request, mtype, mp_id, private=None):
-    if mtype=='mp':    
-        receiver = ParliamentMember.objects.all().filter(
-                id__exact=mp_id
-            )
-    elif mtype=='mn':
-        receiver = MunicipalityMember.objects.all().filter(
-                id__exact=mp_id
-            )
-    elif mtype=='cp':
-        receiver = CivilParishMember.objects.all().filter(
-                id__exact=mp_id
-            )
-    ThanksMessage = _('Thank you. You will be informed, when %(name)s %(surname)s get the message.') % {
-        'name':receiver[0].name, 'surname':receiver[0].surname
+def thanks(request, rtype, mp_id, private=None):
+    receiver = get_rep(mp_id, rtype)
+
+    ThanksMessage = _('Thank you. Your message to %(name)s %(surname)s has been sent.') % {
+        'name':receiver.name, 'surname':receiver.surname
     }
     logging.debug('%s' % (ThanksMessage))
     return render_to_response('pjweb/thanks.html', {
@@ -133,7 +144,7 @@ def thanks(request, mtype, mp_id, private=None):
         'step3': 'step3_active.png',
     })
 
-def smtp_error(request, mtype, mp_id, private=None):
+def smtp_error(request, rtype, mp_id, private=None):
     parliament_member = ParliamentMember.objects.all().filter(
                 id__exact=mp_id
             )
@@ -150,8 +161,8 @@ def smtp_error(request, mtype, mp_id, private=None):
         'step3': 'step3_active.png',
     })
 
-def select_privacy(request, mtype, mp_id):
-    logging.debug('Member type %s, member ID %s' % (mtype, mp_id))    
+def select_privacy(request, rtype, mp_id):
+    logging.debug('Member type %s, member ID %s' % (rtype, mp_id))    
     parliament_member = ParliamentMember.objects.all().filter(
                 id__exact=mp_id
             )
@@ -160,7 +171,7 @@ def select_privacy(request, mtype, mp_id):
     return render_to_response('pjweb/private.html', {
         #'privacy': privacy,
         'mp_id': mp_id,
-        'mtype': mtype,
+        'rtype': rtype,
         'form': form,
         'step1': 'step1_inactive.png',
         'step2': 'step2_active.png',
@@ -175,6 +186,7 @@ def constituency(request, constituency_id, rtype):
     civilparishes = []
     municipality_members = []
     civilparish_members = []
+    seniunaitija_members = []
     if rtype=='mp':
         constituencies = Constituency.objects.all().filter(
                     id__exact=constituency_id
@@ -203,6 +215,10 @@ def constituency(request, constituency_id, rtype):
                         id__exact=civilparishes[0].parent.id
                     )
 
+        seniunaitijas = HierarchicalGeoData.objects.all().filter(
+                    id__exact=constituency_id
+                )
+
         municipality_members = MunicipalityMember.objects.all().filter(
                     municipality__exact=municipalities[0].id
                 )
@@ -213,6 +229,9 @@ def constituency(request, constituency_id, rtype):
         civilparish_members = CivilParishMember.objects.all().filter(
                     civilParish__exact=constituency_id
                 )
+        seniunaitija_members = SeniunaitijaMember.objects.all().filter(
+                    seniunaitija__exact=constituency_id
+                )
 
     return render_to_response('pjweb/const.html', {
         'constituencies': constituencies,
@@ -221,30 +240,21 @@ def constituency(request, constituency_id, rtype):
         'parliament_members': parliament_members,
         'municipality_members': municipality_members,
         'civilparish_members': civilparish_members,
+        'seniunaitija_members': seniunaitija_members,
         'step1': 'step1_active.png',
         'step2': 'step2_inactive.png',
         'step3': 'step3_inactive.png',
     })
     
-def contact(request, mtype, mp_id):
-    if mtype=='mp':    
-        receiver = ParliamentMember.objects.all().filter(
-                id__exact=mp_id
-            )
-    elif mtype=='mn':
-        receiver = MunicipalityMember.objects.all().filter(
-                id__exact=mp_id
-            )
-    elif mtype=='cp':
-        receiver = CivilParishMember.objects.all().filter(
-                id__exact=mp_id
-            )
-            
-    if not receiver[0].email:
+def contact(request, rtype, mp_id):
+    print rtype, mp_id
+    receiver = get_rep(mp_id, rtype)
+    print receiver
+    if not receiver.email:
         return HttpResponseRedirect('no_email')
 
     if request.method == 'POST':
-        form = ContactForm(request.POST)
+        form = ContactForm(data=request.POST)
         if form.is_valid():
             public = form.cleaned_data[u'public']
             if public=='public':
@@ -252,14 +262,14 @@ def contact(request, mtype, mp_id):
             else:
                 publ = False
             sender_name = form.cleaned_data[u'sender_name']
-            subject = form.cleaned_data[u'subject']
+            phone = form.cleaned_data[u'phone']
             message = form.cleaned_data[u'message']
             sender = form.cleaned_data[u'sender']
-            #recipients = [receiver[0].email]
+            #recipients = [receiver.email]
             recipients = [u'testinis@pashtas.lt']
             #print recipients[0]
             if not recipients[0]:
-                logging.debug('%s has no email' % (receiver[0].name, receiver[0].surname))
+                logging.debug('%s has no email' % (receiver.name, receiver.surname))
                 return HttpResponseRedirect('no_email')
             else:
                 #from django.core.mail import send_mail
@@ -268,13 +278,13 @@ def contact(request, mtype, mp_id):
                     sender_name = sender_name,
                     sender = sender,
                     recipient = recipients[0],
-                    subject = subject,
+                    phone = phone,
                     message = message,
                     msg_state = 'W',
                     public = publ,
                 )
                 
-                sendmail = send_mail(subject, message, sender, recipients)
+                sendmail = send_mail('', message, sender, recipients)
                 #print 'email sent', sendmail
                 if publ:
                     mail.save()
@@ -284,27 +294,12 @@ def contact(request, mtype, mp_id):
             return HttpResponseRedirect('thanks')
     else:
         form = ContactForm()
-    municipality_members = MunicipalityMember.objects.all().filter(
-                id__exact=mp_id
-            )
-    civilparish_members = CivilParishMember.objects.all().filter(
-                id__exact=mp_id
-            )
-    parliament_members = ParliamentMember.objects.all().filter(
-                id__exact=mp_id
-            )
-    if mtype=='cp':
-        representative = civilparish_members[0]
-    elif mtype=='mp':
-        representative = parliament_members[0]
-    elif mtype=='mn':
-        representative = municipality_members[0]
         
     return render_to_response('pjweb/contact.html', {
         'form': form,
         'mp_id': mp_id,
-        'mtype': mtype,
-        'representative': representative,
+        'rtype': rtype,
+        'representative': receiver,
         'step1': 'step1_inactive.png',
         'step2': 'step2_active.png',
         'step3': 'step3_inactive.png',
