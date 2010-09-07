@@ -23,7 +23,7 @@ class Email(models.Model):
     sender_name = models.CharField(max_length = 128)
     recipient = models.CharField(max_length = 255)
     message = models.TextField()
-    subject = models.CharField(max_length = 100)
+    phone = models.CharField(max_length = 100)
     msg_state = models.CharField(max_length=1, choices=MSG_STATES)
     email_state = models.CharField(max_length=1, choices=EMAIL_STATES)
     req_date = models.DateTimeField(auto_now = True)
