@@ -77,12 +77,14 @@ def index(request):
             found_by_index = SearchQuerySet().auto_query(query_string)
             if not found_by_index:
                 suggestion = found_by_index.spelling_suggestion()
-                print 'sugg',suggestion
-                logging.debug('suggestion:', suggestion)
-                entry_query = a_s.get_query(suggestion, ['street', 'city', 'district'])
-                #found_entries = SearchQuerySet().auto_query(suggestion)
-                if entry_query:
-                    found_entries = PollingDistrictStreet.objects.filter(entry_query).order_by('street')
+                if suggestion:
+                    logging.debug('suggestion:', suggestion)
+                    entry_query = a_s.get_query(suggestion, ['street', 'city', 'district'])
+                    #found_entries = SearchQuerySet().auto_query(suggestion)
+                    if entry_query:
+                        found_entries = PollingDistrictStreet.objects.filter(entry_query).order_by('street')
+                    else:
+                        found_entries = {}
                 else:
                     found_entries = {}
             else:
