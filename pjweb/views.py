@@ -56,6 +56,9 @@ def index(request):
     query_string = ' '
     found_entries = None
     found_geodata = None
+    suggestion = ''
+    entry_query = ''
+    entry_query1 = ''
     all_mps = ParliamentMember.objects.all()
     if request.method == 'POST':
         form = IndexForm(request.POST)
@@ -74,16 +77,19 @@ def index(request):
             found_by_index = SearchQuerySet().auto_query(query_string)
             if not found_by_index:
                 suggestion = found_by_index.spelling_suggestion()
+                print 'sugg',suggestion
                 logging.debug('suggestion:', suggestion)
                 entry_query = a_s.get_query(suggestion, ['street', 'city', 'district'])
-            #found_entries = SearchQuerySet().auto_query(suggestion)
-                found_entries = PollingDistrictStreet.objects.filter(entry_query).order_by('street')
+                #found_entries = SearchQuerySet().auto_query(suggestion)
+                if entry_query:
+                    found_entries = PollingDistrictStreet.objects.filter(entry_query).order_by('street')
+                else:
+                    found_entries = {}
             else:
                 found_entries = found_by_index
 
     else:
         form = IndexForm()
-    print found_geodata
     return render_to_response('pjweb/index.html', {
         'all_mps': all_mps,
         'form': form,
