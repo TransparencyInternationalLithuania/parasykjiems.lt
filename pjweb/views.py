@@ -63,6 +63,7 @@ def index(request):
     all_mps = ParliamentMember.objects.all()
     if request.method == 'POST':
         form = IndexForm(request.POST)
+        if form.is_valid():
             query_string = form.cleaned_data['address_input']
         else:
             query_string = '*'
