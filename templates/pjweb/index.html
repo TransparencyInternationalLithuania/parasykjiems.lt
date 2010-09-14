@@ -10,35 +10,38 @@
 </form>
 
 {% if found_entries %}
-<div id="address_table">
-<strong>{% trans "Several addresses were found. Choose:" %}</strong>
-<table id="addresses_line">
+  <div id="address_table">
+    <strong>{% trans "Several addresses were found. Choose:" %}</strong>
+    <table id="addresses_line">
 
-<tr><td><b>{% trans "Found Addresses for constituency" %}</b></td></tr>
-{% for found_entry in found_entries %}
+      <tr><td><b>{% trans "Found Addresses for constituency" %}</b></td></tr>
+      {% for found_entry in found_entries %}
 
-{% if found_entry.constituency_id %}
-<tr><td><a href="/pjweb/{{ found_entry.constituency_id }}/mp/">
-{% if found_entry.street %} {{ found_entry.street }}, {% endif %}
-{% if found_entry.city %} {{ found_entry.city }}, {% endif %}
-{% if found_entry.district %} {{ found_entry.district }}{% endif %}
-</a></td></tr>
+        {% if found_entry.constituency_id %}
+        <tr><td><a href="/pjweb/{{ found_entry.constituency_id }}/mp/">
+        {% if found_entry.street %} {{ found_entry.street }}, {% endif %}
+        {% if found_entry.city %} {{ found_entry.city }}, {% endif %}
+        {% if found_entry.district %} {{ found_entry.district }}{% endif %}
+        </a></td></tr>
+        {% else %}
+        <tr><td><a href="/pjweb/{{ found_entry.object.constituency_id }}/mp/">{{ found_entry.street }}</a></td></tr>
+        {% endif %}
+
+      {% endfor %}
 {% else %}
-<tr><td><a href="/pjweb/{{ found_entry.object.constituency_id }}/mp/">{{ found_entry.street }}</a></td></tr>
+  <div id="address_table">
+    <strong>{{ not_found }}</strong>
 {% endif %}
 
-{% endfor %}
-{% endif %}
+    {% if found_geodata %}
+    <tr><td><b>{% trans "Found Addresses for civil parish:" %}</b></td></tr>
+    {% for found_entry in found_geodata %}
+    <tr><td><a href="/pjweb/{{ found_entry.id }}/cp/">
+    {% if found_entry.name %} {{ found_entry.name }}, {% endif %}
+    </a></td></tr>
 
-{% if found_geodata %}
-<tr><td><b>{% trans "Found Addresses for civil parish:" %}</b></td></tr>
-{% for found_entry in found_geodata %}
-<tr><td><a href="/pjweb/{{ found_entry.id }}/cp/">
-{% if found_entry.name %} {{ found_entry.name }}, {% endif %}
-</a></td></tr>
-
-{% endfor %}
-</table>
-</div>
+    {% endfor %}
+    </table>
+  </div>
 {% endif %}
 {% endblock %}

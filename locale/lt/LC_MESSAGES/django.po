@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-14 19:03+0300\n"
-"PO-Revision-Date: 2010-09-14 19:31+0300\n"
+"POT-Creation-Date: 2010-09-15 00:10+0300\n"
+"PO-Revision-Date: 2010-09-15 00:10+0300\n"
 "Last-Translator: Vytautas <didysis@vytrautas.lt>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -35,19 +35,23 @@ msgstr "Siuntėjo intformacija"
 msgid "Message"
 msgstr "Žinutė"
 
-#: pjweb/views.py:112
+#: pjweb/views.py:80
+msgid "No addressess were found. Please refine your search."
+msgstr "Nerasta jokių adresų. Patikslinkite paiešką."
+
+#: pjweb/views.py:115
 #, python-format
 msgid "%(name)s %(surname)s email cannot be found in database."
 msgstr "%(name)s %(surname)s el. paštas nerastas duomenų bazėje."
 
-#: pjweb/views.py:146
+#: pjweb/views.py:149
 msgid "Thank you. Your message has been sent."
 msgstr "Dėkojame. Jūsų žinutė išsiųsta."
 
-#: pjweb/views.py:161
+#: pjweb/views.py:164
 #, python-format
 msgid "Problem occurred. Your Email to %(name)s %(surname)s has not been sent. Please try again later."
-msgstr "Iškilo problema. Jūsų laiškas %(name)s %(surname)s nebuvo išsiųstas. Prašome pamėginti vėliau."
+msgstr "Iškilo problema. Jūsų laiškas, kurio adresatas yra %(name)s %(surname)s, nebuvo išsiųstas. Prašome pamėginti vėliau."
 
 #: templates/admin/base_site.html:4
 msgid "Django site admin"
@@ -79,37 +83,37 @@ msgid "tips"
 msgstr "patarimus"
 
 #: templates/pjweb/const.html:16
-#: templates/pjweb/const.html.py:20
+#: templates/pjweb/const.html.py:21
 msgid "Member of parliament"
-msgstr "Seimo narys:"
+msgstr "Seimo narys"
 
-#: templates/pjweb/const.html:21
+#: templates/pjweb/const.html:22
 msgid "Responsible for everything"
 msgstr "Atsakingas už viską"
 
-#: templates/pjweb/const.html:32
-#: templates/pjweb/const.html.py:41
+#: templates/pjweb/const.html:33
+#: templates/pjweb/const.html.py:43
 msgid "Member of municipality"
-msgstr "Meras:"
+msgstr "Meras"
 
-#: templates/pjweb/const.html:42
+#: templates/pjweb/const.html:44
 msgid "Responsible for your municipality"
-msgstr "Atsakingas už rajoną:"
+msgstr "Atsakingas už rajoną"
 
-#: templates/pjweb/const.html:53
-#: templates/pjweb/const.html.py:58
-#: templates/pjweb/const.html:74
+#: templates/pjweb/const.html:56
+#: templates/pjweb/const.html.py:62
+#: templates/pjweb/const.html:79
 msgid "Member of civil parish"
-msgstr "Seniūnas:"
+msgstr "Seniūnas"
 
-#: templates/pjweb/const.html:59
-#: templates/pjweb/const.html.py:75
+#: templates/pjweb/const.html:63
+#: templates/pjweb/const.html.py:80
 msgid "Responsible for your civil parish"
 msgstr "Atsakingas už Jūsų seniūniją:"
 
-#: templates/pjweb/const.html:70
+#: templates/pjweb/const.html:74
 msgid "Member of seniunaitija"
-msgstr "Seniūnaitis:"
+msgstr "Seniūnaitis"
 
 #: templates/pjweb/contact.html:6
 msgid "You are writing a letter to your representative. Be polite."
@@ -160,7 +164,7 @@ msgstr "Rasti keli adresai. Pasirinkite:"
 msgid "Found Addresses for constituency"
 msgstr "Rasti apygardų adresai"
 
-#: templates/pjweb/index.html:34
+#: templates/pjweb/index.html:37
 msgid "Found Addresses for civil parish:"
 msgstr "Rasti seniūnijų adresai:"
 
