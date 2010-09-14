@@ -3,7 +3,7 @@
 {% block content %}
 
 <div id="head-message">
-<p id="header-font">Rašote laišką, būkite mandagūs.</p>
+<p id="header-font">{% trans "You are writing a letter to your representative. Be polite." %}</p>
 
     <ul id="head-text">
     <li>Lorem ipsum</li>
@@ -15,8 +15,8 @@
 <form action="/pjweb/contact/{{ rtype }}/{{ mp_id }}/" method="post">
 <table id="letter">
 <tr>
-<td width="336px"><h2>Gavėjas:</h2></td>
-<td colspan="2"><h2>Siuntėjas:</h2></td>
+<td width="336px"><h2>{% trans "Receiver:" %}</h2></td>
+<td colspan="2"><h2>{% trans "Sender " %}<small>{% trans "(all fields are required)" %}</small>:</h2></td>
 </tr>
   <tr>
     <td width="336px" rowspan="4">
