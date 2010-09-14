@@ -59,10 +59,10 @@ def index(request):
     suggestion = ''
     entry_query = ''
     entry_query1 = ''
+    not_found = ''
     all_mps = ParliamentMember.objects.all()
     if request.method == 'POST':
         form = IndexForm(request.POST)
-        if form.is_valid():
             query_string = form.cleaned_data['address_input']
         else:
             query_string = '*'
@@ -76,6 +76,7 @@ def index(request):
 #SearchQuerySet returns records from index, built by haystack. Removed for now.
         if not found_entries:
             found_entries = {}
+            not_found = _('No addressess were found. Please refine your search.')
 #            found_by_index = SearchQuerySet().auto_query(query_string)
 #            if not found_by_index:
 #                suggestion = found_by_index.spelling_suggestion()
@@ -100,6 +101,7 @@ def index(request):
         'entered': query_string,
         'found_entries': found_entries,
         'found_geodata': found_geodata,
+        'not_found': not_found,
         'step1': 'step1_active.png',
         'step2': 'step2_inactive.png',
         'step3': 'step3_inactive.png',
@@ -255,9 +257,9 @@ def constituency(request, constituency_id, rtype):
     })
     
 def contact(request, rtype, mp_id):
-    print rtype, mp_id
+    #print rtype, mp_id
     receiver = get_rep(mp_id, rtype)
-    print receiver
+    #print receiver
     if not receiver.email:
         return HttpResponseRedirect('no_email')
 
@@ -274,7 +276,7 @@ def contact(request, rtype, mp_id):
             message = form.cleaned_data[u'message']
             sender = form.cleaned_data[u'sender']
             #recipients = [receiver.email]
-            recipients = [u'testinis@pashtas.lt']
+            recipients = [u'parasykjiems@gmail.com']
             #print recipients[0]
             if not recipients[0]:
                 logging.debug('%s has no email' % (receiver.name, receiver.surname))
