@@ -1,3 +1,4 @@
+{% load i18n %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,8 +11,8 @@
 <div id="top">
 <div>
 	<a href="/" id="logo"><img width="359" height="50" src="/static/img/logo.png" alt="ParašykJiems - Greitas būdas rasti atsakingus valdžios atstovus ir su jais susisiekti."></a>
-	<a href="#" id="about">Apie projektą</a>	
-	<a href="/pjweb/public_mails/" id="archive"><img src="/static/img/info.png" align="absmiddle">Viešai publikuotų laiškų archyvas</a>
+	<a href="#" id="about">{% trans "About project" %}</a>	
+	<a href="/pjweb/public_mails/" id="archive"><img src="/static/img/info.png" align="absmiddle">{% trans "List of all public mails" %}</a>
 </div>
 </div>
 <div id="content">

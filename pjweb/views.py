@@ -73,22 +73,24 @@ def index(request):
         found_entries = PollingDistrictStreet.objects.filter(entry_query).order_by('street')
         found_geodata = HierarchicalGeoData.objects.filter(entry_query1).order_by('name')
 #        found_entries = SearchQuerySet().auto_query(query_string)
+#SearchQuerySet returns records from index, built by haystack. Removed for now.
         if not found_entries:
-            found_by_index = SearchQuerySet().auto_query(query_string)
-            if not found_by_index:
-                suggestion = found_by_index.spelling_suggestion()
-                if suggestion:
-                    logging.debug('suggestion:', suggestion)
-                    entry_query = a_s.get_query(suggestion, ['street', 'city', 'district'])
-                    #found_entries = SearchQuerySet().auto_query(suggestion)
-                    if entry_query:
-                        found_entries = PollingDistrictStreet.objects.filter(entry_query).order_by('street')
-                    else:
-                        found_entries = {}
-                else:
-                    found_entries = {}
-            else:
-                found_entries = found_by_index
+            found_entries = {}
+#            found_by_index = SearchQuerySet().auto_query(query_string)
+#            if not found_by_index:
+#                suggestion = found_by_index.spelling_suggestion()
+#                if suggestion:
+#                    logging.debug('suggestion:', suggestion)
+#                    entry_query = a_s.get_query(suggestion, ['street', 'city', 'district'])
+#                    #found_entries = SearchQuerySet().auto_query(suggestion)
+#                    if entry_query:
+#                        found_entries = PollingDistrictStreet.objects.filter(entry_query).order_by('street')
+#                    else:
+#                        found_entries = {}
+#                else:
+#                    found_entries = {}
+#            else:
+#                found_entries = found_by_index
 
     else:
         form = IndexForm()
@@ -141,9 +143,8 @@ def public(request, mail_id):
 def thanks(request, rtype, mp_id, private=None):
     receiver = get_rep(mp_id, rtype)
 
-    ThanksMessage = _('Thank you. Your message to %(name)s %(surname)s has been sent.') % {
-        'name':receiver.name, 'surname':receiver.surname
-    }
+    ThanksMessage = _('Thank you. Your message has been sent.')
+
     logging.debug('%s' % (ThanksMessage))
     return render_to_response('pjweb/thanks.html', {
         'ThanksMessage': ThanksMessage,
@@ -240,7 +241,6 @@ def constituency(request, constituency_id, rtype):
         seniunaitija_members = SeniunaitijaMember.objects.all().filter(
                     seniunaitija__exact=constituency_id
                 )
-
     return render_to_response('pjweb/const.html', {
         'constituencies': constituencies,
         'municipalities': municipalities,
