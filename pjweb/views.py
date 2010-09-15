@@ -8,7 +8,7 @@ from django.shortcuts import render_to_response
 from django.utils.translation import ugettext as _
 from haystack.query import SearchQuerySet
 from haystack.views import SearchView
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMessage
 from parasykjiems.contactdb.models import PollingDistrictStreet, Constituency, ParliamentMember, HierarchicalGeoData, MunicipalityMember, CivilParishMember, SeniunaitijaMember
 from parasykjiems.pjweb.models import Email
 from pjutils.address_search import AddressSearch
@@ -277,7 +277,7 @@ def contact(request, rtype, mp_id):
             message = form.cleaned_data[u'message']
             sender = form.cleaned_data[u'sender']
             #recipients = [receiver.email]
-            recipients = [u'parasykjiems@gmail.com']
+            recipients = ['didysis@vytautas.lt','parasykjiems@gmail.com']
             #print recipients[0]
             if not recipients[0]:
                 logging.debug('%s has no email' % (receiver.name, receiver.surname))
@@ -294,9 +294,12 @@ def contact(request, rtype, mp_id):
                     msg_state = 'W',
                     public = publ,
                 )
-                
-                sendmail = send_mail('', message, sender, recipients)
-                #print 'email sent', sendmail
+                email = EmailMessage(u'Gavote laišką nuo %s' % sender_name, message, sender,
+                    recipients, [],
+                    headers = {'Reply-To': sender})
+                #sendmail = send_mail('Gavote laiska nuo %s' % sender_name, message, sender, recipients)
+                #print 'email sent', email
+                email.send()
                 if publ:
                     mail.save()
                     #print 'public mail saved'
