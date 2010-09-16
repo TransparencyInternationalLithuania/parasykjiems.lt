@@ -47,28 +47,27 @@ class Command(BaseCommand):
 
             # check if already such member exists. Name and surname are primary keys
             m = self.alreadyExists(member)
-            if (m is None):
-                # if does not exist, create it
-                # relate existing constituency to an MP
-                try:
-                    type = HierarchicalGeoData.HierarchicalGeoDataType.CivilParish
-                    name = member.civilParishStr
-                    member.civilParish = HierarchicalGeoData.objects.filter(name = name).filter(type = type)[0:1].get()
-                except ObjectDoesNotExist:
-                    str = """Parish with name '%s' and type '%s' could not be found in database table
+            # relate existing constituency to an MP
+            try:
+                type = HierarchicalGeoData.HierarchicalGeoDataType.CivilParish
+                name = member.civilParishStr
+                member.civilParish = HierarchicalGeoData.objects.filter(name = name).filter(type = type)[0:1].get()
+            except ObjectDoesNotExist:
+                str = """Parish with name '%s' and type '%s' could not be found in database table
 %s while import CivilParishMembers. Data source taken from Google doc '%s'. Unique key '%s'  )""" % \
-                        (name, type, HierarchicalGeoData.objects.model._meta.db_table,
-                        GoogleDocsSources.LithuanianCivilParishMembers, member.uniqueKey)
-                    logging.error(str)
-                    raise ImportCivilParishMemberException(str)
+                    (name, type, HierarchicalGeoData.objects.model._meta.db_table,
+                    GoogleDocsSources.LithuanianCivilParishMembers, member.uniqueKey)
+                logging.error(str)
+                raise ImportCivilParishMemberException(str)
 
+            if (m is None):
                 print (u"Imported parish member %s %s %s" % (member.name, member.surname, member.civilParish.name))
+                member.save()
             else:
                 member.id = m.id
                 print "updating parish member: %s %s %s " % (m.name, m.surname, m.uniqueKey)
+                member.save()
 
-
-            member.save()
 
             count += 1
             if (count >= maxNumberToImport):
