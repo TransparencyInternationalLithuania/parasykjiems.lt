@@ -3,10 +3,10 @@
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
-SERVER_EMAIL = 'parasykjiems@gmail.com'
+SERVER_EMAIL = 'root@localhost'
 
 ADMINS = (
-    ('Error Group', 'parasykjiems-errors@googlegroups.com'),
+    ('Admin', 'root@localhost'),
 )
 
 MANAGERS = ADMINS
