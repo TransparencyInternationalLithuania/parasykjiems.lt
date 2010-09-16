@@ -13,7 +13,7 @@ class ImportSourceNotExistsException(ChainnedException):
 
 class ImportSources:
     LithuanianConstituencies = os.path.join("contactdb", "sources", "apygardos.txt")
-    LithuanianMPs = os.path.join("contactdb", "sources", "parliament members.txt")
+    LithuanianMPs = os.path.join("contactdb", "sources", "parliament members.csv")
     LithuanianCivilParishMembers = os.path.join("contactdb", "sources", "LithuanianCivilParishMembers.csv")
     LithuanianMunicipalityMembers = os.path.join("contactdb", "sources", "LithuanianMunicipalityMembers.csv")
     LithuanianSeniunaitijaMembers  = os.path.join("contactdb", "sources", "LithuanianSeniunaitijaMembers.csv")
