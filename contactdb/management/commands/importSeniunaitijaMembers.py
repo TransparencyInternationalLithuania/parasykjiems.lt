@@ -45,6 +45,7 @@ class Command(BaseCommand):
             if (member.name.strip() == ""):
                 print u"member name was empty. "
                 print u"Probably that means that in seniunaitija %s a member was not yet elected" % member.seniunaitijaStr
+                continue
 
             # check if already such member exists. Name and surname are primary keys
             m = self.alreadyExists(member)
