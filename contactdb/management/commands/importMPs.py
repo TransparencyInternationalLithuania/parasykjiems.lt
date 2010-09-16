@@ -6,6 +6,8 @@ from contactdb.imp import ImportSources
 from django.db import transaction
 from pjutils import uniconsole
 import os
+import logging
+logger = logging.getLogger(__name__)
 
 class Command(BaseCommand):
     args = '<>'
