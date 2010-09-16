@@ -1,10 +1,12 @@
 # Django settings for parasykjiems project.
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
+SERVER_EMAIL = 'parasykjiems@gmail.com'
+
 ADMINS = (
-    # ('Your Name', 'your_email@domain.com'),
+    ('Error Group', 'parasykjiems-errors@googlegroups.com'),
 )
 
 MANAGERS = ADMINS
