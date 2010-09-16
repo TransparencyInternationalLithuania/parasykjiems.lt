@@ -12,6 +12,7 @@ import os
 import csv
 from pjutils.exc import ChainnedException
 import logging
+logger = logging.getLogger(__name__)
 
 class ImportCivilParishMemberException(ChainnedException):
     pass
@@ -57,7 +58,7 @@ class Command(BaseCommand):
 %s while import CivilParishMembers. Data source taken from Google doc '%s'. Unique key '%s'  )""" % \
                     (name, type, HierarchicalGeoData.objects.model._meta.db_table,
                     GoogleDocsSources.LithuanianCivilParishMembers, member.uniqueKey)
-                logging.error(str)
+                logger.error(str)
                 raise ImportCivilParishMemberException(str)
 
             if (m is None):

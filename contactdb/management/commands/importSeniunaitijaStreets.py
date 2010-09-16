@@ -14,6 +14,7 @@ from pjutils.exc import ChainnedException
 from test.test_iterlen import len
 from contactdb.import_parliamentMembers import SeniunaitijaMembersReader
 import logging
+logger = logging.getLogger(__name__)
 
 class Command(BaseCommand):
     args = '<>'
@@ -143,7 +144,7 @@ class Command(BaseCommand):
                     print "street \t %s \t %s \t %s \t %s" % (street.city, street.street, street.numberFrom, street.numberTo)
                     numberOfStreets += 1
             except SeniunaitijaAddressExpanderException as e:
-                logging.error("""Error in seniunaitija teritory nr '%s'
+                logger.error("""Error in seniunaitija teritory nr '%s'
 ErrorDetails = %s""" % (member.uniqueKey, e.message))
                 wasError = wasError + 1
                 continue

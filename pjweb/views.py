@@ -13,6 +13,8 @@ from parasykjiems.contactdb.models import PollingDistrictStreet, Constituency, P
 from parasykjiems.pjweb.models import Email
 from pjutils.address_search import AddressSearch
 
+logger = logging.getLogger(__name__)
+
 class ContactForm(forms.Form):
     pub_choices = (
         ('',''),
@@ -115,7 +117,7 @@ def no_email(request, rtype, mp_id):
     NoEmailMsg = _('%(name)s %(surname)s email cannot be found in database.') % {
         'name':parliament_member[0].name, 'surname':parliament_member[0].surname
     }
-    logging.debug('%s' % (NoEmailMsg))
+    logger.debug('%s' % (NoEmailMsg))
     return render_to_response('pjweb/no_email.html', {
         'NoEmailMsg': NoEmailMsg,
         'step1': 'step1_inactive.png',
@@ -148,7 +150,7 @@ def thanks(request, rtype, mp_id, private=None):
 
     ThanksMessage = _('Thank you. Your message has been sent.')
 
-    logging.debug('%s' % (ThanksMessage))
+    logger.debug('%s' % (ThanksMessage))
     return render_to_response('pjweb/thanks.html', {
         'ThanksMessage': ThanksMessage,
         'step1': 'step1_inactive.png',
@@ -165,7 +167,7 @@ def smtp_error(request, rtype, mp_id, private=None):
     ) % {
         'name':parliament_member[0].name, 'surname':parliament_member[0].surname
     }
-    logging.debug('Error: %s' % (ErrorMessage))
+    logger.debug('Error: %s' % (ErrorMessage))
     return render_to_response('pjweb/error.html', {
         'ErrorMessage': ErrorMessage,
         'step1': 'step1_inactive.png',
@@ -174,7 +176,7 @@ def smtp_error(request, rtype, mp_id, private=None):
     })
 
 def select_privacy(request, rtype, mp_id):
-    logging.debug('Member type %s, member ID %s' % (rtype, mp_id))    
+    logger.debug('Member type %s, member ID %s' % (rtype, mp_id))
     parliament_member = ParliamentMember.objects.all().filter(
                 id__exact=mp_id
             )
@@ -280,7 +282,7 @@ def contact(request, rtype, mp_id):
             recipients = ['didysis@vytautas.lt','parasykjiems@gmail.com']
             #print recipients[0]
             if not recipients[0]:
-                logging.debug('%s has no email' % (receiver.name, receiver.surname))
+                logger.debug('%s has no email' % (receiver.name, receiver.surname))
                 return HttpResponseRedirect('no_email')
             else:
                 #from django.core.mail import send_mail

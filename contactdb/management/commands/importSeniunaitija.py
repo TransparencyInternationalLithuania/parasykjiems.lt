@@ -15,6 +15,7 @@ from contactdb.management.commands.importCivilParishMembers import ImportCivilPa
 from contactdb.LTRegisterCenter.webparser import LTGeoDataHierarchy
 from contactdb.imp import GoogleDocsSources
 import logging
+logger = logging.getLogger(__name__)
 
 class ImportSeniunaitijaException(ChainnedException):
     pass
@@ -37,7 +38,7 @@ Database table: %s. Data source taken from GoogleDoc '%s'. Unique key '%s' """ %
                 (self.civilParishStr, HierarchicalGeoData.HierarchicalGeoDataType.CivilParish, self.municipalityStr,
                 HierarchicalGeoData.objects.model._meta.db_table, GoogleDocsSources.LithuanianSeniunaitijaMembers,
                 self.uniqueKey)
-            logging.error(str)
+            logger.error(str)
             raise SeniunaitijaNotFoundException(str)
         except HierarchicalGeoData.MultipleObjectsReturned:
             raise ImportSeniunaitijaException("Found multiple Civil parish with name '%s' and type '%s'. \n Municipality '%s'" % (self.civilParishStr, HierarchicalGeoData.HierarchicalGeoDataType.CivilParish, self.municipalityStr))
