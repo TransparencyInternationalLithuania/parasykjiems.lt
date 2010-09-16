@@ -1,0 +1,224 @@
+body {
+    margin:0;
+    padding:0;
+    background-color: #f7faf7;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    }
+
+a {
+    color: #039;
+    }
+
+a:hover {
+    text-decoration: none;
+    }
+
+    a > img {
+            border: 0;
+            }
+#top {
+    background-color: white;
+    background-image:url('img/top-bg.png');
+    background-repeat:repeat-x;
+    padding: 21px;
+    height: 55px;
+    }
+
+    #top > div {
+        margin: 0px auto;
+        width: 819px;
+        }
+
+        #logo {
+            float: left;
+            }
+        #archive {
+            float: right;
+            color: #339900;
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            font-weight: bold;
+            padding-top: 13px;
+            line-height: 21px;
+            height: 21px;
+            }
+            #archive > img {
+            }
+        #about {
+            float: right;
+            color: #336699;
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 46px;
+            padding-top: 13px;
+            line-height: 21px;
+            height: 21px;
+            }
+
+#content {
+    margin: 51px auto;
+    width: 817px;
+    border: 1px solid #dcdcdc;
+    background-color: white;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    }
+
+    h2 {
+        color: #000;
+        font-weight: lighter;
+        }
+
+    img.step {
+        display: block;
+        float: left;
+        }
+
+    #address {
+        clear: both;
+        padding: 73px 97px;
+
+        }
+
+        #id_address_input {
+            background-color: #fffdda;
+            border-width: 1px;
+            width: 513px;
+            height: 24px;
+            padding-left: 4px;
+            }
+
+        #address-button {
+            margin-left: 4px;
+            margin-top: -4px;
+            }
+
+    #address_table {
+        font-size: 14px;
+        padding: 57px 97px;
+        }
+
+        #addresses_line {
+            border: 1px dotted #d7d5a7;
+            width: 100%;
+            background-color: #fffba5;
+            }
+
+            tr {
+                height:30px;
+                }
+
+    #rep_list_header {
+        padding: 73px 57px;
+        }
+
+        #bigger_font {
+            font-size: 20px;
+            }
+        #smaller_font {
+            font-size: 12px;
+            }
+
+    #rep_table {
+        border: 1px dotted #c9c9c9;
+        width: 817px;
+        color: #606b5c;
+        padding: 30px;
+        }
+
+        td {
+            vertical-align: top;
+           }
+
+        th {
+            background-color: #f3f7f4;
+            text-align:left;
+            padding-left: 20px;
+           }
+
+        #head-font {
+            font-size: 16px;
+            }
+
+    #letter {
+        border: 0px dotted #c9c9c9;
+        width: 817px;
+        color: #606b5c;
+        vertical-align: center;
+        text-align: middle;
+        }
+
+        td {
+            vertical-align: middle;
+            padding-left: 20px;
+            }
+
+        #id_public {
+            float: right;
+            margin-right: 28px;
+            }
+
+        #id_sender_name, #id_sender, #id_phone {
+            background-color: #fffdda;
+            border-width: 1px;
+            width: 325px;
+            height: 24px;
+            padding-left: 4px;
+            margin-right: 28px;
+            float: right;
+            }
+
+        #id_message {
+            background-color: #fffdda;
+            border-width: 1px;
+            border-color: #e6e8e5;
+            width: 756px;
+            height: 212px;
+            padding-left: 4px;
+            padding-top: 4px;
+            margin-top: 14px;
+
+            float: center;
+            }
+
+    #sendok {
+        margin: 117px 196px 196px;
+        }
+        
+        #sendok-img {
+            margin-left: -60px;
+            }
+
+        #sendok-large {
+            clear: both;
+            font-size: 20px;
+            margin-left: 60px;
+            }
+
+        #sendok-font {
+            margin-left: 60px;
+            }
+
+    #head-message {
+        font-size: 14px;
+        padding: 73px 31px 0px 31px;
+        }
+
+        #header-font {
+            font-size: 20px;
+            float: center;
+            text-align:center;
+            }
+
+        #head-text {
+            border: 1px dotted #c9c9c9;
+            clear: both;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 19px;
+            font-size: 12px;
+            background-color: #fffba5;
+            list-style-position:inside;
+            }

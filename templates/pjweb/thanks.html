@@ -1,0 +1,13 @@
+{% extends "pjweb/base.html" %}
+{% load i18n %}
+{% block content %}
+
+<div id="sendok">
+<img src="/static/img/ok.png" alt="Laiškas sėkmingai išsiųstas.">
+<p id="sendok-large">{{ ThanksMessage }}</p>
+<p id="sendok-font"><a href="/pjweb/public_mails/">{% trans "View list of all public messages" %}</a></p>
+<p id="sendok-font"><a href="/">{% trans "Go back to home page" %}</a></p>
+<p id="sendok-font"><a href="#" >{% trans "About project" %}</a></p>
+</div>
+
+{% endblock %}
