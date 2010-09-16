@@ -37,21 +37,20 @@ class Command(BaseCommand):
             if (member.name.strip() == ""):
                 continue
 
+            # relate existing constituency to an MP
+            try:
+                if (member.constituency is None):
+                    member.constituency = None
+                else:
+                    member.constituency = Constituency.objects.get(nr = member.constituency.nr)
+            except ObjectDoesNotExist:
+                print "Constituency with nr '%d' could not be found in database. Either the database is not yet populated with contstituencies, or it is missing (probably because import data does not contain it)" % (member.constituency.nr)
+                print "Skipping this MPs. Continuing with the rest"
+                continue
+
             # check if already such member exists. Name and surname are primary keys
             m = self.alreadyExists(member)
             if (m is None):
-                # if does not exist, create it
-                # relate existing constituency to an MP
-                try:
-                    if (member.constituency is None):
-                        member.constituency = None
-                    else:
-                        member.constituency = Constituency.objects.get(nr = member.constituency.nr)
-                except ObjectDoesNotExist:
-                    print "Constituency with nr '%d' could not be found in database. Either the database is not yet populated with contstituencies, or it is missing (probably because import data does not contain it)" % (member.constituency.nr)
-                    print "Skipping this MPs. Continuing with the rest"
-                    continue
-
                 print "Imported MP %s %s %s" % (member.name, member.surname, member.uniqueKey)
 
             else:
