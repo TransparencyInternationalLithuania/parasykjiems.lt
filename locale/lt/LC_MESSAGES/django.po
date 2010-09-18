@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-15 00:10+0300\n"
-"PO-Revision-Date: 2010-09-15 00:10+0300\n"
+"POT-Creation-Date: 2010-09-19 01:29+0300\n"
+"PO-Revision-Date: 2010-09-19 01:30+0300\n"
 "Last-Translator: Vytautas <didysis@vytrautas.lt>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -35,23 +35,36 @@ msgstr "Siuntėjo intformacija"
 msgid "Message"
 msgstr "Žinutė"
 
-#: pjweb/views.py:80
+#: pjweb/views.py:94
 msgid "No addressess were found. Please refine your search."
 msgstr "Nerasta jokių adresų. Patikslinkite paiešką."
 
-#: pjweb/views.py:115
+#: pjweb/views.py:129
 #, python-format
 msgid "%(name)s %(surname)s email cannot be found in database."
 msgstr "%(name)s %(surname)s el. paštas nerastas duomenų bazėje."
 
-#: pjweb/views.py:149
+#: pjweb/views.py:163
 msgid "Thank you. Your message has been sent."
 msgstr "Dėkojame. Jūsų žinutė išsiųsta."
 
-#: pjweb/views.py:164
+#: pjweb/views.py:178
 #, python-format
 msgid "Problem occurred. Your Email to %(name)s %(surname)s has not been sent. Please try again later."
 msgstr "Iškilo problema. Jūsų laiškas, kurio adresatas yra %(name)s %(surname)s, nebuvo išsiųstas. Prašome pamėginti vėliau."
+
+#: templates/404.html:14
+#: templates/500.html:14
+#: templates/pjweb/base.html:14
+#: templates/pjweb/thanks.html:10
+msgid "About project"
+msgstr "Apie projektą"
+
+#: templates/404.html:15
+#: templates/500.html:15
+#: templates/pjweb/base.html:15
+msgid "List of all public mails"
+msgstr "Viešai publikuotų laiškų sąrašas"
 
 #: templates/admin/base_site.html:4
 msgid "Django site admin"
@@ -60,15 +73,6 @@ msgstr "Django puslapio administravimas"
 #: templates/admin/base_site.html:7
 msgid "Parašyk jiems lt administration"
 msgstr "Parašyk jiems lt administravimas"
-
-#: templates/pjweb/base.html:14
-#: templates/pjweb/thanks.html:10
-msgid "About project"
-msgstr "Apie projektą"
-
-#: templates/pjweb/base.html:15
-msgid "List of all public mails"
-msgstr "Viešai publikuotų laiškų sąrašas"
 
 #: templates/pjweb/const.html:6
 msgid "Choose a representative, You want to write."
@@ -167,6 +171,14 @@ msgstr "Rasti apygardų adresai"
 #: templates/pjweb/index.html:37
 msgid "Found Addresses for civil parish:"
 msgstr "Rasti seniūnijų adresai:"
+
+#: templates/pjweb/preview.html:6
+msgid "Check your message"
+msgstr "Patikrinkite laišką"
+
+#: templates/pjweb/preview.html:47
+msgid "Back to editing"
+msgstr "Grįžti į redagavimą"
 
 #: templates/pjweb/public_mails.html:5
 msgid "Here you can see all public emails"

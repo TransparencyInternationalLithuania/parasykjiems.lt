@@ -1,7 +1,7 @@
 from django.conf.urls.defaults import *
 
 #from parasykjiems.pjweb.forms import ContactFormPreview
-#from parasykjiems.pjweb.views import ContactForm
+from parasykjiems.pjweb.views import ContactFormPreview, ContactForm
 #from django import forms
 
 # Uncomment the next two lines to enable the admin:
@@ -25,5 +25,5 @@ urlpatterns = patterns('parasykjiems.pjweb.views',
     (r'^contact/(\w+)/(\d+)/$', 'contact'),
     (r'^public_mails/$', 'public_mails'),
     (r'^public/(\d+)/$', 'public'),
-    #(r'^(?P<poll_id>\d+)/vote/$', 'vote'),
+    (r'^preview/(\d+)/$', 'preview'),
 )

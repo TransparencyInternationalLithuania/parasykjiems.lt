@@ -1,0 +1,51 @@
+{% extends "pjweb/base.html" %}
+{% load i18n %}
+{% block content %}
+
+<div id="head-message">
+<p id="header-font">{% trans "Check your message" %}</p>
+
+</div>
+<br>
+<table id="letter">
+<tr>
+<td width="336px" ><h2>{% now "Y F d" %}</h2></td>
+</tr>
+  <tr>
+    <td width="336px" rowspan="3">
+      <p id="head-font"><b>{{ representative.name }} {{ representative.surname }}</b></p>
+{{ representative.email }}<br>
+{{ representative.phone }}
+    </td>
+    <td width="480px">
+        <p id="head-font"><b>{{ preview.sender_name }}</b></p>
+    </td>
+  </tr>
+  <tr>
+
+    <td width="480px">
+        {{ preview.sender }}<br>
+        {{ preview.phone }}
+    </td>
+  </tr>
+</table>
+<table id="letter">
+  <tr>
+    <td>
+      <p id="message">{{ preview.message }}</p>
+    </td>
+  </tr>
+
+</table>
+
+<form action="/pjweb/contact/{{ rtype }}/{{ mp_id }}/" method="post">
+<div id="invisible">
+{{ form.as_p }}
+<input type="checkbox" name="send" value="True" checked="checked" />
+</div>
+<div id="footer">
+<a href="javascript:javascript:history.go(-1)">{% trans "Back to editing" %}</a>
+<input type="image" src="/static/img/btn-send.png" align="absmiddle" id="address-button">
+</div>
+</form>
+{% endblock %}

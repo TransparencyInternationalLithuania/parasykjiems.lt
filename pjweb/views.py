@@ -12,6 +12,7 @@ from django.core.mail import send_mail, EmailMessage
 from parasykjiems.contactdb.models import PollingDistrictStreet, Constituency, ParliamentMember, HierarchicalGeoData, MunicipalityMember, CivilParishMember, SeniunaitijaMember
 from parasykjiems.pjweb.models import Email
 from pjutils.address_search import AddressSearch
+from django.contrib.formtools.preview import FormPreview
 
 logger = logging.getLogger(__name__)
 
@@ -26,6 +27,17 @@ class ContactForm(forms.Form):
     phone = forms.CharField(max_length=100)
     message = forms.CharField(widget=forms.Textarea)
     sender = forms.EmailField()
+
+class ContactFormPreview(FormPreview):
+    form_template = 'pjweb/contact.html'
+    preview_template = 'pjweb/review.html'
+
+#    def process_preview(self, request, cleaned_data):
+#        print 'cleaned_data-preview', cleaned_data
+
+    def done(self, request, cleaned_data):
+        print 'cl_data-done', cleaned_data
+        return HttpResponseRedirect('/form/success')
 
 class IndexForm(forms.Form):
     address_input = forms.CharField(max_length=255)
@@ -175,23 +187,6 @@ def smtp_error(request, rtype, mp_id, private=None):
         'step3': 'step3_active.png',
     })
 
-def select_privacy(request, rtype, mp_id):
-    logger.debug('Member type %s, member ID %s' % (rtype, mp_id))
-    parliament_member = ParliamentMember.objects.all().filter(
-                id__exact=mp_id
-            )
-    form = PrivateForm(request.POST)
-    
-    return render_to_response('pjweb/private.html', {
-        #'privacy': privacy,
-        'mp_id': mp_id,
-        'rtype': rtype,
-        'form': form,
-        'step1': 'step1_inactive.png',
-        'step2': 'step2_active.png',
-        'step3': 'step3_inactive.png',
-    })
-
 def constituency(request, constituency_id, rtype):
     #print constituency_id
     constituencies = []
@@ -224,6 +219,7 @@ def constituency(request, constituency_id, rtype):
         civilparishes = HierarchicalGeoData.objects.all().filter(
                     id__exact=constituency_id
                 )
+
         if civilparishes[0].type=='City':
             civilparishes = HierarchicalGeoData.objects.all().filter(
                         id__exact=civilparishes[0].parent.id
@@ -262,11 +258,13 @@ def constituency(request, constituency_id, rtype):
 def contact(request, rtype, mp_id):
     #print rtype, mp_id
     receiver = get_rep(mp_id, rtype)
-    #print receiver
+
+    mail_id = None
     if not receiver.email:
         return HttpResponseRedirect('no_email')
 
     if request.method == 'POST':
+        send = request.POST.has_key('send')
         form = ContactForm(data=request.POST)
         if form.is_valid():
             public = form.cleaned_data[u'public']
@@ -296,18 +294,31 @@ def contact(request, rtype, mp_id):
                     msg_state = 'W',
                     public = publ,
                 )
-                email = EmailMessage(u'Gavote laišką nuo %s' % sender_name, message, sender,
-                    recipients, [],
-                    headers = {'Reply-To': sender})
-                #sendmail = send_mail('Gavote laiska nuo %s' % sender_name, message, sender, recipients)
-                #print 'email sent', email
-                email.send()
-                if publ:
-                    mail.save()
+                if send:
+                    email = EmailMessage(u'Gavote laišką nuo %s' % sender_name, message, sender,
+                        recipients, [],
+                        headers = {'Reply-To': sender})
+                    sendmail = send_mail('Gavote laiska nuo %s' % sender_name, message, sender, recipients)
+                    #print 'email sent', email
+                    email.send()
+                    if publ:
+                        mail.save()
                     #print 'public mail saved'
+                    return HttpResponseRedirect('thanks')
                 #except:
                 #    return HttpResponseRedirect('smtp_error')
-            return HttpResponseRedirect('thanks')
+            if not send:
+                return render_to_response('pjweb/preview.html', {
+                    'form': form,
+                    'mp_id': mp_id,
+                    'rtype': rtype,
+                    'preview': mail,
+                    'representative': receiver,
+                    'step1': 'step1_inactive.png',
+                    'step2': 'step2_active.png',
+                    'step3': 'step3_inactive.png',
+                })
+
     else:
         form = ContactForm()
         
