@@ -1,7 +1,6 @@
 from django.conf.urls.defaults import *
 
-#from parasykjiems.pjweb.forms import ContactFormPreview
-from parasykjiems.pjweb.views import ContactFormPreview, ContactForm
+#from parasykjiems.pjweb.views import ContactForm
 #from django import forms
 
 # Uncomment the next two lines to enable the admin:
