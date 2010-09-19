@@ -3,7 +3,11 @@
 {% block content %}
 
 <div id="head-message">
-<p id="header-font">{% trans "Check your message" %}</p>
+{% if preview.public = "public" %}
+<p id="header-font">{% trans "You are writing public mail. It will be sent to addressee and displayed on site." %}</p>
+{% else %}
+<p id="header-font">{% trans "You are writing private mail. It will be sent directly to addressee." %}</p>
+{% endif %}
 
 </div>
 <br>

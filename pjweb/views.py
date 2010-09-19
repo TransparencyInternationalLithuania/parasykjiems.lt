@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import logging
+import re
 from django import forms
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render_to_response
@@ -28,23 +29,15 @@ class ContactForm(forms.Form):
     message = forms.CharField(widget=forms.Textarea)
     sender = forms.EmailField()
 
-class ContactFormPreview(FormPreview):
-    form_template = 'pjweb/contact.html'
-    preview_template = 'pjweb/review.html'
-
-#    def process_preview(self, request, cleaned_data):
-#        print 'cleaned_data-preview', cleaned_data
-
-    def done(self, request, cleaned_data):
-        print 'cl_data-done', cleaned_data
-        return HttpResponseRedirect('/form/success')
-
 class IndexForm(forms.Form):
     address_input = forms.CharField(max_length=255)
 
-class PrivateForm(forms.Form):
-    private = forms.BooleanField()
-    
+def is_odd(number):
+    if number%2==1:
+        return True
+    else:
+        return False
+
 def get_rep(rep_id, rtype):
     if rtype=='mp':    
         receiver = ParliamentMember.objects.all().filter(
@@ -74,6 +67,7 @@ def index(request):
     entry_query = ''
     entry_query1 = ''
     not_found = ''
+    house_no = ''
     all_mps = ParliamentMember.objects.all()
     if request.method == 'POST':
         form = IndexForm(request.POST)
@@ -82,10 +76,18 @@ def index(request):
         else:
             query_string = '*'
 
-        entry_query = a_s.get_query(query_string, ['street', 'city', 'district'])
+        qs = re.split(r'[ ,]', query_string)
 
+        for string in qs:
+            if string.isdigit():
+                house_no = string
+                qs.remove(string)
+
+        query_string = ' '.join(qs)
+        entry_query = a_s.get_query(query_string, ['street', 'city', 'district'])
         entry_query1 = a_s.get_query(query_string, ['name'])
         found_entries = PollingDistrictStreet.objects.filter(entry_query).order_by('street')
+
         found_geodata = HierarchicalGeoData.objects.filter(entry_query1).order_by('name')
 #        found_entries = SearchQuerySet().auto_query(query_string)
 #SearchQuerySet returns records from index, built by haystack. Removed for now.
@@ -107,20 +109,40 @@ def index(request):
 #                    found_entries = {}
 #            else:
 #                found_entries = found_by_index
+        elif house_no:
+            addr_ids = []
+            for found_entry in found_entries:
+                has_number = False
+                if found_entry.numberFrom and found_entry.numberTo:
+                    if is_odd(int(house_no)) and found_entry.numberOdd:
+                        has_number = found_entry.numberFrom <= int(house_no) <= found_entry.numberTo
+                    elif not(is_odd(int(house_no))) and not(found_entry.numberOdd):
+                        has_number = found_entry.numberFrom <= int(house_no) <= found_entry.numberTo
+                elif found_entry.numberFrom and not(found_entry.numberTo):
+                    has_number = found_entry.numberFrom==int(house_no)
+
+                if has_number:
+                    addr_ids.append(found_entry.id)
+
+            found_entries = PollingDistrictStreet.objects.filter(id__in=addr_ids).order_by('street')
 
     else:
         form = IndexForm()
-    return render_to_response('pjweb/index.html', {
-        'all_mps': all_mps,
-        'form': form,
-        'entered': query_string,
-        'found_entries': found_entries,
-        'found_geodata': found_geodata,
-        'not_found': not_found,
-        'step1': 'step1_active.png',
-        'step2': 'step2_inactive.png',
-        'step3': 'step3_inactive.png',
-    })
+    if found_entries and len(found_entries)==1:
+        return HttpResponseRedirect('/pjweb/%s/%s' % (found_entries[0].constituency_id, 'mp'))
+    else:
+        return render_to_response('pjweb/index.html', {
+            'all_mps': all_mps,
+            'form': form,
+            'entered': query_string,
+            'found_entries': found_entries,
+            'house_no': house_no,
+            'found_geodata': found_geodata,
+            'not_found': not_found,
+            'step1': 'step1_active.png',
+            'step2': 'step2_inactive.png',
+            'step3': 'step3_inactive.png',
+        })
 
 def no_email(request, rtype, mp_id):
     parliament_member = ParliamentMember.objects.all().filter(
@@ -298,8 +320,6 @@ def contact(request, rtype, mp_id):
                     email = EmailMessage(u'Gavote laišką nuo %s' % sender_name, message, sender,
                         recipients, [],
                         headers = {'Reply-To': sender})
-                    sendmail = send_mail('Gavote laiska nuo %s' % sender_name, message, sender, recipients)
-                    #print 'email sent', email
                     email.send()
                     if publ:
                         mail.save()
@@ -315,8 +335,8 @@ def contact(request, rtype, mp_id):
                     'preview': mail,
                     'representative': receiver,
                     'step1': 'step1_inactive.png',
-                    'step2': 'step2_active.png',
-                    'step3': 'step3_inactive.png',
+                    'step2': 'step2_inactive.png',
+                    'step3': 'step3_active.png',
                 })
 
     else:
