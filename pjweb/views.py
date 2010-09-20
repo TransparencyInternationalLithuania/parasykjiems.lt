@@ -76,14 +76,15 @@ def index(request):
         else:
             query_string = '*'
 
-        qs = re.split(r'[ ,]', query_string)
+        qery_list = re.split(r'[ ,]', query_string)
 
-        for string in qs:
-            if string.isdigit():
-                house_no = string
-                qs.remove(string)
+        for string in qery_list:
+            number = re.split(r'[-\/]', string)[0]
+            if number.isdigit():
+                house_no = number
+                qery_list.remove(string)
 
-        query_string = ' '.join(qs)
+        query_string = ' '.join(qery_list)
         entry_query = a_s.get_query(query_string, ['street', 'city', 'district'])
         entry_query1 = a_s.get_query(query_string, ['name'])
         found_entries = PollingDistrictStreet.objects.filter(entry_query).order_by('street')
