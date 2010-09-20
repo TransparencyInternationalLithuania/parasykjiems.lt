@@ -61,6 +61,7 @@ def get_rep(rep_id, rtype):
 def index(request):
     a_s = AddressSearch()
     query_string = ' '
+    entered = ''
     found_entries = None
     found_geodata = None
     suggestion = ''
@@ -73,6 +74,7 @@ def index(request):
         form = IndexForm(request.POST)
         if form.is_valid():
             query_string = form.cleaned_data['address_input']
+            entered = form.cleaned_data['address_input']
         else:
             query_string = '*'
 
@@ -130,7 +132,9 @@ def index(request):
     else:
         form = IndexForm()
     if found_entries and len(found_entries)==1:
-        return HttpResponseRedirect('/pjweb/%s/%s' % (found_entries[0].constituency_id, 'mp'))
+        return HttpResponseRedirect('/pjweb/%s/%s/' % (
+            found_entries[0].constituency_id, 'mp')
+        )
     else:
         return render_to_response('pjweb/index.html', {
             'all_mps': all_mps,
@@ -211,7 +215,7 @@ def smtp_error(request, rtype, mp_id, private=None):
     })
 
 def constituency(request, constituency_id, rtype):
-    #print constituency_id
+
     constituencies = []
     parliament_members = []
     municipalities = []

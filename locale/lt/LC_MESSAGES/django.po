@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-19 01:29+0300\n"
-"PO-Revision-Date: 2010-09-19 01:30+0300\n"
+"POT-Creation-Date: 2010-09-20 19:23+0300\n"
+"PO-Revision-Date: 2010-09-20 19:25+0300\n"
 "Last-Translator: Vytautas <didysis@vytrautas.lt>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -35,20 +35,20 @@ msgstr "Siuntėjo intformacija"
 msgid "Message"
 msgstr "Žinutė"
 
-#: pjweb/views.py:94
+#: pjweb/views.py:99
 msgid "No addressess were found. Please refine your search."
 msgstr "Nerasta jokių adresų. Patikslinkite paiešką."
 
-#: pjweb/views.py:129
+#: pjweb/views.py:156
 #, python-format
 msgid "%(name)s %(surname)s email cannot be found in database."
 msgstr "%(name)s %(surname)s el. paštas nerastas duomenų bazėje."
 
-#: pjweb/views.py:163
+#: pjweb/views.py:190
 msgid "Thank you. Your message has been sent."
 msgstr "Dėkojame. Jūsų žinutė išsiųsta."
 
-#: pjweb/views.py:178
+#: pjweb/views.py:205
 #, python-format
 msgid "Problem occurred. Your Email to %(name)s %(surname)s has not been sent. Please try again later."
 msgstr "Iškilo problema. Jūsų laiškas, kurio adresatas yra %(name)s %(surname)s, nebuvo išsiųstas. Prašome pamėginti vėliau."
@@ -172,11 +172,15 @@ msgstr "Rasti apygardų adresai"
 msgid "Found Addresses for civil parish:"
 msgstr "Rasti seniūnijų adresai:"
 
-#: templates/pjweb/preview.html:6
-msgid "Check your message"
-msgstr "Patikrinkite laišką"
+#: templates/pjweb/preview.html:7
+msgid "You are writing public mail. It will be sent to addressee and displayed on site."
+msgstr "Rašote viešą laišką. Jis bus išsiųstas adresatui ir pateiktas puslapyje."
 
-#: templates/pjweb/preview.html:47
+#: templates/pjweb/preview.html:9
+msgid "You are writing private mail. It will be sent directly to addressee."
+msgstr "Rašote privatų laišką. Jis bus persiųstas tiesiogiai adresatui."
+
+#: templates/pjweb/preview.html:51
 msgid "Back to editing"
 msgstr "Grįžti į redagavimą"
 
@@ -192,6 +196,8 @@ msgstr "Peržiūrėti viešai publikuotų laiškų sąrašą"
 msgid "Go back to home page"
 msgstr "Grįžti į titulinį puslapį"
 
+#~ msgid "Check your message"
+#~ msgstr "Patikrinkite laišką"
 #~ msgid "Your Constituency is:"
 #~ msgstr "Jūsų apygarda yra:"
 #~ msgid "Your Municipality is:"
