@@ -13,7 +13,6 @@ from django.core.mail import send_mail, EmailMessage
 from parasykjiems.contactdb.models import PollingDistrictStreet, Constituency, ParliamentMember, HierarchicalGeoData, MunicipalityMember, CivilParishMember, SeniunaitijaMember
 from parasykjiems.pjweb.models import Email
 from pjutils.address_search import AddressSearch
-from django.contrib.formtools.preview import FormPreview
 
 logger = logging.getLogger(__name__)
 
@@ -58,17 +57,129 @@ def get_rep(rep_id, rtype):
 
     return receiver[0]
 
-def index(request):
+def get_civilparish(query_string):
     a_s = AddressSearch()
-    query_string = ' '
-    entered = ''
     found_entries = None
     found_geodata = None
-    suggestion = ''
+    house_no = ''
     entry_query = ''
     entry_query1 = ''
     not_found = ''
-    house_no = ''
+    qery_list = re.split(r'[ ,]', query_string)
+
+    for string in qery_list:
+        number = re.split(r'[-\/]', string)[0]
+        if number.isdigit():
+
+            house_no = number
+            qery_list.remove(string)
+
+    query_string = ' '.join(qery_list)
+    entry_query = a_s.get_query(query_string, ['street', 'city', 'district'])
+    entry_query1 = a_s.get_query(query_string, ['name'])
+    print entry_query
+    print entry_query1
+    found_entries = PollingDistrictStreet.objects.filter(entry_query).order_by('street')
+
+    if not found_entries:
+        found_entries = {}
+        not_found = _('No addressess were found. Please refine your search.')
+
+    elif house_no and len(found_entries)>1:
+
+        addr_ids = []
+        for found_entry in found_entries:
+            has_number = False
+            if found_entry.numberFrom and found_entry.numberTo:
+                if is_odd(int(house_no)) and found_entry.numberOdd:
+                    has_number = found_entry.numberFrom <= int(house_no) <= found_entry.numberTo
+                elif not(is_odd(int(house_no))) and not(found_entry.numberOdd):
+                    has_number = found_entry.numberFrom <= int(house_no) <= found_entry.numberTo
+            elif found_entry.numberFrom and not(found_entry.numberTo):
+                has_number = found_entry.numberFrom==int(house_no)
+
+            if has_number:
+                addr_ids.append(found_entry.id)
+
+        found_entries = PollingDistrictStreet.objects.filter(id__in=addr_ids).order_by('street')
+    result = {
+        'found_entries': found_entries,
+        'found_geodata': found_geodata,
+        'not_found': not_found,
+        'house_no': house_no,
+    }
+    return result
+
+def get_geodata(pd_id, constituency):
+
+    district = constituency.district.split(' ')[0]
+    print 'dstr', district, 'city',constituency.city, 'street',constituency.street
+    parent_dstr = []
+    parent_cp = []
+    parent_city = []
+    streets = []
+    found_geodata = HierarchicalGeoData.objects.filter(name__startswith=district, type__exact='Municipality')
+    for address in found_geodata:
+        print address.name
+        parent_dstr.append(address.id)
+    civilparish = constituency.city[:-2]
+    vard = [u'as', u'ai', u'is', u'us', u'ės', u'ė', u'a']
+    kilm = [u'o', u'ų', u'io', u'aus', u'ių', u'ės', u'os']
+    for gal in range(len(vard)):
+        
+        if constituency.city[-2:]==vard[gal]:
+            civilparish = civilparish + kilm[gal]
+
+    found_geodata = HierarchicalGeoData.objects.filter(
+        name__contains=civilparish,
+        type__exact='CivilParish',
+        parent__in=parent_dstr)
+    for address in found_geodata:
+        parent_cp.append(address.id)
+    if not parent_cp:
+        found_geodata = HierarchicalGeoData.objects.filter(
+            name__contains=civilparish,
+            type__exact='City')
+    else:
+        found_geodata = HierarchicalGeoData.objects.filter(
+            name__contains=constituency.city,
+            type__exact='City',
+            parent__in=parent_cp)
+
+    for address in found_geodata:
+        if not parent_cp:
+            parent_cp.append(address.parent.id)
+        parent_city.append(address.id)
+    street_list = constituency.street.split(' ')
+    street_list.pop()
+    street = ' '.join(street_list)
+    print street
+    found_geodata = HierarchicalGeoData.objects.filter(
+        name__contains=street,
+        type__exact='Street',
+        parent__in=parent_city)
+    for address in found_geodata:
+        streets.append(address.id)
+
+    result = {
+        'parent_dstr': parent_dstr,
+        'parent_city': parent_city,
+        'parent_cp': parent_cp,
+        'streets': streets,
+    }
+    return result
+
+def index(request):
+    query_string = ' '
+    entered = ''
+    address = {
+        'found_entries': None,
+        'found_geodata': None,
+        'not_found': '',
+        'house_no': '',
+        }
+    suggestion = ''
+
     all_mps = ParliamentMember.objects.all()
     if request.method == 'POST':
         form = IndexForm(request.POST)
@@ -77,73 +188,23 @@ def index(request):
             entered = form.cleaned_data['address_input']
         else:
             query_string = '*'
-
-        qery_list = re.split(r'[ ,]', query_string)
-
-        for string in qery_list:
-            number = re.split(r'[-\/]', string)[0]
-            if number.isdigit():
-                house_no = number
-                qery_list.remove(string)
-
-        query_string = ' '.join(qery_list)
-        entry_query = a_s.get_query(query_string, ['street', 'city', 'district'])
-        entry_query1 = a_s.get_query(query_string, ['name'])
-        found_entries = PollingDistrictStreet.objects.filter(entry_query).order_by('street')
-
-        found_geodata = HierarchicalGeoData.objects.filter(entry_query1).order_by('name')
-#        found_entries = SearchQuerySet().auto_query(query_string)
-#SearchQuerySet returns records from index, built by haystack. Removed for now.
-        if not found_entries:
-            found_entries = {}
-            not_found = _('No addressess were found. Please refine your search.')
-#            found_by_index = SearchQuerySet().auto_query(query_string)
-#            if not found_by_index:
-#                suggestion = found_by_index.spelling_suggestion()
-#                if suggestion:
-#                    logging.debug('suggestion:', suggestion)
-#                    entry_query = a_s.get_query(suggestion, ['street', 'city', 'district'])
-#                    #found_entries = SearchQuerySet().auto_query(suggestion)
-#                    if entry_query:
-#                        found_entries = PollingDistrictStreet.objects.filter(entry_query).order_by('street')
-#                    else:
-#                        found_entries = {}
-#                else:
-#                    found_entries = {}
-#            else:
-#                found_entries = found_by_index
-        elif house_no:
-            addr_ids = []
-            for found_entry in found_entries:
-                has_number = False
-                if found_entry.numberFrom and found_entry.numberTo:
-                    if is_odd(int(house_no)) and found_entry.numberOdd:
-                        has_number = found_entry.numberFrom <= int(house_no) <= found_entry.numberTo
-                    elif not(is_odd(int(house_no))) and not(found_entry.numberOdd):
-                        has_number = found_entry.numberFrom <= int(house_no) <= found_entry.numberTo
-                elif found_entry.numberFrom and not(found_entry.numberTo):
-                    has_number = found_entry.numberFrom==int(house_no)
-
-                if has_number:
-                    addr_ids.append(found_entry.id)
-
-            found_entries = PollingDistrictStreet.objects.filter(id__in=addr_ids).order_by('street')
-
+        address = get_civilparish(query_string)
     else:
         form = IndexForm()
-    if found_entries and len(found_entries)==1:
-        return HttpResponseRedirect('/pjweb/%s/%s/' % (
-            found_entries[0].constituency_id, 'mp')
+
+    if address['found_entries'] and len(address['found_entries'])==1:
+        return HttpResponseRedirect('/pjweb/%s/' % (
+            address['found_entries'][0].id)
         )
     else:
         return render_to_response('pjweb/index.html', {
             'all_mps': all_mps,
             'form': form,
             'entered': query_string,
-            'found_entries': found_entries,
-            'house_no': house_no,
-            'found_geodata': found_geodata,
-            'not_found': not_found,
+            'found_entries': address['found_entries'],
+            'house_no': address['house_no'],
+            'found_geodata': address['found_geodata'],
+            'not_found': address['not_found'],
             'step1': 'step1_active.png',
             'step2': 'step2_inactive.png',
             'step3': 'step3_inactive.png',
@@ -214,8 +275,15 @@ def smtp_error(request, rtype, mp_id, private=None):
         'step3': 'step3_active.png',
     })
 
-def constituency(request, constituency_id, rtype):
-
+def constituency(request, pd_id):
+    constituency = PollingDistrictStreet.objects.filter(id__exact=pd_id)[0]
+    constituency_id = constituency.constituency_id
+    address = get_geodata(pd_id, constituency)
+    parent_dstr = address['parent_dstr']
+    parent_cp = address['parent_cp']
+    parent_city = address['parent_city']
+    streets = address['streets']
+#    print found_geodata
     constituencies = []
     parliament_members = []
     municipalities = []
@@ -223,52 +291,36 @@ def constituency(request, constituency_id, rtype):
     municipality_members = []
     civilparish_members = []
     seniunaitija_members = []
-    if rtype=='mp':
-        constituencies = Constituency.objects.all().filter(
-                    id__exact=constituency_id
-                )
-        parliament_members = ParliamentMember.objects.all().filter(
-                    constituency__exact=constituency_id
-                )
-    elif rtype=='cp':
-        municipalities = HierarchicalGeoData.objects.all().filter(
-                    id__exact=constituency_id
-                )
-        if municipalities[0].type=='City':
-            municipalities = HierarchicalGeoData.objects.all().filter(
-                        id__exact=municipalities[0].parent.id
-                    )
-        if municipalities[0].type=='CivilParish':
-            municipalities = HierarchicalGeoData.objects.all().filter(
-                    id__exact=municipalities[0].parent.id
-                )
 
-        civilparishes = HierarchicalGeoData.objects.all().filter(
-                    id__exact=constituency_id
-                )
+    constituencies = Constituency.objects.all().filter(
+                id__exact=constituency_id
+            )
+    parliament_members = ParliamentMember.objects.all().filter(
+                constituency__exact=constituency_id
+            )
 
-        if civilparishes[0].type=='City':
-            civilparishes = HierarchicalGeoData.objects.all().filter(
-                        id__exact=civilparishes[0].parent.id
-                    )
+    municipalities = HierarchicalGeoData.objects.all().filter(
+                id__in=parent_dstr
+            )
 
-        seniunaitijas = HierarchicalGeoData.objects.all().filter(
-                    id__exact=constituency_id
-                )
+    civilparishes = HierarchicalGeoData.objects.all().filter(
+                id__in=parent_cp
+            )
 
-        municipality_members = MunicipalityMember.objects.all().filter(
-                    municipality__exact=municipalities[0].id
-                )
-        if not municipality_members:
-            municipality_members = MunicipalityMember.objects.all().filter(
-                    municipality__exact=municipalities[0].parent.id
-                )
-        civilparish_members = CivilParishMember.objects.all().filter(
-                    civilParish__exact=constituency_id
-                )
-        seniunaitija_members = SeniunaitijaMember.objects.all().filter(
-                    seniunaitija__exact=constituency_id
-                )
+    seniunaitijas = HierarchicalGeoData.objects.all().filter(
+                id__in=streets+parent_city
+            )
+
+    municipality_members = MunicipalityMember.objects.all().filter(
+                municipality__in=parent_dstr
+            )
+
+    civilparish_members = CivilParishMember.objects.all().filter(
+                civilParish__in=parent_cp
+            )
+    seniunaitija_members = SeniunaitijaMember.objects.all().filter(
+                seniunaitija__in=streets+parent_city
+            )
     return render_to_response('pjweb/const.html', {
         'constituencies': constituencies,
         'municipalities': municipalities,

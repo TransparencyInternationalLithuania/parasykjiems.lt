@@ -18,13 +18,13 @@
       {% for found_entry in found_entries %}
 
         {% if found_entry.constituency_id %}
-        <tr><td><a href="/pjweb/{{ found_entry.constituency_id }}/mp/">
+        <tr><td><a href="/pjweb/{{ found_entry.id }}/">
         {% if found_entry.street %} {{ found_entry.street }} {{ house_no }}, {% endif %}
         {% if found_entry.city %} {{ found_entry.city }}, {% endif %}
         {% if found_entry.district %} {{ found_entry.district }}{% endif %}
         </a></td></tr>
         {% else %}
-        <tr><td><a href="/pjweb/{{ found_entry.object.constituency_id }}/mp/">{{ found_entry.street }}</a></td></tr>
+        <tr><td><a href="/pjweb/{{ found_entry.object.id }}/">{{ found_entry.street }}</a></td></tr>
         {% endif %}
 
       {% endfor %}
