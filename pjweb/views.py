@@ -57,7 +57,7 @@ def get_rep(rep_id, rtype):
 
     return receiver[0]
 
-def get_civilparish(query_string):
+def get_pollingstreet(query_string):
     a_s = AddressSearch()
     found_entries = None
     found_geodata = None
@@ -76,9 +76,7 @@ def get_civilparish(query_string):
 
     query_string = ' '.join(qery_list)
     entry_query = a_s.get_query(query_string, ['street', 'city', 'district'])
-    entry_query1 = a_s.get_query(query_string, ['name'])
-    print entry_query
-    print entry_query1
+
     found_entries = PollingDistrictStreet.objects.filter(entry_query).order_by('street')
 
     if not found_entries:
@@ -110,7 +108,7 @@ def get_civilparish(query_string):
     }
     return result
 
-def get_geodata(pd_id, constituency):
+def get_civilparish(pd_id, constituency):
 
     district = constituency.district.split(' ')[0]
     print 'dstr', district, 'city',constituency.city, 'street',constituency.street
@@ -153,7 +151,7 @@ def get_geodata(pd_id, constituency):
     street_list = constituency.street.split(' ')
     street_list.pop()
     street = ' '.join(street_list)
-    print street
+
     found_geodata = HierarchicalGeoData.objects.filter(
         name__contains=street,
         type__exact='Street',
@@ -188,7 +186,7 @@ def index(request):
             entered = form.cleaned_data['address_input']
         else:
             query_string = '*'
-        address = get_civilparish(query_string)
+        address = get_pollingstreet(query_string)
     else:
         form = IndexForm()
 
@@ -278,7 +276,7 @@ def smtp_error(request, rtype, mp_id, private=None):
 def constituency(request, pd_id):
     constituency = PollingDistrictStreet.objects.filter(id__exact=pd_id)[0]
     constituency_id = constituency.constituency_id
-    address = get_geodata(pd_id, constituency)
+    address = get_civilparish(pd_id, constituency)
     parent_dstr = address['parent_dstr']
     parent_cp = address['parent_cp']
     parent_city = address['parent_city']
