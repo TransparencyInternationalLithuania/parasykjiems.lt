@@ -1,0 +1,33 @@
+{% extends "pjweb/base.html" %}
+{% load i18n %}
+{% block content %}
+
+<div id="head-message">
+<p id="header-font">{% trans "Have any notes? Write to us!" %}</p>
+
+    <ul id="head-text">
+    <li>Jei adresas nerastas duomenų bazėje, bet tikrai žinote, kad toks yra, parašykite tikslų adresą, kokiai seniūnijai, miestui bei rajonui jis priklauso, bei, jei galite, nurodykite ir rinkimų apylinkę.</li>
+    <li>Jei nebuvo rastas Jūsų meras, seniūnas, seniūnaitis, parašykite jo duomenis: vardą, pavardę, telefoną, el. pašto adresą, darbovietės adresą.</li>
+    </ul>
+
+</div>
+<br>
+<form action="/pjweb/feedback/" method="post">
+<table id="letter">
+  <tr>
+    <td>
+        {{ form.message }}
+        {{ form.message.errors }}
+    </td>
+  </tr>
+  <tr>
+    <td style="text-align: center; vertical-align: middle;">
+        <br>
+        <input type="image" src="/static/img/btn-send.png" align="absmiddle" id="address-button">
+        <br>
+    </td>
+  </tr>
+</table>
+</form>
+
+{% endblock %}
