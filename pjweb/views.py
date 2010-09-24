@@ -28,6 +28,9 @@ class ContactForm(forms.Form):
     message = forms.CharField(widget=forms.Textarea)
     sender = forms.EmailField()
 
+class FeedbackForm(forms.Form):
+    message = forms.CharField(widget=forms.Textarea)
+
 class IndexForm(forms.Form):
     address_input = forms.CharField(max_length=255)
 
@@ -81,7 +84,7 @@ def get_pollingstreet(query_string):
 
     if not found_entries:
         found_entries = {}
-        not_found = _('No addressess were found. Please refine your search.')
+        not_found = _('No addressess were found. Please refine your search. Or use feedback form to inform us about missing address.')
 
     elif house_no and len(found_entries)>1:
 
@@ -111,15 +114,11 @@ def get_pollingstreet(query_string):
 def get_civilparish(pd_id, constituency):
 
     district = constituency.district.split(' ')[0]
-    print 'dstr', district, 'city',constituency.city, 'street',constituency.street
+
     parent_dstr = []
     parent_cp = []
     parent_city = []
     streets = []
-    found_geodata = HierarchicalGeoData.objects.filter(name__startswith=district, type__exact='Municipality')
-    for address in found_geodata:
-        print address.name
-        parent_dstr.append(address.id)
     civilparish = constituency.city[:-2]
     vard = [u'as', u'ai', u'is', u'us', u'ės', u'ė', u'a']
     kilm = [u'o', u'ų', u'io', u'aus', u'ių', u'ės', u'os']
@@ -127,6 +126,18 @@ def get_civilparish(pd_id, constituency):
         
         if constituency.city[-2:]==vard[gal]:
             civilparish = civilparish + kilm[gal]
+
+    if district==civilparish:
+        found_geodata = HierarchicalGeoData.objects.filter(
+            name__icontains=district,
+            type__exact='Municipality').filter(name__icontains='miesto')
+    else:
+        found_geodata = HierarchicalGeoData.objects.filter(
+            name__icontains=district,
+            type__exact='Municipality').exclude(name__icontains='miesto')
+
+    for address in found_geodata:
+        parent_dstr.append(address.id)
 
     found_geodata = HierarchicalGeoData.objects.filter(
         name__contains=civilparish,
@@ -165,6 +176,7 @@ def get_civilparish(pd_id, constituency):
         'parent_cp': parent_cp,
         'streets': streets,
     }
+
     return result
 
 def index(request):
@@ -243,9 +255,7 @@ def public(request, mail_id):
         'step3': 'step3_inactive.png',
     })
 
-def thanks(request, rtype, mp_id, private=None):
-    receiver = get_rep(mp_id, rtype)
-
+def thanks(request):
     ThanksMessage = _('Thank you. Your message has been sent.')
 
     logger.debug('%s' % (ThanksMessage))
@@ -354,7 +364,7 @@ def contact(request, rtype, mp_id):
             message = form.cleaned_data[u'message']
             sender = form.cleaned_data[u'sender']
             #recipients = [receiver.email]
-            recipients = ['didysis@vytautas.lt','parasykjiems@gmail.com']
+            recipients = ['parasykjiems@gmail.com']
             #print recipients[0]
             if not recipients[0]:
                 logger.debug('%s has no email' % (receiver.name, receiver.surname))
@@ -406,4 +416,29 @@ def contact(request, rtype, mp_id):
         'step2': 'step2_active.png',
         'step3': 'step3_inactive.png',
     })
+
+def feedback(request):
+
+    if request.method == 'POST':
+        form = FeedbackForm(data=request.POST)
+        if form.is_valid():
+            message = form.cleaned_data[u'message']
+            sender = 'Concerned citizen'
+            recipients = ['parasykjiems@gmail.com']
+
+            email = EmailMessage(u'Pastaba dėl parašykjiems.lt', message, sender,
+                recipients, [])
+            email.send()
+            return HttpResponseRedirect('thanks')
+
+    else:
+        form = FeedbackForm()
+        
+    return render_to_response('pjweb/feedback.html', {
+        'form': form,
+        'step1': 'step1_inactive.png',
+        'step2': 'step2_inactive.png',
+        'step3': 'step3_inactive.png',
+    })
+
 
