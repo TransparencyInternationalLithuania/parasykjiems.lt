@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-20 19:23+0300\n"
-"PO-Revision-Date: 2010-09-20 19:25+0300\n"
+"POT-Creation-Date: 2010-09-26 00:21+0300\n"
+"PO-Revision-Date: 2010-09-26 00:21+0300\n"
 "Last-Translator: Vytautas <didysis@vytrautas.lt>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -35,34 +35,47 @@ msgstr "Siuntėjo intformacija"
 msgid "Message"
 msgstr "Žinutė"
 
-#: pjweb/views.py:99
-msgid "No addressess were found. Please refine your search."
-msgstr "Nerasta jokių adresų. Patikslinkite paiešką."
+#: pjweb/views.py:33
+#, python-format
+msgid "Please be polite! Letter with %s in it will not be sent."
+msgstr "Būkite mandagūs! Laiškas su %s tekste nebus siunčiamas."
 
-#: pjweb/views.py:156
+#: pjweb/views.py:34
+msgid "and"
+msgstr "ir"
+
+#: pjweb/views.py:105
+msgid ""
+"No addressess were found. Please refine your search. Or use feedback form to "
+"inform us about missing address."
+msgstr ""
+"Nerasta jokių adresų. Patikslinkite paiešką. Arba pasinaudokite susisiekimo "
+"forma ir praneškite apie trūkstamą adresą."
+
+#: pjweb/views.py:245
 #, python-format
 msgid "%(name)s %(surname)s email cannot be found in database."
 msgstr "%(name)s %(surname)s el. paštas nerastas duomenų bazėje."
 
-#: pjweb/views.py:190
+#: pjweb/views.py:277
 msgid "Thank you. Your message has been sent."
 msgstr "Dėkojame. Jūsų žinutė išsiųsta."
 
-#: pjweb/views.py:205
+#: pjweb/views.py:292
 #, python-format
-msgid "Problem occurred. Your Email to %(name)s %(surname)s has not been sent. Please try again later."
-msgstr "Iškilo problema. Jūsų laiškas, kurio adresatas yra %(name)s %(surname)s, nebuvo išsiųstas. Prašome pamėginti vėliau."
+msgid ""
+"Problem occurred. Your Email to %(name)s %(surname)s has not been sent. "
+"Please try again later."
+msgstr ""
+"Iškilo problema. Jūsų laiškas, kurio adresatas yra %(name)s %(surname)s, "
+"nebuvo išsiųstas. Prašome pamėginti vėliau."
 
-#: templates/404.html:14
-#: templates/500.html:14
-#: templates/pjweb/base.html:14
+#: templates/404.html:14 templates/500.html:14 templates/pjweb/base.html:14
 #: templates/pjweb/thanks.html:10
 msgid "About project"
 msgstr "Apie projektą"
 
-#: templates/404.html:15
-#: templates/500.html:15
-#: templates/pjweb/base.html:15
+#: templates/404.html:15 templates/500.html:15 templates/pjweb/base.html:15
 msgid "List of all public mails"
 msgstr "Viešai publikuotų laiškų sąrašas"
 
@@ -73,6 +86,14 @@ msgstr "Django puslapio administravimas"
 #: templates/admin/base_site.html:7
 msgid "Parašyk jiems lt administration"
 msgstr "Parašyk jiems lt administravimas"
+
+#: templates/pjweb/base.html:25
+msgid "Have any notes, suggestions?"
+msgstr "Turite pastabų, pasiūlymų?"
+
+#: templates/pjweb/base.html:25
+msgid "Write to us"
+msgstr "Parašykite mums"
 
 #: templates/pjweb/const.html:6
 msgid "Choose a representative, You want to write."
@@ -86,8 +107,7 @@ msgstr "Jei nesate tikras, skaitykite "
 msgid "tips"
 msgstr "patarimus"
 
-#: templates/pjweb/const.html:16
-#: templates/pjweb/const.html.py:21
+#: templates/pjweb/const.html:16 templates/pjweb/const.html.py:21
 msgid "Member of parliament"
 msgstr "Seimo narys"
 
@@ -95,8 +115,7 @@ msgstr "Seimo narys"
 msgid "Responsible for everything"
 msgstr "Atsakingas už viską"
 
-#: templates/pjweb/const.html:33
-#: templates/pjweb/const.html.py:43
+#: templates/pjweb/const.html:33 templates/pjweb/const.html.py:43
 msgid "Member of municipality"
 msgstr "Meras"
 
@@ -104,14 +123,12 @@ msgstr "Meras"
 msgid "Responsible for your municipality"
 msgstr "Atsakingas už rajoną"
 
-#: templates/pjweb/const.html:56
-#: templates/pjweb/const.html.py:62
+#: templates/pjweb/const.html:56 templates/pjweb/const.html.py:62
 #: templates/pjweb/const.html:79
 msgid "Member of civil parish"
 msgstr "Seniūnas"
 
-#: templates/pjweb/const.html:63
-#: templates/pjweb/const.html.py:80
+#: templates/pjweb/const.html:63 templates/pjweb/const.html.py:80
 msgid "Responsible for your civil parish"
 msgstr "Atsakingas už Jūsų seniūniją:"
 
@@ -139,22 +156,25 @@ msgstr "(visi laukai privalomi)"
 msgid "Public Mail:"
 msgstr "VIešas laiškas:"
 
-#: templates/pjweb/contact.html:35
+#: templates/pjweb/contact.html:34
 msgid "Sender Name:"
 msgstr "Siuntėjo vardas:"
 
-#: templates/pjweb/contact.html:43
+#: templates/pjweb/contact.html:41
 msgid "Your Email:"
 msgstr "Jūsų El. Paštas:"
 
-#: templates/pjweb/contact.html:51
+#: templates/pjweb/contact.html:48
 msgid "Phone Number:"
 msgstr "Telefono numeris:"
 
-#: templates/pjweb/error.html:5
-#: templates/pjweb/no_email.html:5
+#: templates/pjweb/error.html:5 templates/pjweb/no_email.html:5
 msgid "Go back"
 msgstr "Grįžti"
+
+#: templates/pjweb/feedback.html:6
+msgid "Have any notes? Write to us!"
+msgstr "Turite pastabų? Parašykite mums!"
 
 #: templates/pjweb/index.html:6
 msgid "Enter Your Address for search:"
@@ -173,8 +193,11 @@ msgid "Found Addresses for civil parish:"
 msgstr "Rasti seniūnijų adresai:"
 
 #: templates/pjweb/preview.html:7
-msgid "You are writing public mail. It will be sent to addressee and displayed on site."
-msgstr "Rašote viešą laišką. Jis bus išsiųstas adresatui ir pateiktas puslapyje."
+msgid ""
+"You are writing public mail. It will be sent to addressee and displayed on "
+"site."
+msgstr ""
+"Rašote viešą laišką. Jis bus išsiųstas adresatui ir pateiktas puslapyje."
 
 #: templates/pjweb/preview.html:9
 msgid "You are writing private mail. It will be sent directly to addressee."
@@ -198,28 +221,39 @@ msgstr "Grįžti į titulinį puslapį"
 
 #~ msgid "Check your message"
 #~ msgstr "Patikrinkite laišką"
+
 #~ msgid "Your Constituency is:"
 #~ msgstr "Jūsų apygarda yra:"
+
 #~ msgid "Your Municipality is:"
 #~ msgstr "Jūsų rajonas yra:"
+
 #~ msgid "Your Civil Parish is:"
 #~ msgstr "Jūsų seniūnija yra:"
+
 #~ msgid "You can write to:"
 #~ msgstr "Galite parašyti:"
+
 #~ msgid "Subject of the Letter:"
 #~ msgstr "Laiško tema:"
+
 #~ msgid "Message Text:"
 #~ msgstr "Žinutė:"
+
 #~ msgid "Try to use national letters."
 #~ msgstr "Pasistenkite naudoti tautines raides."
+
 #~ msgid "You entered:"
 #~ msgstr "Įvedėte:"
+
 #~ msgid "We found these addresses:"
 #~ msgstr "Radome šiuos adresus:"
+
 #~ msgid "Or you can select one from all Members of Parliament"
 #~ msgstr "Arba galite pasirinkti vieną iš visų Seimo narių"
+
 #~ msgid "Preffered format is: Street, City, District"
 #~ msgstr "Pageidautinas formatas: Gatvė, Miestas, Rajonas"
+
 #~ msgid "Street, City and District have to be separated with \",\""
 #~ msgstr "Gatvė, miestas ir rajonas turi būti atskirti \",\""
-
