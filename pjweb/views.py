@@ -3,18 +3,37 @@
 
 import logging
 import re
+import settings
 from django import forms
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render_to_response
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext as _, ugettext_lazy, ungettext
 from haystack.query import SearchQuerySet
 from haystack.views import SearchView
 from django.core.mail import send_mail, EmailMessage
+from django.core.exceptions import ValidationError
 from parasykjiems.contactdb.models import PollingDistrictStreet, Constituency, ParliamentMember, HierarchicalGeoData, MunicipalityMember, CivilParishMember, SeniunaitijaMember
 from parasykjiems.pjweb.models import Email
 from pjutils.address_search import AddressSearch
 
 logger = logging.getLogger(__name__)
+
+def hasNoProfanities(field_data): 
+    """ 
+    Checks that the given string has no profanities in it. This does a simple 
+    check for whether each profanity exists within the string, so 'fuck' will 
+    catch 'motherfucker' as well. Raises a ValidationError such as: 
+       Watch your mouth! The words "f--k" and "s--t" are not allowed here. 
+    """ 
+    field_data = field_data.lower() # normalize 
+    words_seen = [w for w in settings.PROFANITIES_LIST if w in field_data] 
+    if words_seen: 
+        from django.utils.text import get_text_list 
+        plural = len(words_seen) 
+        raise ValidationError, ungettext("Please be polite! Letter with word %s will not be sent.",
+            "Please be polite! Letter with words %s will not be sent.", plural) % get_text_list(
+                ['"%s%s%s"' % (i[0], '-'*(len(i)-2), i[-1]) for i in words_seen], _('and')
+            )
 
 class ContactForm(forms.Form):
     pub_choices = (
@@ -23,9 +42,9 @@ class ContactForm(forms.Form):
         ('public','Public'),
     )
     public = forms.ChoiceField(choices = pub_choices)
-    sender_name = forms.CharField(max_length=128)
+    sender_name = forms.CharField(max_length=128, validators=[hasNoProfanities])
     phone = forms.CharField(max_length=100)
-    message = forms.CharField(widget=forms.Textarea)
+    message = forms.CharField(widget=forms.Textarea, validators=[hasNoProfanities])
     sender = forms.EmailField()
 
 class FeedbackForm(forms.Form):
