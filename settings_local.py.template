@@ -55,7 +55,8 @@ dir_util.mkpath(logPath)
 LOG_FILENAME = os.path.join(logPath, 'pjweb.log')
 logging.basicConfig(filename=LOG_FILENAME,level=logging.DEBUG)
 
-
+#list of "nasty" words
+PROFANITIES_LIST = (u'bybys', u'šikna', u'pyderas')
 
 
 
