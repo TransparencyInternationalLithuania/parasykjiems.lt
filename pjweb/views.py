@@ -30,8 +30,7 @@ def hasNoProfanities(field_data):
     if words_seen: 
         from django.utils.text import get_text_list 
         plural = len(words_seen) 
-        raise ValidationError, ungettext("Please be polite! Letter with word %s will not be sent.",
-            "Please be polite! Letter with words %s will not be sent.", plural) % get_text_list(
+        raise ValidationError, _('Please be polite! Letter with %s in it will not be sent.') % get_text_list(
                 ['"%s%s%s"' % (i[0], '-'*(len(i)-2), i[-1]) for i in words_seen], _('and')
             )
 
