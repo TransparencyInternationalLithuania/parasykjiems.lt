@@ -2,7 +2,9 @@
 {% load i18n %}
 {% block content %}
 
-<p>{% trans "Here you can see all public emails" %}</p>
+<div id="head-message">
+<p id="header-font">{% trans "Here you can see all public emails" %}</p>
+</div>
 <table>
 {% for mail in all_mails %}
 <tr>

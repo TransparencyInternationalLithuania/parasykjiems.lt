@@ -36,7 +36,9 @@
 <table id="letter">
   <tr>
     <td>
-      <p id="message">{{ preview.message }}</p>
+      {% for line in msg_lst %}
+      <p id="message">{{ line }}</p>
+      {% endfor %}
     </td>
   </tr>
 

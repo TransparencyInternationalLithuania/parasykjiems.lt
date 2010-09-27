@@ -59,7 +59,7 @@ def is_odd(number):
         return False
 
 def get_rep(rep_id, rtype):
-    if rtype=='mp':    
+    if rtype=='mp':
         receiver = ParliamentMember.objects.all().filter(
                 id__exact=rep_id
             )
@@ -239,11 +239,9 @@ def index(request):
         })
 
 def no_email(request, rtype, mp_id):
-    parliament_member = ParliamentMember.objects.all().filter(
-                id__exact=mp_id
-            )
+    representative = get_rep(mp_id, rtype)
     NoEmailMsg = _('%(name)s %(surname)s email cannot be found in database.') % {
-        'name':parliament_member[0].name, 'surname':parliament_member[0].surname
+        'name':representative.name, 'surname':representative.surname
     }
     logger.debug('%s' % (NoEmailMsg))
     return render_to_response('pjweb/no_email.html', {
@@ -285,13 +283,11 @@ def thanks(request):
     })
 
 def smtp_error(request, rtype, mp_id, private=None):
-    parliament_member = ParliamentMember.objects.all().filter(
-                id__exact=mp_id
-            )
+    representative = get_rep(mp_id, rtype)
     ErrorMessage = _(
         'Problem occurred. Your Email to %(name)s %(surname)s has not been sent. Please try again later.'
     ) % {
-        'name':parliament_member[0].name, 'surname':parliament_member[0].surname
+        'name':representative.name, 'surname':representative.surname
     }
     logger.debug('Error: %s' % (ErrorMessage))
     return render_to_response('pjweb/error.html', {
@@ -361,11 +357,8 @@ def constituency(request, pd_id):
     })
     
 def contact(request, rtype, mp_id):
-    #print rtype, mp_id
     receiver = get_rep(mp_id, rtype)
-
-    mail_id = None
-    if not receiver.email:
+    if not receiver.email and not receiver.officeEmail:
         return HttpResponseRedirect('no_email')
 
     if request.method == 'POST':
@@ -381,9 +374,8 @@ def contact(request, rtype, mp_id):
             phone = form.cleaned_data[u'phone']
             message = form.cleaned_data[u'message']
             sender = form.cleaned_data[u'sender']
-            #recipients = [receiver.email]
+            #recipients = [receiver.email, receiver.officeEmail]
             recipients = ['parasykjiems@gmail.com']
-            #print recipients[0]
             if not recipients[0]:
                 logger.debug('%s has no email' % (receiver.name, receiver.surname))
                 return HttpResponseRedirect('no_email')
@@ -406,16 +398,14 @@ def contact(request, rtype, mp_id):
                     email.send()
                     if publ:
                         mail.save()
-                    #print 'public mail saved'
                     return HttpResponseRedirect('thanks')
-                #except:
-                #    return HttpResponseRedirect('smtp_error')
             if not send:
                 return render_to_response('pjweb/preview.html', {
                     'form': form,
                     'mp_id': mp_id,
                     'rtype': rtype,
                     'preview': mail,
+                    'msg_lst': message.split('\n'),
                     'representative': receiver,
                     'step1': 'step1_inactive.png',
                     'step2': 'step2_inactive.png',
@@ -423,7 +413,7 @@ def contact(request, rtype, mp_id):
                 })
 
     else:
-        form = ContactForm()
+        form = ContactForm(initial={'message': 'Gerb. p. %s, \n \n \n \nGeros dienos.' % receiver.name })
         
     return render_to_response('pjweb/contact.html', {
         'form': form,

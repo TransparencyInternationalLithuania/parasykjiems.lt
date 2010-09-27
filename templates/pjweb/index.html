@@ -31,16 +31,6 @@
 {% else %}
   <div id="address_table">
     <strong>{{ not_found }}</strong>
-{% endif %}
-
-    {% if found_geodata %}
-    <tr><td><b>{% trans "Found Addresses for civil parish:" %}</b></td></tr>
-    {% for found_entry in found_geodata %}
-    <tr><td><a href="/pjweb/{{ found_entry.id }}/cp/">
-    {% if found_entry.name %} {{ found_entry.name }}, {% endif %}
-    </a></td></tr>
-
-    {% endfor %}
     </table>
   </div>
 {% endif %}
