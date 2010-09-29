@@ -232,3 +232,8 @@ a:hover {
         text-align:center;
         padding:30px;
         }
+
+#searchField {
+	width: 300px;
+}
+
