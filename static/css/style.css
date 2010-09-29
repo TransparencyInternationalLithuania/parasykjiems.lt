@@ -152,6 +152,11 @@ a:hover {
         text-align:middle;
         }
 
+        ul.errorlist > li {
+          list-style-type: none;
+          color:#F00;
+          }
+
         #id_public {
             float:right;
             margin-right:28px;
@@ -232,8 +237,3 @@ a:hover {
         text-align:center;
         padding:30px;
         }
-
-#searchField {
-	width: 300px;
-}
-
