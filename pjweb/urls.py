@@ -14,9 +14,7 @@ urlpatterns = patterns('parasykjiems.pjweb.views',
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs'
     # to INSTALLED_APPS to enable admin documentation:
     # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
     (r'^$', 'index'),
-    (r'^contact/thanks/$', 'thanks'),
     (r'^contact/(\w+)/(\d+)/no_email/$', 'no_email'),
     (r'^contact/(\w+)/(\w+)/(\w+)/smtp_error/$', 'smtp_error'),
     #(r'^contact/(\w+)/(\d+)/select_privacy/$', 'select_privacy'),

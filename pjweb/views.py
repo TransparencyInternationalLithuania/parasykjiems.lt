@@ -14,43 +14,11 @@ from django.core.mail import send_mail, EmailMessage
 from django.core.exceptions import ValidationError
 from parasykjiems.contactdb.models import PollingDistrictStreet, Constituency, ParliamentMember, HierarchicalGeoData, MunicipalityMember, CivilParishMember, SeniunaitijaMember
 from parasykjiems.pjweb.models import Email
+from parasykjiems.pjweb.forms import *
 from pjutils.address_search import AddressSearch
+from django.utils import simplejson
 
 logger = logging.getLogger(__name__)
-
-def hasNoProfanities(field_data): 
-    """ 
-    Checks that the given string has no profanities in it. This does a simple 
-    check for whether each profanity exists within the string, so 'fuck' will 
-    catch 'motherfucker' as well. Raises a ValidationError such as: 
-       Watch your mouth! The words "f--k" and "s--t" are not allowed here. 
-    """ 
-    field_data = field_data.lower() # normalize 
-    words_seen = [w for w in settings.PROFANITIES_LIST if w in field_data] 
-    if words_seen: 
-        from django.utils.text import get_text_list 
-        plural = len(words_seen) 
-        raise ValidationError, _('Please be polite! Letter with %s in it will not be sent.') % get_text_list(
-                ['"%s%s%s"' % (i[0], '-'*(len(i)-2), i[-1]) for i in words_seen], _('and')
-            )
-
-class ContactForm(forms.Form):
-    pub_choices = (
-        ('',''),
-        ('private','Private'),
-        ('public','Public'),
-    )
-    public = forms.ChoiceField(choices = pub_choices)
-    sender_name = forms.CharField(max_length=128, validators=[hasNoProfanities])
-    phone = forms.CharField(max_length=100)
-    message = forms.CharField(widget=forms.Textarea, validators=[hasNoProfanities])
-    sender = forms.EmailField()
-
-class FeedbackForm(forms.Form):
-    message = forms.CharField(widget=forms.Textarea)
-
-class IndexForm(forms.Form):
-    address_input = forms.CharField(max_length=255)
 
 def is_odd(number):
     if number%2==1:
@@ -271,17 +239,6 @@ def public(request, mail_id):
         'step3': 'step3_inactive.png',
     })
 
-def thanks(request):
-    ThanksMessage = _('Thank you. Your message has been sent.')
-
-    logger.debug('%s' % (ThanksMessage))
-    return render_to_response('pjweb/thanks.html', {
-        'ThanksMessage': ThanksMessage,
-        'step1': 'step1_inactive.png',
-        'step2': 'step2_inactive.png',
-        'step3': 'step3_active.png',
-    })
-
 def smtp_error(request, rtype, mp_id, private=None):
     representative = get_rep(mp_id, rtype)
     ErrorMessage = _(
@@ -398,7 +355,14 @@ def contact(request, rtype, mp_id):
                     email.send()
                     if publ:
                         mail.save()
-                    return HttpResponseRedirect('thanks')
+                    ThanksMessage = _('Thank you. Your message has been sent.')
+                    logger.debug('%s' % (ThanksMessage))
+                    return render_to_response('pjweb/thanks.html', {
+                        'ThanksMessage': ThanksMessage,
+                        'step1': 'step1_inactive.png',
+                        'step2': 'step2_inactive.png',
+                        'step3': 'step3_active.png',
+                    })
             if not send:
                 return render_to_response('pjweb/preview.html', {
                     'form': form,
@@ -437,7 +401,14 @@ def feedback(request):
             email = EmailMessage(u'Pastaba dėl parašykjiems.lt', message, sender,
                 recipients, [])
             email.send()
-            return HttpResponseRedirect('thanks')
+            ThanksMessage = _('Thank you. Your message has been sent.')
+            logger.debug('%s' % (ThanksMessage))
+            return render_to_response('pjweb/thanks.html', {
+                'ThanksMessage': ThanksMessage,
+                'step1': 'step1_inactive.png',
+                'step2': 'step2_inactive.png',
+                'step3': 'step3_active.png',
+            })
 
     else:
         form = FeedbackForm()
