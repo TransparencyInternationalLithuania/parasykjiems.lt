@@ -11,7 +11,6 @@ from django.utils.translation import ugettext as _, ugettext_lazy, ungettext
 from haystack.query import SearchQuerySet
 from haystack.views import SearchView
 from django.core.mail import send_mail, EmailMessage
-from django.core.exceptions import ValidationError
 from parasykjiems.contactdb.models import PollingDistrictStreet, Constituency, ParliamentMember, HierarchicalGeoData, MunicipalityMember, CivilParishMember, SeniunaitijaMember
 from parasykjiems.pjweb.models import Email
 from parasykjiems.pjweb.forms import *
@@ -224,7 +223,14 @@ def public_mails(request):
 
     return render_to_response('pjweb/public_mails.html', {
         'all_mails': all_mails,
-        'step1': 'step1_active.png',
+        'step1': 'step1_inactive.png',
+        'step2': 'step2_inactive.png',
+        'step3': 'step3_inactive.png',
+    })
+
+def about(request):
+    return render_to_response('pjweb/about.html', {
+        'step1': 'step1_inactive.png',
         'step2': 'step2_inactive.png',
         'step3': 'step3_inactive.png',
     })

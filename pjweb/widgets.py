@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from django.utils.translation import ugettext as _, ugettext_lazy, ungettext
 from django.core.exceptions import ValidationError
 from django import forms
