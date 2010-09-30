@@ -3,8 +3,9 @@ It will replace sys.stdout stream with a stream which automaticall converts to u
 to output"""
 
 import sys, os
+platforms = ["linux2", "win32"]
 
-if sys.platform == "win32":
+if sys.platform in platforms:
     class UniStream(object):
         __slots__= "fileno", "softspace",
         def __init__(self, fileobject):
