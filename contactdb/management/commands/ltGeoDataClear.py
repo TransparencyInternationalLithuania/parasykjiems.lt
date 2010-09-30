@@ -14,12 +14,12 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        print "Clearing queue from any messages that were left unprocessed"
+        print u"Clearing queue from any messages that were left unprocessed"
 
         queue = LTRegisterQueue()
         if (queue.IsEmpty()):
-            print "queue is already empty"
+            print u"queue is already empty"
             return
             
         queue.Clear()
-        print "queue has been cleared"
+        print u"queue has been cleared"

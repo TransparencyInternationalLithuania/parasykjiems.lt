@@ -28,5 +28,5 @@ class Command(BaseCommand):
             count +=1
             print msg.body
 
-        print "finished printing, total %s messages" % count
+        print u"finished printing, total %s messages" % count
 

@@ -68,4 +68,4 @@ not yet populated with Municipalities, or it is missing (probably because import
             count += 1
             if (count >= maxNumberToImport):
                 break
-        print "succesfully imported / updated %d municipality Members" % (count)
+        print u"succesfully imported / updated %d municipality Members" % (count)

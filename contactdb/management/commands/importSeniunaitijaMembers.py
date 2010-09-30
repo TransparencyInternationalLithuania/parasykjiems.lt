@@ -65,7 +65,7 @@ class Command(BaseCommand):
                         (name, type))
             else:
                 member.id = m.id
-                print "updating : %s %s %s " % (member.uniqueKey, member.name, member.surname)
+                print u"updating : %s %s %s " % (member.uniqueKey, member.name, member.surname)
 
 
             member.save()
@@ -73,4 +73,4 @@ class Command(BaseCommand):
             count += 1
             if (count >= maxNumberToImport):
                 break
-        print "succesfully imported %d seniunaitija members" % (count)
+        print u"succesfully imported %d seniunaitija members" % (count)

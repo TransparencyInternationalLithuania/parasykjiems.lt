@@ -26,19 +26,19 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         time = TimeMeasurer()
-        imports = ["importMPs",
-                   "importCivilParishMembers",
-                   "importMunicipalityMembers",
-                   "importSeniunaitija",
-                   "importSeniunaitijaMembers"]
+        imports = [u"importMPs",
+                   u"importCivilParishMembers",
+                   u"importMunicipalityMembers",
+                   u"importSeniunaitija",
+                   u"importSeniunaitijaMembers"]
         #imports = imports[8:9]
 
         print "Will import following data:"
         for i in imports:
             print i
 
-        print "Starting import"
+        print u"Starting import"
 
         ExecManagementCommand(imports)
 
-        print "finished importing ContactDB. Took %s seconds" % time.ElapsedSeconds()
+        print u"finished importing ContactDB. Took %s seconds" % time.ElapsedSeconds()

@@ -59,7 +59,7 @@ importStreets 5:8 - will import streets for counties from 5 to 8 constituencies 
             constituency = constituencies[pol.Constituency.nr]
             # re-assign old constituency to new constituency fetched from database
             pol.Constituency = constituency
-        print "finished pre-fetching. Took %s seconds" % time.ElapsedSeconds()
+        print u"finished pre-fetching. Took %s seconds" % time.ElapsedSeconds()
 
     def RemoveExistingStreets(self, expandedStreets, street, pollingDistrict):
         """ filters a list of streets and returns a list only with those streets,
@@ -129,10 +129,10 @@ importStreets 5:8 - will import streets for counties from 5 to 8 constituencies 
         allPollingDistricts = self.getPollingDistricts(aggregator, fromPrint, toPrint)
 
         #self.deletePollingDistrictsIfExists(allPollingDistricts)
-        print "pre-fetching constituencies"
+        print u"pre-fetching constituencies"
         self.preFetchAllConstituencies(allPollingDistricts)
 
-        print "starting to import streets"
+        print u"starting to import streets"
         count = 0
         for pollingDistrict in allPollingDistricts:
             count += 1
@@ -164,9 +164,9 @@ importStreets 5:8 - will import streets for counties from 5 to 8 constituencies 
                 rate = str(totalNumberOfStreets / seconds)
             #print (u"%d: saved Constituency '%s %d', \nElectoral District '%s' streets (%d). \nTotal streets so far %d" % (count, pollingDistrict.Constituency.name, pollingDistrict.Constituency.nr, pollingDistrict.PollingDistrict, numberOfStreets, totalNumberOfStreets)).encode('utf-8')
             print (u"%d: saved Constituency. Number of streets: '%d', \nTotal streets so far %d" % (count, numberOfStreets, totalNumberOfStreets)).encode('utf-8')
-            print "inserting at %s rows per second (total sec: %d, rows: %d)" % (rate, seconds, totalNumberOfStreets)
+            print u"inserting at %s rows per second (total sec: %d, rows: %d)" % (rate, seconds, totalNumberOfStreets)
             print "\n\n"
 
 
-        print "succesfully imported %d counties, total %d streets" % (imported, totalNumberOfStreets)
-        print "total spent time %d seconds" % (datetime.now() - start).seconds
+        print u"succesfully imported %d counties, total %d streets" % (imported, totalNumberOfStreets)
+        print u"total spent time %d seconds" % (datetime.now() - start).seconds
