@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-29 18:22+0300\n"
-"PO-Revision-Date: 2010-09-29 18:23+0300\n"
+"POT-Creation-Date: 2010-09-30 14:19+0300\n"
+"PO-Revision-Date: 2010-09-30 14:20+0300\n"
 "Last-Translator: Vytautas <didysis@vytrautas.lt>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -43,32 +43,37 @@ msgstr "Privatus"
 msgid "Public"
 msgstr "Viešas"
 
-#: pjweb/views.py:73
+#: pjweb/views.py:72
 msgid "No addressess were found. Please refine your search. Or use feedback form to inform us about missing address."
 msgstr "Nerasta jokių adresų. Patikslinkite paiešką. Arba pasinaudokite susisiekimo forma ir praneškite apie trūkstamą adresą."
 
-#: pjweb/views.py:211
+#: pjweb/views.py:210
 #, python-format
 msgid "%(name)s %(surname)s email cannot be found in database."
 msgstr "%(name)s %(surname)s el. paštas nerastas duomenų bazėje."
 
-#: pjweb/views.py:243
-msgid "Thank you. Your message has been sent."
-msgstr "Dėkojame. Jūsų žinutė išsiųsta."
-
-#: pjweb/views.py:256
+#: pjweb/views.py:251
 #, python-format
 msgid "Problem occurred. Your Email to %(name)s %(surname)s has not been sent. Please try again later."
 msgstr "Iškilo problema. Jūsų laiškas, kurio adresatas yra %(name)s %(surname)s, nebuvo išsiųstas. Prašome pamėginti vėliau."
 
-#: pjweb/widgets.py:18
+#: pjweb/views.py:366
+#: pjweb/views.py:412
+msgid "Thank you. Your message has been sent."
+msgstr "Dėkojame. Jūsų žinutė išsiųsta."
+
+#: pjweb/widgets.py:22
 #, python-format
 msgid "Please be polite! Letter with %s in it will not be sent."
 msgstr "Būkite mandagūs! Laiškas su %s tekste nebus siunčiamas."
 
-#: pjweb/widgets.py:19
+#: pjweb/widgets.py:23
 msgid "and"
 msgstr "ir"
+
+#: pjweb/widgets.py:30
+msgid "There should be numbers in phone number."
+msgstr "Telefono numeryje turi būti skaičiai."
 
 #: templates/404.html:14
 #: templates/500.html:14

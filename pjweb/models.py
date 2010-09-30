@@ -21,7 +21,9 @@ class Email(models.Model):
 
     sender = models.EmailField()
     sender_name = models.CharField(max_length = 128)
-    recipient = models.CharField(max_length = 255)
+    recipient_name = models.CharField(max_length = 128)
+    recipient_id = models.IntegerField()
+    recipient_type = models.CharField(max_length = 5)
     message = models.TextField()
     phone = models.CharField(max_length = 100)
     msg_state = models.CharField(max_length=1, choices=MSG_STATES)

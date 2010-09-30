@@ -8,9 +8,9 @@
 <table>
 {% for mail in all_mails %}
 <tr>
-<td><p>{{ mail.sender_name }}</p></td>
-<td><p><a href="/pjweb/public/{{ mail.id }}/">{{ mail.subject }}</a></p></td>
+<td><p><a href="/pjweb/public/{{ mail.id }}/">{{ mail.recipient_name }}</a></p></td>
 <td><p>{{ mail.message }}</p></td>
+<td><p>{{ mail.sender_name }}</p></td>
 </tr>
 {% endfor %}
 </table>

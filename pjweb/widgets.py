@@ -5,6 +5,7 @@ from django.utils.translation import ugettext as _, ugettext_lazy, ungettext
 from django.core.exceptions import ValidationError
 from django import forms
 import settings
+import re
 
 def hasNoProfanities(field_data):
     """ 
@@ -21,3 +22,9 @@ def hasNoProfanities(field_data):
         raise ValidationError, _('Please be polite! Letter with %s in it will not be sent.') % get_text_list(
                 ['"%s%s%s"' % (i[0], '-'*(len(i)-2), i[-1]) for i in words_seen], _('and')
             )
+
+def hasDigits(field_data):
+
+    field_data = field_data.lower()
+    if not re.match("^[+() 0-9]*$", field_data):
+        raise ValidationError, _('There should be numbers in phone number.')

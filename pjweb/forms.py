@@ -21,7 +21,7 @@ class ContactForm(forms.Form):
     )
     public = forms.ChoiceField(choices = pub_choices)
     sender_name = forms.CharField(max_length=128, validators=[hasNoProfanities])
-    phone = forms.CharField(max_length=100)
+    phone = forms.CharField(max_length=100, validators=[hasDigits])
     message = forms.CharField(widget=forms.Textarea, validators=[hasNoProfanities])
     sender = forms.EmailField()
 
