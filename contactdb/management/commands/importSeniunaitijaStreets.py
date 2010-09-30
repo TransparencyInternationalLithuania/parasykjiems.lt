@@ -54,7 +54,7 @@ class Command(BaseCommand):
             constituency = constituencies[pol.Constituency.nr]
             # re-assign old constituency to new constituency fetched from database
             pol.Constituency = constituency
-        print "finished pre-fetching. Took %s seconds" % time.ElapsedSeconds()
+        print u"finished pre-fetching. Took %s seconds" % time.ElapsedSeconds()
 
     def RemoveExistingStreets(self, expandedStreets, street, pollingDistrict):
         nonExisting = []
@@ -144,7 +144,7 @@ class Command(BaseCommand):
                     print "street \t %s \t %s \t %s \t %s" % (street.city, street.street, street.numberFrom, street.numberTo)
                     numberOfStreets += 1
             except SeniunaitijaAddressExpanderException as e:
-                logger.error("""Error in seniunaitija teritory nr '%s'
+                logger.error(u"""Error in seniunaitija teritory nr '%s'
 ErrorDetails = %s""" % (member.uniqueKey, e.message))
                 wasError = wasError + 1
                 continue
@@ -162,9 +162,9 @@ ErrorDetails = %s""" % (member.uniqueKey, e.message))
 
 
         if (wasError == 0):
-            print "succesfully imported %d seniunaitija territories, total %d streets" % (imported, totalNumberOfStreets)
+            print u"succesfully imported %d seniunaitija territories, total %d streets" % (imported, totalNumberOfStreets)
         else:
-            print "Errors. Imported only part of the seniunaitija territories"
-            print "Imported %d seniunaitija territories, total %d streets" % (imported, totalNumberOfStreets)
-            print "There was %s errors" % (wasError)
-        print "total spent time %d seconds" % (start.ElapsedSeconds())
+            print u"Errors. Imported only part of the seniunaitija territories"
+            print u"Imported %d seniunaitija territories, total %d streets" % (imported, totalNumberOfStreets)
+            print u"There was %s errors" % (wasError)
+        print u"total spent time %d seconds" % (start.ElapsedSeconds())

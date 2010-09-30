@@ -54,7 +54,7 @@ class Command(BaseCommand):
                 name = member.civilParishStr
                 member.civilParish = HierarchicalGeoData.objects.filter(name = name).filter(type = type)[0:1].get()
             except ObjectDoesNotExist:
-                str = """Parish with name '%s' and type '%s' could not be found in database table
+                str = u"""Parish with name '%s' and type '%s' could not be found in database table
 %s while import CivilParishMembers. Data source taken from Google doc '%s'. Unique key '%s'  )""" % \
                     (name, type, HierarchicalGeoData.objects.model._meta.db_table,
                     GoogleDocsSources.LithuanianCivilParishMembers, member.uniqueKey)
@@ -66,11 +66,11 @@ class Command(BaseCommand):
                 member.save()
             else:
                 member.id = m.id
-                print "updating parish member: %s %s %s " % (m.name, m.surname, m.uniqueKey)
+                print u"updating parish member: %s %s %s " % (m.name, m.surname, m.uniqueKey)
                 member.save()
 
 
             count += 1
             if (count >= maxNumberToImport):
                 break
-        print "succesfully imported/updated %d Parish Members" % (count)
+        print u"succesfully imported/updated %d Parish Members" % (count)

@@ -14,15 +14,15 @@ class Command(BaseCommand):
         time = TimeMeasurer()
         imports = ["importConstituencies", "importMPs", "importStreets"]
 
-        print "Will import followind data:"
+        print u"Will import followind data:"
         for i in imports: print i
 
-        print "Starting import"
+        print u"Starting import"
         for i in imports:
-            print "importing %s" % (i)
+            print u"importing %s" % (i)
             management.call_command(i)
 
-        print "finished importing ContactDB. Took %s seconds" % time.ElapsedSeconds()
+        print u"finished importing ContactDB. Took %s seconds" % time.ElapsedSeconds()
 
             
 

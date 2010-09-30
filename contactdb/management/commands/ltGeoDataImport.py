@@ -159,27 +159,27 @@ class Command(BaseCommand):
 
     def CreateAdditionalGeoData(self):
         try:
-            self.CreateRowIfNotExist("Palangos miesto seniūnija", HierarchicalGeoData.HierarchicalGeoDataType.CivilParish,
-                "Palangos miesto savivaldybė", HierarchicalGeoData.HierarchicalGeoDataType.Municipality)
+            self.CreateRowIfNotExist(u"Palangos miesto seniūnija", HierarchicalGeoData.HierarchicalGeoDataType.CivilParish,
+                u"Palangos miesto savivaldybė", HierarchicalGeoData.HierarchicalGeoDataType.Municipality)
 
-            self.CreateRowIfNotExist("Šventosios seniūnija", HierarchicalGeoData.HierarchicalGeoDataType.CivilParish,
-                "Palangos miesto savivaldybė", HierarchicalGeoData.HierarchicalGeoDataType.Municipality)
+            self.CreateRowIfNotExist(u"Šventosios seniūnija", HierarchicalGeoData.HierarchicalGeoDataType.CivilParish,
+                u"Palangos miesto savivaldybė", HierarchicalGeoData.HierarchicalGeoDataType.Municipality)
 
 
-            klaipedaCompanies = ['Teritorija aptarnaujama UAB "Paslaugos būstui"',
-                                 'Teritorija aptarnaujama UAB "Vitės valdos"',
-                                 'Teritorija aptarnaujama UAB "Mūsų namų valdos"',
-                                 'Teritorija aptarnaujama UAB "Marių valdos"',
-                                 'Teritorija aptarnaujama UAB "Ąžuolyno valda"',
-                                 'Teritorija aptarnaujama UAB "Pempininkų valdos"',
-                                 'Teritorija aptarnaujama UAB "Debreceno valda"',
-                                 'Teritorija aptanaujama UAB "Buitis be rūpesčių"',
-                                 'Teritorija aptanaujama UAB "Vingio valdos"',
-                                 'Teritorija aptarnaujama UAB "Laukininkų valdos"']
+            klaipedaCompanies = [u'Teritorija aptarnaujama UAB "Paslaugos būstui"',
+                                 u'Teritorija aptarnaujama UAB "Vitės valdos"',
+                                 u'Teritorija aptarnaujama UAB "Mūsų namų valdos"',
+                                 u'Teritorija aptarnaujama UAB "Marių valdos"',
+                                 u'Teritorija aptarnaujama UAB "Ąžuolyno valda"',
+                                 u'Teritorija aptarnaujama UAB "Pempininkų valdos"',
+                                 u'Teritorija aptarnaujama UAB "Debreceno valda"',
+                                 u'Teritorija aptanaujama UAB "Buitis be rūpesčių"',
+                                 u'Teritorija aptanaujama UAB "Vingio valdos"',
+                                 u'Teritorija aptarnaujama UAB "Laukininkų valdos"']
 
             for company in klaipedaCompanies:
                 self.CreateRowIfNotExist(company, HierarchicalGeoData.HierarchicalGeoDataType.CivilParish,
-                    "Klaipėdos miesto savivaldybė", HierarchicalGeoData.HierarchicalGeoDataType.Municipality)
+                    u"Klaipėdos miesto savivaldybė", HierarchicalGeoData.HierarchicalGeoDataType.Municipality)
 
 
 
@@ -187,8 +187,8 @@ class Command(BaseCommand):
 
 
         except (HierarchicalGeoData.DoesNotExist, LTGeoDataImportException):
-            print "Could not create addition geo data"
-            print """This might happen if you have called with max-depth 1.  In that case appropriate data was simply
+            print u"Could not create addition geo data"
+            print u"""This might happen if you have called with max-depth 1.  In that case appropriate data was simply
 not created, so it is normal to receive HierarchicalGeoData.DoesNotExist exception. Please import
 more data with at least max-depth 2"""
         
@@ -199,7 +199,7 @@ more data with at least max-depth 2"""
         self.options = options
         self.options['max-depth'] = int(self.options['max-depth'])
 
-        print "max-depth is set to %d" % self.options['max-depth']
+        print u"max-depth is set to %d" % self.options['max-depth']
 
         # by default every second will be fetched 1 message.
         # so it will be 1 url fetch per 1 second
@@ -218,7 +218,7 @@ more data with at least max-depth 2"""
             print "Initialising import procedure"
             self.queue.InitialiseImport()
 
-        print "starting import procedure"
+        print u"starting import procedure"
 
         elapsedTime = TimeMeasurer()
         lastMessageTime = elapsedTime.ElapsedSeconds()
@@ -231,7 +231,7 @@ more data with at least max-depth 2"""
         while (True):
             msg = self.queue.ReadMessage()
             if (msg is None):
-                print "no more messages, quitting"
+                print u"no more messages, quitting"
                 break
 
             # if timeDiff is greater than zero, then last message was processed
@@ -241,7 +241,7 @@ more data with at least max-depth 2"""
             timeDiff = timeToProcessLastMessage - throttleSpeed
             if (timeDiff < 0):
                 toSleep = timeDiff * -1
-                print "will sleep for %s seconds" % toSleep
+                print u"will sleep for %s seconds" % toSleep
                 time.sleep(toSleep)
 
             # reset the counter for this message
@@ -253,7 +253,7 @@ more data with at least max-depth 2"""
 
             self.queue.MQServer.BeginTransaction()
             url = msg.body
-            print "parsing url %s" % url
+            print u"parsing url %s" % url
 
             response = urlopen(url)
             lines = "".join(response.readlines())
@@ -269,12 +269,12 @@ more data with at least max-depth 2"""
 
             self.queue.ConsumeMessage(msg)
             self.queue.MQServer.Commit()
-            print "Created total %s additional messages. Inserted %s rows into db" % (totalCreatedMessages, totalInsertedRows)
-            print "Made %s requirests. Avg %s fetches per second" % (totalParsedMessages, totalParsedMessages / elapsedTime.ElapsedSeconds())
+            print u"Created total %s additional messages. Inserted %s rows into db" % (totalCreatedMessages, totalInsertedRows)
+            print u"Made %s requirests. Avg %s fetches per second" % (totalParsedMessages, totalParsedMessages / elapsedTime.ElapsedSeconds())
 
-        print "Took %s seconds" % elapsedTime.ElapsedSeconds()
-        print "Created total %s additional messages. Inserted %s rows into db" % (totalCreatedMessages, totalInsertedRows)
-        print "Made %s requirests. Avg %s fetches per second" % (totalParsedMessages, totalParsedMessages / elapsedTime.ElapsedSeconds())
+        print u"Took %s seconds" % elapsedTime.ElapsedSeconds()
+        print u"Created total %s additional messages. Inserted %s rows into db" % (totalCreatedMessages, totalInsertedRows)
+        print u"Made %s requirests. Avg %s fetches per second" % (totalParsedMessages, totalParsedMessages / elapsedTime.ElapsedSeconds())
 
-        print "Creating additional data, not availbe in www server"
+        print u"Creating additional data, not availbe in www server"
         self.CreateAdditionalGeoData()

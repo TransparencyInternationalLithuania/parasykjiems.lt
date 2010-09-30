@@ -33,7 +33,7 @@ class Command(BaseCommand):
             # TODO: how to do a normal method chaining in Python so that line would not be that long??
             civilParish = HierarchicalGeoData.objects.filter(name__contains = self.civilParishStr).filter(type = HierarchicalGeoData.HierarchicalGeoDataType.CivilParish).filter(parent__name__contains = self.municipalityStr).get()
         except HierarchicalGeoData.DoesNotExist:
-            str = """Could not find Civil parish with name '%s' and type '%s'. \n Municipality '%s'
+            str = u"""Could not find Civil parish with name '%s' and type '%s'. \n Municipality '%s'
 Database table: %s. Data source taken from GoogleDoc '%s'. Unique key '%s' """ % \
                 (self.civilParishStr, HierarchicalGeoData.HierarchicalGeoDataType.CivilParish, self.municipalityStr,
                 HierarchicalGeoData.objects.model._meta.db_table, GoogleDocsSources.LithuanianSeniunaitijaMembers,
@@ -56,9 +56,9 @@ Database table: %s. Data source taken from GoogleDoc '%s'. Unique key '%s' """ %
             seniunaitija.parent = civilParish
             seniunaitija.type = HierarchicalGeoData.HierarchicalGeoDataType.Seniunaitija
             seniunaitija.save()
-            print "creating new Seniunatija object %s %s" % (self.seniunaitijaStr, civilParish.name)
+            print u"creating new Seniunatija object %s %s" % (self.seniunaitijaStr, civilParish.name)
         else:
-            print "already exists Seniunatija object %s %s " % (self.seniunaitijaStr, self.civilParishStr)
+            print u"already exists Seniunatija object %s %s " % (self.seniunaitijaStr, self.civilParishStr)
         return seniunaitija
 
 
@@ -118,9 +118,9 @@ Database table: %s. Data source taken from GoogleDoc '%s'. Unique key '%s' """ %
                 if (count >= maxNumberToImport):
                     break
         except SeniunaitijaNotFoundException as e:
-            raise ImportSeniunaitijaException("""
+            raise ImportSeniunaitijaException(u"""
 Seniunaitija was not found in HierarchicalGeoData. That probabl means that hierarchical geo data was not yet
 imported. Issue this command to import    \n:  ltGeoDataImport --max-depth 3
 Another option is that the data is wrong, such as a misspeled Seniunaitija name""", e)
 
-        print "succesfully imported %d seniunaitija" % (count)
+        print u"succesfully imported %d seniunaitija" % (count)
