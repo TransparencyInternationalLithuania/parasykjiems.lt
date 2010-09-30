@@ -599,17 +599,17 @@ class LithuanianConstituencyReader:
 
         # read a line from file
         for s in self.file:
-
+            s = unicode(s, 'utf-8')
             # return each splited line as separate line
             s = self._removeDumbCharacters(s)
-            if (s == ""):
+            if (s == u""):
                 continue
             return s
 
         return ""
 
     def _removeDumbCharacters(self, str):
-        return str.strip("* \r\n")
+        return str.strip(u"* \r\n")
 
     def _readAddress(self):
         strings = []
@@ -619,27 +619,30 @@ class LithuanianConstituencyReader:
         # read all non empty lines, and append to list
         # when empty strins is found, that means addresses are finished
         for s in self.file:
+            s = unicode(s, 'utf-8')
             s = self._removeDumbCharacters(s)
-            if (s == ""):
+            if (s == u""):
                 break
-            strings.append(" ")
+            strings.append(u" ")
             strings.append(s)
 
 
-        return "".join(strings)
+        return u"".join(strings)
 
     def readParagraph(self):
         s = ""
         for s in self.file:
+            s = unicode(s, 'utf-8')
             s = self._removeDumbCharacters(s)
-            if s != "":
+            if s != u"":
                 break
 
         adr = []
         adr.append(s)
         for s in self.file:
+            s = unicode(s, 'utf-8')
             s = self._removeDumbCharacters(s)
-            if s == "":
+            if s == u"":
                 break
             adr.append(s)
 
@@ -653,15 +656,15 @@ class LithuanianConstituencyReader:
         while (1):
             line = self._notEmptyLine()
 
-            if (line == ""):
+            if (line == u""):
                 return
 
-            if (line.find("apygarda") >=0 ):
+            if (line.find(u"apygarda") >=0 ):
                 location.Constituency = self.constituencyParser.ExtractConstituencyFromConstituencyFile(line)
                 state = State.PollingDistrict
                 continue
 
-            if (line.find("apylink") >=0 ):
+            if (line.find(u"apylink") >=0 ):
                 location.PollingDistrict = line
                 state = State.Addresses
 
@@ -672,7 +675,7 @@ class LithuanianConstituencyReader:
                 # So just instruct so skip reading streets for this Constituency
                 # HACK for now, but works
                 # If you remove it, a test will fail
-                if (line.find("Jūreivių rinkimų apylinkė") >=0 ):
+                if (line.find(u"Jūreivių rinkimų apylinkė") >=0 ):
                     yield location
                     state = State.Constituency
                     continue

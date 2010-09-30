@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand
 from contactdb.imp import LithuanianConstituencyAggregator, ImportSources
 from django.db import transaction
+from pjutils.uniconsole import *
 import os
 
 class Command(BaseCommand):
