@@ -18,3 +18,4 @@ if __name__ == "__main__":
         print msg
         print "logging as exception"
         logging.exception(msg)
+        raise e

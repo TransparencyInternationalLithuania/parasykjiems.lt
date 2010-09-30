@@ -46,22 +46,22 @@ class Command(BaseCommand):
                 else:
                     member.constituency = Constituency.objects.get(nr = member.constituency.nr)
             except ObjectDoesNotExist:
-                print "Constituency with nr '%d' could not be found in database. Either the database is not yet populated with contstituencies, or it is missing (probably because import data does not contain it)" % (member.constituency.nr)
-                print "Skipping this MPs. Continuing with the rest"
+                print u"Constituency with nr '%d' could not be found in database. Either the database is not yet populated with contstituencies, or it is missing (probably because import data does not contain it)" % (member.constituency.nr)
+                print u"Skipping this MPs. Continuing with the rest"
                 continue
 
             # check if already such member exists. Name and surname are primary keys
             m = self.alreadyExists(member)
             if (m is None):
-                print "Imported MP %s %s %s" % (member.name, member.surname, member.uniqueKey)
+                print u"Imported MP %s %s %s" % (member.name, member.surname, member.uniqueKey)
 
             else:
                 member.id = m.id
-                print "updating MP %s %s %s" % (member.name, member.surname, member.uniqueKey)
+                print u"updating MP %s %s %s" % (member.name, member.surname, member.uniqueKey)
 
 
             member.save()
             count += 1
             if (count >= numberToPrint):
                 break;
-        print "succesfully imported / updated %d MPs" % (count)
+        print u"succesfully imported / updated %d MPs" % (count)
