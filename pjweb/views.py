@@ -348,7 +348,9 @@ def contact(request, rtype, mp_id):
                 mail = Email(
                     sender_name = sender_name,
                     sender = sender,
-                    recipient = recipients[0],
+                    recipient_id = receiver.id,
+                    recipient_type = rtype,
+                    recipient_name = '%s %s' % (receiver.name, receiver.surname),
                     phone = phone,
                     message = message,
                     msg_state = 'W',
@@ -383,7 +385,7 @@ def contact(request, rtype, mp_id):
                 })
 
     else:
-        form = ContactForm(initial={'message': 'Gerb. p. %s, \n \n \n \nGeros dienos.' % receiver.name })
+        form = ContactForm(initial={'message': 'Gerb. p. %s, \n\n\n\nGeros dienos.' % receiver.name })
         
     return render_to_response('pjweb/contact.html', {
         'form': form,
