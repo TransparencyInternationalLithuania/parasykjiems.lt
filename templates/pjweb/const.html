@@ -21,7 +21,7 @@
 <p id="head-font">{% trans "Member of parliament" %} </p>
 <p>{% trans "Responsible for everything" %}</p>
 <a href="/pjweb/contact/mp/{{ parliament_member.id }}/">
-<img class="step" src="/static/img/btn-write.png" alt="Rašyti laišką {{ parliament_member.name }} {{ parliament_member.surname }}"></a>
+<img class="step" src="/static/img/btn-write.png" alt={% trans "Write a letter to" %} {{ parliament_member.name }} {{ parliament_member.surname }}"></a>
 </td>
 </tr>
 {% endfor %}
@@ -43,7 +43,7 @@
 <p id="head-font">{% trans "Member of municipality" %} </p>
 <p>{% trans "Responsible for your municipality" %}</p>
 <a href="/pjweb/contact/mn/{{ municipality_member.id }}/">
-<img class="step" src="/static/img/btn-write.png" alt="Rašyti laišką {{ municipality_member.name }} {{ municipality_member.surname }}"></a>
+<img class="step" src="/static/img/btn-write.png" alt={% trans "Write a letter to" %} {{ municipality_member.name }} {{ municipality_member.surname }}"></a>
 </td>
 </tr>
 {% endfor %}
@@ -62,7 +62,7 @@
 <p id="head-font">{% trans "Member of civil parish" %} </p>
 <p>{% trans "Responsible for your civil parish" %}</p>
 <a href="/pjweb/contact/cp/{{ civilparish_member.id }}/">
-<img class="step" src="/static/img/btn-write.png" alt="Rašyti laišką {{ civilparish_member.name }} {{ civilparish_member.surname }}"></a>
+<img class="step" src="/static/img/btn-write.png" alt={% trans "Write a letter to" %} {{ civilparish_member.name }} {{ civilparish_member.surname }}"></a>
 </td>
 </tr>
 {% endfor %}
@@ -79,7 +79,7 @@
 <p id="head-font">{% trans "Member of civil parish" %} </p>
 <p>{% trans "Responsible for your civil parish" %}</p>
 <a href="/pjweb/contact/sn/{{ seniunaitija_member.id }}/">
-<img class="step" src="/static/img/btn-write.png" alt="Rašyti laišką {{ seniunaitija_member.name }} {{ seniunaitija_member.surname }}"></a>
+<img class="step" src="/static/img/btn-write.png" alt={% trans "Write a letter to" %} {{ seniunaitija_member.name }} {{ seniunaitija_member.surname }}"></a>
 </td>
 </tr>
 {% endfor %}

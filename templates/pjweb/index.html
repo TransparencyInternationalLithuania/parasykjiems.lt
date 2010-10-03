@@ -6,7 +6,7 @@
 <strong>{% trans "Enter Your Address for search:" %}</strong><br>
   {{ form.address_input }}
 <input type="image" src="/static/img/btn-ieskoti.png" align="absmiddle" id="address-button"><br>
-<em>Pvz.: Gedimino pr. 9-115, Vilnius</em>
+<em>{% trans "Eg.: Gedimino pr. 9, Vilnius" %}</em>
 </form>
 
 {% if found_entries %}
@@ -28,10 +28,11 @@
         {% endif %}
 
       {% endfor %}
+    </table>
+  </div>
 {% else %}
   <div id="address_table">
     <strong>{{ not_found }}</strong>
-    </table>
   </div>
 {% endif %}
 {% endblock %}

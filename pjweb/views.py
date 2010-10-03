@@ -56,7 +56,7 @@ def get_pollingstreet(query_string):
     qery_list = re.split(r'[ ,]', query_string)
 
     for string in qery_list:
-        number = re.split(r'[-\/]', string)[0]
+        number = re.split(r'[-\/a-zA-Z]', string)[0]
         if number.isdigit():
 
             house_no = number
@@ -67,11 +67,7 @@ def get_pollingstreet(query_string):
 
     found_entries = PollingDistrictStreet.objects.filter(entry_query).order_by('street')
 
-    if not found_entries:
-        found_entries = {}
-        not_found = _('No addressess were found. Please refine your search. Or use feedback form to inform us about missing address.')
-
-    elif house_no and len(found_entries)>1:
+    if house_no and len(found_entries)>1:
 
         addr_ids = []
         for found_entry in found_entries:
@@ -88,6 +84,11 @@ def get_pollingstreet(query_string):
                 addr_ids.append(found_entry.id)
 
         found_entries = PollingDistrictStreet.objects.filter(id__in=addr_ids).order_by('street')
+
+    if not found_entries:
+        found_entries = {}
+        not_found = _('No addressess were found. Please refine your search. Or use feedback form to inform us about missing address.')
+
     result = {
         'found_entries': found_entries,
         'found_geodata': found_geodata,
@@ -175,7 +176,6 @@ def index(request):
         }
     suggestion = ''
 
-    all_mps = ParliamentMember.objects.all()
     if request.method == 'POST':
         form = IndexForm(request.POST)
         if form.is_valid():
@@ -193,7 +193,6 @@ def index(request):
         )
     else:
         return render_to_response('pjweb/index.html', {
-            'all_mps': all_mps,
             'form': form,
             'entered': query_string,
             'found_entries': address['found_entries'],

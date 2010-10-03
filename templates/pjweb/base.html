@@ -10,15 +10,15 @@
 <body>
 <div id="top">
 <div>
-    <a href="/" id="logo"><img width="359" height="50" src="/static/img/logo.png" alt="ParašykJiems - Greitas būdas rasti atsakingus valdžios atstovus ir su jais susisiekti."></a>
+    <a href="/" id="logo"><img width="359" height="50" src="/static/img/logo.png" alt="{% trans "ParašykJiems - Fast method to find representatives and contact them." %}"></a>
     <a href="/pjweb/about/" id="about">{% trans "About project" %}</a>
     <a href="/pjweb/public_mails/" id="archive"><img src="/static/img/info.png" align="absmiddle">{% trans "List of all public mails" %}</a>
 </div>
 </div>
 <div id="content">
-<img class="step" src="/static/img/{{ step1 }}" alt="Raskite reikiamą atstovą (nustatysime pagal adresą)">
-<img class="step" src="/static/img/{{ step2 }}" alt="Laiško turinys (galite rašyti viešą arba privatų laišką)">
-<img class="step" src="/static/img/{{ step3 }}" alt="Peržiūra ir siuntimas (pasitikrinkite klaidas ;-))">
+<img class="step" src="/static/img/{{ step1 }}" alt="{% trans "Find desired representative (will be found by address)" %}">
+<img class="step" src="/static/img/{{ step2 }}" alt="{% trans "Body of the message (you can write public or private mail)" %}">
+<img class="step" src="/static/img/{{ step3 }}" alt="{% trans "Preview and send (check your spelling ;-))" %}">
 {% block content %}{% endblock %}
 </form>
 </div>
