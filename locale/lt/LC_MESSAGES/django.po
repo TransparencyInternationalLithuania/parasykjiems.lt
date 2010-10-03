@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-09-30 14:19+0300\n"
-"PO-Revision-Date: 2010-09-30 14:20+0300\n"
+"POT-Creation-Date: 2010-10-03 23:26+0300\n"
+"PO-Revision-Date: 2010-10-03 23:29+0300\n"
 "Last-Translator: Vytautas <didysis@vytrautas.lt>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -35,11 +35,11 @@ msgstr "Siuntėjo intformacija"
 msgid "Message"
 msgstr "Žinutė"
 
-#: pjweb/forms.py:19
+#: pjweb/forms.py:28
 msgid "Private"
 msgstr "Privatus"
 
-#: pjweb/forms.py:20
+#: pjweb/forms.py:29
 msgid "Public"
 msgstr "Viešas"
 
@@ -96,6 +96,26 @@ msgstr "Django puslapio administravimas"
 msgid "Parašyk jiems lt administration"
 msgstr "Parašyk jiems lt administravimas"
 
+#: templates/pjweb/about.html:6
+msgid "This site is for people to contact with their representatives."
+msgstr "Šis puslapis skirtas žmonėms susisiekti su savo atstovais."
+
+#: templates/pjweb/base.html:13
+msgid "ParašykJiems - Fast method to find representatives and contact them."
+msgstr "ParašykJiems - greitas būdas rasti atsakingus valdžios atstovus ir su jais susisiekti."
+
+#: templates/pjweb/base.html:19
+msgid "Find desired representative (will be found by address)"
+msgstr "Raskite reikiamą atstovą (nustatysime pagal adresą)"
+
+#: templates/pjweb/base.html:20
+msgid "Body of the message (you can write public or private mail)"
+msgstr "Laiško turinys (galite rašyti viešą ar privatų laišką)"
+
+#: templates/pjweb/base.html:21
+msgid "Preview and send (check your spelling ;-))"
+msgstr "Peržiūra ir siuntimas (pasitikrinkite klaidas ;-))"
+
 #: templates/pjweb/base.html:25
 msgid "Have any notes, suggestions?"
 msgstr "Turite pastabų, pasiūlymų?"
@@ -124,6 +144,13 @@ msgstr "Seimo narys"
 #: templates/pjweb/const.html:22
 msgid "Responsible for everything"
 msgstr "Atsakingas už viską"
+
+#: templates/pjweb/const.html:24
+#: templates/pjweb/const.html.py:46
+#: templates/pjweb/const.html:65
+#: templates/pjweb/const.html.py:82
+msgid "Write a letter to"
+msgstr "Rašyti laišką"
 
 #: templates/pjweb/const.html:33
 #: templates/pjweb/const.html.py:43
@@ -194,6 +221,10 @@ msgstr "Turite pastabų? Parašykite mums!"
 msgid "Enter Your Address for search:"
 msgstr "Įveskite savo adresą paieškai:"
 
+#: templates/pjweb/index.html:9
+msgid "Eg.: Gedimino pr. 9, Vilnius"
+msgstr "Pvz.: Gedimino pr. 9, Vilnius"
+
 #: templates/pjweb/index.html:14
 msgid "Several addresses were found. Choose:"
 msgstr "Rasti keli adresai. Pasirinkite:"
@@ -217,6 +248,10 @@ msgstr "Grįžti į redagavimą"
 #: templates/pjweb/public_mails.html:6
 msgid "Here you can see all public emails"
 msgstr "Čia galite matyti visus viešus laiškus"
+
+#: templates/pjweb/thanks.html:6
+msgid "Letter was successfuly sent."
+msgstr "Laiškas sėkmingai išsiųstas."
 
 #: templates/pjweb/thanks.html:8
 msgid "View list of all public messages"
