@@ -99,11 +99,11 @@ class TestImportLithuanianCounties(TestCase):
         for pollingDistrict in LithuanianConstituencyReader(file).getLocations():
             allPollingDistricts[self.getKey(pollingDistrict.PollingDistrict, pollingDistrict.Constituency)] = pollingDistrict
 
-        self.assertPollingDistrict(allPollingDistricts, "Senamiesčio rinkimų apylinkė Nr. 1", "Akmenės–Joniškio rinkimų apygarda Nr. 39", "Akmenės rajonAS", "Adresas *Vytauto g. 3, Naujoji Akmenė.", "Rinkėjų skaičius *2632.")
-        self.assertPollingDistrict(allPollingDistricts, "Lomenos rinkimų apylinkė Nr. 4", "Kaišiadorių–Elektrėnų rinkimų apygarda Nr. 59", "Kaišiadorių rajonAS")
-        self.assertPollingDistrict(allPollingDistricts, "Girelės rinkimų apylinkė Nr. 3", "Kaišiadorių–Elektrėnų rinkimų apygarda Nr. 59", "Kaišiadorių rajonAS", "Adresas *Girelės g. 53, Kaišiadorys, Technologijų ir verslo mokyklos bendrabučio salė.", "Rinkėjų skaičius *2789.")
+        self.assertPollingDistrict  (allPollingDistricts, u"Senamiesčio rinkimų apylinkė Nr. 1", u"Akmenės–Joniškio rinkimų apygarda Nr. 39", u"Akmenės rajonAS", u"Adresas *Vytauto g. 3, Naujoji Akmenė.", u"Rinkėjų skaičius *2632.")
+        self.assertPollingDistrict(allPollingDistricts, u"Lomenos rinkimų apylinkė Nr. 4", u"Kaišiadorių–Elektrėnų rinkimų apygarda Nr. 59", u"Kaišiadorių rajonAS")
+        self.assertPollingDistrict(allPollingDistricts, u"Girelės rinkimų apylinkė Nr. 3", u"Kaišiadorių–Elektrėnų rinkimų apygarda Nr. 59", u"Kaišiadorių rajonAS", u"Adresas *Girelės g. 53, Kaišiadorys, Technologijų ir verslo mokyklos bendrabučio salė.", u"Rinkėjų skaičius *2789.")
 
-        self.assertPollingDistrict(allPollingDistricts, "S. Daukanto rinkimų apylinkė Nr. 64", "Danės rinkimų apygarda Nr. 19", "Klaipėdos miestas", "Adresas *S.Daukanto g. 5, Klaipėda.", "Rinkėjų skaičius *1001.")
+        self.assertPollingDistrict(allPollingDistricts, u"S. Daukanto rinkimų apylinkė Nr. 64", u"Danės rinkimų apygarda Nr. 19", u"Klaipėdos miestas", u"Adresas *S.Daukanto g. 5, Klaipėda.", u"Rinkėjų skaičius *1001.")
 
 
 
@@ -112,8 +112,8 @@ class TestImportLithuanianCounties(TestCase):
         file = open(self.singleRecordFile, "r")
         importer = LithuanianConstituencyReader(file)
         for loc in importer.getLocations():
-            self.assertEqual(loc.District, "Akmenės rajonAS")
-            self.assertEqual(loc.Constituency.name, "Akmenės–Joniškio rinkimų apygarda")
+            self.assertEqual(loc.District, u"Akmenės rajonAS")
+            self.assertEqual(loc.Constituency.name, u"Akmenės–Joniškio rinkimų apygarda")
             self.assertEqual(loc.Constituency.nr, 39)
-            self.assertEqual(loc.PollingDistrict, "Senamiesčio rinkimų apylinkė Nr. 1")
-            self.assertTrue(loc.Addresses.index("Naujoji Akmenė: Algirdo g., Aušros g., Barvydžio vs.,") >= 0)
+            self.assertEqual(loc.PollingDistrict, u"Senamiesčio rinkimų apylinkė Nr. 1")
+            self.assertTrue(loc.Addresses.index(u"Naujoji Akmenė: Algirdo g., Aušros g., Barvydžio vs.,") >= 0)
