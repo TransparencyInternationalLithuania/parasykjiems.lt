@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-03 23:26+0300\n"
+"POT-Creation-Date: 2010-10-04 19:22+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -44,25 +44,25 @@ msgstr ""
 msgid "Public"
 msgstr ""
 
-#: pjweb/views.py:72
+#: pjweb/views.py:90
 msgid ""
 "No addressess were found. Please refine your search. Or use feedback form to "
 "inform us about missing address."
 msgstr ""
 
-#: pjweb/views.py:210
+#: pjweb/views.py:209
 #, python-format
 msgid "%(name)s %(surname)s email cannot be found in database."
 msgstr ""
 
-#: pjweb/views.py:251
+#: pjweb/views.py:250
 #, python-format
 msgid ""
 "Problem occurred. Your Email to %(name)s %(surname)s has not been sent. "
 "Please try again later."
 msgstr ""
 
-#: pjweb/views.py:366 pjweb/views.py:412
+#: pjweb/views.py:365 pjweb/views.py:411
 msgid "Thank you. Your message has been sent."
 msgstr ""
 
@@ -210,6 +210,19 @@ msgstr ""
 msgid "Have any notes? Write to us!"
 msgstr ""
 
+#: templates/pjweb/feedback.html:9
+msgid ""
+"If address wasn't found in database, but you know, that it exists, write "
+"exact address, to which civil parish, polling district and municipality it "
+"belongs, and, if you can, specify polling district."
+msgstr ""
+
+#: templates/pjweb/feedback.html:10
+msgid ""
+"If your member of municipality, civil parish wasn't found, write his data: "
+"name, surname, phone, email, work address."
+msgstr ""
+
 #: templates/pjweb/index.html:6
 msgid "Enter Your Address for search:"
 msgstr ""
@@ -238,6 +251,14 @@ msgstr ""
 
 #: templates/pjweb/preview.html:55
 msgid "Back to editing"
+msgstr ""
+
+#: templates/pjweb/private.html:5
+msgid "Click here, if you want to send private email"
+msgstr ""
+
+#: templates/pjweb/private.html:6
+msgid "Click here, if you want to send public email"
 msgstr ""
 
 #: templates/pjweb/public_mails.html:6

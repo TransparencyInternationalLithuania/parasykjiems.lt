@@ -23,6 +23,6 @@ urlpatterns = patterns('parasykjiems.pjweb.views',
     (r'^public_mails/$', 'public_mails'),
     (r'^public/(\d+)/$', 'public'),
     (r'^feedback/$', 'feedback'),
-    (r'^feedback/thanks/$', 'thanks'),
+#    (r'^feedback/thanks/$', 'thanks'),
     (r'^about/$', 'about'),
 )
