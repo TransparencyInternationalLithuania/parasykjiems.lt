@@ -47,7 +47,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 #EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 # where the static media files are
-STATIC_DOC_ROOT = '/path/to/media/folder/'
+STATIC_DOC_ROOT = os.path.join(scriptPath, "static")
 
 # enable logging
 logPath = os.path.join(scriptPath, "logs")
