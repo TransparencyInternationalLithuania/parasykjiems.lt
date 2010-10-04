@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-03 23:26+0300\n"
-"PO-Revision-Date: 2010-10-03 23:29+0300\n"
-"Last-Translator: Vytautas <didysis@vytrautas.lt>\n"
+"POT-Creation-Date: 2010-10-04 19:22+0300\n"
+"PO-Revision-Date: 2010-10-04 19:23+0300\n"
+"Last-Translator: Kroitus <didysis@vytautas.lt>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -43,22 +43,22 @@ msgstr "Privatus"
 msgid "Public"
 msgstr "Viešas"
 
-#: pjweb/views.py:72
+#: pjweb/views.py:90
 msgid "No addressess were found. Please refine your search. Or use feedback form to inform us about missing address."
 msgstr "Nerasta jokių adresų. Patikslinkite paiešką. Arba pasinaudokite susisiekimo forma ir praneškite apie trūkstamą adresą."
 
-#: pjweb/views.py:210
+#: pjweb/views.py:209
 #, python-format
 msgid "%(name)s %(surname)s email cannot be found in database."
 msgstr "%(name)s %(surname)s el. paštas nerastas duomenų bazėje."
 
-#: pjweb/views.py:251
+#: pjweb/views.py:250
 #, python-format
 msgid "Problem occurred. Your Email to %(name)s %(surname)s has not been sent. Please try again later."
 msgstr "Iškilo problema. Jūsų laiškas, kurio adresatas yra %(name)s %(surname)s, nebuvo išsiųstas. Prašome pamėginti vėliau."
 
-#: pjweb/views.py:366
-#: pjweb/views.py:412
+#: pjweb/views.py:365
+#: pjweb/views.py:411
 msgid "Thank you. Your message has been sent."
 msgstr "Dėkojame. Jūsų žinutė išsiųsta."
 
@@ -217,6 +217,14 @@ msgstr "Grįžti"
 msgid "Have any notes? Write to us!"
 msgstr "Turite pastabų? Parašykite mums!"
 
+#: templates/pjweb/feedback.html:9
+msgid "If address wasn't found in database, but you know, that it exists, write exact address, to which civil parish, polling district and municipality it belongs, and, if you can, specify polling district."
+msgstr "Jei adresas nerastas duomenų bazėje, bet tikrai žinote, kad toks yra, parašykite tikslų adresą, kokiai seniūnijai, miestui bei rajonui jis priklauso, bei, jei galite, nurodykite ir rinkimų apylinkę."
+
+#: templates/pjweb/feedback.html:10
+msgid "If your member of municipality, civil parish wasn't found, write his data: name, surname, phone, email, work address."
+msgstr "Jei nebuvo rastas Jūsų meras, seniūnas, seniūnaitis, parašykite jo duomenis: vardą, pavardę, telefoną, el. pašto adresą, darbovietės adresą."
+
 #: templates/pjweb/index.html:6
 msgid "Enter Your Address for search:"
 msgstr "Įveskite savo adresą paieškai:"
@@ -244,6 +252,14 @@ msgstr "Rašote privatų laišką. Jis bus persiųstas tiesiogiai adresatui."
 #: templates/pjweb/preview.html:55
 msgid "Back to editing"
 msgstr "Grįžti į redagavimą"
+
+#: templates/pjweb/private.html:5
+msgid "Click here, if you want to send private email"
+msgstr "Spauskite čia, jei norite siųsti privatų laišką"
+
+#: templates/pjweb/private.html:6
+msgid "Click here, if you want to send public email"
+msgstr "Spauskite čia, jei norite siųsti viešą laišką"
 
 #: templates/pjweb/public_mails.html:6
 msgid "Here you can see all public emails"
