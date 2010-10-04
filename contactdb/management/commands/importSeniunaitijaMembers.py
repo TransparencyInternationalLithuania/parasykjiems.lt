@@ -47,22 +47,22 @@ class Command(BaseCommand):
                 print u"Probably that means that in seniunaitija %s a member was not yet elected" % member.seniunaitijaStr
                 continue
 
+
+            # relate existing seniunaitija to seniūnaitis
+            try:
+                type = HierarchicalGeoData.HierarchicalGeoDataType.Seniunaitija
+                name = member.seniunaitijaStr
+                #print "query: %s" % HierarchicalGeoData.objects.filter(name__contains = name).filter(type = type)[0:1].query
+                member.seniunaitija = HierarchicalGeoData.objects.filter(name__contains = name).filter(type = type)[0:1].get()
+            except ObjectDoesNotExist:
+                raise ImportCivilParishMemberException("""Seniunaitija with name '%s' and type '%s' could not be found in database. Either the database is
+not yet populated with seniunaitija, or it is missing (probably because import data does not contain it)""" % \
+                    (name, type))
+
             # check if already such member exists. Name and surname are primary keys
             m = self.alreadyExists(member)
             if (m is None):
                 print (u"Importing seniunaitija member %s %s %s" % (member.uniqueKey, member.name, member.surname))
-
-                # if does not exist, create it
-                # relate existing seniunaitija to an MP
-                try:
-                    type = HierarchicalGeoData.HierarchicalGeoDataType.Seniunaitija
-                    name = member.seniunaitijaStr
-                    #print "query: %s" % HierarchicalGeoData.objects.filter(name__contains = name).filter(type = type)[0:1].query
-                    member.seniunaitija = HierarchicalGeoData.objects.filter(name__contains = name).filter(type = type)[0:1].get()
-                except ObjectDoesNotExist:
-                    raise ImportCivilParishMemberException("""Seniunaitija with name '%s' and type '%s' could not be found in database. Either the database is
-    not yet populated with seniunaitija, or it is missing (probably because import data does not contain it)""" % \
-                        (name, type))
             else:
                 member.id = m.id
                 print u"updating : %s %s %s " % (member.uniqueKey, member.name, member.surname)
