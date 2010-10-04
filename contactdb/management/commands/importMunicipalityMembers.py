@@ -45,11 +45,11 @@ class Command(BaseCommand):
 
             # check if already such member exists. Name and surname are primary keys
             m = self.alreadyExists(member)
-
             # relate existing constituency to an MP
             try:
                 type = HierarchicalGeoData.HierarchicalGeoDataType.Municipality
-                name = member.municipalityStr.replace('rajono', '').strip()
+                name = member.municipalityStr.replace(u'rajono', '').strip()
+                name = u"%s savivaldybė" % (name)
                 member.municipality = HierarchicalGeoData.objects.filter(name__contains=name).filter(type = type)[0:1].get()
             except ObjectDoesNotExist:
                 raise ImportMunicipalityMemberException("""Municipality with name '%s' and type '%s' could not be found in database. Either the database is
