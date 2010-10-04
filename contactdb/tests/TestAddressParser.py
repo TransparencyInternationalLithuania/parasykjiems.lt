@@ -578,9 +578,9 @@ class TestAddressParser(TestCase):
 
         parsed = list(self.parser.GetAddresses(addressStr))
 
-        self.assertCity("Naujoji Akmenė", "Algirdo g.", parsed[0])
+        self.assertCity(u"Naujoji Akmenė", u"Algirdo g.", parsed[0])
 
-        self.assertCity("Naujoji Akmenė", "Aušros g.", parsed[1])
+        self.assertCity(u"Naujoji Akmenė", u"Aušros g.", parsed[1])
 
         self.assertEqual(55, len(parsed))
 
