@@ -30,7 +30,7 @@ class MunicipalityMembersReader:
             member.phone2 = row["telephonenumber2"].strip()
             member.mobilePhone = row["mobilenumber"].strip()
             member.address = row["address"].strip()
-            member.municipalityStr = row["municipality"].strip()
+            member.municipalityStr = unicode(row["municipality"].strip(), 'utf-8')
             member.uniqueKey = row["uniquekeynotchangeable"]
             yield member
 
