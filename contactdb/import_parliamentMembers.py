@@ -80,7 +80,7 @@ class CivilParishMembersReader:
             member.officeEmail = row["officee-mail"].strip()
             member.officePhone = row["officetelephonenumber"].strip()
             member.officeAddress = row["officeaddress"].strip()
-            member.civilParishStr = row["institution"].strip()
+            member.civilParishStr = unicode(row["institution"].strip(), 'utf-8')
             member.uniqueKey = row["uniquekeynotchangeable"]
 
             yield member
