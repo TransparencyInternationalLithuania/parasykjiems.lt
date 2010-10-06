@@ -194,6 +194,7 @@ def index(request):
     else:
         return render_to_response('pjweb/index.html', {
             'form': form,
+            'LANGUAGES': settings.LANGUAGES,
             'entered': query_string,
             'found_entries': address['found_entries'],
             'house_no': address['house_no'],
@@ -212,6 +213,7 @@ def no_email(request, rtype, mp_id):
     logger.debug('%s' % (NoEmailMsg))
     return render_to_response('pjweb/no_email.html', {
         'NoEmailMsg': NoEmailMsg,
+        'LANGUAGES': settings.LANGUAGES,
         'step1': 'step1_inactive.png',
         'step2': 'step2_active.png',
         'step3': 'step3_inactive.png',
@@ -222,6 +224,7 @@ def public_mails(request):
 
     return render_to_response('pjweb/public_mails.html', {
         'all_mails': all_mails,
+        'LANGUAGES': settings.LANGUAGES,
         'step1': 'step1_inactive.png',
         'step2': 'step2_inactive.png',
         'step3': 'step3_inactive.png',
@@ -229,6 +232,7 @@ def public_mails(request):
 
 def about(request):
     return render_to_response('pjweb/about.html', {
+        'LANGUAGES': settings.LANGUAGES,
         'step1': 'step1_inactive.png',
         'step2': 'step2_inactive.png',
         'step3': 'step3_inactive.png',
@@ -239,6 +243,7 @@ def public(request, mail_id):
     mail = mails[0]
     return render_to_response('pjweb/public.html', {
         'mail': mail,
+        'LANGUAGES': settings.LANGUAGES,
         'step1': 'step1_inactive.png',
         'step2': 'step2_active.png',
         'step3': 'step3_inactive.png',
@@ -254,6 +259,7 @@ def smtp_error(request, rtype, mp_id, private=None):
     logger.debug('Error: %s' % (ErrorMessage))
     return render_to_response('pjweb/error.html', {
         'ErrorMessage': ErrorMessage,
+        'LANGUAGES': settings.LANGUAGES,
         'step1': 'step1_inactive.png',
         'step2': 'step2_inactive.png',
         'step3': 'step3_active.png',
@@ -313,6 +319,7 @@ def constituency(request, pd_id):
         'municipality_members': municipality_members,
         'civilparish_members': civilparish_members,
         'seniunaitija_members': seniunaitija_members,
+        'LANGUAGES': settings.LANGUAGES,
         'step1': 'step1_active.png',
         'step2': 'step2_inactive.png',
         'step3': 'step3_inactive.png',
@@ -366,6 +373,7 @@ def contact(request, rtype, mp_id):
                     logger.debug('%s' % (ThanksMessage))
                     return render_to_response('pjweb/thanks.html', {
                         'ThanksMessage': ThanksMessage,
+                        'LANGUAGES': settings.LANGUAGES,
                         'step1': 'step1_inactive.png',
                         'step2': 'step2_inactive.png',
                         'step3': 'step3_active.png',
@@ -378,6 +386,7 @@ def contact(request, rtype, mp_id):
                     'preview': mail,
                     'msg_lst': message.split('\n'),
                     'representative': receiver,
+                    'LANGUAGES': settings.LANGUAGES,
                     'step1': 'step1_inactive.png',
                     'step2': 'step2_inactive.png',
                     'step3': 'step3_active.png',
@@ -391,6 +400,7 @@ def contact(request, rtype, mp_id):
         'mp_id': mp_id,
         'rtype': rtype,
         'representative': receiver,
+        'LANGUAGES': settings.LANGUAGES,
         'step1': 'step1_inactive.png',
         'step2': 'step2_active.png',
         'step3': 'step3_inactive.png',
@@ -412,6 +422,7 @@ def feedback(request):
             logger.debug('%s' % (ThanksMessage))
             return render_to_response('pjweb/thanks.html', {
                 'ThanksMessage': ThanksMessage,
+                'LANGUAGES': settings.LANGUAGES,
                 'step1': 'step1_inactive.png',
                 'step2': 'step2_inactive.png',
                 'step3': 'step3_active.png',
@@ -422,6 +433,7 @@ def feedback(request):
         
     return render_to_response('pjweb/feedback.html', {
         'form': form,
+        'LANGUAGES': settings.LANGUAGES,
         'step1': 'step1_inactive.png',
         'step2': 'step2_inactive.png',
         'step3': 'step3_inactive.png',
