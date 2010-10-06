@@ -16,6 +16,7 @@ from parasykjiems.pjweb.models import Email
 from parasykjiems.pjweb.forms import *
 from pjutils.address_search import AddressSearch
 from django.utils import simplejson
+import random
 
 logger = logging.getLogger(__name__)
 
@@ -53,14 +54,25 @@ def get_pollingstreet(query_string):
     entry_query = ''
     entry_query1 = ''
     not_found = ''
+    apt_no = False
     qery_list = re.split(r'[ ,]', query_string)
-
+    print qery_list
     for string in qery_list:
-        number = re.split(r'[-\/a-zA-Z]', string)[0]
-        if number.isdigit():
+        numbered = re.split(r'[-_\\/]', string)
+        number = numbered[0]
+        if len(numbered)>1:
+            if numbered[1].isdigit():
+                apt_no = True
+            else:
+                apt_no = False
+        if apt_no:
+            if number.isdigit():
 
-            house_no = number
-            qery_list.remove(string)
+                house_no = number
+                qery_list.remove(string)
+            elif number[:-1].isdigit():
+                house_no = number[:-1]
+                qery_list.remove(string)
 
     query_string = ' '.join(qery_list)
     entry_query = a_s.get_query(query_string, ['street', 'city', 'district'])
@@ -360,6 +372,8 @@ def contact(request, rtype, mp_id):
                     phone = phone,
                     message = message,
                     msg_state = 'W',
+                    msg_type = 'M',
+                    answer_no = random.randrange(0, 10000),
                     public = publ,
                 )
                 if send:
