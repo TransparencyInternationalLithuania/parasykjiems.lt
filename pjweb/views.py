@@ -17,6 +17,7 @@ from parasykjiems.pjweb.forms import *
 from pjutils.address_search import AddressSearch
 from django.utils import simplejson
 import random
+from django.contrib.sites.models import Site
 
 logger = logging.getLogger(__name__)
 
@@ -239,6 +240,7 @@ def no_email(request, rtype, mp_id):
         'LANGUAGES': settings.LANGUAGES,
         'step1': 'step1_inactive.png',
         'step2': 'step2_active.png',
+
         'step3': 'step3_inactive.png',
     })
 
@@ -369,6 +371,8 @@ def contact(request, rtype, mp_id):
             phone = form.cleaned_data[u'phone']
             message = form.cleaned_data[u'message']
             sender = form.cleaned_data[u'sender']
+            answer_no = random.randrange(0, 10000),
+            answer_no = answer_no[0]
             #recipients = [receiver.email, receiver.officeEmail]
             recipients = ['parasykjiems@gmail.com']
             if not recipients[0]:
@@ -387,16 +391,19 @@ def contact(request, rtype, mp_id):
                     message = message,
                     msg_state = 'W',
                     msg_type = 'M',
-                    answer_no = random.randrange(0, 10000),
+                    answer_no = answer_no,
                     public = publ,
                 )
                 if send:
+                    if publ:
+                        mail.save()
+                        message = message + _('\nIf You want to response, click this link:')+'\nhttp://%s/response/%s/%s' % (
+                            Site.objects.get_current().domain, mail.id, answer_no
+                        )
                     email = EmailMessage(u'Gavote laišką nuo %s' % sender_name, message, sender,
                         recipients, [],
                         headers = {'Reply-To': sender})
                     email.send()
-                    if publ:
-                        mail.save()
                     ThanksMessage = _('Thank you. Your message has been sent.')
                     logger.debug('%s' % (ThanksMessage))
                     return render_to_response('pjweb/thanks.html', {
@@ -467,4 +474,51 @@ def feedback(request):
         'step3': 'step3_inactive.png',
     })
 
+def response(request, mail_id, response_no):
+    mails = Email.objects.all().filter(id__exact=mail_id)
+    mail = mails[0]
+    responder = get_rep(mail.recipient_id, mail.recipient_type)
+    if int(mail.answer_no)==int(response_no) and request.method == 'POST':
+        form = FeedbackForm(data=request.POST)
+        if form.is_valid():
+            message = form.cleaned_data[u'message']
+            sender = responder.email
+            recipients = mail.sender
+
+            mail = Email(
+                sender_name = mail.recipient_name,
+                sender = responder.email,
+                recipient_id = mail.recipient_id,
+                recipient_type = mail.recipient_type,
+                recipient_name = mail.sender_name,
+                message = message,
+                msg_state = 'R',
+                msg_type = 'R',
+                answer_no = response_no,
+                public = True,
+            )
+            mail.save()
+            ThanksMessage = _('Thank you. Your response has been posted.')
+            logger.debug('%s' % (ThanksMessage))
+            return render_to_response('pjweb/thanks.html', {
+                'ThanksMessage': ThanksMessage,
+                'LANGUAGES': settings.LANGUAGES,
+                'step1': 'step1_inactive.png',
+                'step2': 'step2_inactive.png',
+                'step3': 'step3_active.png',
+            })
+
+    else:
+        form = FeedbackForm()
+        
+    return render_to_response('pjweb/response.html', {
+        'form': form,
+        'mail': mail,
+        'msg_lst': mail.message.split('\n'),
+        'response_no': response_no,
+        'LANGUAGES': settings.LANGUAGES,
+        'step1': 'step1_inactive.png',
+        'step2': 'step2_inactive.png',
+        'step3': 'step3_inactive.png',
+    })
 
