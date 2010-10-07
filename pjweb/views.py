@@ -54,7 +54,7 @@ def get_pollingstreet(query_string):
     entry_query = ''
     entry_query1 = ''
     not_found = ''
-    apt_no = False
+    apt_no = 0
     qery_list = re.split(r'[ ,]', query_string)
     print qery_list
     for string in qery_list:
@@ -62,12 +62,19 @@ def get_pollingstreet(query_string):
         number = numbered[0]
         if len(numbered)>1:
             if numbered[1].isdigit():
-                apt_no = True
+                apt_no = 1
             else:
-                apt_no = False
-        if apt_no:
-            if number.isdigit():
+                apt_no = 2
 
+        if apt_no==1:
+            if number.isdigit():
+                house_no = number
+                qery_list.remove(string)
+            elif number[:-1].isdigit():
+                house_no = number[:-1]
+                qery_list.remove(string)
+        elif apt_no==0:
+            if number.isdigit():
                 house_no = number
                 qery_list.remove(string)
             elif number[:-1].isdigit():
@@ -75,6 +82,7 @@ def get_pollingstreet(query_string):
                 qery_list.remove(string)
 
     query_string = ' '.join(qery_list)
+
     entry_query = a_s.get_query(query_string, ['street', 'city', 'district'])
 
     found_entries = PollingDistrictStreet.objects.filter(entry_query).order_by('street')
@@ -117,14 +125,15 @@ def get_civilparish(pd_id, constituency):
     parent_cp = []
     parent_city = []
     streets = []
+    seniunaitijas = []
     civilparish = constituency.city[:-2]
-    vard = [u'as', u'ai', u'is', u'us', u'ės', u'ė', u'a']
-    kilm = [u'o', u'ų', u'io', u'aus', u'ių', u'ės', u'os']
+    vard = [u'as', u'ai', u'is', u'us', u'ės', u'ė', u'a', u'ys']
+    kilm = [u'o', u'ų', u'io', u'aus', u'ių', u'ės', u'os', u'ių']
     for gal in range(len(vard)):
         
         if constituency.city[-2:]==vard[gal]:
             civilparish = civilparish + kilm[gal]
-
+    
     if district==civilparish:
         found_geodata = HierarchicalGeoData.objects.filter(
             name__icontains=district,
@@ -137,44 +146,46 @@ def get_civilparish(pd_id, constituency):
     for address in found_geodata:
         parent_dstr.append(address.id)
 
-    found_geodata = HierarchicalGeoData.objects.filter(
-        name__contains=civilparish,
-        type__exact='CivilParish',
-        parent__in=parent_dstr)
-    for address in found_geodata:
-        parent_cp.append(address.id)
-    if not parent_cp:
-        found_geodata = HierarchicalGeoData.objects.filter(
-            name__contains=civilparish,
-            type__exact='City')
-    else:
-        found_geodata = HierarchicalGeoData.objects.filter(
-            name__contains=constituency.city,
-            type__exact='City',
-            parent__in=parent_cp)
+    civilparish = civilparish.strip()
 
-    for address in found_geodata:
-        if not parent_cp:
-            parent_cp.append(address.parent.id)
-        parent_city.append(address.id)
-    street_list = constituency.street.split(' ')
-    street_list.pop()
-    street = ' '.join(street_list)
+    all_results = HierarchicalGeoData.objects.filter(
+            name__icontains=civilparish,)
 
-    found_geodata = HierarchicalGeoData.objects.filter(
-        name__contains=street,
-        type__exact='Street',
-        parent__in=parent_city)
-    for address in found_geodata:
-        streets.append(address.id)
+    for result in all_results:
+        parent = result
+        correct_dstr = False
+
+        while True:
+
+            if parent.type == 'Municipality' and parent.id == parent_dstr[0]:
+                correct_dstr = True
+            parent = parent.parent
+            if parent.parent == None:
+                break
+        if correct_dstr:
+            address = result
+            while True:
+
+                if address.type == 'Seniunaitija':
+                    seniunaitijas.append(address.id)
+                elif address.type == 'City':
+                    parent_city.append(address.id)
+                elif address.type == 'CivilParish':
+                    parent_cp.append(address.id)
+                elif address.type == 'Street':
+                    streets.append(address.id)
+                address = address.parent
+                if address.parent == None:
+                    break
 
     result = {
         'parent_dstr': parent_dstr,
         'parent_city': parent_city,
         'parent_cp': parent_cp,
         'streets': streets,
+        'seniunaitijas': seniunaitijas,
     }
-
+    print result
     return result
 
 def index(request):
@@ -194,7 +205,7 @@ def index(request):
             query_string = form.cleaned_data['address_input']
             entered = form.cleaned_data['address_input']
         else:
-            query_string = '*'
+            query_string = ''
         address = get_pollingstreet(query_string)
     else:
         form = IndexForm()
@@ -285,6 +296,8 @@ def constituency(request, pd_id):
     parent_cp = address['parent_cp']
     parent_city = address['parent_city']
     streets = address['streets']
+    seniunaitijas = address['seniunaitijas']
+
 #    print found_geodata
     constituencies = []
     parliament_members = []
@@ -310,7 +323,7 @@ def constituency(request, pd_id):
             )
 
     seniunaitijas = HierarchicalGeoData.objects.all().filter(
-                id__in=streets+parent_city
+                id__in=seniunaitijas
             )
 
     municipality_members = MunicipalityMember.objects.all().filter(
@@ -321,8 +334,9 @@ def constituency(request, pd_id):
                 civilParish__in=parent_cp
             )
     seniunaitija_members = SeniunaitijaMember.objects.all().filter(
-                seniunaitija__in=streets+parent_city
+                seniunaitija__in=seniunaitijas
             )
+
     return render_to_response('pjweb/const.html', {
         'constituencies': constituencies,
         'municipalities': municipalities,
