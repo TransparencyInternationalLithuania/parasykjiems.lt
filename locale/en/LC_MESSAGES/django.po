@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-08 01:29+0300\n"
+"POT-Creation-Date: 2010-10-08 15:02+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -55,32 +55,32 @@ msgstr ""
 #: pjweb/views.py:111
 msgid ""
 "No addressess were found. Please refine your search. Or use feedback form to "
-"inform us about missing address."
+"inform us about missing address"
 msgstr ""
 
-#: pjweb/views.py:234
+#: pjweb/views.py:233
 #, python-format
 msgid "%(name)s %(surname)s email cannot be found in database."
 msgstr ""
 
-#: pjweb/views.py:280
+#: pjweb/views.py:279
 #, python-format
 msgid ""
 "Problem occurred. Your Email to %(name)s %(surname)s has not been sent. "
 "Please try again later."
 msgstr ""
 
-#: pjweb/views.py:400
+#: pjweb/views.py:399
 msgid ""
 "\n"
 "If You want to response, click this link:"
 msgstr ""
 
-#: pjweb/views.py:407 pjweb/views.py:456
+#: pjweb/views.py:406 pjweb/views.py:455
 msgid "Thank you. Your message has been sent."
 msgstr ""
 
-#: pjweb/views.py:501
+#: pjweb/views.py:500
 msgid "Thank you. Your response has been posted."
 msgstr ""
 
@@ -104,6 +104,10 @@ msgstr ""
 
 #: templates/404.html:15 templates/500.html:15 templates/pjweb/base.html:16
 msgid "List of all public mails"
+msgstr ""
+
+#: templates/500.html:24
+msgid "Error was sent to developers."
 msgstr ""
 
 #: templates/admin/base_site.html:4
@@ -208,11 +212,11 @@ msgid "Sender "
 msgstr ""
 
 #: templates/pjweb/contact.html:19
-msgid "(all fields are required)"
+msgid "(fields marked with asterisk are required)"
 msgstr ""
 
 #: templates/pjweb/contact.html:29
-msgid "Public Mail:"
+msgid "Mail type:"
 msgstr ""
 
 #: templates/pjweb/contact.html:36
@@ -262,6 +266,10 @@ msgstr ""
 
 #: templates/pjweb/index.html:17
 msgid "Found Addresses for constituency"
+msgstr ""
+
+#: templates/pjweb/index.html:36
+msgid "here"
 msgstr ""
 
 #: templates/pjweb/preview.html:7

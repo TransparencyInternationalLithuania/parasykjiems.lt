@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-08 01:29+0300\n"
-"PO-Revision-Date: 2010-10-08 01:30+0300\n"
+"POT-Creation-Date: 2010-10-08 15:02+0300\n"
+"PO-Revision-Date: 2010-10-08 15:03+0300\n"
 "Last-Translator: Vytautas <didysis@vytrautas.lt>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -52,20 +52,20 @@ msgid "Public"
 msgstr "Viešas"
 
 #: pjweb/views.py:111
-msgid "No addressess were found. Please refine your search. Or use feedback form to inform us about missing address."
-msgstr "Nerasta jokių adresų. Patikslinkite paiešką. Arba pasinaudokite susisiekimo forma ir praneškite apie trūkstamą adresą."
+msgid "No addressess were found. Please refine your search. Or use feedback form to inform us about missing address"
+msgstr "Nerasta jokių adresų. Patikslinkite paiešką. Arba pasinaudokite susisiekimo forma ir praneškite apie trūkstamą adresą"
 
-#: pjweb/views.py:234
+#: pjweb/views.py:233
 #, python-format
 msgid "%(name)s %(surname)s email cannot be found in database."
 msgstr "%(name)s %(surname)s el. paštas nerastas duomenų bazėje."
 
-#: pjweb/views.py:280
+#: pjweb/views.py:279
 #, python-format
 msgid "Problem occurred. Your Email to %(name)s %(surname)s has not been sent. Please try again later."
 msgstr "Iškilo problema. Jūsų laiškas, kurio adresatas yra %(name)s %(surname)s, nebuvo išsiųstas. Prašome pamėginti vėliau."
 
-#: pjweb/views.py:400
+#: pjweb/views.py:399
 msgid ""
 "\n"
 "If You want to response, click this link:"
@@ -73,12 +73,12 @@ msgstr ""
 "\n"
 "Jei norite atsakyti, paspauskite šią nuorodą:"
 
-#: pjweb/views.py:407
-#: pjweb/views.py:456
+#: pjweb/views.py:406
+#: pjweb/views.py:455
 msgid "Thank you. Your message has been sent."
 msgstr "Dėkojame. Jūsų žinutė išsiųsta."
 
-#: pjweb/views.py:501
+#: pjweb/views.py:500
 msgid "Thank you. Your response has been posted."
 msgstr "Dėkojame. Jūsų atsakymas paviešintas."
 
@@ -107,6 +107,10 @@ msgstr "Apie projektą"
 #: templates/pjweb/base.html:16
 msgid "List of all public mails"
 msgstr "Viešai publikuotų laiškų sąrašas"
+
+#: templates/500.html:24
+msgid "Error was sent to developers."
+msgstr "Klaida nusiųsta programuotojams."
 
 #: templates/admin/base_site.html:4
 msgid "Django site admin"
@@ -215,12 +219,12 @@ msgid "Sender "
 msgstr "Siuntėjas"
 
 #: templates/pjweb/contact.html:19
-msgid "(all fields are required)"
-msgstr "(visi laukai privalomi)"
+msgid "(fields marked with asterisk are required)"
+msgstr "(laukai, pažymėti žvaigždute, yra privalomi)"
 
 #: templates/pjweb/contact.html:29
-msgid "Public Mail:"
-msgstr "Viešas laiškas:"
+msgid "Mail type:"
+msgstr "Laiško tipas:"
 
 #: templates/pjweb/contact.html:36
 msgid "Sender Name:"
@@ -267,6 +271,10 @@ msgstr "Rasti keli adresai. Pasirinkite:"
 msgid "Found Addresses for constituency"
 msgstr "Rasti apygardų adresai"
 
+#: templates/pjweb/index.html:36
+msgid "here"
+msgstr "čia"
+
 #: templates/pjweb/preview.html:7
 msgid "You are writing public mail. It will be sent to addressee and displayed on site."
 msgstr "Rašote viešą laišką. Jis bus išsiųstas adresatui ir pateiktas puslapyje."
@@ -307,6 +315,8 @@ msgstr "Peržiūrėti viešai publikuotų laiškų sąrašą"
 msgid "Go back to home page"
 msgstr "Grįžti į titulinį puslapį"
 
+#~ msgid "Public Mail:"
+#~ msgstr "Viešas laiškas:"
 #~ msgid "Found Addresses for civil parish:"
 #~ msgstr "Rasti seniūnijų adresai:"
 #~ msgid "Check your message"
