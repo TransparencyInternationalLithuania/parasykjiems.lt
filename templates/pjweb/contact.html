@@ -16,7 +16,7 @@
 <table id="letter">
 <tr>
 <th width="336px" ><h2>{% trans "Receiver:" %}</h2></th>
-<th colspan="2"><h2>{% trans "Sender " %}<small>{% trans "(all fields are required)" %}</small>:</h2></th>
+<th colspan="2"><h2>{% trans "Sender " %}<small>{% trans "(fields marked with asterisk are required)" %}</small>:</h2></th>
 </tr>
   <tr>
     <td width="336px" rowspan="4">
@@ -26,21 +26,21 @@
 {% if representative.phone %}{{ representative.phone }}{% endif %}
 {% if representative.officePhone %}{{ representative.officePhone }}{% endif %}
     </td>
-    <td width="120px">{% trans "Public Mail:" %}</td>
+    <td width="120px">{% trans "Mail type:" %}*</td>
     <td width="360px">
         {{ form.public }}
         {{ form.public.errors }}
     </td>
   </tr>
   <tr>
-    <td width="120px">{% trans "Sender Name:" %}</td>
+    <td width="120px">{% trans "Sender Name:" %}*</td>
     <td width="360px">
         {{ form.sender_name }}
         {{ form.sender_name.errors }}
     </td>
   </tr>
   <tr>
-    <td width="120px">{% trans "Your Email:" %}</td>
+    <td width="120px">{% trans "Your Email:" %}*</td>
     <td width="360px">
         {{ form.sender }}
         {{ form.sender.errors }}

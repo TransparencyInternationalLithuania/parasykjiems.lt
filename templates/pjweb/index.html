@@ -32,7 +32,9 @@
   </div>
 {% else %}
   <div id="address_table">
-    <strong>{{ not_found }}</strong>
+  {% if not_found %}
+    <strong>{{ not_found }} <a href="./feedback/">{% trans "here" %}</a></strong>
+  {% endif %}
   </div>
 {% endif %}
 {% endblock %}
