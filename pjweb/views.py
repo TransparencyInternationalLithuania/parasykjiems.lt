@@ -108,7 +108,7 @@ def get_pollingstreet(query_string):
 
     if not found_entries:
         found_entries = {}
-        not_found = _('No addressess were found. Please refine your search. Or use feedback form to inform us about missing address.')
+        not_found = _('No addressess were found. Please refine your search. Or use feedback form to inform us about missing address')
 
     result = {
         'found_entries': found_entries,
@@ -134,11 +134,11 @@ def get_civilparish(pd_id, constituency):
         
         if constituency.city[-2:]==vard[gal]:
             civilparish = civilparish + kilm[gal]
-    
+
     if district==civilparish:
         found_geodata = HierarchicalGeoData.objects.filter(
             name__icontains=district,
-            type__exact='Municipality').filter(name__icontains='miesto')
+            type__exact='Municipality')
     else:
         found_geodata = HierarchicalGeoData.objects.filter(
             name__icontains=district,
@@ -155,7 +155,6 @@ def get_civilparish(pd_id, constituency):
     for result in all_results:
         parent = result
         correct_dstr = False
-
         while True:
 
             if parent.type == 'Municipality' and parent.id == parent_dstr[0]:
