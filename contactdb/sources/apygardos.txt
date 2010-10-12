@@ -1,4 +1,4 @@
-Akmenės rajonAS
+Akmenės rajonas
 
 * *
 
@@ -569,7 +569,7 @@ Sanatorijos g., Saulėnų g., Ūtos g., Vardos g., Voveraičių g., Žirgų g.
 
  
 
-Alytaus rajonAS
+Alytaus rajonas
 
  
 
@@ -1086,7 +1086,7 @@ Nemunaičio mstl., Sudvajų k., Užupių k., Vangelonių k.
 
  
 
-Anykščių rajonAS
+Anykščių rajonas
 
  
 
@@ -1676,7 +1676,7 @@ Pelėšiškių k., Šilaičių k., Šilėnų k., Tauliukų k., Voseliūnų k.,
 
  
 
-Biržų rajonAS
+Biržų rajonas
 
  
 
@@ -2565,7 +2565,7 @@ Naujųjų Kietaviškių k., Obenių k., Senųjų Kietaviškių k.
 
 * *
 
-Ignalinos rajonAS
+Ignalinos rajonas
 
 * *
 
@@ -2970,7 +2970,7 @@ Prisieginės k., Remeniškės vs., Rimšėnų k., Vidiškių k., Vinciškės k.,
 
 * *
 
-Jonavos rajonAS
+Jonavos rajonas
 
  
 
@@ -3333,7 +3333,7 @@ Skarbinų k., Spanėnų k., Stašėnų k., Steponavos k., Šalūgiškių k.,
 
 * *
 
-Joniškio rajonAS
+Joniškio rajonas
 
  
 
@@ -3753,7 +3753,7 @@ Ežeikių k., Radikių k., Ziniūnėlių k., Ziniūnų k.
 
  
 
-Jurbarko rajonAS
+Jurbarko rajonas
 
  
 
@@ -4162,7 +4162,7 @@ Kęstučio g., Lauko g., R. Marcinkaus g., S. Daukanto g., Žemaitės g.
 
 * *
 
-Kaišiadorių rajonAS
+Kaišiadorių rajonas
 
  
 
@@ -6730,7 +6730,7 @@ g., Žaisos g., Žeimelių g., Žiglos g.
 
 * *
 
-Kauno rajonAS
+Kauno rajonas
 
  
 
@@ -7458,7 +7458,7 @@ Tamošbūdžio k., Uzarų k., Valių k., Viliūšių k., Vinkšnupių k., Zūkų
 
 * *
 
-Kelmės rajonAS
+Kelmės rajonas
 
  
 
@@ -8060,7 +8060,7 @@ k., Pėriškių k., Uvainiškių k., Užžalpių k., Žalpių mstl.
 
 * *
 
-*Kėdainių rajonAS*
+*Kėdainių rajonas*
 
  
 
@@ -9548,7 +9548,7 @@ Veliuonos g., Vikingų g., Vilnelės g., Žūklės g.
 
  
 
-Klaipėdos rajonAS
+Klaipėdos rajonas
 
  
 
@@ -9953,7 +9953,7 @@ Mickų k., Šilgalių k., Spengių k., Traubių k., Vaškių k.
 
 * *
 
-Kretingos rajonAS
+Kretingos rajonas
 
  
 
@@ -10409,7 +10409,7 @@ k., Mažųjų Žalimų k., Pesčių k., Žudgalio k.
 
 * *
 
-Kupiškio rajonAS
+Kupiškio rajonas
 
  
 
@@ -10739,7 +10739,7 @@ mstl., Tumasonių k., Uogšilio k.
 
 * *
 
-Lazdijų rajonAS
+Lazdijų rajonas
 
  
 
@@ -11687,7 +11687,7 @@ Dalginės k., Kievinės k., Pašešupių k., Prodobolės k., Užgirių k.,
 
 * *
 
-Mažeikių rajonAS
+Mažeikių rajonas
 
  
 
@@ -12170,7 +12170,7 @@ g., Vinkšnų g., Vytauto g., Žalgirio g., Žvyro g.; Žibikų k.
 
 * *
 
-Molėtų rajonAS
+Molėtų rajonas
 
  
 
@@ -12770,7 +12770,7 @@ Stygliškių k., Vėžininkų k., Žagmantėlių k., Žagmantų k., Žukų k.
 
 * *
 
-Pakruojo rajonAS
+Pakruojo rajonas
 
  
 
@@ -13917,7 +13917,7 @@ galo; poriniai numeriai nuo Nr. 110 iki galo; Šviesos Tako g.
 
 * *
 
-Panevėžio rajonAS
+Panevėžio rajonas
 
  
 
@@ -14473,7 +14473,7 @@ Kupstų k., Mantvydų k., Medikonių k., Palėvenio vs., Pamiškės k.,
 
 * *
 
-Pasvalio rajonAS
+Pasvalio rajonas
 
  
 
@@ -14918,7 +14918,7 @@ vs., Zvanagalos vs., Žvirblinių k.
 
 * *
 
-Plungės rajonAS
+Plungės rajonas
 
  
 
@@ -15271,7 +15271,7 @@ Gandingos k., Kaušėnų k., Kleipščių k., Macenių k.; Noriškių k.: SB
 
 * *
 
-Prienų rajonAS
+Prienų rajonas
 
  
 
@@ -15682,7 +15682,7 @@ Pakrovų k., Pikelionių k., Stakliškių k., Trečionių k.
 
 * *
 
-Radviliškio rajonAS
+Radviliškio rajonas
 
  
 
@@ -16234,7 +16234,7 @@ Viržių g., Vyšnių g.
 
 * *
 
-Raseinių rajonAS
+Raseinių rajonas
 
  
 
@@ -16967,7 +16967,7 @@ Pievų g., Šaltinių g., Užupio g., Vatušių g., Vatušių skg.; Vatušių k.
 
 * *
 
-Rokiškio rajonAS
+Rokiškio rajonas
 
  
 
@@ -17538,7 +17538,7 @@ mstl., Panemunėlio vs., Panemunių k., Roblių k., Sėdžiūnų k., Skirų k.,
 
  
 
-Skuodo rajonAS
+Skuodo rajonas
 
  
 
@@ -17820,7 +17820,7 @@ Drupių k., Erslos k., Giršinų k., Rukų k., Žebrokų k.
 
 * *
 
-Šakių rajonAS
+Šakių rajonas
 
  
 
@@ -18288,7 +18288,7 @@ Tamuliškės k.
 
 * *
 
-Šalčininkų rajonAS
+Šalčininkų rajonas
 
  
 
@@ -19335,7 +19335,7 @@ Rugių g.
 
 * *
 
-Šiaulių rajonAS
+Šiaulių rajonas
 
  
 
@@ -19866,7 +19866,7 @@ Tulminų k., Žarėnų k.
 
 * *
 
-Šilalės rajonAS
+Šilalės rajonas
 
  
 
@@ -20222,7 +20222,7 @@ V. Statkevičiaus g., Vingininkų g.; Struikų k., Vingininkų k.
 
 * *
 
-Šilutės rajonAS
+Šilutės rajonas
 
  
 
@@ -20713,7 +20713,7 @@ Vanagių k., Venckų k.
 
 * *
 
-Širvintų rajonAS
+Širvintų rajonas
 
  
 
@@ -21073,7 +21073,7 @@ Roskošnės vs., Surgėliškių vs., Žindulių k.
 
 * *
 
-Švenčionių rajonAS
+Švenčionių rajonas
 
  
 
@@ -21514,7 +21514,7 @@ vs., Veliankos vs., Vilkamušių vs., Žingių vs.
 
 * *
 
-Tauragės rajonAS
+Tauragės rajonas
 
  
 
@@ -21998,7 +21998,7 @@ Vaidatonių k.
 
 * *
 
-Telšių rajonAS
+Telšių rajonas
 
  
 
@@ -22462,7 +22462,7 @@ Degenių k., Dimaičių k. dalis, Paežerės k. dalis, Rainių k., Stulpinų k.
 
 * *
 
-Trakų rajonAS
+Trakų rajonas
 
  
 
@@ -22862,7 +22862,7 @@ Stareinės k., Strėvos k., Subartėnų k., Užilgių k., Vilkokšnio k.
 
 * *
 
-Ukmergės rajonAS
+Ukmergės rajonas
 
  
 
@@ -23441,7 +23441,7 @@ Valtūnų k., Valų k., Vidiškių vs., Viksvinių vs., Žemaitkiemio k.,
 
 * *
 
-Utenos rajonAS
+Utenos rajonas
 
  
 
@@ -23898,7 +23898,7 @@ Utena: Metalo g., Pramonės g., Pušynėlio g., Smėlio g., Žemdirbių g.
 
 * *
 
-Varėnos rajonAS
+Varėnos rajonas
 
  
 
@@ -24306,7 +24306,7 @@ nuo Nr. 194 iki Nr. 258.
 
 * *
 
-Vilkaviškio rajonAS
+Vilkaviškio rajonas
 
 * *
 
@@ -27644,7 +27644,7 @@ Grigiškės: Afindevičių g., Jaunimo skg., Šviesos g., Taikos g.
 
 * *
 
-Vilniaus rajonAS
+Vilniaus rajonas
 
  
 
@@ -28603,7 +28603,7 @@ neporiniai numeriai nuo Nr. 59 iki Nr. 67.
 
 * *
 
-Zarasų rajonAS
+Zarasų rajonas
 
  
 
