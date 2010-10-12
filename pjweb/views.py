@@ -148,20 +148,23 @@ def get_civilparish(pd_id, constituency):
         parent_dstr.append(address.id)
 
     civilparish = civilparish.strip()
-
-    all_results = HierarchicalGeoData.objects.filter(
-            name__icontains=civilparish,)
+    if civilparish:
+        all_results = HierarchicalGeoData.objects.filter(
+                name__icontains=civilparish,)
+    else:
+        all_results = {}
 
     for result in all_results:
         parent = result
         correct_dstr = False
-        while True:
-
-            if parent.type == 'Municipality' and parent.id == parent_dstr[0]:
-                correct_dstr = True
-            parent = parent.parent
-            if parent.parent == None:
-                break
+        if parent.parent != None:
+            while True:
+                print parent.name
+                if parent.type == 'Municipality' and parent.id == parent_dstr[0]:
+                    correct_dstr = True
+                parent = parent.parent
+                if parent.parent == None:
+                    break
         if correct_dstr:
             address = result
             while True:
@@ -185,7 +188,7 @@ def get_civilparish(pd_id, constituency):
         'streets': streets,
         'seniunaitijas': seniunaitijas,
     }
-    print result
+#    print result
     return result
 
 def index(request):

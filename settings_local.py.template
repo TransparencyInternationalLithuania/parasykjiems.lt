@@ -15,6 +15,13 @@ TEMPLATE_DIRS = (
  os.path.join(scriptPath, "templates")
 )
 
+_ = lambda s: s
+
+LANGUAGES = (
+      ('lt', _('Lithuanian')),
+      ('en', _('English')),
+)
+
 dbPath = os.path.join(scriptPath, "db")
 dbFileName = "parasykjiems.db3"
 dir_util.mkpath(dbPath)
