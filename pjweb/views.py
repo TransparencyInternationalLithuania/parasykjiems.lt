@@ -135,11 +135,18 @@ def get_civilparish(pd_id, constituency):
         if constituency.city[-2:]==vard[gal]:
             civilparish = civilparish + kilm[gal]
 
+    # search for municipality location
     if district==civilparish:
+        # first try searching with adding a special term "miesto", since
+        # in Lithuania there might exist data with similar words, e.g.:
+        # "Vilniaus miesto seniūnija"
+        # "Vilniaus rajono seniūnija"
         found_geodata = HierarchicalGeoData.objects.filter(
             name__icontains=district,
-            type__exact='Municipality')
+            type__exact='Municipality').filter(name__icontains='miesto')
     else:
+        # if municipality location with "miesto' does not exist,
+        # search the rest
         found_geodata = HierarchicalGeoData.objects.filter(
             name__icontains=district,
             type__exact='Municipality').exclude(name__icontains='miesto')
