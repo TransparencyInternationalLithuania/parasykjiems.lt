@@ -18,6 +18,7 @@ from pjutils.address_search import AddressSearch
 from django.utils import simplejson
 import random
 from django.contrib.sites.models import Site
+from pjutils.uniconsole import *
 
 logger = logging.getLogger(__name__)
 
