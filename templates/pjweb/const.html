@@ -1,0 +1,87 @@
+{% extends "pjweb/base.html" %}
+{% load i18n %}
+{% block content %}
+
+<div id="rep_list_header">
+<p id="bigger_font" align="middle">{% trans "Choose a representative, You want to write." %} <br>
+{% trans "If You are not sure, read " %}<a href="#">{% trans "tips" %}</a></p>
+
+</div>
+
+<table id="rep_table">
+{% for parliament_member in parliament_members %}
+<tr>
+<td width="30%" >
+<p id="head-font"><b>{{ parliament_member.name }} {{ parliament_member.surname }}</b> <br>
+{% trans "Member of parliament" %} </p>
+{{ parliament_member.email }}<br>
+{{ parliament_member.phone }}
+</td>
+<td width="70%">
+<p id="head-font">{% trans "Member of parliament" %} </p>
+<p>{% trans "Responsible for everything" %}</p>
+<a href="/pjweb/contact/mp/{{ parliament_member.id }}/">
+<img class="step" src="/static/img/btn-write.png" alt={% trans "Write a letter to" %} {{ parliament_member.name }} {{ parliament_member.surname }}"></a>
+</td>
+</tr>
+{% endfor %}
+
+{% for municipality_member in municipality_members %}
+<tr>
+<td width="30%" >
+<p id="head-font"><b>{{ municipality_member.name }} {{ municipality_member.surname }}</b> <br>
+{% trans "Member of municipality" %} </p>
+{{ municipality_member.email }}<br>
+{% if municipality_member.email2 %}
+{{ municipality_member.email2 }}<br>
+{% endif %}
+{{ municipality_member.phone }}<br>
+{{ municipality_member.phone2 }}<br>
+{{ municipality_member.officeAddress }}<br>
+</td>
+<td width="70%">
+<p id="head-font">{% trans "Member of municipality" %} </p>
+<p>{% trans "Responsible for your municipality" %}</p>
+<a href="/pjweb/contact/mn/{{ municipality_member.id }}/">
+<img class="step" src="/static/img/btn-write.png" alt={% trans "Write a letter to" %} {{ municipality_member.name }} {{ municipality_member.surname }}"></a>
+</td>
+</tr>
+{% endfor %}
+
+{% for civilparish_member in civilparish_members %}
+<tr>
+<td width="30%" >
+<p id="head-font">
+<b>{{ civilparish_member.name }} {{ civilparish_member.surname }}</b> <br>
+{% trans "Member of civil parish" %} </p>
+{{ civilparish_member.officeEmail }}<br>
+{{ civilparish_member.officePhone }}<br>
+{{ civilparish_member.officeAddress }}<br>
+</td>
+<td width="70%">
+<p id="head-font">{% trans "Member of civil parish" %} </p>
+<p>{% trans "Responsible for your civil parish" %}</p>
+<a href="/pjweb/contact/cp/{{ civilparish_member.id }}/">
+<img class="step" src="/static/img/btn-write.png" alt={% trans "Write a letter to" %} {{ civilparish_member.name }} {{ civilparish_member.surname }}"></a>
+</td>
+</tr>
+{% endfor %}
+
+{% for seniunaitija_member in seniunaitija_members %}
+<tr>
+<td width="30%" >
+<p id="head-font"><b>{{ seniunaitija_member.name }} {{ seniunaitija_member.surname }}</b> <br>
+{% trans "Member of seniunaitija" %} </p>
+{{ seniunaitija_member.mail }}<br>
+{{ seniunaitija_member.phone }}<br>
+</td>
+<td width="70%">
+<p id="head-font">{% trans "Member of seniūnaitija" %} </p>
+<p>{% trans "Responsible for your seniūnaitija" %}</p>
+<a href="/pjweb/contact/sn/{{ seniunaitija_member.id }}/">
+<img class="step" src="/static/img/btn-write.png" alt={% trans "Write a letter to" %} {{ seniunaitija_member.name }} {{ seniunaitija_member.surname }}"></a>
+</td>
+</tr>
+{% endfor %}
+</table>
+{% endblock %}
