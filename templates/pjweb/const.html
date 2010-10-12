@@ -30,7 +30,7 @@
 <tr>
 <td width="30%" >
 <p id="head-font"><b>{{ municipality_member.name }} {{ municipality_member.surname }}</b> <br>
-{% trans "Member of municipality" %} </p>
+{{ municipality_member.municipality.name }} </p>
 {{ municipality_member.email }}<br>
 {% if municipality_member.email2 %}
 {{ municipality_member.email2 }}<br>

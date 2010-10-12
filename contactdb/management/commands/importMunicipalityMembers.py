@@ -48,7 +48,8 @@ class Command(BaseCommand):
             # relate existing constituency to an MP
             try:
                 type = HierarchicalGeoData.HierarchicalGeoDataType.Municipality
-                name = member.municipalityStr.replace(u'rajono', '').strip()
+                name = member.municipalityStr.strip()
+                #name = name.replace(u'rajono', '')
                 name = u"%s savivaldybė" % (name)
                 member.municipality = HierarchicalGeoData.objects.filter(name__contains=name).filter(type = type)[0:1].get()
             except ObjectDoesNotExist:
