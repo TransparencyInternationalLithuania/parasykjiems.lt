@@ -1,0 +1,34 @@
+{% extends "pjweb/base.html" %}
+{% load i18n %}
+{% block content %}
+
+<div id="head-message">
+<p id="header-font">{% trans "Have any notes? Write to us!" %}</p>
+
+    <ul id="head-text">
+    <li>{% trans "If address wasn't found in database, but you know, that it exists, write exact address, to which civil parish, polling district and municipality it belongs, and, if you can, specify polling district." %}</li>
+    <li>{% trans "If your member of municipality, civil parish wasn't found, write his data: name, surname, phone, email, work address." %}</li>
+    </ul>
+
+</div>
+<br>
+<form action="/pjweb/feedback/" method="post">
+<table id="letter">
+  <tr>
+    <td>
+        {{ form.message }}
+        {{ form.message.errors }}
+    </td>
+  </tr>
+  <tr>
+    <td style="text-align: center; vertical-align: middle;">
+        <br>
+        <input type="image" src="/static/img/btn-send.png" align="absmiddle" id="address-button">
+        <br>
+    </td>
+  </tr>
+</table>
+</form>
+
+{% endblock %}
+

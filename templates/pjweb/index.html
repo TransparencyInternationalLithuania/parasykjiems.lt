@@ -1,0 +1,40 @@
+{% extends "pjweb/base.html" %}
+{% load i18n %}
+{% block content %}
+
+<form action="/pjweb/" method="post" id="address">
+<strong>{% trans "Enter Your Address for search:" %}</strong><br>
+  {{ form.address_input }}
+<input type="image" src="/static/img/btn-ieskoti.png" align="absmiddle" id="address-button"><br>
+<em>{% trans "Eg.: Gedimino pr. 9, Vilnius" %}</em>
+</form>
+
+{% if found_entries %}
+  <div id="address_table">
+    <strong>{% trans "Several addresses were found. Choose:" %}</strong>
+    <table id="addresses_line">
+
+      <tr><td><b>{% trans "Found Addresses for constituency" %}</b></td></tr>
+      {% for found_entry in found_entries %}
+
+        {% if found_entry.constituency_id %}
+        <tr><td><a href="/pjweb/{{ found_entry.id }}/">
+        {% if found_entry.street %} {{ found_entry.street }} {{ house_no }}, {% endif %}
+        {% if found_entry.city %} {{ found_entry.city }}, {% endif %}
+        {% if found_entry.district %} {{ found_entry.district }}{% endif %}
+        </a></td></tr>
+        {% else %}
+        <tr><td><a href="/pjweb/{{ found_entry.object.id }}/">{{ found_entry.street }}</a></td></tr>
+        {% endif %}
+
+      {% endfor %}
+    </table>
+  </div>
+{% else %}
+  <div id="address_table">
+  {% if not_found %}
+    <strong>{{ not_found }} <a href="./feedback/">{% trans "here" %}</a></strong>
+  {% endif %}
+  </div>
+{% endif %}
+{% endblock %}
