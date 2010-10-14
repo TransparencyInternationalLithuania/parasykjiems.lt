@@ -11,7 +11,6 @@ from django.utils.translation import ugettext as _, ugettext_lazy, ungettext
 from haystack.query import SearchQuerySet
 from haystack.views import SearchView
 from django.core.mail import send_mail, EmailMessage
-from parasykjiems.contactdb.models import PollingDistrictStreet, Constituency, ParliamentMember, HierarchicalGeoData, MunicipalityMember, CivilParishMember, SeniunaitijaMember
 from parasykjiems.pjweb.models import Email
 from parasykjiems.pjweb.forms import *
 from pjutils.address_search import AddressSearch
@@ -19,6 +18,11 @@ from django.utils import simplejson
 import random
 from django.contrib.sites.models import Site
 from pjutils.uniconsole import *
+from cdb_lt_municipality.models import MunicipalityMember
+from cdb_lt_mps.models import ParliamentMember, PollingDistrictStreet
+from cdb_lt_civilparish.models import CivilParishMember
+from cdb_lt_seniunaitija.models import SeniunaitijaMember
+from cdb_lt_streets.models import HierarchicalGeoData
 
 logger = logging.getLogger(__name__)
 

@@ -3,14 +3,11 @@
 
 from django.test import TestCase
 import os
-from contactdb.AdressParser import AddressParser
-from contactdb.imp import LithuanianConstituencyReader
-from contactdb.LTRegisterCenter.webparser import RegisterCenterParser, RegisterCenterPage, LinkCell, LTGeoDataHierarchy
 from settings import *
-from contactdb.models import HierarchicalGeoData
 
 from urllib2 import urlopen
 import contactdb.models
+from cdb_lt_streets.LTRegisterCenter.webparser import RegisterCenterParser, LinkCell, LTGeoDataHierarchy
 
 scriptPath = os.path.dirname( os.path.realpath( __file__ ) )
 
@@ -216,7 +213,7 @@ class TestLTRegisterCenterLocations(TestCase):
             self.assertEqual(4, len(page.location))
             self.assertEqual(u"LIETUVOS RESPUBLIKA", page.location[0].text)
             self.assertEqual(u"Alytaus apskritis", page.location[1].text)
-            self.assertEqual(u"Alytaus savivaldybė", page.location[2].text)
+            self.assertEqual(u"Alytaus rajono savivaldybė", page.location[2].text)
             self.assertEqual(u"Alytaus seniūnija", page.location[3].text)
 
     def testLietuvosRespublika(self):

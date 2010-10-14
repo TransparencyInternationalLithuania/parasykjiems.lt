@@ -1,9 +1,9 @@
-from parasykjiems.contactdb.models import PollingDistrictStreet, Constituency, ParliamentMember
 from parasykjiems.contactdb import models
 from django.contrib import admin
 from django.utils.translation import ugettext as _
 from django.db import models as djangoModel
 import inspect
+from cdb_lt_mps.models import ParliamentMember, PollingDistrictStreet, Constituency
 
 class AddrAdmin(admin.ModelAdmin):
     list_display = ('street', 'city', 'district')
@@ -20,7 +20,7 @@ for klass, adminKlas in customModels:
     admin.site.register(klass, adminKlas)
 
 # auto-register all other models
-moduleAttributes = [getattr(models, m) for m in dir(models)]
+"""moduleAttributes = [getattr(models, m) for m in dir(models)]
 moduleClasses = [m for m in moduleAttributes if inspect.isclass(m)]
 modelsList = [m for m in moduleClasses if issubclass(m, djangoModel.Model)]
 # from model list remove already registered models
@@ -28,3 +28,4 @@ for klass, adminKlass in customModels:
     modelsList.remove(klass)
 # finally register all modules
 admin.site.register(modelsList)
+"""
