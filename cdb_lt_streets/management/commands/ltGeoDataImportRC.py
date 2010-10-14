@@ -12,6 +12,7 @@ from pjutils.exc import ChainnedException
 import time
 from optparse import make_option
 
+
 class LTGeoDataImportException(ChainnedException):
     pass
 
