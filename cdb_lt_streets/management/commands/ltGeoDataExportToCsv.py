@@ -39,17 +39,19 @@ class Command(BaseCommand):
                           HierarchicalGeoData.HierarchicalGeoDataType.Street])
 
         allIds = HierarchicalGeoData.objects.values_list('id', flat = True).order_by('id')
-        count = len(allIds)
+        count = 0
 
         for id in allIds:
+
             childrenCount = len(HierarchicalGeoData.objects.all().filter(parent__id = id))
             if (childrenCount != 0):
                 print "id %s has %s children, skipping" % (id, childrenCount)
                 continue
+            count += 1
             print "id %s has %s children" % (id, childrenCount)
             obj = HierarchicalGeoData.objects.all().filter(id = id)[0]
             parent_values = self.getParentValues(obj)
-            finalValues = [obj.id]
+            finalValues = [count]
             for pv in parent_values:
                 finalValues.append(pv)
             finalValues.append(obj.name)

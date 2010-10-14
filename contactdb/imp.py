@@ -5,7 +5,6 @@ import copy
 import re
 import os
 from pjutils.exc import ChainnedException
-from contactdb.models import Constituency
 from pjutils.deprecated import deprecated
 
 class ImportSourceNotExistsException(ChainnedException):
@@ -17,6 +16,7 @@ class ImportSources:
     LithuanianCivilParishMembers = os.path.join("contactdb", "sources", "LithuanianCivilParishMembers.csv")
     LithuanianMunicipalityMembers = os.path.join("contactdb", "sources", "LithuanianMunicipalityMembers.csv")
     LithuanianSeniunaitijaMembers  = os.path.join("contactdb", "sources", "LithuanianSeniunaitijaMembers.csv")
+    LithuanianStreetIndex  = os.path.join("contactdb", "sources", "LithuanianStreetIndex.csv")
 
     @classmethod
     def EsnureExists(clas, importSource):
@@ -39,6 +39,8 @@ class GoogleDocsSources:
     LithuanianMunicipalityMembers = "parasykjiems.lt 4 merai"
     # Seniūnaičiai
     LithuanianSeniunaitijaMembers = "parasykjiems.lt 5 seniunaiciai"
+
+    LithuanianStreetIndex = "Lithuanian street index"
 
 
 class SeniunaitijaAddressExpanderException(ChainnedException):
