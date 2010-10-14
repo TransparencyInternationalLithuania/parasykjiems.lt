@@ -13,8 +13,16 @@ from pjutils.uniconsole import *
 class Command(BaseCommand):
     args = '<>'
     help = """Prints contents of queue"""
+    def __init__(self):
+        self.localCache = {}
+
 
     def createIfNotNull(self, name, type, parent = None):
+        key = "%s%s" % (name, type)
+
+        if (self.localCache.has_key(key) == True):
+            return self.localCache[key]
+
         try:
             existing = HierarchicalGeoData.objects.all().filter(name = name) \
                 .filter(type = type)
@@ -23,6 +31,7 @@ class Command(BaseCommand):
             else:
                 existing = existing.filter(parent = parent)
             existing = existing[0:1].get()
+            self.localCache[key] = existing
             print u"object %s %s exists, skipping" % (name, type)
             return existing
         except HierarchicalGeoData.DoesNotExist:
@@ -30,6 +39,7 @@ class Command(BaseCommand):
             print u"creating %s %s" % (name, type)
             newObject = HierarchicalGeoData(name = name, type = type, parent = parent)
             newObject.save()
+            self.localCache[key] = newObject
             return newObject
 
     @transaction.commit_on_success
