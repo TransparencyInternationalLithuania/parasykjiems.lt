@@ -1,12 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from contactdb.models import MunicipalityMember, SeniunaitijaMember, ParliamentMember, CivilParishMember
 from pjutils.exc import ChainnedException
 from contactdb.imp import LithuanianConstituencyParser
 from django.core.exceptions import ObjectDoesNotExist
 import csv
-
+from cdb_lt_municipality.models import MunicipalityMember
+from cdb_lt_seniunaitija.models import SeniunaitijaMember
+from cdb_lt_civilparish.models import CivilParishMember
+from cdb_lt_mps.models import ParliamentMember
 
 
 class ParliamentMemberImportError(ChainnedException):

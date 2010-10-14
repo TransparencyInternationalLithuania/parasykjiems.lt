@@ -6,6 +6,7 @@ import re
 import os
 from pjutils.exc import ChainnedException
 from pjutils.deprecated import deprecated
+from cdb_lt_mps.models import Constituency, Constituency
 
 class ImportSourceNotExistsException(ChainnedException):
     pass
