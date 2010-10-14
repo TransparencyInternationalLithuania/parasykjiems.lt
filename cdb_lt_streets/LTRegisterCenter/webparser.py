@@ -5,12 +5,12 @@ from urllib2 import urlopen
 from ClientForm import ParseResponse
 from BeautifulSoup import BeautifulSoup
 import re
-from contactdb.models import HierarchicalGeoData
 from pjutils.exc import ChainnedException
 from pjutils.uniconsole import *
 
 # forcing BeautifulSoup to allow <b> tag to have nested table and other tags
 import contactdb.models
+from cdb_lt_streets.models import HierarchicalGeoData
 
 BeautifulSoup.RESET_NESTING_TAGS['b'] = []
 

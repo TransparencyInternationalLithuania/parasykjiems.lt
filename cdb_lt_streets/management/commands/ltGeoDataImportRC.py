@@ -5,12 +5,13 @@ from django.core.management.base import BaseCommand
 from pjutils.timemeasurement import TimeMeasurer
 from django.db import transaction
 from parasykjiems.FeatureBroker.configs import defaultConfig
-from contactdb.LTRegisterCenter.mqbroker import LTRegisterQueue
-from contactdb.LTRegisterCenter.webparser import RegisterCenterParser, LTGeoDataHierarchy
 from urllib2 import urlopen
 from pjutils.exc import ChainnedException
 import time
 from optparse import make_option
+from cdb_lt_streets.LTRegisterCenter.webparser import RegisterCenterParser
+from cdb_lt_streets.LTRegisterCenter.mqbroker import LTRegisterQueue
+from cdb_lt_streets.models import HierarchicalGeoData
 
 
 class LTGeoDataImportException(ChainnedException):
