@@ -25,13 +25,16 @@ class LTRegisterQueue(Component):
         self.CreateQueues()
         pass
 
-    def InitialiseImport(self):
+    def InitialiseImport(self, url = None):
         """ Will initialise queue with a single message, witch will mean that a specific URL must be parsed
         and inserted as LT Geo Data. The page will contain links to deeper levels, which will be
         later inserted as other messoges"""
 
         # send initial message with a defined URL in GlobalSettings
-        self.SendMessage(GlobalSettings.LTGeoDataParseUrl)
+        if (url is None):
+            self.SendMessage(GlobalSettings.LTGeoDataParseUrl)
+        else:
+            self.SendMessage(url)
 
 
     def SendMessage(self, msgBody):

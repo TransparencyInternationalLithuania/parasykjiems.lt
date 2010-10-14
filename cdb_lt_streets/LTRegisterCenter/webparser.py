@@ -95,6 +95,10 @@ class RegisterCenterParser:
         # this is soooo lame that i do it twice here. Anyone knows how to do better? 
         rootLocation = rootLocation.replace("   ", " ")
         rootLocation = rootLocation.replace("  ", " ")
+        rootLocation = rootLocation.replace("<td>", "")
+        rootLocation = rootLocation.replace("</td>", "")
+        rootLocation = rootLocation.replace("</b>", "")
+        rootLocation = rootLocation.replace("<b>", "")
         return rootLocation
 
     def _GetLocationsFirstTag(self):
@@ -197,7 +201,7 @@ LIETUVOS RESPUBLIKA / Tauragės apskr. / Pagėgių sav. / Natkiškių sen. / Nat
                 # go to next tag
                 textSibling = textSibling.next.next
                 # remove bold
-                textSibling = textSibling.next
+                #textSibling = textSibling.next
             cell.text = self._NormaliseLocationText(self._removeLineBreaks(textSibling))
         else:
             cell.text = self._NormaliseLocationText(self._removeLineBreaks(href))

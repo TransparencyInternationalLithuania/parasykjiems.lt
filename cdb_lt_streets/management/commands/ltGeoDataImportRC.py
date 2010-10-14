@@ -28,6 +28,11 @@ class Command(BaseCommand):
             metavar="depth-level",
             default = "99",
             help='Specify a maximum depth-level to parse. Counts from root location, even though current url might be deep in hierarchy'),
+        make_option('-u', '--url',
+            dest='url',
+            metavar='url',
+            default=None,
+            help='Specify a URL from http://www.registrucentras.lt/adr/p/index.php  to parse. Effectively you can make parse only a sub-tree')
         )
 
 
@@ -215,7 +220,8 @@ more data with at least max-depth 2"""
         if (empty):
             print "Queue is empty"
             print "Initialising import procedure"
-            self.queue.InitialiseImport()
+            url = options['url']
+            self.queue.InitialiseImport(url)
 
         print u"starting import procedure"
 
