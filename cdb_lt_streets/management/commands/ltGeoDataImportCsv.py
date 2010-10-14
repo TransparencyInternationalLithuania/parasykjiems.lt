@@ -1,4 +1,5 @@
 from django.core.management.base import BaseCommand
+from django.db import transaction
 from django.core import management
 from pjutils.timemeasurement import TimeMeasurer
 from parasykjiems.FeatureBroker.configs import defaultConfig
@@ -31,10 +32,12 @@ class Command(BaseCommand):
             newObject.save()
             return newObject
 
+    @transaction.commit_on_success
     def handle(self, *args, **options):
         fileName = ImportSources.LithuanianStreetIndex
         print u"Import street index data from csv file %s" % fileName
         ImportSources.EsnureExists(ImportSources.LithuanianStreetIndex)
+        elapsedTime = TimeMeasurer()
 
         self.dictReader = csv.DictReader(open(fileName, "rt"), delimiter = "\t")
 
@@ -56,5 +59,6 @@ class Command(BaseCommand):
             parent = self.createIfNotNull(street, HierarchicalGeoData.HierarchicalGeoDataType.Country, parent = parent)
 
 
+        print u"Took %s seconds" % elapsedTime.ElapsedSeconds()
         print u"finished, written total %s lines" % self.count
 
