@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand
 from django.core import management
 from pjutils.timemeasurement import TimeMeasurer
 from parasykjiems.FeatureBroker.configs import defaultConfig
-from contactdb.LTRegisterCenter.mqbroker import LTRegisterQueue
+from cdb_lt_streets.LTRegisterCenter.mqbroker import LTRegisterQueue
 
 
 class Command(BaseCommand):
