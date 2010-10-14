@@ -8,24 +8,24 @@ class HierarchicalGeoData(models.Model):
     """ A hierarchical geo data structure """
 
     class HierarchicalGeoDataType:
-        Country = 'Country'
-        County = 'County' # Apskritis
-        Municipality = 'Municipality'  # Savivaldybė
-        CivilParish = 'CivilParish'  # Seniūnija
-        City = 'City'
-        Street = 'Street'
+        Country = u'Country'
+        County = u'County' # Apskritis
+        Municipality = u'Municipality'  # Savivaldybė
+        CivilParish = u'CivilParish'  # Seniūnija
+        City = u'City'
+        Street = u'Street'
 
 
     # types of hierarchical data. Note that correctness is not enforced programitcally
     # Which means that Country can be put below City, and vice-versa.
     # Import tools must ensure that data is logically insert
     HierarchicalGeoDataTypeChoices = (
-        (HierarchicalGeoDataType.Country, 'Country'),
-        (HierarchicalGeoDataType.County, 'County'), # Apskritis
-        (HierarchicalGeoDataType.Municipality, 'Municipality'), # Savivaldybė
-        (HierarchicalGeoDataType.CivilParish, 'Civil parish'), # Seniūnija
-        (HierarchicalGeoDataType.City, 'City'),
-        (HierarchicalGeoDataType.Street, 'Street'))
+        (HierarchicalGeoDataType.Country, u'Country'),
+        (HierarchicalGeoDataType.County, u'County'), # Apskritis
+        (HierarchicalGeoDataType.Municipality, u'Municipality'), # Savivaldybė
+        (HierarchicalGeoDataType.CivilParish, u'Civil parish'), # Seniūnija
+        (HierarchicalGeoDataType.City, u'City'),
+        (HierarchicalGeoDataType.Street, u'Street'))
 
     name = models.CharField(max_length = 100)
     parent = models.ForeignKey('self', blank=True, null=True, related_name="children", help_text="Parent data, if this is a child node.")
