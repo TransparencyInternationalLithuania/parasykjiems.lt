@@ -6,4 +6,11 @@
 <p>{{ mail.sender }}</p>
 <p>{{ mail.message }}</p>
 <p>{{ mail.msg_state }}</p>
+{% if responses %}
+  <div>
+    {% for response in responses %}
+      {{ response.message }}
+    {% endfor %}
+  </div>
+{% endif %}
 {% endblock %}

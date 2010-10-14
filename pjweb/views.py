@@ -15,6 +15,7 @@ from parasykjiems.contactdb.models import PollingDistrictStreet, Constituency, P
 from parasykjiems.pjweb.models import Email
 from parasykjiems.pjweb.forms import *
 from pjutils.address_search import AddressSearch
+from pjutils.get_mail import GetMail
 from django.utils import simplejson
 import random
 from django.contrib.sites.models import Site
@@ -199,6 +200,40 @@ def get_civilparish(pd_id, constituency):
 #    print result
     return result
 
+def insert_response(mail_id):
+    getmail = GetMail()
+    server_info = {
+        'server':settings.MAIL_SERVER,
+        'username':settings.MAIL_USERNAME,
+        'password':settings.MAIL_PASSWORD,
+        'type':settings.MAIL_SERVER_TYPE
+    }
+    responses = getmail.get_mail(server_info, mail_id)
+
+    mails = Email.objects.all().filter(id__exact=mail_id)
+    mail = mails[0]
+    responder = get_rep(mail.recipient_id, mail.recipient_type)
+
+    for response in responses:
+        message = response
+        sender = responder.email
+        recipients = mail.sender
+
+        mail = Email(
+            sender_name = mail.recipient_name,
+            sender = responder.email,
+            recipient_id = mail.recipient_id,
+            recipient_type = mail.recipient_type,
+            recipient_name = mail.sender_name,
+            message = message,
+            msg_state = 'R',
+            msg_type = 'R',
+            answer_no = mail.id,
+            public = True,
+        )
+        mail.save()
+    return mail
+
 def index(request):
     query_string = ' '
     entered = ''
@@ -274,10 +309,15 @@ def about(request):
     })
 
 def public(request, mail_id):
+    responses = []
     mails = Email.objects.all().filter(id__exact=mail_id)
     mail = mails[0]
+    responses = Email.objects.all().filter(answer_no__exact=mail_id)
+    if not responses:
+        responses = [insert_response(mail.id)]
     return render_to_response('pjweb/public.html', {
         'mail': mail,
+        'responses': responses,
         'LANGUAGES': settings.LANGUAGES,
         'step1': 'step1_inactive.png',
         'step2': 'step2_active.png',
@@ -504,7 +544,7 @@ def response(request, mail_id, response_no):
                 message = message,
                 msg_state = 'R',
                 msg_type = 'R',
-                answer_no = response_no,
+                answer_no = mail.id,
                 public = True,
             )
             mail.save()
