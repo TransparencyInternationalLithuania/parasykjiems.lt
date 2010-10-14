@@ -1,19 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from django.core.management.base import BaseCommand, make_option
-from django.core import management
+from django.core.management.base import BaseCommand
 from pjutils.timemeasurement import TimeMeasurer
 from django.db import transaction
-from contactdb.models import HierarchicalGeoData
 from parasykjiems.FeatureBroker.configs import defaultConfig
 from contactdb.LTRegisterCenter.mqbroker import LTRegisterQueue
-from contactdb.LTRegisterCenter.webparser import RegisterCenterParser, RegisterCenterPage, LTGeoDataHierarchy
+from contactdb.LTRegisterCenter.webparser import RegisterCenterParser, LTGeoDataHierarchy
 from urllib2 import urlopen
 from pjutils.exc import ChainnedException
 import time
 from optparse import make_option
-import contactdb.models
 
 class LTGeoDataImportException(ChainnedException):
     pass
@@ -47,7 +44,7 @@ class Command(BaseCommand):
         for link in page.otherPages:
             if (link.href is None):
                 continue
-            # add links only on first page. So that we dount end up browsing through paged data forever
+            # add links only on first page. So that we do not end up browsing through paged data forever
             if (link.text == "1"):
                 break
             print "creating message for other page \n'%s' " % (link)

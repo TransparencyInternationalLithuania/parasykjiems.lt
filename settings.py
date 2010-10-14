@@ -72,6 +72,11 @@ INSTALLED_APPS = (
     'parasykjiems.pjweb',
     'parasykjiems.pjutils',
     'django.contrib.admin',
+    'cdb_lt_civilparish',
+    'cdb_lt_mps',
+    'cdb_lt_municipality',
+    'cdb_lt_seniunaitija',
+    'cdb_lt_streets',
     'haystack',
 )
 
