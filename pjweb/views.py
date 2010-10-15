@@ -16,10 +16,12 @@ from parasykjiems.pjweb.models import Email
 from parasykjiems.pjweb.forms import *
 from pjutils.address_search import AddressSearch
 from pjutils.get_mail import GetMail
+from pjutils.declension import DeclensionLt
 from django.utils import simplejson
 import random
 from django.contrib.sites.models import Site
 from pjutils.uniconsole import *
+import datetime
 
 logger = logging.getLogger(__name__)
 
@@ -310,9 +312,9 @@ def about(request):
 
 def public(request, mail_id):
     responses = []
-    mails = Email.objects.all().filter(id__exact=mail_id)
+    mails = Email.objects.filter(id__exact=mail_id)
     mail = mails[0]
-    responses = Email.objects.all().filter(answer_no__exact=mail_id)
+    responses = Email.objects.filter(answer_no__exact=mail_id)
     if not responses:
         responses = [insert_response(mail.id)]
     return render_to_response('pjweb/public.html', {
@@ -464,6 +466,9 @@ def contact(request, rtype, mp_id):
                         'step3': 'step3_active.png',
                     })
             if not send:
+#                decl = DeclensionLt()
+#                d = datetime.date.today()
+#                print d.year, decl.month(d.month), d.day
                 return render_to_response('pjweb/preview.html', {
                     'form': form,
                     'mp_id': mp_id,
@@ -478,7 +483,8 @@ def contact(request, rtype, mp_id):
                 })
 
     else:
-        form = ContactForm(initial={'message': 'Gerb. p. %s, \n\n\n\nGeros dienos.' % receiver.name })
+        decl = DeclensionLt()
+        form = ContactForm(initial={'message': 'Gerb. p. %s, \n\n\n\nGeros dienos.' % decl.sauksm(receiver.name) })
         
     return render_to_response('pjweb/contact.html', {
         'form': form,
