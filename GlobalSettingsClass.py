@@ -15,6 +15,9 @@ class GlobalSettingsClass():
     def Languages(self):
         print "Define used Languages. Defaults are Lithuanian and English "
 
+    def MailServ(self):
+        print "Define mail server, where responses are comming from."
+
     def _LTGeoDataParseUrl(self):
         print """Define an URL for Lithuanian RegisterCenter root page. From that page data will be extracted
         hierarchicaly from top to bottom. Don't set this variable to root url, unless you are on production.
@@ -27,7 +30,8 @@ class GlobalSettingsClass():
                          'GOOGLE_DOCS_PASSWORD' : self.googleDocsUsers,
                          'EnableWWWForLTGeoTests' : self._EnableWWWForLTGeoTests,
                          'LTGeoDataParseUrl' : self._LTGeoDataParseUrl,
-                         'LANGUAGES' : self.Languages}
+                         'LANGUAGES' : self.Languages,
+                         'MAIL_SERVER' : self.MailServ,}
         if (name in printMoreInfo):
             printMoreInfo[name]()
 

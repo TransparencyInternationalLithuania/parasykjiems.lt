@@ -204,37 +204,39 @@ def get_civilparish(pd_id, constituency):
 
 def insert_response(mail_id):
     getmail = GetMail()
-    server_info = {
-        'server':settings.MAIL_SERVER,
-        'username':settings.MAIL_USERNAME,
-        'password':settings.MAIL_PASSWORD,
-        'type':settings.MAIL_SERVER_TYPE
-    }
-    responses = getmail.get_mail(server_info, mail_id)
+    if settings.MAIL_SERVER:
+        server_info = {
+            'server':settings.MAIL_SERVER,
+            'username':settings.MAIL_USERNAME,
+            'password':settings.MAIL_PASSWORD,
+            'type':settings.MAIL_SERVER_TYPE
+        }
+        responses = getmail.get_mail(server_info, mail_id)
 
-    mails = Email.objects.all().filter(id__exact=mail_id)
-    mail = mails[0]
-    responder = get_rep(mail.recipient_id, mail.recipient_type)
+        mails = Email.objects.all().filter(id__exact=mail_id)
+        mail = mails[0]
+        responder = get_rep(mail.recipient_id, mail.recipient_type)
 
-    for response in responses:
-        message = response
-        sender = responder.email
-        recipients = mail.sender
+        for response in responses:
+            message = response
+            sender = responder.email
+            recipients = mail.sender
 
-        mail = Email(
-            sender_name = mail.recipient_name,
-            sender = responder.email,
-            recipient_id = mail.recipient_id,
-            recipient_type = mail.recipient_type,
-            recipient_name = mail.sender_name,
-            message = message,
-            msg_state = 'R',
-            msg_type = 'R',
-            answer_no = mail.id,
-            public = True,
-        )
-        mail.save()
-    return mail
+            mail = Email(
+                sender_name = mail.recipient_name,
+                sender = responder.email,
+                recipient_id = mail.recipient_id,
+                recipient_type = mail.recipient_type,
+                recipient_name = mail.sender_name,
+                message = message,
+                msg_state = 'R',
+                msg_type = 'R',
+                answer_no = mail.id,
+                public = True,
+            )
+            mail.save()
+        return mail
+    return False
 
 def index(request):
     query_string = ' '
