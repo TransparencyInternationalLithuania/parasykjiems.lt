@@ -165,6 +165,11 @@ class Command(BaseCommand):
             self.CreateRowIfNotExist(u"Šventosios seniūnija", HierarchicalGeoData.HierarchicalGeoDataType.CivilParish,
                 u"Palangos miesto savivaldybė", HierarchicalGeoData.HierarchicalGeoDataType.Municipality)
 
+            self.CreateRowIfNotExist(u"Juodkrantės seniūnija", HierarchicalGeoData.HierarchicalGeoDataType.CivilParish,
+                u"Neringos savivaldybė", HierarchicalGeoData.HierarchicalGeoDataType.Municipality)
+            
+            self.CreateRowIfNotExist(u"Preilos-Pervalkos seniūnija", HierarchicalGeoData.HierarchicalGeoDataType.CivilParish,
+                u"Neringos savivaldybė", HierarchicalGeoData.HierarchicalGeoDataType.Municipality)
 
             klaipedaCompanies = [u'Teritorija aptarnaujama UAB "Paslaugos būstui"',
                                  u'Teritorija aptarnaujama UAB "Vitės valdos"',
