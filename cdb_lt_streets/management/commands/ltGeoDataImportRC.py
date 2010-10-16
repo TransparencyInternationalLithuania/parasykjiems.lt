@@ -94,16 +94,6 @@ class Command(BaseCommand):
             parentLocationObject = locationInDB
         return insertedRows
 
-    def CreateRowIfNotExist(self, text, type, parentLocationText, parentLocationType):
-        locationInDB = HierarchicalGeoData.FindByName(text, parentName = parentLocationText)
-        if (locationInDB is not None):
-            return
-        try:
-            parent = HierarchicalGeoData.objects.filter(name__contains = parentLocationText, type = parentLocationType)[0:1].get()
-        except HierarchicalGeoData.DoesNotExist:
-            raise LTGeoDataImportException("Could not find location with name '%s' and type '%s'" % (parentLocationText, parentLocationType))
-        self._CreateNewLocationObject(text, type, parent)
-
 
     def _CreateNewLocationObject(self, text, type, parentLocationObject):
         locationInDB = HierarchicalGeoData()
@@ -161,40 +151,7 @@ class Command(BaseCommand):
 
         return insertedRows
 
-    def CreateAdditionalGeoData(self):
-        try:
-            self.CreateRowIfNotExist(u"Palangos miesto seniūnija", HierarchicalGeoData.HierarchicalGeoDataType.CivilParish,
-                u"Palangos miesto savivaldybė", HierarchicalGeoData.HierarchicalGeoDataType.Municipality)
 
-            self.CreateRowIfNotExist(u"Šventosios seniūnija", HierarchicalGeoData.HierarchicalGeoDataType.CivilParish,
-                u"Palangos miesto savivaldybė", HierarchicalGeoData.HierarchicalGeoDataType.Municipality)
-
-
-            klaipedaCompanies = [u'Teritorija aptarnaujama UAB "Paslaugos būstui"',
-                                 u'Teritorija aptarnaujama UAB "Vitės valdos"',
-                                 u'Teritorija aptarnaujama UAB "Mūsų namų valdos"',
-                                 u'Teritorija aptarnaujama UAB "Marių valdos"',
-                                 u'Teritorija aptarnaujama UAB "Ąžuolyno valda"',
-                                 u'Teritorija aptarnaujama UAB "Pempininkų valdos"',
-                                 u'Teritorija aptarnaujama UAB "Debreceno valda"',
-                                 u'Teritorija aptanaujama UAB "Buitis be rūpesčių"',
-                                 u'Teritorija aptanaujama UAB "Vingio valdos"',
-                                 u'Teritorija aptarnaujama UAB "Laukininkų valdos"']
-
-            for company in klaipedaCompanies:
-                self.CreateRowIfNotExist(company, HierarchicalGeoData.HierarchicalGeoDataType.CivilParish,
-                    u"Klaipėdos miesto savivaldybė", HierarchicalGeoData.HierarchicalGeoDataType.Municipality)
-
-
-
-
-
-
-        except (HierarchicalGeoData.DoesNotExist, LTGeoDataImportException):
-            print u"Could not create addition geo data"
-            print u"""This might happen if you have called with max-depth 1.  In that case appropriate data was simply
-not created, so it is normal to receive HierarchicalGeoData.DoesNotExist exception. Please import
-more data with at least max-depth 2"""
         
 
     def handle(self, *args, **options):
@@ -282,4 +239,3 @@ more data with at least max-depth 2"""
         print u"Made %s requirests. Avg %s fetches per second" % (totalParsedMessages, totalParsedMessages / elapsedTime.ElapsedSeconds())
 
         print u"Creating additional data, not availbe in www server"
-        self.CreateAdditionalGeoData()
