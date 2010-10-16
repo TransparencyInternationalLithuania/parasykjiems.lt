@@ -35,34 +35,11 @@ class MunicipalityMembersReader:
 
 
 
-class SeniunaitijaStreetParser:
-
-    def GetStreets(self, streetStr):
-        str = streetStr.split(',')
-
-        for s in str:
-            yield s.strip() 
 
 def toUnicode(str):
     return unicode(str, 'utf-8')
 
-class SeniunaitijaMembersReader:
-    def __init__(self, fileName):
-        self.dictReader = csv.DictReader(open(fileName, "rt"), delimiter = "\t")
 
-    def ReadMembers(self):
-        for row in self.dictReader:
-            member = SeniunaitijaMember()
-            member.name = unicode(row["name"].strip(), 'utf-8')
-            member.surname = unicode(row["surname"].strip(), 'utf-8')
-            member.email = row["e-mail"]
-            member.phone = row["telephonenumber"]
-            member.homePhone = row["hometelephonenumber"]
-            member.role = row["pareigos"]
-            member.seniunaitijaStr = toUnicode(row["seniunaitija"].strip())
-            member.territoryStr = toUnicode(row["territorycoveredbyseniunaitija"].strip())
-            member.uniqueKey = int(row["uniquekeynotchangeable"])
-            yield member
 
 class CivilParishMembersReader:
     def __init__(self, fileName):

@@ -7,7 +7,9 @@ from django.db import models
 from contactdb.models import PersonNameField, PhoneField, InstitutionNameField
 
 class Seniunaitija(models.Model):
-    name = InstitutionNameField();
+    name = InstitutionNameField()
+    civilParish = InstitutionNameField()
+    municipality = InstitutionNameField()
 
 class SeniunaitijaMember(models.Model):
     """ Seniunaitis. Is accountable to CivilParishMember. Basically he performs any sub-management

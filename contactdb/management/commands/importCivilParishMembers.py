@@ -3,8 +3,7 @@
 
 from django.core.management.base import BaseCommand
 from django.core.exceptions import ObjectDoesNotExist
-from contactdb.import_parliamentMembers import LithuanianMPsReader, CivilParishMembersReader
-from contactdb.models import HierarchicalGeoData, CivilParishMember
+from contactdb.import_parliamentMembers import CivilParishMembersReader
 from contactdb.imp import ImportSources, GoogleDocsSources
 from django.db import transaction
 from pjutils import uniconsole

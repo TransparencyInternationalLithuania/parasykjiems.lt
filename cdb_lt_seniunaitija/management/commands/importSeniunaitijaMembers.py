@@ -3,8 +3,6 @@
 
 from django.core.management.base import BaseCommand
 from django.core.exceptions import ObjectDoesNotExist
-from contactdb.import_parliamentMembers import SeniunaitijaMembersReader
-from contactdb.models import HierarchicalGeoData, SeniunaitijaMember
 from contactdb.imp import ImportSources
 from django.db import transaction
 from pjutils import uniconsole
@@ -12,21 +10,35 @@ import os
 import csv
 from pjutils.exc import ChainnedException
 from contactdb.management.commands.importCivilParishMembers import ImportCivilParishMemberException
+from cdb_lt_seniunaitija.models import Seniunaitija, SeniunaitijaMember
 
 class ImportSeniunaitijaMemberException(ChainnedException):
     pass
 
+def toUnicode(str):
+    return unicode(str, 'utf-8')
+
+class SeniunaitijaMembersReader:
+    def __init__(self, fileName):
+        self.dictReader = csv.DictReader(open(fileName, "rt"), delimiter = "\t")
+
+    def ReadMembers(self):
+        for row in self.dictReader:
+            member = SeniunaitijaMember()
+            member.name = unicode(row["name"].strip(), 'utf-8')
+            member.surname = unicode(row["surname"].strip(), 'utf-8')
+            member.email = row["e-mail"]
+            member.phone = row["telephonenumber"]
+            member.homePhone = row["hometelephonenumber"]
+            member.role = row["pareigos"]
+            member.seniunaitijaStr = toUnicode(row["seniunaitija"].strip())
+            member.territoryStr = toUnicode(row["territorycoveredbyseniunaitija"].strip())
+            member.uniqueKey = int(row["uniquekeynotchangeable"])
+            yield member
+
 class Command(BaseCommand):
     args = '<>'
     help = 'Imports into database all Lithuanian SeniunaitijaMember  / seniūnaičiai'
-
-
-    def alreadyExists(self, member):
-        try:
-            return SeniunaitijaMember.objects.get(uniqueKey = member.uniqueKey)
-        except ObjectDoesNotExist:
-            return None
-
 
     @transaction.commit_on_success
     def handle(self, *args, **options):
@@ -50,25 +62,17 @@ class Command(BaseCommand):
 
             # relate existing seniunaitija to seniūnaitis
             try:
-                type = HierarchicalGeoData.HierarchicalGeoDataType.Seniunaitija
                 name = member.seniunaitijaStr
-                #print "query: %s" % HierarchicalGeoData.objects.filter(name__contains = name).filter(type = type)[0:1].query
-                member.seniunaitija = HierarchicalGeoData.objects.filter(name__contains = name).filter(type = type)[0:1].get()
+                member.seniunaitija = Seniunaitija.objects.filter(id = member.uniqueKey)[0:1].get()
             except ObjectDoesNotExist:
                 raise ImportCivilParishMemberException("""Seniunaitija with name '%s' and type '%s' could not be found in database. Either the database is
 not yet populated with seniunaitija, or it is missing (probably because import data does not contain it)""" % \
                     (name, type))
 
-            # check if already such member exists. Name and surname are primary keys
-            m = self.alreadyExists(member)
-            if (m is None):
-                print (u"Importing seniunaitija member %s %s %s" % (member.uniqueKey, member.name, member.surname))
-            else:
-                member.id = m.id
-                print u"updating : %s %s %s " % (member.uniqueKey, member.name, member.surname)
-
-
+            member.id = member.uniqueKey
             member.save()
+            print "Seniunaitija member: %s %s %s" % (member.uniqueKey, member.name, member.surname)
+
 
             count += 1
             if (count >= maxNumberToImport):
