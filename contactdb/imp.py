@@ -19,6 +19,7 @@ class ImportSources:
     LithuanianMunicipalityMembers = os.path.join("contactdb", "sources", "LithuanianMunicipalityMembers.csv")
     LithuanianSeniunaitijaMembers  = os.path.join("contactdb", "sources", "LithuanianSeniunaitijaMembers.csv")
     LithuanianStreetIndex  = os.path.join("contactdb", "sources", "LithuanianStreetIndex.csv")
+    LithuanianMunicipalities  = os.path.join("contactdb", "sources", "LithuanianMunicipalities.csv")
 
     @classmethod
     def EsnureExists(clas, importSource):
@@ -43,6 +44,7 @@ class GoogleDocsSources:
     LithuanianSeniunaitijaMembers = "parasykjiems.lt 5 seniunaiciai"
 
     LithuanianStreetIndex = "Lithuanian street index"
+    LithuanianMunicipalities = "Contact DB LT Municipalities"
 
 
 class SeniunaitijaAddressExpanderException(ChainnedException):

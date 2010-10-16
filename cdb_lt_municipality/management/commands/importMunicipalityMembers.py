@@ -4,20 +4,20 @@
 from django.core.management.base import BaseCommand
 from django.core.exceptions import ObjectDoesNotExist
 from contactdb.import_parliamentMembers import MunicipalityMembersReader
-from contactdb.models import HierarchicalGeoData, MunicipalityMember
 from contactdb.imp import ImportSources
 from django.db import transaction
 from pjutils import uniconsole
 import os
 import csv
 from pjutils.exc import ChainnedException
+from cdb_lt_municipality.models import MunicipalityMember, Municipality
 
 class ImportMunicipalityMemberException(ChainnedException):
     pass
 
 class Command(BaseCommand):
     args = '<>'
-    help = 'Imports into database all Lithuanian MunicipalityMembers / seniūnai'
+    help = 'Imports into database all Lithuanian MunicipalityMembers / Mayors'
 
 
     def alreadyExists(self, member):
@@ -47,11 +47,10 @@ class Command(BaseCommand):
             m = self.alreadyExists(member)
             # relate existing constituency to an MP
             try:
-                type = HierarchicalGeoData.HierarchicalGeoDataType.Municipality
                 name = member.municipalityStr.strip()
                 #name = name.replace(u'rajono', '')
                 name = u"%s savivaldybė" % (name)
-                member.municipality = HierarchicalGeoData.objects.filter(name__contains=name).filter(type = type)[0:1].get()
+                member.municipality = Municipality.objects.filter(name__contains=name)[0:1].get()
             except ObjectDoesNotExist:
                 raise ImportMunicipalityMemberException("""Municipality with name '%s' and type '%s' could not be found in database. Either the database is
 not yet populated with Municipalities, or it is missing (probably because import data does not contain it)""" % \

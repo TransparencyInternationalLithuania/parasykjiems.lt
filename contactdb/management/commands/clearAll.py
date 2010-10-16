@@ -1,6 +1,11 @@
 from django.core.management.base import BaseCommand
 from contactdb.models import *
 from django.db import connection, transaction
+from cdb_lt_mps.models import PollingDistrictStreet, ParliamentMember, Constituency
+from cdb_lt_civilparish.models import CivilParishMember
+from cdb_lt_streets.models import HierarchicalGeoData
+from cdb_lt_seniunaitija.models import SeniunaitijaMember
+from cdb_lt_municipality.models import MunicipalityMember
 
 def ClearTablesData(listOfDjangoModels):
     print "Will clear %d models" % (len(listOfDjangoModels))
