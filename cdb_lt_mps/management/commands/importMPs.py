@@ -1,13 +1,38 @@
 from django.core.management.base import BaseCommand
 from django.core.exceptions import ObjectDoesNotExist
-from contactdb.import_parliamentMembers import LithuanianMPsReader
-from contactdb.models import ParliamentMember, Constituency
 from contactdb.imp import ImportSources
 from django.db import transaction
 from pjutils import uniconsole
 import os
 import logging
+from cdb_lt_mps.models import ParliamentMember, Constituency
+from cdb_lt_mps.parseConstituencies import LithuanianConstituencyParser
+import csv
+
 logger = logging.getLogger(__name__)
+
+class LithuanianMPsReader:
+    def __init__(self, fileName):
+        self.dictReader = csv.DictReader(open(fileName, "rt"), delimiter = "\t")
+
+
+    def ReadParliamentMembers(self):
+        """A generator which returns parliament member instances from
+    given file.  A constituency object is fetched from the database for this specific MP"""
+
+        parser = LithuanianConstituencyParser()
+
+        for row in self.dictReader:
+
+
+            member = ParliamentMember()
+            member.constituency = parser.ExtractConstituencyFromMPsFile(row["electoraldistrict"])
+            member.name = unicode(row["name"], 'utf-8')
+            member.surname = unicode(row["surname"], 'utf-8')
+            member.email = row["e-mail"]
+            member.uniqueKey = row["uniquekeynotchangeable"]
+
+            yield member
 
 class Command(BaseCommand):
     args = '<>'

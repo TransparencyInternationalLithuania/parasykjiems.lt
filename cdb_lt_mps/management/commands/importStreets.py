@@ -2,8 +2,7 @@
 # -*- coding: utf-8 -*-
 from django.core.management.base import BaseCommand
 from django.db import transaction
-from contactdb.imp import LithuanianConstituencyReader, ImportSources, PollingDistrictStreetExpander
-from contactdb.models import PollingDistrictStreet, Constituency
+from contactdb.imp import ImportSources
 from contactdb.AdressParser import AddressParser
 from datetime import datetime
 from django.db import connection, transaction
@@ -11,6 +10,8 @@ from pjutils.timemeasurement import TimeMeasurer
 import pjutils.uniconsole
 import os
 from pjutils.exc import ChainnedException
+from cdb_lt_mps.parseConstituencies import LithuanianConstituencyReader, PollingDistrictStreetExpander
+from cdb_lt_mps.models import Constituency, PollingDistrictStreet
 
 class ImportStreetsConstituencyDoesNotExist(ChainnedException):
     pass
