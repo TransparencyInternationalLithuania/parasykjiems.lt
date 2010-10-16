@@ -90,11 +90,10 @@ GlobalSettings.EnableWWWForLTGeoTests = False
 #   parser goes down the hierarchy. So for example --max-depth 1 will take only the top first Lithuanian hierarchical
 #   administration order. --max-depth 3 will take only CivilParish data (seniūnijos), which will be only 66 requests
 # more than 2k request
-# GlobalSettings.LTGeoDataParseUrl = "http://www.registrucentras.lt/adr/p/index.php"
+GlobalSettings.LTGeoDataParseUrl = "http://www.registrucentras.lt/adr/p/index.php"
 # Whole Alytaus Apskritis. 218 requests
 # GlobalSettings.LTGeoDataParseUrl = "http://www.registrucentras.lt/adr/p/index.php?aps_id=1"
 # around 47 web pages
 # GlobalSettings.LTGeoDataParseUrl = "http://www.registrucentras.lt/adr/p/index.php?sav_id=4"
 # around 8 web pages
-
-GlobalSettings.LTGeoDataParseUrl = "http://www.registrucentras.lt/adr/p/index.php?sen_id=5"
+#GlobalSettings.LTGeoDataParseUrl = "http://www.registrucentras.lt/adr/p/index.php?sen_id=5"
