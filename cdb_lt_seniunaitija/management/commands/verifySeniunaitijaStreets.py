@@ -2,9 +2,6 @@
 # -*- coding: utf-8 -*-
 from django.core.management.base import BaseCommand
 from django.db import transaction
-from contactdb.imp import LithuanianConstituencyReader, ImportSources, PollingDistrictStreetExpander, SeniunaitijaAddressExpander, SeniunaitijaAddressExpanderException
-from contactdb.models import PollingDistrictStreet, Constituency
-from contactdb.AdressParser import AddressParser
 from datetime import datetime
 from django.db import connection, transaction
 from pjutils.timemeasurement import TimeMeasurer
@@ -12,8 +9,11 @@ import pjutils.uniconsole
 import os
 from pjutils.exc import ChainnedException
 from test.test_iterlen import len
-from contactdb.import_parliamentMembers import SeniunaitijaMembersReader
 import logging
+from contactdb.imp import ImportSources
+from cdb_lt_seniunaitija.management.commands.importSeniunaitijaMembers import SeniunaitijaMembersReader
+from cdb_lt_seniunaitija.management.commands.importSeniunaitijaStreets import SeniunaitijaAddressExpander, SeniunaitijaAddressExpanderException
+
 logger = logging.getLogger(__name__)
 
 class Command(BaseCommand):

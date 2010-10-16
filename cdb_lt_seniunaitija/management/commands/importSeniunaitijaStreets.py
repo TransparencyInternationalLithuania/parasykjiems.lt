@@ -2,9 +2,6 @@
 # -*- coding: utf-8 -*-
 from django.core.management.base import BaseCommand
 from django.db import transaction
-from contactdb.imp import LithuanianConstituencyReader, ImportSources, PollingDistrictStreetExpander, SeniunaitijaAddressExpander, SeniunaitijaAddressExpanderException
-from contactdb.models import PollingDistrictStreet, Constituency
-from contactdb.AdressParser import AddressParser
 from datetime import datetime
 from django.db import connection, transaction
 from pjutils.timemeasurement import TimeMeasurer
@@ -12,9 +9,272 @@ import pjutils.uniconsole
 import os
 from pjutils.exc import ChainnedException
 from test.test_iterlen import len
-from contactdb.import_parliamentMembers import SeniunaitijaMembersReader
 import logging
+import re
+from cdb_lt_seniunaitija.models import SeniunaitijaStreet, Seniunaitija
+from contactdb.imp import ImportSources
+from cdb_lt_seniunaitija.management.commands.importSeniunaitijaMembers import SeniunaitijaMembersReader
+
 logger = logging.getLogger(__name__)
+
+class ExpandedStreet(object):
+    """ The biggest house number that can possibly exist. This is usually used
+    when in address range is refered in this form "from number 5 till the end".
+    So the end in this case is this number"""
+    MaxOddValue = 999999
+    MaxEvenValue = 999999 - 1
+
+    def __init__(self, street = u"", numberFrom = None, numberTo = None, city = u""):
+        self.street = street
+        self.numberFrom = numberFrom
+        self.numberTo = numberTo
+        self.city = city
+
+class SeniunaitijaAddressExpanderException(ChainnedException):
+    pass
+
+class SeniunaitijaAddressExpander:
+    streetPrefixes = [u'mstl.', u'k.', u'vs.']
+
+    def GetCityPrefix(self, city, prefix):
+        if (prefix == "mstl."):
+            return "%s %s" % (city, "miestelis")
+        return "%s %s" % (city, prefix)
+
+    def ContainsCity(self, street):
+        for prefix in self.streetPrefixes:
+            index = street.find(prefix)
+            if (index >= 0):
+                city = street[0:index].strip()
+                city = self.GetCityPrefix(city, prefix)
+                streetNew = street[index + len(prefix):].strip()
+                return (streetNew, city)
+        return (None, None)
+
+
+
+    def RemoveStreetParts(self, street):
+        streetTuple = None
+        if (streetTuple is None):
+            streetTuple = self._RemoveStreetPart(street, u"skg.")
+        if (streetTuple is None):
+            streetTuple = self._RemoveStreetPart(street, u"g.")
+        if (streetTuple is None):
+            streetTuple = self._RemoveStreetPart(street, u"a.")
+        if (streetTuple is None):
+            streetTuple = self._RemoveStreetPart(street, u"pr.")
+        if (streetTuple is None):
+            streetTuple = self._RemoveStreetPart(street, u"pl.")
+        if (streetTuple is None):
+            streetTuple = self._RemoveStreetPart(street, u"al.")
+        if (streetTuple is None):
+            streetTuple = self._RemoveStreetPart(street, u"takas")
+        if (streetTuple is None):
+            streetTuple = self._RemoveStreetPart(street, u"alėja")
+        if (streetTuple is None):
+            streetTuple = self._RemoveStreetPartSB(street, "SB")
+        if (streetTuple is None):
+            streetTuple = self._RemoveStreetPartSB(street, "sb")
+        if (streetTuple is None):
+            streetTuple = self._RemoveStreetPartSB(street, "s/b")
+
+
+        return streetTuple
+
+    def _RemoveStreetPartSB(self, part, streetPartName):
+        if (part.find(streetPartName) >= 0):
+            noName = part.split("Nr.")
+            noName = [s.strip() for s in noName]
+            str = "".join(noName[0:-1])
+            str = "%s" % (str)
+            part = "%s %s" % (noName[-1], "Nr.")
+            return (part, str)
+        return None
+
+    def _RemoveStreetPart(self, street, streetPartName):
+        if (street.find(streetPartName) >= 0):
+            noName = street.split(streetPartName)
+            noName = [s.strip() for s in noName]
+            str = "".join(noName[0:-1])
+            str = "%s %s" % (str, streetPartName)
+            part = noName[-1]
+            return (str, part)
+        return None
+
+    def RemoveLetter(self, fromNumber):
+        # maybe it contains letter
+        m = re.search('[a-zA-Z]', fromNumber)
+        if (m is not None):
+            group = m.group()
+            letterFrom = group
+            fromNumber = fromNumber.replace(group, "")
+        return fromNumber
+
+    def ContainsNumbers(self, fromNumber):
+        m = re.search('[0-9]', fromNumber)
+        if (m is not None):
+            return True
+        return False
+
+    def ExpandStreet(self, streets):
+        """ yield a ExpandedStreet object for each house number found in street """
+
+        if (streets == "" or streets is None):
+            yield ExpandedStreet(street = u"")
+            return
+
+        if (streets.strip() == ""):
+            yield ExpandedStreet(street = u"")
+            return
+
+        if (streets.find(u"išskyrus") >=0 ):
+            raise SeniunaitijaAddressExpanderException(u"territory contains 'except' / 'išskyrus' expressions. string '%s'" % streets)
+
+
+        city = None
+        lastStreet = None
+        streetProperties = ""
+
+
+        splitted = streets.split(u',')
+        for street in splitted:
+            numberTo = None
+            numberFrom = None
+
+            street = street.strip()
+
+            # separate city from street
+            streetNew, cityNew = self.ContainsCity(street)
+            if (cityNew is not None):
+                street, city  = streetNew, cityNew
+
+            # separate street number from street
+            streetTuple = self.RemoveStreetParts(street)
+
+            # if no street prefix found, then whole street is actually a street number,
+            # if it contains numbers. if it does not contain numbers, treat it as city name
+            if (streetTuple is not None):
+                street, streetProperties = streetTuple
+            else:
+                if (street != u""):
+                    if (self.ContainsNumbers(street) == True):
+                        streetProperties = street
+                        street = lastStreet
+                    else:
+                        city = street
+                        streetProperties = None
+                        street = None
+                else:
+                    street = None
+
+            # parse street number
+            if (streetProperties == u"" or streetProperties is None):
+                numberFrom = None
+            else:
+                oldProp = streetProperties
+                odd = None
+                if (streetProperties.find(u"neporiniai") >= 0):
+                    odd = 1
+                elif (streetProperties.find(u"poriniai") >= 0):
+                    odd = 0
+                streetProperties = streetProperties.lower()
+
+                streetProperties = streetProperties.replace(u"neporiniai", u"") \
+                    .replace(u"poriniai", u"").replace(u"nuo", u"") \
+                    .replace(u"nr.:", u"") \
+                    .replace(u"nr.", u"")\
+                    .replace(u"nr", u"") \
+                    .replace(u"numeriai", u"") \
+                    .replace(u"individualiųjų namų dalis", u"").replace(u"namo", u"") \
+                    .replace(u"namai", u"") \
+                    .replace(u"gyv. namai", u"").replace(u"gyv. namas", u"") \
+                    .replace(u"(", u"").replace(u")", u"").strip()
+                #print streetProperties
+                # the numbers will contain ranges
+
+                if (self.ContainsRanges(streetProperties)):
+                #if (streetProperties.find("iki") >= 0):
+                    # sometimes we might have more than one range
+                    # so split it into individual
+                    for numberFrom, numberTo in self.SplitToRanges(streetProperties):
+                        numberFrom = numberFrom.strip()
+                        numberTo = numberTo.strip()
+                        try:
+                            numberFrom = self.RemoveLetter(numberFrom)
+                            numberFrom = int(numberFrom)
+                        except:
+                            raise SeniunaitijaAddressExpanderException("could not convert string '%s' to number" % numberFrom)
+
+                        try:
+                            if (numberTo == u"galo"):
+                                isOdd = numberFrom % 2
+                                if (isOdd == 0):
+                                    numberTo = ExpandedStreet.MaxEvenValue
+                                else:
+                                    numberTo = ExpandedStreet.MaxOddValue
+                            else:
+                                numberTo = self.RemoveLetter(numberTo)
+                                numberTo = int(numberTo)
+                        except:
+                            raise SeniunaitijaAddressExpanderException("could not convert string '%s' to number" % numberTo)
+
+                        yield ExpandedStreet(street = street, city = city, numberFrom = numberFrom, numberTo = numberTo)
+                    # we have yielded already, continue
+                    lastStreet = street
+                    continue
+
+                else:
+                    # else it will be simple number
+                    if (self.ContainsNumbers(streetProperties) == False):
+                        raise SeniunaitijaAddressExpanderException("string '%s' does not contain numbers. Though i expected it to be a house number" % streetProperties)
+
+                    streetProperties = self.RemoveLetter(streetProperties)
+                    #print streetProperties
+                    try:
+                        numberFrom = int(streetProperties)
+                    except:
+                        raise SeniunaitijaAddressExpanderException("could not convert string '%s' to number" % streetProperties)
+
+            lastStreet = street
+
+            yield ExpandedStreet(street = street, city = city, numberFrom = numberFrom, numberTo = numberTo)
+
+    def SplitToRanges(self, streetProperties):
+        for s1 in streetProperties.split("ir"):
+            for s in s1.split(u";"):
+                if s.find("iki") >=0:
+                    r = s.split("iki")
+                    if (len(r) != 2):
+                        raise SeniunaitijaAddressExpanderException("string '%s' had more than 1 range" % s)
+                    yield r
+                elif (s.find(u"-") >= 0):
+                    r = s.split("-")
+                    if (len(r) != 2):
+                        raise SeniunaitijaAddressExpanderException("string '%s' had more than 1 range" % s)
+                    yield r
+                elif (s.find(u"–") >= 0):
+                    r = s.split(u"–")
+                    if (len(r) != 2):
+                        raise SeniunaitijaAddressExpanderException("string '%s' had more than 1 range" % s)
+                    yield r
+
+                else:
+                    raise SeniunaitijaAddressExpanderException("string '%s' did not contain any ranges. Whole string '%s'" % (s, streetProperties))
+
+
+
+    def ContainsRanges(self, streetProperties):
+        if streetProperties.find(u"iki") >=0:
+            return True
+
+        if (streetProperties.find(u"–") >= 0):
+            return True
+
+        if streetProperties.find(u"-") >=0:
+            return True
+
+        return False
+
 
 class Command(BaseCommand):
     args = '<>'
@@ -129,8 +389,12 @@ class Command(BaseCommand):
         wasError = 0
         count = 0
         for member in reader.ReadMembers():
-            if (member.territoryStr == ""):
+            if (member.territoryStr == u""):
                 continue
+            if (member.seniunaitijaStr == u""):
+                print "skipping teritory %s" % (member.uniqueKey)
+                continue
+
             count += 1
             if (fromPrint > member.uniqueKey):
                 continue
@@ -140,9 +404,20 @@ class Command(BaseCommand):
             print "territory for: %s %s" % (member.uniqueKey, member.seniunaitijaStr)
 
             try:
+                seniunaitija = Seniunaitija.objects.all().filter(id = member.uniqueKey)[0:1].get()
                 for street in streetExpander.ExpandStreet(member.territoryStr):
-                    print "street \t %s \t %s \t %s \t %s" % (street.city, street.street, street.numberFrom, street.numberTo)
                     numberOfStreets += 1
+                    #print "street %s %s %s" %(numberOfStreets, street.city, street.street)
+                    s = SeniunaitijaStreet()
+                    s.municipality = member.municipalityStr
+                    s.seniunaitija = seniunaitija
+                    s.city = street.city
+                    s.street = street.street
+                    s.numberFrom = street.numberFrom
+                    if (street.numberFrom is not None):
+                        s.numberOdd = street.numberFrom % 2
+                    s.numberTo = street.numberTo
+                    s.save()
             except SeniunaitijaAddressExpanderException as e:
                 logger.error(u"""Error in seniunaitija teritory nr '%s'
 ErrorDetails = %s""" % (member.uniqueKey, e.message))

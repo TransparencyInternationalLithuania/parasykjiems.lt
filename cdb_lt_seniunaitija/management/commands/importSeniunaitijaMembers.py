@@ -32,6 +32,8 @@ class SeniunaitijaMembersReader:
             member.homePhone = row["hometelephonenumber"]
             member.role = row["pareigos"]
             member.seniunaitijaStr = toUnicode(row["seniunaitija"].strip())
+            member.municipalityStr = toUnicode(row["municipality"].strip())
+            member.civilParishStr = toUnicode(row["townshipseniunija"].strip())
             member.territoryStr = toUnicode(row["territorycoveredbyseniunaitija"].strip())
             member.uniqueKey = int(row["uniquekeynotchangeable"])
             yield member

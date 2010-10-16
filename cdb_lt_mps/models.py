@@ -4,7 +4,7 @@
 from django.db import models
 
 # Create your models here.
-from contactdb.models import PersonNameField
+from contactdb.models import PersonNameField, AddressNameField
 
 class Constituency(models.Model):
     """ Contains counties, for example:
@@ -47,12 +47,12 @@ class ParliamentMember(models.Model):
 class PollingDistrictStreet(models.Model):
     """ Represents a mapping between a constituency, a district and a street in Lithuania
     """
-    district = models.CharField(max_length = 100)
+    municipality = AddressNameField()
     constituency = models.ForeignKey(Constituency)
-    street = models.CharField(max_length = 255, db_index = True)
+    street = AddressNameField(db_index = True)
     numberFrom = models.IntegerField(null = True, db_index = True)
     numberTo = models.IntegerField(null = True, db_index = True)
     numberOdd = models.BooleanField()
-    city = models.CharField(max_length = 50)
+    city = AddressNameField(max_length = 50)
     # should be renamed to polling district
     pollingDistrict = models.CharField(max_length = 100)
