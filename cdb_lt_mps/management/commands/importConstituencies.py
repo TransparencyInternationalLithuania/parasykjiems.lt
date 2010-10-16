@@ -1,8 +1,9 @@
 from django.core.management.base import BaseCommand
-from contactdb.imp import LithuanianConstituencyAggregator, ImportSources
+from contactdb.imp import ImportSources
 from django.db import transaction
 from pjutils.uniconsole import *
 import os
+from cdb_lt_mps.parseConstituencies import LithuanianConstituencyAggregator
 
 class Command(BaseCommand):
     args = '<>'

@@ -2,13 +2,10 @@
 # -*- coding: utf-8 -*-
 
 from pjutils.exc import ChainnedException
-from contactdb.imp import LithuanianConstituencyParser
-from django.core.exceptions import ObjectDoesNotExist
 import csv
 from cdb_lt_municipality.models import MunicipalityMember
 from cdb_lt_seniunaitija.models import SeniunaitijaMember
 from cdb_lt_civilparish.models import CivilParishMember
-from cdb_lt_mps.models import ParliamentMember
 
 
 class ParliamentMemberImportError(ChainnedException):
@@ -83,30 +80,6 @@ class CivilParishMembersReader:
             member.officePhone = row["officetelephonenumber"].strip()
             member.officeAddress = row["officeaddress"].strip()
             member.civilParishStr = unicode(row["institution"].strip(), 'utf-8')
-            member.uniqueKey = row["uniquekeynotchangeable"]
-
-            yield member
-
-
-class LithuanianMPsReader:
-    def __init__(self, fileName):
-        self.dictReader = csv.DictReader(open(fileName, "rt"), delimiter = "\t")
-
-
-    def ReadParliamentMembers(self):
-        """A generator which returns parliament member instances from
-    given file.  A constituency object is fetched from the database for this specific MP"""
-
-        parser = LithuanianConstituencyParser()
-
-        for row in self.dictReader:
-
-
-            member = ParliamentMember()
-            member.constituency = parser.ExtractConstituencyFromMPsFile(row["electoraldistrict"])
-            member.name = unicode(row["name"], 'utf-8')
-            member.surname = unicode(row["surname"], 'utf-8')
-            member.email = row["e-mail"]
             member.uniqueKey = row["uniquekeynotchangeable"]
 
             yield member
