@@ -7,6 +7,7 @@ import os
 from pjutils.exc import ChainnedException
 from pjutils.deprecated import deprecated
 from cdb_lt_mps.models import Constituency, Constituency
+from cdb_lt_mps.parseConstituencies import ExpandedStreet
 
 class ImportSourceNotExistsException(ChainnedException):
     pass
