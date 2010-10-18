@@ -20,6 +20,7 @@ class ImportSources:
     LithuanianSeniunaitijaMembers  = os.path.join("contactdb", "sources", "LithuanianSeniunaitijaMembers.csv")
     LithuanianStreetIndex  = os.path.join("contactdb", "sources", "LithuanianStreetIndex.csv")
     LithuanianMunicipalities  = os.path.join("contactdb", "sources", "LithuanianMunicipalities.csv")
+    LithuanianCivilParishes  = os.path.join("contactdb", "sources", "LithuanianCivilParishes.csv")
 
     @classmethod
     def EsnureExists(clas, importSource):
@@ -45,3 +46,4 @@ class GoogleDocsSources:
 
     LithuanianStreetIndex = "Lithuanian street index"
     LithuanianMunicipalities = "Contact DB LT Municipalities"
+    LithuanianCivilParishes = "Contact DB LT CivilParishes"
