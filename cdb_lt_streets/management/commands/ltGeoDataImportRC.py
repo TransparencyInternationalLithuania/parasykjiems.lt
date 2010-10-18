@@ -237,5 +237,3 @@ class Command(BaseCommand):
         print u"Took %s seconds" % elapsedTime.ElapsedSeconds()
         print u"Created total %s additional messages. Inserted %s rows into db" % (totalCreatedMessages, totalInsertedRows)
         print u"Made %s requirests. Avg %s fetches per second" % (totalParsedMessages, totalParsedMessages / elapsedTime.ElapsedSeconds())
-
-        print u"Creating additional data, not availbe in www server"
