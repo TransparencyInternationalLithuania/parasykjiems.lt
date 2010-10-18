@@ -3,7 +3,6 @@
 
 from django.core.management.base import BaseCommand
 from django.core.exceptions import ObjectDoesNotExist
-from contactdb.import_parliamentMembers import MunicipalityMembersReader
 from contactdb.imp import ImportSources
 from django.db import transaction
 from pjutils import uniconsole
@@ -12,20 +11,18 @@ import csv
 from pjutils.exc import ChainnedException
 from cdb_lt_municipality.models import MunicipalityMember, Municipality
 from pjutils.timemeasurement import TimeMeasurer
-
-class ImportMunicipalityMemberException(ChainnedException):
-    pass
+from cdb_lt_civilparish.models import CivilParish
 
 class Command(BaseCommand):
     args = '<>'
-    help = 'Imports into database all Lithuanian MunicipalityMembers / Mayors'
+    help = 'Imports into database all Lithuanian CivilParish members / seniūnai'
 
 
     @transaction.commit_on_success
     def handle(self, *args, **options):
-        fileName = ImportSources.LithuanianMunicipalities
-        print u"Import street index data from csv file %s" % fileName
-        ImportSources.EsnureExists(ImportSources.LithuanianMunicipalities)
+        fileName = ImportSources.LithuanianCivilParishes
+        print u"Import civil parish data from csv file %s" % fileName
+        ImportSources.EsnureExists(ImportSources.LithuanianCivilParishes)
         elapsedTime = TimeMeasurer()
 
         self.dictReader = csv.DictReader(open(fileName, "rt"), delimiter = "\t")
@@ -35,12 +32,17 @@ class Command(BaseCommand):
         for row in self.dictReader:
             self.count += 1
             id = int(unicode(row["id"].strip(), 'utf-8'))
-            municipality = unicode(row["municipality"].strip(), 'utf-8')
+            municipalityStr = unicode(row["municipality"].strip(), 'utf-8')
+            civilParishStr = unicode(row["civilparish"].strip(), 'utf-8')
 
-            municipalities = Municipality()
-            municipalities.id = id
-            municipalities.name = municipality
-            municipalities.save()
+            if (civilParishStr == u""):
+                continue
+
+            civilParish = CivilParish()
+            civilParish.id = id
+            civilParish.name = civilParishStr
+            civilParish.municipality = municipalityStr
+            civilParish.save()
 
 
         print u"Took %s seconds" % elapsedTime.ElapsedSeconds()

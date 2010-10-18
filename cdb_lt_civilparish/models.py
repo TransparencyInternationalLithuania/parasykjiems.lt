@@ -8,6 +8,7 @@ from contactdb.models import PersonNameField, InstitutionNameField, PhoneField
 
 class CivilParish(models.Model):
     name = InstitutionNameField()
+    municipality = InstitutionNameField()
 
 class CivilParishMember(models.Model):
     """ Seniūnas.  A CivilParish member is a regional representative, which helps solve local problems. He usually

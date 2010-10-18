@@ -11,6 +11,8 @@ import os
 import csv
 from pjutils.exc import ChainnedException
 import logging
+from cdb_lt_civilparish.models import CivilParishMember, CivilParish
+
 logger = logging.getLogger(__name__)
 
 class ImportCivilParishMemberException(ChainnedException):
@@ -49,13 +51,12 @@ class Command(BaseCommand):
             m = self.alreadyExists(member)
             # relate existing constituency to an MP
             try:
-                type = HierarchicalGeoData.HierarchicalGeoDataType.CivilParish
                 name = member.civilParishStr
-                member.civilParish = HierarchicalGeoData.objects.filter(name = name).filter(type = type)[0:1].get()
+                member.civilParish = CivilParish.objects.filter(name = name)[0:1].get()
             except ObjectDoesNotExist:
                 str = u"""Parish with name '%s' and type '%s' could not be found in database table
 %s while import CivilParishMembers. Data source taken from Google doc '%s'. Unique key '%s'  )""" % \
-                    (name, type, HierarchicalGeoData.objects.model._meta.db_table,
+                    (name, type, CivilParish.objects.model._meta.db_table,
                     GoogleDocsSources.LithuanianCivilParishMembers, member.uniqueKey)
                 logger.error(str)
                 raise ImportCivilParishMemberException(str)
