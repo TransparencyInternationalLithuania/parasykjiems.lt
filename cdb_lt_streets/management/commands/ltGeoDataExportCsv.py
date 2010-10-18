@@ -10,11 +10,20 @@ class Command(BaseCommand):
     args = '<>'
     help = """Prints contents of queue"""
 
+    def __init__(self):
+        self.parentCache = {}
+
     def getParentValues(self, obj):
         values = []
         while (obj.parent is not None):
-            values.append(obj.parent.name)
-            obj = obj.parent
+            parent = obj.parent
+            parentId = parent.id
+            if (self.parentCache.has_key(parentId)):
+                parent = self.parentCache[parentId]
+            else:
+                self.parentCache[parentId] = parent
+            values.append(parent.name)
+            obj = parent
         values.reverse()
         return values
 
@@ -26,6 +35,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
+        elapsedTime = TimeMeasurer()
         fileName = u"geoData.csv"
         print u"Writing contents to %s" % fileName
         self.file = open(fileName, 'w')
@@ -58,5 +68,6 @@ class Command(BaseCommand):
             self.writeToFile(finalValues)
 
         self.file.close()
+        print u"Took %s seconds" % elapsedTime.ElapsedSeconds()
         print u"finished, total %s lines" % count
 
