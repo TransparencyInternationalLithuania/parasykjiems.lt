@@ -11,9 +11,19 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         time = TimeMeasurer()
-        imports = ["importConstituencies",
+        #"ltGeoDataDownloadDocs",
+        imports = ["ltGeoDataImportCsv",     # LT street index
+                   "importConstituencies",   # LT MP data
+                   "importMPs",
                    "importStreets",
-                   ("ltGeoDataImport", {"max-depth" :3})]
+                   "importCivilParish",      # LT CivilParish data
+                   "importCivilParishMembers",
+                   "importCivilParishStreets",
+                   "importMunicipality",     # LT Municipality data
+                   "importMunicipalityMembers",
+                   "importSeniunaitija",     # LT Seniunaitija data
+                   "importSeniunaitijaMembers",
+                   "importSeniunaitijaStreets"]
         #imports = imports[8:9]
 
         print "Will import following data:"
