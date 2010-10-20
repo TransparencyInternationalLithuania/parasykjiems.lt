@@ -19,10 +19,11 @@ import random
 from django.contrib.sites.models import Site
 from pjutils.uniconsole import *
 from cdb_lt_municipality.models import MunicipalityMember
-from cdb_lt_mps.models import ParliamentMember, PollingDistrictStreet
+from cdb_lt_mps.models import ParliamentMember, Constituency, PollingDistrictStreet
 from cdb_lt_civilparish.models import CivilParishMember
 from cdb_lt_seniunaitija.models import SeniunaitijaMember
-from cdb_lt_streets.models import HierarchicalGeoData
+from cdb_lt_streets.models import HierarchicalGeoData, LithuanianStreetIndexes
+from django.db.models.query_utils import Q, Q
 
 logger = logging.getLogger(__name__)
 
@@ -52,7 +53,113 @@ def get_rep(rep_id, rtype):
 
     return receiver[0]
 
+class AddressCruncher:
+    def __init__(self):
+        pass
+
+    """ Returns a list of key words extracted from query string"""
+    def crunch(self, query_string):
+        qery_list = re.split(r'[ ,]', query_string)
+        print qery_list
+        """for string in qery_list:
+            numbered = re.split(r'[-_\\/]', string)
+            number = numbered[0]
+            if len(numbered)>1:
+                if numbered[1].isdigit():
+                    apt_no = 1
+                else:
+                    apt_no = 2
+
+            if apt_no==1:
+                if number.isdigit():
+                    house_no = number
+                    qery_list.remove(string)
+                elif number[:-1].isdigit():
+                    house_no = number[:-1]
+                    qery_list.remove(string)
+            elif apt_no==0:
+                if number.isdigit():
+                    house_no = number
+                    qery_list.remove(string)
+                elif number[:-1].isdigit():
+                    house_no = number[:-1]
+                    qery_list.remove(string)  """
+
+
+        # remove empty words
+        qery_list = [l for l in qery_list if l.strip() != u""]
+        # remove words less than 3 letters
+        qery_list = [l for l in qery_list if len(l) > 3]
+        return qery_list
+
+class ContactDbAddress:
+    street = []
+    city = []
+    municipality = []
+    unknown = []
+
+class AddressDeducer():
+
+    def findStreet(self, streetName):
+        length = len(LithuanianStreetIndexes.objects.filter(street__icontains = streetName))
+        return length > 0
+
+    def findCity(self, streetName):
+        length = len(LithuanianStreetIndexes.objects.filter(city__icontains = streetName))
+        return length > 0
+
+    def findMunicipality(self, streetName):
+        length = len(LithuanianStreetIndexes.objects.filter(municipality__icontains = streetName))
+        return length > 0
+
+    def deduce(self, stringList):
+        address = ContactDbAddress()
+
+        for s in stringList:
+            print "s %s" % (s)
+            isStreet = self.findStreet(s)
+            if (isStreet):
+                address.street.append(s)
+            isCity = self.findCity(s)
+            if (isCity):
+                address.city.append(s)
+            isMunicipality = self.findMunicipality(s)
+            if (isMunicipality):
+                address.municipality.append(s)
+
+            print "isStreet %s" % (isStreet)
+            print "isCity %s" % (isCity)
+            print "isMunicipality %s" % (isMunicipality)
+            if (isCity == False and isStreet == False and isMunicipality == False ):
+                address.unknown.append(s)
+
+        return address
+
+def getOrQuery(fieldName, fieldValues):
+    streetFilters = None
+    for s in fieldValues:
+        q = Q(**{"%s__icontains" % fieldName: s})
+        if streetFilters is None:
+            streetFilters = q
+        else:
+            streetFilters = streetFilters | q
+    return streetFilters
+
+def getAndQuery(*args):
+    finalQuery = None
+    for q in args:
+        if (q is None):
+            continue
+        if (finalQuery is None):
+            finalQuery = q
+        else:
+            finalQuery = finalQuery | q
+    print "finalQuery %s" % (finalQuery)
+    return finalQuery
+
 def get_pollingstreet(query_string):
+
+    print "query_string %s" % query_string
     a_s = AddressSearch()
     found_entries = None
     found_geodata = None
@@ -61,39 +168,28 @@ def get_pollingstreet(query_string):
     entry_query1 = ''
     not_found = ''
     apt_no = 0
-    qery_list = re.split(r'[ ,]', query_string)
-    print qery_list
-    for string in qery_list:
-        numbered = re.split(r'[-_\\/]', string)
-        number = numbered[0]
-        if len(numbered)>1:
-            if numbered[1].isdigit():
-                apt_no = 1
-            else:
-                apt_no = 2
 
-        if apt_no==1:
-            if number.isdigit():
-                house_no = number
-                qery_list.remove(string)
-            elif number[:-1].isdigit():
-                house_no = number[:-1]
-                qery_list.remove(string)
-        elif apt_no==0:
-            if number.isdigit():
-                house_no = number
-                qery_list.remove(string)
-            elif number[:-1].isdigit():
-                house_no = number[:-1]
-                qery_list.remove(string)
+    crunchedAddress = AddressCruncher().crunch(query_string)
+    print "crunchedAddress %s" % ( crunchedAddress)
+    addressContext = AddressDeducer().deduce(crunchedAddress)
 
-    query_string = ' '.join(qery_list)
 
-    entry_query = a_s.get_query(query_string, ['street', 'city', 'district'])
+    streetFilters = getOrQuery("street", addressContext.street)
+    cityFilters = getOrQuery("city", addressContext.city)
+    municipalityFilters = getOrQuery("municipality", addressContext.municipality)
+    finalQuery = getAndQuery(streetFilters, cityFilters, municipalityFilters)
+    print "streetFilters %s" % (streetFilters)
+    print "cityFilters %s" % (cityFilters)
+    print "municipalityFilters %s" % (municipalityFilters)
 
-    found_entries = PollingDistrictStreet.objects.filter(entry_query).order_by('street')
+    found_entries = LithuanianStreetIndexes.objects.filter(finalQuery).order_by('street')
+    print "sql : %s" % (found_entries.query)
+    print "len %s " % len(found_entries)
 
-    if house_no and len(found_entries)>1:
+    #entry_query = a_s.get_query(query_string, ['street', 'city', 'municipality'])
+    #found_entries = LithuanianStreetIndexes.objects.filter(entry_query).order_by('street')
+
+    """if house_no and len(found_entries)>1:
 
         addr_ids = []
         for found_entry in found_entries:
@@ -109,7 +205,7 @@ def get_pollingstreet(query_string):
             if has_number:
                 addr_ids.append(found_entry.id)
 
-        found_entries = PollingDistrictStreet.objects.filter(id__in=addr_ids).order_by('street')
+        found_entries = LithuanianStreetIndexes.objects.filter(id__in=addr_ids).order_by('street')"""
 
     if not found_entries:
         found_entries = {}
