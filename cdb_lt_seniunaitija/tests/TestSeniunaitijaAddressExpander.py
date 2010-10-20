@@ -3,9 +3,7 @@
 
 from django.test import TestCase
 import os
-from contactdb.AdressParser import AddressParser
-from contactdb.imp import SeniunaitijaAddressExpander
-from cdb_lt_mps.parseConstituencies import ExpandedStreet
+from cdb_lt_seniunaitija.management.commands.importSeniunaitijaStreets import SeniunaitijaAddressExpander, ExpandedStreet
 
 scriptPath = os.path.dirname( os.path.realpath( __file__ ) )
 
@@ -25,15 +23,15 @@ class TestSeniunaitijaAddressExpander(TestCase):
         self.assertEqual(len(list(original)), len(generated))
 
     def test_Empty(self):
-        original = [ExpandedStreet("")]
+        original = [ExpandedStreet()]
 
         self.assertTuplesEqual(original, self.parser.ExpandStreet(""))
         self.assertTuplesEqual(original, self.parser.ExpandStreet(None))
         self.assertTuplesEqual(original, self.parser.ExpandStreet("    "))
 
     def test_WithCityAndStreets(self):
-        original = [ExpandedStreet(street = "Ateities g.", city = u"Vandžiogalos miestelis"),
-                    ExpandedStreet(street = "Kauno g.", city = u"Vandžiogalos miestelis")]
+        original = [ExpandedStreet(street = u"Ateities g.", city = u"Vandžiogalos miestelis"),
+                    ExpandedStreet(street = u"Kauno g.", city = u"Vandžiogalos miestelis")]
         self.assertTuplesEqual(original, self.parser.ExpandStreet(u"Vandžiogalos mstl. Ateities g., Kauno g."))
 
 
