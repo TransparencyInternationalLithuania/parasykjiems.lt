@@ -3,11 +3,9 @@
 
 from django.test import TestCase
 import os
-from contactdb.import_parliamentMembers import SeniunaitijaStreetParser
-
+from cdb_lt_seniunaitija.management.commands.importSeniunaitija import SeniunaitijaStreetParser
 
 scriptPath = os.path.dirname( os.path.realpath( __file__ ) )
-
 
 class TestSeniunaitijaStreetParser(TestCase):
     parser = SeniunaitijaStreetParser()

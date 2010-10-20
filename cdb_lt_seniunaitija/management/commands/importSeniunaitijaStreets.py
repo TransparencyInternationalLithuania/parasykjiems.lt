@@ -24,7 +24,7 @@ class ExpandedStreet(object):
     MaxOddValue = 999999
     MaxEvenValue = 999999 - 1
 
-    def __init__(self, street = u"", numberFrom = None, numberTo = None, city = u""):
+    def __init__(self, street = None, numberFrom = None, numberTo = None, city = None):
         self.street = street
         self.numberFrom = numberFrom
         self.numberTo = numberTo
@@ -120,11 +120,11 @@ class SeniunaitijaAddressExpander:
         """ yield a ExpandedStreet object for each house number found in street """
 
         if (streets == "" or streets is None):
-            yield ExpandedStreet(street = u"")
+            yield ExpandedStreet()
             return
 
         if (streets.strip() == ""):
-            yield ExpandedStreet(street = u"")
+            yield ExpandedStreet()
             return
 
         if (streets.find(u"išskyrus") >=0 ):
