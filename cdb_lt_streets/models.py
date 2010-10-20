@@ -4,8 +4,19 @@
 from django.db import models
 
 # Create your models here.
+from contactdb.models import AddressNameField
+
+class LithuanianStreetIndexes(models.Model):
+    street = AddressNameField(db_index = True)
+    city = AddressNameField(db_index = True)
+    municipality = AddressNameField(db_index = True)
+
+
 class HierarchicalGeoData(models.Model):
-    """ A hierarchical geo data structure """
+    """ A hierarchical geo data structure. Used to extract data from lithuanian street index page
+     http://www.registrucentras.lt/adr/p/index.php?sen_id=5
+
+     """
 
     class HierarchicalGeoDataType:
         Country = u'Country'

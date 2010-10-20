@@ -12,7 +12,7 @@ class Command(BaseCommand):
 
         time = TimeMeasurer()
         #"ltGeoDataDownloadDocs",
-        imports = ["ltGeoDataImportCsv",     # LT street index
+        imports = ["ltStreetIndexImport",     # LT street index
                    "importConstituencies",   # LT MP data
                    "importMPs",
                    "importStreets",
