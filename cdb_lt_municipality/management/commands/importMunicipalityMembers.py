@@ -3,7 +3,6 @@
 
 from django.core.management.base import BaseCommand
 from django.core.exceptions import ObjectDoesNotExist
-from contactdb.import_parliamentMembers import MunicipalityMembersReader
 from contactdb.imp import ImportSources
 from django.db import transaction
 from pjutils import uniconsole
@@ -14,6 +13,27 @@ from cdb_lt_municipality.models import MunicipalityMember, Municipality
 
 class ImportMunicipalityMemberException(ChainnedException):
     pass
+
+
+class MunicipalityMembersReader:
+    def __init__(self, fileName):
+        self.dictReader = csv.DictReader(open(fileName, "rt"), delimiter = "\t")
+
+
+    def ReadMembers(self):
+        for row in self.dictReader:
+            member = MunicipalityMember()
+            member.name = unicode(row["name"].strip(), 'utf-8')
+            member.surname = unicode(row["surname"].strip(), 'utf-8')
+            member.email = row["e-mail"]
+            member.email2 = row["e-mail2"]
+            member.phone = row["telephonenumber"].strip()
+            member.phone2 = row["telephonenumber2"].strip()
+            member.mobilePhone = row["mobilenumber"].strip()
+            member.address = row["address"].strip()
+            member.municipalityStr = unicode(row["municipality"].strip(), 'utf-8')
+            member.uniqueKey = row["uniquekeynotchangeable"]
+            yield member
 
 class Command(BaseCommand):
     args = '<>'
