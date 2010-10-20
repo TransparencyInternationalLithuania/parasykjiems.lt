@@ -3,7 +3,7 @@ from contactdb.models import *
 from django.db import connection, transaction
 from cdb_lt_mps.models import PollingDistrictStreet, ParliamentMember, Constituency
 from cdb_lt_civilparish.models import CivilParishMember, CivilParish, CivilParishStreet
-from cdb_lt_streets.models import HierarchicalGeoData
+from cdb_lt_streets.models import HierarchicalGeoData, LithuanianStreetIndexes
 from cdb_lt_seniunaitija.models import SeniunaitijaMember, Seniunaitija, SeniunaitijaStreet
 from cdb_lt_municipality.models import MunicipalityMember, Municipality
 
@@ -38,6 +38,7 @@ class Command(BaseCommand):
                   CivilParish,
                   CivilParishStreet,
                   HierarchicalGeoData,   # street index
+                  LithuanianStreetIndexes,
                   MunicipalityMember,
                   Municipality,
                   Seniunaitija,
