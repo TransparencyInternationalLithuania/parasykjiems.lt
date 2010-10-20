@@ -7,7 +7,6 @@ import settings
 from django import forms
 from django.utils.translation import ugettext as _, ugettext_lazy, ungettext
 from django.core.exceptions import ValidationError
-from parasykjiems.contactdb.models import PollingDistrictStreet, Constituency, ParliamentMember, HierarchicalGeoData, MunicipalityMember, CivilParishMember, SeniunaitijaMember
 from parasykjiems.pjweb.models import Email
 from parasykjiems.pjweb.widgets import *
 from django.utils.safestring import mark_safe
