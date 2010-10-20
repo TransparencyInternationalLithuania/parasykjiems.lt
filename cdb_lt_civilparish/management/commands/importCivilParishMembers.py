@@ -18,6 +18,29 @@ logger = logging.getLogger(__name__)
 class ImportCivilParishMemberException(ChainnedException):
     pass
 
+def toUnicode(str):
+    return unicode(str, 'utf-8')
+
+class CivilParishMembersReader:
+    def __init__(self, fileName):
+        self.dictReader = csv.DictReader(open(fileName, "rt"), delimiter = "\t")
+
+
+    def ReadMembers(self):
+        for row in self.dictReader:
+            member = CivilParishMember()
+            member.name = unicode(row["name"].strip(), 'utf-8')
+            member.surname = unicode(row["surname"].strip(), 'utf-8')
+            #member.email = row["e-mail"]
+            member.personalPhone = row["personaltelephonenumber"].strip()
+            member.officeEmail = row["officee-mail"].strip()
+            member.officePhone = row["officetelephonenumber"].strip()
+            member.officeAddress = row["officeaddress"].strip()
+            member.civilParishStr = unicode(row["institution"].strip(), 'utf-8')
+            member.uniqueKey = row["uniquekeynotchangeable"]
+
+            yield member
+
 class Command(BaseCommand):
     args = '<>'
     help = 'Imports into database all Lithuanian CivilParishMembers / seniūnai'
