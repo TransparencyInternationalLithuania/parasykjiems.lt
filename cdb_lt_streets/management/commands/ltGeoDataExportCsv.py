@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from django.core.management.base import BaseCommand
 from django.core import management
 from pjutils.timemeasurement import TimeMeasurer

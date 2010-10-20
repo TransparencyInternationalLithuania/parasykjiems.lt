@@ -5,19 +5,19 @@ from settings import *
 import csv
 import pjutils.uniconsole
 from contactdb.imp import GoogleDocsSources, ImportSources
-
-
 import os
 
-class Command(BaseCommand):
-    args = '<>'
-    help = 'Download a google docs document to specific location'
 
+""" Downloads a google doc, and saves it to a file as csv file.
+You can use some of the helper methods defined in the same package instead of using this class directly"""
+class GoogleDocDownloader:
+    def __init__(self):
+        self.client = SpreadSheetClient(GlobalSettings.GOOGLE_DOCS_USER, GlobalSettings.GOOGLE_DOCS_PASSWORD)
 
     def openWriter(self, fileName, row):
         """ creates a new DictWriter object from row object. Writes header row"""
         fieldNames = [k for k in row.iterkeys()]
-        
+
         writer = csv.DictWriter(open(fileName, "wb"), fieldNames, delimiter = "\t")
 
         headers = dict( (n,n) for n in fieldNames )
@@ -37,8 +37,6 @@ class Command(BaseCommand):
             d[k] = d[k].encode("utf-8")
         return d
 
-
-
     def downloadDoc(self, docName, fileName):
         #client.SelectSpreadsheet("ParasykJiems.lt public contact db")
         print "downloading  '%s' to '%s'" % (docName, fileName)
@@ -47,7 +45,7 @@ class Command(BaseCommand):
 
 
         #writer = csv.writer(open(output, "wb"), csv.excel_tab)
-        fileName = os.path.join(os.getcwd(), fileName) 
+        fileName = os.path.join(os.getcwd(), fileName)
 
         writer = None
         for row in self.client.GetAllRows():
@@ -59,19 +57,29 @@ class Command(BaseCommand):
         print "ok"
 
 
+
+""" Uses GoogleDocDownloader inside to actually download a google doc and save it to file
+as csv"""
+def downloadDoc(docName, fileName):
+    GoogleDocDownloader().downloadDoc(docName, fileName)
+
+class Command(BaseCommand):
+    args = '<>'
+    help = 'Download a google docs document to specific location'
+
+
+
+
     def handle(self, *args, **options):
         """ Downloads documents as csv (tab-delimited) files from google docs"""
         allRecords = os.getcwd()
 
-        self.client = SpreadSheetClient(GlobalSettings.GOOGLE_DOCS_USER, GlobalSettings.GOOGLE_DOCS_PASSWORD)
-
-        self.downloadDoc(GoogleDocsSources.LithuanianMPs, ImportSources.LithuanianMPs)
-        self.downloadDoc(GoogleDocsSources.LithuanianCivilParishMembers, ImportSources.LithuanianCivilParishMembers)
-        self.downloadDoc(GoogleDocsSources.LithuanianMunicipalityMembers, ImportSources.LithuanianMunicipalityMembers)
-        self.downloadDoc(GoogleDocsSources.LithuanianSeniunaitijaMembers, ImportSources.LithuanianSeniunaitijaMembers)
-        self.downloadDoc(GoogleDocsSources.LithuanianStreetIndex, ImportSources.LithuanianStreetIndex)
-        self.downloadDoc(GoogleDocsSources.LithuanianMunicipalities, ImportSources.LithuanianMunicipalities)
-        self.downloadDoc(GoogleDocsSources.LithuanianCivilParishes, ImportSources.LithuanianCivilParishes)
+        downloadDoc(GoogleDocsSources.LithuanianMPs, ImportSources.LithuanianMPs)
+        downloadDoc(GoogleDocsSources.LithuanianCivilParishMembers, ImportSources.LithuanianCivilParishMembers)
+        downloadDoc(GoogleDocsSources.LithuanianMunicipalityMembers, ImportSources.LithuanianMunicipalityMembers)
+        downloadDoc(GoogleDocsSources.LithuanianSeniunaitijaMembers, ImportSources.LithuanianSeniunaitijaMembers)
+        downloadDoc(GoogleDocsSources.LithuanianMunicipalities, ImportSources.LithuanianMunicipalities)
+        downloadDoc(GoogleDocsSources.LithuanianCivilParishes, ImportSources.LithuanianCivilParishes)
 
 
             
