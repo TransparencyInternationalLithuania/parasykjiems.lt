@@ -18,7 +18,6 @@ class ImportSources:
     LithuanianCivilParishMembers = os.path.join("contactdb", "sources", "LithuanianCivilParishMembers.csv")
     LithuanianMunicipalityMembers = os.path.join("contactdb", "sources", "LithuanianMunicipalityMembers.csv")
     LithuanianSeniunaitijaMembers  = os.path.join("contactdb", "sources", "LithuanianSeniunaitijaMembers.csv")
-    LithuanianStreetIndex  = os.path.join("contactdb", "sources", "LithuanianStreetIndex.csv")
     LithuanianMunicipalities  = os.path.join("contactdb", "sources", "LithuanianMunicipalities.csv")
     LithuanianCivilParishes  = os.path.join("contactdb", "sources", "LithuanianCivilParishes.csv")
 
@@ -44,6 +43,5 @@ class GoogleDocsSources:
     # Seniūnaičiai
     LithuanianSeniunaitijaMembers = "parasykjiems.lt 5 seniunaiciai"
 
-    LithuanianStreetIndex = "Lithuanian street index"
     LithuanianMunicipalities = "Contact DB LT Municipalities"
     LithuanianCivilParishes = "Contact DB LT CivilParishes"
