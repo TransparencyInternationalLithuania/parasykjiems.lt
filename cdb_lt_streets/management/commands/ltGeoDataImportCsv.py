@@ -54,7 +54,8 @@ class Command(BaseCommand):
             return existing
         except HierarchicalGeoData.DoesNotExist:
             self.count += 1
-            print u"%s creating %s %s" % (self.count, name, type)
+            if (self.count % 1000 == 0):
+                print u"%s creating %s %s" % (self.count, name, type)
             newObject = HierarchicalGeoData(name = name, type = type, parent = parent)
             newObject.save()
             self.localCache[key] = newObject

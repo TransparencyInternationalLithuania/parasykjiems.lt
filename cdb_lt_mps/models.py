@@ -54,5 +54,4 @@ class PollingDistrictStreet(models.Model):
     numberTo = models.IntegerField(null = True, db_index = True)
     numberOdd = models.BooleanField()
     city = AddressNameField(max_length = 50)
-    # should be renamed to polling district
     pollingDistrict = models.CharField(max_length = 100)

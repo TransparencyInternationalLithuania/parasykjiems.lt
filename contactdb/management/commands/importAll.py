@@ -26,11 +26,15 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         time = TimeMeasurer()
-        imports = [u"importMPs",
-                   u"importCivilParishMembers",
-                   u"importMunicipalityMembers",
-                   u"importSeniunaitija",
-                   u"importSeniunaitijaMembers"]
+        imports = [
+                   "importConstituencies",   # LT MP data
+                   "importMPs",
+                   "importCivilParish",      # LT CivilParish data
+                   "importCivilParishMembers",
+                   "importMunicipality",     # LT Municipality data
+                   "importMunicipalityMembers",
+                   "importSeniunaitija",     # LT Seniunaitija data
+                   "importSeniunaitijaMembers"]
         #imports = imports[8:9]
 
         print "Will import following data:"
