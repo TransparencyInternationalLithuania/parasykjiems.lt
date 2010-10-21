@@ -28,7 +28,6 @@ class RegisterCenterPageLocations:
                      siauliu,
                      taurages,
                      telsiu,
-                     vilniaus,
                      vilniaus]
 
 
@@ -75,7 +74,7 @@ class Command(BaseCommand):
 
         for location in list:
             url, name = location
-            name = name.replace(u" ", u"")
+            name = name.replace(" ", "")
             commands.append("ltGeoDataClearData")
             commands.append("ltGeoDataClearQueue")
             commands.append(("ltGeoDataImportRC", {"url" : url, "max-depth" : 99}))

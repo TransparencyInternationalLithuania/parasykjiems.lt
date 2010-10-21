@@ -45,8 +45,13 @@ class HierarchicalGeoData(models.Model):
     type = models.CharField(max_length=20, choices=HierarchicalGeoDataTypeChoices)
 
     @classmethod
-    def FindByName(cls, name, type=None, parentName = None):
-        locationInDB = HierarchicalGeoData.objects.filter(name = name)
+    def FindByName(cls, name, name_genitive = None, type=None, parentName = None):
+        locationInDB = HierarchicalGeoData.objects.all()
+        if name is not None:
+            locationInDB = locationInDB.filter(name = name)
+        if name_genitive is not None:
+            locationInDB = locationInDB.filter(name_genitive = name_genitive)
+
         if (parentName is not None):
             locationInDB = locationInDB.filter(parent__name = parentName)
         if (type is not None):

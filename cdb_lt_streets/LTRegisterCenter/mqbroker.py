@@ -6,6 +6,8 @@ from amqplib.client_0_8.exceptions import *
 from pjutils.exc import ChainnedException
 from pjutils.MessagingServer.MessagingServer import MQServer
 
+
+
 class LTRegisterQueue(Component):
     mqServer = RequiredFeature("MQServer", IsInstanceOf(MQServer))
     queueName = "po_box"
@@ -13,6 +15,7 @@ class LTRegisterQueue(Component):
     routingKey = "jason"
     
     persistentMessageMode = 2
+    sett = False
 
 
     def __init__(self):
@@ -49,11 +52,15 @@ class LTRegisterQueue(Component):
     def CreateQueues(self):
         """ Creates all neded queues and bindings needed to work with RegistruCentras.lt """
         # create a queue used for reading from http://www.registrucentras.lt/adr/p/index.php
+        if (LTRegisterQueue.sett == True):
+            return
         self.mqServer.Channel.queue_declare(queue=self.queueName, durable=True, exclusive=False, auto_delete=False)
         self.mqServer.Channel.exchange_declare(exchange = self.exchangeName, type="direct", durable=True, auto_delete=False,)
 
         # create binding - from po_box to sorting room
         self.mqServer.Channel.queue_bind(queue=self.queueName, exchange= self.exchangeName, routing_key= self.routingKey)
+
+        LTRegisterQueue.sett = True
 
     def ConsumeMessage(self, msg):
         self.mqServer.Channel.basic_ack(msg.delivery_tag)
