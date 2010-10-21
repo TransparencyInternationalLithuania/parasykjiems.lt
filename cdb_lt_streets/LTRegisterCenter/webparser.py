@@ -111,12 +111,23 @@ class RegisterCenterParser:
 
     def _NormaliseLocationText(self, text):
         text = text.replace(u"apskr.", u"apskritis")
+        text = text.replace(u"m. sav.", u"miesto savivaldybė")
+        text = text.replace(u"r. sav.", u"rajono savivaldybė")
         text = text.replace(u"sav.", u"savivaldybė")
         text = text.replace(u"sen.", u"seniūnija")
+        text = text.replace(u"vs.", u"viensėdis")
+        text = text.replace(u"pl.", u"plentas")
+        text = text.replace(u"kel.", u"kelias")
+        text = text.replace(u"mstl.", u"miestelis")
+        text = text.replace(u"gst.", u"geležinkelio stoties gyvenvietė")
+        text = text.replace(u"m.", u"miestas")
         text = text.replace(u"k.", u"kaimas")
         text = text.replace(u"r.", u"rajono")
         text = text.replace(u"g.", u"gatvė")
-        text = text.replace(u"m.", u"miesto")
+        text = text.replace(u"m.", u"miestas")
+        if text.strip().endswith("a."):
+            text = text.rstrip("a.") + u"aikstė"
+        text = text.replace(u"m.", u"miestas")
         return text
 
 
