@@ -54,10 +54,14 @@ class LinkCell:
     in the next import cycle"""
     text = u""
     href = u""
+    text_genitive = u""
+    #genitive = u""
 
-    def __init__(self, text = None, href = None):
+
+    def __init__(self, text = None, href = None, text_genitive = None):
         self.text = text
         self.href = href
+        self.text_genitive = text_genitive
 
     def __str__(self):
         return "text: %s  url: %s" % (self.text, self.href)
@@ -193,30 +197,35 @@ LIETUVOS RESPUBLIKA / Tauragės apskr. / Pagėgių sav. / Natkiškių sen. / Nat
 
 
     def ExtractLinkCell(self, cellTag):
-        cell = LinkCell()
+        #cell = LinkCell()
         #cell.text = self._removeLineBreaks(cellTag.next)
         #cell.text = self._NormaliseLocationText(cell.text)
+        href = None
+        text = None
+
 
         if (cellTag.next is None):
             raise PageParseException("cell tag should contain a next property, which should be either text of a link, or a href and a text")
-        href = cellTag.next
-        if (hasattr(href, "attrs") == True):
-            cell.href = self.ExtractUrlFromATag(href)
+        tag = cellTag.next
+        if (hasattr(tag, u"attrs") == True):
+            href = self.ExtractUrlFromATag(tag)
 
             # registrucentras.lt is very bad at constructing valid html. Here the a tag is double nested.
             # here is the original html code that we try to parse with if logic here:
             # <td><a href="/adr/p/index.php?gyv_id=339"><b><a href="/adr/p/index.php?gyv_id=339"><b>Likiškėlių k.</b></a></b></a></td>
             # notice a tag is repeated twice.  So in our logic we will try to move also forward two times if needed
-            textSibling = href.nextSibling.next
-            if (hasattr(textSibling, "attrs")):
+            textSibling = tag.nextSibling.next
+            if (hasattr(textSibling, u"attrs")):
                 # go to next tag
                 textSibling = textSibling.next.next
                 # remove bold
                 #textSibling = textSibling.next
-            cell.text = self._NormaliseLocationText(self._removeLineBreaks(textSibling))
+            text = self._NormaliseLocationText(self._removeLineBreaks(textSibling))
+            #cell.text = self._NormaliseLocationText(self._removeLineBreaks(textSibling.next.next))
         else:
-            cell.text = self._NormaliseLocationText(self._removeLineBreaks(href))
-        return cell
+            text = self._NormaliseLocationText(self._removeLineBreaks(tag))
+            #cell.text = self._NormaliseLocationText(self._removeLineBreaks(href.next.next))
+        return (text, href)
 
     def GetLinks(self):
         """ Finds a table containing a list of streets/districts/counties in the page
@@ -238,9 +247,19 @@ LIETUVOS RESPUBLIKA / Tauragės apskr. / Pagėgių sav. / Natkiškių sen. / Nat
 
         for row in allRows:
             rowCells = row.findAll("td")
-            cell1 = self.ExtractLinkCell(rowCells[0])
-            #cell2 = self.ExtractLinkCell(rowCells[1])
-            links.append(cell1)
+            text_nominative, url = self.ExtractLinkCell(rowCells[0])
+            text_genitive = None
+
+
+            if (headingCell == u"Pavadinimo vardininkas"):
+                if (len(rowCells) >=2):
+                    text, url = self.ExtractLinkCell(rowCells[1])
+                    text_genitive = text_nominative
+                    text_nominative = text
+
+
+            links.append(LinkCell(text = text_nominative, href= url, text_genitive= text_genitive))
+            #links.append(cell1)
 
         return links
 
