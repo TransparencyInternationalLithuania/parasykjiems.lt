@@ -22,14 +22,14 @@ class ImportSources:
     LithuanianCivilParishes  = os.path.join("contactdb", "sources", "LithuanianCivilParishes.csv")
 
     @classmethod
-    def EsnureExists(clas, importSource):
+    def EsnureExists(clas, importSource, downloadCommand = "downloadDocs"):
         """ Checks that a given import source exists on file system. if not, throw an exception,
          so that user would know how to donwload that source"""
         file = os.path.join(os.getcwd(), importSource)
         exists = os.path.exists(file)
         if (exists == False):
             raise ImportSourceNotExistsException("""File '%s' does not exist on your file system. Usually this means
-that an appropriate google doc was not downloaded yet.  You can do that by calling manage.py downloadDocs """ % file) 
+that an appropriate google doc was not downloaded yet.  You can do that by calling manage.py %s """ % (file, downloadCommand))
 
 class GoogleDocsSources:
     """ collection of google docs documents for Lithuanian data"""

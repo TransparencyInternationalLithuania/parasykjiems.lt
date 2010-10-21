@@ -14,7 +14,14 @@ from pjutils.uniconsole import *
 
 
 class ltGeoDataSources:
-    LithuanianStreetIndexes = [("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Telšių apskr.", os.path.join("contactdb", "sources", "cdb_lt_street_index_telsiai.csv")),
+
+
+
+
+
+    lithuanianAdditionalStreets = [("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Vilnius City", os.path.join("contactdb", "sources", "cdb_lt_street_index_Vilnius_city.csv"))]
+
+    commonIndexes = [("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Telšių apskr.", os.path.join("contactdb", "sources", "cdb_lt_street_index_telsiai.csv")),
                             ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Panevėžio apskr.", os.path.join("contactdb", "sources", "cdb_lt_street_index_panevezys.csv")),
                             ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Vilniaus apskr.", os.path.join("contactdb", "sources", "cdb_lt_street_index_vilnius.csv")),
                             ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Utenos apskr.", os.path.join("contactdb", "sources", "cdb_lt_street_index_utena.csv")),
@@ -24,6 +31,13 @@ class ltGeoDataSources:
                             ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Klaipėdos apskr.", os.path.join("contactdb", "sources", "cdb_lt_street_index_klaipeda.csv")),
                             ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Kauno apskr.", os.path.join("contactdb", "sources", "cdb_lt_street_index_kaunas.csv")),
                             ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Alytaus apskr.", os.path.join("contactdb", "sources", "cdb_lt_street_index_alytus.csv"))]
+
+    """ A list of document for importing streets for civil parishes"""
+    CivilParishIndexes = commonIndexes
+
+    """ A complete Lithuanian street source"""
+    LithuanianStreetIndexes = commonIndexes + lithuanianAdditionalStreets
+
 
 class Command(BaseCommand):
     args = '<>'

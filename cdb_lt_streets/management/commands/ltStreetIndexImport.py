@@ -64,7 +64,7 @@ class Command(BaseCommand):
 
         for doc, file in list:
             print "\t%s" % (file)
-            ImportSources.EsnureExists(file)
+            ImportSources.EsnureExists(file, "ltGeoDataDownloadDocs")
 
         self.count = 0
         for doc, file in list:
