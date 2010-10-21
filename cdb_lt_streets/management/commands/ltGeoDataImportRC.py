@@ -79,11 +79,18 @@ class Command(BaseCommand):
         parentLocationName = None
         parentLocationObject = None
         for location in page.location:
+            text_nominative = location.text
+            text_genitive = None
+            # city names must be in nominative, not in genitive
+            # location.text will be in genitive, so fix that
+            if (location.type == HierarchicalGeoData.HierarchicalGeoDataType.City):
+                text_genitive = location.text
+                text_nominative = None
 
             parentLocationText = None
             if (parentLocationName is not None):
                 parentLocationText = parentLocationName.text
-            locationInDB = HierarchicalGeoData.FindByName(location.text, parentName = parentLocationText)
+            locationInDB = HierarchicalGeoData.FindByName(name = text_nominative, name_genitive = text_genitive, parentName = parentLocationText)
 
             if (locationInDB is None):
                 # that means we have to create it
@@ -116,9 +123,20 @@ class Command(BaseCommand):
         parentType = LTGeoDataHierarchy.Hierarchy[pageLocationLength - 1]
         parentName = page.location[len(page.location) -1].text
 
-        parentLocationObject = HierarchicalGeoData.FindByName(name = parentName, type = parentType)
+        # for cities names are in genitive case
+        # so correct that if that is the case
+        text_nominative = parentName
+        text_genitive = None
+        if (parentType == HierarchicalGeoData.HierarchicalGeoDataType.City):
+            text_genitive = text_nominative
+            text_nominative = None
+
+        # execute the query. Searching for parent with either text in nominative or genitive
+        parentLocationObject = HierarchicalGeoData.FindByName(name = text_nominative, name_genitive=text_genitive, type = parentType)
         if (parentLocationObject is None):
-            raise LTGeoDataImportException("Could not find parent object by name %s and type " % (parentName, parentType) )
+            print "parentType %s" % parentType
+            print "type %s" % type
+            raise LTGeoDataImportException("Could not find parent object by name %s and type %s" % (parentName, parentType) )
 
         for link in page.links:
             locationInDB = HierarchicalGeoData.FindByName(link.text, parentName = parentName)

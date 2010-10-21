@@ -11,11 +11,18 @@ from cdb_lt_streets.LTRegisterCenter.webparser import RegisterCenterParser, Link
 
 scriptPath = os.path.dirname( os.path.realpath( __file__ ) )
 
-LietuvosRespublikaHtml = scriptPath + "/test data/LietuvosRespublika.htm", "http://www.registrucentras.lt/adr/p/index.php"
-AlytausSavAlytausSenHtml = scriptPath + "/test data/AlytausSavAlytausSen.htm", "http://www.registrucentras.lt/adr/p/index.php?sen_id=5"
-PagegiuSavNaktiskiuVillageHtml = scriptPath + "/test data/PagegiuSavNaktiskiuVillage.htm",
-AlytausSavAlytausSenLastPageHtml = scriptPath + "/test data/AlytausSavAlytausSenLastPage.htm", "http://www.registrucentras.lt/adr/p/index.php?sen_id=5&p=3"
-AlytausSavHtml = scriptPath + "/test data/AlytausSav.htm", "http://www.registrucentras.lt/adr/p/index.php?sav_id=4"
+class LTRegisterCenterHtmlData:
+    LietuvosRespublikaHtml = scriptPath + "/test data/LietuvosRespublika.htm", "http://www.registrucentras.lt/adr/p/index.php"
+    AlytausSavAlytausSenHtml = scriptPath + "/test data/AlytausSavAlytausSen.htm", "http://www.registrucentras.lt/adr/p/index.php?sen_id=5"
+    PagegiuSavNaktiskiuVillageHtml = scriptPath + "/test data/PagegiuSavNaktiskiuVillage.htm",
+    AlytausSavAlytausSenLastPageHtml = scriptPath + "/test data/AlytausSavAlytausSenLastPage.htm", "http://www.registrucentras.lt/adr/p/index.php?sen_id=5&p=3"
+    AlytausSavHtml = scriptPath + "/test data/AlytausSav.htm", "http://www.registrucentras.lt/adr/p/index.php?sav_id=4"
+
+    allSources = [LietuvosRespublikaHtml,
+                AlytausSavAlytausSenHtml,
+                PagegiuSavNaktiskiuVillageHtml,
+                AlytausSavAlytausSenLastPageHtml,
+                AlytausSavHtml]
 
 
 def ReadSource(sourceTag):
@@ -55,17 +62,17 @@ class TestLTRegisterCenterOtherLinks(TestCase):
 
 
     def testAlytausSavAlytausSenLastPageHtml(self):
-        for lines in ReadSource(AlytausSavAlytausSenLastPageHtml):
+        for lines in ReadSource(LTRegisterCenterHtmlData.AlytausSavAlytausSenLastPageHtml):
             page = RegisterCenterParser(lines).parse()
             self.assertEqual(len(page.otherPages), 2)
 
     def testPagegiuSavNaktiskiuVillageHtml(self):
-        for lines in ReadSource(PagegiuSavNaktiskiuVillageHtml):
+        for lines in ReadSource(LTRegisterCenterHtmlData.PagegiuSavNaktiskiuVillageHtml):
             page = RegisterCenterParser(lines).parse()
             self.assertEqual(len(page.otherPages), 0)
 
     def testLietuvosRespublika(self):
-        for lines in ReadSource(LietuvosRespublikaHtml):
+        for lines in ReadSource(LTRegisterCenterHtmlData.LietuvosRespublikaHtml):
             page = RegisterCenterParser(lines).parse()
             self.assertEqual(len(page.otherPages), 0)
 
@@ -77,7 +84,7 @@ class TestLTRegisterCenterOtherLinks(TestCase):
         
         cells = [LinkCell(tuple[0], tuple[1]) for tuple in links]
 
-        for lines in ReadSource(AlytausSavAlytausSenHtml):
+        for lines in ReadSource(LTRegisterCenterHtmlData.AlytausSavAlytausSenHtml):
             page = RegisterCenterParser(lines).parse()
             self.assertPage(page.otherPages, cells)
 
@@ -115,17 +122,45 @@ u"Vilties gatvė",
 u"Vingio gatvė"]
         cells = [LinkCell(street, "") for street in streets]
 
-        for lines in ReadSource(PagegiuSavNaktiskiuVillageHtml):
+        for lines in ReadSource(LTRegisterCenterHtmlData.PagegiuSavNaktiskiuVillageHtml):
             page = RegisterCenterParser(lines).parse()
             self.assertPage(page.links, cells)
 
     def testAlytausSavHtml(self):
-        for lines in ReadSource(AlytausSavHtml):
+        for lines in ReadSource(LTRegisterCenterHtmlData.AlytausSavHtml):
             page = RegisterCenterParser(lines).parse()
             self.assertEqual(len(page.links), 11)
 
 
     def testAlytausSavAlytausSenHtml(self):
+
+        villages_nominative = [
+u"Aniškis",
+u"Arminai I",
+u"Arminai II",
+u"Bakšiai",
+u"Bernotiškės",
+u"Bundoriai",
+u"Butkūnai",
+u"Butrimiškiai",
+u"Daugirdėliai",
+u"Daujotiškės",
+u"Dubenka",
+u"Dubėnai",
+u"Dubiai",
+u"Geniai",
+u"Jasunskai",
+u"Jovaišonys",
+u"Junonys",
+u"Jurgiškiai",
+u"Kaniūkai",
+u"Karklynai",
+u"Kelmanonys",
+u"Kibirkščiai",
+u"Kriauniai",
+u"Likiškėliai",
+u"Likiškiai"
+        ]
         villages = [
 (u"Aniškio kaimas", ""),
 (u"Arminų I kaimas", ""),
@@ -150,12 +185,13 @@ u"Vingio gatvė"]
 (u"Kelmanonių kaimas", ""),
 (u"Kibirkščių kaimas", ""),
 (u"Kriaunių kaimas", ""),
-(u"Likiškėlių kaimas", "http://www.registrucentras.lt/adr/p/index.php?gyv_id=339"),
+(u"Likiškėlių kaimas", u"http://www.registrucentras.lt/adr/p/index.php?gyv_id=339"),
 (u"Likiškių kaimas", "")]
-        cells = [LinkCell(tuple[0], tuple[1]) for tuple in villages]
 
 
-        for lines in ReadSource(AlytausSavAlytausSenHtml):
+        cells = [LinkCell(text = tuple[1], href = tuple[0][1], text_genitive=tuple[0][0]) for tuple in zip(villages, villages_nominative)]
+
+        for lines in ReadSource(LTRegisterCenterHtmlData.AlytausSavAlytausSenHtml):
             page = RegisterCenterParser(lines).parse()
             self.assertPage(page.links, cells)
 
@@ -176,7 +212,7 @@ u"Vingio gatvė"]
             LinkCell(text=u"Vilniaus apskritis",    href="http://www.registrucentras.lt/adr/p/index.php?aps_id=460"),
         ]
 
-        for lines in ReadSource(LietuvosRespublikaHtml):
+        for lines in ReadSource(LTRegisterCenterHtmlData.LietuvosRespublikaHtml):
             page = RegisterCenterParser(lines).parse()
             self.assertPage(page.links, cells)
 
@@ -189,7 +225,7 @@ class TestLTRegisterCenterLocations(TestCase):
         pass
 
     def testPagegiuSavNaktiskiuVillageHtml_Types(self):
-       for lines in ReadSource(PagegiuSavNaktiskiuVillageHtml):
+       for lines in ReadSource(LTRegisterCenterHtmlData.PagegiuSavNaktiskiuVillageHtml):
            page = RegisterCenterParser(lines).parse()
 
            self.assertEqual(5, len(page.location))
@@ -197,7 +233,7 @@ class TestLTRegisterCenterLocations(TestCase):
                self.assertEqual(LTGeoDataHierarchy.Hierarchy[i], page.location[i].type)
 
     def testPagegiuSavNaktiskiuVillageHtml(self):
-        for lines in ReadSource(PagegiuSavNaktiskiuVillageHtml):
+        for lines in ReadSource(LTRegisterCenterHtmlData.PagegiuSavNaktiskiuVillageHtml):
             page = RegisterCenterParser(lines).parse()
 
             self.assertEqual(5, len(page.location))
@@ -208,7 +244,7 @@ class TestLTRegisterCenterLocations(TestCase):
             self.assertEqual(u"Natkiškių kaimas", page.location[4].text)
 
     def testAlytausSavAlytausSenHtml(self):
-        for lines in ReadSource(AlytausSavAlytausSenHtml):
+        for lines in ReadSource(LTRegisterCenterHtmlData.AlytausSavAlytausSenHtml):
             page = RegisterCenterParser(lines).parse()
             self.assertEqual(4, len(page.location))
             self.assertEqual(u"LIETUVOS RESPUBLIKA", page.location[0].text)
@@ -217,7 +253,7 @@ class TestLTRegisterCenterLocations(TestCase):
             self.assertEqual(u"Alytaus seniūnija", page.location[3].text)
 
     def testLietuvosRespublika(self):
-        for lines in ReadSource(LietuvosRespublikaHtml):
+        for lines in ReadSource(LTRegisterCenterHtmlData.LietuvosRespublikaHtml):
             page = RegisterCenterParser(lines).parse()
             self.assertEqual(1, len(page.location))
             self.assertEqual(u"LIETUVOS RESPUBLIKA", page.location[0].text)

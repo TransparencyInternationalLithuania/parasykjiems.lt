@@ -3,7 +3,7 @@
 
 from urllib2 import urlopen
 from ClientForm import ParseResponse
-from BeautifulSoup import BeautifulSoup
+from BeautifulSoup import BeautifulSoup, NavigableString
 import re
 from pjutils.exc import ChainnedException
 from pjutils.uniconsole import *
@@ -214,17 +214,20 @@ LIETUVOS RESPUBLIKA / Tauragės apskr. / Pagėgių sav. / Natkiškių sen. / Nat
             # here is the original html code that we try to parse with if logic here:
             # <td><a href="/adr/p/index.php?gyv_id=339"><b><a href="/adr/p/index.php?gyv_id=339"><b>Likiškėlių k.</b></a></b></a></td>
             # notice a tag is repeated twice.  So in our logic we will try to move also forward two times if needed
-            textSibling = tag.nextSibling.next
-            if (hasattr(textSibling, u"attrs")):
-                # go to next tag
-                textSibling = textSibling.next.next
-                # remove bold
-                #textSibling = textSibling.next
-            text = self._NormaliseLocationText(self._removeLineBreaks(textSibling))
-            #cell.text = self._NormaliseLocationText(self._removeLineBreaks(textSibling.next.next))
+            if (tag.nextSibling is not None):
+                textSibling = tag.nextSibling.next
+                if (hasattr(textSibling, u"attrs")):
+                    textSibling = textSibling.next.next
+                text = self._NormaliseLocationText(self._removeLineBreaks(textSibling))
+            else:
+                t = tag
+                while isinstance(t, NavigableString) == False:
+                    t = t.next
+                #t = tag.next.next.next
+                text = self._NormaliseLocationText(self._removeLineBreaks(t))
+
         else:
             text = self._NormaliseLocationText(self._removeLineBreaks(tag))
-            #cell.text = self._NormaliseLocationText(self._removeLineBreaks(href.next.next))
         return (text, href)
 
     def GetLinks(self):
@@ -253,7 +256,7 @@ LIETUVOS RESPUBLIKA / Tauragės apskr. / Pagėgių sav. / Natkiškių sen. / Nat
 
             if (headingCell == u"Pavadinimo vardininkas"):
                 if (len(rowCells) >=2):
-                    text, url = self.ExtractLinkCell(rowCells[1])
+                    text, anotherUrl = self.ExtractLinkCell(rowCells[1])
                     text_genitive = text_nominative
                     text_nominative = text
 

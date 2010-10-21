@@ -49,7 +49,7 @@ class Command(BaseCommand):
 
         elapsedTime = TimeMeasurer()
         fileName = options['file']
-        print u"Writing contents to %s" % fileName
+        print "Writing contents to %s" % fileName
         self.file = open(fileName, 'w')
 
         self.writeToFile([u"Id",
