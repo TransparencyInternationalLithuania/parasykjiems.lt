@@ -139,7 +139,7 @@ class Command(BaseCommand):
             raise LTGeoDataImportException("Could not find parent object by name %s and type %s" % (parentName, parentType) )
 
         for link in page.links:
-            locationInDB = HierarchicalGeoData.FindByName(link.text, parentName = parentName)
+            locationInDB = HierarchicalGeoData.FindByName(name = link.text, name_genitive=link.text_genitive, parentName = parentName)
             if (locationInDB is not None):
                 continue
             # create new location object
