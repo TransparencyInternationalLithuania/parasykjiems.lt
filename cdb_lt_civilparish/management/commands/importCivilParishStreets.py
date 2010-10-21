@@ -71,7 +71,7 @@ class Command(BaseCommand):
         elapsedTime = TimeMeasurer()
         print "Will import lt civil parish street index data:"
 
-        list = ltGeoDataSources.LithuanianStreetIndexes
+        list = ltGeoDataSources.CivilParishIndexes
 
 
         for doc, file in list:
