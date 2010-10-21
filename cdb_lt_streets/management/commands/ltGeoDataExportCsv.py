@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from optparse import make_option
 from django.core.management.base import BaseCommand
 from django.core import management
 from pjutils.timemeasurement import TimeMeasurer
@@ -11,7 +12,15 @@ from cdb_lt_streets.models import HierarchicalGeoData
 
 class Command(BaseCommand):
     args = '<>'
-    help = """Prints contents of queue"""
+    help = """Exports data from HierarchicalGeoData to csv file"""
+
+    option_list = BaseCommand.option_list + (
+        make_option('-f', '--file',
+            dest='file',
+            metavar="file",
+            default = "geoData.csv",
+            help='Specify a file name where to save extracted data'),
+        )
 
     def __init__(self):
         self.parentCache = {}
@@ -39,7 +48,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         elapsedTime = TimeMeasurer()
-        fileName = u"geoData.csv"
+        fileName = options['file']
         print u"Writing contents to %s" % fileName
         self.file = open(fileName, 'w')
 
