@@ -35,7 +35,7 @@ class RegisterCenterPageLocations:
 class Command(BaseCommand):
     args = '<>'
     help = """Crawls part of Register Center page and saves data to csv files.  You can call command like
-    ltGeoDataCrawl 2:5  to start from second source and finish in fifth"""
+    ltGeoDataCrawl [2:5]  to start from second source and finish in fifth"""
 
     def handle(self, *args, **options):
 
@@ -45,7 +45,7 @@ class Command(BaseCommand):
         toNumber = len(RegisterCenterPageLocations.AllDistricts)
 
         if (len(args) >= 1):
-            parts = args[0].split(":")
+            parts = args[0].strip("[]").split(":")
             if (len(parts) >= 1):
                 if (parts[0].strip() != u""):
                     fromNumber = int(parts[0])
