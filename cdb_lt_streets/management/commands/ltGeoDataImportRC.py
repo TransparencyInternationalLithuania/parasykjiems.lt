@@ -87,7 +87,7 @@ class Command(BaseCommand):
 
             if (locationInDB is None):
                 # that means we have to create it
-                locationInDB = self._CreateNewLocationObject(location.text, location.type, parentLocationObject)
+                locationInDB = self._CreateNewLocationObject(text_nominative= location.text, type = location.type, parentLocationObject=parentLocationObject)
                 insertedRows += 1
 
             parentLocationName = location
@@ -95,10 +95,11 @@ class Command(BaseCommand):
         return insertedRows
 
 
-    def _CreateNewLocationObject(self, text, type, parentLocationObject):
+    def _CreateNewLocationObject(self, type, parentLocationObject, text_nominative, text_genitive = None):
         locationInDB = HierarchicalGeoData()
         locationInDB.parent = parentLocationObject
-        locationInDB.name = text
+        locationInDB.name = text_nominative
+        locationInDB.name_genitive = text_genitive
         locationInDB.type = type
         locationInDB.save()
         return locationInDB
@@ -124,7 +125,7 @@ class Command(BaseCommand):
             if (locationInDB is not None):
                 continue
             # create new location object
-            self._CreateNewLocationObject(link.text, type, parentLocationObject)
+            self._CreateNewLocationObject(text_nominative = link.text, text_genitive=link.text_genitive, type = type, parentLocationObject = parentLocationObject)
             insertedRows += 1
 
 

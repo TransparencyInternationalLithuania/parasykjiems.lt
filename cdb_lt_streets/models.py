@@ -9,6 +9,7 @@ from contactdb.models import AddressNameField
 class LithuanianStreetIndexes(models.Model):
     street = AddressNameField(db_index = True)
     city = AddressNameField(db_index = True)
+    city_genitive = AddressNameField(db_index = True, null = True)
     municipality = AddressNameField(db_index = True)
 
 
@@ -39,6 +40,7 @@ class HierarchicalGeoData(models.Model):
         (HierarchicalGeoDataType.Street, u'Street'))
 
     name = models.CharField(max_length = 100)
+    name_genitive = models.CharField(max_length = 100, null = True)
     parent = models.ForeignKey('self', blank=True, null=True, related_name="children", help_text="Parent data, if this is a child node.")
     type = models.CharField(max_length=20, choices=HierarchicalGeoDataTypeChoices)
 
