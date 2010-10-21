@@ -454,9 +454,14 @@ def contact(request, rtype, mp_id):
                         message = message + _('\nIf You want to response, click this link:')+'\nhttp://%s/response/%s/%s' % (
                             Site.objects.get_current().domain, mail.id, answer_no
                         )
+                        domain = settings.MAIL_USERNAME.split('@')[1]
+                        reply_to = 'reply%s@kroitus.com' % mail.id
+                    else:
+                        reply_to = sender
+                    print reply_to
                     email = EmailMessage(u'Gavote laišką nuo %s' % sender_name, message, sender,
                         recipients, [],
-                        headers = {'Reply-To': sender})
+                        headers = {'Reply-To': reply_to})
                     email.send()
                     ThanksMessage = _('Thank you. Your message has been sent.')
                     logger.debug('%s' % (ThanksMessage))

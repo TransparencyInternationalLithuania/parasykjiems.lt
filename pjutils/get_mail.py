@@ -11,7 +11,7 @@ class GetMail():
         M.login(server_info['username'], server_info['password'])
         M.select()
         messages = []
-        typ, data = M.search(None, 'SUBJECT', 'reply%s' % msg_id)
+        typ, data = M.search(None, 'To', 'reply%s' % msg_id)
         for num in data[0].split():
             typ, data = M.fetch(num, '(RFC822)')
 
