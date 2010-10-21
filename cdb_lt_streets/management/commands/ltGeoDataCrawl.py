@@ -11,12 +11,12 @@ from contactdb.management.commands.importAll import ExecManagementCommand
 class RegisterCenterPageLocations:
     alytaus = ("http://www.registrucentras.lt/adr/p/index.php?aps_id=1", "Alytaus apskritis")
     kauno = ("http://www.registrucentras.lt/adr/p/index.php?aps_id=41","Kauno apskritis")
-    klaipedos = ("http://www.registrucentras.lt/adr/p/index.php?aps_id=111","Klaipėdos apskritis")
-    marijampoles = ("http://www.registrucentras.lt/adr/p/index.php?aps_id=161","Marijampolės apskritis")
-    panevezio = ("http://www.registrucentras.lt/adr/p/index.php?aps_id=204","Panevėžio apskritis")
-    siauliu = ("http://www.registrucentras.lt/adr/p/index.php?aps_id=258","Šiaulių apskritis")
-    taurages = ("http://www.registrucentras.lt/adr/p/index.php?aps_id=322","Tauragės apskritis")
-    telsiu = ("http://www.registrucentras.lt/adr/p/index.php?aps_id=358","Telšių apskritis")
+    klaipedos = ("http://www.registrucentras.lt/adr/p/index.php?aps_id=111","Klaipedos apskritis")
+    marijampoles = ("http://www.registrucentras.lt/adr/p/index.php?aps_id=161","Marijampoles apskritis")
+    panevezio = ("http://www.registrucentras.lt/adr/p/index.php?aps_id=204","Panevezio apskritis")
+    siauliu = ("http://www.registrucentras.lt/adr/p/index.php?aps_id=258","Siauliu apskritis")
+    taurages = ("http://www.registrucentras.lt/adr/p/index.php?aps_id=322","Taurages apskritis")
+    telsiu = ("http://www.registrucentras.lt/adr/p/index.php?aps_id=358","Telsių apskritis")
     utenos = ("http://www.registrucentras.lt/adr/p/index.php?aps_id=392","Utenos apskritis")
     vilniaus = ("http://www.registrucentras.lt/adr/p/index.php?aps_id=460","Vilniaus apskritis")
 
