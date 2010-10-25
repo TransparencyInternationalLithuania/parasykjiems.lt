@@ -125,6 +125,7 @@ class RegisterCenterParser:
         text = text.replace(u"gst.", u"geležinkelio stoties gyvenvietė")
         text = text.replace(u"vs.", u"viensėdis")
         text = text.replace(u"pl.", u"plentas")
+        text = text.replace(u"pr.", u"prospektas")
         text = text.replace(u"al.", u"alėja")
         text = text.replace(u"m.", u"miestas")
         text = text.replace(u"k.", u"kaimas")
