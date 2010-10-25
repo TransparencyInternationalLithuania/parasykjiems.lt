@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-21 11:46+0300\n"
+"POT-Creation-Date: 2010-10-23 02:45+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -77,11 +77,11 @@ msgid ""
 "If You want to response, click this link:"
 msgstr ""
 
-#: pjweb/views.py:461 pjweb/views.py:514
+#: pjweb/views.py:466 pjweb/views.py:519
 msgid "Thank you. Your message has been sent."
 msgstr ""
 
-#: pjweb/views.py:559
+#: pjweb/views.py:564
 msgid "Thank you. Your response has been posted."
 msgstr ""
 
@@ -98,17 +98,41 @@ msgstr ""
 msgid "There should be numbers in phone number."
 msgstr ""
 
-#: templates/404.html:14 templates/500.html:14 templates/pjweb/base.html:15
+#: templates/404.html:14 templates/500.html:14 templates/base.html:15
 #: templates/pjweb/thanks.html:10
 msgid "About project"
 msgstr ""
 
-#: templates/404.html:15 templates/500.html:15 templates/pjweb/base.html:16
+#: templates/404.html:15 templates/500.html:15 templates/base.html:16
 msgid "List of all public mails"
 msgstr ""
 
-#: templates/500.html:24
+#: templates/500.html:21
 msgid "Error was sent to developers."
+msgstr ""
+
+#: templates/base.html:14
+msgid "ParašykJiems - Fast method to find representatives and contact them."
+msgstr ""
+
+#: templates/base.html:20
+msgid "Find desired representative (will be found by address)"
+msgstr ""
+
+#: templates/base.html:21
+msgid "Body of the message (you can write public or private mail)"
+msgstr ""
+
+#: templates/base.html:22
+msgid "Preview and send (check your spelling ;-))"
+msgstr ""
+
+#: templates/base.html:26
+msgid "Have any notes, suggestions?"
+msgstr ""
+
+#: templates/base.html:26
+msgid "Write to us"
 msgstr ""
 
 #: templates/admin/base_site.html:4
@@ -123,28 +147,8 @@ msgstr ""
 msgid "This site is for people to contact with their representatives."
 msgstr ""
 
-#: templates/pjweb/base.html:14
-msgid "ParašykJiems - Fast method to find representatives and contact them."
-msgstr ""
-
-#: templates/pjweb/base.html:20
-msgid "Find desired representative (will be found by address)"
-msgstr ""
-
-#: templates/pjweb/base.html:21
-msgid "Body of the message (you can write public or private mail)"
-msgstr ""
-
-#: templates/pjweb/base.html:22
-msgid "Preview and send (check your spelling ;-))"
-msgstr ""
-
-#: templates/pjweb/base.html:26
-msgid "Have any notes, suggestions?"
-msgstr ""
-
-#: templates/pjweb/base.html:26
-msgid "Write to us"
+#: templates/pjweb/check.html:16 templates/pjweb/contact.html:67
+msgid "Next Step"
 msgstr ""
 
 #: templates/pjweb/const.html:6
@@ -273,6 +277,10 @@ msgstr ""
 msgid "Enter Your Address for search:"
 msgstr ""
 
+#: templates/pjweb/index.html:8
+msgid "Search"
+msgstr ""
+
 #: templates/pjweb/index.html:9
 msgid "Eg.: Gedimino pr. 9, Vilnius"
 msgstr ""
@@ -301,6 +309,10 @@ msgstr ""
 
 #: templates/pjweb/preview.html:55
 msgid "Back to editing"
+msgstr ""
+
+#: templates/pjweb/preview.html:56
+msgid "Send Message"
 msgstr ""
 
 #: templates/pjweb/private.html:5

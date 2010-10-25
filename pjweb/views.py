@@ -204,6 +204,7 @@ def get_civilparish(pd_id, constituency):
 
 def insert_response(mail_id):
     getmail = GetMail()
+    resp = False
     if settings.MAIL_SERVER:
         server_info = {
             'server':settings.MAIL_SERVER,
@@ -222,7 +223,7 @@ def insert_response(mail_id):
             sender = responder.email
             recipients = mail.sender
 
-            mail = Email(
+            resp = Email(
                 sender_name = mail.recipient_name,
                 sender = responder.email,
                 recipient_id = mail.recipient_id,
@@ -234,8 +235,25 @@ def insert_response(mail_id):
                 answer_no = mail.id,
                 public = True,
             )
-            mail.save()
-        return mail
+            resp.save()
+            email = Email(
+                id = mail.id,
+                sender_name = mail.sender_name,
+                sender = mail.sender,
+                recipient_id = mail.recipient_id,
+                recipient_type = mail.recipient_type,
+                recipient_name = mail.recipient_name,
+                message = mail.message,
+                msg_state = 'A',
+                msg_type = mail.msg_type,
+                answer_no = mail.answer_no,
+                public = mail.public,
+            )
+            email.save()
+        if resp:
+            return resp
+        else:
+            return False
     return False
 
 def index(request):
@@ -248,7 +266,7 @@ def index(request):
         'house_no': '',
         }
     suggestion = ''
-
+    lang = request.LANGUAGE_CODE
     if request.method == 'POST':
         form = IndexForm(request.POST)
         if form.is_valid():
@@ -268,6 +286,7 @@ def index(request):
         return render_to_response('pjweb/index.html', {
             'form': form,
             'LANGUAGES': settings.LANGUAGES,
+            'lang_code': lang,
             'entered': query_string,
             'found_entries': address['found_entries'],
             'house_no': address['house_no'],
@@ -294,7 +313,7 @@ def no_email(request, rtype, mp_id):
     })
 
 def public_mails(request):
-    all_mails = Email.objects.all().filter(public__exact=True)
+    all_mails = Email.objects.all().filter(public__exact=True, msg_type__exact='M')
 
     return render_to_response('pjweb/public_mails.html', {
         'all_mails': all_mails,

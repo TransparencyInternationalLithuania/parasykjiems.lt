@@ -95,6 +95,28 @@ a:hover {
             margin-top:-4px;
             }
 
+        .button_short {
+            border: none;
+            background: url('img/btn-short.png') no-repeat top left;
+            padding: 2px 8px;
+            width: 89px;
+            height: 28px;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .button_long {
+            border: none;
+            background: url('img/btn-long.png') no-repeat top left;
+            padding: 2px 8px;
+            width: 159px;
+            height: 28px;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
     #address_table {
         font-size:14px;
         padding:57px 97px;
@@ -237,3 +259,4 @@ a:hover {
         text-align:center;
         padding:30px;
         }
+
