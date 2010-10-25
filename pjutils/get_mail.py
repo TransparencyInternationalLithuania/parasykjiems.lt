@@ -16,10 +16,14 @@ class GetMail():
             typ, data = M.fetch(num, '(RFC822)')
 
             file = StringIO.StringIO(data[0][1])
+
             message = rfc822.Message(file)
 
-#            print message.fp.read()
-            messages.append(message.fp.read())
+            mssg = message.fp.read()
+#            encoded = mssg.encode('iso-8859-13')
+#            decoded = unicode(encoded, 'utf-8')
+#            print decoded
+            messages.append(mssg)
 
         M.close()
         M.logout()
