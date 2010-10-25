@@ -20,6 +20,12 @@ class RegisterCenterPageLocations:
     utenos = ("http://www.registrucentras.lt/adr/p/index.php?aps_id=392","Utenos apskritis")
     vilniaus = ("http://www.registrucentras.lt/adr/p/index.php?aps_id=460","Vilniaus apskritis")
 
+    vilniusStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=1", "city_Vilnius")
+    kaunasStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=6", "city_Kaunas")
+
+    allStreets = [vilniusStreets,
+                kaunasStreets]
+
     AllDistricts = [alytaus,
                      kauno,
                      klaipedos,
@@ -31,6 +37,7 @@ class RegisterCenterPageLocations:
                      utenos,
                      vilniaus]
 
+    AllData = AllDistricts + allStreets
 
 
 class Command(BaseCommand):
@@ -43,7 +50,7 @@ class Command(BaseCommand):
         timeMeasurer = TimeMeasurer()
 
         fromNumber = 0
-        toNumber = len(RegisterCenterPageLocations.AllDistricts)
+        toNumber = len(RegisterCenterPageLocations.AllData)
 
         if (len(args) >= 1):
             parts = args[0].strip("[]").split(":")
@@ -56,7 +63,7 @@ class Command(BaseCommand):
 
         print "Will crawl from %s to %s source " % (fromNumber, toNumber)
 
-        list = RegisterCenterPageLocations.AllDistricts[fromNumber:toNumber]
+        list = RegisterCenterPageLocations.AllData[fromNumber:toNumber]
 
 
         print "Following pages will be parsed:"
