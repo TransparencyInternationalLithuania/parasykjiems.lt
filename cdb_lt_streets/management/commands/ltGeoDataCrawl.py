@@ -28,6 +28,7 @@ class RegisterCenterPageLocations:
                      siauliu,
                      taurages,
                      telsiu,
+                     utenos,
                      vilniaus]
 
 
@@ -59,9 +60,11 @@ class Command(BaseCommand):
 
 
         print "Following pages will be parsed:"
+        num = 0
         for i in list:
             url, name = i
-            print "%s \t %s" % (name, url)
+            print "%s-%s  %s" % (num, name, url)
+            num += 1
 
 
         seconds = 5
