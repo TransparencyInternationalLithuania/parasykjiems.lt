@@ -153,7 +153,7 @@ def getAndQuery(*args):
         if (finalQuery is None):
             finalQuery = q
         else:
-            finalQuery = finalQuery | q
+            finalQuery = finalQuery & q
     print "finalQuery %s" % (finalQuery)
     return finalQuery
 
@@ -182,7 +182,10 @@ def get_pollingstreet(query_string):
     print "cityFilters %s" % (cityFilters)
     print "municipalityFilters %s" % (municipalityFilters)
 
-    found_entries = LithuanianStreetIndexes.objects.filter(finalQuery).order_by('street')
+    found_entries = LithuanianStreetIndexes.objects.filter(finalQuery).order_by('street')[0:50]
+
+    for e in found_entries:
+        print "%s %s %s %s" % (e.id, e.street, e.city, e.municipality)
     print "sql : %s" % (found_entries.query)
     print "len %s " % len(found_entries)
 
