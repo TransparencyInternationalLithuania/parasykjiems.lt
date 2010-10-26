@@ -9,20 +9,42 @@
 
 <body>
 {% include 'pjweb/change_lang.html' %}
-<div id="top">
-<div>
-    <a href="/" id="logo"><img width="359" height="50" src="/static/img/logo.png" alt="{% trans "ParašykJiems - Fast method to find representatives and contact them." %}"></a>
-    <a href="/pjweb/about/" id="about">{% trans "About project" %}</a>
-    <a href="/pjweb/public_mails/" id="archive"><img src="/static/img/info.png" align="absmiddle">{% trans "List of all public mails" %}</a>
-</div>
-</div>
-<div id="content">
-<img class="step" src="/static/img/{{ step1 }}" alt="{% trans "Find desired representative (will be found by address)" %}">
-<img class="step" src="/static/img/{{ step2 }}" alt="{% trans "Body of the message (you can write public or private mail)" %}">
-<img class="step" src="/static/img/{{ step3 }}" alt="{% trans "Preview and send (check your spelling ;-))" %}">
-{% block content %}{% endblock %}
-</form>
-</div>
+    <div id="head">
+      <div class="cont">
+        <p id="lang">
+
+        <p id="logo">
+          <a href="/"><img src="/static/img/logo.png" width="359" height="50"
+              alt="{% trans "ParašykJiems - Fast method to find representatives and contact them." %}"></a>
+
+        <p id="nav">
+          <a href="/pjweb/public_mails/" id="nav-archive">{% trans "List of all public mails" %}</a>
+          <a href="/pjweb/about/" id="nav-about">{% trans "About project" %}</a>
+
+      </div>
+    </div>
+
+<!--<div id="top">-->
+<!--<div>-->
+<!--    <a href="/" id="logo"><img width="359" height="50" src="/static/img/logo.png" alt="{% trans "ParašykJiems - Fast method to find representatives and contact them." %}"></a>-->
+<!--    <a href="/pjweb/about/" id="about">{% trans "About project" %}</a>-->
+<!--    <a href="/pjweb/public_mails/" id="archive"><img src="/static/img/info.png" align="absmiddle">{% trans "List of all public mails" %}</a>-->
+<!--</div>-->
+<!--</div>-->
+    <div id="content">
+      <div id="c-head">
+        <h1 class="step step-1 {{ step1 }}">{% trans "Find desired representative" %}<br>
+          <small>{% trans "Will be found by address" %}</small></h1>
+
+        <p class="step step-2 {{ step2 }}">{% trans "Body of the message" %}<br>
+          <small>{% trans "You can write public or private mail" %}</small>
+
+        <p class="step step-3 {{ step3 }}">{% trans "Preview and send" %}<br>
+          <small>{% trans "Check your spelling ;-)" %}</small>
+      </div>
+
+    {% block content %}{% endblock %}
+    </div>
 <p align="center">{% trans "Have any notes, suggestions?" %} <a href="/pjweb/feedback/" >{% trans "Write to us" %}</a></p>
 
 </body>
