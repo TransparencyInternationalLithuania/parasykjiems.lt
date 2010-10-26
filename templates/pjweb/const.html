@@ -20,8 +20,10 @@
 <td width="70%">
 <p id="head-font">{% trans "Member of parliament" %} </p>
 <p>{% trans "Responsible for legislation, statutory bodies of the Lithuanian state leaders the appointment and dismissal from office, the state budget approval, the Lithuanian government surveillance activities." %}</p>
-<a href="/pjweb/contact/mp/{{ parliament_member.id }}/">
-<img class="step" src="/static/img/btn-write.png" alt={% trans "Write a letter to" %} {{ parliament_member.name }} {{ parliament_member.surname }}"></a>
+<form action="/pjweb/contact/mp/{{ parliament_member.id }}/" method="get">
+  <button><span>{% trans "Write" %}</span></button><br>
+</form>
+
 </td>
 </tr>
 {% endfor %}
@@ -42,8 +44,10 @@
 <td width="70%">
 <p id="head-font">{% trans "Member of municipality" %} </p>
 <p>{% trans "Ensures that local residents have the opportunity to become involved in local affairs, that decision-making of municipal council and municipal council committees is improved." %}</p>
-<a href="/pjweb/contact/mn/{{ municipality_member.id }}/">
-<img class="step" src="/static/img/btn-write.png" alt={% trans "Write a letter to" %} {{ municipality_member.name }} {{ municipality_member.surname }}"></a>
+<form action="/pjweb/contact/mn/{{ municipality_member.id }}/" method="get">
+  <button><span>{% trans "Write" %}</span></button><br>
+</form>
+
 </td>
 </tr>
 {% endfor %}
@@ -61,8 +65,10 @@
 <td width="70%">
 <p id="head-font">{% trans "Member of civil parish" %} </p>
 <p>{% trans "Carry out internal administration of the municipality, maintain a public service free of charge by certain notary functions assigned to advise the parish area residents, according to their competence to draw up protocols of administrative violations, consider cases of administrative offenses, may register the death, burial permits issued" %}</p>
-<a href="/pjweb/contact/cp/{{ civilparish_member.id }}/">
-<img class="step" src="/static/img/btn-write.png" alt={% trans "Write a letter to" %} {{ civilparish_member.name }} {{ civilparish_member.surname }}"></a>
+<form action="/pjweb/contact/cp/{{ civilparish_member.id }}/" method="get">
+  <button><span>{% trans "Write" %}</span></button><br>
+</form>
+
 </td>
 </tr>
 {% endfor %}
@@ -78,8 +84,10 @@
 <td width="70%">
 <p id="head-font">{% trans "Member of seniūnaitija" %} </p>
 <p>{% trans "Encourage residents of seniunaitija to monitor the territory of the residential area, to develop and organize local cultural and sports life, is entitled to receive and provide information about the functions of local government institutions, their working hours and working arrangements, may represent seniūnaitijos residents of the municipal council meeting." %}</p>
-<a href="/pjweb/contact/sn/{{ seniunaitija_member.id }}/">
-<img class="step" src="/static/img/btn-write.png" alt={% trans "Write a letter to" %} {{ seniunaitija_member.name }} {{ seniunaitija_member.surname }}"></a>
+<form action="/pjweb/contact/sn/{{ seniunaitija_member.id }}/" method="get">
+  <button><span>{% trans "Write" %}</span></button><br>
+</form>
+
 </td>
 </tr>
 {% endfor %}

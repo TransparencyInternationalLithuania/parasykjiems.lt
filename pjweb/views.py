@@ -292,9 +292,9 @@ def index(request):
             'house_no': address['house_no'],
             'found_geodata': address['found_geodata'],
             'not_found': address['not_found'],
-            'step1': 'step1_active.png',
-            'step2': 'step2_inactive.png',
-            'step3': 'step3_inactive.png',
+            'step1': 'active-step',
+            'step2': '',
+            'step3': '',
         })
 
 def no_email(request, rtype, mp_id):
@@ -306,10 +306,9 @@ def no_email(request, rtype, mp_id):
     return render_to_response('pjweb/no_email.html', {
         'NoEmailMsg': NoEmailMsg,
         'LANGUAGES': settings.LANGUAGES,
-        'step1': 'step1_inactive.png',
-        'step2': 'step2_active.png',
-
-        'step3': 'step3_inactive.png',
+        'step1': '',
+        'step2': 'active-step',
+        'step3': '',
     })
 
 def public_mails(request):
@@ -318,17 +317,17 @@ def public_mails(request):
     return render_to_response('pjweb/public_mails.html', {
         'all_mails': all_mails,
         'LANGUAGES': settings.LANGUAGES,
-        'step1': 'step1_inactive.png',
-        'step2': 'step2_inactive.png',
-        'step3': 'step3_inactive.png',
+        'step1': '',
+        'step2': '',
+        'step3': '',
     })
 
 def about(request):
     return render_to_response('pjweb/about.html', {
         'LANGUAGES': settings.LANGUAGES,
-        'step1': 'step1_inactive.png',
-        'step2': 'step2_inactive.png',
-        'step3': 'step3_inactive.png',
+        'step1': '',
+        'step2': '',
+        'step3': '',
     })
 
 def public(request, mail_id):
@@ -342,9 +341,9 @@ def public(request, mail_id):
         'mail': mail,
         'responses': responses,
         'LANGUAGES': settings.LANGUAGES,
-        'step1': 'step1_inactive.png',
-        'step2': 'step2_active.png',
-        'step3': 'step3_inactive.png',
+        'step1': '',
+        'step2': 'active-step',
+        'step3': '',
     })
 
 def smtp_error(request, rtype, mp_id, private=None):
@@ -358,9 +357,9 @@ def smtp_error(request, rtype, mp_id, private=None):
     return render_to_response('pjweb/error.html', {
         'ErrorMessage': ErrorMessage,
         'LANGUAGES': settings.LANGUAGES,
-        'step1': 'step1_inactive.png',
-        'step2': 'step2_inactive.png',
-        'step3': 'step3_active.png',
+        'step1': '',
+        'step2': '',
+        'step3': 'active-step',
     })
 
 def constituency(request, pd_id):
@@ -421,9 +420,9 @@ def constituency(request, pd_id):
         'civilparish_members': civilparish_members,
         'seniunaitija_members': seniunaitija_members,
         'LANGUAGES': settings.LANGUAGES,
-        'step1': 'step1_active.png',
-        'step2': 'step2_inactive.png',
-        'step3': 'step3_inactive.png',
+        'step1': 'active-step',
+        'step2': '',
+        'step3': '',
     })
     
 def contact(request, rtype, mp_id):
@@ -473,7 +472,7 @@ def contact(request, rtype, mp_id):
                         message = message + _('\nIf You want to response, click this link:')+'\nhttp://%s/response/%s/%s' % (
                             Site.objects.get_current().domain, mail.id, answer_no
                         )
-                        domain = settings.MAIL_USERNAME.split('@')[1]
+                        #domain = settings.MAIL_USERNAME.split('@')[1]
                         reply_to = 'reply%s@kroitus.com' % mail.id
                     else:
                         reply_to = sender
@@ -487,9 +486,9 @@ def contact(request, rtype, mp_id):
                     return render_to_response('pjweb/thanks.html', {
                         'ThanksMessage': ThanksMessage,
                         'LANGUAGES': settings.LANGUAGES,
-                        'step1': 'step1_inactive.png',
-                        'step2': 'step2_inactive.png',
-                        'step3': 'step3_active.png',
+                        'step1': '',
+                        'step2': '',
+                        'step3': 'active-step',
                     })
             if not send:
 #                decl = DeclensionLt()
@@ -503,9 +502,9 @@ def contact(request, rtype, mp_id):
                     'msg_lst': message.split('\n'),
                     'representative': receiver,
                     'LANGUAGES': settings.LANGUAGES,
-                    'step1': 'step1_inactive.png',
-                    'step2': 'step2_inactive.png',
-                    'step3': 'step3_active.png',
+                    'step1': '',
+                    'step2': '',
+                    'step3': 'active-step',
                 })
 
     else:
@@ -518,9 +517,9 @@ def contact(request, rtype, mp_id):
         'rtype': rtype,
         'representative': receiver,
         'LANGUAGES': settings.LANGUAGES,
-        'step1': 'step1_inactive.png',
-        'step2': 'step2_active.png',
-        'step3': 'step3_inactive.png',
+        'step1': '',
+        'step2': 'active-step',
+        'step3': '',
     })
 
 def feedback(request):
@@ -540,9 +539,9 @@ def feedback(request):
             return render_to_response('pjweb/thanks.html', {
                 'ThanksMessage': ThanksMessage,
                 'LANGUAGES': settings.LANGUAGES,
-                'step1': 'step1_inactive.png',
-                'step2': 'step2_inactive.png',
-                'step3': 'step3_active.png',
+                'step1': '',
+                'step2': '',
+                'step3': '',
             })
 
     else:
@@ -551,9 +550,9 @@ def feedback(request):
     return render_to_response('pjweb/feedback.html', {
         'form': form,
         'LANGUAGES': settings.LANGUAGES,
-        'step1': 'step1_inactive.png',
-        'step2': 'step2_inactive.png',
-        'step3': 'step3_inactive.png',
+        'step1': '',
+        'step2': '',
+        'step3': '',
     })
 
 def response(request, mail_id, response_no):
@@ -585,9 +584,9 @@ def response(request, mail_id, response_no):
             return render_to_response('pjweb/thanks.html', {
                 'ThanksMessage': ThanksMessage,
                 'LANGUAGES': settings.LANGUAGES,
-                'step1': 'step1_inactive.png',
-                'step2': 'step2_inactive.png',
-                'step3': 'step3_active.png',
+                'step1': '',
+                'step2': '',
+                'step3': 'active-step',
             })
 
     else:
@@ -599,8 +598,8 @@ def response(request, mail_id, response_no):
         'msg_lst': mail.message.split('\n'),
         'response_no': response_no,
         'LANGUAGES': settings.LANGUAGES,
-        'step1': 'step1_inactive.png',
-        'step2': 'step2_inactive.png',
-        'step3': 'step3_inactive.png',
+        'step1': '',
+        'step2': '',
+        'step3': '',
     })
 
