@@ -447,6 +447,7 @@ def contact(request, rtype, mp_id):
             answer_no = answer_no[0]
             #recipients = [receiver.email, receiver.officeEmail]
             recipients = ['parasykjiems@gmail.com']
+            #recipients = ['didysis@vytautas.lt']
             if not recipients[0]:
                 logger.debug('%s has no email' % (receiver.name, receiver.surname))
                 return HttpResponseRedirect('no_email')
@@ -467,21 +468,21 @@ def contact(request, rtype, mp_id):
                     public = publ,
                 )
                 if send:
+                    mail.save()
                     if publ:
-                        mail.save()
-                        message = message + _('\nIf You want to response, click this link:')+'\nhttp://%s/response/%s/%s' % (
-                            Site.objects.get_current().domain, mail.id, answer_no
-                        )
                         #domain = settings.MAIL_USERNAME.split('@')[1]
                         reply_to = 'reply%s@kroitus.com' % mail.id
                     else:
                         reply_to = sender
-                    print reply_to
-                    email = EmailMessage(u'Gavote laišką nuo %s' % sender_name, message, sender,
-                        recipients, [],
+                    message = _('You sent an email to ')+ mail.recipient_name + _(' with text:\n\n')+ message + _('\n\nYou must confirm this message by clicking link below:\n') + 'http://127.0.0.1:8000/confirm/%s/%s' % (mail.id, mail.answer_no)
+
+                    email = EmailMessage(u'Confirm your message %s' % sender_name, message, sender,
+                        [sender], [],
                         headers = {'Reply-To': reply_to})
+
                     email.send()
-                    ThanksMessage = _('Thank you. Your message has been sent.')
+
+                    ThanksMessage = _('Thank you. This message must be confirmed. Please check your email.')
                     logger.debug('%s' % (ThanksMessage))
                     return render_to_response('pjweb/thanks.html', {
                         'ThanksMessage': ThanksMessage,
@@ -519,6 +520,35 @@ def contact(request, rtype, mp_id):
         'LANGUAGES': settings.LANGUAGES,
         'step1': '',
         'step2': 'active-step',
+        'step3': '',
+    })
+
+def confirm(request, mail_id, secret):
+    mail = Email.objects.get(id=mail_id)
+    ConfirmMessage = _('Sorry, but your message could not be confirmed.')
+    if (int(mail_id)==mail.id) and (int(secret)==mail.answer_no):
+        if mail.public:
+            #domain = settings.MAIL_USERNAME.split('@')[1]
+            reply_to = 'reply%s@kroitus.com' % mail.id
+        else:
+            reply_to = mail.sender
+        #recipients = ['didysis@vytautas.lt']
+        recipients = ['parasykjiems@gmail.com']
+        email = EmailMessage(u'Gavote laišką nuo %s' % mail.sender_name, mail.message, mail.sender,
+            recipients, [],
+            headers = {'Reply-To': reply_to})
+        email.send()
+        ConfirmMessage = _('Thank you. Your message has been sent.')
+    else:
+        print 'bbbbbb'
+        ConfirmMessage = _('Sorry, but your message could not be confirmed.')
+
+    logger.debug('%s' % (ConfirmMessage))
+    return render_to_response('pjweb/confirm.html', {
+        'ConfirmMessage': ConfirmMessage,
+        'LANGUAGES': settings.LANGUAGES,
+        'step1': '',
+        'step2': '',
         'step3': '',
     })
 

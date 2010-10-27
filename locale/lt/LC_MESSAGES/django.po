@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-27 13:19+0300\n"
-"PO-Revision-Date: 2010-10-27 13:22+0300\n"
+"POT-Creation-Date: 2010-10-28 01:29+0300\n"
+"PO-Revision-Date: 2010-10-28 01:31+0300\n"
 "Last-Translator: Vytautas <didysis@vytrautas.lt>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -66,20 +66,41 @@ msgstr "%(name)s %(surname)s el. paštas nerastas duomenų bazėje."
 msgid "Problem occurred. Your Email to %(name)s %(surname)s has not been sent. Please try again later."
 msgstr "Iškilo problema. Jūsų laiškas, kurio adresatas yra %(name)s %(surname)s, nebuvo išsiųstas. Prašome pamėginti vėliau."
 
-#: pjweb/views.py:472
+#: pjweb/views.py:477
+msgid "You sent an email to "
+msgstr "Siuntėte laišką "
+
+#: pjweb/views.py:477
+msgid ""
+" with text:\n"
+"\n"
+msgstr " su tekstu:\n"
+
+#: pjweb/views.py:477
 msgid ""
 "\n"
-"If You want to response, click this link:"
+"\n"
+"You must confirm this message by clicking link below:\n"
 msgstr ""
 "\n"
-"Jei norite atsakyti, paspauskite šią nuorodą:"
+"\n"
+"Privalote patvirtinti žinutę paspausdami žemiau:\n"
 
-#: pjweb/views.py:484
-#: pjweb/views.py:537
+#: pjweb/views.py:485
+msgid "Thank you. This message must be confirmed. Please check your email."
+msgstr "Dėkojame. Ši žinutė privalo būti patvirtinta. Patikrinkite savo el. pašto dėžutę."
+
+#: pjweb/views.py:528
+#: pjweb/views.py:543
+msgid "Sorry, but your message could not be confirmed."
+msgstr "Apgailestaujame, bet Jūsų žinutė negali būti patvirtinta."
+
+#: pjweb/views.py:540
+#: pjweb/views.py:566
 msgid "Thank you. Your message has been sent."
 msgstr "Dėkojame. Jūsų žinutė išsiųsta."
 
-#: pjweb/views.py:582
+#: pjweb/views.py:611
 msgid "Thank you. Your response has been posted."
 msgstr "Dėkojame. Jūsų atsakymas paviešintas."
 
@@ -100,6 +121,7 @@ msgstr "Telefono numeryje turi būti skaičiai."
 #: templates/500.html:14
 #: templates/base.html:22
 #: templates/base.html.py:30
+#: templates/pjweb/confirm.html:10
 #: templates/pjweb/thanks.html:10
 msgid "About project"
 msgstr "Apie projektą"
@@ -168,6 +190,21 @@ msgstr "Šis puslapis skirtas žmonėms susisiekti su savo atstovais."
 #: templates/pjweb/contact.html:67
 msgid "Next Step"
 msgstr "Sekantis žingsnis"
+
+#: templates/pjweb/confirm.html:6
+#: templates/pjweb/thanks.html:6
+msgid "Letter was successfuly sent."
+msgstr "Laiškas sėkmingai išsiųstas."
+
+#: templates/pjweb/confirm.html:8
+#: templates/pjweb/thanks.html:8
+msgid "View list of all public messages"
+msgstr "Peržiūrėti viešai publikuotų laiškų sąrašą"
+
+#: templates/pjweb/confirm.html:9
+#: templates/pjweb/thanks.html:9
+msgid "Go back to home page"
+msgstr "Grįžti į titulinį puslapį"
 
 #: templates/pjweb/const.html:6
 msgid "Choose a representative, You want to write."
@@ -333,18 +370,12 @@ msgstr "Čia galite matyti visus viešus laiškus"
 msgid "You are writing an answer to "
 msgstr "Rašote atsakymą į laišką, kurio autorius yra"
 
-#: templates/pjweb/thanks.html:6
-msgid "Letter was successfuly sent."
-msgstr "Laiškas sėkmingai išsiųstas."
-
-#: templates/pjweb/thanks.html:8
-msgid "View list of all public messages"
-msgstr "Peržiūrėti viešai publikuotų laiškų sąrašą"
-
-#: templates/pjweb/thanks.html:9
-msgid "Go back to home page"
-msgstr "Grįžti į titulinį puslapį"
-
+#~ msgid ""
+#~ "\n"
+#~ "If You want to response, click this link:"
+#~ msgstr ""
+#~ "\n"
+#~ "Jei norite atsakyti, paspauskite šią nuorodą:"
 #~ msgid "Send Message"
 #~ msgstr "Siųsti laišką"
 #~ msgid "Write a letter to"
