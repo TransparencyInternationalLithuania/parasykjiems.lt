@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-25 11:47+0300\n"
-"PO-Revision-Date: 2010-10-25 11:48+0300\n"
+"POT-Creation-Date: 2010-10-27 13:19+0300\n"
+"PO-Revision-Date: 2010-10-27 13:22+0300\n"
 "Last-Translator: Vytautas <didysis@vytrautas.lt>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -56,17 +56,17 @@ msgstr "Viešas"
 msgid "No addressess were found. Please refine your search. Or use feedback form to inform us about missing address"
 msgstr "Nerasta jokių adresų. Patikslinkite paiešką. Arba pasinaudokite susisiekimo forma ir praneškite apie trūkstamą adresą"
 
-#: pjweb/views.py:283
+#: pjweb/views.py:302
 #, python-format
 msgid "%(name)s %(surname)s email cannot be found in database."
 msgstr "%(name)s %(surname)s el. paštas nerastas duomenų bazėje."
 
-#: pjweb/views.py:334
+#: pjweb/views.py:352
 #, python-format
 msgid "Problem occurred. Your Email to %(name)s %(surname)s has not been sent. Please try again later."
 msgstr "Iškilo problema. Jūsų laiškas, kurio adresatas yra %(name)s %(surname)s, nebuvo išsiųstas. Prašome pamėginti vėliau."
 
-#: pjweb/views.py:454
+#: pjweb/views.py:472
 msgid ""
 "\n"
 "If You want to response, click this link:"
@@ -74,12 +74,12 @@ msgstr ""
 "\n"
 "Jei norite atsakyti, paspauskite šią nuorodą:"
 
-#: pjweb/views.py:466
-#: pjweb/views.py:519
+#: pjweb/views.py:484
+#: pjweb/views.py:537
 msgid "Thank you. Your message has been sent."
 msgstr "Dėkojame. Jūsų žinutė išsiųsta."
 
-#: pjweb/views.py:564
+#: pjweb/views.py:582
 msgid "Thank you. Your response has been posted."
 msgstr "Dėkojame. Jūsų atsakymas paviešintas."
 
@@ -98,14 +98,16 @@ msgstr "Telefono numeryje turi būti skaičiai."
 
 #: templates/404.html:14
 #: templates/500.html:14
-#: templates/base.html:15
+#: templates/base.html:22
+#: templates/base.html.py:30
 #: templates/pjweb/thanks.html:10
 msgid "About project"
 msgstr "Apie projektą"
 
 #: templates/404.html:15
 #: templates/500.html:15
-#: templates/base.html:16
+#: templates/base.html:21
+#: templates/base.html.py:31
 msgid "List of all public mails"
 msgstr "Viešai publikuotų laiškų sąrašas"
 
@@ -113,27 +115,40 @@ msgstr "Viešai publikuotų laiškų sąrašas"
 msgid "Error was sent to developers."
 msgstr "Klaida nusiųsta programuotojams."
 
-#: templates/base.html:14
+#: templates/base.html:18
+#: templates/base.html.py:29
 msgid "ParašykJiems - Fast method to find representatives and contact them."
 msgstr "ParašykJiems - greitas būdas rasti atsakingus valdžios atstovus ir su jais susisiekti."
 
-#: templates/base.html:20
-msgid "Find desired representative (will be found by address)"
-msgstr "Raskite reikiamą atstovą (nustatysime pagal adresą)"
+#: templates/base.html:36
+msgid "Find desired representative"
+msgstr "Raskite reikiamą atstovą"
 
-#: templates/base.html:21
-msgid "Body of the message (you can write public or private mail)"
-msgstr "Laiško turinys (galite rašyti viešą ar privatų laišką)"
+#: templates/base.html:37
+msgid "Will be found by address"
+msgstr "Nustatysime pagal adresą"
 
-#: templates/base.html:22
-msgid "Preview and send (check your spelling ;-))"
-msgstr "Peržiūra ir siuntimas (pasitikrinkite klaidas ;-))"
+#: templates/base.html:39
+msgid "Body of the message"
+msgstr "Laiško turinys"
 
-#: templates/base.html:26
+#: templates/base.html:40
+msgid "You can write public or private mail"
+msgstr "Galite rašyti viešą ar privatų laišką"
+
+#: templates/base.html:42
+msgid "Preview and send"
+msgstr "Peržiūra ir siuntimas"
+
+#: templates/base.html:43
+msgid "Check your spelling ;-)"
+msgstr "Pasitikrinkite klaidas ;-)"
+
+#: templates/base.html:48
 msgid "Have any notes, suggestions?"
 msgstr "Turite pastabų, pasiūlymų?"
 
-#: templates/base.html:26
+#: templates/base.html:48
 msgid "Write to us"
 msgstr "Parašykite mums"
 
@@ -176,38 +191,38 @@ msgid "Responsible for legislation, statutory bodies of the Lithuanian state lea
 msgstr "Atsakingas už įstatymų leidybą, įstatymu numatytų Lietuvos valstybės institucijų vadovų skyrimą ir atleidimą iš pareigų, valstybės biudžeto tvirtinimą, Lietuvos Respublikos Vyriausybės veiklos priežiūrą."
 
 #: templates/pjweb/const.html:24
-#: templates/pjweb/const.html.py:47
-#: templates/pjweb/const.html:67
-#: templates/pjweb/const.html.py:86
+#: templates/pjweb/const.html.py:48
+#: templates/pjweb/const.html:69
+#: templates/pjweb/const.html.py:88
 msgid "Write"
 msgstr "Rašyti"
 
-#: templates/pjweb/const.html:44
+#: templates/pjweb/const.html:45
 msgid "Member of municipality"
 msgstr "Meras"
 
-#: templates/pjweb/const.html:45
+#: templates/pjweb/const.html:46
 msgid "Ensures that local residents have the opportunity to become involved in local affairs, that decision-making of municipal council and municipal council committees is improved."
 msgstr "Užtikrina, kad  savivaldybės gyventojai turėtų galimybę įsitraukti į vietos reikalų tvarkymą, kad būtų tobulinamas savivaldybės tarybos sprendimų priėmimas ir savivaldybės tarybos komitetų veikla."
 
-#: templates/pjweb/const.html:58
-#: templates/pjweb/const.html.py:64
+#: templates/pjweb/const.html:60
+#: templates/pjweb/const.html.py:66
 msgid "Member of civil parish"
 msgstr "Seniūnas"
 
-#: templates/pjweb/const.html:65
+#: templates/pjweb/const.html:67
 msgid "Carry out internal administration of the municipality, maintain a public service free of charge by certain notary functions assigned to advise the parish area residents, according to their competence to draw up protocols of administrative violations, consider cases of administrative offenses, may register the death, burial permits issued"
 msgstr "Atlieka seniūnijos vidaus administravimą, prižiūri viešųjų paslaugų teikimą, neatlygintinai atlieka tam tikras notarines funkcijas, konsultuoja seniūnijai priskirtos teritorijos gyventojus, pagal kompetenciją gali surašyti administracinių teisės pažeidimų protokolus, nagrinėti administracinių teisės pažeidimų bylas, gali registruoti mirtis, išduoda leidimus laidoti"
 
-#: templates/pjweb/const.html:78
+#: templates/pjweb/const.html:80
 msgid "Member of seniunaitija"
 msgstr "Seniūnaitis"
 
-#: templates/pjweb/const.html:83
+#: templates/pjweb/const.html:85
 msgid "Member of seniūnaitija"
 msgstr "Seniūnaitis"
 
-#: templates/pjweb/const.html:84
+#: templates/pjweb/const.html:86
 msgid "Encourage residents of seniunaitija to monitor the territory of the residential area, to develop and organize local cultural and sports life, is entitled to receive and provide information about the functions of local government institutions, their working hours and working arrangements, may represent seniūnaitijos residents of the municipal council meeting."
 msgstr "Skatina seniūnaitijos gyventojus prižiūrėti gyvenamosios vietovės teritoriją, plėtoti ir organizuoti vietovės kultūrinį ir sportinį gyvenimą, turi teisę gauti ir teikia informaciją apie savivaldybės institucijų funkcijas, jų darbo laiką ir darbo tvarką, gali atstovauti seniūnaitijos gyventojams savivaldybės tarybos posėdžiuose."
 
@@ -260,6 +275,12 @@ msgstr "Jei adresas nerastas duomenų bazėje, bet tikrai žinote, kad toks yra,
 msgid "If your member of municipality, civil parish wasn't found, write his data: name, surname, phone, email, work address."
 msgstr "Jei nebuvo rastas Jūsų meras, seniūnas, seniūnaitis, parašykite jo duomenis: vardą, pavardę, telefoną, el. pašto adresą, darbovietės adresą."
 
+#: templates/pjweb/feedback.html:26
+#: templates/pjweb/preview.html:56
+#: templates/pjweb/response.html:25
+msgid "Send"
+msgstr "Siųsti"
+
 #: templates/pjweb/index.html:6
 msgid "Enter Your Address for search:"
 msgstr "Įveskite savo adresą paieškai:"
@@ -285,7 +306,7 @@ msgid "here"
 msgstr "čia"
 
 #: templates/pjweb/preview.html:7
-msgid "You are writing public mail. It will be sent to addressee and displayed on public mails list."
+msgid "You are writing public mail. It will be sent to addressee and displayed on site."
 msgstr "Rašote viešą laišką. Jis bus išsiųstas adresatui ir pateiktas viešų laiškų sąraše."
 
 #: templates/pjweb/preview.html:9
@@ -295,10 +316,6 @@ msgstr "Rašote privatų laišką. Jis bus persiųstas tiesiogiai adresatui."
 #: templates/pjweb/preview.html:55
 msgid "Back to editing"
 msgstr "Grįžti į redagavimą"
-
-#: templates/pjweb/preview.html:56
-msgid "Send Message"
-msgstr "Siųsti laišką"
 
 #: templates/pjweb/private.html:5
 msgid "Click here, if you want to send private email"
@@ -328,6 +345,8 @@ msgstr "Peržiūrėti viešai publikuotų laiškų sąrašą"
 msgid "Go back to home page"
 msgstr "Grįžti į titulinį puslapį"
 
+#~ msgid "Send Message"
+#~ msgstr "Siųsti laišką"
 #~ msgid "Write a letter to"
 #~ msgstr "Rašyti laišką"
 #~ msgid "Responsible for everything"
@@ -358,8 +377,6 @@ msgstr "Grįžti į titulinį puslapį"
 #~ msgstr "Pasistenkite naudoti tautines raides."
 #~ msgid "You entered:"
 #~ msgstr "Įvedėte:"
-#~ msgid "We found these addresses:"
-#~ msgstr "Radome šiuos adresus:"
 #~ msgid "Or you can select one from all Members of Parliament"
 #~ msgstr "Arba galite pasirinkti vieną iš visų Seimo narių"
 #~ msgid "Preffered format is: Street, City, District"
