@@ -61,30 +61,6 @@ class AddressCruncher:
     def crunch(self, query_string):
         qery_list = re.split(r'[ ,]', query_string)
         print qery_list
-        """for string in qery_list:
-            numbered = re.split(r'[-_\\/]', string)
-            number = numbered[0]
-            if len(numbered)>1:
-                if numbered[1].isdigit():
-                    apt_no = 1
-                else:
-                    apt_no = 2
-
-            if apt_no==1:
-                if number.isdigit():
-                    house_no = number
-                    qery_list.remove(string)
-                elif number[:-1].isdigit():
-                    house_no = number[:-1]
-                    qery_list.remove(string)
-            elif apt_no==0:
-                if number.isdigit():
-                    house_no = number
-                    qery_list.remove(string)
-                elif number[:-1].isdigit():
-                    house_no = number[:-1]
-                    qery_list.remove(string)  """
-
 
         # remove empty words
         qery_list = [l for l in qery_list if l.strip() != u""]
@@ -93,10 +69,11 @@ class AddressCruncher:
         return qery_list
 
 class ContactDbAddress:
-    street = []
-    city = []
-    municipality = []
-    unknown = []
+    def __init__(self):
+        self.street = []
+        self.city = []
+        self.municipality = []
+        self.unknown = []
 
 class AddressDeducer():
 
@@ -172,8 +149,11 @@ def get_pollingstreet(query_string):
     crunchedAddress = AddressCruncher().crunch(query_string)
     print "crunchedAddress %s" % ( crunchedAddress)
     addressContext = AddressDeducer().deduce(crunchedAddress)
+    print "addressContext %s" % ( addressContext.street)
+    print "addressContext %s" % ( addressContext.city)
+    print "addressContext %s" % ( addressContext.municipality)
 
-
+    #print "before filter %s %s %s" %(streetFilters, cityFilters)
     streetFilters = getOrQuery("street", addressContext.street)
     cityFilters = getOrQuery("city", addressContext.city)
     municipalityFilters = getOrQuery("municipality", addressContext.municipality)
@@ -192,23 +172,6 @@ def get_pollingstreet(query_string):
     #entry_query = a_s.get_query(query_string, ['street', 'city', 'municipality'])
     #found_entries = LithuanianStreetIndexes.objects.filter(entry_query).order_by('street')
 
-    """if house_no and len(found_entries)>1:
-
-        addr_ids = []
-        for found_entry in found_entries:
-            has_number = False
-            if found_entry.numberFrom and found_entry.numberTo:
-                if is_odd(int(house_no)) and found_entry.numberOdd:
-                    has_number = found_entry.numberFrom <= int(house_no) <= found_entry.numberTo
-                elif not(is_odd(int(house_no))) and not(found_entry.numberOdd):
-                    has_number = found_entry.numberFrom <= int(house_no) <= found_entry.numberTo
-            elif found_entry.numberFrom and not(found_entry.numberTo):
-                has_number = found_entry.numberFrom==int(house_no)
-
-            if has_number:
-                addr_ids.append(found_entry.id)
-
-        found_entries = LithuanianStreetIndexes.objects.filter(id__in=addr_ids).order_by('street')"""
 
     if not found_entries:
         found_entries = {}
