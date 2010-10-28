@@ -14,9 +14,8 @@ class Email(models.Model):
     )
     
     EMAIL_STATES = (
-        ('S', 'Sent'),
-        ('N', 'Not Sent'),
-        ('F', 'Failed Permanently'),
+        ('C', 'Confirmed'),
+        ('N', 'Not Confirmed'),
     )
     
     MSG_TYPE = (
@@ -33,7 +32,7 @@ class Email(models.Model):
     message = models.TextField()
     phone = models.CharField(max_length = 100)
     msg_state = models.CharField(max_length=1, choices=MSG_STATES)
-    email_state = models.CharField(max_length=1, choices=EMAIL_STATES)
+    email_state = models.CharField(max_length=1, choices=EMAIL_STATES, blank=True)
     msg_type = models.CharField(max_length=1, choices=MSG_TYPE)
     req_date = models.DateTimeField(auto_now = True)
     public = models.BooleanField()
