@@ -54,6 +54,7 @@ def get_rep(rep_id, rtype):
     return receiver[0]
 
 class AddressCruncher:
+    """ Crunches address and removes any dummy words """
     def __init__(self):
         pass
 
@@ -65,7 +66,8 @@ class AddressCruncher:
         # remove empty words
         qery_list = [l for l in qery_list if l.strip() != u""]
         # remove words less than 3 letters
-        qery_list = [l for l in qery_list if len(l) > 3]
+        # but keep numbers
+        qery_list = [l for l in qery_list if (l.isalpha() and len(l) < 3) == False]
         return qery_list
 
 class ContactDbAddress:
@@ -74,8 +76,10 @@ class ContactDbAddress:
         self.city = []
         self.municipality = []
         self.unknown = []
+        self.number = []
 
 class AddressDeducer():
+    """ Deduces which strings are city, which street, and which is municipality """
 
     def findStreet(self, streetName):
         length = len(LithuanianStreetIndexes.objects.filter(street__icontains = streetName))
@@ -94,6 +98,10 @@ class AddressDeducer():
 
         for s in stringList:
             print "s %s" % (s)
+            if (s.isdigit()):
+                address.number.append(s)
+                continue
+
             isStreet = self.findStreet(s)
             if (isStreet):
                 address.street.append(s)
@@ -152,6 +160,7 @@ def get_pollingstreet(query_string):
     print "addressContext %s" % ( addressContext.street)
     print "addressContext %s" % ( addressContext.city)
     print "addressContext %s" % ( addressContext.municipality)
+    print "addressContext %s" % ( addressContext.number)
 
     #print "before filter %s %s %s" %(streetFilters, cityFilters)
     streetFilters = getOrQuery("street", addressContext.street)
@@ -164,9 +173,17 @@ def get_pollingstreet(query_string):
 
     found_entries = LithuanianStreetIndexes.objects.filter(finalQuery).order_by('street')[0:50]
 
+    # attach house numbers
+    number = None
+    if (len(addressContext.number) > 0):
+        number = addressContext.number[0]
+    for f in found_entries:
+        f.number = number
+
+
     for e in found_entries:
-        print "%s %s %s %s" % (e.id, e.street, e.city, e.municipality)
-    print "sql : %s" % (found_entries.query)
+        print "%s %s %s %s %s" % (e.id, e.street, e.city, e.municipality, e.number)
+    #print "sql : %s" % (found_entries.query)
     print "len %s " % len(found_entries)
 
     #entry_query = a_s.get_query(query_string, ['street', 'city', 'municipality'])

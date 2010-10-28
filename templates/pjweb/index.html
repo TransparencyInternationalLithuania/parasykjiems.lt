@@ -18,7 +18,7 @@
       {% for found_entry in found_entries %}
         <tr>
             <td>
-                <a href="/pjweb/{{ found_entry.id }}/">{{ found_entry.street }} {{ found_entry.city }} {{ found_entry.municipality }}</a>
+                <a href="/pjweb/{{ found_entry.municipality }}/{{ found_entry.city }}/{{ found_entry.street }}/{{ found_entry.number }}/">{{ found_entry.street }} {{ found_entry.number }} {{ found_entry.city }} {{ found_entry.municipality }}</a>
             </td>
         </tr>
       {% endfor %}
