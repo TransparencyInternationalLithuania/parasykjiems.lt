@@ -30,7 +30,7 @@ class ContactForm(forms.Form):
     )
     public = forms.ChoiceField(choices = pub_choices,
         initial=0,
-        widget=forms.RadioSelect(renderer=HorizontalRadioRenderer))
+        widget=forms.RadioSelect(renderer=HorizontalRadioRenderer), required=False)
     sender_name = forms.CharField(max_length=128, validators=[hasNoProfanities])
     phone = forms.CharField(max_length=100, validators=[hasDigits], required=False)
     message = forms.CharField(widget=forms.Textarea, validators=[hasNoProfanities])

@@ -8,13 +8,21 @@
 </head>
 
 <body>
-<div id="top">
-<div>
-	<a href="/" id="logo"><img width="359" height="50" src="/static/img/logo.png" alt="ParašykJiems - Greitas būdas rasti atsakingus valdžios atstovus ir su jais susisiekti."></a>
-	<a href="#" id="about">{% trans "About project" %}</a>	
-	<a href="/pjweb/public_mails/" id="archive"><img src="/static/img/info.png" align="absmiddle">{% trans "List of all public mails" %}</a>
-</div>
-</div>
+{% include 'pjweb/change_lang.html' %}
+    <div id="head">
+      <div class="cont">
+        <p id="lang">
+
+        <p id="logo">
+          <a href="/"><img src="/static/img/logo.png" width="359" height="50"
+              alt="{% trans "ParašykJiems - Fast method to find representatives and contact them." %}"></a>
+
+        <p id="nav">
+          <a href="/pjweb/public_mails/" id="nav-archive"><img src="/static/img/info.png" align="absmiddle">{% trans "List of all public mails" %}</a>
+          <a href="/pjweb/about/" id="nav-about">{% trans "About project" %}</a>
+
+      </div>
+    </div>
 <div id="content">
   <div id="sendok">
     <p id="sendok-large">Error 500: internal server error.</p>

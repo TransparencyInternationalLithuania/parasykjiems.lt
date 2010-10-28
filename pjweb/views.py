@@ -312,7 +312,7 @@ def no_email(request, rtype, mp_id):
     })
 
 def public_mails(request):
-    all_mails = Email.objects.all().filter(public__exact=True, msg_type__exact='M')
+    all_mails = Email.objects.all().filter(public__exact=True, msg_type__exact='M', email_state__exact='C')
 
     return render_to_response('pjweb/public_mails.html', {
         'all_mails': all_mails,
@@ -429,7 +429,7 @@ def contact(request, rtype, mp_id):
     receiver = get_rep(mp_id, rtype)
     if not receiver.email and not receiver.officeEmail:
         return HttpResponseRedirect('no_email')
-
+    publ = False
     if request.method == 'POST':
         send = request.POST.has_key('send')
         form = ContactForm(data=request.POST)
@@ -443,7 +443,7 @@ def contact(request, rtype, mp_id):
             phone = form.cleaned_data[u'phone']
             message = form.cleaned_data[u'message']
             sender = form.cleaned_data[u'sender']
-            answer_no = random.randrange(0, 10000),
+            answer_no = random.randrange(0, 100000),
             answer_no = answer_no[0]
             #recipients = [receiver.email, receiver.officeEmail]
             recipients = ['parasykjiems@gmail.com']
@@ -463,6 +463,7 @@ def contact(request, rtype, mp_id):
                     phone = phone,
                     message = message,
                     msg_state = 'W',
+                    email_state = 'N',
                     msg_type = 'M',
                     answer_no = answer_no,
                     public = publ,
@@ -534,13 +535,14 @@ def confirm(request, mail_id, secret):
             reply_to = mail.sender
         #recipients = ['didysis@vytautas.lt']
         recipients = ['parasykjiems@gmail.com']
+        mail.email_state = 'C'
+        mail.save()
         email = EmailMessage(u'Gavote laišką nuo %s' % mail.sender_name, mail.message, mail.sender,
             recipients, [],
             headers = {'Reply-To': reply_to})
         email.send()
         ConfirmMessage = _('Thank you. Your message has been sent.')
     else:
-        print 'bbbbbb'
         ConfirmMessage = _('Sorry, but your message could not be confirmed.')
 
     logger.debug('%s' % (ConfirmMessage))
@@ -586,8 +588,7 @@ def feedback(request):
     })
 
 def response(request, mail_id, response_no):
-    mails = Email.objects.all().filter(id__exact=mail_id)
-    mail = mails[0]
+    mail = Email.objects.get(id=mail_id)
     responder = get_rep(mail.recipient_id, mail.recipient_type)
     if int(mail.answer_no)==int(response_no) and request.method == 'POST':
         form = FeedbackForm(data=request.POST)
@@ -596,7 +597,7 @@ def response(request, mail_id, response_no):
             sender = responder.email
             recipients = mail.sender
 
-            mail = Email(
+            response = Email(
                 sender_name = mail.recipient_name,
                 sender = responder.email,
                 recipient_id = mail.recipient_id,
@@ -608,7 +609,7 @@ def response(request, mail_id, response_no):
                 answer_no = mail.id,
                 public = True,
             )
-            mail.save()
+            response.save()
             ThanksMessage = _('Thank you. Your response has been posted.')
             logger.debug('%s' % (ThanksMessage))
             return render_to_response('pjweb/thanks.html', {

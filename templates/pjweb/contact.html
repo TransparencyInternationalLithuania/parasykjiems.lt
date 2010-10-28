@@ -2,15 +2,15 @@
 {% load i18n %}
 {% block content %}
 
-<div id="head-message">
-<p id="header-font">{% trans "You are writing a letter to your representative. Be polite." %}</p>
+
+<h2 class="c-h">{% trans "You are writing a letter to your representative. Be polite." %}</h2>
 
     <ul id="head-text">
     <li>Lorem ipsum</li>
     <li>Dolor sit amet</li>
     </ul>
 
-</div>
+
 <br>
 <form action="/pjweb/contact/{{ rtype }}/{{ mp_id }}/" method="post">
 <table id="letter">
@@ -26,11 +26,11 @@
 {% if representative.phone %}{{ representative.phone }}{% endif %}
 {% if representative.officePhone %}{{ representative.officePhone }}{% endif %}
     </td>
-    <td width="120px">{% trans "Mail type:" %}*</td>
-    <td width="360px">
-        {{ form.public }}
-        {{ form.public.errors }}
-    </td>
+<!--    <td width="120px">{% trans "Mail type:" %}*</td>-->
+<!--    <td width="360px">-->
+<!--        {{ form.public }}-->
+<!--        {{ form.public.errors }}-->
+<!--    </td>-->
   </tr>
   <tr>
     <td width="120px">{% trans "Sender Name:" %}*</td>

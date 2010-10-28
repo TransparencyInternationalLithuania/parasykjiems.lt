@@ -2,11 +2,9 @@
 {% load i18n %}
 {% block content %}
 
-<div id="rep_list_header">
-<p id="bigger_font" align="middle">{% trans "Choose a representative, You want to write." %} <br>
-{% trans "If You are not sure, read " %}<a href="#">{% trans "tips" %}</a></p>
+<h2 class="c-h">{% trans "Choose a representative, You want to write." %} <br>
+{% trans "If You are not sure, read " %}<a href="#">{% trans "tips" %}</a></h2>
 
-</div>
 
 <table id="rep_table">
 {% for parliament_member in parliament_members %}

@@ -2,15 +2,13 @@
 {% load i18n %}
 {% block content %}
 
-<div id="head-message">
-<p id="header-font">{% trans "Have any notes? Write to us!" %}</p>
+<h2 class="c-h">{% trans "Have any notes? Write to us!" %}</h2>
 
     <ul id="head-text">
     <li>{% trans "If address wasn't found in database, but you know, that it exists, write exact address, to which civil parish, polling district and municipality it belongs, and, if you can, specify polling district." %}</li>
     <li>{% trans "If your member of municipality, civil parish wasn't found, write his data: name, surname, phone, email, work address." %}</li>
     </ul>
 
-</div>
 <br>
 <form action="/pjweb/feedback/" method="post">
 <table id="letter">

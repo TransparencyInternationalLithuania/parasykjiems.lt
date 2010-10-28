@@ -97,6 +97,7 @@
   color: #39454B;
   font: bold 16px/18px 'Droid Sans', Tahoma, 'Helvetica Neue', Helvetica, sans-serif;
   margin: 0 0 9px;
+  text-align: center;
 }
 .c-h small {
   color: #666;
@@ -142,29 +143,6 @@ a:hover {
 
         #logo {
             float:left;
-            }
-
-        #archive {
-            float:right;
-            color:#390;
-            font-family:Arial, sans-serif;
-            font-size:12px;
-            font-weight:700;
-            padding-top:13px;
-            line-height:21px;
-            height:21px;
-            }
-
-        #about {
-            float:right;
-            color:#369;
-            font-family:Arial, sans-serif;
-            font-size:12px;
-            font-weight:700;
-            margin-left:46px;
-            padding-top:13px;
-            line-height:21px;
-            height:21px;
             }
 
 #content {
@@ -234,14 +212,14 @@ a:hover {
             }
 
     #rep_table {
-        border:1px dotted #c9c9c9;
+        
         width:780px;
         color:#606b5c;
         padding:30px;
         }
 
         td {
-            vertical-align:middle;
+            vertical-align:top;
             padding-left:20px;
             }
 
@@ -316,17 +294,6 @@ a:hover {
 
         #sendok-font {
             margin-left:60px;
-            }
-
-    #head-message {
-        font-size:14px;
-        padding:73px 31px 0;
-        }
-
-        #header-font {
-            font-size:20px;
-            float:center;
-            text-align:center;
             }
 
         #head-text {
