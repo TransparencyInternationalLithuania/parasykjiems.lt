@@ -427,6 +427,8 @@ def constituency(request, pd_id):
     
 def contact(request, rtype, mp_id):
     receiver = get_rep(mp_id, rtype)
+    current_site = Site.objects.get_current()
+    print current_site
     if not receiver.email and not receiver.officeEmail:
         return HttpResponseRedirect('no_email')
     publ = False
@@ -475,7 +477,7 @@ def contact(request, rtype, mp_id):
                         reply_to = 'reply%s@kroitus.com' % mail.id
                     else:
                         reply_to = sender
-                    message = _('You sent an email to ')+ mail.recipient_name + _(' with text:\n\n')+ message + _('\n\nYou must confirm this message by clicking link below:\n') + 'http://127.0.0.1:8000/confirm/%s/%s' % (mail.id, mail.answer_no)
+                    message = _('You sent an email to ')+ mail.recipient_name + _(' with text:\n\n')+ message + _('\n\nYou must confirm this message by clicking link below:\n') + 'http://%s/confirm/%s/%s' % (current_site.domain, mail.id, mail.answer_no)
 
                     email = EmailMessage(u'Confirm your message %s' % sender_name, message, sender,
                         [sender], [],
@@ -511,7 +513,7 @@ def contact(request, rtype, mp_id):
 
     else:
         decl = DeclensionLt()
-        form = ContactForm(initial={'message': u'Gerb. p. %s, \n\n\n\nGeros dienos.' % decl.sauksm(receiver.name) })
+        form = ContactForm(initial={'message': _(u'Dear. Mr. %s, \n\n\n\nHave a nice day.') % decl.sauksm(receiver.name) })
         
     return render_to_response('pjweb/contact.html', {
         'form': form,
