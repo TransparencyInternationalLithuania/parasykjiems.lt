@@ -12,7 +12,6 @@
 <td width="30%" >
 <p id="head-font"><b>{{ parliament_member.name }} {{ parliament_member.surname }}</b> <br>
 {% trans "Member of parliament" %} </p>
-{{ parliament_member.email }}<br>
 {{ parliament_member.phone }}
 </td>
 <td width="70%">
@@ -31,10 +30,6 @@
 <td width="30%" >
 <p id="head-font"><b>{{ municipality_member.name }} {{ municipality_member.surname }}</b> <br>
 {{ municipality_member.municipality.name }} </p>
-{{ municipality_member.email }}<br>
-{% if municipality_member.email2 %}
-{{ municipality_member.email2 }}<br>
-{% endif %}
 {{ municipality_member.phone }}<br>
 {{ municipality_member.phone2 }}<br>
 {{ municipality_member.officeAddress }}<br>
@@ -56,7 +51,6 @@
 <p id="head-font">
 <b>{{ civilparish_member.name }} {{ civilparish_member.surname }}</b> <br>
 {% trans "Member of civil parish" %} </p>
-{{ civilparish_member.officeEmail }}<br>
 {{ civilparish_member.officePhone }}<br>
 {{ civilparish_member.officeAddress }}<br>
 </td>
@@ -76,7 +70,6 @@
 <td width="30%" >
 <p id="head-font"><b>{{ seniunaitija_member.name }} {{ seniunaitija_member.surname }}</b> <br>
 {% trans "Member of seniunaitija" %} </p>
-{{ seniunaitija_member.mail }}<br>
 {{ seniunaitija_member.phone }}<br>
 </td>
 <td width="70%">

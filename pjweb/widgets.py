@@ -6,6 +6,7 @@ from django.core.exceptions import ValidationError
 from django import forms
 import settings
 import re
+from django.utils.translation import ugettext as _
 
 def hasNoProfanities(field_data):
     """ 
@@ -31,7 +32,9 @@ def hasDigits(field_data):
 
 def notEmptyMsg(field_data):
     words = field_data.split(' ')
+    text = field_data.replace('\r','')
     name = words[2]
-    to_check = u'Gerb. p. %s \r\n\r\n\r\n\r\nGeros dienos.' % name
-    if field_data==to_check:
+    to_check = _(u'Dear. Mr. %s \n\n\n\nHave a nice day.') % name
+    if text==to_check:
         raise ValidationError, _('Message should not only be greeting.')
+

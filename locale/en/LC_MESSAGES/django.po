@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-29 13:00+0300\n"
+"POT-Creation-Date: 2010-10-29 15:17+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -71,69 +71,76 @@ msgid ""
 "Please try again later."
 msgstr ""
 
-#: pjweb/views.py:478
+#: pjweb/views.py:480
 msgid "You sent an email to "
 msgstr ""
 
-#: pjweb/views.py:478
+#: pjweb/views.py:480
 msgid ""
 " with text:\n"
 "\n"
 msgstr ""
 
-#: pjweb/views.py:478
+#: pjweb/views.py:480
 msgid ""
 "\n"
 "\n"
 "You must confirm this message by clicking link below:\n"
 msgstr ""
 
-#: pjweb/views.py:486
+#: pjweb/views.py:488
 msgid "Thank you. This message must be confirmed. Please check your email."
 msgstr ""
 
-#: pjweb/views.py:529 pjweb/views.py:546
+#: pjweb/views.py:531 pjweb/views.py:548
 msgid "Sorry, but your message could not be confirmed."
 msgstr ""
 
-#: pjweb/views.py:544 pjweb/views.py:569
+#: pjweb/views.py:546 pjweb/views.py:571
 msgid "Thank you. Your message has been sent."
 msgstr ""
 
-#: pjweb/views.py:613
+#: pjweb/views.py:615
 msgid "Thank you. Your response has been posted."
 msgstr ""
 
-#: pjweb/widgets.py:22
+#: pjweb/widgets.py:23
 #, python-format
 msgid "Please be polite! Letter with %s in it will not be sent."
 msgstr ""
 
-#: pjweb/widgets.py:23
+#: pjweb/widgets.py:24
 msgid "and"
 msgstr ""
 
-#: pjweb/widgets.py:30
+#: pjweb/widgets.py:31
 msgid "There should be numbers in phone number."
 msgstr ""
 
-#: pjweb/widgets.py:37
+#: pjweb/widgets.py:36
+#, python-format
+msgid ""
+"Dear. Mr. %s \n"
+"\n"
+"\n"
+"\n"
+"Have a nice day."
+msgstr ""
+
+#: pjweb/widgets.py:40
 msgid "Message should not only be greeting."
 msgstr ""
 
 #: templates/404.html:18 templates/500.html:18 templates/base.html:18
-#: templates/base.html.py:29
 msgid "ParašykJiems - Fast method to find representatives and contact them."
 msgstr ""
 
 #: templates/404.html:21 templates/500.html:21 templates/base.html:21
-#: templates/base.html.py:31
 msgid "List of all public mails"
 msgstr ""
 
 #: templates/404.html:22 templates/500.html:22 templates/base.html:22
-#: templates/base.html.py:30 templates/pjweb/confirm.html:10
-#: templates/pjweb/thanks.html:10
+#: templates/pjweb/confirm.html:10 templates/pjweb/thanks.html:10
 msgid "About project"
 msgstr ""
 
@@ -141,35 +148,35 @@ msgstr ""
 msgid "Error was sent to developers."
 msgstr ""
 
-#: templates/base.html:36
+#: templates/base.html:29
 msgid "Find desired representative"
 msgstr ""
 
-#: templates/base.html:37
+#: templates/base.html:30
 msgid "Will be found by address"
 msgstr ""
 
-#: templates/base.html:39
+#: templates/base.html:32
 msgid "Body of the message"
 msgstr ""
 
-#: templates/base.html:40
+#: templates/base.html:33
 msgid "You can write public or private mail"
 msgstr ""
 
-#: templates/base.html:42
+#: templates/base.html:35
 msgid "Preview and send"
 msgstr ""
 
-#: templates/base.html:43
+#: templates/base.html:36
 msgid "Check your spelling ;-)"
 msgstr ""
 
-#: templates/base.html:48
+#: templates/base.html:41
 msgid "Have any notes, suggestions?"
 msgstr ""
 
-#: templates/base.html:48
+#: templates/base.html:41
 msgid "Write to us"
 msgstr ""
 
