@@ -511,7 +511,7 @@ def contact(request, rtype, mp_id):
 
     else:
         decl = DeclensionLt()
-        form = ContactForm(initial={'message': 'Gerb. p. %s, \n\n\n\nGeros dienos.' % decl.sauksm(receiver.name) })
+        form = ContactForm(initial={'message': u'Gerb. p. %s, \n\n\n\nGeros dienos.' % decl.sauksm(receiver.name) })
         
     return render_to_response('pjweb/contact.html', {
         'form': form,

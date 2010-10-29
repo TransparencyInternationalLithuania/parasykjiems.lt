@@ -28,3 +28,10 @@ def hasDigits(field_data):
     field_data = field_data.lower()
     if not re.match("^[+() 0-9]*$", field_data):
         raise ValidationError, _('There should be numbers in phone number.')
+
+def notEmptyMsg(field_data):
+    words = field_data.split(' ')
+    name = words[2]
+    to_check = u'Gerb. p. %s \r\n\r\n\r\n\r\nGeros dienos.' % name
+    if field_data==to_check:
+        raise ValidationError, _('Message should not only be greeting.')
