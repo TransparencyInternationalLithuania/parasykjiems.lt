@@ -8,8 +8,8 @@ from django import forms
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render_to_response
 from django.utils.translation import ugettext as _, ugettext_lazy, ungettext
-from haystack.query import SearchQuerySet
-from haystack.views import SearchView
+#from haystack.query import SearchQuerySet
+#from haystack.views import SearchView
 from django.core.mail import send_mail, EmailMessage
 from parasykjiems.contactdb.models import PollingDistrictStreet, Constituency, ParliamentMember, HierarchicalGeoData, MunicipalityMember, CivilParishMember, SeniunaitijaMember
 from parasykjiems.pjweb.models import Email
@@ -274,7 +274,8 @@ def index(request):
             entered = form.cleaned_data['address_input']
         else:
             query_string = ''
-        address = get_pollingstreet(query_string)
+        if query_string:
+            address = get_pollingstreet(query_string)
     else:
         form = IndexForm()
 
