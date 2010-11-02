@@ -10,6 +10,8 @@ from django.conf.urls.defaults import *
 from django.contrib import admin
 admin.autodiscover()
 
+sentenceRegExp = u"[a-zA-Z0-9ąčęėįšųūž_ ]+"
+
 urlpatterns = patterns('parasykjiems.pjweb.views',
     # Example:
     # (r'^parasykjiems/', include('parasykjiems.foo.urls')),
@@ -24,8 +26,8 @@ urlpatterns = patterns('parasykjiems.pjweb.views',
     (r'^contact/(\w+)/(\w+)/(\w+)/smtp_error/$', 'smtp_error'),
 
     #(r'^choose_rep/(\w+)/(\w+)/(\w+)/(\d+)$', 'choose_representative'),
-    (u'^choose_rep/([a-zA-Z0-9ąčęėįšųūž_ ]+)/([a-zA-Z0-9ąčęėįšųūž_ ]+)/([a-zA-Z0-9ąčęėįšųūž_ ]+)/$', 'choose_representative'),
-    (u'^choose_rep/([a-zA-Z0-9ąčęėįšųūž_ ]+)/([a-zA-Z0-9ąčęėįšųūž_ ]+)/([a-zA-Z0-9ąčęėįšųūž_ ]+)/(\d+)/$', 'choose_representative'),
+    (u'^choose_rep/(%(sentence)s)/(%(sentence)s)/(%(sentence)s)/$' % {'sentence' : sentenceRegExp}, 'choose_representative'),
+    (u'^choose_rep/(%(sentence)s)/(%(sentence)s)/(%(sentence)s)/(\d+)/$' % {'sentence' : sentenceRegExp}, 'choose_representative'),
     #(r'^choose_rep/(\w+)/$', 'choose_representative'),
 
 
