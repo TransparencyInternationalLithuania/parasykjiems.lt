@@ -333,7 +333,7 @@ button {
   background: #5488fe;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#7cbffe', endColorstr='#5488fe');
   background: -webkit-gradient(linear, 0 0, 0 100%, from(#7cbffe), color-stop(.47, #7cbffe), color-stop(.53, #5488fe), to(#5488fe));
-  background: -moz-linear-gradient(top,  #f5fbf8, #f5fbf8 50%, #eff5f1 50%, #e1e4e1);
+  background: -moz-linear-gradient(top,  #7cbffe, #7cbffe 50%, #5488fe 50%, #5488fe);
 }
 
 button:focus {

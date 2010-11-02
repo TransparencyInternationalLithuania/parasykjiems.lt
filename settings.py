@@ -72,11 +72,11 @@ INSTALLED_APPS = (
     'parasykjiems.pjweb',
     'parasykjiems.pjutils',
     'django.contrib.admin',
-    'haystack',
+#    'haystack',
 )
 
 
-HAYSTACK_INCLUDE_SPELLING = True
+#HAYSTACK_INCLUDE_SPELLING = True
 
 def prepareSettingsLocal():
     import os
