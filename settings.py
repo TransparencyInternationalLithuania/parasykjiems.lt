@@ -76,8 +76,8 @@ INSTALLED_APPS = (
     'cdb_lt_mps',
     'cdb_lt_municipality',
     'cdb_lt_seniunaitija',
-    'cdb_lt_streets',
-    'haystack',
+    'cdb_lt_streets'
+    #'haystack',
 )
 
 
