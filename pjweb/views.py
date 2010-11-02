@@ -24,6 +24,7 @@ from cdb_lt_civilparish.models import CivilParishMember
 from cdb_lt_seniunaitija.models import SeniunaitijaMember
 from cdb_lt_streets.models import HierarchicalGeoData, LithuanianStreetIndexes
 from django.db.models.query_utils import Q, Q
+from django.utils.encoding import iri_to_uri
 
 logger = logging.getLogger(__name__)
 
@@ -142,17 +143,13 @@ def getAndQuery(*args):
     print "finalQuery %s" % (finalQuery)
     return finalQuery
 
-def get_pollingstreet(query_string):
+def searchInStreetIndex(query_string):
+    """ Searches throught street index and returns municipality / city / street/ house number
+    Additionally returns more data for rendering in template"""
 
     print "query_string %s" % query_string
-    a_s = AddressSearch()
-    found_entries = None
     found_geodata = None
-    house_no = ''
-    entry_query = ''
-    entry_query1 = ''
     not_found = ''
-    apt_no = 0
 
     crunchedAddress = AddressCruncher().crunch(query_string)
     print "crunchedAddress %s" % ( crunchedAddress)
@@ -179,16 +176,16 @@ def get_pollingstreet(query_string):
         number = addressContext.number[0]
     for f in found_entries:
         f.number = number
+        iri = "/pjweb/choose_rep/%s/%s/%s/%s/" % (f.municipality, f.city, f.street, f.number)
+        print "iri %s" % iri
+        uri = iri_to_uri(iri)
+        print "uri %s" % uri
+        f.url = uri
 
 
     for e in found_entries:
         print "%s %s %s %s %s" % (e.id, e.street, e.city, e.municipality, e.number)
-    #print "sql : %s" % (found_entries.query)
     print "len %s " % len(found_entries)
-
-    #entry_query = a_s.get_query(query_string, ['street', 'city', 'municipality'])
-    #found_entries = LithuanianStreetIndexes.objects.filter(entry_query).order_by('street')
-
 
     if not found_entries:
         found_entries = {}
@@ -198,9 +195,27 @@ def get_pollingstreet(query_string):
         'found_entries': found_entries,
         'found_geodata': found_geodata,
         'not_found': not_found,
-        'house_no': house_no,
     }
     return result
+
+def choose_representative(request, municipality, city = None, street = None, house_number = None):
+    print "municipality %s" % municipality
+    print "city %s" % city
+    print "street %s" % street
+    print "house_number %s" % house_number
+
+    form = IndexForm()
+    return render_to_response('pjweb/index.html', {
+            'form': form,
+            'LANGUAGES': settings.LANGUAGES,
+            'entered': None,
+            'found_entries': None,
+            'found_geodata': None,
+            'not_found': None,
+            'step1': 'step1_active.png',
+            'step2': 'step2_inactive.png',
+            'step3': 'step3_inactive.png',
+        })
 
 def get_civilparish(pd_id, constituency):
 
@@ -289,7 +304,6 @@ def index(request):
         'found_entries': None,
         'found_geodata': None,
         'not_found': '',
-        'house_no': '',
         }
     suggestion = ''
 
@@ -300,7 +314,7 @@ def index(request):
             entered = form.cleaned_data['address_input']
         else:
             query_string = ''
-        address = get_pollingstreet(query_string)
+        address = searchInStreetIndex(query_string)
     else:
         form = IndexForm()
 
@@ -314,7 +328,6 @@ def index(request):
             'LANGUAGES': settings.LANGUAGES,
             'entered': query_string,
             'found_entries': address['found_entries'],
-            'house_no': address['house_no'],
             'found_geodata': address['found_geodata'],
             'not_found': address['not_found'],
             'step1': 'step1_active.png',

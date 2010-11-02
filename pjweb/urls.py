@@ -20,7 +20,11 @@ urlpatterns = patterns('parasykjiems.pjweb.views',
     (r'^contact/(\w+)/(\d+)/no_email/$', 'no_email'),
     (r'^contact/(\w+)/(\w+)/(\w+)/smtp_error/$', 'smtp_error'),
 
-    (r'^chose_rep/(\w+/)$', 'chose_representative'),
+    #(r'^choose_rep/(\w+)/(\w+)/(\w+)/(\d+)$', 'choose_representative'),
+    (r'^choose_rep/([a-zA-Z0-9_ ]+)/([a-zA-Z0-9_ ]+)/([a-zA-Z0-9_ ]+)/$', 'choose_representative'),
+    (r'^choose_rep/([a-zA-Z0-9_ ]+)/([a-zA-Z0-9_ ]+)/([a-zA-Z0-9_ ]+)/(\d+)/$', 'choose_representative'),
+    #(r'^choose_rep/(\w+)/$', 'choose_representative'),
+
 
     # user is presented with a list of representatives whom he can write to
     (r'^(\d+)/$', 'constituency'),
