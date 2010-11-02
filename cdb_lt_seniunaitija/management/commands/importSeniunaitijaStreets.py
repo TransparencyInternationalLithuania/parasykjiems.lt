@@ -14,6 +14,7 @@ import re
 from cdb_lt_seniunaitija.models import SeniunaitijaStreet, Seniunaitija
 from contactdb.imp import ImportSources
 from cdb_lt_seniunaitija.management.commands.importSeniunaitijaMembers import SeniunaitijaMembersReader
+from cdb_lt_mps.models import PollingDistrictStreet
 
 logger = logging.getLogger(__name__)
 
