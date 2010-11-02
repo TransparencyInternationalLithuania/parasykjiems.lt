@@ -8,8 +8,8 @@ from django import forms
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render_to_response
 from django.utils.translation import ugettext as _, ugettext_lazy, ungettext
-from haystack.query import SearchQuerySet
-from haystack.views import SearchView
+#from haystack.query import SearchQuerySet
+#from haystack.views import SearchView
 from django.core.mail import send_mail, EmailMessage
 from parasykjiems.pjweb.models import Email
 from parasykjiems.pjweb.forms import *
@@ -198,7 +198,7 @@ def searchInStreetIndex(query_string):
     }
     return result
 
-def choose_representative(request, municipality, city = None, street = None, house_number = None):
+def choose_representative(request, municipality = None, city = None, street = None, house_number = None):
     print "municipality %s" % municipality
     print "city %s" % city
     print "street %s" % street

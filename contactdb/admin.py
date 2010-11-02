@@ -6,7 +6,7 @@ import inspect
 from cdb_lt_mps.models import ParliamentMember, PollingDistrictStreet, Constituency
 
 class AddrAdmin(admin.ModelAdmin):
-    list_display = ('street', 'city', 'district')
+    list_display = ('street', 'city')
 
 class MPAdmin(admin.ModelAdmin):
     list_display = ('name', 'surname', 'email')
