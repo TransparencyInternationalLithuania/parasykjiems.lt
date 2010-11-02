@@ -81,7 +81,7 @@ INSTALLED_APPS = (
 )
 
 
-HAYSTACK_INCLUDE_SPELLING = True
+#HAYSTACK_INCLUDE_SPELLING = True
 
 def prepareSettingsLocal():
     import os
