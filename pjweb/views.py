@@ -18,7 +18,7 @@ from django.utils import simplejson
 import random
 from django.contrib.sites.models import Site
 from pjutils.uniconsole import *
-from cdb_lt_municipality.models import MunicipalityMember
+from cdb_lt_municipality.models import MunicipalityMember, Municipality
 from cdb_lt_mps.models import ParliamentMember, Constituency, PollingDistrictStreet
 from cdb_lt_civilparish.models import CivilParishMember
 from cdb_lt_seniunaitija.models import SeniunaitijaMember
@@ -240,12 +240,8 @@ def addHouseNumberQuery(query, house_number):
 
 
 def findMPs(municipality = None, city = None, street = None, house_number = None):
-    print "finding mp"
     street = removeGenericPartFromStreet(street)
     municipality = removeGenericPartFromMunicipality(municipality)
-    print "street %s" % street
-    print "municipality %s" % municipality
-
 
     try:
         query = PollingDistrictStreet.objects.all().filter(municipality__contains = municipality)\
@@ -255,17 +251,28 @@ def findMPs(municipality = None, city = None, street = None, house_number = None
 
         query = query.distinct() \
             .values('constituency')
-        print query.query
-        for s in query:
-            print s
         constituencyIds = [p['constituency'] for p in query]
     except PollingDistrictStreet.DoesNotExist:
         logging.info("no polling district")
         return []
-    print "constituencyId %s" % constituencyIds
 
     parliamentMembers = ParliamentMember.objects.all().filter(id__in = constituencyIds)
     return parliamentMembers
+
+def findMunicipalityMembers(municipality = None, city = None, street = None, house_number = None):
+
+    try:
+        query = Municipality.objects.all().filter(name__contains = municipality)
+
+        query = query.distinct() \
+            .values('id')
+        idList = [p['id'] for p in query]
+    except PollingDistrictStreet.DoesNotExist:
+        logging.info("no municipalities found")
+        return []
+
+    members = MunicipalityMember.objects.all().filter(municipality__in = idList)
+    return members
 
 
 def choose_representative(request, municipality = None, city = None, street = None, house_number = None):
@@ -274,8 +281,8 @@ def choose_representative(request, municipality = None, city = None, street = No
     print "street %s" % street
     print "house_number %s" % house_number
 
-    parliament_members = findMPs(municipality,city, street,house_number)
-    municipality_members = []
+    parliament_members = findMPs(municipality, city, street, house_number)
+    municipality_members = findMunicipalityMembers(municipality, city, street, house_number)
     civilparish_members = []
     seniunaitija_members = []
 
