@@ -3,14 +3,13 @@
 from django.core.management.base import BaseCommand
 from django.db import transaction
 from contactdb.imp import ImportSources
-from contactdb.AdressParser import AddressParser
 from datetime import datetime
 from django.db import connection, transaction
 from pjutils.timemeasurement import TimeMeasurer
 import pjutils.uniconsole
 import os
 from pjutils.exc import ChainnedException
-from cdb_lt_mps.parseConstituencies import LithuanianConstituencyReader, PollingDistrictStreetExpander
+from cdb_lt_mps.parseConstituencies import LithuanianConstituencyReader, PollingDistrictStreetExpander, AddressParser
 from cdb_lt_mps.models import Constituency, PollingDistrictStreet
 
 class ImportStreetsConstituencyDoesNotExist(ChainnedException):
@@ -144,7 +143,7 @@ importStreets 5:8 - will import streets for counties from 5 to 8 constituencies 
                 for expandedStreet in expandedStreets:            
                     pollingDistrictStreet = PollingDistrictStreet()
                     pollingDistrictStreet.constituency = pollingDistrict.Constituency
-                    pollingDistrictStreet.district = pollingDistrict.District
+                    pollingDistrictStreet.municipality = pollingDistrict.District
                     pollingDistrictStreet.city = street.cityName
                     expandedStreetStr = expandedStreet.street
                     pollingDistrictStreet.street = expandedStreetStr
