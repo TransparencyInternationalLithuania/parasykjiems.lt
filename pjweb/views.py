@@ -20,7 +20,7 @@ from django.contrib.sites.models import Site
 from pjutils.uniconsole import *
 from cdb_lt_municipality.models import MunicipalityMember, Municipality
 from cdb_lt_mps.models import ParliamentMember, Constituency, PollingDistrictStreet
-from cdb_lt_civilparish.models import CivilParishMember
+from cdb_lt_civilparish.models import CivilParishMember, CivilParishStreet
 from cdb_lt_seniunaitija.models import SeniunaitijaMember
 from cdb_lt_streets.models import HierarchicalGeoData, LithuanianStreetIndexes
 from django.db.models.query_utils import Q, Q
@@ -177,7 +177,10 @@ def searchInStreetIndex(query_string):
         number = addressContext.number[0]
     for f in found_entries:
         f.number = number
-        iri = "/pjweb/choose_rep/%s/%s/%s/%s/" % (f.municipality, f.city, f.street, f.number)
+        if (f.number is not None):
+            iri = "/pjweb/choose_rep/%s/%s/%s/%s/" % (f.municipality, f.city, f.street, f.number)
+        else:
+            iri = "/pjweb/choose_rep/%s/%s/%s/" % (f.municipality, f.city, f.street)
         print "iri %s" % iri
         uri = iri_to_uri(iri)
         print "uri %s" % uri
@@ -256,8 +259,8 @@ def findMPs(municipality = None, city = None, street = None, house_number = None
         logging.info("no polling district")
         return []
 
-    parliamentMembers = ParliamentMember.objects.all().filter(id__in = constituencyIds)
-    return parliamentMembers
+    members = ParliamentMember.objects.all().filter(constituency__in = constituencyIds)
+    return members
 
 def findMunicipalityMembers(municipality = None, city = None, street = None, house_number = None):
 
@@ -267,11 +270,30 @@ def findMunicipalityMembers(municipality = None, city = None, street = None, hou
         query = query.distinct() \
             .values('id')
         idList = [p['id'] for p in query]
-    except PollingDistrictStreet.DoesNotExist:
+    except Municipality.DoesNotExist:
         logging.info("no municipalities found")
         return []
 
     members = MunicipalityMember.objects.all().filter(municipality__in = idList)
+    return members
+
+def findCivilParishMembers(municipality = None, city = None, street = None, house_number = None):
+    street = removeGenericPartFromStreet(street)
+    municipality = removeGenericPartFromMunicipality(municipality)
+
+    try:
+        query = CivilParishStreet.objects.all().filter(municipality__contains = municipality)\
+            .filter(street__contains = street) \
+            .filter(city__contains = city)
+
+        query = query.distinct() \
+            .values('civilParish')
+        idList = [p['civilParish'] for p in query]
+    except CivilParishStreet.DoesNotExist:
+        logging.info("no civilParish")
+        return []
+
+    members = CivilParishMember.objects.all().filter(civilParish__in = idList)
     return members
 
 
@@ -283,7 +305,7 @@ def choose_representative(request, municipality = None, city = None, street = No
 
     parliament_members = findMPs(municipality, city, street, house_number)
     municipality_members = findMunicipalityMembers(municipality, city, street, house_number)
-    civilparish_members = []
+    civilparish_members = findCivilParishMembers(municipality, city, street, house_number)
     seniunaitija_members = []
 
 
@@ -401,9 +423,8 @@ def index(request):
         form = IndexForm()
 
     if address['found_entries'] and len(address['found_entries'])==1:
-        return HttpResponseRedirect('/pjweb/%s/' % (
-            address['found_entries'][0].id)
-        )
+        url = address['found_entries'][0].url
+        return HttpResponseRedirect(url)
     else:
         return render_to_response('pjweb/index.html', {
             'form': form,
