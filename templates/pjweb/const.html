@@ -23,13 +23,13 @@
         <a href="/pjweb/contact/mp/{{ parliament_member.id }}/">
         <img class="step"
              src="/static/img/btn-write.png" alt={% trans "Write a letter to" %} {{ parliament_member.name }} {{ parliament_member.surname }}"></a>
-</td>
-</tr>
-{% endfor %}
+    </td>
+    </tr>
+    {% endfor %}
 
-{% for municipality_member in municipality_members %}
-<tr>
-<td width="30%" >
+    {% for municipality_member in municipality_members %}
+    <tr>
+    <td width="30%" >
     <p id="head-font"><b>{{ municipality_member.name }} {{ municipality_member.surname }}</b> <br>
         {{ municipality_member.municipality.name }} </p>
     {{ municipality_member.email }}<br>
@@ -46,13 +46,13 @@
     <a href="/pjweb/contact/mn/{{ municipality_member.id }}/">
     <img class="step"
          src="/static/img/btn-write.png" alt={% trans "Write a letter to" %} {{ municipality_member.name }} {{ municipality_member.surname }}"></a>
-</td>
-</tr>
-{% endfor %}
+    </td>
+    </tr>
+    {% endfor %}
 
-{% for civilparish_member in civilparish_members %}
-<tr>
-<td width="30%" >
+    {% for civilparish_member in civilparish_members %}
+    <tr>
+    <td width="30%" >
     <p id="head-font">
         <b>{{ civilparish_member.name }} {{ civilparish_member.surname }}</b> <br>
         {% trans "Member of civil parish" %} </p>
@@ -66,13 +66,13 @@
     <a href="/pjweb/contact/cp/{{ civilparish_member.id }}/">
     <img class="step"
          src="/static/img/btn-write.png" alt={% trans "Write a letter to" %} {{ civilparish_member.name }} {{ civilparish_member.surname }}"></a>
-</td>
-</tr>
-{% endfor %}
+    </td>
+    </tr>
+    {% endfor %}
 
-{% for seniunaitija_member in seniunaitija_members %}
-<tr>
-<td width="30%" >
+    {% for seniunaitija_member in seniunaitija_members %}
+    <tr>
+    <td width="30%" >
     <p id="head-font"><b>{{ seniunaitija_member.name }} {{ seniunaitija_member.surname }}</b> <br>
         {% trans "Member of seniunaitija" %} </p>
     {{ seniunaitija_member.mail }}<br>
@@ -84,8 +84,8 @@
     <a href="/pjweb/contact/sn/{{ seniunaitija_member.id }}/">
     <img class="step"
          src="/static/img/btn-write.png" alt={% trans "Write a letter to" %} {{ seniunaitija_member.name }} {{ seniunaitija_member.surname }}"></a>
-</td>
-</tr>
-{% endfor %}
-</table>
+    </td>
+    </tr>
+    {% endfor %}
+    </table>
 {% endblock %}
