@@ -3,14 +3,13 @@
 
 from django.core.management.base import BaseCommand
 from django.core.exceptions import ObjectDoesNotExist
-from contactdb.import_parliamentMembers import MunicipalityMembersReader
 from contactdb.imp import ImportSources
 from django.db import transaction
 from pjutils import uniconsole
 import os
 import csv
 from pjutils.exc import ChainnedException
-from cdb_lt_municipality.models import MunicipalityMember, Municipality
+from cdb_lt_municipality.models import Municipality
 from pjutils.timemeasurement import TimeMeasurer
 
 class ImportMunicipalityMemberException(ChainnedException):

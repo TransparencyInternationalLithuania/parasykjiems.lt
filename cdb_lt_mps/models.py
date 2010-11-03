@@ -52,6 +52,6 @@ class PollingDistrictStreet(models.Model):
     street = AddressNameField(db_index = True)
     numberFrom = models.IntegerField(null = True, db_index = True)
     numberTo = models.IntegerField(null = True, db_index = True)
-    numberOdd = models.BooleanField()
+    numberOdd = models.IntegerField(null = True, db_index = True)
     city = AddressNameField(max_length = 50)
     pollingDistrict = models.CharField(max_length = 100)

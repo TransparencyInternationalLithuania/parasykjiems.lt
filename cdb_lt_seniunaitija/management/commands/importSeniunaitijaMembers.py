@@ -9,8 +9,8 @@ from pjutils import uniconsole
 import os
 import csv
 from pjutils.exc import ChainnedException
-from contactdb.management.commands.importCivilParishMembers import ImportCivilParishMemberException
 from cdb_lt_seniunaitija.models import Seniunaitija, SeniunaitijaMember
+from cdb_lt_civilparish.management.commands.importCivilParishMembers import ImportCivilParishMemberException
 
 class ImportSeniunaitijaMemberException(ChainnedException):
     pass

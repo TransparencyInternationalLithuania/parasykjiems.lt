@@ -25,6 +25,7 @@ from cdb_lt_seniunaitija.models import SeniunaitijaMember
 from cdb_lt_streets.models import HierarchicalGeoData, LithuanianStreetIndexes
 from django.db.models.query_utils import Q, Q
 from django.utils.encoding import iri_to_uri
+from pjutils.deprecated import deprecated
 
 logger = logging.getLogger(__name__)
 
@@ -198,25 +199,99 @@ def searchInStreetIndex(query_string):
     }
     return result
 
+
+def removeGenericPartFromStreet(street):
+    endings = [u"skersgatvis", u"kelias",
+               u"plentas", u"prospektas",
+               u"alėja", u"gatvė",
+                u"aikštė"]
+
+    for e in endings:
+        if street.endswith(e):
+            street = street.replace(e, u"")
+    return street
+
+def removeGenericPartFromMunicipality(municipality):
+    endings = [u"miesto savivaldybė"]
+
+    for e in endings:
+        if municipality.endswith(e):
+            municipality = municipality.replace(e, u"")
+    return municipality
+
+
+def addHouseNumberQuery(query, house_number):
+    """ if house number is a numeric, add special conditions to check
+    if house number is matched"""
+    if (house_number is None):
+        return query
+    if (house_number.isdigit() == False):
+        return query
+
+    # convert to integer
+    house_number = int(house_number)
+    isOdd = house_number % 2
+    query = query.filter(numberFrom__lte = house_number ) \
+        .filter(numberTo__gte = house_number) \
+        .filter(numberOdd = isOdd)
+    return query
+
+
+
+
+def findMPs(municipality = None, city = None, street = None, house_number = None):
+    print "finding mp"
+    street = removeGenericPartFromStreet(street)
+    municipality = removeGenericPartFromMunicipality(municipality)
+    print "street %s" % street
+    print "municipality %s" % municipality
+
+
+    try:
+        query = PollingDistrictStreet.objects.all().filter(municipality__contains = municipality)\
+            .filter(street__contains = street) \
+            .filter(city__contains = city)
+        query = addHouseNumberQuery(query, house_number)
+
+        query = query.distinct() \
+            .values('constituency')
+        print query.query
+        for s in query:
+            print s
+        constituencyIds = [p['constituency'] for p in query]
+    except PollingDistrictStreet.DoesNotExist:
+        logging.info("no polling district")
+        return []
+    print "constituencyId %s" % constituencyIds
+
+    parliamentMembers = ParliamentMember.objects.all().filter(id__in = constituencyIds)
+    return parliamentMembers
+
+
 def choose_representative(request, municipality = None, city = None, street = None, house_number = None):
     print "municipality %s" % municipality
     print "city %s" % city
     print "street %s" % street
     print "house_number %s" % house_number
 
-    form = IndexForm()
-    return render_to_response('pjweb/index.html', {
-            'form': form,
-            'LANGUAGES': settings.LANGUAGES,
-            'entered': None,
-            'found_entries': None,
-            'found_geodata': None,
-            'not_found': None,
-            'step1': 'step1_active.png',
-            'step2': 'step2_inactive.png',
-            'step3': 'step3_inactive.png',
-        })
+    parliament_members = findMPs(municipality,city, street,house_number)
+    municipality_members = []
+    civilparish_members = []
+    seniunaitija_members = []
 
+
+    return render_to_response('pjweb/const.html', {
+        'parliament_members': parliament_members,
+        'municipality_members': municipality_members,
+        'civilparish_members': civilparish_members,
+        'seniunaitija_members': seniunaitija_members,
+        'LANGUAGES': settings.LANGUAGES,
+        'step1': 'step1_active.png',
+        'step2': 'step2_inactive.png',
+        'step3': 'step3_inactive.png',
+    })
+
+@deprecated
 def get_civilparish(pd_id, constituency):
 
     district = constituency.district.split(' ')[0]
@@ -396,6 +471,7 @@ def smtp_error(request, rtype, mp_id, private=None):
         'step3': 'step3_active.png',
     })
 
+@deprecated
 def constituency(request, pd_id):
     constituency = PollingDistrictStreet.objects.filter(id__exact=pd_id)[0]
     constituency_id = constituency.constituency_id
