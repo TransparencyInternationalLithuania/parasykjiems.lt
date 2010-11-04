@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import re
 from cdb_lt_streets.models import LithuanianStreetIndexes
 from django.db.models.query_utils import Q
@@ -5,6 +8,29 @@ import logging
 from pjutils.deprecated import deprecated
 
 logger = logging.getLogger(__name__)
+
+
+wholeStreetEndings = [u"skersgatvis", u"kelias",
+                    u"plentas", u"prospektas",
+                    u"alėja", u"gatvė",
+                    u"aikštė"]
+shortStreetEndings = [u"skg.", u"kel.", u"pl.", u"pr.", u"al.", u"g.", u"a."]
+allStreetEndings = wholeStreetEndings + shortStreetEndings
+
+
+def removeGenericPartFromStreet(street):
+    for e in wholeStreetEndings:
+        if street.endswith(e):
+            street = street.replace(e, u"")
+    return street
+
+def removeGenericPartFromMunicipality(municipality):
+    endings = [u"miesto savivaldybė"]
+
+    for e in endings:
+        if municipality.endswith(e):
+            municipality = municipality.replace(e, u"")
+    return municipality
 
 class ContactDbAddress:
     def __init__(self):
@@ -47,15 +73,30 @@ class AddressDeducer():
         street = street.strip()
         return (street, number)
 
+    def containsNumber(self, str):
+        parts = str.split(" ")
+        for p in parts:
+            if p.isdigit():
+                return True
+        return False
+
+    def containsStreet(self, str):
+        for ending in allStreetEndings:
+            if str.find(ending) >= 0:
+                return True
+        return False
 
     def deduce(self, stringList):
         address = ContactDbAddress()
 
-        if (stringList.find(u",") >=0 ):
-            parts = stringList.split(u",")
+        parts = stringList.split(u",")
+        if (self.containsNumber(parts[0])) or (self.containsStreet(parts[0])):
             address.street, address.number = self.extractStreetAndNumber(self.takePart(parts, 0))
             address.city = self.takePart(parts, 1)
             address.municipality = self.takePart(parts, 2)
+        else:
+            address.city = self.takePart(parts, 0)
+            address.municipality = self.takePart(parts, 1)
 
 
         """for s in stringList:

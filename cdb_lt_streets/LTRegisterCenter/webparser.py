@@ -132,8 +132,8 @@ class RegisterCenterParser:
         text = text.replace(u"r.", u"rajono")
         text = text.replace(u"g.", u"gatvė")
         text = text.replace(u"m.", u"miestas")
-        if text.strip().endswith("a."):
-            text = text.rstrip("a.") + u"aikštė"
+        if text.strip().endswith(u"a."):
+            text = text.rstrip(u"a.") + u"aikštė"
         text = text.replace(u"m.", u"miestas")
         return text
 
