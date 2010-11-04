@@ -45,6 +45,15 @@ class TestAddressDeducer(TestCase):
         self.assertEqual(u"Dubėnai", address.city)
         self.assertEqual(u"", address.municipality)
 
+    def testVerkiai_NoCommas(self):
+        """ no commas in addresses """
+        address = deduceAddress(u"Verkių g. 30 Vilnius Vilniaus m. sav.")
+        self.assertEqual(u"30", address.number)
+        self.assertEqual(u"Verkių g.", address.street)
+        self.assertEqual(u"Vilnius", address.city)
+        self.assertEqual(u"Vilniaus m. sav.", address.municipality)
+
+
 
 class TestSearchInIndex(TestCase):
     #fixtures = ['municipality.vilnius.json']
