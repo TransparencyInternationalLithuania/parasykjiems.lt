@@ -18,24 +18,44 @@ class Command(BaseCommand):
     args = '<>'
     help = """Prints contents of queue"""
     def __init__(self):
+        self.streetCache = {}
+        self.initializeCache()
         pass
 
+    def getCacheKey(self, municipality, city, street):
+        return "%s %s %s" % (municipality, city, street)
+
+
+    def addToCache(self, record):
+        self.streetCache[self.getCacheKey(record.municipality, record.city, record.street)] = record
+
+    def initializeCache(self):
+        for r in LithuanianStreetIndexes.objects.all():
+            self.addToCache(r)
+
+    def isInCache(self, municipality, city, street):
+        key = self.getCacheKey(municipality, city, street)
+        return self.streetCache.has_key(key)
 
     def createIfNotNull(self, street, city, municipality):
         self.processedRecords += 1
-        try:
+
+        if (self.isInCache(municipality, city, street) == False):
+            """try:
+
             LithuanianStreetIndexes.objects.all().filter(street = street) \
                 .filter(city = city) \
                 .filter(municipality = municipality) \
                 [0:1].get()
             #print u"object %s %s %s exists, skipping" % (street, city, municipality)
-        except LithuanianStreetIndexes.DoesNotExist:
+        except LithuanianStreetIndexes.DoesNotExist:"""
             self.count += 1
             newObject = LithuanianStreetIndexes()
             newObject.street = street
             newObject.municipality = municipality
             newObject.city = city
             newObject.save()
+            self.addToCache(newObject)
 
         seconds = (datetime.now() - self.start).seconds
         if (seconds - self.previousSecond > 1):
