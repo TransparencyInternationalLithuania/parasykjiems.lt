@@ -37,7 +37,7 @@ class Command(BaseCommand):
         key = self.getCacheKey(municipality, city, street)
         return self.streetCache.has_key(key)
 
-    def createIfNotNull(self, street, city, municipality):
+    def createIfNotNull(self, street, city, municipality, city_genitive = None):
         self.processedRecords += 1
 
         if (self.isInCache(municipality, city, street) == False):
@@ -54,6 +54,7 @@ class Command(BaseCommand):
             newObject.street = street
             newObject.municipality = municipality
             newObject.city = city
+            newObject.city_genitive = city_genitive
             newObject.save()
             self.addToCache(newObject)
 
@@ -83,9 +84,10 @@ class Command(BaseCommand):
             municipality = unicode(row["municipality"].strip(), 'utf-8')
             civilParish = unicode(row["civilparish"].strip(), 'utf-8')
             city = unicode(row["city"].strip(), 'utf-8')
+            city_genitive = unicode(row["city_genitive"].strip(), 'utf-8')
             street = unicode(row["street"].strip(), 'utf-8')
 
-            self.createIfNotNull(street, city, municipality)
+            self.createIfNotNull(street, city, municipality, city_genitive = city_genitive)
 
 
     def handle(self, *args, **options):
