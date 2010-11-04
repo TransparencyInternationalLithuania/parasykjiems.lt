@@ -12,6 +12,7 @@ from contactdb.imp import ImportSources
 import csv
 from pjutils.uniconsole import *
 from cdb_lt_streets.management.commands.ltGeoDataImportCsv import ltGeoDataSources
+from datetime import datetime
 
 class Command(BaseCommand):
     args = '<>'
@@ -21,21 +22,33 @@ class Command(BaseCommand):
 
 
     def createIfNotNull(self, street, city, municipality):
+        self.processedRecords += 1
         try:
             LithuanianStreetIndexes.objects.all().filter(street = street) \
                 .filter(city = city) \
                 .filter(municipality = municipality) \
                 [0:1].get()
-            print u"object %s %s %s exists, skipping" % (street, city, municipality)
+            #print u"object %s %s %s exists, skipping" % (street, city, municipality)
         except LithuanianStreetIndexes.DoesNotExist:
             self.count += 1
-            if (self.count % 1000 == 0):
-                print u"%s creating %s %s %s" % (self.count, street, city, municipality)
             newObject = LithuanianStreetIndexes()
             newObject.street = street
             newObject.municipality = municipality
             newObject.city = city
             newObject.save()
+
+        seconds = (datetime.now() - self.start).seconds
+        if (seconds - self.previousSecond > 1):
+            self.previousSecond = seconds
+            if (seconds == 0):
+                rate = "unknown"
+                rateProcessing = "unknown"
+            else:
+                rate = str(self.count / seconds)
+                rateProcessing = str(self.processedRecords / seconds)
+            print u"%s creating %s %s %s" % (self.count, street, city, municipality)
+            print u"inserting at %s rows per second (total sec: %d, rows: %d)" % (rate, seconds, self.count)
+            print u"processing at %s rows per second (total sec: %d, rows: %d)" % (rateProcessing, seconds, self.processedRecords)
 
     @transaction.commit_on_success
     def importFile(self, fileName):
@@ -59,7 +72,11 @@ class Command(BaseCommand):
         elapsedTime = TimeMeasurer()
         print "Will import lt street index data:"
 
-        list = ltGeoDataSources.LithuanianStreetIndexes[2:3]
+        self.processedRecords = 0
+        self.previousSecond = 0
+        self.start = datetime.now()
+
+        list = ltGeoDataSources.LithuanianStreetIndexes
 
 
         for doc, file in list:
