@@ -21,11 +21,12 @@ from pjutils.uniconsole import *
 from cdb_lt_municipality.models import MunicipalityMember, Municipality
 from cdb_lt_mps.models import ParliamentMember, Constituency, PollingDistrictStreet
 from cdb_lt_civilparish.models import CivilParishMember, CivilParishStreet
-from cdb_lt_seniunaitija.models import SeniunaitijaMember
+from cdb_lt_seniunaitija.models import SeniunaitijaMember, SeniunaitijaStreet
 from cdb_lt_streets.models import HierarchicalGeoData, LithuanianStreetIndexes
 from django.db.models.query_utils import Q, Q
 from django.utils.encoding import iri_to_uri
 from pjutils.deprecated import deprecated
+from cdb_lt_streets.searchInIndex import searchInIndex, deduceAddress
 
 logger = logging.getLogger(__name__)
 
@@ -55,121 +56,19 @@ def get_rep(rep_id, rtype):
 
     return receiver[0]
 
-class AddressCruncher:
-    """ Crunches address and removes any dummy words """
-    def __init__(self):
-        pass
 
-    """ Returns a list of key words extracted from query string"""
-    def crunch(self, query_string):
-        qery_list = re.split(r'[ ,]', query_string)
-        print qery_list
 
-        # remove empty words
-        qery_list = [l for l in qery_list if l.strip() != u""]
-        # remove words less than 3 letters
-        # but keep numbers
-        qery_list = [l for l in qery_list if (l.isalpha() and len(l) < 3) == False]
-        return qery_list
-
-class ContactDbAddress:
-    def __init__(self):
-        self.street = []
-        self.city = []
-        self.municipality = []
-        self.unknown = []
-        self.number = []
-
-class AddressDeducer():
-    """ Deduces which strings are city, which street, and which is municipality """
-
-    def findStreet(self, streetName):
-        length = len(LithuanianStreetIndexes.objects.filter(street__icontains = streetName))
-        return length > 0
-
-    def findCity(self, streetName):
-        length = len(LithuanianStreetIndexes.objects.filter(city__icontains = streetName))
-        return length > 0
-
-    def findMunicipality(self, streetName):
-        length = len(LithuanianStreetIndexes.objects.filter(municipality__icontains = streetName))
-        return length > 0
-
-    def deduce(self, stringList):
-        address = ContactDbAddress()
-
-        for s in stringList:
-            print "s %s" % (s)
-            if (s.isdigit()):
-                address.number.append(s)
-                continue
-
-            isStreet = self.findStreet(s)
-            if (isStreet):
-                address.street.append(s)
-            isCity = self.findCity(s)
-            if (isCity):
-                address.city.append(s)
-            isMunicipality = self.findMunicipality(s)
-            if (isMunicipality):
-                address.municipality.append(s)
-
-            print "isStreet %s" % (isStreet)
-            print "isCity %s" % (isCity)
-            print "isMunicipality %s" % (isMunicipality)
-            if (isCity == False and isStreet == False and isMunicipality == False ):
-                address.unknown.append(s)
-
-        return address
-
-def getOrQuery(fieldName, fieldValues):
-    streetFilters = None
-    for s in fieldValues:
-        q = Q(**{"%s__icontains" % fieldName: s})
-        if streetFilters is None:
-            streetFilters = q
-        else:
-            streetFilters = streetFilters | q
-    return streetFilters
-
-def getAndQuery(*args):
-    finalQuery = None
-    for q in args:
-        if (q is None):
-            continue
-        if (finalQuery is None):
-            finalQuery = q
-        else:
-            finalQuery = finalQuery & q
-    print "finalQuery %s" % (finalQuery)
-    return finalQuery
 
 def searchInStreetIndex(query_string):
     """ Searches throught street index and returns municipality / city / street/ house number
     Additionally returns more data for rendering in template"""
 
-    print "query_string %s" % query_string
+    logger.debug("query_string %s" % query_string)
     found_geodata = None
     not_found = ''
 
-    crunchedAddress = AddressCruncher().crunch(query_string)
-    print "crunchedAddress %s" % ( crunchedAddress)
-    addressContext = AddressDeducer().deduce(crunchedAddress)
-    print "addressContext %s" % ( addressContext.street)
-    print "addressContext %s" % ( addressContext.city)
-    print "addressContext %s" % ( addressContext.municipality)
-    print "addressContext %s" % ( addressContext.number)
-
-    #print "before filter %s %s %s" %(streetFilters, cityFilters)
-    streetFilters = getOrQuery("street", addressContext.street)
-    cityFilters = getOrQuery("city", addressContext.city)
-    municipalityFilters = getOrQuery("municipality", addressContext.municipality)
-    finalQuery = getAndQuery(streetFilters, cityFilters, municipalityFilters)
-    print "streetFilters %s" % (streetFilters)
-    print "cityFilters %s" % (cityFilters)
-    print "municipalityFilters %s" % (municipalityFilters)
-
-    found_entries = LithuanianStreetIndexes.objects.filter(finalQuery).order_by('street')[0:50]
+    addressContext = deduceAddress(query_string)
+    found_entries = searchInIndex(addressContext)
 
     # attach house numbers
     number = None
@@ -181,9 +80,7 @@ def searchInStreetIndex(query_string):
             iri = "/pjweb/choose_rep/%s/%s/%s/%s/" % (f.municipality, f.city, f.street, f.number)
         else:
             iri = "/pjweb/choose_rep/%s/%s/%s/" % (f.municipality, f.city, f.street)
-        print "iri %s" % iri
         uri = iri_to_uri(iri)
-        print "uri %s" % uri
         f.url = uri
 
 
@@ -254,12 +151,12 @@ def findMPs(municipality = None, city = None, street = None, house_number = None
 
         query = query.distinct() \
             .values('constituency')
-        constituencyIds = [p['constituency'] for p in query]
+        idList = [p['constituency'] for p in query]
     except PollingDistrictStreet.DoesNotExist:
         logging.info("no polling district")
         return []
 
-    members = ParliamentMember.objects.all().filter(constituency__in = constituencyIds)
+    members = ParliamentMember.objects.all().filter(constituency__in = idList)
     return members
 
 def findMunicipalityMembers(municipality = None, city = None, street = None, house_number = None):
@@ -297,6 +194,36 @@ def findCivilParishMembers(municipality = None, city = None, street = None, hous
     return members
 
 
+def findSeniunaitijaMembers(municipality = None, city = None, street = None, house_number = None):
+    street = removeGenericPartFromStreet(street)
+    municipality = removeGenericPartFromMunicipality(municipality)
+
+    query = SeniunaitijaStreet.objects.all().filter(municipality__contains = municipality)\
+        .filter(street__contains = street) \
+        .filter(city__contains = city)
+    query = addHouseNumberQuery(query, house_number)
+
+    query = query.distinct().values('seniunaitija')
+    idList = [p['seniunaitija'] for p in query]
+
+    if (len(idList) == 0):
+        logging.debug("no seniunaitija street at first attempt")
+
+        query = SeniunaitijaStreet.objects.all().filter(municipality__contains = municipality)\
+            .filter(city__contains = city)
+
+
+        query = query.distinct().values('seniunaitija')
+        idList = [p['seniunaitija'] for p in query]
+
+    if (len(idList) == 0):
+        logging.debug("no seniunaitija street at second attempt")
+        return []
+
+
+    members = SeniunaitijaMember.objects.all().filter(seniunaitija__in = idList)
+    return members
+
 def choose_representative(request, municipality = None, city = None, street = None, house_number = None):
     print "municipality %s" % municipality
     print "city %s" % city
@@ -306,7 +233,7 @@ def choose_representative(request, municipality = None, city = None, street = No
     parliament_members = findMPs(municipality, city, street, house_number)
     municipality_members = findMunicipalityMembers(municipality, city, street, house_number)
     civilparish_members = findCivilParishMembers(municipality, city, street, house_number)
-    seniunaitija_members = []
+    seniunaitija_members = findSeniunaitijaMembers(municipality, city, street, house_number)
 
 
     return render_to_response('pjweb/const.html', {
