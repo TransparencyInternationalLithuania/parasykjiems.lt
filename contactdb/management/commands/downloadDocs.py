@@ -9,7 +9,7 @@ import os
 from cdb_lt_streets.management.commands.ltGeoDataImportCsv import ltGeoDataSources
 logger = logging.getLogger(__name__)
 
-class SpreadSheetUploader:
+class SpreadSheetDiffUploader:
 
     def __init__(self, docName, fileName):
         logger.debug("logging in to GDocs")
@@ -152,8 +152,10 @@ class Command(BaseCommand):
 
 
 
-        #docName = ltGeoDataSources.commonIndexes[0]
-        #SpreadSheetUploader(docName[0], docName[1])
+        docName = ltGeoDataSources.commonIndexes[0]
+        SpreadSheetDiffUploader(docName[0], docName[1])
+
+        """
         downloadDoc(GoogleDocsSources.LithuanianMPs, ImportSources.LithuanianMPs)
         downloadDoc(GoogleDocsSources.LithuanianMPs, ImportSources.LithuanianMPs)
         downloadDoc(GoogleDocsSources.LithuanianCivilParishMembers, ImportSources.LithuanianCivilParishMembers)
@@ -163,4 +165,4 @@ class Command(BaseCommand):
         downloadDoc(GoogleDocsSources.LithuanianCivilParishes, ImportSources.LithuanianCivilParishes)
 
 
-            
+        """
