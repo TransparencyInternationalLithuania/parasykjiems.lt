@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from pjutils.uniconsole import *
 import re
 from cdb_lt_streets.models import LithuanianStreetIndexes
 from django.db.models.query_utils import Q
@@ -17,20 +18,21 @@ wholeStreetEndings = [u"skersgatvis", u"kelias",
 shortStreetEndings = [u"skg.", u"kel.", u"pl.", u"pr.", u"al.", u"g.", u"a."]
 allStreetEndings = wholeStreetEndings + shortStreetEndings
 
+wholeMunicipalityEndings = [u"miesto savivaldybė"]
+shortMunicipalityEndings = [u"m. sav."]
+allMunicipalityEndings = wholeMunicipalityEndings + shortMunicipalityEndings
 
 def removeGenericPartFromStreet(street):
-    for e in wholeStreetEndings:
+    for e in allStreetEndings:
         if street.endswith(e):
             street = street.replace(e, u"")
-    return street
+    return street.strip()
 
 def removeGenericPartFromMunicipality(municipality):
-    endings = [u"miesto savivaldybė"]
-
-    for e in endings:
+    for e in allMunicipalityEndings:
         if municipality.endswith(e):
             municipality = municipality.replace(e, u"")
-    return municipality
+    return municipality.strip()
 
 class ContactDbAddress:
     def __init__(self):
@@ -86,37 +88,64 @@ class AddressDeducer():
                 return True
         return False
 
+    def splitNoCommas(self, str):
+        """ when an address is entered without commas, use some custom logic to split it into parts"""
+        returnList = []
+        parts = str.split(u" ")
+        containsNumbers = False
+        for p in parts:
+            if (self.containsStreet(p) or self.containsNumber(p)):
+                containsNumbers = True
+
+        if (containsNumbers == False):
+            returnList.append(parts[0])
+            rest = u" ".join(parts[1:])
+            rest = rest.strip()
+            returnList.append(rest)
+            return returnList
+
+        current = parts[0]
+        i = 0
+        i1 = 1
+        while i1 < len(parts):
+            next = parts[i1]
+            if self.containsStreet(next) or self.containsNumber(next):
+                current = u"%s %s" % (current, next)
+            else:
+                break
+            i1 += 1
+            i += 1
+        returnList.append(current)
+        returnList.append(parts[i + 1])
+        rest = u" ".join(parts[i + 2:])
+        rest = rest.strip()
+        returnList.append(rest)
+        return returnList
+
     def deduce(self, stringList):
         address = ContactDbAddress()
 
-        parts = stringList.split(u",")
-        if (self.containsNumber(parts[0])) or (self.containsStreet(parts[0])):
-            address.street, address.number = self.extractStreetAndNumber(self.takePart(parts, 0))
-            address.city = self.takePart(parts, 1)
-            address.municipality = self.takePart(parts, 2)
+        if (stringList.find(u",") >= 0):
+            parts = stringList.split(u",")
+            # if first part contains either number, or street, thet it is street, city, municipality
+            if (self.containsNumber(parts[0])) or (self.containsStreet(parts[0])):
+                address.street, address.number = self.extractStreetAndNumber(self.takePart(parts, 0))
+                address.city = self.takePart(parts, 1)
+                address.municipality = self.takePart(parts, 2)
+            else:
+                # else this is city, and municipality only
+                address.city = self.takePart(parts, 0)
+                address.municipality = self.takePart(parts, 1)
         else:
-            address.city = self.takePart(parts, 0)
-            address.municipality = self.takePart(parts, 1)
-
-
-        """for s in stringList:
-            if (s.isdigit()):
-                address.number += s
-                continue
-
-            isStreet = self.findStreet(s)
-            if (isStreet):
-                address.street += s
-            isCity = self.findCity(s)
-            if (isCity):
-                address.city += s
-            isMunicipality = self.findMunicipality(s)
-            if (isMunicipality):
-                address.municipality += s
-
-            if (isCity == False and isStreet == False and isMunicipality == False ):
-                address.unknown += s
-                """
+            parts = self.splitNoCommas(stringList)
+            if (self.containsNumber(parts[0])) or (self.containsStreet(parts[0])):
+                address.street, address.number = self.extractStreetAndNumber(self.takePart(parts, 0))
+                address.city = self.takePart(parts, 1)
+                address.municipality = self.takePart(parts, 2)
+            else:
+                # else this is city, and municipality only
+                address.city = self.takePart(parts, 0)
+                address.municipality = self.takePart(parts, 1)
 
         return address
 
@@ -163,27 +192,38 @@ def getAndQuery(*args):
 
 
 def deduceAddress(query_string):
+    """ parses a given string into a house number, street, city and municipality parts
+    Return result is type of ContactDbAddress """
     addressContext = AddressDeducer().deduce(query_string)
     return addressContext
 
 
 
 def searchInIndex(addressContext):
-    """ """
+    """ Searches for streets using a given address."""
 
-    logger.debug("searching in index")
-    logger.debug("addressContext %s" % ( addressContext.street))
-    logger.debug("addressContext %s" % ( addressContext.city))
-    logger.debug("addressContext %s" % ( addressContext.municipality))
-    logger.debug("addressContext %s" % ( addressContext.number))
+    logger.debug(u"searching in index")
+    logger.debug(u"addressContext.number '%s'" % ( addressContext.number))
+    logger.debug(u"addressContext.street '%s'" % ( addressContext.street))
+    logger.debug(u"addressContext.city '%s'" % ( addressContext.city))
+    logger.debug(u"addressContext.municipality '%s'" % ( addressContext.municipality))
+
+    street = removeGenericPartFromStreet(addressContext.street)
+    municipality = removeGenericPartFromMunicipality(addressContext.municipality)
+    city = addressContext.city
+
+    logger.debug(u"street %s" % ( street))
+    logger.debug(u"city %s" % ( city))
+    logger.debug(u"municipality %s" % ( municipality))
 
     #print "before filter %s %s %s" %(streetFilters, cityFilters)
-    streetFilters = getOrQuery("street", addressContext.street)
-    cityFilters = getOrQuery("city", addressContext.city)
-    municipalityFilters = getOrQuery("municipality", addressContext.municipality)
+    streetFilters = getOrQuery("street", [street])
+    cityFilters = getOrQuery("city", [city])
+    municipalityFilters = getOrQuery("municipality", [municipality])
     finalQuery = getAndQuery(streetFilters, cityFilters, municipalityFilters)
     #logger.debug("streetFilters %s" % (streetFilters))
     #logger.debug("cityFilters %s" % (cityFilters))
     #logger.debug("municipalityFilters %s" % (municipalityFilters))
-
-    return LithuanianStreetIndexes.objects.filter(finalQuery).order_by('street')[0:50]
+    query = LithuanianStreetIndexes.objects.filter(finalQuery).order_by('street')[0:50]
+    #logger.debug(query.query)
+    return query
