@@ -34,6 +34,9 @@ class Command(BaseCommand):
                 parent = self.parentCache[parentId]
             else:
                 self.parentCache[parentId] = parent
+
+            if (parent.type == HierarchicalGeoData.HierarchicalGeoDataType.City):
+                values.append(parent.name_genitive)
             values.append(parent.name)
             obj = parent
         values.reverse()
@@ -58,7 +61,8 @@ class Command(BaseCommand):
                           HierarchicalGeoData.HierarchicalGeoDataType.Municipality,
                           HierarchicalGeoData.HierarchicalGeoDataType.CivilParish,
                           HierarchicalGeoData.HierarchicalGeoDataType.City,
-                          HierarchicalGeoData.HierarchicalGeoDataType.Street])
+                          u"City_genitive",
+                          HierarchicalGeoData.HierarchicalGeoDataType.Street,])
 
         allIds = HierarchicalGeoData.objects.values_list('id', flat = True).order_by('id')
         count = 0

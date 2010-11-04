@@ -41,7 +41,7 @@ class ltGeoDataSources:
 
 class Command(BaseCommand):
     args = '<>'
-    help = """Prints contents of queue"""
+    help = """Imports data from csv files into HierarchicalGeoData table. This is only used to scan register center web page"""
     def __init__(self):
         self.localCache = {}
 
