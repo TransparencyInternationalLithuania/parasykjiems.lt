@@ -100,24 +100,6 @@ def searchInStreetIndex(query_string):
     return result
 
 
-def removeGenericPartFromStreet(street):
-    endings = [u"skersgatvis", u"kelias",
-               u"plentas", u"prospektas",
-               u"alėja", u"gatvė",
-                u"aikštė"]
-
-    for e in endings:
-        if street.endswith(e):
-            street = street.replace(e, u"")
-    return street
-
-def removeGenericPartFromMunicipality(municipality):
-    endings = [u"miesto savivaldybė"]
-
-    for e in endings:
-        if municipality.endswith(e):
-            municipality = municipality.replace(e, u"")
-    return municipality
 
 
 def addHouseNumberQuery(query, house_number):
