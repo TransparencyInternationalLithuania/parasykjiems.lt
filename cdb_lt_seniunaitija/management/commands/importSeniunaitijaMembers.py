@@ -11,12 +11,10 @@ import csv
 from pjutils.exc import ChainnedException
 from cdb_lt_seniunaitija.models import Seniunaitija, SeniunaitijaMember
 from cdb_lt_civilparish.management.commands.importCivilParishMembers import ImportCivilParishMemberException
+from cdb_lt_civilparish.management.commands.importCivilParish import readRow
 
 class ImportSeniunaitijaMemberException(ChainnedException):
     pass
-
-def toUnicode(str):
-    return unicode(str, 'utf-8')
 
 class SeniunaitijaMembersReader:
     def __init__(self, fileName):
@@ -25,17 +23,17 @@ class SeniunaitijaMembersReader:
     def ReadMembers(self):
         for row in self.dictReader:
             member = SeniunaitijaMember()
-            member.name = unicode(row["name"].strip(), 'utf-8')
-            member.surname = unicode(row["surname"].strip(), 'utf-8')
-            member.email = row["e-mail"]
-            member.phone = row["telephonenumber"]
-            member.homePhone = row["hometelephonenumber"]
-            member.role = row["pareigos"]
-            member.seniunaitijaStr = toUnicode(row["seniunaitija"].strip())
-            member.municipalityStr = toUnicode(row["municipality"].strip())
-            member.civilParishStr = toUnicode(row["townshipseniunija"].strip())
-            member.territoryStr = toUnicode(row["territorycoveredbyseniunaitija"].strip())
-            member.uniqueKey = int(row["uniquekeynotchangeable"])
+            member.name = readRow(row, "name")
+            member.surname = readRow(row, "surname")
+            member.email = readRow(row, "e-mail")
+            member.phone = readRow(row, "telephonenumber")
+            member.homePhone = readRow(row, "hometelephonenumber")
+            member.role = readRow(row, "pareigos")
+            member.seniunaitijaStr = readRow(row, "seniunaitija")
+            member.municipalityStr = readRow(row, "municipality")
+            member.civilParishStr = readRow(row, "townshipseniunija")
+            member.territoryStr = readRow(row, "territorycoveredbyseniunaitija")
+            member.uniqueKey = int(readRow(row, "uniquekeynotchangeable"))
             yield member
 
 class Command(BaseCommand):

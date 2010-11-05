@@ -506,7 +506,7 @@ class LithuanianConstituencyParser:
             return None
 
         # išrinktas pagal sąrašą means that MP does not have a constituency
-        if (lower.find("pagal sąrašą") > 0):
+        if (lower.find(u"pagal sąrašą") > 0):
             return None
         nr = lower.find("nr")
         if (nr < 0):

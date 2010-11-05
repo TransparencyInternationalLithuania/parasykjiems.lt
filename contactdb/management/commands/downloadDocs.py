@@ -117,10 +117,10 @@ class GoogleDocUpdater:
 
 
 
-""" Downloads a google doc, and saves it to a file as csv file.
-You can use some of the helper methods defined in the same package instead of using this class directly"""
-@deprecated
 class GoogleDocDownloader:
+    """ Downloads a google doc, and saves it to a file as csv file.
+    You can use some of the helper methods defined in the same package instead of using this class directly"""
+
     def __init__(self):
         self.client = SpreadSheetClient(GlobalSettings.GOOGLE_DOCS_USER, GlobalSettings.GOOGLE_DOCS_PASSWORD)
 
@@ -128,7 +128,7 @@ class GoogleDocDownloader:
         """ creates a new DictWriter object from row object. Writes header row"""
         fieldNames = [k for k in row.iterkeys()]
 
-        writer = csv.DictWriter(open(fileName, "wb"), fieldNames, delimiter = "\t")
+        writer = csv.DictWriter(open(fileName, "wb"), fieldNames, delimiter = ImportSources.Delimiter)
 
         headers = dict( (n,n) for n in fieldNames )
         writer.writerow(headers)
@@ -163,9 +163,9 @@ class GoogleDocDownloader:
 def downloadDoc(login, docName, fileName):
     """ Uses GoogleDocDownloader inside to actually download a google doc and save it to file
     as csv"""
-    document = GoogleDocsDocument(login, docName)
-    document.downloadDocument(fileName)
-    #GoogleDocDownloader().downloadDoc(docName, fileName)
+    #document = GoogleDocsDocument(login, docName)
+    #document.downloadDocument(fileName)
+    GoogleDocDownloader().downloadDoc(docName, fileName)
 
 
 

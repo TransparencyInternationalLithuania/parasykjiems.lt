@@ -110,7 +110,7 @@ class Command(BaseCommand):
             commands.append("ltGeoDataClearData")
             commands.append(("ltGeoDataImportRC", {"url" : url, "max-depth" : 99}))
             exportOptions = {"file" : name}
-            if (len(location) >= 2):
+            if (len(location) >= 3):
                 exportOptions["city"] = location[2]
             commands.append(("ltGeoDataExportCsv", exportOptions))
 

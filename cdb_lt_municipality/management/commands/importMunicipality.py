@@ -11,6 +11,7 @@ import csv
 from pjutils.exc import ChainnedException
 from cdb_lt_municipality.models import Municipality
 from pjutils.timemeasurement import TimeMeasurer
+from cdb_lt_civilparish.management.commands.importCivilParish import readRow
 
 class ImportMunicipalityMemberException(ChainnedException):
     pass
@@ -27,14 +28,14 @@ class Command(BaseCommand):
         ImportSources.EsnureExists(ImportSources.LithuanianMunicipalities)
         elapsedTime = TimeMeasurer()
 
-        self.dictReader = csv.DictReader(open(fileName, "rt"), delimiter = "\t")
+        self.dictReader = csv.DictReader(open(fileName, "rt"), delimiter = ImportSources.Delimiter)
 
         self.count = 0
 
         for row in self.dictReader:
             self.count += 1
-            id = int(unicode(row["id"].strip(), 'utf-8'))
-            municipality = unicode(row["municipality"].strip(), 'utf-8')
+            id = int(readRow(row, "id"))
+            municipality = readRow(row, "municipality")
 
             municipalities = Municipality()
             municipalities.id = id

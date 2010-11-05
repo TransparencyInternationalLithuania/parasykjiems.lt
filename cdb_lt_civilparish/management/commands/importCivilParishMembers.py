@@ -11,6 +11,7 @@ import csv
 from pjutils.exc import ChainnedException
 import logging
 from cdb_lt_civilparish.models import CivilParishMember, CivilParish
+from cdb_lt_civilparish.management.commands.importCivilParish import readRow
 
 logger = logging.getLogger(__name__)
 
@@ -28,15 +29,15 @@ class CivilParishMembersReader:
     def ReadMembers(self):
         for row in self.dictReader:
             member = CivilParishMember()
-            member.name = unicode(row["name"].strip(), 'utf-8')
-            member.surname = unicode(row["surname"].strip(), 'utf-8')
+            member.name = readRow(row, "name")
+            member.surname = readRow(row, "surname")
             #member.email = row["e-mail"]
-            member.personalPhone = row["personaltelephonenumber"].strip()
-            member.officeEmail = row["officee-mail"].strip()
-            member.officePhone = row["officetelephonenumber"].strip()
-            member.officeAddress = row["officeaddress"].strip()
-            member.civilParishStr = unicode(row["institution"].strip(), 'utf-8')
-            member.uniqueKey = row["uniquekeynotchangeable"]
+            member.personalPhone = readRow(row, "personaltelephonenumber")
+            member.officeEmail = readRow(row, "officee-mail")
+            member.officePhone = readRow(row, "officetelephonenumber")
+            member.officeAddress = readRow(row, "officeaddress")
+            member.civilParishStr = readRow(row, "institution")
+            member.uniqueKey = readRow(row, "uniquekeynotchangeable")
 
             yield member
 

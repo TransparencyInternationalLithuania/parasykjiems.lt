@@ -13,6 +13,17 @@ from cdb_lt_municipality.models import MunicipalityMember, Municipality
 from pjutils.timemeasurement import TimeMeasurer
 from cdb_lt_civilparish.models import CivilParish
 
+def readRow(row, key):
+    if (row.has_key(key) == False):
+        for p in row.iterkeys():
+            print p
+        row[key].strip()
+    val = row[key]
+    if (val is None):
+        return u""
+    return unicode(val.strip(), 'utf-8')
+
+
 class Command(BaseCommand):
     args = '<>'
     help = 'Imports into database all Lithuanian CivilParish members / seniūnai'
@@ -25,15 +36,16 @@ class Command(BaseCommand):
         ImportSources.EsnureExists(ImportSources.LithuanianCivilParishes)
         elapsedTime = TimeMeasurer()
 
-        self.dictReader = csv.DictReader(open(fileName, "rt"), delimiter = "\t")
+        self.dictReader = csv.DictReader(open(fileName, "rt"), delimiter = ImportSources.Delimiter)
 
         self.count = 0
 
         for row in self.dictReader:
             self.count += 1
-            id = int(unicode(row["id"].strip(), 'utf-8'))
-            municipalityStr = unicode(row["municipality"].strip(), 'utf-8')
-            civilParishStr = unicode(row["civilparish"].strip(), 'utf-8')
+
+            id = int(readRow(row, "id"))
+            municipalityStr = readRow(row, "municipality")
+            civilParishStr = readRow(row, "civilparish")
 
             if (civilParishStr == u""):
                 continue

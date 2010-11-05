@@ -10,6 +10,7 @@ import os
 import csv
 from pjutils.exc import ChainnedException
 from cdb_lt_municipality.models import MunicipalityMember, Municipality
+from cdb_lt_civilparish.management.commands.importCivilParish import readRow
 
 class ImportMunicipalityMemberException(ChainnedException):
     pass
@@ -23,16 +24,16 @@ class MunicipalityMembersReader:
     def ReadMembers(self):
         for row in self.dictReader:
             member = MunicipalityMember()
-            member.name = unicode(row["name"].strip(), 'utf-8')
-            member.surname = unicode(row["surname"].strip(), 'utf-8')
-            member.email = row["e-mail"]
-            member.email2 = row["e-mail2"]
-            member.phone = row["telephonenumber"].strip()
-            member.phone2 = row["telephonenumber2"].strip()
-            member.mobilePhone = row["mobilenumber"].strip()
-            member.address = row["address"].strip()
-            member.municipalityStr = unicode(row["municipality"].strip(), 'utf-8')
-            member.uniqueKey = row["uniquekeynotchangeable"]
+            member.name = readRow(row, "name")
+            member.surname = readRow(row, "surname")
+            member.email = readRow(row, "e-mail")
+            member.email2 = readRow(row, "e-mail2")
+            member.phone = readRow(row, "telephonenumber")
+            member.phone2 = readRow(row, "telephonenumber2")
+            member.mobilePhone = readRow(row, "mobilenumber")
+            member.address = readRow(row, "address")
+            member.municipalityStr = readRow(row, "municipality")
+            member.uniqueKey = readRow(row, "uniquekeynotchangeable")
             yield member
 
 class Command(BaseCommand):

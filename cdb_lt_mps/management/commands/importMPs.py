@@ -8,6 +8,7 @@ import logging
 from cdb_lt_mps.models import ParliamentMember, Constituency
 from cdb_lt_mps.parseConstituencies import LithuanianConstituencyParser
 import csv
+from cdb_lt_civilparish.management.commands.importCivilParish import readRow
 
 logger = logging.getLogger(__name__)
 
@@ -23,14 +24,12 @@ class LithuanianMPsReader:
         parser = LithuanianConstituencyParser()
 
         for row in self.dictReader:
-
-
             member = ParliamentMember()
-            member.constituency = parser.ExtractConstituencyFromMPsFile(row["electoraldistrict"])
-            member.name = unicode(row["name"], 'utf-8')
-            member.surname = unicode(row["surname"], 'utf-8')
-            member.email = row["e-mail"]
-            member.uniqueKey = row["uniquekeynotchangeable"]
+            member.constituency = parser.ExtractConstituencyFromMPsFile(readRow(row, "electoraldistrict"))
+            member.name = readRow(row, "name")
+            member.surname = readRow(row,"surname")
+            member.email = readRow(row, "e-mail")
+            member.uniqueKey = readRow(row, "uniquekeynotchangeable")
 
             yield member
 
