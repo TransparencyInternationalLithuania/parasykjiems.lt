@@ -8,6 +8,7 @@ from cdb_lt_streets.management.commands.ltGeoDataImportCsv import ltGeoDataSourc
 from pjutils.timemeasurement import TimeMeasurer
 from cdb_lt_civilparish.models import CivilParish, CivilParishStreet
 from pjutils.exc import ChainnedException
+from cdb_lt_civilparish.management.commands.importCivilParish import readRow
 
 class CivilParishNotFound(ChainnedException):
     pass
@@ -49,16 +50,16 @@ class Command(BaseCommand):
     def importFile(self, fileName):
         print u"Import street index data from csv file %s" % fileName
 
-        self.dictReader = csv.DictReader(open(fileName, "rt"), delimiter = "\t")
+        self.dictReader = csv.DictReader(open(fileName, "rt"), delimiter = ImportSources.Delimiter)
 
         for row in self.dictReader:
-            id = unicode(row["id"].strip(), 'utf-8')
-            country = unicode(row["country"].strip(), 'utf-8')
-            county = unicode(row["county"].strip(), 'utf-8')
-            municipality = unicode(row["municipality"].strip(), 'utf-8')
-            civilParish = unicode(row["civilparish"].strip(), 'utf-8')
-            city = unicode(row["city"].strip(), 'utf-8')
-            street = unicode(row["street"].strip(), 'utf-8')
+            id = readRow(row, "id")
+            country = readRow(row, "country")
+            county = readRow(row, "county")
+            municipality = readRow(row, "municipality")
+            civilParish = readRow(row, "civilparish")
+            city = readRow(row, "city")
+            street = readRow(row, "street")
 
             if (civilParish == u""):
                 continue

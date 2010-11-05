@@ -14,6 +14,8 @@ from pjutils.timemeasurement import TimeMeasurer
 from cdb_lt_civilparish.models import CivilParish
 
 def readRow(row, key):
+    key = key.lower()
+    key = key.replace("_", "")
     if (row.has_key(key) == False):
         for p in row.iterkeys():
             print p
