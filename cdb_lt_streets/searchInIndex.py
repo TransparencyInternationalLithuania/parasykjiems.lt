@@ -23,6 +23,8 @@ shortMunicipalityEndings = [u"m. sav."]
 allMunicipalityEndings = wholeMunicipalityEndings + shortMunicipalityEndings
 
 def removeGenericPartFromStreet(street):
+    if (street is None):
+        return ""
     for e in allStreetEndings:
         if street.endswith(e):
             street = street.replace(e, u"")
