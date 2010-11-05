@@ -23,16 +23,16 @@ class ltGeoDataSources:
                                    ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Kaunas City", os.path.join(commonPath, "cdb_lt_street_index_Kaunas_city.csv"))]
 
     commonIndexes = [
-                    ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Alytaus apskr.", os.path.join(commonPath, "cdb_lt_street_index_alytus.csv")),
-                    ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Kauno apskr.", os.path.join(commonPath, "cdb_lt_street_index_kaunas.csv")),
-                    ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Klaipėdos apskr.", os.path.join(commonPath, "cdb_lt_street_index_klaipeda.csv")),
-                    ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Marijampolės apskr.", os.path.join(commonPath, "cdb_lt_street_index_marijampole.csv")),
-                    ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Panevėžio apskr.", os.path.join(commonPath, "cdb_lt_street_index_panevezys.csv")),
-                    ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Šiaulių apskr.", os.path.join(commonPath, "cdb_lt_street_index_siauliai.csv")),
-                    ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Tauragės apskr.", os.path.join(commonPath, "cdb_lt_street_index_taurge.csv")),
-                    ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Telšių apskr.", os.path.join(commonPath, "cdb_lt_street_index_telsiai.csv")),
-                    ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Utenos apskr.", os.path.join(commonPath, "cdb_lt_street_index_utena.csv")),
-                    ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Vilniaus apskr.", os.path.join(commonPath, "cdb_lt_street_index_vilnius.csv"))
+                    ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Alytaus apskr.", os.path.join(commonPath, "cdb_lt_street_index_alytaus_apskritis.csv")),
+                    ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Kauno apskr.", os.path.join(commonPath, "cdb_lt_street_index_kaunas_apskritis.csv")),
+                    ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Klaipėdos apskr.", os.path.join(commonPath, "cdb_lt_street_index_klaipeda_apskritis.csv")),
+                    ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Marijampolės apskr.", os.path.join(commonPath, "cdb_lt_street_index_marijampole_apskritis.csv")),
+                    ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Panevėžio apskr.", os.path.join(commonPath, "cdb_lt_street_index_panevezys_apskritis.csv")),
+                    ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Šiaulių apskr.", os.path.join(commonPath, "cdb_lt_street_index_siauliai_apskritis.csv")),
+                    ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Tauragės apskr.", os.path.join(commonPath, "cdb_lt_street_index_taurge_apskritis.csv")),
+                    ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Telšių apskr.", os.path.join(commonPath, "cdb_lt_street_index_telsiai_apskritis.csv")),
+                    ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Utenos apskr.", os.path.join(commonPath, "cdb_lt_street_index_utena_apskritis.csv")),
+                    ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Vilniaus apskr.", os.path.join(commonPath, "cdb_lt_street_index_vilnius_apskritis.csv"))
     ]
 
     """ A list of document for importing streets for civil parishes"""

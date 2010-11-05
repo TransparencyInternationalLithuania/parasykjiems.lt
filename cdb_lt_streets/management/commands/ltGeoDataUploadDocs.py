@@ -24,6 +24,8 @@ class Command(BaseCommand):
 
         l = zip(ltGeoDataSources.LithuanianStreetIndexes, RegisterCenterPageLocations.AllData)
 
+        fromNumber = 0
+        toNumber = None
         if (len(args) >= 1):
             fromNumber, toNumber = ExtractRange(args[0])
         if (toNumber is None):

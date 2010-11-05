@@ -69,6 +69,8 @@ class Command(BaseCommand):
 
         timeMeasurer = TimeMeasurer()
 
+        fromNumber = 0
+        toNumber = None
         if (len(args) >= 1):
             fromNumber, toNumber = ExtractRange(args[0])
         if (toNumber is None):
@@ -105,8 +107,8 @@ class Command(BaseCommand):
             url = location[0]
             name = location[1]
             commands.append("ltGeoDataClearQueue")
-            #commands.append("ltGeoDataClearData")
-            #commands.append(("ltGeoDataImportRC", {"url" : url, "max-depth" : 99}))
+            commands.append("ltGeoDataClearData")
+            commands.append(("ltGeoDataImportRC", {"url" : url, "max-depth" : 99}))
             exportOptions = {"file" : name}
             if (len(location) >= 2):
                 exportOptions["city"] = location[2]
