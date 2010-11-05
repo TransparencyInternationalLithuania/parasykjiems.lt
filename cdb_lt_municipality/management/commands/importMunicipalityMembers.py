@@ -17,7 +17,7 @@ class ImportMunicipalityMemberException(ChainnedException):
 
 class MunicipalityMembersReader:
     def __init__(self, fileName):
-        self.dictReader = csv.DictReader(open(fileName, "rt"), delimiter = "\t")
+        self.dictReader = csv.DictReader(open(fileName, "rt"), delimiter = ImportSources.Delimiter)
 
 
     def ReadMembers(self):

@@ -8,6 +8,8 @@ from pjutils.timemeasurement import TimeMeasurer
 from parasykjiems.FeatureBroker.configs import defaultConfig
 from cdb_lt_streets.LTRegisterCenter.mqbroker import LTRegisterQueue
 from cdb_lt_streets.models import HierarchicalGeoData
+from distutils import dir_util
+import os
 
 
 class Command(BaseCommand):
@@ -43,7 +45,8 @@ class Command(BaseCommand):
         return values
 
     def writeToFile(self, values):
-        valuesStr = "%s\t%s" % (values[0], u"\t".join(values[1:]))
+        delimiter = u", "
+        valuesStr = "%s%s%s" % (values[0], delimiter, delimiter.join(values[1:]))
         valuesStr = valuesStr.encode('UTF-8')
         self.file.write(valuesStr)
         self.file.write("\n")
@@ -53,6 +56,8 @@ class Command(BaseCommand):
         elapsedTime = TimeMeasurer()
         fileName = options['file']
         print "Writing contents to %s" % fileName
+
+        dir_util.mkpath(os.path.dirname(fileName))
         self.file = open(fileName, 'w')
 
         self.writeToFile([u"Id",
@@ -81,6 +86,8 @@ class Command(BaseCommand):
             for pv in parent_values:
                 finalValues.append(pv)
             finalValues.append(obj.name)
+            if (obj.type == HierarchicalGeoData.HierarchicalGeoDataType.City):
+                finalValues.append(obj.name_genitive)
             self.writeToFile(finalValues)
 
         self.file.close()

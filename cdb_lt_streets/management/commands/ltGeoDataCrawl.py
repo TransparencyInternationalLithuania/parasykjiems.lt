@@ -7,21 +7,25 @@ from pjutils.timemeasurement import TimeMeasurer
 import types
 import time
 from contactdb.management.commands.importAll import ExecManagementCommand
+import os
 
 class RegisterCenterPageLocations:
-    alytaus = ("http://www.registrucentras.lt/adr/p/index.php?aps_id=1", "Alytaus apskritis")
-    kauno = ("http://www.registrucentras.lt/adr/p/index.php?aps_id=41","Kauno apskritis")
-    klaipedos = ("http://www.registrucentras.lt/adr/p/index.php?aps_id=111","Klaipedos apskritis")
-    marijampoles = ("http://www.registrucentras.lt/adr/p/index.php?aps_id=161","Marijampoles apskritis")
-    panevezio = ("http://www.registrucentras.lt/adr/p/index.php?aps_id=204","Panevezio apskritis")
-    siauliu = ("http://www.registrucentras.lt/adr/p/index.php?aps_id=258","Siauliu apskritis")
-    taurages = ("http://www.registrucentras.lt/adr/p/index.php?aps_id=322","Taurages apskritis")
-    telsiu = ("http://www.registrucentras.lt/adr/p/index.php?aps_id=358","Telsių apskritis")
-    utenos = ("http://www.registrucentras.lt/adr/p/index.php?aps_id=392","Utenos apskritis")
-    vilniaus = ("http://www.registrucentras.lt/adr/p/index.php?aps_id=460","Vilniaus apskritis")
+    fileType = ".csv"
+    commonPath = os.path.join("contactdb", "sources", "register center", "municipalities")
 
-    vilniusStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=1", "city_Vilnius")
-    kaunasStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=6", "city_Kaunas")
+    alytaus = ("http://www.registrucentras.lt/adr/p/index.php?aps_id=1", os.path.join(commonPath, "Alytaus apskritis%s" % fileType))
+    kauno = ("http://www.registrucentras.lt/adr/p/index.php?aps_id=41", os.path.join(commonPath, "Kauno apskritis%s" % fileType))
+    klaipedos = ("http://www.registrucentras.lt/adr/p/index.php?aps_id=111", os.path.join(commonPath, "Klaipedos apskritis%s" % fileType))
+    marijampoles = ("http://www.registrucentras.lt/adr/p/index.php?aps_id=161", os.path.join(commonPath, "Marijampoles apskritis%s" % fileType))
+    panevezio = ("http://www.registrucentras.lt/adr/p/index.php?aps_id=204", os.path.join(commonPath, "Panevezio apskritis%s" % fileType))
+    siauliu = ("http://www.registrucentras.lt/adr/p/index.php?aps_id=258", os.path.join(commonPath, "Siauliu apskritis%s" % fileType))
+    taurages = ("http://www.registrucentras.lt/adr/p/index.php?aps_id=322", os.path.join(commonPath, "Taurages apskritis%s" % fileType))
+    telsiu = ("http://www.registrucentras.lt/adr/p/index.php?aps_id=358", os.path.join(commonPath, "Telsių apskritis%s" % fileType))
+    utenos = ("http://www.registrucentras.lt/adr/p/index.php?aps_id=392", os.path.join(commonPath, "Utenos apskritis%s" % fileType))
+    vilniaus = ("http://www.registrucentras.lt/adr/p/index.php?aps_id=460", os.path.join(commonPath, "Vilniaus apskritis%s" % fileType))
+
+    vilniusStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=1", os.path.join(commonPath, "city_Vilnius%s" % fileType))
+    kaunasStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=6", os.path.join(commonPath, "city_Kaunas%s" % fileType))
 
     allStreets = [vilniusStreets,
                 kaunasStreets]
@@ -84,11 +88,10 @@ class Command(BaseCommand):
 
         for location in list:
             url, name = location
-            name = name.replace(" ", "")
-            commands.append("ltGeoDataClearData")
             commands.append("ltGeoDataClearQueue")
-            commands.append(("ltGeoDataImportRC", {"url" : url, "max-depth" : 99}))
-            commands.append(("ltGeoDataExportCsv", {"file" : "%s.csv" % (name)}))
+            #commands.append("ltGeoDataClearData")
+            #commands.append(("ltGeoDataImportRC", {"url" : url, "max-depth" : 99}))
+            commands.append(("ltGeoDataExportCsv", {"file" : name}))
 
 
 

@@ -20,7 +20,7 @@ def toUnicode(str):
 
 class SeniunaitijaMembersReader:
     def __init__(self, fileName):
-        self.dictReader = csv.DictReader(open(fileName, "rt"), delimiter = "\t")
+        self.dictReader = csv.DictReader(open(fileName, "rt"), delimiter = ImportSources.Delimiter)
 
     def ReadMembers(self):
         for row in self.dictReader:

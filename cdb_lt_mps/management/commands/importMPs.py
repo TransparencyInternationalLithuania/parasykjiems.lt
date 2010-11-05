@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 class LithuanianMPsReader:
     def __init__(self, fileName):
-        self.dictReader = csv.DictReader(open(fileName, "rt"), delimiter = "\t")
+        self.dictReader = csv.DictReader(open(fileName, "rt"), delimiter = ImportSources.Delimiter)
 
 
     def ReadParliamentMembers(self):

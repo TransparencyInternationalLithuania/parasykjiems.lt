@@ -13,13 +13,16 @@ class ImportSourceNotExistsException(ChainnedException):
     pass
 
 class ImportSources:
+    Delimiter = ","
+#delimiter = "\t"
+
     LithuanianConstituencies = os.path.join("contactdb", "sources", "apygardos.txt")
-    LithuanianMPs = os.path.join("contactdb", "sources", "parliament members.tsv")
-    LithuanianCivilParishMembers = os.path.join("contactdb", "sources", "LithuanianCivilParishMembers.tsv")
-    LithuanianMunicipalityMembers = os.path.join("contactdb", "sources", "LithuanianMunicipalityMembers.tsv")
-    LithuanianSeniunaitijaMembers  = os.path.join("contactdb", "sources", "LithuanianSeniunaitijaMembers.tsv")
-    LithuanianMunicipalities  = os.path.join("contactdb", "sources", "LithuanianMunicipalities.tsv")
-    LithuanianCivilParishes  = os.path.join("contactdb", "sources", "LithuanianCivilParishes.tsv")
+    LithuanianMPs = os.path.join("contactdb", "sources", "parliament members.csv")
+    LithuanianCivilParishMembers = os.path.join("contactdb", "sources", "LithuanianCivilParishMembers.csv")
+    LithuanianMunicipalityMembers = os.path.join("contactdb", "sources", "LithuanianMunicipalityMembers.csv")
+    LithuanianSeniunaitijaMembers  = os.path.join("contactdb", "sources", "LithuanianSeniunaitijaMembers.csv")
+    LithuanianMunicipalities  = os.path.join("contactdb", "sources", "LithuanianMunicipalities.csv")
+    LithuanianCivilParishes  = os.path.join("contactdb", "sources", "LithuanianCivilParishes.csv")
 
     @classmethod
     def EsnureExists(clas, importSource, downloadCommand = "downloadDocs"):
