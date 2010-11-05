@@ -12,6 +12,9 @@ from optparse import make_option
 from cdb_lt_streets.LTRegisterCenter.webparser import RegisterCenterParser, LTGeoDataHierarchy
 from cdb_lt_streets.LTRegisterCenter.mqbroker import LTRegisterQueue
 from cdb_lt_streets.models import HierarchicalGeoData
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class LTGeoDataImportException(ChainnedException):

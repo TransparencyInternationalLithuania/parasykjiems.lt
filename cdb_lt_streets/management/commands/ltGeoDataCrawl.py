@@ -8,6 +8,9 @@ import types
 import time
 from contactdb.management.commands.importAll import ExecManagementCommand
 import os
+import logging
+
+logger = logging.getLogger(__name__)
 
 class RegisterCenterPageLocations:
     fileType = ".csv"
@@ -24,8 +27,9 @@ class RegisterCenterPageLocations:
     utenos = ("http://www.registrucentras.lt/adr/p/index.php?aps_id=392", os.path.join(commonPath, "Utenos apskritis%s" % fileType))
     vilniaus = ("http://www.registrucentras.lt/adr/p/index.php?aps_id=460", os.path.join(commonPath, "Vilniaus apskritis%s" % fileType))
 
-    vilniusStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=1", os.path.join(commonPath, "city_Vilnius%s" % fileType))
-    kaunasStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=6", os.path.join(commonPath, "city_Kaunas%s" % fileType))
+    # third option is the nominative form of City. This will be passed also as param --city when calling ltGeoDataExportCsv
+    vilniusStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=1", os.path.join(commonPath, "city_Vilnius%s" % fileType), "Vilnius")
+    kaunasStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=6", os.path.join(commonPath, "city_Kaunas%s" % fileType), "Kaunas")
 
     allStreets = [vilniusStreets,
                 kaunasStreets]
@@ -43,6 +47,18 @@ class RegisterCenterPageLocations:
 
     AllData = AllDistricts + allStreets
 
+def ExtractRange(args):
+    fromNumber = 0
+    toNumber = None
+    parts = args.strip("[]").split(":")
+    if (len(parts) >= 1):
+        if (parts[0].strip() != u""):
+            fromNumber = int(parts[0])
+    if (len(parts) >= 2):
+        if (parts[1].strip() != u""):
+            toNumber = int(parts[1])
+    return fromNumber, toNumber
+
 
 class Command(BaseCommand):
     args = '<>'
@@ -53,17 +69,11 @@ class Command(BaseCommand):
 
         timeMeasurer = TimeMeasurer()
 
-        fromNumber = 0
-        toNumber = len(RegisterCenterPageLocations.AllData)
-
         if (len(args) >= 1):
-            parts = args[0].strip("[]").split(":")
-            if (len(parts) >= 1):
-                if (parts[0].strip() != u""):
-                    fromNumber = int(parts[0])
-            if (len(parts) >= 2):
-                if (parts[1].strip() != u""):
-                    toNumber = int(parts[1])
+            fromNumber, toNumber = ExtractRange(args[0])
+        if (toNumber is None):
+            toNumber = len(RegisterCenterPageLocations.AllData)
+
 
         print "Will crawl from %s to %s source " % (fromNumber, toNumber)
 
@@ -73,8 +83,13 @@ class Command(BaseCommand):
         print "Following pages will be parsed:"
         num = 0
         for i in list:
-            url, name = i
-            print "%s-%s  %s" % (num, name, url)
+            # a weird way to unpack values
+            url = i[0]
+            name = i[1]
+            city = u""
+            if (len(i) >= 3):
+                city = i[2]
+            print "%s-%s  %s %s" % (num, name, url, city)
             num += 1
 
 
@@ -87,11 +102,15 @@ class Command(BaseCommand):
         commands = []
 
         for location in list:
-            url, name = location
+            url = location[0]
+            name = location[1]
             commands.append("ltGeoDataClearQueue")
-            commands.append("ltGeoDataClearData")
-            commands.append(("ltGeoDataImportRC", {"url" : url, "max-depth" : 99}))
-            commands.append(("ltGeoDataExportCsv", {"file" : name}))
+            #commands.append("ltGeoDataClearData")
+            #commands.append(("ltGeoDataImportRC", {"url" : url, "max-depth" : 99}))
+            exportOptions = {"file" : name}
+            if (len(location) >= 2):
+                exportOptions["city"] = location[2]
+            commands.append(("ltGeoDataExportCsv", exportOptions))
 
 
 
