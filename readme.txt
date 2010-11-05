@@ -18,30 +18,22 @@ Installing the Google Data Library:
 http://code.google.com/apis/documents/code.html
 http://code.google.com/apis/documents/docs/3.0/developers_guide_python.html
 
-# install enum library
-pip install enum
-
 
 # Solr and django-haystack (http://haystacksearch.org/) are required. Solr also requires pysolr library.
 If you prefer not Solr, but some other search engine, read here: http://docs.haystacksearch.org/dev/installing_search_engines.html
 
 
 2. Available commands
-
-# prints a list of first 5 Lithuanian countries. 
-manage.py printCounties 5 
-
 # runs all tests
 manage.py test 
-
-# runs only tests for contactdb app
-manage.py test contactdb
 
 # runs an embedded web server
 manage.py runserver
 
-# cleans all database from contact data
-manage.py clearcontactDB
+# cleans all database from contact data. This does not clean data enetered by users
+manage.py clearAll
+
+
 
 3. Creating a database with mysql
 Connect as root
@@ -57,6 +49,9 @@ issue manage.py syncdb to populate database with tables
 # creates database
 manage.py syncdb
 
+# download lithuanian data from google docs 
+manage.py ltGeoDataDownloadDocs
+
 # downloads data from google docs to be ready for import:
 manage.py downloadDocs
 
@@ -65,6 +60,8 @@ manage.py importInitial
 
 # imports other data, which can be updated quite often (even daily)
 manage.py importAll
+
+# after running thse four commands you should have your database ready. just call manage.py runserver and use browser :)
 
 5. Help and bug fixes
 If you have any problems setting up the project, or get unexpected exsceptions, dont hesistate to report everything at http://bitbucket.org/dariusdamalakas/parasykjiems
