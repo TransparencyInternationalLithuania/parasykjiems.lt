@@ -13,6 +13,14 @@ class TestAddressDeducer(TestCase):
     def setUp(self):
         pass
 
+    def testGedimino_NoCity(self):
+        """ basic test"""
+        address = deduceAddress(u"Gedimino pr. 9")
+        self.assertEqual(u"9", address.number)
+        self.assertEqual(u"Gedimino pr.", address.street)
+        self.assertEqual(u"", address.city)
+        self.assertEqual(u"", address.municipality)
+
     def testGedimino(self):
         """ basic test"""
         address = deduceAddress(u"Gedimino pr. 9, Vilnius")
