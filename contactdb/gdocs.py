@@ -1,5 +1,6 @@
 import logging
 from pjutils.deprecated import deprecated
+import os
 
 try:
   from xml.etree import ElementTree
@@ -17,6 +18,7 @@ logger = logging.getLogger(__name__)
 import gdata.docs.data
 import gdata.docs.client
 import gdata.spreadsheet.service
+from distutils import dir_util
 
 class SpreadSheetUpdater:
     def __init__(self, spreadSheetClient):
@@ -88,6 +90,7 @@ class GoogleDocsDocument():
 
     def downloadDocument(self, fileName):
         logger.info('Downloading spreadsheet to %s...' % fileName)
+        dir_util.mkpath(os.path.dirname(fileName))
         self.gdocsLogin.UseSpreadSheetToken()
         self.gdocsLogin.client.Export(self.entry, fileName, gid=0)
         self.gdocsLogin.UseDocsToken()
