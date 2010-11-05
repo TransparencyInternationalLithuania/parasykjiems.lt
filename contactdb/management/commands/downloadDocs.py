@@ -165,6 +165,7 @@ def downloadDoc(login, docName, fileName):
     as csv"""
     #document = GoogleDocsDocument(login, docName)
     #document.downloadDocument(fileName)
+    dir_util.mkpath(os.path.dirname(fileName))
     GoogleDocDownloader().downloadDoc(docName, fileName)
 
 
