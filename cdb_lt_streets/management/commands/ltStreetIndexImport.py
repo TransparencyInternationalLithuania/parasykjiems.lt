@@ -71,21 +71,27 @@ class Command(BaseCommand):
             print u"inserting at %s rows per second (total sec: %d, rows: %d)" % (rate, seconds, self.count)
             print u"processing at %s rows per second (total sec: %d, rows: %d)" % (rateProcessing, seconds, self.processedRecords)
 
+    def readUnicode(self, str):
+        if (str is None):
+            return u""
+        return unicode(str.strip(), 'utf-8')
+
     @transaction.commit_on_success
     def importFile(self, fileName):
         print u"Import street index data from csv file %s" % fileName
 
-        self.dictReader = csv.DictReader(open(fileName, "rt"), delimiter = "\t")
+
+        self.dictReader = csv.DictReader(open(fileName, "rt"), delimiter = ImportSources.Delimiter)
 
         for row in self.dictReader:
-            id = unicode(row["id"].strip(), 'utf-8')
-            country = unicode(row["country"].strip(), 'utf-8')
-            county = unicode(row["county"].strip(), 'utf-8')
-            municipality = unicode(row["municipality"].strip(), 'utf-8')
-            civilParish = unicode(row["civilparish"].strip(), 'utf-8')
-            city = unicode(row["city"].strip(), 'utf-8')
-            city_genitive = unicode(row["city_genitive"].strip(), 'utf-8')
-            street = unicode(row["street"].strip(), 'utf-8')
+            id = unicode(row["Id"].strip(), 'utf-8')
+            country = self.readUnicode(row["Country"])
+            county = self.readUnicode(row["County"])
+            municipality =self.readUnicode(row["Municipality"])
+            civilParish = self.readUnicode(row["CivilParish"])
+            city = self.readUnicode(row["City"])
+            city_genitive = self.readUnicode(row["City_genitive"])
+            street = self.readUnicode(row["Street"])
 
             self.createIfNotNull(street, city, municipality, city_genitive = city_genitive)
 
