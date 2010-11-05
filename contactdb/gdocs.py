@@ -1,6 +1,7 @@
 import logging
 from pjutils.deprecated import deprecated
 import os
+from pjutils.exc import ChainnedException
 
 try:
   from xml.etree import ElementTree
@@ -66,7 +67,8 @@ class GoogleDocsLogin():
     def UseDocsToken(self):
         self.client.auth_token = self.docs_token  # reset the DocList auth token
 
-
+class GoogleDocNotFound(ChainnedException):
+    pass
 
 
 class GoogleDocsDocument():
@@ -75,7 +77,11 @@ class GoogleDocsDocument():
         self.entry = None
         uri = '/feeds/default/private/full?title=%s&title-exact=true&max-results=5' % documentTitle
         feed = self.gdocsLogin.client.GetDocList(uri=uri)
-        self.entry = feed.entry[0]
+        try:
+            self.entry = feed.entry[0]
+        except IndexError:
+            raise GoogleDocNotFound("Google document with title '%s' was not found. Double check that such document realy exist. Maybe you forgot to create it?" % documentTitle )
+
         msg = u"Selected document '%s'" %  self.entry.title.text
         logger.info(msg)
 
