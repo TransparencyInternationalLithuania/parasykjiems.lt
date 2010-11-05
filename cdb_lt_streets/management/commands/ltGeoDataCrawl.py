@@ -89,8 +89,8 @@ class Command(BaseCommand):
         for location in list:
             url, name = location
             commands.append("ltGeoDataClearQueue")
-            #commands.append("ltGeoDataClearData")
-            #commands.append(("ltGeoDataImportRC", {"url" : url, "max-depth" : 99}))
+            commands.append("ltGeoDataClearData")
+            commands.append(("ltGeoDataImportRC", {"url" : url, "max-depth" : 99}))
             commands.append(("ltGeoDataExportCsv", {"file" : name}))
 
 
