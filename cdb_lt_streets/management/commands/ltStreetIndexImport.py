@@ -13,6 +13,7 @@ import csv
 from pjutils.uniconsole import *
 from cdb_lt_streets.management.commands.ltGeoDataImportCsv import ltGeoDataSources
 from datetime import datetime
+from cdb_lt_civilparish.management.commands.importCivilParish import readRow
 
 class Command(BaseCommand):
     args = '<>'
@@ -71,11 +72,6 @@ class Command(BaseCommand):
             print u"inserting at %s rows per second (total sec: %d, rows: %d)" % (rate, seconds, self.count)
             print u"processing at %s rows per second (total sec: %d, rows: %d)" % (rateProcessing, seconds, self.processedRecords)
 
-    def readUnicode(self, str):
-        if (str is None):
-            return u""
-        return unicode(str.strip(), 'utf-8')
-
     @transaction.commit_on_success
     def importFile(self, fileName):
         print u"Import street index data from csv file %s" % fileName
@@ -84,14 +80,14 @@ class Command(BaseCommand):
         self.dictReader = csv.DictReader(open(fileName, "rt"), delimiter = ImportSources.Delimiter)
 
         for row in self.dictReader:
-            id = unicode(row["Id"].strip(), 'utf-8')
-            country = self.readUnicode(row["Country"])
-            county = self.readUnicode(row["County"])
-            municipality =self.readUnicode(row["Municipality"])
-            civilParish = self.readUnicode(row["CivilParish"])
-            city = self.readUnicode(row["City"])
-            city_genitive = self.readUnicode(row["City_genitive"])
-            street = self.readUnicode(row["Street"])
+            id = readRow(row, "Id")
+            country = readRow(row, "Country")
+            county = readRow(row, "County")
+            municipality = readRow(row, "Municipality")
+            civilParish = readRow(row, "CivilParish")
+            city = readRow(row, "City")
+            city_genitive = readRow(row, "City_genitive")
+            street = readRow(row, "Street")
 
             self.createIfNotNull(street, city, municipality, city_genitive = city_genitive)
 
