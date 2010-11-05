@@ -10,7 +10,7 @@ from django.conf.urls.defaults import *
 from django.contrib import admin
 admin.autodiscover()
 
-sentenceRegExp = u"[a-zA-Z0-9ąčęėįšųūž_ \.]+"
+sentenceRegExp = u"[a-zA-Z0-9ąčęėįšųūžĄČĘĖĮŠŲŪŽ_ \.]+"
 
 urlpatterns = patterns('parasykjiems.pjweb.views',
     # Example:
