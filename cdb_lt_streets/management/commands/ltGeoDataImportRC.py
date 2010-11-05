@@ -186,7 +186,7 @@ class Command(BaseCommand):
         # usually you will want to set it to lower values, such as 0.5 (a url fetch in every 2 seconds)
         # or extremely slow 0.1 (in 10 seconds only 1 page fetch)
         # or maximum 2 (2 messages per second).
-        throttleMessagesPerSecond = 1
+        throttleMessagesPerSecond = 2
         if (len(args) > 0):
             throttleMessagesPerSecond = float(args[0])
 

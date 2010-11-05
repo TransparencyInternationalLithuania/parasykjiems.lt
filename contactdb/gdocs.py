@@ -1,4 +1,5 @@
 import logging
+from pjutils.deprecated import deprecated
 
 try:
   from xml.etree import ElementTree
@@ -15,6 +16,7 @@ import string
 logger = logging.getLogger(__name__)
 import gdata.docs.data
 import gdata.docs.client
+import gdata.spreadsheet.service
 
 class SpreadSheetUpdater:
     def __init__(self, spreadSheetClient):
@@ -38,12 +40,31 @@ class SpreadSheetUpdater:
 
 class GoogleDocsLogin():
     def __init__(self, username, passw):
+        self.username = username
+        self.passw = passw
+        self.spreadsheets_client = None
+
         logger.info("Logging into google docs")
         self.client = gdata.docs.client.DocsClient(source='ManoValstybe-Para6ykjiems-v.0.0.1')
         self.client.ssl = True  # Force all API requests through HTTPS
         self.client.http_client.debug = True  # Set to True for debugging HTTP requests
         self.client.ClientLogin(username, passw, self.client.source)
         logger.info("Logged in into google docs")
+
+    def UseSpreadSheetToken(self):
+        if (self.spreadsheets_client is None):
+            self.spreadsheets_client = gdata.spreadsheet.service.SpreadsheetsService(source='ManoValstybe-Para6ykjiems-v.0.0.1')
+            self.spreadsheets_client.ClientLogin(self.username, self.passw, self.client.source)
+
+        # substitute the spreadsheets token into our client
+        self.docs_token = self.client.auth_token
+        self.client.auth_token = gdata.gauth.ClientLoginToken(self.spreadsheets_client.GetClientLoginToken())
+
+
+    def UseDocsToken(self):
+        self.client.auth_token = self.docs_token  # reset the DocList auth token
+
+
 
 
 class GoogleDocsDocument():
@@ -65,9 +86,16 @@ class GoogleDocsDocument():
         logger.info(msg)
 
 
+    def downloadDocument(self, fileName):
+        logger.info('Downloading spreadsheet to %s...' % fileName)
+        self.gdocsLogin.UseSpreadSheetToken()
+        self.gdocsLogin.client.Export(self.entry, fileName, gid=0)
+        self.gdocsLogin.UseDocsToken()
+        logger.info('ok')
 
 
 
+@deprecated
 class SpreadSheetClient:
     """ A class to connect to Google docs and download spreadsheet document
     To download a doc you first need to know an email and password for that email.

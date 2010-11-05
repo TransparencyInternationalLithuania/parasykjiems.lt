@@ -8,9 +8,12 @@ from contactdb.imp import GoogleDocsSources, ImportSources
 import os
 from cdb_lt_streets.management.commands.ltGeoDataImportCsv import ltGeoDataSources
 import gdata
+from pjutils.deprecated import deprecated
+from pjutils.timemeasurement import TimeMeasurer
 
 logger = logging.getLogger(__name__)
 
+@deprecated
 class SpreadSheetDiffUploader:
 
     def __init__(self, docName, fileName):
@@ -82,7 +85,7 @@ class SpreadSheetDiffUploader:
                 updater.UpdateRow(i, self.dictReader[i])
 
 
-
+@deprecated
 class GoogleDocDeleter:
     def __init__(self, docName, fileName):
         logger.debug("logging in to GDocs")
@@ -91,7 +94,7 @@ class GoogleDocDeleter:
         doc = None
         self.client.gd_client.Delete(doc)
 
-
+@deprecated
 class GoogleDocUploader:
     def __init__(self, docName, fileName):
         logger.debug("logging in to GDocs")
@@ -103,6 +106,7 @@ class GoogleDocUploader:
         entry = self.client.gd_client.Upload('/path/to/your/test.doc', 'MyDocTitle', content_type='application/msword')
         logger.info('Document now accessible online at: %s' % entry.GetAlternateLink().href)
 
+@deprecated
 class GoogleDocUpdater:
     def __init__(self, docName, fileName):
         ms = gdata.data.MediaSource(file_path=fileName, content_type='application/msword')
@@ -115,6 +119,7 @@ class GoogleDocUpdater:
 
 """ Downloads a google doc, and saves it to a file as csv file.
 You can use some of the helper methods defined in the same package instead of using this class directly"""
+@deprecated
 class GoogleDocDownloader:
     def __init__(self):
         self.client = SpreadSheetClient(GlobalSettings.GOOGLE_DOCS_USER, GlobalSettings.GOOGLE_DOCS_PASSWORD)
@@ -155,10 +160,12 @@ class GoogleDocDownloader:
 
 
 
-def downloadDoc(docName, fileName):
+def downloadDoc(login, docName, fileName):
     """ Uses GoogleDocDownloader inside to actually download a google doc and save it to file
     as csv"""
-    GoogleDocDownloader().downloadDoc(docName, fileName)
+    document = GoogleDocsDocument(login, docName)
+    document.downloadDocument(fileName)
+    #GoogleDocDownloader().downloadDoc(docName, fileName)
 
 
 
@@ -169,10 +176,12 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         """ Downloads documents as csv (tab-delimited) files from google docs"""
-        downloadDoc(GoogleDocsSources.LithuanianMPs, ImportSources.LithuanianMPs)
-        downloadDoc(GoogleDocsSources.LithuanianMPs, ImportSources.LithuanianMPs)
-        downloadDoc(GoogleDocsSources.LithuanianCivilParishMembers, ImportSources.LithuanianCivilParishMembers)
-        downloadDoc(GoogleDocsSources.LithuanianMunicipalityMembers, ImportSources.LithuanianMunicipalityMembers)
-        downloadDoc(GoogleDocsSources.LithuanianSeniunaitijaMembers, ImportSources.LithuanianSeniunaitijaMembers)
-        downloadDoc(GoogleDocsSources.LithuanianMunicipalities, ImportSources.LithuanianMunicipalities)
-        downloadDoc(GoogleDocsSources.LithuanianCivilParishes, ImportSources.LithuanianCivilParishes)
+        elapsedTime = TimeMeasurer()
+        login = GoogleDocsLogin(GlobalSettings.GOOGLE_DOCS_USER, GlobalSettings.GOOGLE_DOCS_PASSWORD)
+        downloadDoc(login, GoogleDocsSources.LithuanianMPs, ImportSources.LithuanianMPs)
+        downloadDoc(login, GoogleDocsSources.LithuanianCivilParishMembers, ImportSources.LithuanianCivilParishMembers)
+        downloadDoc(login, GoogleDocsSources.LithuanianMunicipalityMembers, ImportSources.LithuanianMunicipalityMembers)
+        downloadDoc(login, GoogleDocsSources.LithuanianSeniunaitijaMembers, ImportSources.LithuanianSeniunaitijaMembers)
+        downloadDoc(login, GoogleDocsSources.LithuanianMunicipalities, ImportSources.LithuanianMunicipalities)
+        downloadDoc(login, GoogleDocsSources.LithuanianCivilParishes, ImportSources.LithuanianCivilParishes)
+        print u"Took %s seconds" % elapsedTime.ElapsedSeconds()

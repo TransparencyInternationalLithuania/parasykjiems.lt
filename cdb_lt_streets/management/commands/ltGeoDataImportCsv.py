@@ -16,21 +16,24 @@ from pjutils.uniconsole import *
 class ltGeoDataSources:
 
 
+    commonPath = os.path.join("contactdb", "sources", "street indexes")
 
 
+    lithuanianAdditionalStreets = [("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Vilnius City", os.path.join(commonPath, "cdb_lt_street_index_Vilnius_city.csv")),
+                                   ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Kaunas City", os.path.join(commonPath, "cdb_lt_street_index_Kaunas_city.csv"))]
 
-    lithuanianAdditionalStreets = [("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Vilnius City", os.path.join("contactdb", "sources", "cdb_lt_street_index_Vilnius_city.csv"))]
-
-    commonIndexes = [("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Telšių apskr.", os.path.join("contactdb", "sources", "cdb_lt_street_index_telsiai.csv")),
-                            ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Panevėžio apskr.", os.path.join("contactdb", "sources", "cdb_lt_street_index_panevezys.csv")),
-                            ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Vilniaus apskr.", os.path.join("contactdb", "sources", "cdb_lt_street_index_vilnius.csv")),
-                            ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Utenos apskr.", os.path.join("contactdb", "sources", "cdb_lt_street_index_utena.csv")),
-                            ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Tauragės apskr.", os.path.join("contactdb", "sources", "cdb_lt_street_index_taurge.csv")),
-                            ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Šiaulių apskr.", os.path.join("contactdb", "sources", "cdb_lt_street_index_siauliai.csv")),
-                            ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Marijampolės apskr.", os.path.join("contactdb", "sources", "cdb_lt_street_index_marijampole.csv")),
-                            ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Klaipėdos apskr.", os.path.join("contactdb", "sources", "cdb_lt_street_index_klaipeda.csv")),
-                            ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Kauno apskr.", os.path.join("contactdb", "sources", "cdb_lt_street_index_kaunas.csv")),
-                            ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Alytaus apskr.", os.path.join("contactdb", "sources", "cdb_lt_street_index_alytus.csv"))]
+    commonIndexes = [
+                    ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Alytaus apskr.", os.path.join(commonPath, "cdb_lt_street_index_alytus.csv")),
+                    ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Kauno apskr.", os.path.join(commonPath, "cdb_lt_street_index_kaunas.csv")),
+                    ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Klaipėdos apskr.", os.path.join(commonPath, "cdb_lt_street_index_klaipeda.csv")),
+                    ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Marijampolės apskr.", os.path.join(commonPath, "cdb_lt_street_index_marijampole.csv")),
+                    ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Panevėžio apskr.", os.path.join(commonPath, "cdb_lt_street_index_panevezys.csv")),
+                    ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Šiaulių apskr.", os.path.join(commonPath, "cdb_lt_street_index_siauliai.csv")),
+                    ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Tauragės apskr.", os.path.join(commonPath, "cdb_lt_street_index_taurge.csv")),
+                    ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Telšių apskr.", os.path.join(commonPath, "cdb_lt_street_index_telsiai.csv")),
+                    ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Utenos apskr.", os.path.join(commonPath, "cdb_lt_street_index_utena.csv")),
+                    ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Vilniaus apskr.", os.path.join(commonPath, "cdb_lt_street_index_vilnius.csv"))
+    ]
 
     """ A list of document for importing streets for civil parishes"""
     CivilParishIndexes = commonIndexes
