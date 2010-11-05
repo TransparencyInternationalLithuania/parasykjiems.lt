@@ -78,8 +78,10 @@ def searchInStreetIndex(query_string):
         f.number = number
         if (f.number is not None):
             iri = "/pjweb/choose_rep/%s/%s/%s/%s/" % (f.municipality, f.city, f.street, f.number)
-        else:
+        elif (f.street is not None and f.street != u""):
             iri = "/pjweb/choose_rep/%s/%s/%s/" % (f.municipality, f.city, f.street)
+        else:
+            iri = "/pjweb/choose_rep/%s/%s/" % (f.municipality, f.city)
         uri = iri_to_uri(iri)
         f.url = uri
 
