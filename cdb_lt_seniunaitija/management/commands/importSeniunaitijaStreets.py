@@ -8,7 +8,6 @@ from pjutils.timemeasurement import TimeMeasurer
 import pjutils.uniconsole
 import os
 from pjutils.exc import ChainnedException
-from test.test_iterlen import len
 import logging
 import re
 from cdb_lt_seniunaitija.models import SeniunaitijaStreet, Seniunaitija
