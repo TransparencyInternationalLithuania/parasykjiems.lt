@@ -95,8 +95,16 @@ class GoogleDocsDocument():
 
 
     def downloadDocument(self, fileName):
+        """ this function downloads a file as csv file.
+        However, if the cells have new line symols, the csv file will not handle them correctly, i.e. there
+        will be line breaks in the csv file"""
+
         logger.info('Downloading spreadsheet to %s...' % fileName)
         dir_util.mkpath(os.path.dirname(fileName))
+        contents = self.gdocsLogin.client.GetFileContent(self.entry.GetAlternateLink().href)
+        for c in contents:
+            print c
+
         self.gdocsLogin.UseSpreadSheetToken()
         self.gdocsLogin.client.Export(self.entry, fileName, gid=0)
         self.gdocsLogin.UseDocsToken()

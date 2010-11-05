@@ -11,6 +11,7 @@ from pjutils.exc import ChainnedException
 from contactdb.imp import GoogleDocsSources, ImportSources
 import logging
 from cdb_lt_seniunaitija.models import Seniunaitija
+from cdb_lt_civilparish.management.commands.importCivilParish import readRow
 
 logger = logging.getLogger(__name__)
 
@@ -57,17 +58,17 @@ class Command(BaseCommand):
         parser = SeniunaitijaStreetParser()
 
         count = 0
-        self.dictReader = csv.DictReader(open(fileName, "rt"), delimiter = "\t")
+        self.dictReader = csv.DictReader(open(fileName, "rt"), delimiter = ImportSources.Delimiter)
 
         for row in self.dictReader:
             # i use class instance variables here on purpose. Might be tricky if the class grows too much,
             # but handy for now
 
-            self.seniunaitijaStr = unicode(row["seniunaitija"].strip(), 'utf-8')
-            self.civilParishStr = unicode(row["townshipseniunija"].strip(), 'utf-8')
-            streets = unicode(row["territorycoveredbyseniunaitija"].strip(), 'utf-8')
-            self.municipalityStr = unicode(row["municipality"].strip(), 'utf-8')
-            self.uniqueKey = int(row["uniquekeynotchangeable"].strip())
+            self.seniunaitijaStr = readRow(row, "seniunaitija")
+            self.civilParishStr = readRow(row, "townshipseniunija")
+            streets = readRow(row, "territorycoveredbyseniunaitija")
+            self.municipalityStr = readRow(row, "municipality")
+            self.uniqueKey = int(readRow(row, "uniquekeynotchangeable"))
 
 
             # skip empty entries
