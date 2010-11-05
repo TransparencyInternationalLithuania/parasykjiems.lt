@@ -1,12 +1,14 @@
 from django.core.management.base import BaseCommand
 from django.db import transaction
-from contactdb.gdocs import SpreadSheetClient, SpreadSheetUpdater
+from contactdb.gdocs import SpreadSheetClient, SpreadSheetUpdater, GoogleDocsLogin, GoogleDocsDocument
 from settings import *
 import csv
 import pjutils.uniconsole
 from contactdb.imp import GoogleDocsSources, ImportSources
 import os
 from cdb_lt_streets.management.commands.ltGeoDataImportCsv import ltGeoDataSources
+import gdata
+
 logger = logging.getLogger(__name__)
 
 class SpreadSheetDiffUploader:
@@ -81,7 +83,31 @@ class SpreadSheetDiffUploader:
 
 
 
+class GoogleDocDeleter:
+    def __init__(self, docName, fileName):
+        logger.debug("logging in to GDocs")
+        self.client = SpreadSheetClient(GlobalSettings.GOOGLE_DOCS_USER, GlobalSettings.GOOGLE_DOCS_PASSWORD)
+        self.client.SelectSpreadsheet(docName)
+        doc = None
+        self.client.gd_client.Delete(doc)
 
+
+class GoogleDocUploader:
+    def __init__(self, docName, fileName):
+        logger.debug("logging in to GDocs")
+        self.client = SpreadSheetClient(GlobalSettings.GOOGLE_DOCS_USER, GlobalSettings.GOOGLE_DOCS_PASSWORD)
+        self.client.SelectSpreadsheet(docName)
+        self.client.SelectWorksheet(0)
+        logger.debug("logged into GDocs")
+
+        entry = self.client.gd_client.Upload('/path/to/your/test.doc', 'MyDocTitle', content_type='application/msword')
+        logger.info('Document now accessible online at: %s' % entry.GetAlternateLink().href)
+
+class GoogleDocUpdater:
+    def __init__(self, docName, fileName):
+        ms = gdata.data.MediaSource(file_path=fileName, content_type='application/msword')
+        self.client = SpreadSheetClient(GlobalSettings.GOOGLE_DOCS_USER, GlobalSettings.GOOGLE_DOCS_PASSWORD)
+        updated_entry = self.client.Update(self.entry, media_source=ms)
 
 
 
@@ -141,21 +167,8 @@ class Command(BaseCommand):
     args = '<>'
     help = 'Download a google docs document to specific location'
 
-
-
-
     def handle(self, *args, **options):
         """ Downloads documents as csv (tab-delimited) files from google docs"""
-        allRecords = os.getcwd()
-
-
-
-
-
-        docName = ltGeoDataSources.commonIndexes[0]
-        SpreadSheetDiffUploader(docName[0], docName[1])
-
-        """
         downloadDoc(GoogleDocsSources.LithuanianMPs, ImportSources.LithuanianMPs)
         downloadDoc(GoogleDocsSources.LithuanianMPs, ImportSources.LithuanianMPs)
         downloadDoc(GoogleDocsSources.LithuanianCivilParishMembers, ImportSources.LithuanianCivilParishMembers)
@@ -163,6 +176,3 @@ class Command(BaseCommand):
         downloadDoc(GoogleDocsSources.LithuanianSeniunaitijaMembers, ImportSources.LithuanianSeniunaitijaMembers)
         downloadDoc(GoogleDocsSources.LithuanianMunicipalities, ImportSources.LithuanianMunicipalities)
         downloadDoc(GoogleDocsSources.LithuanianCivilParishes, ImportSources.LithuanianCivilParishes)
-
-
-        """

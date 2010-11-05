@@ -13,7 +13,8 @@ import getopt
 import sys
 import string
 logger = logging.getLogger(__name__)
-
+import gdata.docs.data
+import gdata.docs.client
 
 class SpreadSheetUpdater:
     def __init__(self, spreadSheetClient):
@@ -33,6 +34,38 @@ class SpreadSheetUpdater:
 
     def DeleteRow(self, i):
         self.gd_client.DeleteRow(self.feed.entry[i])
+
+
+class GoogleDocsLogin():
+    def __init__(self, username, passw):
+        logger.info("Logging into google docs")
+        self.client = gdata.docs.client.DocsClient(source='ManoValstybe-Para6ykjiems-v.0.0.1')
+        self.client.ssl = True  # Force all API requests through HTTPS
+        self.client.http_client.debug = True  # Set to True for debugging HTTP requests
+        self.client.ClientLogin(username, passw, self.client.source)
+        logger.info("Logged in into google docs")
+
+
+class GoogleDocsDocument():
+    def __init__(self, gdocsLogin, documentTitle):
+        self.gdocsLogin = gdocsLogin
+        self.entry = None
+        uri = '/feeds/default/private/full?title=%s&title-exact=true&max-results=5' % documentTitle
+        feed = self.gdocsLogin.client.GetDocList(uri=uri)
+        self.entry = feed.entry[0]
+        msg = u"Selected document '%s'" %  self.entry.title.text
+        logger.info(msg)
+
+    def replaceContents(self, fileName):
+        ms = gdata.data.MediaSource(file_path=fileName, content_type='text/csv')
+        #self.entry.title.text = 'updated document'
+
+        self.gdocsLogin.client.Update(self.entry, media_source=ms)
+        msg = u"Document '%s' contents changed" % (self.entry.title.text)
+        logger.info(msg)
+
+
+
 
 
 class SpreadSheetClient:
