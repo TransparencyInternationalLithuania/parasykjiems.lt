@@ -118,7 +118,8 @@ class AddressDeducer():
             i1 += 1
             i += 1
         returnList.append(current)
-        returnList.append(parts[i + 1])
+        if (len(parts) > i + 1):
+            returnList.append(parts[i + 1])
         rest = u" ".join(parts[i + 2:])
         rest = rest.strip()
         returnList.append(rest)
