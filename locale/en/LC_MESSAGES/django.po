@@ -1,0 +1,315 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-10-08 15:02+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: settings_local.py:21
+msgid "Lithuanian"
+msgstr ""
+
+#: settings_local.py:22
+msgid "English"
+msgstr ""
+
+#: contactdb/models.py:11
+msgid "Phone field"
+msgstr ""
+
+#: contactdb/models.py:18
+msgid "A person name field"
+msgstr ""
+
+#: pjweb/admin.py:7
+msgid "Recipient"
+msgstr ""
+
+#: pjweb/admin.py:8
+msgid "Sender Information"
+msgstr ""
+
+#: pjweb/admin.py:9
+msgid "Message"
+msgstr ""
+
+#: pjweb/forms.py:28
+msgid "Private"
+msgstr ""
+
+#: pjweb/forms.py:29
+msgid "Public"
+msgstr ""
+
+#: pjweb/views.py:111
+msgid ""
+"No addressess were found. Please refine your search. Or use feedback form to "
+"inform us about missing address"
+msgstr ""
+
+#: pjweb/views.py:233
+#, python-format
+msgid "%(name)s %(surname)s email cannot be found in database."
+msgstr ""
+
+#: pjweb/views.py:279
+#, python-format
+msgid ""
+"Problem occurred. Your Email to %(name)s %(surname)s has not been sent. "
+"Please try again later."
+msgstr ""
+
+#: pjweb/views.py:399
+msgid ""
+"\n"
+"If You want to response, click this link:"
+msgstr ""
+
+#: pjweb/views.py:406 pjweb/views.py:455
+msgid "Thank you. Your message has been sent."
+msgstr ""
+
+#: pjweb/views.py:500
+msgid "Thank you. Your response has been posted."
+msgstr ""
+
+#: pjweb/widgets.py:22
+#, python-format
+msgid "Please be polite! Letter with %s in it will not be sent."
+msgstr ""
+
+#: pjweb/widgets.py:23
+msgid "and"
+msgstr ""
+
+#: pjweb/widgets.py:30
+msgid "There should be numbers in phone number."
+msgstr ""
+
+#: templates/404.html:14 templates/500.html:14 templates/pjweb/base.html:15
+#: templates/pjweb/thanks.html:10
+msgid "About project"
+msgstr ""
+
+#: templates/404.html:15 templates/500.html:15 templates/pjweb/base.html:16
+msgid "List of all public mails"
+msgstr ""
+
+#: templates/500.html:24
+msgid "Error was sent to developers."
+msgstr ""
+
+#: templates/admin/base_site.html:4
+msgid "Django site admin"
+msgstr ""
+
+#: templates/admin/base_site.html:7
+msgid "Parašyk jiems lt administration"
+msgstr ""
+
+#: templates/pjweb/about.html:6
+msgid "This site is for people to contact with their representatives."
+msgstr ""
+
+#: templates/pjweb/base.html:14
+msgid "ParašykJiems - Fast method to find representatives and contact them."
+msgstr ""
+
+#: templates/pjweb/base.html:20
+msgid "Find desired representative (will be found by address)"
+msgstr ""
+
+#: templates/pjweb/base.html:21
+msgid "Body of the message (you can write public or private mail)"
+msgstr ""
+
+#: templates/pjweb/base.html:22
+msgid "Preview and send (check your spelling ;-))"
+msgstr ""
+
+#: templates/pjweb/base.html:26
+msgid "Have any notes, suggestions?"
+msgstr ""
+
+#: templates/pjweb/base.html:26
+msgid "Write to us"
+msgstr ""
+
+#: templates/pjweb/const.html:6
+msgid "Choose a representative, You want to write."
+msgstr ""
+
+#: templates/pjweb/const.html:7
+msgid "If You are not sure, read "
+msgstr ""
+
+#: templates/pjweb/const.html:7
+msgid "tips"
+msgstr ""
+
+#: templates/pjweb/const.html:16 templates/pjweb/const.html.py:21
+msgid "Member of parliament"
+msgstr ""
+
+#: templates/pjweb/const.html:22
+msgid "Responsible for everything"
+msgstr ""
+
+#: templates/pjweb/const.html:24 templates/pjweb/const.html.py:46
+#: templates/pjweb/const.html:65 templates/pjweb/const.html.py:82
+msgid "Write a letter to"
+msgstr ""
+
+#: templates/pjweb/const.html:33 templates/pjweb/const.html.py:43
+msgid "Member of municipality"
+msgstr ""
+
+#: templates/pjweb/const.html:44
+msgid "Responsible for your municipality"
+msgstr ""
+
+#: templates/pjweb/const.html:56 templates/pjweb/const.html.py:62
+msgid "Member of civil parish"
+msgstr ""
+
+#: templates/pjweb/const.html:63
+msgid "Responsible for your civil parish"
+msgstr ""
+
+#: templates/pjweb/const.html:74
+msgid "Member of seniunaitija"
+msgstr ""
+
+#: templates/pjweb/const.html:79
+msgid "Member of seniūnaitija"
+msgstr ""
+
+#: templates/pjweb/const.html:80
+msgid "Responsible for your seniūnaitija"
+msgstr ""
+
+#: templates/pjweb/contact.html:6
+msgid "You are writing a letter to your representative. Be polite."
+msgstr ""
+
+#: templates/pjweb/contact.html:18
+msgid "Receiver:"
+msgstr ""
+
+#: templates/pjweb/contact.html:19
+msgid "Sender "
+msgstr ""
+
+#: templates/pjweb/contact.html:19
+msgid "(fields marked with asterisk are required)"
+msgstr ""
+
+#: templates/pjweb/contact.html:29
+msgid "Mail type:"
+msgstr ""
+
+#: templates/pjweb/contact.html:36
+msgid "Sender Name:"
+msgstr ""
+
+#: templates/pjweb/contact.html:43
+msgid "Your Email:"
+msgstr ""
+
+#: templates/pjweb/contact.html:50
+msgid "Phone Number:"
+msgstr ""
+
+#: templates/pjweb/error.html:5 templates/pjweb/no_email.html:5
+msgid "Go back"
+msgstr ""
+
+#: templates/pjweb/feedback.html:6
+msgid "Have any notes? Write to us!"
+msgstr ""
+
+#: templates/pjweb/feedback.html:9
+msgid ""
+"If address wasn't found in database, but you know, that it exists, write "
+"exact address, to which civil parish, polling district and municipality it "
+"belongs, and, if you can, specify polling district."
+msgstr ""
+
+#: templates/pjweb/feedback.html:10
+msgid ""
+"If your member of municipality, civil parish wasn't found, write his data: "
+"name, surname, phone, email, work address."
+msgstr ""
+
+#: templates/pjweb/index.html:6
+msgid "Enter Your Address for search:"
+msgstr ""
+
+#: templates/pjweb/index.html:9
+msgid "Eg.: Gedimino pr. 9, Vilnius"
+msgstr ""
+
+#: templates/pjweb/index.html:14
+msgid "Several addresses were found. Choose:"
+msgstr ""
+
+#: templates/pjweb/index.html:17
+msgid "Found Addresses for constituency"
+msgstr ""
+
+#: templates/pjweb/index.html:36
+msgid "here"
+msgstr ""
+
+#: templates/pjweb/preview.html:7
+msgid ""
+"You are writing public mail. It will be sent to addressee and displayed on "
+"site."
+msgstr ""
+
+#: templates/pjweb/preview.html:9
+msgid "You are writing private mail. It will be sent directly to addressee."
+msgstr ""
+
+#: templates/pjweb/preview.html:55
+msgid "Back to editing"
+msgstr ""
+
+#: templates/pjweb/private.html:5
+msgid "Click here, if you want to send private email"
+msgstr ""
+
+#: templates/pjweb/private.html:6
+msgid "Click here, if you want to send public email"
+msgstr ""
+
+#: templates/pjweb/public_mails.html:6
+msgid "Here you can see all public emails"
+msgstr ""
+
+#: templates/pjweb/response.html:6
+msgid "You are writing an answer to "
+msgstr ""
+
+#: templates/pjweb/thanks.html:6
+msgid "Letter was successfuly sent."
+msgstr ""
+
+#: templates/pjweb/thanks.html:8
+msgid "View list of all public messages"
+msgstr ""
+
+#: templates/pjweb/thanks.html:9
+msgid "Go back to home page"
+msgstr ""
