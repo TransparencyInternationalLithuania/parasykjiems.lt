@@ -11,6 +11,9 @@ if sys.platform in platforms:
         def __init__(self, fileobject):
             self.fileno= fileobject.fileno()
             self.softspace= False
+        def flush(self):
+            pass
+
         def write(self, text):
             if isinstance(text, unicode):
                 os.write(self.fileno, text.encode("utf_8"))
