@@ -16,17 +16,11 @@
 
       <tr><td><b>{% trans "Found Addresses for constituency" %}</b></td></tr>
       {% for found_entry in found_entries %}
-
-        {% if found_entry.constituency_id %}
-        <tr><td><a href="/pjweb/{{ found_entry.id }}/">
-        {% if found_entry.street %} {{ found_entry.street }} {{ house_no }}, {% endif %}
-        {% if found_entry.city %} {{ found_entry.city }}, {% endif %}
-        {% if found_entry.district %} {{ found_entry.district }}{% endif %}
-        </a></td></tr>
-        {% else %}
-        <tr><td><a href="/pjweb/{{ found_entry.object.id }}/">{{ found_entry.street }}</a></td></tr>
-        {% endif %}
-
+        <tr>
+            <td>
+                <a href="{{ found_entry.url }}">{{ found_entry.street }} {{ found_entry.number }}, {{ found_entry.city }}, {{ found_entry.municipality }}</a>
+            </td>
+        </tr>
       {% endfor %}
     </table>
   </div>

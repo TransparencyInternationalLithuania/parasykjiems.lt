@@ -11,7 +11,6 @@ from django.utils.translation import ugettext as _, ugettext_lazy, ungettext
 #from haystack.query import SearchQuerySet
 #from haystack.views import SearchView
 from django.core.mail import send_mail, EmailMessage
-from parasykjiems.contactdb.models import PollingDistrictStreet, Constituency, ParliamentMember, HierarchicalGeoData, MunicipalityMember, CivilParishMember, SeniunaitijaMember
 from parasykjiems.pjweb.models import Email
 from parasykjiems.pjweb.forms import *
 from pjutils.address_search import AddressSearch
@@ -22,6 +21,15 @@ import random
 from django.contrib.sites.models import Site
 from pjutils.uniconsole import *
 import datetime
+from cdb_lt_municipality.models import MunicipalityMember, Municipality
+from cdb_lt_mps.models import ParliamentMember, Constituency, PollingDistrictStreet
+from cdb_lt_civilparish.models import CivilParishMember, CivilParishStreet
+from cdb_lt_seniunaitija.models import SeniunaitijaMember, SeniunaitijaStreet
+from cdb_lt_streets.models import HierarchicalGeoData, LithuanianStreetIndexes
+from django.db.models.query_utils import Q, Q
+from django.utils.encoding import iri_to_uri
+from pjutils.deprecated import deprecated
+from cdb_lt_streets.searchInIndex import searchInIndex, deduceAddress, removeGenericPartFromStreet, removeGenericPartFromMunicipality
 
 logger = logging.getLogger(__name__)
 
@@ -51,64 +59,39 @@ def get_rep(rep_id, rtype):
 
     return receiver[0]
 
-def get_pollingstreet(query_string):
-    a_s = AddressSearch()
-    found_entries = None
+
+
+
+def searchInStreetIndex(query_string):
+    """ Searches throught street index and returns municipality / city / street/ house number
+    Additionally returns more data for rendering in template"""
+
+    logger.debug("query_string %s" % query_string)
     found_geodata = None
-    house_no = ''
-    entry_query = ''
-    entry_query1 = ''
     not_found = ''
-    apt_no = 0
-    qery_list = re.split(r'[ ,]', query_string)
-    print qery_list
-    for string in qery_list:
-        numbered = re.split(r'[-_\\/]', string)
-        number = numbered[0]
-        if len(numbered)>1:
-            if numbered[1].isdigit():
-                apt_no = 1
-            else:
-                apt_no = 2
 
-        if apt_no==1:
-            if number.isdigit():
-                house_no = number
-                qery_list.remove(string)
-            elif number[:-1].isdigit():
-                house_no = number[:-1]
-                qery_list.remove(string)
-        elif apt_no==0:
-            if number.isdigit():
-                house_no = number
-                qery_list.remove(string)
-            elif number[:-1].isdigit():
-                house_no = number[:-1]
-                qery_list.remove(string)
+    addressContext = deduceAddress(query_string)
+    found_entries = searchInIndex(addressContext)
 
-    query_string = ' '.join(qery_list)
+    # attach house numbers
+    number = None
+    if (len(addressContext.number) > 0):
+        number = addressContext.number[0]
+    for f in found_entries:
+        f.number = number
+        if (f.number is not None):
+            iri = "/pjweb/choose_rep/%s/%s/%s/%s/" % (f.municipality, f.city, f.street, f.number)
+        elif (f.street is not None and f.street != u""):
+            iri = "/pjweb/choose_rep/%s/%s/%s/" % (f.municipality, f.city, f.street)
+        else:
+            iri = "/pjweb/choose_rep/%s/%s/" % (f.municipality, f.city)
+        uri = iri_to_uri(iri)
+        f.url = uri
 
-    entry_query = a_s.get_query(query_string, ['street', 'city', 'district'])
 
-    found_entries = PollingDistrictStreet.objects.filter(entry_query).order_by('street')
-
-    if house_no and len(found_entries)>1:
-
-        addr_ids = []
-        for found_entry in found_entries:
-            has_number = False
-            if found_entry.numberFrom and found_entry.numberTo:
-                if is_odd(int(house_no)) and found_entry.numberOdd:
-                    has_number = found_entry.numberFrom <= int(house_no) <= found_entry.numberTo
-                elif not(is_odd(int(house_no))) and not(found_entry.numberOdd):
-                    has_number = found_entry.numberFrom <= int(house_no) <= found_entry.numberTo
-            elif found_entry.numberFrom and not(found_entry.numberTo):
-                has_number = found_entry.numberFrom==int(house_no)
-
-            if has_number:
-                addr_ids.append(found_entry.id)
-
-        found_entries = PollingDistrictStreet.objects.filter(id__in=addr_ids).order_by('street')
+    for e in found_entries:
+        print "%s %s %s %s %s" % (e.id, e.street, e.city, e.municipality, e.number)
+    print "len %s " % len(found_entries)
 
     if not found_entries:
         found_entries = {}
@@ -118,10 +101,140 @@ def get_pollingstreet(query_string):
         'found_entries': found_entries,
         'found_geodata': found_geodata,
         'not_found': not_found,
-        'house_no': house_no,
     }
     return result
 
+
+
+
+def addHouseNumberQuery(query, house_number):
+    """ if house number is a numeric, add special conditions to check
+    if house number is matched"""
+    if (house_number is None):
+        return query
+    if (house_number.isdigit() == False):
+        return query
+
+    # convert to integer
+    house_number = int(house_number)
+    isOdd = house_number % 2
+    query = query.filter(numberFrom__lte = house_number ) \
+        .filter(numberTo__gte = house_number) \
+        .filter(numberOdd = isOdd)
+    return query
+
+
+
+
+def findMPs(municipality = None, city = None, street = None, house_number = None):
+    street = removeGenericPartFromStreet(street)
+    municipality = removeGenericPartFromMunicipality(municipality)
+
+    try:
+        query = PollingDistrictStreet.objects.all().filter(municipality__contains = municipality)\
+            .filter(street__contains = street) \
+            .filter(city__contains = city)
+        query = addHouseNumberQuery(query, house_number)
+
+        query = query.distinct() \
+            .values('constituency')
+        idList = [p['constituency'] for p in query]
+    except PollingDistrictStreet.DoesNotExist:
+        logging.info("no polling district")
+        return []
+
+    members = ParliamentMember.objects.all().filter(constituency__in = idList)
+    return members
+
+def findMunicipalityMembers(municipality = None, city = None, street = None, house_number = None):
+
+    try:
+        query = Municipality.objects.all().filter(name__contains = municipality)
+
+        query = query.distinct() \
+            .values('id')
+        idList = [p['id'] for p in query]
+    except Municipality.DoesNotExist:
+        logging.info("no municipalities found")
+        return []
+
+    members = MunicipalityMember.objects.all().filter(municipality__in = idList)
+    return members
+
+def findCivilParishMembers(municipality = None, city = None, street = None, house_number = None):
+    street = removeGenericPartFromStreet(street)
+    municipality = removeGenericPartFromMunicipality(municipality)
+
+    try:
+        query = CivilParishStreet.objects.all().filter(municipality__contains = municipality)\
+            .filter(street__contains = street) \
+            .filter(city__contains = city)
+
+        query = query.distinct() \
+            .values('civilParish')
+        idList = [p['civilParish'] for p in query]
+    except CivilParishStreet.DoesNotExist:
+        logging.info("no civilParish")
+        return []
+
+    members = CivilParishMember.objects.all().filter(civilParish__in = idList)
+    return members
+
+
+def findSeniunaitijaMembers(municipality = None, city = None, street = None, house_number = None):
+    street = removeGenericPartFromStreet(street)
+    municipality = removeGenericPartFromMunicipality(municipality)
+
+    query = SeniunaitijaStreet.objects.all().filter(municipality__contains = municipality)\
+        .filter(street__contains = street) \
+        .filter(city__contains = city)
+    query = addHouseNumberQuery(query, house_number)
+
+    query = query.distinct().values('seniunaitija')
+    idList = [p['seniunaitija'] for p in query]
+
+    if (len(idList) == 0):
+        logging.debug("no seniunaitija street at first attempt")
+
+        query = SeniunaitijaStreet.objects.all().filter(municipality__contains = municipality)\
+            .filter(city__contains = city)
+
+
+        query = query.distinct().values('seniunaitija')
+        idList = [p['seniunaitija'] for p in query]
+
+    if (len(idList) == 0):
+        logging.debug("no seniunaitija street at second attempt")
+        return []
+
+
+    members = SeniunaitijaMember.objects.all().filter(seniunaitija__in = idList)
+    return members
+
+def choose_representative(request, municipality = None, city = None, street = None, house_number = None):
+    print "municipality %s" % municipality
+    print "city %s" % city
+    print "street %s" % street
+    print "house_number %s" % house_number
+
+    parliament_members = findMPs(municipality, city, street, house_number)
+    municipality_members = findMunicipalityMembers(municipality, city, street, house_number)
+    civilparish_members = findCivilParishMembers(municipality, city, street, house_number)
+    seniunaitija_members = findSeniunaitijaMembers(municipality, city, street, house_number)
+
+
+    return render_to_response('pjweb/const.html', {
+        'parliament_members': parliament_members,
+        'municipality_members': municipality_members,
+        'civilparish_members': civilparish_members,
+        'seniunaitija_members': seniunaitija_members,
+        'LANGUAGES': settings.LANGUAGES,
+        'step1': 'step1_active.png',
+        'step2': 'step2_inactive.png',
+        'step3': 'step3_inactive.png',
+    })
+
+@deprecated
 def get_civilparish(pd_id, constituency):
 
     district = constituency.district.split(' ')[0]
@@ -263,7 +376,6 @@ def index(request):
         'found_entries': None,
         'found_geodata': None,
         'not_found': '',
-        'house_no': '',
         }
     suggestion = ''
     lang = request.LANGUAGE_CODE
@@ -274,15 +386,13 @@ def index(request):
             entered = form.cleaned_data['address_input']
         else:
             query_string = ''
-        if query_string:
-            address = get_pollingstreet(query_string)
+        address = searchInStreetIndex(query_string)
     else:
         form = IndexForm()
 
     if address['found_entries'] and len(address['found_entries'])==1:
-        return HttpResponseRedirect('/pjweb/%s/' % (
-            address['found_entries'][0].id)
-        )
+        url = address['found_entries'][0].url
+        return HttpResponseRedirect(url)
     else:
         return render_to_response('pjweb/index.html', {
             'form': form,
@@ -290,7 +400,6 @@ def index(request):
             'lang_code': lang,
             'entered': query_string,
             'found_entries': address['found_entries'],
-            'house_no': address['house_no'],
             'found_geodata': address['found_geodata'],
             'not_found': address['not_found'],
             'step1': 'active-step',
@@ -363,6 +472,7 @@ def smtp_error(request, rtype, mp_id, private=None):
         'step3': 'active-step',
     })
 
+@deprecated
 def constituency(request, pd_id):
     constituency = PollingDistrictStreet.objects.filter(id__exact=pd_id)[0]
     constituency_id = constituency.constituency_id

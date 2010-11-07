@@ -4,7 +4,7 @@ from django.utils.translation import ugettext as _
 
 class MsgAdmin(admin.ModelAdmin):
     fieldsets = [
-        (_('Recipient'), {'fields': ['recipient']}),
+        (_('Recipient'), {'fields': ['recipient_name']}),
         (_('Sender Information'), {'fields': ['sender_name', 'sender']}),
         (_('Message'),            {'fields': ['phone', 'message', 'msg_state', 'public']}),
     ]

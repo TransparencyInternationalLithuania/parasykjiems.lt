@@ -1,5 +1,5 @@
 from FeatureBroker.FeatureBroker import *
-from contactdb.LTRegisterCenter.mqbroker import MQServer
+from pjutils.MessagingServer.MessagingServer import MQServer
 
 """ import this package to initialize FeatureBroker with default settings for ParasykJiems.lt project"""
 

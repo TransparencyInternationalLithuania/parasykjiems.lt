@@ -16,7 +16,7 @@ urlpatterns = patterns('',
 	(r'^pjweb/', include('parasykjiems.pjweb.urls')),
 	# Uncomment the next line to enable the admin:
 	(r'^admin/', include(admin.site.urls)),
-    (r'^search/', include('haystack.urls')),
+#    (r'^search/', include('haystack.urls')),
     (r'^static/(?P<path>.*)$', 'django.views.static.serve',
         {'document_root': settings.STATIC_DOC_ROOT}),
 )
