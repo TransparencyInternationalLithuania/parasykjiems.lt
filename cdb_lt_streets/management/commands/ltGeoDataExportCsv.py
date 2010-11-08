@@ -62,6 +62,7 @@ Also, the city name is only in genitive form, no nominative form. So when export
                 val = u""
             v.append(val)
         values = v
+        vstr = delimiter.join(values[1:4])
         valuesStr = u"%s%s%s" % (values[0], delimiter, delimiter.join(values[1:]))
         valuesStr = valuesStr.encode('UTF-8')
         self.file.write(valuesStr)
@@ -72,6 +73,7 @@ Also, the city name is only in genitive form, no nominative form. So when export
         elapsedTime = TimeMeasurer()
         fileName = options['file']
         self.city = options['city']
+        self.city = unicode(self.city, 'utf-8')
         self.cityMode = self.city is not None and self.city.strip() != ""
         logger.info("Writing contents to %s" % fileName)
         logger.info("using city mode: %s" % self.cityMode)
