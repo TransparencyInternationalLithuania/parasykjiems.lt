@@ -32,6 +32,12 @@ class Command(BaseCommand):
 Kaunas city streets are here: http://www.registrucentras.lt/adr/p/index.php?gyv_id=6    What is different is that it does not have a civil parish written
 in the location position, that is 'LIETUVOS RESPUBLIKA / Kauno apskr. / Kauno m. sav. / <this part is missing>/Kauno m.'
 Also, the city name is only in genitive form, no nominative form. So when exporting a civil parish will be empty, and city param will be a nominative form of city"""),
+        make_option('-i', '--insertCivilParish',
+            dest='insertCivilParish',
+            metavar="insertCivilParish",
+            default = "True",
+            help="""Used only in conjuction with --city option.  If this is True, then it is treated that a CivilParish is missing directly before city, and thus it will be
+inserterted as empty. If False, then this will not be inserted. See RegisterCenterPageLocations.allStreets variable to see which RegisterCenter page locations require this"""),
         )
 
     def __init__(self):
@@ -62,7 +68,6 @@ Also, the city name is only in genitive form, no nominative form. So when export
                 val = u""
             v.append(val)
         values = v
-        vstr = delimiter.join(values[1:4])
         valuesStr = u"%s%s%s" % (values[0], delimiter, delimiter.join(values[1:]))
         valuesStr = valuesStr.encode('UTF-8')
         self.file.write(valuesStr)
@@ -75,6 +80,8 @@ Also, the city name is only in genitive form, no nominative form. So when export
         self.city = options['city']
         self.city = unicode(self.city, 'utf-8')
         self.cityMode = self.city is not None and self.city.strip() != ""
+        self.insertCivilParish = options['insertCivilParish']
+
         logger.info("Writing contents to %s" % fileName)
         logger.info("using city mode: %s" % self.cityMode)
 
@@ -110,9 +117,16 @@ Also, the city name is only in genitive form, no nominative form. So when export
                 finalValues.append(pv)
             finalValues.append(obj.name)
 
-            if (self.cityMode):
-                finalValues.insert(len(finalValues) - 2, u"")
-                finalValues.insert(len(finalValues) -2, self.city)
+            if (self.cityMode == True):
+                if (self.insertCivilParish == True):
+                    finalValues.insert(len(finalValues) - 2, u"")
+
+                    # insert nominative form for city
+                    finalValues.insert(len(finalValues) -2, self.city)
+                else:
+                    # update city nominative form, if this is not insertCivilparishMode
+                    finalValues[len(finalValues) -2] = self.city
+
 
             if (self.cityMode == False):
                 if (obj.type == HierarchicalGeoData.HierarchicalGeoDataType.City):

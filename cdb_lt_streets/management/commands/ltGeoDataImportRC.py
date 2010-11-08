@@ -137,9 +137,15 @@ class Command(BaseCommand):
         # execute the query. Searching for parent with either text in nominative or genitive
         parentLocationObject = HierarchicalGeoData.FindByName(name = text_nominative, name_genitive=text_genitive, type = parentType)
         if (parentLocationObject is None):
-            print "parentType %s" % parentType
-            print "type %s" % type
-            raise LTGeoDataImportException("Could not find parent object by name %s and type %s" % (parentName, parentType) )
+            # if could not find, try again this time with searching for city name in genitive form, but with nominative value.
+            # this happens only in specific cases, for example when parsing only cities. In those cases database
+            # has only city name in genitive form, not in nominative. For example this url would
+            # otherwise fail to parse: http://www.registrucentras.lt/adr/p/index.php?gyv_id=82
+            parentLocationObject = HierarchicalGeoData.FindByName(name_genitive = text_nominative, type = parentType)
+            if (parentLocationObject is None):
+                print "parentType %s" % parentType
+                print "type %s" % type
+                raise LTGeoDataImportException("Could not find parent object by name %s and type %s" % (parentName, parentType) )
 
         for link in page.links:
             locationInDB = HierarchicalGeoData.FindByName(name = link.text, name_genitive=link.text_genitive, parentName = parentName)

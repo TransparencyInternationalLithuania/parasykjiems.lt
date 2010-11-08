@@ -29,16 +29,16 @@ class RegisterCenterPageLocations:
 
     # third option is the nominative form of City. This will be passed also as param --city when calling ltGeoDataExportCsv
     commonStreetPath = os.path.join("contactdb", "sources", "register center", "streets")
-    vilniusStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=1", os.path.join(commonStreetPath, "city_Vilnius%s" % fileType), "Vilnius")
-    kaunasStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=6", os.path.join(commonStreetPath, "city_Kaunas%s" % fileType), "Kaunas")
-    alytusStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=2", os.path.join(commonStreetPath, "city_alytus%s" % fileType), "Alytus")
-    klaipedaStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=7", os.path.join(commonStreetPath, "city_klaipeda%s" % fileType), "Klaipėda")
-    marijampolesStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=5", os.path.join(commonStreetPath, "city_marijampole%s" % fileType), "Marijampolė")
-    panevezioStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=10", os.path.join(commonStreetPath, "city_panevezio%s" % fileType), "Panevėžys")
-    siauliuStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=11", os.path.join(commonStreetPath, "city_siauliu%s" % fileType), "Šiauliai")
-    taurageStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=82", os.path.join(commonStreetPath, "city_taurage%s" % fileType), "Tauragė")
-    telsiuStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=84", os.path.join(commonStreetPath, "city_telsiai%s" % fileType), "Telšiai")
-    utenaStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=93", os.path.join(commonStreetPath, "city_utena%s" % fileType), "Utena")
+    vilniusStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=1", os.path.join(commonStreetPath, "city_Vilnius%s" % fileType), {'city': "Vilnius"})
+    kaunasStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=6", os.path.join(commonStreetPath, "city_Kaunas%s" % fileType), {'city': "Kaunas"})
+    alytusStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=2", os.path.join(commonStreetPath, "city_alytus%s" % fileType), {'city': "Alytus"})
+    klaipedaStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=7", os.path.join(commonStreetPath, "city_klaipeda%s" % fileType), {'city': "Klaipėda"})
+    marijampolesStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=5", os.path.join(commonStreetPath, "city_marijampole%s" % fileType), {'city': "Marijampolė"})
+    panevezioStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=10", os.path.join(commonStreetPath, "city_panevezio%s" % fileType), {'city': "Panevėžys"})
+    siauliuStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=11", os.path.join(commonStreetPath, "city_siauliu%s" % fileType), {'city': "Šiauliai"})
+    taurageStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=82", os.path.join(commonStreetPath, "city_taurage%s" % fileType), {'city': "Tauragė", 'insertCivilParish' : False})
+    telsiuStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=84", os.path.join(commonStreetPath, "city_telsiai%s" % fileType), {'city': "Telšiai", 'insertCivilParish' : False})
+    utenaStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=93", os.path.join(commonStreetPath, "city_utena%s" % fileType), {'city': "Utena"})
 
 
     allStreets = [
@@ -130,7 +130,7 @@ class Command(BaseCommand):
             commands.append(("ltGeoDataImportRC", {"url" : url, "max-depth" : 99}))
             exportOptions = {"file" : name}
             if (len(location) >= 3):
-                exportOptions["city"] = location[2]
+                exportOptions = dict(exportOptions.items() + location[2].items())
             commands.append(("ltGeoDataExportCsv", exportOptions))
 
 

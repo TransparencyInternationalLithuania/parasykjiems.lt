@@ -16,12 +16,13 @@ from pjutils.uniconsole import *
 class ltGeoDataSources:
 
 
-    commonPath = os.path.join("contactdb", "sources", "street indexes")
+    commonStreetPath = os.path.join("contactdb", "sources", "streets", "street indexes")
 
 
-    lithuanianAdditionalStreets = [("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Vilnius City", os.path.join(commonPath, "cdb_lt_street_index_Vilnius_city.csv")),
-                                   ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Kaunas City", os.path.join(commonPath, "cdb_lt_street_index_Kaunas_city.csv"))]
+    lithuanianAdditionalStreets = [("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Vilnius City", os.path.join(commonStreetPath, "cdb_lt_street_index_Vilnius_city.csv")),
+                                   ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Kaunas City", os.path.join(commonStreetPath, "cdb_lt_street_index_Kaunas_city.csv"))]
 
+    commonPath = os.path.join("contactdb", "sources", "municipalities", "street indexes")
     commonIndexes = [
                     ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Alytaus apskr.", os.path.join(commonPath, "cdb_lt_street_index_alytaus_apskritis.csv")),
                     ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Kauno apskr.", os.path.join(commonPath, "cdb_lt_street_index_kaunas_apskritis.csv")),
