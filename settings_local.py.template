@@ -83,17 +83,3 @@ GlobalSettings = GlobalSettingsClass()
 
 # set this to True if you want to run geo tests for Lithuanian data against real world data / real www servers
 GlobalSettings.EnableWWWForLTGeoTests = False
-
-
-
-# Do not forget that it is possible to specify --max-depth n parameter, where n is the number of times
-#   parser goes down the hierarchy. So for example --max-depth 1 will take only the top first Lithuanian hierarchical
-#   administration order. --max-depth 3 will take only CivilParish data (seniūnijos), which will be only 66 requests
-# more than 2k request
-GlobalSettings.LTGeoDataParseUrl = "http://www.registrucentras.lt/adr/p/index.php"
-# Whole Alytaus Apskritis. 218 requests
-# GlobalSettings.LTGeoDataParseUrl = "http://www.registrucentras.lt/adr/p/index.php?aps_id=1"
-# around 47 web pages
-# GlobalSettings.LTGeoDataParseUrl = "http://www.registrucentras.lt/adr/p/index.php?sav_id=4"
-# around 8 web pages
-#GlobalSettings.LTGeoDataParseUrl = "http://www.registrucentras.lt/adr/p/index.php?sen_id=5"
