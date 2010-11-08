@@ -28,11 +28,30 @@ class RegisterCenterPageLocations:
     vilniaus = ("http://www.registrucentras.lt/adr/p/index.php?aps_id=460", os.path.join(commonPath, "Vilniaus apskritis%s" % fileType))
 
     # third option is the nominative form of City. This will be passed also as param --city when calling ltGeoDataExportCsv
-    vilniusStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=1", os.path.join(commonPath, "city_Vilnius%s" % fileType), "Vilnius")
-    kaunasStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=6", os.path.join(commonPath, "city_Kaunas%s" % fileType), "Kaunas")
+    commonStreetPath = os.path.join("contactdb", "sources", "register center", "streets")
+    vilniusStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=1", os.path.join(commonStreetPath, "city_Vilnius%s" % fileType), "Vilnius")
+    kaunasStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=6", os.path.join(commonStreetPath, "city_Kaunas%s" % fileType), "Kaunas")
+    alytusStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=2", os.path.join(commonStreetPath, "city_alytus%s" % fileType), "Alytus")
+    klaipedaStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=7", os.path.join(commonStreetPath, "city_klaipeda%s" % fileType), "Klaipėda")
+    marijampolesStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=5", os.path.join(commonStreetPath, "city_marijampole%s" % fileType), "Marijampolė")
+    panevezioStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=10", os.path.join(commonStreetPath, "city_panevezio%s" % fileType), "Panevėžys")
+    siauliuStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=11", os.path.join(commonStreetPath, "city_siauliu%s" % fileType), "Šiauliai")
+    taurageStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=82", os.path.join(commonStreetPath, "city_taurage%s" % fileType), "Tauragė")
+    telsiuStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=84", os.path.join(commonStreetPath, "city_telsiai%s" % fileType), "Telšiai")
+    utenaStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=93", os.path.join(commonStreetPath, "city_utena%s" % fileType), "Utena")
 
-    allStreets = [vilniusStreets,
-                kaunasStreets]
+
+    allStreets = [
+                alytusStreets,
+                kaunasStreets,
+                klaipedaStreets,
+                marijampolesStreets,
+                panevezioStreets,
+                siauliuStreets,
+                taurageStreets,
+                telsiuStreets,
+                utenos,
+                vilniusStreets]
 
     AllDistricts = [alytaus,
                      kauno,
