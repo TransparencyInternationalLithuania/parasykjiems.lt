@@ -173,14 +173,6 @@ class Command(BaseCommand):
 
         return insertedRows
 
-
-            self.CreateRowIfNotExist(u"Juodkrantės seniūnija", HierarchicalGeoData.HierarchicalGeoDataType.CivilParish,
-                u"Neringos savivaldybė", HierarchicalGeoData.HierarchicalGeoDataType.Municipality)
-            
-            self.CreateRowIfNotExist(u"Preilos-Pervalkos seniūnija", HierarchicalGeoData.HierarchicalGeoDataType.CivilParish,
-                u"Neringos savivaldybė", HierarchicalGeoData.HierarchicalGeoDataType.Municipality)
-        
-
     def handle(self, *args, **options):
 
         print "Checking if MQ is empty"

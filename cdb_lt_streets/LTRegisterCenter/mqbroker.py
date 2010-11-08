@@ -7,6 +7,9 @@ from pjutils.exc import ChainnedException
 from pjutils.MessagingServer.MessagingServer import MQServer
 
 
+class NoRegisterCenterURLDefined(ChainnedException):
+    pass
+
 
 class LTRegisterQueue(Component):
     mqServer = RequiredFeature("MQServer", IsInstanceOf(MQServer))
@@ -35,7 +38,8 @@ class LTRegisterQueue(Component):
 
         # send initial message with a defined URL in GlobalSettings
         if (url is None):
-            self.SendMessage(GlobalSettings.LTGeoDataParseUrl)
+            raise NoRegisterCenterURLDefined("""Please pass a --url param to specify which part of the web page to parse.
+Root url is %s, but you can pass any sub url if you want to parse only sub-pages """ % "http://www.registrucentras.lt/adr/p/")
         else:
             self.SendMessage(url)
 
