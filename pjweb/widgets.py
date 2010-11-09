@@ -4,7 +4,7 @@
 from django.utils.translation import ugettext as _, ugettext_lazy, ungettext
 from django.core.exceptions import ValidationError
 from django import forms
-import settings
+from settings import *
 import re
 from django.utils.translation import ugettext as _
 
@@ -16,7 +16,7 @@ def hasNoProfanities(field_data):
        Watch your mouth! The words "f--k" and "s--t" are not allowed here. 
     """ 
     field_data = field_data.lower() # normalize 
-    words_seen = [w for w in settings.PROFANITIES_LIST if w in field_data] 
+    words_seen = [w for w in GlobalSettings.PROFANITIES_LIST if w in field_data] 
     if words_seen: 
         from django.utils.text import get_text_list 
         plural = len(words_seen) 

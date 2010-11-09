@@ -3,13 +3,11 @@
 
 import logging
 import re
-import settings
+from settings import *
 from django import forms
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render_to_response
 from django.utils.translation import ugettext as _, ugettext_lazy, ungettext
-#from haystack.query import SearchQuerySet
-#from haystack.views import SearchView
 from django.core.mail import send_mail, EmailMessage
 from parasykjiems.pjweb.models import Email
 from parasykjiems.pjweb.forms import *
@@ -228,7 +226,7 @@ def choose_representative(request, municipality = None, city = None, street = No
         'municipality_members': municipality_members,
         'civilparish_members': civilparish_members,
         'seniunaitija_members': seniunaitija_members,
-        'LANGUAGES': settings.LANGUAGES,
+        'LANGUAGES': GlobalSettings.LANGUAGES,
         'step1': 'step1_active.png',
         'step2': 'step2_inactive.png',
         'step3': 'step3_inactive.png',
@@ -334,32 +332,34 @@ def insert_response(mail_id):
         for response in responses:
             message = response
             sender = responder.email
-            recipients = mail.sender
+            recipients = mail.sender_mail
 
             resp = Email(
                 sender_name = mail.recipient_name,
-                sender = responder.email,
+                sender_mail = responder.email,
                 recipient_id = mail.recipient_id,
                 recipient_type = mail.recipient_type,
                 recipient_name = mail.sender_name,
+                recipient_mail = mail.sender_mail,
                 message = message,
-                msg_state = 'R',
-                msg_type = 'R',
-                answer_no = mail.id,
+                msg_state = 'A',
+                response_hash = mail.response_hash,
+                answer_to = mail.id,
                 public = True,
             )
             resp.save()
             email = Email(
                 id = mail.id,
                 sender_name = mail.sender_name,
-                sender = mail.sender,
+                sender_mail = mail.sender,
                 recipient_id = mail.recipient_id,
                 recipient_type = mail.recipient_type,
                 recipient_name = mail.recipient_name,
+                recipient_mail = mail.sender_mail,
                 message = mail.message,
                 msg_state = 'A',
-                msg_type = mail.msg_type,
-                answer_no = mail.answer_no,
+                response_hash = mail.response_hash,
+                answer_to = mail.answer_to,
                 public = mail.public,
             )
             email.save()
@@ -396,7 +396,7 @@ def index(request):
     else:
         return render_to_response('pjweb/index.html', {
             'form': form,
-            'LANGUAGES': settings.LANGUAGES,
+            'LANGUAGES': GlobalSettings.LANGUAGES,
             'lang_code': lang,
             'entered': query_string,
             'found_entries': address['found_entries'],
@@ -415,18 +415,18 @@ def no_email(request, rtype, mp_id):
     logger.debug('%s' % (NoEmailMsg))
     return render_to_response('pjweb/no_email.html', {
         'NoEmailMsg': NoEmailMsg,
-        'LANGUAGES': settings.LANGUAGES,
+        'LANGUAGES': GlobalSettings.LANGUAGES,
         'step1': '',
         'step2': 'active-step',
         'step3': '',
     })
 
 def public_mails(request):
-    all_mails = Email.objects.all().filter(public__exact=True, msg_type__exact='M', email_state__exact='C')
+    all_mails = Email.objects.all().filter(public__exact=True, answer_to__isnull=True, msg_state__exact='W')
 
     return render_to_response('pjweb/public_mails.html', {
         'all_mails': all_mails,
-        'LANGUAGES': settings.LANGUAGES,
+        'LANGUAGES': GlobalSettings.LANGUAGES,
         'step1': '',
         'step2': '',
         'step3': '',
@@ -434,7 +434,7 @@ def public_mails(request):
 
 def about(request):
     return render_to_response('pjweb/about.html', {
-        'LANGUAGES': settings.LANGUAGES,
+        'LANGUAGES': GlobalSettings.LANGUAGES,
         'step1': '',
         'step2': '',
         'step3': '',
@@ -444,13 +444,13 @@ def public(request, mail_id):
     responses = []
     mails = Email.objects.filter(id__exact=mail_id)
     mail = mails[0]
-    responses = Email.objects.filter(answer_no__exact=mail_id)
+    responses = Email.objects.filter(answer_to__exact=mail_id)
     if not responses:
         responses = [insert_response(mail.id)]
     return render_to_response('pjweb/public.html', {
         'mail': mail,
         'responses': responses,
-        'LANGUAGES': settings.LANGUAGES,
+        'LANGUAGES': GlobalSettings.LANGUAGES,
         'step1': '',
         'step2': 'active-step',
         'step3': '',
@@ -466,7 +466,7 @@ def smtp_error(request, rtype, mp_id, private=None):
     logger.debug('Error: %s' % (ErrorMessage))
     return render_to_response('pjweb/error.html', {
         'ErrorMessage': ErrorMessage,
-        'LANGUAGES': settings.LANGUAGES,
+        'LANGUAGES': GlobalSettings.LANGUAGES,
         'step1': '',
         'step2': '',
         'step3': 'active-step',
@@ -556,8 +556,8 @@ def contact(request, rtype, mp_id):
             phone = form.cleaned_data[u'phone']
             message = form.cleaned_data[u'message']
             sender = form.cleaned_data[u'sender']
-            answer_no = random.randrange(0, 100000),
-            answer_no = answer_no[0]
+            response_hash = random.randrange(0, 1000000),
+            response_hash = response_hash[0]
             #recipients = [receiver.email, receiver.officeEmail]
             recipients = ['parasykjiems@gmail.com']
             #recipients = ['didysis@vytautas.lt']
@@ -567,40 +567,42 @@ def contact(request, rtype, mp_id):
             else:
                 #from django.core.mail import send_mail
                 #try:
+                messageas = message
+                if not publ:
+                    message = ''
                 mail = Email(
                     sender_name = sender_name,
-                    sender = sender,
+                    sender_mail = sender,
                     recipient_id = receiver.id,
                     recipient_type = rtype,
                     recipient_name = '%s %s' % (receiver.name, receiver.surname),
-                    phone = phone,
+                    recipient_mail = recipients[0],
                     message = message,
                     msg_state = 'W',
-                    email_state = 'N',
-                    msg_type = 'M',
-                    answer_no = answer_no,
+                    response_hash = response_hash,
                     public = publ,
                 )
                 if send:
+                    print mail.message
                     mail.save()
                     if publ:
                         #domain = settings.MAIL_USERNAME.split('@')[1]
                         reply_to = 'reply%s@kroitus.com' % mail.id
                     else:
                         reply_to = sender
-                    message = _('You sent an email to ')+ mail.recipient_name + _(' with text:\n\n')+ message + _('\n\nYou must confirm this message by clicking link below:\n') + 'http://%s/confirm/%s/%s' % (current_site.domain, mail.id, mail.answer_no)
-
+                    message = _('You sent an email to ')+ mail.recipient_name + _(' with text:\n\n')+ messageas + _('\n\nYou must confirm this message by clicking link below:\n') + 'http://%s/confirm/%s/%s' % (current_site.domain, mail.id, mail.response_hash)
+                    print message
                     email = EmailMessage(u'Confirm your message %s' % sender_name, message, sender,
                         [sender], [],
                         headers = {'Reply-To': reply_to})
 
-                    email.send()
+                    #email.send()
 
                     ThanksMessage = _('Thank you. This message must be confirmed. Please check your email.')
                     logger.debug('%s' % (ThanksMessage))
                     return render_to_response('pjweb/thanks.html', {
                         'ThanksMessage': ThanksMessage,
-                        'LANGUAGES': settings.LANGUAGES,
+                        'LANGUAGES': GlobalSettings.LANGUAGES,
                         'step1': '',
                         'step2': '',
                         'step3': 'active-step',
@@ -614,9 +616,9 @@ def contact(request, rtype, mp_id):
                     'mp_id': mp_id,
                     'rtype': rtype,
                     'preview': mail,
-                    'msg_lst': message.split('\n'),
+                    'msg_lst': messageas.split('\n'),
                     'representative': receiver,
-                    'LANGUAGES': settings.LANGUAGES,
+                    'LANGUAGES': GlobalSettings.LANGUAGES,
                     'step1': '',
                     'step2': '',
                     'step3': 'active-step',
@@ -631,7 +633,7 @@ def contact(request, rtype, mp_id):
         'mp_id': mp_id,
         'rtype': rtype,
         'representative': receiver,
-        'LANGUAGES': settings.LANGUAGES,
+        'LANGUAGES': GlobalSettings.LANGUAGES,
         'step1': '',
         'step2': 'active-step',
         'step3': '',
@@ -640,7 +642,7 @@ def contact(request, rtype, mp_id):
 def confirm(request, mail_id, secret):
     mail = Email.objects.get(id=mail_id)
     ConfirmMessage = _('Sorry, but your message could not be confirmed.')
-    if (int(mail_id)==mail.id) and (int(secret)==mail.answer_no):
+    if (int(mail_id)==mail.id) and (int(secret)==mail.response_hash):
         if mail.public:
             #domain = settings.MAIL_USERNAME.split('@')[1]
             reply_to = 'reply%s@kroitus.com' % mail.id
@@ -648,7 +650,7 @@ def confirm(request, mail_id, secret):
             reply_to = mail.sender
         #recipients = ['didysis@vytautas.lt']
         recipients = ['parasykjiems@gmail.com']
-        mail.email_state = 'C'
+        mail.msg_state = 'W'
         mail.save()
         email = EmailMessage(u'Gavote laišką nuo %s' % mail.sender_name, mail.message, mail.sender,
             recipients, [],
@@ -661,7 +663,7 @@ def confirm(request, mail_id, secret):
     logger.debug('%s' % (ConfirmMessage))
     return render_to_response('pjweb/confirm.html', {
         'ConfirmMessage': ConfirmMessage,
-        'LANGUAGES': settings.LANGUAGES,
+        'LANGUAGES': GlobalSettings.LANGUAGES,
         'step1': '',
         'step2': '',
         'step3': '',
@@ -683,7 +685,7 @@ def feedback(request):
             logger.debug('%s' % (ThanksMessage))
             return render_to_response('pjweb/thanks.html', {
                 'ThanksMessage': ThanksMessage,
-                'LANGUAGES': settings.LANGUAGES,
+                'LANGUAGES': GlobalSettings.LANGUAGES,
                 'step1': '',
                 'step2': '',
                 'step3': '',
@@ -694,7 +696,7 @@ def feedback(request):
         
     return render_to_response('pjweb/feedback.html', {
         'form': form,
-        'LANGUAGES': settings.LANGUAGES,
+        'LANGUAGES': GlobalSettings.LANGUAGES,
         'step1': '',
         'step2': '',
         'step3': '',
@@ -703,7 +705,7 @@ def feedback(request):
 def response(request, mail_id, response_no):
     mail = Email.objects.get(id=mail_id)
     responder = get_rep(mail.recipient_id, mail.recipient_type)
-    if int(mail.answer_no)==int(response_no) and request.method == 'POST':
+    if int(mail.response_hash)==int(response_no) and request.method == 'POST':
         form = FeedbackForm(data=request.POST)
         if form.is_valid():
             message = form.cleaned_data[u'message']
@@ -719,7 +721,7 @@ def response(request, mail_id, response_no):
                 message = message,
                 msg_state = 'R',
                 msg_type = 'R',
-                answer_no = mail.id,
+                answer_to = mail.id,
                 public = True,
             )
             response.save()
@@ -727,7 +729,7 @@ def response(request, mail_id, response_no):
             logger.debug('%s' % (ThanksMessage))
             return render_to_response('pjweb/thanks.html', {
                 'ThanksMessage': ThanksMessage,
-                'LANGUAGES': settings.LANGUAGES,
+                'LANGUAGES': GlobalSettings.LANGUAGES,
                 'step1': '',
                 'step2': '',
                 'step3': 'active-step',
@@ -741,7 +743,7 @@ def response(request, mail_id, response_no):
         'mail': mail,
         'msg_lst': mail.message.split('\n'),
         'response_no': response_no,
-        'LANGUAGES': settings.LANGUAGES,
+        'LANGUAGES': GlobalSettings.LANGUAGES,
         'step1': '',
         'step2': '',
         'step3': '',

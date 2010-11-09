@@ -15,6 +15,9 @@ class GlobalSettingsClass():
     def Languages(self):
         print "Define used Languages. Defaults are Lithuanian and English "
 
+    def Profanities(self):
+        print "Define profanities (nasty words) list in local_settings.py "
+
     def MailServ(self):
         print "Define mail server, where responses are comming from."
 
@@ -31,6 +34,7 @@ class GlobalSettingsClass():
                          'EnableWWWForLTGeoTests' : self._EnableWWWForLTGeoTests,
                          'LTGeoDataParseUrl' : self._LTGeoDataParseUrl,
                          'LANGUAGES' : self.Languages,
+                         'PROFANITIES_LIST' : self.Profanities,
                          'MAIL_SERVER' : self.MailServ,}
         if (name in printMoreInfo):
             printMoreInfo[name]()
