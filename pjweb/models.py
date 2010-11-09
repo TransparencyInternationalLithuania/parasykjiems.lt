@@ -4,36 +4,40 @@
 from django.db import models
 
 class Email(models.Model):
-    """ Table, where all emails are stored, and admin have to confirm them
+    """ Table, where all emails are stored
     """
     
     MSG_STATES = (
+        ('N', 'Not Confirmed'),
         ('W', 'Waiting'),
         ('A', 'Answered'),
         ('R', 'Response'),
     )
-    
-    EMAIL_STATES = (
-        ('C', 'Confirmed'),
-        ('N', 'Not Confirmed'),
-    )
-    
-    MSG_TYPE = (
-        ('M', 'Message'),
-        ('R', 'Response'),
-    )
 
-    sender = models.EmailField()
+    sender_mail = models.EmailField()
     sender_name = models.CharField(max_length = 128)
     recipient_name = models.CharField(max_length = 128)
     recipient_id = models.IntegerField()
     recipient_type = models.CharField(max_length = 5)
-    answer_no = models.IntegerField()
-    message = models.TextField()
-    phone = models.CharField(max_length = 100)
+    recipient_mail = models.EmailField()
+    answer_to = models.IntegerField(null=True)
+    response_hash = models.IntegerField()
+    message = models.TextField(blank=True)
     msg_state = models.CharField(max_length=1, choices=MSG_STATES)
-    email_state = models.CharField(max_length=1, choices=EMAIL_STATES, blank=True)
-    msg_type = models.CharField(max_length=1, choices=MSG_TYPE)
-    req_date = models.DateTimeField(auto_now = True)
+    mail_date = models.DateTimeField(auto_now=True)
     public = models.BooleanField()
 
+class MailHistory(models.Model):
+    """ It will show, what was done with an email
+    """
+
+    EMAIL_STATES = (
+        ('S', 'Sent'),
+        ('N', 'Not sent'),
+    )
+
+    sender = models.EmailField()
+    recipient = models.CharField(max_length = 5)
+    mail = models.ForeignKey('Email')
+    mail_state = models.CharField(max_length=1, choices=EMAIL_STATES, blank=True)
+    request_date = models.DateTimeField(auto_now = True)

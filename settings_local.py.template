@@ -15,13 +15,6 @@ TEMPLATE_DIRS = (
  os.path.join(scriptPath, "templates")
 )
 
-_ = lambda s: s
-
-LANGUAGES = (
-      ('lt', _('Lithuanian')),
-      ('en', _('English')),
-)
-
 dbPath = os.path.join(scriptPath, "db")
 dbFileName = "parasykjiems.db3"
 dir_util.mkpath(dbPath)
@@ -69,17 +62,22 @@ dir_util.mkpath(logPath)
 LOG_FILENAME = os.path.join(logPath, 'pjweb.log')
 logging.basicConfig(filename=LOG_FILENAME,level=logging.DEBUG)
 
-#list of "nasty" words
-PROFANITIES_LIST = (u'bybys', u'šikna', u'pyderas')
-
-
-
 # Setttings repository for ParašykJiems.LT
 GlobalSettings = GlobalSettingsClass()
 
 # variables for accessing Lithuanian contact db documents on google docs
 #GlobalSettings.GOOGLE_DOCS_USER = 'parasykjiems@gmail.com'
 #GlobalSettings.GOOGLE_DOCS_PASSWORD = 'enter password here'
+
+_ = lambda s: s
+
+GlobalSettings.LANGUAGES = (
+      ('lt', _('Lithuanian')),
+      ('en', _('English')),
+)
+
+#list of "nasty" words
+GlobalSettings.PROFANITIES_LIST = (u'bybys', u'šikna', u'pyderas')
 
 # set this to True if you want to run geo tests for Lithuanian data against real world data / real www servers
 GlobalSettings.EnableWWWForLTGeoTests = False

@@ -19,16 +19,16 @@
 <th colspan="2"><h2>{% trans "Sender " %}<small>{% trans "(fields marked with asterisk are required)" %}</small>:</h2></th>
 </tr>
   <tr>
-    <td width="300px" rowspan="4">
+    <td width="300px" rowspan="3">
       <p id="head-font"><b>{{ representative.name }} {{ representative.surname }}</b></p>
 {% if representative.phone %}{{ representative.phone }}{% endif %}
 {% if representative.officePhone %}{{ representative.officePhone }}{% endif %}
     </td>
-<!--    <td width="120px">{% trans "Mail type:" %}*</td>-->
-<!--    <td width="360px">-->
-<!--        {{ form.public }}-->
-<!--        {{ form.public.errors }}-->
-<!--    </td>-->
+    <td width="120px">{% trans "Mail type:" %}*</td>
+    <td width="360px">
+        {{ form.public }}
+        {{ form.public.errors }}
+    </td>
   </tr>
   <tr>
     <td width="120px">{% trans "Sender Name:" %}*</td>
@@ -44,13 +44,13 @@
         {{ form.sender.errors }}
     </td>
   </tr>
-  <tr>
-    <td width="120px">{% trans "Phone Number:" %}</td>
-    <td width="360px">
-        {{ form.phone }}
-        {{ form.phone.errors }}
-    </td>
-  </tr>
+<!--  <tr>-->
+<!--    <td width="120px">{% trans "Phone Number:" %}</td>-->
+<!--    <td width="360px">-->
+<!--        {{ form.phone }}-->
+<!--        {{ form.phone.errors }}-->
+<!--    </td>-->
+<!--  </tr>-->
 </table>
 <table id="letter">
   <tr>
