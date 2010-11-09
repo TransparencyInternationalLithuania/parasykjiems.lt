@@ -38,7 +38,7 @@ class RegisterCenterPageLocations:
     siauliuStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=11", os.path.join(commonStreetPath, "city_siauliu%s" % fileType), {'city': "Šiauliai"})
     taurageStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=82", os.path.join(commonStreetPath, "city_taurage%s" % fileType), {'city': "Tauragė", 'insertCivilParish' : False})
     telsiuStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=84", os.path.join(commonStreetPath, "city_telsiai%s" % fileType), {'city': "Telšiai", 'insertCivilParish' : False})
-    utenaStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=93", os.path.join(commonStreetPath, "city_utena%s" % fileType), {'city': "Utena"})
+    utenaStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=93", os.path.join(commonStreetPath, "city_utena%s" % fileType), {'city': "Utena", 'insertCivilParish' : False})
 
 
     allStreets = [
@@ -50,7 +50,7 @@ class RegisterCenterPageLocations:
                 siauliuStreets,
                 taurageStreets,
                 telsiuStreets,
-                utenos,
+                utenaStreets,
                 vilniusStreets]
 
     AllDistricts = [alytaus,

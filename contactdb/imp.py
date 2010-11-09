@@ -16,13 +16,17 @@ class ImportSources:
     Delimiter = ","
 #delimiter = "\t"
 
-    LithuanianConstituencies = os.path.join("contactdb", "sources", "apygardos.txt")
-    LithuanianMPs = os.path.join("contactdb", "sources", "parliament members.csv")
-    LithuanianCivilParishMembers = os.path.join("contactdb", "sources", "LithuanianCivilParishMembers.csv")
-    LithuanianMunicipalityMembers = os.path.join("contactdb", "sources", "LithuanianMunicipalityMembers.csv")
-    LithuanianSeniunaitijaMembers  = os.path.join("contactdb", "sources", "LithuanianSeniunaitijaMembers.csv")
-    LithuanianMunicipalities  = os.path.join("contactdb", "sources", "LithuanianMunicipalities.csv")
-    LithuanianCivilParishes  = os.path.join("contactdb", "sources", "LithuanianCivilParishes.csv")
+
+    constituencyPath = os.path.join("contactdb", "sources", "import data")
+    LithuanianConstituencies = os.path.join(constituencyPath, "apygardos.txt")
+
+    commonPath = os.path.join("contactdb", "sources", "import data", "members")
+    LithuanianMPs = os.path.join(commonPath, "parliament members.csv")
+    LithuanianCivilParishMembers = os.path.join(commonPath, "LithuanianCivilParishMembers.csv")
+    LithuanianMunicipalityMembers = os.path.join(commonPath, "LithuanianMunicipalityMembers.csv")
+    LithuanianSeniunaitijaMembers  = os.path.join(commonPath, "LithuanianSeniunaitijaMembers.csv")
+    LithuanianMunicipalities  = os.path.join(commonPath, "LithuanianMunicipalities.csv")
+    LithuanianCivilParishes  = os.path.join(commonPath, "LithuanianCivilParishes.csv")
 
     @classmethod
     def EsnureExists(clas, importSource, downloadCommand = "downloadDocs"):
