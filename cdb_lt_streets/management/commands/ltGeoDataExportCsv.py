@@ -80,7 +80,7 @@ inserterted as empty. If False, then this will not be inserted. See RegisterCent
         self.city = options['city']
         self.city = unicode(self.city, 'utf-8')
         self.cityMode = self.city is not None and self.city.strip() != ""
-        self.insertCivilParish = options['insertCivilParish']
+        self.insertCivilParish = bool(options['insertCivilParish'])
 
         logger.info("Writing contents to %s" % fileName)
         logger.info("using city mode: %s" % self.cityMode)

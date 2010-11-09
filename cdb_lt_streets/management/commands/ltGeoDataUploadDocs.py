@@ -32,6 +32,13 @@ class Command(BaseCommand):
             toNumber = len(l)
 
 
+        print "Following docs will be upload:"
+        num = 0
+        for street, regCenterPage in l[fromNumber : toNumber]:
+            file = regCenterPage[1]
+            logger.info("%s '%s' to location '%s'" % (num, file, street[0]))
+            num += 1
+
         login = GoogleDocsLogin(GlobalSettings.GOOGLE_DOCS_USER, GlobalSettings.GOOGLE_DOCS_PASSWORD)
 
         for street, regCenterPage in l[fromNumber : toNumber]:

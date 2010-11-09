@@ -94,6 +94,10 @@ class Command(BaseCommand):
             if (parentLocationName is not None):
                 parentLocationText = parentLocationName.text
             locationInDB = HierarchicalGeoData.FindByName(name = text_nominative, name_genitive = text_genitive, parentName = parentLocationText)
+            if (locationInDB is None):
+                # try searching for genitive field with nominative form. The same logic as in _InsertContentRows()
+                locationInDB = HierarchicalGeoData.FindByName(name_genitive = text_nominative, parentName = parentLocationText)
+
 
             if (locationInDB is None):
                 # that means we have to create it
