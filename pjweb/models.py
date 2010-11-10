@@ -34,6 +34,7 @@ class MailHistory(models.Model):
     EMAIL_STATES = (
         ('S', 'Sent'),
         ('N', 'Not sent'),
+        ('F', 'Failed'),
     )
 
     sender = models.EmailField()

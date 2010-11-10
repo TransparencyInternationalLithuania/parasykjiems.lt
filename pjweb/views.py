@@ -9,7 +9,7 @@ from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadReque
 from django.shortcuts import render_to_response
 from django.utils.translation import ugettext as _, ugettext_lazy, ungettext
 from django.core.mail import send_mail, EmailMessage
-from parasykjiems.pjweb.models import Email
+from parasykjiems.pjweb.models import Email, MailHistory
 from parasykjiems.pjweb.forms import *
 from pjutils.address_search import AddressSearch
 from pjutils.get_mail import GetMail
@@ -351,7 +351,7 @@ def insert_response(mail_id):
             email = Email(
                 id = mail.id,
                 sender_name = mail.sender_name,
-                sender_mail = mail.sender,
+                sender_mail = mail.sender_mail,
                 recipient_id = mail.recipient_id,
                 recipient_type = mail.recipient_type,
                 recipient_name = mail.recipient_name,
@@ -422,7 +422,7 @@ def no_email(request, rtype, mp_id):
     })
 
 def public_mails(request):
-    all_mails = Email.objects.all().filter(public__exact=True, answer_to__isnull=True, msg_state__exact='W')
+    all_mails = Email.objects.all().filter(public__exact=True, answer_to__isnull=True, msg_state__exact='W').exclude(msg_state__exact='N')
 
     return render_to_response('pjweb/public_mails.html', {
         'all_mails': all_mails,
@@ -567,7 +567,7 @@ def contact(request, rtype, mp_id):
             else:
                 #from django.core.mail import send_mail
                 #try:
-                messageas = message
+                message_disp = message
                 if not publ:
                     message = ''
                 mail = Email(
@@ -578,26 +578,33 @@ def contact(request, rtype, mp_id):
                     recipient_name = '%s %s' % (receiver.name, receiver.surname),
                     recipient_mail = recipients[0],
                     message = message,
-                    msg_state = 'W',
+                    msg_state = 'N',
                     response_hash = response_hash,
                     public = publ,
                 )
                 if send:
                     print mail.message
                     mail.save()
-                    if publ:
+#                    if publ:
                         #domain = settings.MAIL_USERNAME.split('@')[1]
-                        reply_to = 'reply%s@kroitus.com' % mail.id
-                    else:
-                        reply_to = sender
-                    message = _('You sent an email to ')+ mail.recipient_name + _(' with text:\n\n')+ messageas + _('\n\nYou must confirm this message by clicking link below:\n') + 'http://%s/confirm/%s/%s' % (current_site.domain, mail.id, mail.response_hash)
+                    reply_to = 'reply%s_%s@kroitus.com' % (mail.id, mail.response_hash)
+#                    else:
+#                        reply_to = sender
+                    message = _('You sent an email to ')+ mail.recipient_name + _(' with text:\n\n')+ message_disp + _('\n\nYou must confirm this message by clicking link below:\n') + 'http://%s/confirm/%s/%s' % (current_site.domain, mail.id, mail.response_hash)
                     print message
                     email = EmailMessage(u'Confirm your message %s' % sender_name, message, sender,
                         [sender], [],
                         headers = {'Reply-To': reply_to})
 
-                    #email.send()
-
+                    email.send()
+                    history = MailHistory(
+                        sender = mail.sender_mail,
+                        recipient = mail.recipient_mail,
+                        mail = mail,
+                        mail_state = 'N',
+                    )
+                    print email
+                    history.save()
                     ThanksMessage = _('Thank you. This message must be confirmed. Please check your email.')
                     logger.debug('%s' % (ThanksMessage))
                     return render_to_response('pjweb/thanks.html', {
@@ -616,7 +623,7 @@ def contact(request, rtype, mp_id):
                     'mp_id': mp_id,
                     'rtype': rtype,
                     'preview': mail,
-                    'msg_lst': messageas.split('\n'),
+                    'msg_lst': message_disp.split('\n'),
                     'representative': receiver,
                     'LANGUAGES': GlobalSettings.LANGUAGES,
                     'step1': '',
@@ -647,15 +654,23 @@ def confirm(request, mail_id, secret):
             #domain = settings.MAIL_USERNAME.split('@')[1]
             reply_to = 'reply%s@kroitus.com' % mail.id
         else:
-            reply_to = mail.sender
+            reply_to = mail.sender_mail
         #recipients = ['didysis@vytautas.lt']
         recipients = ['parasykjiems@gmail.com']
         mail.msg_state = 'W'
         mail.save()
-        email = EmailMessage(u'Gavote laišką nuo %s' % mail.sender_name, mail.message, mail.sender,
+        email = EmailMessage(u'Gavote laišką nuo %s' % mail.sender_name, mail.message, mail.sender_mail,
             recipients, [],
             headers = {'Reply-To': reply_to})
         email.send()
+        history = MailHistory(
+            sender = mail.sender_mail,
+            recipient = mail.recipient_mail,
+            mail = mail,
+            mail_state = 'S',
+        )
+        print email
+        history.save()
         ConfirmMessage = _('Thank you. Your message has been sent.')
     else:
         ConfirmMessage = _('Sorry, but your message could not be confirmed.')
@@ -714,15 +729,15 @@ def response(request, mail_id, response_no):
 
             response = Email(
                 sender_name = mail.recipient_name,
-                sender = responder.email,
+                sender_mail = responder.email,
                 recipient_id = mail.recipient_id,
                 recipient_type = mail.recipient_type,
                 recipient_name = mail.sender_name,
+                recipient_mail = mail.sender_mail,
                 message = message,
                 msg_state = 'R',
-                msg_type = 'R',
                 answer_to = mail.id,
-                public = True,
+                public = mail.public,
             )
             response.save()
             ThanksMessage = _('Thank you. Your response has been posted.')
