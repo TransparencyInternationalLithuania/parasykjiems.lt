@@ -659,6 +659,13 @@ def confirm(request, mail_id, secret):
         recipients = ['parasykjiems@gmail.com']
         mail.msg_state = 'W'
         mail.save()
+        history = MailHistory(
+            sender = mail.sender_mail,
+            recipient = mail.recipient_mail,
+            mail = mail,
+            mail_state = 'C',
+        )
+        history.save()
         email = EmailMessage(u'Gavote laišką nuo %s' % mail.sender_name, mail.message, mail.sender_mail,
             recipients, [],
             headers = {'Reply-To': reply_to})
@@ -669,7 +676,6 @@ def confirm(request, mail_id, secret):
             mail = mail,
             mail_state = 'S',
         )
-        print email
         history.save()
         ConfirmMessage = _('Thank you. Your message has been sent.')
     else:
