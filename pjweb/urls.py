@@ -52,4 +52,5 @@ urlpatterns = patterns('parasykjiems.pjweb.views',
     (r'^response/(\d+)/(\d+)/$', 'response'),
     (r'^confirm/(\d+)/(\d+)/$', 'confirm'),
     (r'^i18n/', include('django.conf.urls.i18n')),
+    (r'^setlang/(?P<lang_code>.*)/$', 'set_language')
 )

@@ -7,7 +7,7 @@ from settings import *
 from django import forms
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render_to_response
-from django.utils.translation import ugettext as _, ugettext_lazy, ungettext
+from django.utils.translation import ugettext as _, ugettext_lazy, ungettext, check_for_language
 from django.core.mail import send_mail, EmailMessage
 from parasykjiems.pjweb.models import Email, MailHistory
 from parasykjiems.pjweb.forms import *
@@ -769,4 +769,19 @@ def response(request, mail_id, response_no):
         'step2': '',
         'step3': '',
     })
+
+def set_language(request, lang_code):
+    """
+    Patched for Get method
+    """
+    next = request.REQUEST.get('next', None)
+    if not next:
+        next = '/'
+    response = HttpResponseRedirect(next)
+    if lang_code and check_for_language(lang_code):
+        if hasattr(request, 'session'):
+            request.session['django_language'] = lang_code
+        else:
+            response.set_cookie(settings.LANGUAGE_COOKIE_NAME, lang_code)
+    return response
 

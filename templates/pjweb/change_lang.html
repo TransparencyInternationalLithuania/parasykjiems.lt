@@ -1,9 +1,6 @@
 {% load i18n %}
-    <form name="lang_select" action="/i18n/setlang/" method="post" style="display: inline;" >
-      <div style="display: inline;">
-          {% for lang in LANGUAGES %}
-            <input type="radio" name="language" value={{ lang.0 }} onClick="this.form.submit();" /><img src="/static/img/flags/png/{{ lang.0 }}.png" />
-          {% endfor %}
-      </div>
-    </form>
-
+<div align="right">
+{% for lang in LANGUAGES %}
+  <a class="myopacity" href="/setlang/{{ lang.0 }}/"><img src="/static/img/flags/png/{{ lang.0 }}.png" /></a>
+{% endfor %}
+</div>
