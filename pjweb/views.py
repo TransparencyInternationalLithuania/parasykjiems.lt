@@ -319,6 +319,7 @@ def insert_response(mail_id):
     if settings.MAIL_SERVER:
         server_info = {
             'server':settings.MAIL_SERVER,
+            'port':settings.MAIL_PORT,
             'username':settings.MAIL_USERNAME,
             'password':settings.MAIL_PASSWORD,
             'type':settings.MAIL_SERVER_TYPE
@@ -422,7 +423,7 @@ def no_email(request, rtype, mp_id):
     })
 
 def public_mails(request):
-    all_mails = Email.objects.all().filter(public__exact=True, answer_to__isnull=True, msg_state__exact='W').exclude(msg_state__exact='N')
+    all_mails = Email.objects.all().filter(public__exact=True, answer_to__isnull=True).exclude(msg_state__exact='N')
 
     return render_to_response('pjweb/public_mails.html', {
         'all_mails': all_mails,
@@ -560,7 +561,7 @@ def contact(request, rtype, mp_id):
             response_hash = response_hash[0]
             #recipients = [receiver.email, receiver.officeEmail]
             recipients = ['parasykjiems@gmail.com']
-            #recipients = ['didysis@vytautas.lt']
+
             if not recipients[0]:
                 logger.debug('%s has no email' % (receiver.name, receiver.surname))
                 return HttpResponseRedirect('no_email')
