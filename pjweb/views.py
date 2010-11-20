@@ -334,7 +334,15 @@ def insert_response(mail_id):
             message = response
             sender = responder.email
             recipients = mail.sender_mail
-
+            resp = response.split('>\r')
+            response_1 = ''.join(resp)
+            lines = response_1.split('\n')
+            for line in lines:
+                find_us = line.find('parasykjiems@gmail.com')
+                if len(line)>0 and (line[0]=='>' or find_us>-1):
+                    #print len(line), line
+                    lines.remove(line)
+            message_1 = '\n'.join(lines)
             resp = Email(
                 sender_name = mail.recipient_name,
                 sender_mail = responder.email,
@@ -342,14 +350,20 @@ def insert_response(mail_id):
                 recipient_type = mail.recipient_type,
                 recipient_name = mail.sender_name,
                 recipient_mail = mail.sender_mail,
-                message = message,
-                msg_state = 'A',
+                message = message_1,
+                msg_state = 'R',
                 response_hash = mail.response_hash,
                 answer_to = mail.id,
                 public = True,
             )
             resp.save()
-            email = Email(
+
+            email = EmailMessage(u'Gavote atsakymą nuo %s' % resp.sender_name, response, 'parasykjiems@gmail.com',
+                [resp.recipient_mail], [],
+                headers = {'Reply-To': resp.sender_mail})
+            email.send()
+
+            email_edit = Email(
                 id = mail.id,
                 sender_name = mail.sender_name,
                 sender_mail = mail.sender_mail,
@@ -363,7 +377,7 @@ def insert_response(mail_id):
                 answer_to = mail.answer_to,
                 public = mail.public,
             )
-            email.save()
+            email_edit.save()
         if resp:
             return resp
         else:
@@ -588,11 +602,11 @@ def contact(request, rtype, mp_id):
                     mail.save()
 #                    if publ:
                         #domain = settings.MAIL_USERNAME.split('@')[1]
-                    reply_to = 'reply%s_%s@kroitus.com' % (mail.id, mail.response_hash)
+                    reply_to = 'reply%s_%s@dev.parasykjiems.lt' % (mail.id, mail.response_hash)
 #                    else:
 #                        reply_to = sender
                     message = _('You sent an email to ')+ mail.recipient_name + _(' with text:\n\n')+ message_disp + _('\n\nYou must confirm this message by clicking link below:\n') + 'http://%s/confirm/%s/%s' % (current_site.domain, mail.id, mail.response_hash)
-                    print message
+                    #print message
                     email = EmailMessage(u'Confirm your message %s' % sender_name, message, sender,
                         [sender], [],
                         headers = {'Reply-To': reply_to})
@@ -604,7 +618,7 @@ def contact(request, rtype, mp_id):
                         mail = mail,
                         mail_state = 'N',
                     )
-                    print email
+                    #print email
                     history.save()
                     ThanksMessage = _('Thank you. This message must be confirmed. Please check your email.')
                     logger.debug('%s' % (ThanksMessage))
@@ -653,7 +667,7 @@ def confirm(request, mail_id, secret):
     if (int(mail_id)==mail.id) and (int(secret)==mail.response_hash):
         if mail.public:
             #domain = settings.MAIL_USERNAME.split('@')[1]
-            reply_to = 'reply%s@kroitus.com' % mail.id
+            reply_to = 'reply%s_%s@dev.parasykjiems.lt' % (mail.id, mail.response_hash)
         else:
             reply_to = mail.sender_mail
         #recipients = ['didysis@vytautas.lt']
@@ -699,7 +713,6 @@ def feedback(request):
             message = form.cleaned_data[u'message']
             sender = 'Concerned citizen'
             recipients = ['parasykjiems@gmail.com']
-
             email = EmailMessage(u'Pastaba dėl parašykjiems.lt', message, sender,
                 recipients, [])
             email.send()

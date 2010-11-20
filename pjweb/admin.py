@@ -9,7 +9,7 @@ class MsgAdmin(admin.ModelAdmin):
         (_('Message'),            {'fields': ['message', 'msg_state', 'public']}),
     ]
     list_display = ('sender_name', 'msg_state', 'mail_date', 'public')
-    list_filter = ['mail_date', 'sender_mail', 'recipient_mail']
+    list_filter = ['mail_date', 'sender_mail', 'recipient_mail', 'msg_state']
     search_fields = ['recipient_name', 'sender_name', 'recipient_mail', 'sender_mail']
     date_hierarchy = 'mail_date'
     
