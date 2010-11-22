@@ -12,7 +12,8 @@ from django.core.mail import send_mail, EmailMessage
 from parasykjiems.pjweb.models import Email, MailHistory
 from parasykjiems.pjweb.forms import *
 from pjutils.address_search import AddressSearch
-from pjutils.get_mail import GetMail
+#from pjutils.get_mail import GetMail
+from pjutils.insert_response import InsertResponse
 from pjutils.declension import DeclensionLt
 from django.utils import simplejson
 import random
@@ -36,27 +37,6 @@ def is_odd(number):
         return True
     else:
         return False
-
-def get_rep(rep_id, rtype):
-    if rtype=='mp':
-        receiver = ParliamentMember.objects.all().filter(
-                id__exact=rep_id
-            )
-    elif rtype=='mn':
-        receiver = MunicipalityMember.objects.all().filter(
-                id__exact=rep_id
-            )
-    elif rtype=='cp':
-        receiver = CivilParishMember.objects.all().filter(
-                id__exact=rep_id
-            )
-    elif rtype=='sn':
-        receiver = SeniunaitijaMember.objects.all().filter(
-                id__exact=rep_id
-            )
-
-    return receiver[0]
-
 
 
 
@@ -313,77 +293,6 @@ def get_civilparish(pd_id, constituency):
 #    print result
     return result
 
-def insert_response(mail_id):
-    getmail = GetMail()
-    resp = False
-    if settings.MAIL_SERVER:
-        server_info = {
-            'server':settings.MAIL_SERVER,
-            'port':settings.MAIL_PORT,
-            'username':settings.MAIL_USERNAME,
-            'password':settings.MAIL_PASSWORD,
-            'type':settings.MAIL_SERVER_TYPE
-        }
-        responses = getmail.get_mail(server_info, mail_id)
-
-        mails = Email.objects.all().filter(id__exact=mail_id)
-        mail = mails[0]
-        responder = get_rep(mail.recipient_id, mail.recipient_type)
-
-        for response in responses:
-            message = response
-            sender = responder.email
-            recipients = mail.sender_mail
-            resp = response.split('>\r')
-            response_1 = ''.join(resp)
-            lines = response_1.split('\n')
-            for line in lines:
-                find_us = line.find('parasykjiems@gmail.com')
-                if len(line)>0 and (line[0]=='>' or find_us>-1):
-                    #print len(line), line
-                    lines.remove(line)
-            message_1 = '\n'.join(lines)
-            resp = Email(
-                sender_name = mail.recipient_name,
-                sender_mail = responder.email,
-                recipient_id = mail.recipient_id,
-                recipient_type = mail.recipient_type,
-                recipient_name = mail.sender_name,
-                recipient_mail = mail.sender_mail,
-                message = message_1,
-                msg_state = 'R',
-                response_hash = mail.response_hash,
-                answer_to = mail.id,
-                public = True,
-            )
-            resp.save()
-
-            email = EmailMessage(u'Gavote atsakymą nuo %s' % resp.sender_name, response, 'parasykjiems@gmail.com',
-                [resp.recipient_mail], [],
-                headers = {'Reply-To': resp.sender_mail})
-            email.send()
-
-            email_edit = Email(
-                id = mail.id,
-                sender_name = mail.sender_name,
-                sender_mail = mail.sender_mail,
-                recipient_id = mail.recipient_id,
-                recipient_type = mail.recipient_type,
-                recipient_name = mail.recipient_name,
-                recipient_mail = mail.sender_mail,
-                message = mail.message,
-                msg_state = 'A',
-                response_hash = mail.response_hash,
-                answer_to = mail.answer_to,
-                public = mail.public,
-            )
-            email_edit.save()
-        if resp:
-            return resp
-        else:
-            return False
-    return False
-
 def index(request):
     query_string = ' '
     entered = ''
@@ -455,13 +364,14 @@ def about(request):
         'step3': '',
     })
 
+
 def public(request, mail_id):
     responses = []
-    mails = Email.objects.filter(id__exact=mail_id)
-    mail = mails[0]
+    mail = Email.objects.get(id=mail_id)
     responses = Email.objects.filter(answer_to__exact=mail_id)
+    insert = InsertResponse()
     if not responses:
-        responses = [insert_response(mail.id)]
+        responses = [insert.insert_response(mail.id)]
     return render_to_response('pjweb/public.html', {
         'mail': mail,
         'responses': responses,

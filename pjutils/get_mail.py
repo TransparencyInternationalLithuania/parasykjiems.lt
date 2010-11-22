@@ -8,7 +8,7 @@ from email.charset import Charset
 
 class GetMail():
 
-    def get_imap(self, server_info, msg_id):
+    def get_imap(self, server_info, msg_id, response_hash):
 # use IMAP4_SSL when SSL is supported on mail server
 #        M = imaplib.IMAP4_SSL(server_info['server'])
 # use login, when plaintext login is supported
@@ -20,7 +20,8 @@ class GetMail():
         M.select()
         messages = []
         chrst = Charset()
-        typ, data = M.search(None, 'To', 'reply%s' % msg_id)
+#        typ, data = M.search(None, 'To', 'reply%s_%s' % (msg_id, response_hash))
+        typ, data = M.search(None, 'To', 'reply%s' % (msg_id))
         for num in data[0].split():
             message = ""
 #            typ, data = M.fetch(num, '(RFC822)')
@@ -45,11 +46,11 @@ class GetMail():
         print 'Not yet implemented'
         return []
 
-    def get_mail(self, server_info, msg_id):
+    def get_mail(self, server_info, msg_id, response_hash):
         messages = []
         if server_info['type'] == 'IMAP':
-            messages = self.get_imap(server_info, msg_id)
+            messages = self.get_imap(server_info, msg_id, response_hash)
         elif server_info['type'] == 'POP3':
-            messages = self.get_pop3(server_info, msg_id)
+            messages = self.get_pop3(server_info, msg_id, response_hash)
         return messages
 

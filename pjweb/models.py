@@ -39,6 +39,7 @@ class MailHistory(models.Model):
         ('S', 'Sent'),
         ('N', 'New'),
         ('F', 'Failed'),
+        ('A', 'Answered'),
     )
 
     sender = models.EmailField()
