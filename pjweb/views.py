@@ -332,7 +332,8 @@ def index(request):
         })
 
 def no_email(request, rtype, mp_id):
-    representative = get_rep(mp_id, rtype)
+    insert = InsertResponse()
+    representative = insert.get_rep(mp_id, rtype)
     NoEmailMsg = _('%(name)s %(surname)s email cannot be found in database.') % {
         'name':representative.name, 'surname':representative.surname
     }
@@ -382,7 +383,8 @@ def public(request, mail_id):
     })
 
 def smtp_error(request, rtype, mp_id, private=None):
-    representative = get_rep(mp_id, rtype)
+    insert = InsertResponse()
+    representative = insert.get_rep(mp_id, rtype)
     ErrorMessage = _(
         'Problem occurred. Your Email to %(name)s %(surname)s has not been sent. Please try again later.'
     ) % {
@@ -458,11 +460,13 @@ def constituency(request, pd_id):
         'LANGUAGES': settings.LANGUAGES,
         'step1': 'active-step',
         'step2': '',
+
         'step3': '',
     })
     
 def contact(request, rtype, mp_id):
-    receiver = get_rep(mp_id, rtype)
+    insert = InsertResponse()
+    receiver = insert.get_rep(mp_id, rtype)
     current_site = Site.objects.get_current()
     print current_site
     if not receiver.email and not receiver.officeEmail:
@@ -649,7 +653,8 @@ def feedback(request):
 
 def response(request, mail_id, response_no):
     mail = Email.objects.get(id=mail_id)
-    responder = get_rep(mail.recipient_id, mail.recipient_type)
+    insert = InsertResponse()
+    responder = insert.get_rep(mail.recipient_id, mail.recipient_type)
     if int(mail.response_hash)==int(response_no) and request.method == 'POST':
         form = FeedbackForm(data=request.POST)
         if form.is_valid():

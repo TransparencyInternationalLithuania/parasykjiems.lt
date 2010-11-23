@@ -46,6 +46,7 @@ MAIL_SERVER_TYPE = 'IMAP'
 MAIL_SERVER = ''
 MAIL_USERNAME = ''
 MAIL_PASSWORD = ''
+MAIL_PORT = '143'
 
 # email sending backend - works only from django 1.2
 # to console
