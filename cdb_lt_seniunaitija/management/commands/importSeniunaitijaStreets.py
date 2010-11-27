@@ -14,6 +14,7 @@ from cdb_lt_seniunaitija.models import SeniunaitijaStreet, Seniunaitija
 from contactdb.imp import ImportSources
 from cdb_lt_seniunaitija.management.commands.importSeniunaitijaMembers import SeniunaitijaMembersReader
 from cdb_lt_mps.models import PollingDistrictStreet
+from cdb_lt_streets.searchInIndex import *
 
 logger = logging.getLogger(__name__)
 
@@ -34,20 +35,18 @@ class SeniunaitijaAddressExpanderException(ChainnedException):
     pass
 
 class SeniunaitijaAddressExpander:
-    streetPrefixes = [u'mstl.', u'k.', u'vs.']
+    zippedCityPrefixes = zip(shortCityEndings, wholeCityEndings)
 
-    def GetCityPrefix(self, city, prefix):
-        if (prefix == "mstl."):
-            return "%s %s" % (city, "miestelis")
-        return "%s %s" % (city, prefix)
+    def GetCityPrefix(self, city, longPrefix):
+        return "%s %s" % (city, longPrefix)
 
     def ContainsCity(self, street):
-        for prefix in self.streetPrefixes:
-            index = street.find(prefix)
+        for shortPrefix, longPrefix in self.zippedCityPrefixes:
+            index = street.find(shortPrefix)
             if (index >= 0):
                 city = street[0:index].strip()
-                city = self.GetCityPrefix(city, prefix)
-                streetNew = street[index + len(prefix):].strip()
+                city = self.GetCityPrefix(city, longPrefix)
+                streetNew = street[index + len(shortPrefix):].strip()
                 return (streetNew, city)
         return (None, None)
 

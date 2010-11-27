@@ -10,11 +10,12 @@ from pjutils.deprecated import deprecated
 
 logger = logging.getLogger(__name__)
 
+shortCityEndings = [u"mstl.", u"vs.", u"m.", u"k."]
+wholeCityEndings = [u"miestelis", u"viensėdis", u"miestas", u"kaimas"]
+allCityEndings = wholeCityEndings + shortCityEndings
 
-wholeStreetEndings = [u"skersgatvis", u"kelias",
-                    u"plentas", u"prospektas",
-                    u"alėja", u"gatvė",
-                    u"aikštė", u"takas"]
+wholeStreetEndings = [u"skersgatvis", u"kelias", u"plentas", u"prospektas",
+                    u"alėja", u"gatvė", u"aikštė", u"takas"]
 shortStreetEndings = [u"skg.", u"kel.", u"tak.", u"pl.", u"pr.", u"al.", u"g.", u"a."]
 allStreetEndings = wholeStreetEndings + shortStreetEndings
 
