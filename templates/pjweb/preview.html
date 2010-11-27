@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+
+{% if preview.public %}
+<h2 class="c-h">{% trans "You are writing public mail. It will be sent to addressee and displayed on site." %}</h2>
+{% else %}
+<h2 class="c-h">{% trans "You are writing private mail. It will be sent directly to addressee." %}</h2>
+{% endif %}
+
+<br>
+<table id="letter">
+<tr>
+<td width="336px" ><h2>{% now "Y F d" %}</h2></td>
+</tr>
+  <tr>
+    <td width="336px" rowspan="3">
+      <p id="head-font"><b>{{ representative.name }} {{ representative.surname }}</b></p>
+{% if representative.phone %}{{ representative.phone }}{% endif %}
+{% if representative.officePhone %}{{ representative.officePhone }}{% endif %}
+    </td>
+    <td width="480px">
+        <p id="head-font"><b>{{ preview.sender_name }}</b></p>
+    </td>
+  </tr>
+  <tr>
+
+    <td width="480px">
+        {{ preview.sender }}<br>
+        {{ preview.phone }}
+    </td>
+  </tr>
+</table>
+<table id="letter">
+  <tr>
+    <td>
+      {% for line in msg_lst %}
+      <p id="message">{{ line }}</p>
+      {% endfor %}
+    </td>
+  </tr>
+
+</table>
+
+<form action="/pjweb/contact/{{ rtype }}/{{ mp_id }}/" method="post">
+<div id="invisible">
+{{ form.as_p }}
+<input type="checkbox" name="send" value="True" checked="checked" />
+</div>
+<div id="footer">
+<a href="javascript:javascript:history.go(-1)">{% trans "Back to editing" %}</a>
+<button><span>{% trans "Send" %}</span></button><br>
+</div>
+</form>
+{% endblock %}

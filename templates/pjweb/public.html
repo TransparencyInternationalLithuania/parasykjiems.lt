@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+<p>{{ mail.mail_date }}</p>
+<p>{{ mail.recipient_name }}</p>
+<p>{{ mail.sender_name }}</p>
+<p>{{ mail.message }}</p>
+{% if responses %}
+  <div>
+    {% for response in responses %}
+      {{ response.message }}
+    {% endfor %}
+  </div>
+{% endif %}
+{% endblock %}

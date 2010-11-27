@@ -1,0 +1,83 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import os
+from GlobalSettingsClass import *
+from distutils import dir_util
+import logging
+
+scriptPath = os.path.dirname( os.path.realpath( __file__ ) )
+
+TEMPLATE_DIRS = (
+ # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+ # Always use forward slashes, even on Windows.
+ # Don't forget to use absolute paths, not relative paths.
+ os.path.join(scriptPath, "templates")
+)
+
+dbPath = os.path.join(scriptPath, "db")
+dbFileName = "parasykjiems.db3"
+dir_util.mkpath(dbPath)
+
+DATABASE_ENGINE = 'sqlite3'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+DATABASE_NAME = os.path.join(dbPath, dbFileName)             # Or path to database file if using sqlite3.
+DATABASE_USER = ''             # Not used with sqlite3.
+DATABASE_PASSWORD = ''         # Not used with sqlite3.
+DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
+DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
+
+indexPath = os.path.join(scriptPath, "parasyk_index")
+dir_util.mkpath(indexPath)
+
+HAYSTACK_SITECONF = 'parasykjiems.search_sites'
+HAYSTACK_SEARCH_ENGINE = 'whoosh'
+HAYSTACK_WHOOSH_PATH = os.path.join(dbPath, 'parasyk_index')
+#HAYSTACK_XAPIAN_PATH = os.path.join(scriptPath, 'parasyk_index')
+
+# variables for email sending
+EMAIL_HOST = ''
+EMAIL_PORT = '25'
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_USE_TLS = False
+
+#variables for getting email
+MAIL_SERVER_TYPE = 'IMAP'
+MAIL_SERVER = ''
+MAIL_USERNAME = ''
+MAIL_PASSWORD = ''
+
+# email sending backend - works only from django 1.2
+# to console
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# real one
+#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+# where the static media files are
+STATIC_DOC_ROOT = os.path.join(scriptPath, "static")
+
+# enable logging
+logPath = os.path.join(scriptPath, "logs")
+dir_util.mkpath(logPath)
+LOG_FILENAME = os.path.join(logPath, 'pjweb.log')
+logging.basicConfig(filename=LOG_FILENAME,level=logging.DEBUG)
+
+# Setttings repository for ParašykJiems.LT
+GlobalSettings = GlobalSettingsClass()
+
+# variables for accessing Lithuanian contact db documents on google docs
+#GlobalSettings.GOOGLE_DOCS_USER = 'parasykjiems@gmail.com'
+#GlobalSettings.GOOGLE_DOCS_PASSWORD = 'enter password here'
+
+_ = lambda s: s
+
+GlobalSettings.LANGUAGES = (
+      ('lt', _('Lithuanian')),
+      ('en', _('English')),
+)
+
+#list of "nasty" words
+GlobalSettings.PROFANITIES_LIST = (u'bybys', u'šikna', u'pyderas')
+
+# set this to True if you want to run geo tests for Lithuanian data against real world data / real www servers
+GlobalSettings.EnableWWWForLTGeoTests = False
