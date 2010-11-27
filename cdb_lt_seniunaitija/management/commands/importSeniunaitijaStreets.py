@@ -36,6 +36,7 @@ class SeniunaitijaAddressExpanderException(ChainnedException):
 
 class SeniunaitijaAddressExpander:
     zippedCityPrefixes = zip(shortCityEndings, wholeCityEndings)
+    zippedStreetPrefixes = zip(shortStreetEndings, wholeStreetEndings)
 
     def GetCityPrefix(self, city, longPrefix):
         return "%s %s" % (city, longPrefix)
@@ -115,6 +116,18 @@ class SeniunaitijaAddressExpander:
             return True
         return False
 
+    def ExpandStreetEnding(self, street):
+        if (street is None):
+            return None
+        if (street == ""):
+            return ""
+        #print "street %s" % street
+        for shortPrefix, longPrefix in self.zippedStreetPrefixes:
+            index = street.find(shortPrefix)
+            if (index >= 0):
+                expanded = "%s%s" % (street[0:index], longPrefix)
+                return expanded
+
     def ExpandStreet(self, streets):
         """ yield a ExpandedStreet object for each house number found in street """
 
@@ -165,6 +178,9 @@ class SeniunaitijaAddressExpander:
                         street = None
                 else:
                     street = None
+
+            # expand street
+            street = self.ExpandStreetEnding(street)
 
             # parse street number
             if (streetProperties == u"" or streetProperties is None):
