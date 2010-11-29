@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import logging
-import settings
+from settings import *
 from django.core.management.base import BaseCommand
 from parasykjiems.pjutils.get_mail import GetMail
 from parasykjiems.pjweb.models import Email, MailHistory
@@ -37,13 +37,13 @@ class InsertResponse():
     def insert_response(self, mail_id):
         getmail = GetMail()
         resp = False
-        if settings.MAIL_SERVER:
+        if GlobalSettings.MAIL_SERVER:
             server_info = {
-                'server':settings.MAIL_SERVER,
-                'port':settings.MAIL_PORT,
-                'username':settings.MAIL_USERNAME,
-                'password':settings.MAIL_PASSWORD,
-                'type':settings.MAIL_SERVER_TYPE
+                'server':GlobalSettings.MAIL_SERVER,
+                'port':GlobalSettings.MAIL_PORT,
+                'username':GlobalSettings.MAIL_USERNAME,
+                'password':GlobalSettings.MAIL_PASSWORD,
+                'type':GlobalSettings.MAIL_SERVER_TYPE
             }
             mail = Email.objects.get(id=mail_id)
 
@@ -60,7 +60,6 @@ class InsertResponse():
                 for line in lines:
                     find_us = line.find('parasykjiems@gmail.com')
                     if len(line)>0 and (line[0]=='>' or find_us>-1):
-                        #print len(line), line
                         lines.remove(line)
                 message_1 = '\n'.join(lines)
                 resp = Email(
