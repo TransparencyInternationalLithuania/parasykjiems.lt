@@ -19,7 +19,7 @@ class GlobalSettingsClass():
         print "Define profanities (nasty words) list in local_settings.py "
 
     def MailServ(self):
-        print "Define mail server, where responses are comming from."
+        print "Define mail server, and settings where responses are coming from."
 
     def _LTGeoDataParseUrl(self):
         print """Define an URL for Lithuanian RegisterCenter root page. From that page data will be extracted
@@ -35,7 +35,11 @@ class GlobalSettingsClass():
                          'LTGeoDataParseUrl' : self._LTGeoDataParseUrl,
                          'LANGUAGES' : self.Languages,
                          'PROFANITIES_LIST' : self.Profanities,
-                         'MAIL_SERVER' : self.MailServ,}
+                         'MAIL_SERVER' : self.MailServ,
+                         'MAIL_SERVER_TYPE' : self.MailServ,
+                         'MAIL_USERNAME' : self.MailServ,
+                         'MAIL_PASSWORD' : self.MailServ,
+                         'MAIL_PORT' : self.MailServ,}
         if (name in printMoreInfo):
             printMoreInfo[name]()
 

@@ -378,7 +378,7 @@ def public(request, mail_id):
         'responses': responses,
         'LANGUAGES': GlobalSettings.LANGUAGES,
         'step1': '',
-        'step2': 'active-step',
+        'step2': '',
         'step3': '',
     })
 
@@ -468,6 +468,20 @@ def contact(request, rtype, mp_id):
     insert = InsertResponse()
     receiver = insert.get_rep(mp_id, rtype)
     current_site = Site.objects.get_current()
+    months = [
+        _(u'January'),
+        _(u'February'),
+        _(u'March'),
+        _(u'April'),
+        _(u'May'),
+        _(u'June'),
+        _(u'July'),
+        _(u'August'),
+        _(u'September'),
+        _(u'October'),
+        _(u'November'),
+        _(u'December')
+    ]
     print current_site
     if not receiver.email and not receiver.officeEmail:
         return HttpResponseRedirect('no_email')
@@ -486,6 +500,7 @@ def contact(request, rtype, mp_id):
             message = form.cleaned_data[u'message']
             sender = form.cleaned_data[u'sender']
             response_hash = random.randrange(0, 1000000),
+
             response_hash = response_hash[0]
             #recipients = [receiver.email, receiver.officeEmail]
             recipients = ['parasykjiems@gmail.com']
@@ -544,9 +559,8 @@ def contact(request, rtype, mp_id):
                         'step3': 'active-step',
                     })
             if not send:
-#                decl = DeclensionLt()
-#                d = datetime.date.today()
-#                print d.year, decl.month(d.month), d.day
+                d = datetime.date.today()
+                date_words = '%s %s %s' % (d.year, months[d.month-1], d.day)
                 return render_to_response('pjweb/preview.html', {
                     'form': form,
                     'mp_id': mp_id,
@@ -555,6 +569,7 @@ def contact(request, rtype, mp_id):
                     'msg_lst': message_disp.split('\n'),
                     'representative': receiver,
                     'LANGUAGES': GlobalSettings.LANGUAGES,
+                    'date_words': date_words,
                     'step1': '',
                     'step2': '',
                     'step3': 'active-step',
@@ -580,12 +595,14 @@ def confirm(request, mail_id, secret):
     ConfirmMessage = _('Sorry, but your message could not be confirmed.')
     if (int(mail_id)==mail.id) and (int(secret)==mail.response_hash):
         if mail.public:
-            #domain = settings.MAIL_USERNAME.split('@')[1]
-            reply_to = 'reply%s_%s@dev.parasykjiems.lt' % (mail.id, mail.response_hash)
+            domain = settings.MAIL_SERVER
+            #reply_to = 'reply%s_%s@dev.parasykjiems.lt' % (mail.id, mail.response_hash)
+            reply_to = 'reply%s_%s@%s' % (mail.id, mail.response_hash, domain)
         else:
             reply_to = mail.sender_mail
-        #recipients = ['didysis@vytautas.lt']
+
         recipients = ['parasykjiems@gmail.com']
+#        recipients = [mail.recipient_mail]
         mail.msg_state = 'W'
         mail.save()
         history = MailHistory(
