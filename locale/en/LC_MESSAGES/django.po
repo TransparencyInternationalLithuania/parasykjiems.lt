@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-29 21:42+0200\n"
+"POT-Creation-Date: 2010-11-30 19:25+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: settings_local.py:77
+#: settings_local.py:76
 msgid "Lithuanian"
 msgstr ""
 
-#: settings_local.py:78
+#: settings_local.py:77
 msgid "English"
 msgstr ""
 
@@ -127,28 +127,28 @@ msgstr ""
 msgid "December"
 msgstr ""
 
-#: pjweb/views.py:537
+#: pjweb/views.py:538
 msgid "You sent an email to "
 msgstr ""
 
-#: pjweb/views.py:537
+#: pjweb/views.py:538
 msgid ""
 " with text:\n"
 "\n"
 msgstr ""
 
-#: pjweb/views.py:537
+#: pjweb/views.py:538
 msgid ""
 "\n"
 "\n"
 "You must confirm this message by clicking link below:\n"
 msgstr ""
 
-#: pjweb/views.py:552
+#: pjweb/views.py:544
 msgid "Thank you. This message must be confirmed. Please check your email."
 msgstr ""
 
-#: pjweb/views.py:580
+#: pjweb/views.py:572
 #, python-format
 msgid ""
 "Dear. Mr. %s, \n"
@@ -158,15 +158,15 @@ msgid ""
 "Have a nice day."
 msgstr ""
 
-#: pjweb/views.py:595 pjweb/views.py:626
+#: pjweb/views.py:587 pjweb/views.py:620
 msgid "Sorry, but your message could not be confirmed."
 msgstr ""
 
-#: pjweb/views.py:624 pjweb/views.py:648
+#: pjweb/views.py:618 pjweb/views.py:642
 msgid "Thank you. Your message has been sent."
 msgstr ""
 
-#: pjweb/views.py:693
+#: pjweb/views.py:687
 msgid "Thank you. Your response has been posted."
 msgstr ""
 
@@ -273,7 +273,7 @@ msgstr ""
 msgid "Preview and send (check your spelling ;-))"
 msgstr ""
 
-#: templates/pjweb/check.html:16 templates/pjweb/contact.html:65
+#: templates/pjweb/check.html:16 templates/pjweb/contact.html:64
 msgid "Next Step"
 msgstr ""
 
@@ -362,31 +362,31 @@ msgstr ""
 msgid "You are writing a letter to your representative. Be polite."
 msgstr ""
 
-#: templates/pjweb/contact.html:18
+#: templates/pjweb/contact.html:17
 msgid "Receiver:"
 msgstr ""
 
-#: templates/pjweb/contact.html:19
+#: templates/pjweb/contact.html:18
 msgid "Sender "
 msgstr ""
 
-#: templates/pjweb/contact.html:19
+#: templates/pjweb/contact.html:18
 msgid "(fields marked with asterisk are required)"
 msgstr ""
 
-#: templates/pjweb/contact.html:27
+#: templates/pjweb/contact.html:26
 msgid "Mail type:"
 msgstr ""
 
-#: templates/pjweb/contact.html:34
+#: templates/pjweb/contact.html:33
 msgid "Sender Name:"
 msgstr ""
 
-#: templates/pjweb/contact.html:41
+#: templates/pjweb/contact.html:40
 msgid "Your Email:"
 msgstr ""
 
-#: templates/pjweb/contact.html:48
+#: templates/pjweb/contact.html:47
 msgid "Phone Number:"
 msgstr ""
 
@@ -460,6 +460,22 @@ msgstr ""
 
 #: templates/pjweb/private.html:6
 msgid "Click here, if you want to send public email"
+msgstr ""
+
+#: templates/pjweb/public.html:5
+msgid "Letter was sent to"
+msgstr ""
+
+#: templates/pjweb/public.html:5
+msgid "from"
+msgstr ""
+
+#: templates/pjweb/public.html:5 templates/pjweb/public.html.py:14
+msgid "on"
+msgstr ""
+
+#: templates/pjweb/public.html:14
+msgid "Got response from"
 msgstr ""
 
 #: templates/pjweb/public_mails.html:5

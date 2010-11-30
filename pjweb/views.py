@@ -347,7 +347,7 @@ def no_email(request, rtype, mp_id):
     })
 
 def public_mails(request):
-    all_mails = Email.objects.all().filter(public__exact=True, answer_to__isnull=True).exclude(msg_state__exact='N')
+    all_mails = Email.objects.all().filter(public__exact=True, msg_type__exact='Question').exclude(msg_state__exact='NotConfirmed')
 
     return render_to_response('pjweb/public_mails.html', {
         'all_mails': all_mails,
@@ -522,7 +522,8 @@ def contact(request, rtype, mp_id):
                     recipient_name = '%s %s' % (receiver.name, receiver.surname),
                     recipient_mail = recipients[0],
                     message = message,
-                    msg_state = 'N',
+                    msg_state = 'NotConfirmed',
+                    msg_type = 'Question',
                     response_hash = response_hash,
                     public = publ,
                 )
@@ -539,16 +540,7 @@ def contact(request, rtype, mp_id):
                     email = EmailMessage(u'Confirm your message %s' % sender_name, message, sender,
                         [sender], [],
                         headers = {'Reply-To': reply_to})
-
                     email.send()
-                    history = MailHistory(
-                        sender = mail.sender_mail,
-                        recipient = mail.recipient_mail,
-                        mail = mail,
-                        mail_state = 'N',
-                    )
-                    #print email
-                    history.save()
                     ThanksMessage = _('Thank you. This message must be confirmed. Please check your email.')
                     logger.debug('%s' % (ThanksMessage))
                     return render_to_response('pjweb/thanks.html', {
@@ -594,8 +586,10 @@ def confirm(request, mail_id, secret):
     mail = Email.objects.get(id=mail_id)
     ConfirmMessage = _('Sorry, but your message could not be confirmed.')
     if (int(mail_id)==mail.id) and (int(secret)==mail.response_hash):
+        print mail.id
+        mail.msg_state = 'Confirmed'
         if mail.public:
-            domain = settings.MAIL_SERVER
+            domain = GlobalSettings.MAIL_SERVER
             #reply_to = 'reply%s_%s@dev.parasykjiems.lt' % (mail.id, mail.response_hash)
             reply_to = 'reply%s_%s@%s' % (mail.id, mail.response_hash, domain)
         else:
@@ -603,15 +597,7 @@ def confirm(request, mail_id, secret):
 
         recipients = ['parasykjiems@gmail.com']
 #        recipients = [mail.recipient_mail]
-        mail.msg_state = 'W'
         mail.save()
-        history = MailHistory(
-            sender = mail.sender_mail,
-            recipient = mail.recipient_mail,
-            mail = mail,
-            mail_state = 'C',
-        )
-        history.save()
         email = EmailMessage(u'Gavote laišką nuo %s' % mail.sender_name, mail.message, mail.sender_mail,
             recipients, [],
             headers = {'Reply-To': reply_to})
@@ -620,7 +606,7 @@ def confirm(request, mail_id, secret):
             sender = mail.sender_mail,
             recipient = mail.recipient_mail,
             mail = mail,
-            mail_state = 'S',
+            mail_state = 'Sent',
         )
         history.save()
         ConfirmMessage = _('Thank you. Your message has been sent.')
@@ -687,7 +673,7 @@ def response(request, mail_id, response_no):
                 recipient_name = mail.sender_name,
                 recipient_mail = mail.sender_mail,
                 message = message,
-                msg_state = 'R',
+                msg_type = 'Response',
                 answer_to = mail.id,
                 public = mail.public,
             )

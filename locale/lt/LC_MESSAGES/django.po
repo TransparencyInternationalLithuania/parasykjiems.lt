@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-29 21:39+0200\n"
-"PO-Revision-Date: 2010-11-29 21:42+0300\n"
+"POT-Creation-Date: 2010-11-30 19:25+0200\n"
+"PO-Revision-Date: 2010-11-30 19:27+0300\n"
 "Last-Translator: Vytautas <didysis@vytrautas.lt>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -16,11 +16,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: settings_local.py:77
+#: settings_local.py:76
 msgid "Lithuanian"
 msgstr "Lietuvių"
 
-#: settings_local.py:78
+#: settings_local.py:77
 msgid "English"
 msgstr "Anglų"
 
@@ -124,17 +124,17 @@ msgstr "Lapkričio"
 msgid "December"
 msgstr "Gruodžio"
 
-#: pjweb/views.py:537
+#: pjweb/views.py:538
 msgid "You sent an email to "
 msgstr "Siuntėte laišką "
 
-#: pjweb/views.py:537
+#: pjweb/views.py:538
 msgid ""
 " with text:\n"
 "\n"
 msgstr " su tekstu:\n"
 
-#: pjweb/views.py:537
+#: pjweb/views.py:538
 msgid ""
 "\n"
 "\n"
@@ -144,11 +144,11 @@ msgstr ""
 "\n"
 "Privalote patvirtinti žinutę paspausdami žemiau:\n"
 
-#: pjweb/views.py:552
+#: pjweb/views.py:544
 msgid "Thank you. This message must be confirmed. Please check your email."
 msgstr "Dėkojame. Ši žinutė privalo būti patvirtinta. Patikrinkite savo el. pašto dėžutę."
 
-#: pjweb/views.py:580
+#: pjweb/views.py:572
 #, python-format
 msgid ""
 "Dear. Mr. %s, \n"
@@ -163,17 +163,17 @@ msgstr ""
 "\n"
 "Geros dienos."
 
-#: pjweb/views.py:595
-#: pjweb/views.py:626
+#: pjweb/views.py:587
+#: pjweb/views.py:620
 msgid "Sorry, but your message could not be confirmed."
 msgstr "Apgailestaujame, bet Jūsų žinutė negali būti patvirtinta."
 
-#: pjweb/views.py:624
-#: pjweb/views.py:648
+#: pjweb/views.py:618
+#: pjweb/views.py:642
 msgid "Thank you. Your message has been sent."
 msgstr "Dėkojame. Jūsų žinutė išsiųsta."
 
-#: pjweb/views.py:693
+#: pjweb/views.py:687
 msgid "Thank you. Your response has been posted."
 msgstr "Dėkojame. Jūsų atsakymas paviešintas."
 
@@ -295,7 +295,7 @@ msgid "Preview and send (check your spelling ;-))"
 msgstr "Peržiūra ir siuntimas (pasitikrinkite klaidas ;-))"
 
 #: templates/pjweb/check.html:16
-#: templates/pjweb/contact.html:65
+#: templates/pjweb/contact.html:64
 msgid "Next Step"
 msgstr "Sekantis žingsnis"
 
@@ -375,31 +375,31 @@ msgstr "Skatina seniūnaitijos gyventojus prižiūrėti gyvenamosios vietovės t
 msgid "You are writing a letter to your representative. Be polite."
 msgstr "Rašote laišką savo atstovui. Būkite mandagūs."
 
-#: templates/pjweb/contact.html:18
+#: templates/pjweb/contact.html:17
 msgid "Receiver:"
 msgstr "Gavėjas:"
 
-#: templates/pjweb/contact.html:19
+#: templates/pjweb/contact.html:18
 msgid "Sender "
 msgstr "Siuntėjas"
 
-#: templates/pjweb/contact.html:19
+#: templates/pjweb/contact.html:18
 msgid "(fields marked with asterisk are required)"
 msgstr "(laukai, pažymėti žvaigždute, yra privalomi)"
 
-#: templates/pjweb/contact.html:27
+#: templates/pjweb/contact.html:26
 msgid "Mail type:"
 msgstr "Laiško tipas:"
 
-#: templates/pjweb/contact.html:34
+#: templates/pjweb/contact.html:33
 msgid "Sender Name:"
 msgstr "Siuntėjo vardas:"
 
-#: templates/pjweb/contact.html:41
+#: templates/pjweb/contact.html:40
 msgid "Your Email:"
 msgstr "Jūsų El. Paštas:"
 
-#: templates/pjweb/contact.html:48
+#: templates/pjweb/contact.html:47
 msgid "Phone Number:"
 msgstr "Telefono numeris:"
 
@@ -469,6 +469,23 @@ msgstr "Spauskite čia, jei norite siųsti privatų laišką"
 #: templates/pjweb/private.html:6
 msgid "Click here, if you want to send public email"
 msgstr "Spauskite čia, jei norite siųsti viešą laišką"
+
+#: templates/pjweb/public.html:5
+msgid "Letter was sent to"
+msgstr "Laiškas buvo išsiųstas"
+
+#: templates/pjweb/public.html:5
+msgid "from"
+msgstr "nuo"
+
+#: templates/pjweb/public.html:5
+#: templates/pjweb/public.html.py:14
+msgid "on"
+msgstr " "
+
+#: templates/pjweb/public.html:14
+msgid "Got response from"
+msgstr "Atsakymas gautas nuo"
 
 #: templates/pjweb/public_mails.html:5
 msgid "Here you can see all public emails"
