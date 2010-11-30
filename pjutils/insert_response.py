@@ -46,10 +46,8 @@ class InsertResponse():
                 'type':GlobalSettings.MAIL_SERVER_TYPE
             }
             mail = Email.objects.get(id=mail_id)
-
             responses = getmail.get_mail(server_info, mail_id, mail.response_hash)
             responder = self.get_rep(mail.recipient_id, mail.recipient_type)
-
             for response in responses:
                 message = response
                 sender = responder.email
@@ -70,7 +68,7 @@ class InsertResponse():
                     recipient_name = mail.sender_name,
                     recipient_mail = mail.sender_mail,
                     message = message_1,
-                    msg_state = 'R',
+                    msg_type = 'Response',
                     response_hash = mail.response_hash,
                     answer_to = mail.id,
                     public = True,
@@ -82,28 +80,13 @@ class InsertResponse():
                     headers = {'Reply-To': resp.sender_mail})
                 email.send()
 
-                email_edit = Email(
-                    id = mail.id,
-                    sender_name = mail.sender_name,
-                    sender_mail = mail.sender_mail,
-                    recipient_id = mail.recipient_id,
-                    recipient_type = mail.recipient_type,
-                    recipient_name = mail.recipient_name,
-                    recipient_mail = mail.sender_mail,
-                    message = mail.message,
-                    msg_state = 'A',
-                    response_hash = mail.response_hash,
-                    answer_to = mail.answer_to,
-                    public = mail.public,
-                )
-                email_edit.save()
-                mail_history = MailHistory(
-                    sender = mail.sender_mail,
-                    recipient = mail.recipient_mail,
-                    mail = mail,
-                    mail_state = 'A',
-                )
-                mail_history.save()
+#                mail_history = MailHistory(
+#                    sender = mail.sender_mail,
+#                    recipient = mail.recipient_mail,
+#                    mail = mail,
+#                    mail_state = 'A',
+#                )
+#                mail_history.save()
             if resp:
                 return resp
             else:

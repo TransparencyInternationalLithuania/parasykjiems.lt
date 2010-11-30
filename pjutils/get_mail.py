@@ -21,7 +21,7 @@ class GetMail():
         messages = []
         chrst = Charset()
 #        typ, data = M.search(None, 'To', 'reply%s_%s' % (msg_id, response_hash))
-        typ, data = M.search(None, 'To', 'reply%s' % (msg_id))
+        typ, data = M.search(None, 'To', 'reply%s_%s' % (msg_id, response_hash))
         for num in data[0].split():
             message = ""
 #            typ, data = M.fetch(num, '(RFC822)')

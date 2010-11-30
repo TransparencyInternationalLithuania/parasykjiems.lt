@@ -8,10 +8,13 @@ class Email(models.Model):
     """
     
     MSG_STATES = (
-        ('N', 'Not Confirmed'),
-        ('W', 'Waiting'),
-        ('A', 'Answered'),
-        ('R', 'Response'),
+        ('NotConfirmed', 'Not Confirmed'),
+        ('Confirmed', 'Confirmed'),
+    )
+
+    MSG_TYPES = (
+        ('Question', 'Question'),
+        ('Response', 'Response'),
     )
 
     sender_mail = models.EmailField()
@@ -23,7 +26,8 @@ class Email(models.Model):
     answer_to = models.IntegerField(null=True)
     response_hash = models.IntegerField()
     message = models.TextField(blank=True)
-    msg_state = models.CharField(max_length=1, choices=MSG_STATES)
+    msg_state = models.CharField(max_length=12, choices=MSG_STATES, null=True)
+    msg_type = models.CharField(max_length=10, choices=MSG_TYPES, null=True)
     mail_date = models.DateTimeField(auto_now=True, editable=False)
     public = models.BooleanField()
 
@@ -35,17 +39,15 @@ class MailHistory(models.Model):
     """
 
     EMAIL_STATES = (
-        ('C', 'Confirmed'),
-        ('S', 'Sent'),
-        ('N', 'New'),
-        ('F', 'Failed'),
-        ('A', 'Answered'),
+        ('Sent', 'Sent'),
+        ('FailedPermanently', 'Failed Permanently'),
+        ('Failed', 'Failed'),
     )
 
     sender = models.EmailField()
-    recipient = models.CharField(max_length = 5)
+    recipient = models.CharField(max_length = 128)
     mail = models.ForeignKey('Email')
-    mail_state = models.CharField(max_length=1, choices=EMAIL_STATES, blank=True)
+    mail_state = models.CharField(max_length=17, choices=EMAIL_STATES, blank=True)
     request_date = models.DateTimeField(auto_now=True, editable=False)
 
     def __unicode__(self):
