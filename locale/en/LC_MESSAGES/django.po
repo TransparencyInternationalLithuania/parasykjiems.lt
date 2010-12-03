@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-30 19:25+0200\n"
+"POT-Creation-Date: 2010-12-04 01:44+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -53,11 +53,11 @@ msgstr ""
 msgid "States"
 msgstr ""
 
-#: pjweb/forms.py:27
+#: pjweb/forms.py:29
 msgid "Private"
 msgstr ""
 
-#: pjweb/forms.py:28
+#: pjweb/forms.py:30
 msgid "Public"
 msgstr ""
 
@@ -158,15 +158,35 @@ msgid ""
 "Have a nice day."
 msgstr ""
 
-#: pjweb/views.py:587 pjweb/views.py:620
+#: pjweb/views.py:587 pjweb/views.py:614
 msgid "Sorry, but your message could not be confirmed."
 msgstr ""
 
-#: pjweb/views.py:618 pjweb/views.py:642
+#: pjweb/views.py:612 pjweb/views.py:636
 msgid "Thank you. Your message has been sent."
 msgstr ""
 
-#: pjweb/views.py:687
+#: pjweb/views.py:674
+#, python-format
+msgid "In selected period (from %(from)s to %(to)s):"
+msgstr ""
+
+#: pjweb/views.py:676
+#, python-format
+msgid "Questions sent: %s"
+msgstr ""
+
+#: pjweb/views.py:677
+#, python-format
+msgid "Answers got: %s"
+msgstr ""
+
+#: pjweb/views.py:678
+#, python-format
+msgid "New users: %s"
+msgstr ""
+
+#: pjweb/views.py:726
 msgid "Thank you. Your response has been posted."
 msgstr ""
 
@@ -484,4 +504,16 @@ msgstr ""
 
 #: templates/pjweb/response.html:6
 msgid "You are writing an answer to "
+msgstr ""
+
+#: templates/pjweb/stats.html:6
+msgid "From"
+msgstr ""
+
+#: templates/pjweb/stats.html:6
+msgid "to"
+msgstr ""
+
+#: templates/pjweb/stats.html:7
+msgid "Filter"
 msgstr ""

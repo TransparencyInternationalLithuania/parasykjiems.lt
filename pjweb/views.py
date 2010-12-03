@@ -654,6 +654,51 @@ def feedback(request):
         'step3': '',
     })
 
+def stats(request):
+    period_string = ''
+    if request.method == 'POST':
+        form = PeriodSelectForm(data=request.POST)
+        if form.is_valid():
+            date_from = form.cleaned_data['date_from']
+            date_to = form.cleaned_data['date_to']
+            questions = len(Email.objects.filter(
+                msg_type__iexact='Question', msg_state__iexact='Confirmed',
+                mail_date__gte=date_from,mail_date__lte=date_to
+            ))
+            responses = len(Email.objects.filter(
+                msg_type__iexact='Response', mail_date__gte=date_from,mail_date__lte=date_to
+            ))
+            new_addresses = len(Email.objects.filter(
+                answer_to__exact=None, mail_date__gte=date_from,mail_date__lte=date_to
+            ).values('sender_mail').distinct())
+            period_string = _('In selected period (from %(from)s to %(to)s):') % {'from':date_from, 'to':date_to}
+            stats = [
+                _('Questions sent: %s') % questions,
+                _('Answers got: %s') % responses,
+                _('New users: %s') % new_addresses,
+            ]
+            return render_to_response('pjweb/stats.html', {
+                'period_string': period_string,
+                'stats': stats,
+                'form': form,
+                'LANGUAGES': GlobalSettings.LANGUAGES,
+                'step1': '',
+                'step2': '',
+                'step3': '',
+            })
+
+    else:
+        form = PeriodSelectForm()
+        
+    return render_to_response('pjweb/stats.html', {
+        'period_string': period_string,
+        'form': form,
+        'LANGUAGES': GlobalSettings.LANGUAGES,
+        'step1': '',
+        'step2': '',
+        'step3': '',
+    })
+
 def response(request, mail_id, response_no):
     mail = Email.objects.get(id=mail_id)
     insert = InsertResponse()
