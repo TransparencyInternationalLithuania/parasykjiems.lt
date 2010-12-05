@@ -385,11 +385,14 @@ def public(request, mail_id):
     responses = []
     mail = Email.objects.get(id=mail_id)
     responses = Email.objects.filter(answer_to__exact=mail_id)
-    insert = InsertResponse()
-    if not responses:
-        responses = [insert.insert_response(mail.id)]
+    message = mail.message
+    msg = message.split('\n')
+#    insert = InsertResponse()
+#    if not responses:
+#        responses = [insert.insert_response(mail.id)]
     return render_to_response('pjweb/public.html', {
         'mail': mail,
+        'message': msg,
         'responses': responses,
         'LANGUAGES': GlobalSettings.LANGUAGES,
         'step1': '',
