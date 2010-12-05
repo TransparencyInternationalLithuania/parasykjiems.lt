@@ -116,9 +116,21 @@ def addHouseNumberQuery(query, house_number):
     # convert to integer
     house_number = int(house_number)
     isOdd = house_number % 2
-    query = query.filter(numberFrom__lte = house_number ) \
-        .filter(numberTo__gte = house_number) \
-        .filter(numberOdd = isOdd)
+
+    houseNumberEquals = Q(**{"%s__lte" % "numberFrom": house_number}) & \
+        Q(**{"%s__gte" % "numberTo": house_number}) & \
+        Q(**{"%s" % "numberOdd": isOdd})
+
+    houseNumberIsNull = Q(**{"%s__isnull" % "numberFrom": True}) & \
+        Q(**{"%s__isnull" % "numberTo": True})
+
+    orQuery = houseNumberEquals | houseNumberIsNull
+
+    #query = query.filter(numberFrom__lte = house_number ) \
+     #   .filter(numberTo__gte = house_number) \
+      #  .filter(numberOdd = isOdd)
+
+    query = query.filter(orQuery)
     return query
 
 
@@ -128,11 +140,14 @@ def findMPs(municipality = None, city = None, street = None, house_number = None
     street = removeGenericPartFromStreet(street)
     municipality = removeGenericPartFromMunicipality(municipality)
 
+    logging.info("searching for MP: street %s, city %s, municipality %s" % (street, city, municipality))
+
     try:
         query = PollingDistrictStreet.objects.all().filter(municipality__contains = municipality)\
             .filter(street__contains = street) \
             .filter(city__contains = city)
         query = addHouseNumberQuery(query, house_number)
+        print query.query
 
         query = query.distinct() \
             .values('constituency')
@@ -140,7 +155,7 @@ def findMPs(municipality = None, city = None, street = None, house_number = None
     except PollingDistrictStreet.DoesNotExist:
         logging.info("no polling district")
         return []
-
+    print "found MPs in following constituency : %s" % (idList)
     members = ParliamentMember.objects.all().filter(constituency__in = idList)
     return members
 
