@@ -127,7 +127,7 @@ def findMPs(municipality = None, city = None, street = None, house_number = None
             .filter(street__contains = street) \
             .filter(city__contains = city)
         query = addHouseNumberQuery(query, house_number)
-        print query.query
+        #print query.query
 
         query = query.distinct() \
             .values('constituency')
