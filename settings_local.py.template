@@ -29,9 +29,9 @@ DATABASE_PORT = ''             # Set to empty string for default. Not used with 
 indexPath = os.path.join(scriptPath, "parasyk_index")
 dir_util.mkpath(indexPath)
 
-HAYSTACK_SITECONF = 'parasykjiems.search_sites'
-HAYSTACK_SEARCH_ENGINE = 'whoosh'
-HAYSTACK_WHOOSH_PATH = os.path.join(dbPath, 'parasyk_index')
+#HAYSTACK_SITECONF = 'parasykjiems.search_sites'
+#HAYSTACK_SEARCH_ENGINE = 'whoosh'
+#HAYSTACK_WHOOSH_PATH = os.path.join(dbPath, 'parasyk_index')
 #HAYSTACK_XAPIAN_PATH = os.path.join(scriptPath, 'parasyk_index')
 
 # variables for email sending
@@ -40,12 +40,6 @@ EMAIL_PORT = '25'
 EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = False
-
-#variables for getting email
-MAIL_SERVER_TYPE = 'IMAP'
-MAIL_SERVER = ''
-MAIL_USERNAME = ''
-MAIL_PASSWORD = ''
 
 # email sending backend - works only from django 1.2
 # to console
@@ -64,6 +58,13 @@ logging.basicConfig(filename=LOG_FILENAME,level=logging.DEBUG)
 
 # Setttings repository for ParašykJiems.LT
 GlobalSettings = GlobalSettingsClass()
+
+#variables for getting email
+GlobalSettings.MAIL_SERVER_TYPE = 'IMAP'
+GlobalSettings.MAIL_SERVER = 'dev.parasykjiems.lt'
+GlobalSettings.MAIL_USERNAME = 'vytautas'
+GlobalSettings.MAIL_PASSWORD = 'devdev'
+GlobalSettings.MAIL_PORT = '5143'
 
 # variables for accessing Lithuanian contact db documents on google docs
 #GlobalSettings.GOOGLE_DOCS_USER = 'parasykjiems@gmail.com'

@@ -1,15 +1,21 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block content %}
-<p>{{ mail.mail_date }}</p>
+<div id="public_question">
+<p id="date_sent">{% trans "Letter was sent to" %} {{ mail.recipient_name }} {% trans "from" %} {{ mail.sender_name }} {% trans "on" %} {{ mail.mail_date|date:"Y-m-d" }}, {{ mail.mail_date|time:"H:i" }}</p>
+<hr>
 <p>{{ mail.recipient_name }}</p>
 <p>{{ mail.sender_name }}</p>
 <p>{{ mail.message }}</p>
-{% if responses %}
-  <div>
-    {% for response in responses %}
-      {{ response.message }}
-    {% endfor %}
-  </div>
-{% endif %}
+</div>
+  {% if responses %}
+    <div id="public_response">
+      {% for response in responses %}
+        <p id="date_sent">{% trans "Got response from" %} {{ response.sender_name }} {% trans "on" %} {{ mail.mail_date|date:"Y-m-d" }}, {{ mail.mail_date|time:"H:i" }}</p>
+        <hr>
+        {{ response.message }}
+      {% endfor %}
+    </div>
+  {% endif %}
+
 {% endblock %}
