@@ -222,9 +222,9 @@ def choose_representative(request, municipality = None, city = None, street = No
         'civilparish_members': civilparish_members,
         'seniunaitija_members': seniunaitija_members,
         'LANGUAGES': GlobalSettings.LANGUAGES,
-        'step1': 'step1_active.png',
-        'step2': 'step2_inactive.png',
-        'step3': 'step3_inactive.png',
+        'step1': 'active-step',
+        'step2': '',
+        'step3': '',
     })
 
 @deprecated
@@ -478,7 +478,6 @@ def constituency(request, pd_id):
         'LANGUAGES': settings.LANGUAGES,
         'step1': 'active-step',
         'step2': '',
-
         'step3': '',
     })
     
