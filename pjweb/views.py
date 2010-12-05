@@ -12,7 +12,8 @@ from django.core.mail import send_mail, EmailMessage
 from parasykjiems.pjweb.models import Email, MailHistory
 from parasykjiems.pjweb.forms import *
 from pjutils.address_search import AddressSearch
-from pjutils.get_mail import GetMail
+#from pjutils.get_mail import GetMail
+from pjutils.insert_response import InsertResponse
 from pjutils.declension import DeclensionLt
 from django.utils import simplejson
 import random
@@ -36,27 +37,6 @@ def is_odd(number):
         return True
     else:
         return False
-
-def get_rep(rep_id, rtype):
-    if rtype=='mp':
-        receiver = ParliamentMember.objects.all().filter(
-                id__exact=rep_id
-            )
-    elif rtype=='mn':
-        receiver = MunicipalityMember.objects.all().filter(
-                id__exact=rep_id
-            )
-    elif rtype=='cp':
-        receiver = CivilParishMember.objects.all().filter(
-                id__exact=rep_id
-            )
-    elif rtype=='sn':
-        receiver = SeniunaitijaMember.objects.all().filter(
-                id__exact=rep_id
-            )
-
-    return receiver[0]
-
 
 
 
@@ -328,62 +308,6 @@ def get_civilparish(pd_id, constituency):
 #    print result
     return result
 
-def insert_response(mail_id):
-    getmail = GetMail()
-    resp = False
-    if settings.MAIL_SERVER:
-        server_info = {
-            'server':settings.MAIL_SERVER,
-            'username':settings.MAIL_USERNAME,
-            'password':settings.MAIL_PASSWORD,
-            'type':settings.MAIL_SERVER_TYPE
-        }
-        responses = getmail.get_mail(server_info, mail_id)
-
-        mails = Email.objects.all().filter(id__exact=mail_id)
-        mail = mails[0]
-        responder = get_rep(mail.recipient_id, mail.recipient_type)
-
-        for response in responses:
-            message = response
-            sender = responder.email
-            recipients = mail.sender_mail
-
-            resp = Email(
-                sender_name = mail.recipient_name,
-                sender_mail = responder.email,
-                recipient_id = mail.recipient_id,
-                recipient_type = mail.recipient_type,
-                recipient_name = mail.sender_name,
-                recipient_mail = mail.sender_mail,
-                message = message,
-                msg_state = 'A',
-                response_hash = mail.response_hash,
-                answer_to = mail.id,
-                public = True,
-            )
-            resp.save()
-            email = Email(
-                id = mail.id,
-                sender_name = mail.sender_name,
-                sender_mail = mail.sender_mail,
-                recipient_id = mail.recipient_id,
-                recipient_type = mail.recipient_type,
-                recipient_name = mail.recipient_name,
-                recipient_mail = mail.sender_mail,
-                message = mail.message,
-                msg_state = 'A',
-                response_hash = mail.response_hash,
-                answer_to = mail.answer_to,
-                public = mail.public,
-            )
-            email.save()
-        if resp:
-            return resp
-        else:
-            return False
-    return False
-
 def index(request):
     query_string = ' '
     entered = ''
@@ -423,7 +347,8 @@ def index(request):
         })
 
 def no_email(request, rtype, mp_id):
-    representative = get_rep(mp_id, rtype)
+    insert = InsertResponse()
+    representative = insert.get_rep(mp_id, rtype)
     NoEmailMsg = _('%(name)s %(surname)s email cannot be found in database.') % {
         'name':representative.name, 'surname':representative.surname
     }
@@ -437,7 +362,7 @@ def no_email(request, rtype, mp_id):
     })
 
 def public_mails(request):
-    all_mails = Email.objects.all().filter(public__exact=True, answer_to__isnull=True, msg_state__exact='W').exclude(msg_state__exact='N')
+    all_mails = Email.objects.all().filter(public__exact=True, msg_type__exact='Question').exclude(msg_state__exact='NotConfirmed')
 
     return render_to_response('pjweb/public_mails.html', {
         'all_mails': all_mails,
@@ -455,24 +380,26 @@ def about(request):
         'step3': '',
     })
 
+
 def public(request, mail_id):
     responses = []
-    mails = Email.objects.filter(id__exact=mail_id)
-    mail = mails[0]
+    mail = Email.objects.get(id=mail_id)
     responses = Email.objects.filter(answer_to__exact=mail_id)
+    insert = InsertResponse()
     if not responses:
-        responses = [insert_response(mail.id)]
+        responses = [insert.insert_response(mail.id)]
     return render_to_response('pjweb/public.html', {
         'mail': mail,
         'responses': responses,
         'LANGUAGES': GlobalSettings.LANGUAGES,
         'step1': '',
-        'step2': 'active-step',
+        'step2': '',
         'step3': '',
     })
 
 def smtp_error(request, rtype, mp_id, private=None):
-    representative = get_rep(mp_id, rtype)
+    insert = InsertResponse()
+    representative = insert.get_rep(mp_id, rtype)
     ErrorMessage = _(
         'Problem occurred. Your Email to %(name)s %(surname)s has not been sent. Please try again later.'
     ) % {
@@ -548,12 +475,28 @@ def constituency(request, pd_id):
         'LANGUAGES': settings.LANGUAGES,
         'step1': 'active-step',
         'step2': '',
+
         'step3': '',
     })
     
 def contact(request, rtype, mp_id):
-    receiver = get_rep(mp_id, rtype)
+    insert = InsertResponse()
+    receiver = insert.get_rep(mp_id, rtype)
     current_site = Site.objects.get_current()
+    months = [
+        _(u'January'),
+        _(u'February'),
+        _(u'March'),
+        _(u'April'),
+        _(u'May'),
+        _(u'June'),
+        _(u'July'),
+        _(u'August'),
+        _(u'September'),
+        _(u'October'),
+        _(u'November'),
+        _(u'December')
+    ]
     print current_site
     if not receiver.email and not receiver.officeEmail:
         return HttpResponseRedirect('no_email')
@@ -572,10 +515,11 @@ def contact(request, rtype, mp_id):
             message = form.cleaned_data[u'message']
             sender = form.cleaned_data[u'sender']
             response_hash = random.randrange(0, 1000000),
+
             response_hash = response_hash[0]
             #recipients = [receiver.email, receiver.officeEmail]
             recipients = ['parasykjiems@gmail.com']
-            #recipients = ['didysis@vytautas.lt']
+
             if not recipients[0]:
                 logger.debug('%s has no email' % (receiver.name, receiver.surname))
                 return HttpResponseRedirect('no_email')
@@ -593,7 +537,8 @@ def contact(request, rtype, mp_id):
                     recipient_name = '%s %s' % (receiver.name, receiver.surname),
                     recipient_mail = recipients[0],
                     message = message,
-                    msg_state = 'N',
+                    msg_state = 'NotConfirmed',
+                    msg_type = 'Question',
                     response_hash = response_hash,
                     public = publ,
                 )
@@ -602,24 +547,15 @@ def contact(request, rtype, mp_id):
                     mail.save()
 #                    if publ:
                         #domain = settings.MAIL_USERNAME.split('@')[1]
-                    reply_to = 'reply%s_%s@kroitus.com' % (mail.id, mail.response_hash)
+                    reply_to = 'reply%s_%s@dev.parasykjiems.lt' % (mail.id, mail.response_hash)
 #                    else:
 #                        reply_to = sender
                     message = _('You sent an email to ')+ mail.recipient_name + _(' with text:\n\n')+ message_disp + _('\n\nYou must confirm this message by clicking link below:\n') + 'http://%s/confirm/%s/%s' % (current_site.domain, mail.id, mail.response_hash)
-                    print message
+                    #print message
                     email = EmailMessage(u'Confirm your message %s' % sender_name, message, sender,
                         [sender], [],
                         headers = {'Reply-To': reply_to})
-
                     email.send()
-                    history = MailHistory(
-                        sender = mail.sender_mail,
-                        recipient = mail.recipient_mail,
-                        mail = mail,
-                        mail_state = 'N',
-                    )
-                    print email
-                    history.save()
                     ThanksMessage = _('Thank you. This message must be confirmed. Please check your email.')
                     logger.debug('%s' % (ThanksMessage))
                     return render_to_response('pjweb/thanks.html', {
@@ -630,9 +566,8 @@ def contact(request, rtype, mp_id):
                         'step3': 'active-step',
                     })
             if not send:
-#                decl = DeclensionLt()
-#                d = datetime.date.today()
-#                print d.year, decl.month(d.month), d.day
+                d = datetime.date.today()
+                date_words = '%s %s %s' % (d.year, months[d.month-1], d.day)
                 return render_to_response('pjweb/preview.html', {
                     'form': form,
                     'mp_id': mp_id,
@@ -641,6 +576,7 @@ def contact(request, rtype, mp_id):
                     'msg_lst': message_disp.split('\n'),
                     'representative': receiver,
                     'LANGUAGES': GlobalSettings.LANGUAGES,
+                    'date_words': date_words,
                     'step1': '',
                     'step2': '',
                     'step3': 'active-step',
@@ -665,22 +601,18 @@ def confirm(request, mail_id, secret):
     mail = Email.objects.get(id=mail_id)
     ConfirmMessage = _('Sorry, but your message could not be confirmed.')
     if (int(mail_id)==mail.id) and (int(secret)==mail.response_hash):
+        print mail.id
+        mail.msg_state = 'Confirmed'
         if mail.public:
-            #domain = settings.MAIL_USERNAME.split('@')[1]
-            reply_to = 'reply%s@kroitus.com' % mail.id
+            domain = GlobalSettings.MAIL_SERVER
+            #reply_to = 'reply%s_%s@dev.parasykjiems.lt' % (mail.id, mail.response_hash)
+            reply_to = 'reply%s_%s@%s' % (mail.id, mail.response_hash, domain)
         else:
             reply_to = mail.sender_mail
-        #recipients = ['didysis@vytautas.lt']
+
         recipients = ['parasykjiems@gmail.com']
-        mail.msg_state = 'W'
+#        recipients = [mail.recipient_mail]
         mail.save()
-        history = MailHistory(
-            sender = mail.sender_mail,
-            recipient = mail.recipient_mail,
-            mail = mail,
-            mail_state = 'C',
-        )
-        history.save()
         email = EmailMessage(u'Gavote laišką nuo %s' % mail.sender_name, mail.message, mail.sender_mail,
             recipients, [],
             headers = {'Reply-To': reply_to})
@@ -689,7 +621,7 @@ def confirm(request, mail_id, secret):
             sender = mail.sender_mail,
             recipient = mail.recipient_mail,
             mail = mail,
-            mail_state = 'S',
+            mail_state = 'Sent',
         )
         history.save()
         ConfirmMessage = _('Thank you. Your message has been sent.')
@@ -713,7 +645,6 @@ def feedback(request):
             message = form.cleaned_data[u'message']
             sender = 'Concerned citizen'
             recipients = ['parasykjiems@gmail.com']
-
             email = EmailMessage(u'Pastaba dėl parašykjiems.lt', message, sender,
                 recipients, [])
             email.send()
@@ -738,9 +669,55 @@ def feedback(request):
         'step3': '',
     })
 
+def stats(request):
+    period_string = ''
+    if request.method == 'POST':
+        form = PeriodSelectForm(data=request.POST)
+        if form.is_valid():
+            date_from = form.cleaned_data['date_from']
+            date_to = form.cleaned_data['date_to']
+            questions = len(Email.objects.filter(
+                msg_type__iexact='Question', msg_state__iexact='Confirmed',
+                mail_date__gte=date_from,mail_date__lte=date_to
+            ))
+            responses = len(Email.objects.filter(
+                msg_type__iexact='Response', mail_date__gte=date_from,mail_date__lte=date_to
+            ))
+            new_addresses = len(Email.objects.filter(
+                answer_to__exact=None, mail_date__gte=date_from,mail_date__lte=date_to
+            ).values('sender_mail').distinct())
+            period_string = _('In selected period (from %(from)s to %(to)s):') % {'from':date_from, 'to':date_to}
+            stats = [
+                _('Questions sent: %s') % questions,
+                _('Answers got: %s') % responses,
+                _('New users: %s') % new_addresses,
+            ]
+            return render_to_response('pjweb/stats.html', {
+                'period_string': period_string,
+                'stats': stats,
+                'form': form,
+                'LANGUAGES': GlobalSettings.LANGUAGES,
+                'step1': '',
+                'step2': '',
+                'step3': '',
+            })
+
+    else:
+        form = PeriodSelectForm()
+        
+    return render_to_response('pjweb/stats.html', {
+        'period_string': period_string,
+        'form': form,
+        'LANGUAGES': GlobalSettings.LANGUAGES,
+        'step1': '',
+        'step2': '',
+        'step3': '',
+    })
+
 def response(request, mail_id, response_no):
     mail = Email.objects.get(id=mail_id)
-    responder = get_rep(mail.recipient_id, mail.recipient_type)
+    insert = InsertResponse()
+    responder = insert.get_rep(mail.recipient_id, mail.recipient_type)
     if int(mail.response_hash)==int(response_no) and request.method == 'POST':
         form = FeedbackForm(data=request.POST)
         if form.is_valid():
@@ -756,7 +733,7 @@ def response(request, mail_id, response_no):
                 recipient_name = mail.sender_name,
                 recipient_mail = mail.sender_mail,
                 message = message,
-                msg_state = 'R',
+                msg_type = 'Response',
                 answer_to = mail.id,
                 public = mail.public,
             )

@@ -10,6 +10,8 @@ from django.core.exceptions import ValidationError
 from parasykjiems.pjweb.models import Email
 from parasykjiems.pjweb.widgets import *
 from django.utils.safestring import mark_safe
+from django.forms.extras.widgets import SelectDateWidget
+import datetime
 
 logger = logging.getLogger(__name__)
 
@@ -40,3 +42,12 @@ class FeedbackForm(forms.Form):
 
 class IndexForm(forms.Form):
     address_input = forms.CharField(max_length=255)
+
+
+class PeriodSelectForm(forms.Form):
+
+    this_year = datetime.date.today().year
+
+    date_from = forms.DateField(widget=SelectDateWidget(years=range(this_year, this_year-5,-1)))
+    date_to = forms.DateField(widget=SelectDateWidget(years=range(this_year, this_year-5,-1)))
+
