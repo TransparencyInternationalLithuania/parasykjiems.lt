@@ -14,16 +14,27 @@ class Command(BaseCommand):
     help = ''
 
     def handle(self, *args, **options):
-        responses = []
-        requests = Email.objects.filter(msg_state__exact='W')
-        waiting = len(requests)
-        print "%s requests are waiting for responses." % waiting
+        responses_list = []
+        questions_list = []
+        waiting_list = []
+        questions = Email.objects.filter(msg_type__iexact='Question', msg_state__iexact='Confirmed')
+        responses = Email.objects.filter(msg_type__iexact='Response')
+        waiting = len(questions) - len(responses)
+        print "%s questions are waiting for responses." % waiting
+        for question in questions:
+            questions_list.append(question.id)
+        for response in responses:
+            responses_list.append(response.answer_to)
+        for question in questions_list:
+            if not (question in responses_list):
+                waiting_list.append(question)
         answered = 0
+        print waiting_list
         insert = InsertResponse()
-        if requests:
-            for request in requests:
-                response = insert.insert_response(request.id)
+        if waiting_list:
+            for question in waiting_list:
+                response = insert.insert_response(question)
                 if response:
                     answered += 1
 
-        print "%s mails got answers." % answered
+        print "%s question got responses." % answered
