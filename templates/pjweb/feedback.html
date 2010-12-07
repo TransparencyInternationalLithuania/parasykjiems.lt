@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+
+<h2 class="c-h">{% trans "Have any notes? Write to us!" %}</h2>
+
+    <ul id="head-text">
+    <li>{% trans "If address wasn't found in database, but you know, that it exists, write exact address, to which civil parish, polling district and municipality it belongs, and, if you can, specify polling district." %}</li>
+    <li>{% trans "If your member of municipality, civil parish wasn't found, write his data: name, surname, phone, email, work address." %}</li>
+    </ul>
+
+<br>
+<form action="/pjweb/feedback/" method="post">
+<table id="letter">
+  <tr>
+    <td>
+        {{ form.message }}
+        {{ form.message.errors }}
+    </td>
+  </tr>
+  <tr>
+    <td style="text-align: center; vertical-align: middle;">
+        <br>
+        <button><span>{% trans "Send" %}</span></button><br>
+        <br>
+    </td>
+  </tr>
+</table>
+</form>
+
+{% endblock %}
+
