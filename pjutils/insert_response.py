@@ -67,7 +67,7 @@ class InsertResponse():
                     recipient_type = mail.recipient_type,
                     recipient_name = mail.sender_name,
                     recipient_mail = mail.sender_mail,
-                    message = message_1,
+                    message = unicode(message_1,'iso-8859-13'),
                     msg_type = 'Response',
                     response_hash = mail.response_hash,
                     answer_to = mail.id,

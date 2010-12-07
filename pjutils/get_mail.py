@@ -5,6 +5,7 @@ import os, sys, imaplib, rfc822
 import string, re, StringIO
 import email
 from email.charset import Charset
+import quopri
 
 class GetMail():
 
@@ -33,6 +34,7 @@ class GetMail():
             message = rfc822.Message(file)
 
             mssg = message.fp.read()
+            mssg = quopri.decodestring(mssg)#mssg.decode('quoted-printable')
 #            encoded = mssg.encode('iso-8859-13')
 #            decoded = unicode(encoded, 'utf-8')
 #            print decoded
