@@ -386,13 +386,13 @@ def public(request, mail_id):
     mail = Email.objects.get(id=mail_id)
     responses = Email.objects.filter(answer_to__exact=mail_id)
     message = mail.message
-    msg = message.split('\n')
+#    msg = message.split('\n')
 #    insert = InsertResponse()
 #    if not responses:
 #        responses = [insert.insert_response(mail.id)]
     return render_to_response('pjweb/public.html', {
         'mail': mail,
-        'message': msg,
+#        'message': msg,
         'responses': responses,
         'LANGUAGES': GlobalSettings.LANGUAGES,
         'step1': '',
@@ -575,7 +575,7 @@ def contact(request, rtype, mp_id):
                     'mp_id': mp_id,
                     'rtype': rtype,
                     'preview': mail,
-                    'msg_lst': message_disp.split('\n'),
+                    'msg_lst': message_disp,
                     'representative': receiver,
                     'LANGUAGES': GlobalSettings.LANGUAGES,
                     'date_words': date_words,
