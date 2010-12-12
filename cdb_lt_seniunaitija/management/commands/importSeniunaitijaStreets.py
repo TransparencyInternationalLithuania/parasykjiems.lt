@@ -418,6 +418,10 @@ class Command(BaseCommand):
                         s.numberOdd = street.numberFrom % 2
                     s.numberTo = street.numberTo
                     s.save()
+            except Seniunaitija.DoesNotExist as e:
+                logger.error(u"""Seniunaitija with id %s was not found""" % member.uniqueKey)
+                wasError = wasError + 1
+                continue
             except SeniunaitijaAddressExpanderException as e:
                 logger.error(u"""Error in seniunaitija teritory nr '%s'
 ErrorDetails = %s""" % (member.uniqueKey, e.message))
