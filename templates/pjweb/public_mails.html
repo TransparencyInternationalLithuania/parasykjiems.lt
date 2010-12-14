@@ -3,14 +3,14 @@
 {% block content %}
 
 <h2 class="c-h">{% trans "Here you can see all public emails" %}</h2>
-
-<table>
+<p>&nbsp</p>
+<table id="public_mails">
 {% for mail in all_mails %}
 <tr>
-<td><p><a href="/pjweb/public/{{ mail.id }}/">{{ mail.recipient_name }}</a></p></td>
-<td><p>{{ mail.message }}</p></td>
-<td><p>{{ mail.sender_name }}</p></td>
-<td><p>{{ mail.request_date }}</p></td>
+<td><a href="/pjweb/public/{{ mail.id }}/">{{ mail.recipient_name }}</a></td>
+<td>{{ mail.message }}</td>
+<td>{{ mail.sender_name }}</td>
+<td>{{ mail.mail_date|date:"Y-m-d" }}, {{ mail.mail_date|time:"H:i" }}</td>
 </tr>
 {% endfor %}
 </table>

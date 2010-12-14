@@ -23,11 +23,12 @@
 }
 
 #head {
-  padding: 20px 10px 15px; margin-bottom: 40px;
+  padding: 20px 10px 15px; 
+  margin-bottom: 40px;
   background: #fff;
   border-bottom: solid 1px #ccc;
   -webkit-box-shadow: 0 0 5px #888;
-  -moz-box-shadow: 0 0 5px #888;
+  -moz-box-shadow: 0 0 0px #888;
   box-shadow: 0 0 5px #888;
 }
 
@@ -70,7 +71,7 @@
 
 .step {
   float: left;
-  margin: 0; padding: 10px 20px;
+  margin: 0; padding: 10px 19px;
   font: bold 16px 'Droid Sans', Tahoma, 'Helvetica Neue', Helvetica, sans-serif;
 /*  font-family: 'Cantarell';*/
 /*  font-weight: bold;
@@ -330,6 +331,15 @@ a:hover {
         text-align:center;
         padding:30px;
         }
+
+#public_mails {
+  float:center;
+  padding:20px;
+}
+  td {
+    float:center;
+    padding:10px;
+  }
 
 button {
   padding: 0;
