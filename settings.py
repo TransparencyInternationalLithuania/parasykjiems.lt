@@ -61,28 +61,6 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'parasykjiems.urls'
 
-INSTALLED_APPS = (
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.sites',
-    'django.contrib.formtools',
-#    'chronograph',
-#    'parasykjiems.polls',
-    'parasykjiems.contactdb',
-    'parasykjiems.pjweb',
-    'parasykjiems.pjutils',
-    'django.contrib.admin',
-    'gunicorn',
-#    'haystack',
-    'cdb_lt_civilparish',
-    'cdb_lt_mps',
-    'cdb_lt_municipality',
-    'cdb_lt_seniunaitija',
-    'cdb_lt_streets'
-    #'haystack',
-)
-
 #HAYSTACK_INCLUDE_SPELLING = True
 
 def prepareSettingsLocal():
@@ -96,3 +74,25 @@ def prepareSettingsLocal():
 
 prepareSettingsLocal()
 from settings_local import *
+
+INSTALLED_APPS = (
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.sites',
+    'django.contrib.formtools',
+#    'chronograph',
+#    'parasykjiems.polls',
+    'parasykjiems.contactdb',
+    'parasykjiems.pjweb',
+    'parasykjiems.pjutils',
+    'django.contrib.admin',
+#    'gunicorn',
+#    'haystack',
+    'cdb_lt_civilparish',
+    'cdb_lt_mps',
+    'cdb_lt_municipality',
+    'cdb_lt_seniunaitija',
+    'cdb_lt_streets'
+    #'haystack',
+) + GlobalSettings.LiveServerApps

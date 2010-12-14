@@ -82,3 +82,7 @@ GlobalSettings.PROFANITIES_LIST = (u'bybys', u'šikna', u'pyderas')
 
 # set this to True if you want to run geo tests for Lithuanian data against real world data / real www servers
 GlobalSettings.EnableWWWForLTGeoTests = False
+
+# list additional apps, which are needed at live server, such as gunicorn, or similar
+#GlobalSettings.LiveServerApps = ('gunicorn')
+GlobalSettings.LiveServerApps = ()
