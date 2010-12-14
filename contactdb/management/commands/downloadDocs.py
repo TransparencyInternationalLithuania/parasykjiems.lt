@@ -10,6 +10,7 @@ from cdb_lt_streets.management.commands.ltGeoDataImportCsv import ltGeoDataSourc
 import gdata
 from pjutils.deprecated import deprecated
 from pjutils.timemeasurement import TimeMeasurer
+from cdb_lt_streets.management.commands.ltGeoDataCrawl import ExtractRange
 
 logger = logging.getLogger(__name__)
 
@@ -177,12 +178,27 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         """ Downloads documents as csv (tab-delimited) files from google docs"""
+
+        fromNumber = 0
+        toNumber = None
+
+        allDocs = [(GoogleDocsSources.LithuanianMPs, ImportSources.LithuanianMPs),
+                (GoogleDocsSources.LithuanianCivilParishMembers, ImportSources.LithuanianCivilParishMembers),
+                (GoogleDocsSources.LithuanianMunicipalityMembers, ImportSources.LithuanianMunicipalityMembers),
+                (GoogleDocsSources.LithuanianSeniunaitijaMembers, ImportSources.LithuanianSeniunaitijaMembers),
+                (GoogleDocsSources.LithuanianMunicipalities, ImportSources.LithuanianMunicipalities),
+                (GoogleDocsSources.LithuanianCivilParishes, ImportSources.LithuanianCivilParishes)
+
+        ]
+        if (len(args) >= 1):
+            fromNumber, toNumber = ExtractRange(args[0])
+        if (toNumber is None):
+            toNumber = len(allDocs)
+
         elapsedTime = TimeMeasurer()
+        print "Will download docs from %s to %s " % (fromNumber, toNumber)
         login = GoogleDocsLogin(GlobalSettings.GOOGLE_DOCS_USER, GlobalSettings.GOOGLE_DOCS_PASSWORD)
-        downloadDoc(login, GoogleDocsSources.LithuanianMPs, ImportSources.LithuanianMPs)
-        downloadDoc(login, GoogleDocsSources.LithuanianCivilParishMembers, ImportSources.LithuanianCivilParishMembers)
-        downloadDoc(login, GoogleDocsSources.LithuanianMunicipalityMembers, ImportSources.LithuanianMunicipalityMembers)
-        downloadDoc(login, GoogleDocsSources.LithuanianSeniunaitijaMembers, ImportSources.LithuanianSeniunaitijaMembers)
-        downloadDoc(login, GoogleDocsSources.LithuanianMunicipalities, ImportSources.LithuanianMunicipalities)
-        downloadDoc(login, GoogleDocsSources.LithuanianCivilParishes, ImportSources.LithuanianCivilParishes)
+        for docSource, importSource in allDocs[fromNumber:toNumber]:
+            downloadDoc(login, docSource, importSource)
+
         print u"Took %s seconds" % elapsedTime.ElapsedSeconds()
