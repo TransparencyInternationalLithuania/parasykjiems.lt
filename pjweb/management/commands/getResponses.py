@@ -29,6 +29,7 @@ class Command(BaseCommand):
             if not (question in responses_list):
                 waiting_list.append(question)
         answered = 0
+        waiting_list = list(set(waiting_list))
         print waiting_list
         insert = InsertResponse()
         if waiting_list:
