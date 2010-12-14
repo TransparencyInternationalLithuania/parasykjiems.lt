@@ -82,7 +82,7 @@ class InsertResponse():
                 # responses now.
                 email = EmailMessage(u'Gavote atsakymą nuo %s' % resp.sender_name, response, 'parasykjiems@gmail.com',
                     [resp.recipient_mail], [],
-                    headers = {'Reply-To': 'no_reply@parasykjiems@gmail.com'})
+                    headers = {'Reply-To': 'no_reply_parasykjiems@gmail.com'})
                 email.send()
 
 #                mail_history = MailHistory(
