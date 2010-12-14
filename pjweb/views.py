@@ -96,9 +96,21 @@ def addHouseNumberQuery(query, house_number):
     # convert to integer
     house_number = int(house_number)
     isOdd = house_number % 2
-    query = query.filter(numberFrom__lte = house_number ) \
-        .filter(numberTo__gte = house_number) \
-        .filter(numberOdd = isOdd)
+
+    houseNumberEquals = Q(**{"%s__lte" % "numberFrom": house_number}) & \
+        Q(**{"%s__gte" % "numberTo": house_number}) & \
+        Q(**{"%s" % "numberOdd": isOdd})
+
+    houseNumberIsNull = Q(**{"%s__isnull" % "numberFrom": True}) & \
+        Q(**{"%s__isnull" % "numberTo": True})
+
+    orQuery = houseNumberEquals | houseNumberIsNull
+
+    #query = query.filter(numberFrom__lte = house_number ) \
+     #   .filter(numberTo__gte = house_number) \
+      #  .filter(numberOdd = isOdd)
+
+    query = query.filter(orQuery)
     return query
 
 
@@ -108,11 +120,14 @@ def findMPs(municipality = None, city = None, street = None, house_number = None
     street = removeGenericPartFromStreet(street)
     municipality = removeGenericPartFromMunicipality(municipality)
 
+    logging.info("searching for MP: street %s, city %s, municipality %s" % (street, city, municipality))
+
     try:
         query = PollingDistrictStreet.objects.all().filter(municipality__contains = municipality)\
             .filter(street__contains = street) \
             .filter(city__contains = city)
         query = addHouseNumberQuery(query, house_number)
+        #print query.query
 
         query = query.distinct() \
             .values('constituency')
@@ -120,7 +135,7 @@ def findMPs(municipality = None, city = None, street = None, house_number = None
     except PollingDistrictStreet.DoesNotExist:
         logging.info("no polling district")
         return []
-
+    print "found MPs in following constituency : %s" % (idList)
     members = ParliamentMember.objects.all().filter(constituency__in = idList)
     return members
 
@@ -207,9 +222,9 @@ def choose_representative(request, municipality = None, city = None, street = No
         'civilparish_members': civilparish_members,
         'seniunaitija_members': seniunaitija_members,
         'LANGUAGES': GlobalSettings.LANGUAGES,
-        'step1': 'step1_active.png',
-        'step2': 'step2_inactive.png',
-        'step3': 'step3_inactive.png',
+        'step1': 'active-step',
+        'step2': '',
+        'step3': '',
     })
 
 @deprecated
@@ -370,11 +385,14 @@ def public(request, mail_id):
     responses = []
     mail = Email.objects.get(id=mail_id)
     responses = Email.objects.filter(answer_to__exact=mail_id)
-    insert = InsertResponse()
-    if not responses:
-        responses = [insert.insert_response(mail.id)]
+    message = mail.message
+#    msg = message.split('\n')
+#    insert = InsertResponse()
+#    if not responses:
+#        responses = [insert.insert_response(mail.id)]
     return render_to_response('pjweb/public.html', {
         'mail': mail,
+#        'message': msg,
         'responses': responses,
         'LANGUAGES': GlobalSettings.LANGUAGES,
         'step1': '',
@@ -460,7 +478,6 @@ def constituency(request, pd_id):
         'LANGUAGES': settings.LANGUAGES,
         'step1': 'active-step',
         'step2': '',
-
         'step3': '',
     })
     
@@ -503,7 +520,7 @@ def contact(request, rtype, mp_id):
 
             response_hash = response_hash[0]
             #recipients = [receiver.email, receiver.officeEmail]
-            recipients = ['parasykjiems@gmail.com']
+            recipients = [settings.EMAIL_HOST_USER]
 
             if not recipients[0]:
                 logger.debug('%s has no email' % (receiver.name, receiver.surname))
@@ -538,7 +555,7 @@ def contact(request, rtype, mp_id):
                     message = _('You sent an email to ')+ mail.recipient_name + _(' with text:\n\n')+ message_disp + _('\n\nYou must confirm this message by clicking link below:\n') + 'http://%s/confirm/%s/%s' % (current_site.domain, mail.id, mail.response_hash)
                     #print message
                     email = EmailMessage(u'Confirm your message %s' % sender_name, message, sender,
-                        [sender], [],
+                        [settings.EMAIL_HOST_USER], [],
                         headers = {'Reply-To': reply_to})
                     email.send()
                     ThanksMessage = _('Thank you. This message must be confirmed. Please check your email.')
@@ -558,7 +575,7 @@ def contact(request, rtype, mp_id):
                     'mp_id': mp_id,
                     'rtype': rtype,
                     'preview': mail,
-                    'msg_lst': message_disp.split('\n'),
+                    'msg_lst': message_disp,
                     'representative': receiver,
                     'LANGUAGES': GlobalSettings.LANGUAGES,
                     'date_words': date_words,
@@ -598,7 +615,7 @@ def confirm(request, mail_id, secret):
         recipients = ['parasykjiems@gmail.com']
 #        recipients = [mail.recipient_mail]
         mail.save()
-        email = EmailMessage(u'Gavote laišką nuo %s' % mail.sender_name, mail.message, mail.sender_mail,
+        email = EmailMessage(u'Gavote laišką nuo %s' % mail.sender_name, mail.message, settings.EMAIL_HOST_USER,
             recipients, [],
             headers = {'Reply-To': reply_to})
         email.send()
@@ -630,7 +647,7 @@ def feedback(request):
             message = form.cleaned_data[u'message']
             sender = 'Concerned citizen'
             recipients = ['parasykjiems@gmail.com']
-            email = EmailMessage(u'Pastaba dėl parašykjiems.lt', message, sender,
+            email = EmailMessage(u'Pastaba dėl parašykjiems.lt', message, settings.EMAIL_HOST_USER,
                 recipients, [])
             email.send()
             ThanksMessage = _('Thank you. Your message has been sent.')
@@ -647,6 +664,51 @@ def feedback(request):
         form = FeedbackForm()
         
     return render_to_response('pjweb/feedback.html', {
+        'form': form,
+        'LANGUAGES': GlobalSettings.LANGUAGES,
+        'step1': '',
+        'step2': '',
+        'step3': '',
+    })
+
+def stats(request):
+    period_string = ''
+    if request.method == 'POST':
+        form = PeriodSelectForm(data=request.POST)
+        if form.is_valid():
+            date_from = form.cleaned_data['date_from']
+            date_to = form.cleaned_data['date_to']
+            questions = len(Email.objects.filter(
+                msg_type__iexact='Question', msg_state__iexact='Confirmed',
+                mail_date__gte=date_from,mail_date__lte=date_to
+            ))
+            responses = len(Email.objects.filter(
+                msg_type__iexact='Response', mail_date__gte=date_from,mail_date__lte=date_to
+            ))
+            new_addresses = len(Email.objects.filter(
+                answer_to__exact=None, mail_date__gte=date_from,mail_date__lte=date_to
+            ).values('sender_mail').distinct())
+            period_string = _('In selected period (from %(from)s to %(to)s):') % {'from':date_from, 'to':date_to}
+            stats = [
+                _('Questions sent: %s') % questions,
+                _('Answers got: %s') % responses,
+                _('New users: %s') % new_addresses,
+            ]
+            return render_to_response('pjweb/stats.html', {
+                'period_string': period_string,
+                'stats': stats,
+                'form': form,
+                'LANGUAGES': GlobalSettings.LANGUAGES,
+                'step1': '',
+                'step2': '',
+                'step3': '',
+            })
+
+    else:
+        form = PeriodSelectForm()
+        
+    return render_to_response('pjweb/stats.html', {
+        'period_string': period_string,
         'form': form,
         'LANGUAGES': GlobalSettings.LANGUAGES,
         'step1': '',

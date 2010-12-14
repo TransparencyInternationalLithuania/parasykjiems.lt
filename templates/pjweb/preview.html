@@ -34,9 +34,7 @@
 <table id="letter">
   <tr>
     <td>
-      {% for line in msg_lst %}
-      <p id="message">{{ line }}</p>
-      {% endfor %}
+      {{ msg_lst|linebreaks }}
     </td>
   </tr>
 

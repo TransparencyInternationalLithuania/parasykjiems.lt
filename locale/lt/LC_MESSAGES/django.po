@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-30 19:25+0200\n"
-"PO-Revision-Date: 2010-11-30 19:27+0300\n"
+"POT-Creation-Date: 2010-12-04 01:44+0200\n"
+"PO-Revision-Date: 2010-12-04 01:45+0300\n"
 "Last-Translator: Vytautas <didysis@vytrautas.lt>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -54,11 +54,11 @@ msgstr "Gavėjai"
 msgid "States"
 msgstr "Būsenos"
 
-#: pjweb/forms.py:27
+#: pjweb/forms.py:29
 msgid "Private"
 msgstr "Privatus"
 
-#: pjweb/forms.py:28
+#: pjweb/forms.py:30
 msgid "Public"
 msgstr "Viešas"
 
@@ -164,16 +164,36 @@ msgstr ""
 "Geros dienos."
 
 #: pjweb/views.py:587
-#: pjweb/views.py:620
+#: pjweb/views.py:614
 msgid "Sorry, but your message could not be confirmed."
 msgstr "Apgailestaujame, bet Jūsų žinutė negali būti patvirtinta."
 
-#: pjweb/views.py:618
-#: pjweb/views.py:642
+#: pjweb/views.py:612
+#: pjweb/views.py:636
 msgid "Thank you. Your message has been sent."
 msgstr "Dėkojame. Jūsų žinutė išsiųsta."
 
-#: pjweb/views.py:687
+#: pjweb/views.py:674
+#, python-format
+msgid "In selected period (from %(from)s to %(to)s):"
+msgstr "Pasirinktame periode (nuo %(from)s iki %(to)s):"
+
+#: pjweb/views.py:676
+#, python-format
+msgid "Questions sent: %s"
+msgstr "Klausimų siųsta: %s"
+
+#: pjweb/views.py:677
+#, python-format
+msgid "Answers got: %s"
+msgstr "Atsakymų gauta: %s"
+
+#: pjweb/views.py:678
+#, python-format
+msgid "New users: %s"
+msgstr "Naujų vartotojų: %s"
+
+#: pjweb/views.py:726
 msgid "Thank you. Your response has been posted."
 msgstr "Dėkojame. Jūsų atsakymas paviešintas."
 
@@ -494,6 +514,18 @@ msgstr "Čia galite matyti visus viešus laiškus"
 #: templates/pjweb/response.html:6
 msgid "You are writing an answer to "
 msgstr "Rašote atsakymą į laišką, kurio autorius yra"
+
+#: templates/pjweb/stats.html:6
+msgid "From"
+msgstr "Nuo"
+
+#: templates/pjweb/stats.html:6
+msgid "to"
+msgstr "iki"
+
+#: templates/pjweb/stats.html:7
+msgid "Filter"
+msgstr "Filtruoti"
 
 #~ msgid ""
 #~ "\n"
