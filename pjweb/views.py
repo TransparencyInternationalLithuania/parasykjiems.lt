@@ -520,7 +520,7 @@ def contact(request, rtype, mp_id):
 
             response_hash = response_hash[0]
             #recipients = [receiver.email, receiver.officeEmail]
-            recipients = [settings.EMAIL_HOST_USER]
+            recipients = ['parasykjiems@gmail.com']
 
             if not recipients[0]:
                 logger.debug('%s has no email' % (receiver.name, receiver.surname))
@@ -554,8 +554,8 @@ def contact(request, rtype, mp_id):
 #                        reply_to = sender
                     message = _('You sent an email to ')+ mail.recipient_name + _(' with text:\n\n')+ message_disp + _('\n\nYou must confirm this message by clicking link below:\n') + 'http://%s/confirm/%s/%s' % (current_site.domain, mail.id, mail.response_hash)
                     #print message
-                    email = EmailMessage(u'Confirm your message %s' % sender_name, message, sender,
-                        [settings.EMAIL_HOST_USER], [],
+                    email = EmailMessage(u'Confirm your message %s' % sender_name, message, settings.EMAIL_HOST_USER,
+                        [sender], [],
                         headers = {'Reply-To': reply_to})
                     email.send()
                     ThanksMessage = _('Thank you. This message must be confirmed. Please check your email.')

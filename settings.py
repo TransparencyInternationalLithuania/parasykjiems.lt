@@ -1,6 +1,6 @@
 # Django settings for parasykjiems project.
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 SERVER_EMAIL = 'parasykjiems@gmail.com'
@@ -67,6 +67,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.formtools',
+#    'chronograph',
 #    'parasykjiems.polls',
     'parasykjiems.contactdb',
     'parasykjiems.pjweb',
