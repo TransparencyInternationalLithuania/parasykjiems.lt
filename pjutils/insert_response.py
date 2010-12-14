@@ -75,9 +75,13 @@ class InsertResponse():
                 )
                 resp.save()
 
+                # send a mail message to original person who asked a question.
+                # Reply-to will not be an exact recipients email (resp.sender_mail),
+                # but a "no_reply" address, meaning that we do not support "discussion" style
+                # responses now.
                 email = EmailMessage(u'Gavote atsakymą nuo %s' % resp.sender_name, response, 'parasykjiems@gmail.com',
                     [resp.recipient_mail], [],
-                    headers = {'Reply-To': resp.sender_mail})
+                    headers = {'Reply-To': 'no_reply@parasykjiems@gmail.com'})
                 email.send()
 
 #                mail_history = MailHistory(
