@@ -29,6 +29,7 @@ from django.db.models.query_utils import Q, Q
 from django.utils.encoding import iri_to_uri
 from pjutils.deprecated import deprecated
 from cdb_lt_streets.searchInIndex import searchInIndex, deduceAddress, removeGenericPartFromStreet, removeGenericPartFromMunicipality
+from djangoplus.widgets.ajax_fk_widget import AjaxFKWidget
 
 logger = logging.getLogger(__name__)
 
@@ -204,6 +205,7 @@ def findSeniunaitijaMembers(municipality = None, city = None, street = None, hou
     members = SeniunaitijaMember.objects.all().filter(seniunaitija__in = idList)
     return members
 
+
 def choose_representative(request, municipality = None, city = None, street = None, house_number = None):
     print "municipality %s" % municipality
     print "city %s" % city
@@ -308,6 +310,18 @@ def get_civilparish(pd_id, constituency):
 #    print result
     return result
 
+
+def json_lookup(request, queryset, field, limit=5, login_required=False):
+    if login_required and not request.user.is_authenticated():
+        return redirect_to_login(request.path)
+    obj_list = []
+    lookup = { '%s__icontains' % field: request.GET['query'],}
+    for obj in queryset.filter(**lookup)[:limit]:
+        obj_list.append({"id": obj.id, "name": getattr(obj, field)}) 
+    object = {"ResultSet": { "total": str(limit), "Result": obj_list } }
+    return HttpResponse(simplejson.dumps(object), mimetype='application/javascript')
+
+
 def index(request):
     query_string = ' '
     entered = ''
@@ -346,6 +360,7 @@ def index(request):
             'step3': '',
         })
 
+
 def no_email(request, rtype, mp_id):
     insert = InsertResponse()
     representative = insert.get_rep(mp_id, rtype)
@@ -361,6 +376,7 @@ def no_email(request, rtype, mp_id):
         'step3': '',
     })
 
+
 def public_mails(request):
     all_mails = Email.objects.all().filter(public__exact=True, msg_type__exact='Question').exclude(msg_state__exact='NotConfirmed')
 
@@ -371,6 +387,7 @@ def public_mails(request):
         'step2': '',
         'step3': '',
     })
+
 
 def about(request):
     return render_to_response('pjweb/about.html', {
@@ -400,6 +417,7 @@ def public(request, mail_id):
         'step3': '',
     })
 
+
 def smtp_error(request, rtype, mp_id, private=None):
     insert = InsertResponse()
     representative = insert.get_rep(mp_id, rtype)
@@ -416,6 +434,7 @@ def smtp_error(request, rtype, mp_id, private=None):
         'step2': '',
         'step3': 'active-step',
     })
+
 
 @deprecated
 def constituency(request, pd_id):
@@ -480,7 +499,8 @@ def constituency(request, pd_id):
         'step2': '',
         'step3': '',
     })
-    
+
+
 def contact(request, rtype, mp_id):
     insert = InsertResponse()
     receiver = insert.get_rep(mp_id, rtype)
@@ -599,6 +619,7 @@ def contact(request, rtype, mp_id):
         'step3': '',
     })
 
+
 def confirm(request, mail_id, secret):
     mail = Email.objects.get(id=mail_id)
     ConfirmMessage = _('Sorry, but your message could not be confirmed.')
@@ -639,6 +660,7 @@ def confirm(request, mail_id, secret):
         'step3': '',
     })
 
+
 def feedback(request):
 
     if request.method == 'POST':
@@ -670,6 +692,7 @@ def feedback(request):
         'step2': '',
         'step3': '',
     })
+
 
 def stats(request):
     period_string = ''
@@ -715,6 +738,7 @@ def stats(request):
         'step2': '',
         'step3': '',
     })
+
 
 def response(request, mail_id, response_no):
     mail = Email.objects.get(id=mail_id)
@@ -763,6 +787,7 @@ def response(request, mail_id, response_no):
         'step2': '',
         'step3': '',
     })
+
 
 def set_language(request, lang_code):
     """
