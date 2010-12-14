@@ -612,10 +612,10 @@ def confirm(request, mail_id, secret):
         else:
             reply_to = mail.sender_mail
 
-        recipients = [settings.EMAIL_HOST_USER]
+        recipients = ['parasykjiems@gmail.com']
 #        recipients = [mail.recipient_mail]
         mail.save()
-        email = EmailMessage(u'Gavote laišką nuo %s' % mail.sender_name, mail.message, mail.sender_mail,
+        email = EmailMessage(u'Gavote laišką nuo %s' % mail.sender_name, mail.message, settings.EMAIL_HOST_USER,
             recipients, [],
             headers = {'Reply-To': reply_to})
         email.send()
@@ -647,7 +647,7 @@ def feedback(request):
             message = form.cleaned_data[u'message']
             sender = 'Concerned citizen'
             recipients = ['parasykjiems@gmail.com']
-            email = EmailMessage(u'Pastaba dėl parašykjiems.lt', message, sender,
+            email = EmailMessage(u'Pastaba dėl parašykjiems.lt', message, settings.EMAIL_HOST_USER,
                 recipients, [])
             email.send()
             ThanksMessage = _('Thank you. Your message has been sent.')

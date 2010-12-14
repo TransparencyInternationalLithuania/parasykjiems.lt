@@ -75,7 +75,7 @@ class InsertResponse():
                 )
                 resp.save()
 
-                email = EmailMessage(u'Gavote atsakymą nuo %s' % resp.sender_name, response, 'parasykjiems@gmail.com',
+                email = EmailMessage(u'Gavote atsakymą nuo %s' % resp.sender_name, response, settings.EMAIL_HOST_USER,
                     [resp.recipient_mail], [],
                     headers = {'Reply-To': resp.sender_mail})
                 email.send()
