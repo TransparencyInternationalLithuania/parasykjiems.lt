@@ -34,7 +34,7 @@ class GetMail():
             message = rfc822.Message(file)
 
             mssg = message.fp.read()
-            mssg = quopri.decodestring(mssg)#mssg.decode('quoted-printable')
+            mssg = mssg.decode('quoted-printable')
 #            encoded = mssg.encode('iso-8859-13')
 #            decoded = unicode(encoded, 'utf-8')
 #            print decoded

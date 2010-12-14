@@ -554,7 +554,7 @@ def contact(request, rtype, mp_id):
 #                        reply_to = sender
                     message = _('You sent an email to ')+ mail.recipient_name + _(' with text:\n\n')+ message_disp + _('\n\nYou must confirm this message by clicking link below:\n') + 'http://%s/confirm/%s/%s' % (current_site.domain, mail.id, mail.response_hash)
                     #print message
-                    email = EmailMessage(u'Confirm your message %s' % sender_name, message, sender,
+                    email = EmailMessage(u'Confirm your message %s' % sender_name, message, settings.EMAIL_HOST_USER,
                         [sender], [],
                         headers = {'Reply-To': reply_to})
                     email.send()
@@ -615,7 +615,7 @@ def confirm(request, mail_id, secret):
         recipients = ['parasykjiems@gmail.com']
 #        recipients = [mail.recipient_mail]
         mail.save()
-        email = EmailMessage(u'Gavote laišką nuo %s' % mail.sender_name, mail.message, mail.sender_mail,
+        email = EmailMessage(u'Gavote laišką nuo %s' % mail.sender_name, mail.message, settings.EMAIL_HOST_USER,
             recipients, [],
             headers = {'Reply-To': reply_to})
         email.send()
@@ -647,7 +647,7 @@ def feedback(request):
             message = form.cleaned_data[u'message']
             sender = 'Concerned citizen'
             recipients = ['parasykjiems@gmail.com']
-            email = EmailMessage(u'Pastaba dėl parašykjiems.lt', message, sender,
+            email = EmailMessage(u'Pastaba dėl parašykjiems.lt', message, settings.EMAIL_HOST_USER,
                 recipients, [])
             email.send()
             ThanksMessage = _('Thank you. Your message has been sent.')
