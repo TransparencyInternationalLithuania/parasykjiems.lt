@@ -3,12 +3,28 @@
 
 from django.conf.urls.defaults import *
 
+from parasykjiems.cdb_lt_streets.models import LithuanianStreetIndexes
+
+from autocomplete.views import autocomplete
+
 #from parasykjiems.pjweb.views import ContactForm
 #from django import forms
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
+
+def display_suggestion(city):
+    return u"%s %s %s" % (city.street, city.city, city.municipality)
+
+autocomplete.register(
+    id = 'street', 
+    queryset = LithuanianStreetIndexes.objects.all(),
+    fields = ('street', 'city', 'city_genitive'),
+    limit = 10,
+    key = 'street',
+    label = display_suggestion,
+)
 
 sentenceRegExp = u"[a-zA-Z0-9ąčęėįšųūžĄČĘĖĮŠŲŪŽ_ \.]+"
 
@@ -53,5 +69,6 @@ urlpatterns = patterns('parasykjiems.pjweb.views',
     (r'^response/(\d+)/(\d+)/$', 'response'),
     (r'^confirm/(\d+)/(\d+)/$', 'confirm'),
     (r'^i18n/', include('django.conf.urls.i18n')),
-    (r'^setlang/(?P<lang_code>.*)/$', 'set_language')
+    (r'^setlang/(?P<lang_code>.*)/$', 'set_language'),
+    url('^autocomplete/(\w+)/$', autocomplete, name='autocomplete'),
 )

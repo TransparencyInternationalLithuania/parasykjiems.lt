@@ -13,6 +13,11 @@ from django.utils.safestring import mark_safe
 from django.forms.extras.widgets import SelectDateWidget
 import datetime
 
+from parasykjiems.cdb_lt_streets.models import LithuanianStreetIndexes
+
+from autocomplete.widgets import AutoCompleteWidget
+from autocomplete.fields import ModelChoiceField
+
 logger = logging.getLogger(__name__)
 
 class HorizontalRadioRenderer(forms.RadioSelect.renderer):
@@ -37,11 +42,19 @@ class ContactForm(forms.Form):
     message = forms.CharField(widget=forms.Textarea, validators=[hasNoProfanities,notEmptyMsg])
     sender = forms.EmailField()
 
+
 class FeedbackForm(forms.Form):
     message = forms.CharField(widget=forms.Textarea)
 
+
+class StreetForm(forms.ModelForm):
+    class Meta:
+        model = LithuanianStreetIndexes
+    street = ModelChoiceField('street')
+
+
 class IndexForm(forms.Form):
-    address_input = forms.CharField(max_length=255)
+    address_input = forms.CharField(widget=AutoCompleteWidget('street', force_selection=False))
 
 
 class PeriodSelectForm(forms.Form):
