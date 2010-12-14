@@ -205,10 +205,10 @@ def findSeniunaitijaMembers(municipality = None, city = None, street = None, hou
     return members
 
 def choose_representative(request, municipality = None, city = None, street = None, house_number = None):
-    print "municipality %s" % municipality
-    print "city %s" % city
-    print "street %s" % street
-    print "house_number %s" % house_number
+    print "choose_rep: municipality %s" % municipality
+    print "choose_rep: city %s" % city
+    print "choose_rep: street %s" % street
+    print "choose_rep: house_number %s" % house_number
 
     parliament_members = findMPs(municipality, city, street, house_number)
     municipality_members = findMunicipalityMembers(municipality, city, street, house_number)

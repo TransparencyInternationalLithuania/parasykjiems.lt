@@ -206,6 +206,9 @@ def deduceAddress(query_string):
 def searchInIndex(addressContext):
     """ Searches for streets using a given address."""
 
+    addressContext.city = addressContext.city.capitalize()
+    addressContext.street = addressContext.street.capitalize()
+
     logger.debug(u"searching in index")
     logger.debug(u"addressContext.number '%s'" % ( addressContext.number))
     logger.debug(u"addressContext.street '%s'" % ( addressContext.street))
