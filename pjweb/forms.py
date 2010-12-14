@@ -13,10 +13,10 @@ from django.utils.safestring import mark_safe
 from django.forms.extras.widgets import SelectDateWidget
 import datetime
 
-from parasykjiems.cdb_lt_streets.models import LithuanianStreetIndexes
+#from parasykjiems.cdb_lt_streets.models import LithuanianStreetIndexes
 
-from autocomplete.widgets import AutoCompleteWidget
-from autocomplete.fields import ModelChoiceField
+#from autocomplete.widgets import AutoCompleteWidget
+#from autocomplete.fields import ModelChoiceField
 
 logger = logging.getLogger(__name__)
 
@@ -47,14 +47,15 @@ class FeedbackForm(forms.Form):
     message = forms.CharField(widget=forms.Textarea)
 
 
-class StreetForm(forms.ModelForm):
-    class Meta:
-        model = LithuanianStreetIndexes
-    street = ModelChoiceField('street')
+#class StreetForm(forms.ModelForm):
+#    class Meta:
+#        model = LithuanianStreetIndexes
+#    street = ModelChoiceField('street')
 
 
 class IndexForm(forms.Form):
-    address_input = forms.CharField(widget=AutoCompleteWidget('street', force_selection=False))
+#    address_input = forms.CharField(widget=AutoCompleteWidget('street', force_selection=False))
+    address_input = forms.CharField(max_length=255)
 
 
 class PeriodSelectForm(forms.Form):

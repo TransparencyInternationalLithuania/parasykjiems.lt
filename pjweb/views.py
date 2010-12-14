@@ -29,7 +29,7 @@ from django.db.models.query_utils import Q, Q
 from django.utils.encoding import iri_to_uri
 from pjutils.deprecated import deprecated
 from cdb_lt_streets.searchInIndex import searchInIndex, deduceAddress, removeGenericPartFromStreet, removeGenericPartFromMunicipality
-from djangoplus.widgets.ajax_fk_widget import AjaxFKWidget
+
 
 logger = logging.getLogger(__name__)
 
