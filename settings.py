@@ -1,6 +1,6 @@
 # Django settings for parasykjiems project.
 
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 SERVER_EMAIL = 'parasykjiems@gmail.com'
