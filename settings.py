@@ -3,10 +3,10 @@
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-SERVER_EMAIL = 'root@localhost'
+SERVER_EMAIL = 'parasykjiems@gmail.com'
 
 ADMINS = (
-    ('Admin', 'root@localhost'),
+    ('Error Group', 'parasykjiems-errors@googlegroups.com'),
 )
 
 MANAGERS = ADMINS
@@ -72,6 +72,8 @@ INSTALLED_APPS = (
     'parasykjiems.pjweb',
     'parasykjiems.pjutils',
     'django.contrib.admin',
+    'gunicorn',
+#    'haystack',
     'cdb_lt_civilparish',
     'cdb_lt_mps',
     'cdb_lt_municipality',

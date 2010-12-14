@@ -49,6 +49,7 @@ urlpatterns = patterns('parasykjiems.pjweb.views',
 
     # about page
     (r'^about/$', 'about'),
+    (r'^stats/$', 'stats'),
     (r'^response/(\d+)/(\d+)/$', 'response'),
     (r'^confirm/(\d+)/(\d+)/$', 'confirm'),
     (r'^i18n/', include('django.conf.urls.i18n')),

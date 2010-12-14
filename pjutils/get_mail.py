@@ -5,6 +5,7 @@ import os, sys, imaplib, rfc822
 import string, re, StringIO
 import email
 from email.charset import Charset
+import quopri
 
 class GetMail():
 

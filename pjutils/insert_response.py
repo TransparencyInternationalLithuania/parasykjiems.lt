@@ -55,10 +55,10 @@ class InsertResponse():
                 resp = response.split('>\r')
                 response_1 = ''.join(resp)
                 lines = response_1.split('\n')
-                for line in lines:
-                    find_us = line.find('parasykjiems@gmail.com')
-                    if len(line)>0 and (line[0]=='>' or find_us>-1):
-                        lines.remove(line)
+#                for line in lines:
+#                    find_us = line.find('parasykjiems@gmail.com')
+#                    if len(line)>0 and (line[0]=='>' or find_us>-1):
+#                        lines.remove(line)
                 message_1 = '\n'.join(lines)
                 resp = Email(
                     sender_name = mail.recipient_name,
@@ -67,7 +67,7 @@ class InsertResponse():
                     recipient_type = mail.recipient_type,
                     recipient_name = mail.sender_name,
                     recipient_mail = mail.sender_mail,
-                    message = message_1,
+                    message = unicode(message_1,'iso-8859-13'),
                     msg_type = 'Response',
                     response_hash = mail.response_hash,
                     answer_to = mail.id,
@@ -75,7 +75,7 @@ class InsertResponse():
                 )
                 resp.save()
 
-                email = EmailMessage(u'Gavote atsakymą nuo %s' % resp.sender_name, response, 'parasykjiems@gmail.com',
+                email = EmailMessage(u'Gavote atsakymą nuo %s' % resp.sender_name, response, settings.EMAIL_HOST_USER,
                     [resp.recipient_mail], [],
                     headers = {'Reply-To': resp.sender_mail})
                 email.send()
