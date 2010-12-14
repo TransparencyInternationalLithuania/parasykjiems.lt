@@ -61,8 +61,12 @@ manage.py importInitial
 # imports other data, which can be updated quite often (even daily)
 manage.py importAll
 
-#runing server with nginx and gunicorn
-manage.py run_gunicorn 127.0.0.1:1234 --daemon
+#runing server with nginx and gunicorn 
+sudo python26 manage.py run_gunicorn 127.0.0.1:1234 --daemon
+
+# to kill a running gunicorn instance
+ps ax | grep manage.py
+kill (process number)
 
 # after running thse four commands you should have your database ready. just call manage.py runserver and use browser :)
 
