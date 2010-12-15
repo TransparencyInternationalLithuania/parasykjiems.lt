@@ -517,6 +517,7 @@ def constituency(request, pd_id):
 
 def contact(request, rtype, mp_id):
     insert = InsertResponse()
+    # find required representative
     receiver = insert.get_rep(mp_id, rtype)
     current_site = Site.objects.get_current()
     months = [
@@ -534,7 +535,7 @@ def contact(request, rtype, mp_id):
         _(u'December')
     ]
     print current_site
-    if not receiver.email:
+    if not receiver.email and not receiver.officeEmail:
         return HttpResponseRedirect('no_email')
     publ = False
     if request.method == 'POST':
@@ -556,7 +557,7 @@ def contact(request, rtype, mp_id):
 
 
             recipients = [receiver.email]
-
+            # if representative has no email - show message
             if not recipients[0]:
                 logger.debug('%s has no email' % (receiver.name, receiver.surname))
                 return HttpResponseRedirect('no_email')
@@ -564,9 +565,6 @@ def contact(request, rtype, mp_id):
                 #from django.core.mail import send_mail
                 #try:
                 message_disp = message
-                if not publ:
-                    message = ''
-                    
                 mail = Email(
                     sender_name = sender_name,
                     sender_mail = sender,
@@ -583,11 +581,9 @@ def contact(request, rtype, mp_id):
                 if send:
                     print mail.message
                     mail.save()
-#                    if publ:
-                        #domain = settings.MAIL_USERNAME.split('@')[1]
+                    #domain = settings.MAIL_USERNAME.split('@')[1]
                     reply_to = 'reply%s_%s@dev.parasykjiems.lt' % (mail.id, mail.response_hash)
-#                    else:
-#                        reply_to = sender
+                    # generate confirmation email message and send it
                     message = _('You sent an email to ')+ mail.recipient_name + _(' with text:\n\n')+ message_disp + _('\n\nYou must confirm this message by clicking link below:\n') + 'http://%s/confirm/%s/%s' % (current_site.domain, mail.id, mail.response_hash)
                     #print message
                     email = EmailMessage(u'Confirm your message %s' % sender_name, message, settings.EMAIL_HOST_USER,
@@ -646,24 +642,30 @@ def confirm(request, mail_id, secret):
         # update message state 
         mail.msg_state = 'Confirmed'
 
+        # determine where to send email
+        domain = GlobalSettings.MAIL_SERVER
+        #reply_to = 'reply%s_%s@dev.parasykjiems.lt' % (mail.id, mail.response_hash)
+        reply_to = 'reply%s_%s@%s' % (mail.id, mail.response_hash, domain)
+
+        # assigning message to email
+        message = mail.message
+
+        # if message is private - clear it in db
+        if not mail.public:
+            message = mail.message
+            mail.message = ''
+
         # save message state to db
         mail.save()
-
-        # determine where to send email
-        if mail.public:
-            domain = GlobalSettings.MAIL_SERVER
-            reply_to = 'reply%s_%s@%s' % (mail.id, mail.response_hash, domain)
-        else:
-            reply_to = mail.sender_mail
 
         if (GlobalSettings.mail.sendEmailToRepresentatives == "sendToRepresentatives"):
             recipients = [mail.recipient_mail]
         else:
-            recipients = GlobalSettings.mail.sendEmailToRepresentatives;
+            recipients = [GlobalSettings.mail.sendEmailToRepresentatives];
 
 
         # send an actual email message to government representative
-        email = EmailMessage(u'Gavote laišką nuo %s' % mail.sender_name, mail.message, settings.EMAIL_HOST_USER,
+        email = EmailMessage(u'Gavote laišką nuo %s' % mail.sender_name, message, settings.EMAIL_HOST_USER,
             recipients, [],
             headers = {'Reply-To': reply_to})
         email.send()
