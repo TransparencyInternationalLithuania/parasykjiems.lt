@@ -682,7 +682,7 @@ def feedback(request):
         if form.is_valid():
             message = form.cleaned_data[u'message']
             sender = 'Concerned citizen'
-            recipients = ['parasykjiems@gmail.com']
+            recipients = [GlobalSettings.mail.feedbackEmail]
             email = EmailMessage(u'Pastaba dėl parašykjiems.lt', message, settings.EMAIL_HOST_USER,
                 recipients, [])
             email.send()
