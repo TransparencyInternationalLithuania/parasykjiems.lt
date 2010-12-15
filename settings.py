@@ -1,6 +1,6 @@
 # Django settings for parasykjiems project.
 
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 SERVER_EMAIL = 'parasykjiems@gmail.com'
@@ -87,7 +87,7 @@ INSTALLED_APPS = (
     'parasykjiems.pjweb',
     'parasykjiems.pjutils',
     'django.contrib.admin',
-    'gunicorn',
+    #'gunicorn',
 #    'haystack',
     'cdb_lt_civilparish',
     'cdb_lt_mps',
@@ -95,3 +95,8 @@ INSTALLED_APPS = (
     'cdb_lt_seniunaitija',
     'cdb_lt_streets') 
     #'haystack') 
+
+
+# send feedback from website to this email address
+GlobalSettings.mail = GlobalSettingsMail();
+GlobalSettings.mail.feedbackEmail = "parasykjiems@gmail.com"
