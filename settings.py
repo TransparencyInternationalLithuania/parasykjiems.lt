@@ -1,8 +1,5 @@
 # Django settings for parasykjiems project.
 
-DEBUG = True
-TEMPLATE_DEBUG = DEBUG
-
 SERVER_EMAIL = 'parasykjiems@gmail.com'
 
 ADMINS = (
