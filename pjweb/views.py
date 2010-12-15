@@ -379,9 +379,23 @@ def no_email(request, rtype, mp_id):
 
 def public_mails(request):
     all_mails = Email.objects.all().filter(public__exact=True, msg_type__exact='Question').exclude(msg_state__exact='NotConfirmed')
-
+    mail_list = []
+    for mail in all_mails:
+        id = mail.id
+        recipient_name = mail.recipient_name
+        sender = mail.sender_name
+        message = mail.message
+        send_date = mail.mail_date.strftime("%Y-%m-%d %H:%M")
+        answers = Email.objects.filter(answer_to=mail.id)
+        if not answers:
+            has_response = 'Yes'
+        else:
+            has_response = 'No'
+        mail_dict = {'id':id,'recipient_name':recipient_name, 'sender':sender, 'message':message, 'send_date':send_date,'has_response':has_response}
+        mail_list.append(mail_dict)
     return render_to_response('pjweb/public_mails.html', {
         'all_mails': all_mails,
+        'mail_list': mail_list,
         'LANGUAGES': GlobalSettings.LANGUAGES,
         'step1': '',
         'step2': '',
@@ -668,7 +682,7 @@ def feedback(request):
         if form.is_valid():
             message = form.cleaned_data[u'message']
             sender = 'Concerned citizen'
-            recipients = ['parasykjiems@gmail.com']
+            recipients = [GlobalSettings.mail.feedbackEmail]
             email = EmailMessage(u'Pastaba dėl parašykjiems.lt', message, settings.EMAIL_HOST_USER,
                 recipients, [])
             email.send()
