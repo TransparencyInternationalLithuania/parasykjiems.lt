@@ -6,6 +6,10 @@ from GlobalSettingsClass import *
 from distutils import dir_util
 import logging
 
+
+DEBUG = True
+TEMPLATE_DEBUG = DEBUG
+
 scriptPath = os.path.dirname( os.path.realpath( __file__ ) )
 
 TEMPLATE_DIRS = (
