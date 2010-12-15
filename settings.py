@@ -96,3 +96,7 @@ INSTALLED_APPS = (
     'cdb_lt_streets'
     #'haystack',
 ) + GlobalSettings.LiveServerApps
+
+# send feedback from website to this email address
+GlobalSettings.mail = GlobalSettingsMail();
+GlobalSettings.mail.feedbackEmail = "parasykjiems@gmail.com"
