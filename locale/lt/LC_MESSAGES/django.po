@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-04 01:44+0200\n"
-"PO-Revision-Date: 2010-12-04 01:45+0300\n"
+"POT-Creation-Date: 2010-12-15 22:11+0200\n"
+"PO-Revision-Date: 2010-12-15 22:12+0300\n"
 "Last-Translator: Vytautas <didysis@vytrautas.lt>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -16,11 +16,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: settings_local.py:76
+#: settings_local.py:80
 msgid "Lithuanian"
 msgstr "Lietuvių"
 
-#: settings_local.py:77
+#: settings_local.py:81
 msgid "English"
 msgstr "Anglų"
 
@@ -43,6 +43,7 @@ msgid "Sender Information"
 msgstr "Siuntėjo intformacija"
 
 #: pjweb/admin.py:9
+#: templates/pjweb/public_mails.html:11
 msgid "Message"
 msgstr "Žinutė"
 
@@ -54,87 +55,87 @@ msgstr "Gavėjai"
 msgid "States"
 msgstr "Būsenos"
 
-#: pjweb/forms.py:29
+#: pjweb/forms.py:34
 msgid "Private"
 msgstr "Privatus"
 
-#: pjweb/forms.py:30
+#: pjweb/forms.py:35
 msgid "Public"
 msgstr "Viešas"
 
-#: pjweb/views.py:76
+#: pjweb/views.py:77
 msgid "No addressess were found. Please refine your search. Or use feedback form to inform us about missing address"
 msgstr "Nerasta jokių adresų. Patikslinkite paiešką. Arba pasinaudokite susisiekimo forma ir praneškite apie trūkstamą adresą"
 
-#: pjweb/views.py:337
+#: pjweb/views.py:367
 #, python-format
 msgid "%(name)s %(surname)s email cannot be found in database."
 msgstr "%(name)s %(surname)s el. paštas nerastas duomenų bazėje."
 
-#: pjweb/views.py:389
+#: pjweb/views.py:439
 #, python-format
 msgid "Problem occurred. Your Email to %(name)s %(surname)s has not been sent. Please try again later."
 msgstr "Iškilo problema. Jūsų laiškas, kurio adresatas yra %(name)s %(surname)s, nebuvo išsiųstas. Prašome pamėginti vėliau."
 
-#: pjweb/views.py:472
+#: pjweb/views.py:524
 msgid "January"
 msgstr "Sausio"
 
-#: pjweb/views.py:473
+#: pjweb/views.py:525
 msgid "February"
 msgstr "Vasario"
 
-#: pjweb/views.py:474
+#: pjweb/views.py:526
 msgid "March"
 msgstr "Kovo"
 
-#: pjweb/views.py:475
+#: pjweb/views.py:527
 msgid "April"
 msgstr "Balandžio"
 
-#: pjweb/views.py:476
+#: pjweb/views.py:528
 msgid "May"
 msgstr "Gegužės"
 
-#: pjweb/views.py:477
+#: pjweb/views.py:529
 msgid "June"
 msgstr "Birželio"
 
-#: pjweb/views.py:478
+#: pjweb/views.py:530
 msgid "July"
 msgstr "Liepos"
 
-#: pjweb/views.py:479
+#: pjweb/views.py:531
 msgid "August"
 msgstr "Rugpjūčio"
 
-#: pjweb/views.py:480
+#: pjweb/views.py:532
 msgid "September"
 msgstr "Rugsėjo"
 
-#: pjweb/views.py:481
+#: pjweb/views.py:533
 msgid "October"
 msgstr "Spalio"
 
-#: pjweb/views.py:482
+#: pjweb/views.py:534
 msgid "November"
 msgstr "Lapkričio"
 
-#: pjweb/views.py:483
+#: pjweb/views.py:535
 msgid "December"
 msgstr "Gruodžio"
 
-#: pjweb/views.py:538
+#: pjweb/views.py:587
 msgid "You sent an email to "
 msgstr "Siuntėte laišką "
 
-#: pjweb/views.py:538
+#: pjweb/views.py:587
 msgid ""
 " with text:\n"
 "\n"
 msgstr " su tekstu:\n"
 
-#: pjweb/views.py:538
+#: pjweb/views.py:587
 msgid ""
 "\n"
 "\n"
@@ -144,11 +145,11 @@ msgstr ""
 "\n"
 "Privalote patvirtinti žinutę paspausdami žemiau:\n"
 
-#: pjweb/views.py:544
+#: pjweb/views.py:593
 msgid "Thank you. This message must be confirmed. Please check your email."
 msgstr "Dėkojame. Ši žinutė privalo būti patvirtinta. Patikrinkite savo el. pašto dėžutę."
 
-#: pjweb/views.py:572
+#: pjweb/views.py:621
 #, python-format
 msgid ""
 "Dear. Mr. %s, \n"
@@ -163,37 +164,37 @@ msgstr ""
 "\n"
 "Geros dienos."
 
-#: pjweb/views.py:587
-#: pjweb/views.py:614
+#: pjweb/views.py:637
+#: pjweb/views.py:685
 msgid "Sorry, but your message could not be confirmed."
 msgstr "Apgailestaujame, bet Jūsų žinutė negali būti patvirtinta."
 
-#: pjweb/views.py:612
-#: pjweb/views.py:636
+#: pjweb/views.py:640
+#: pjweb/views.py:708
 msgid "Thank you. Your message has been sent."
 msgstr "Dėkojame. Jūsų žinutė išsiųsta."
 
-#: pjweb/views.py:674
+#: pjweb/views.py:747
 #, python-format
 msgid "In selected period (from %(from)s to %(to)s):"
 msgstr "Pasirinktame periode (nuo %(from)s iki %(to)s):"
 
-#: pjweb/views.py:676
+#: pjweb/views.py:749
 #, python-format
 msgid "Questions sent: %s"
 msgstr "Klausimų siųsta: %s"
 
-#: pjweb/views.py:677
+#: pjweb/views.py:750
 #, python-format
 msgid "Answers got: %s"
 msgstr "Atsakymų gauta: %s"
 
-#: pjweb/views.py:678
+#: pjweb/views.py:751
 #, python-format
 msgid "New users: %s"
 msgstr "Naujų vartotojų: %s"
 
-#: pjweb/views.py:726
+#: pjweb/views.py:800
 msgid "Thank you. Your response has been posted."
 msgstr "Dėkojame. Jūsų atsakymas paviešintas."
 
@@ -231,21 +232,21 @@ msgstr "Laiške turėtų būti daugiau teksto, nei tik pasisveikinimas."
 
 #: templates/404.html:18
 #: templates/500.html:18
-#: templates/base.html:18
+#: templates/base.html:20
 #: templates/pjweb/base.html:14
 msgid "ParašykJiems - Fast method to find representatives and contact them."
 msgstr "ParašykJiems - greitas būdas rasti atsakingus valdžios atstovus ir su jais susisiekti."
 
 #: templates/404.html:21
 #: templates/500.html:21
-#: templates/base.html:21
+#: templates/base.html:23
 #: templates/pjweb/base.html:16
 msgid "List of all public mails"
 msgstr "Viešai publikuotų laiškų sąrašas"
 
 #: templates/404.html:22
 #: templates/500.html:22
-#: templates/base.html:22
+#: templates/base.html:24
 #: templates/pjweb/base.html:15
 #: templates/pjweb/confirm.html:10
 #: templates/pjweb/thanks.html:10
@@ -256,36 +257,36 @@ msgstr "Apie projektą"
 msgid "Error was sent to developers."
 msgstr "Klaida nusiųsta programuotojams."
 
-#: templates/base.html:29
+#: templates/base.html:31
 msgid "Find desired representative"
 msgstr "Raskite reikiamą atstovą"
 
-#: templates/base.html:30
+#: templates/base.html:32
 msgid "Will be found by address"
 msgstr "Nustatysime pagal adresą"
 
-#: templates/base.html:32
+#: templates/base.html:34
 msgid "Body of the message"
 msgstr "Laiško turinys"
 
-#: templates/base.html:33
+#: templates/base.html:35
 msgid "You can write public or private mail"
 msgstr "Galite rašyti viešą ar privatų laišką"
 
-#: templates/base.html:35
+#: templates/base.html:37
 msgid "Preview and send"
 msgstr "Peržiūra ir siuntimas"
 
-#: templates/base.html:36
+#: templates/base.html:38
 msgid "Check your spelling ;-)"
 msgstr "Pasitikrinkite klaidas ;-)"
 
-#: templates/base.html:41
+#: templates/base.html:43
 #: templates/pjweb/base.html:26
 msgid "Have any notes, suggestions?"
 msgstr "Turite pastabų, pasiūlymų?"
 
-#: templates/base.html:41
+#: templates/base.html:43
 #: templates/pjweb/base.html:26
 msgid "Write to us"
 msgstr "Parašykite mums"
@@ -317,7 +318,7 @@ msgstr "Peržiūra ir siuntimas (pasitikrinkite klaidas ;-))"
 #: templates/pjweb/check.html:16
 #: templates/pjweb/contact.html:64
 msgid "Next Step"
-msgstr "Sekantis žingsnis"
+msgstr "Kitas žingsnis"
 
 #: templates/pjweb/confirm.html:6
 #: templates/pjweb/thanks.html:6
@@ -441,7 +442,7 @@ msgid "If your member of municipality, civil parish wasn't found, write his data
 msgstr "Jei nebuvo rastas Jūsų meras, seniūnas, seniūnaitis, parašykite jo duomenis: vardą, pavardę, telefoną, el. pašto adresą, darbovietės adresą."
 
 #: templates/pjweb/feedback.html:24
-#: templates/pjweb/preview.html:52
+#: templates/pjweb/preview.html:50
 #: templates/pjweb/response.html:25
 msgid "Send"
 msgstr "Siųsti"
@@ -466,7 +467,7 @@ msgstr "Rasti keli adresai. Pasirinkite:"
 msgid "Found Addresses for constituency"
 msgstr "Rasti apygardų adresai"
 
-#: templates/pjweb/index.html:30
+#: templates/pjweb/index.html:31
 msgid "here"
 msgstr "čia"
 
@@ -478,7 +479,7 @@ msgstr "Rašote viešą laišką. Jis bus išsiųstas adresatui ir pateiktas vie
 msgid "You are writing private mail. It will be sent directly to addressee."
 msgstr "Rašote privatų laišką. Jis bus persiųstas tiesiogiai adresatui."
 
-#: templates/pjweb/preview.html:51
+#: templates/pjweb/preview.html:49
 msgid "Back to editing"
 msgstr "Grįžti į redagavimą"
 
@@ -499,17 +500,33 @@ msgid "from"
 msgstr "nuo"
 
 #: templates/pjweb/public.html:5
-#: templates/pjweb/public.html.py:14
+#: templates/pjweb/public.html.py:12
 msgid "on"
 msgstr " "
 
-#: templates/pjweb/public.html:14
+#: templates/pjweb/public.html:12
 msgid "Got response from"
 msgstr "Atsakymas gautas nuo"
 
 #: templates/pjweb/public_mails.html:5
 msgid "Here you can see all public emails"
 msgstr "Čia galite matyti visus viešus laiškus"
+
+#: templates/pjweb/public_mails.html:10
+msgid "Receiver"
+msgstr "Gavėjas"
+
+#: templates/pjweb/public_mails.html:12
+msgid "Sender"
+msgstr "Siuntėjas"
+
+#: templates/pjweb/public_mails.html:13
+msgid "Was sent on"
+msgstr "Buvo išsiųsta"
+
+#: templates/pjweb/public_mails.html:14
+msgid "Answered"
+msgstr "Atsakyta"
 
 #: templates/pjweb/response.html:6
 msgid "You are writing an answer to "
