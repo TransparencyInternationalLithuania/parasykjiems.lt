@@ -76,8 +76,8 @@ GlobalSettings.mail = GlobalSettingsMail();
 prepareSettingsLocal()
 from settings_local import *
 
-INSTALLED_APPS = (
-    'django.contrib.auth',
+
+commonApps = ['django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
@@ -94,9 +94,9 @@ INSTALLED_APPS = (
     'cdb_lt_mps',
     'cdb_lt_municipality',
     'cdb_lt_seniunaitija',
-    'cdb_lt_streets') + GlobalSettings.LiveServerApps 
-    #'haystack')
+    'cdb_lt_streets']
 
+INSTALLED_APPS = tuple(commonApps + GlobalSettings.LiveServerApps)
 
 # send feedback from website to this email address
 GlobalSettings.mail.feedbackEmail = "parasykjiems@gmail.com"
