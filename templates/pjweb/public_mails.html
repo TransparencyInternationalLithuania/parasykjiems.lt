@@ -4,15 +4,23 @@
 
 <h2 class="c-h">{% trans "Here you can see all public emails" %}</h2>
 <p>&nbsp</p>
+
 <table id="public_mails">
-{% for mail in all_mails %}
+<tr>
+<th width="150px">{% trans "Receiver" %}</th>
+<th width="250px">{% trans "Message" %}</th>
+<th width="150px">{% trans "Sender" %}</th>
+<th width="100px">{% trans "Was sent on" %}</th>
+<th width="50px">{% trans "Answered" %}</th>
+</tr>
+{% for mail in mail_list %}
 <tr>
 <td><a href="/pjweb/public/{{ mail.id }}/">{{ mail.recipient_name }}</a></td>
 <td>{{ mail.message }}</td>
-<td>{{ mail.sender_name }}</td>
-<td>{{ mail.mail_date|date:"Y-m-d" }}, {{ mail.mail_date|time:"H:i" }}</td>
+<td>{{ mail.sender }}</td>
+<td>{{ mail.send_date }}</td>
+<td>{{ mail.has_response }}</td>
 </tr>
 {% endfor %}
 </table>
-
 {% endblock %}

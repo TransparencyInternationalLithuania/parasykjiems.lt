@@ -1,6 +1,6 @@
 # Django settings for parasykjiems project.
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 SERVER_EMAIL = 'parasykjiems@gmail.com'
@@ -87,12 +87,11 @@ INSTALLED_APPS = (
     'parasykjiems.pjweb',
     'parasykjiems.pjutils',
     'django.contrib.admin',
-#    'gunicorn',
+    'gunicorn',
 #    'haystack',
     'cdb_lt_civilparish',
     'cdb_lt_mps',
     'cdb_lt_municipality',
     'cdb_lt_seniunaitija',
-    'cdb_lt_streets'
-    #'haystack',
-) + GlobalSettings.LiveServerApps
+    'cdb_lt_streets') 
+    #'haystack') 
