@@ -50,17 +50,20 @@ class InsertResponse():
             responses = getmail.get_mail(server_info, mail_id, mail.response_hash)
             responder = self.get_rep(mail.recipient_id, mail.recipient_type)
             for response in responses:
-                message = response
+                try:
+                    message = unicode(response,'UTF-8')
+                except:
+                    message = unicode(response,'iso-8859-13')
                 sender = responder.email
                 recipients = mail.sender_mail
-                resp = response.split('>\r')
-                response_1 = ''.join(resp)
-                lines = response_1.split('\n')
+#                resp = response.split('>\r')
+#                response_1 = ''.join(resp)
+#                lines = response_1.split('\n')
 #                for line in lines:
 #                    find_us = line.find('parasykjiems@gmail.com')
 #                    if len(line)>0 and (line[0]=='>' or find_us>-1):
 #                        lines.remove(line)
-                message_1 = '\n'.join(lines)
+#                message_1 = '\n'.join(lines)
                 resp = Email(
                     sender_name = mail.recipient_name,
                     sender_mail = responder.email,
@@ -68,12 +71,15 @@ class InsertResponse():
                     recipient_type = mail.recipient_type,
                     recipient_name = mail.sender_name,
                     recipient_mail = mail.sender_mail,
-                    message = unicode(message_1,'iso-8859-13'),
                     msg_type = 'Response',
                     response_hash = mail.response_hash,
                     answer_to = mail.id,
-                    public = True,
+                    public = mail.public,
                 )
+                if mail.public:
+                    mail.message = message
+                else:
+                    mail.message = ''
                 resp.save()
 
                 # send a mail message to original person who asked a question.
