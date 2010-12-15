@@ -88,8 +88,8 @@ GlobalSettings.PROFANITIES_LIST = (u'bybys', u'šikna', u'pyderas')
 GlobalSettings.EnableWWWForLTGeoTests = False
 
 # list additional apps, which are needed at live server, such as gunicorn, or similar
-#GlobalSettings.LiveServerApps = ('gunicorn')
-GlobalSettings.LiveServerApps = ()
+#GlobalSettings.LiveServerApps = ['gunicorn']
+GlobalSettings.LiveServerApps = []
 
 # Whether to send emails to real representatives, or only to specific addresses
 # Possible values - list of emails, single email, literal string "sendToRepresentatives", which will send email to representatives
