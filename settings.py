@@ -1,4 +1,5 @@
 # Django settings for parasykjiems project.
+from GlobalSettingsClass import GlobalSettingsClass, GlobalSettingsMail
 
 SERVER_EMAIL = 'parasykjiems@gmail.com'
 
@@ -69,6 +70,9 @@ def prepareSettingsLocal():
         shutil.copy("settings_local.py.template", "settings_local.py")
     
 
+GlobalSettings = GlobalSettingsClass()
+GlobalSettings.mail = GlobalSettingsMail();
+
 prepareSettingsLocal()
 from settings_local import *
 
@@ -95,5 +99,4 @@ INSTALLED_APPS = (
 
 
 # send feedback from website to this email address
-GlobalSettings.mail = GlobalSettingsMail();
 GlobalSettings.mail.feedbackEmail = "parasykjiems@gmail.com"

@@ -5,6 +5,7 @@ import os
 from GlobalSettingsClass import *
 from distutils import dir_util
 import logging
+from settings import *
 
 
 DEBUG = True
@@ -61,7 +62,6 @@ LOG_FILENAME = os.path.join(logPath, 'pjweb.log')
 logging.basicConfig(filename=LOG_FILENAME,level=logging.DEBUG)
 
 # Setttings repository for ParašykJiems.LT
-GlobalSettings = GlobalSettingsClass()
 
 #variables for getting email
 GlobalSettings.MAIL_SERVER_TYPE = 'IMAP'
@@ -90,3 +90,7 @@ GlobalSettings.EnableWWWForLTGeoTests = False
 # list additional apps, which are needed at live server, such as gunicorn, or similar
 #GlobalSettings.LiveServerApps = ('gunicorn')
 GlobalSettings.LiveServerApps = ()
+
+# Whether to send emails to real representatives, or only to specific addresses
+# Possible values - list of emails, single email, literal string "sendToRepresentatives", which will send email to representatives
+GlobalSettings.mail.sendEmailToRepresentatives = "parasykjiems@gmail.com"

@@ -534,7 +534,7 @@ def contact(request, rtype, mp_id):
         _(u'December')
     ]
     print current_site
-    if not receiver.email and not receiver.officeEmail:
+    if not receiver.email:
         return HttpResponseRedirect('no_email')
     publ = False
     if request.method == 'POST':
@@ -553,8 +553,9 @@ def contact(request, rtype, mp_id):
             response_hash = random.randrange(0, 1000000),
 
             response_hash = response_hash[0]
-            #recipients = [receiver.email, receiver.officeEmail]
-            recipients = ['parasykjiems@gmail.com']
+
+
+            recipients = [receiver.email]
 
             if not recipients[0]:
                 logger.debug('%s has no email' % (receiver.name, receiver.surname))
@@ -565,6 +566,7 @@ def contact(request, rtype, mp_id):
                 message_disp = message
                 if not publ:
                     message = ''
+                    
                 mail = Email(
                     sender_name = sender_name,
                     sender_mail = sender,
@@ -639,30 +641,45 @@ def confirm(request, mail_id, secret):
     ConfirmMessage = _('Sorry, but your message could not be confirmed.')
     if (int(mail_id)==mail.id) and (int(secret)==mail.response_hash):
         print mail.id
+        ConfirmMessage = _('Thank you. Your message has been sent.')
+
+        # update message state 
         mail.msg_state = 'Confirmed'
+
+        # save message state to db
+        mail.save()
+
+        # determine where to send email
         if mail.public:
             domain = GlobalSettings.MAIL_SERVER
-            #reply_to = 'reply%s_%s@dev.parasykjiems.lt' % (mail.id, mail.response_hash)
             reply_to = 'reply%s_%s@%s' % (mail.id, mail.response_hash, domain)
         else:
             reply_to = mail.sender_mail
 
-        recipients = ['parasykjiems@gmail.com']
-#        recipients = [mail.recipient_mail]
-        mail.save()
+        if (GlobalSettings.mail.sendEmailToRepresentatives == "sendToRepresentatives"):
+            recipients = [mail.recipient_mail]
+        else:
+            recipients = GlobalSettings.mail.sendEmailToRepresentatives;
+
+
+        # send an actual email message to government representative
         email = EmailMessage(u'Gavote laišką nuo %s' % mail.sender_name, mail.message, settings.EMAIL_HOST_USER,
             recipients, [],
             headers = {'Reply-To': reply_to})
         email.send()
+
+        # store in email history status of message, so we can know that this message got sent
         history = MailHistory(
             sender = mail.sender_mail,
-            recipient = mail.recipient_mail,
+            recipient = recipients[0],
             mail = mail,
             mail_state = 'Sent',
         )
         history.save()
-        ConfirmMessage = _('Thank you. Your message has been sent.')
+
+        # finished confirminging, just render response
     else:
+        # render response with failed message
         ConfirmMessage = _('Sorry, but your message could not be confirmed.')
 
     logger.debug('%s' % (ConfirmMessage))
