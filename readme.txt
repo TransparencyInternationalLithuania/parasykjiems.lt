@@ -66,7 +66,7 @@ sudo python26 manage.py run_gunicorn 127.0.0.1:1234 --daemon
 
 # to kill a running gunicorn instance
 ps ax | grep manage.py
-kill (process number)
+sudo kill (process number)
 
 # after running thse four commands you should have your database ready. just call manage.py runserver and use browser :)
 
