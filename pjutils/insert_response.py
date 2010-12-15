@@ -80,7 +80,7 @@ class InsertResponse():
                 # Reply-to will not be an exact recipients email (resp.sender_mail),
                 # but a "no_reply" address, meaning that we do not support "discussion" style
                 # responses now.
-                email = EmailMessage(u'Gavote atsakymą nuo %s' % resp.sender_name, response, 'parasykjiems@gmail.com',
+                email = EmailMessage(u'Gavote atsakymą nuo %s' % resp.sender_name, response, settings.EMAIL_HOST_USER,
                     [resp.recipient_mail], [],
                     headers = {'Reply-To': 'no_reply_parasykjiems@gmail.com'})
                 email.send()
