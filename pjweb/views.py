@@ -388,9 +388,9 @@ def public_mails(request):
         send_date = mail.mail_date.strftime("%Y-%m-%d %H:%M")
         answers = Email.objects.filter(answer_to=mail.id)
         if not answers:
-            has_response = 'Yes'
+            has_response = _('No')
         else:
-            has_response = 'No'
+            has_response = _('Yes')
         mail_dict = {'id':id,'recipient_name':recipient_name, 'sender':sender, 'message':message, 'send_date':send_date,'has_response':has_response}
         mail_list.append(mail_dict)
     return render_to_response('pjweb/public_mails.html', {
