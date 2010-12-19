@@ -555,11 +555,14 @@ def contact(request, rtype, mp_id):
 
             response_hash = response_hash[0]
 
+            if (GlobalSettings.mail.sendEmailToRepresentatives == "sendToRepresentatives"):
+                recipients = [mail.recipient_mail]
+            else:
+                recipients = [GlobalSettings.mail.sendEmailToRepresentatives];
 
-            recipients = [receiver.email]
             # if representative has no email - show message
             if not recipients[0]:
-                logger.debug('%s has no email' % (receiver.name, receiver.surname))
+                logger.debug('%s %s has no email' % (receiver.name, receiver.surname))
                 return HttpResponseRedirect('no_email')
             else:
                 #from django.core.mail import send_mail
