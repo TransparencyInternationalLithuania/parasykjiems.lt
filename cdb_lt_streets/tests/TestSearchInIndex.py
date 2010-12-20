@@ -29,6 +29,14 @@ class TestAddressDeducer(TestCase):
         self.assertEqual(u"Vilnius", address.city)
         self.assertEqual(u"", address.municipality)
 
+    def testGedimino_with_flat_number(self):
+        address = deduceAddress(u"Gedimino 9-15, Vilnius")
+        self.assertEqual(u"15", address.flatNumber)
+        self.assertEqual(u"9", address.number)
+        self.assertEqual(u"Gedimino", address.street)
+        self.assertEqual(u"Vilnius", address.city)
+        self.assertEqual(u"", address.municipality)
+
     def testVerkiu(self):
         """ adds municipality """
         address = deduceAddress(u"Verkių g., Vilnius, Vilniaus m. sav.")

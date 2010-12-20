@@ -43,7 +43,9 @@ class ContactDbAddress:
         self.city = u""
         self.municipality = u""
         self.unknown = u""
+        # house number
         self.number = u""
+        self.flatNumber = u""
 
 
 class AddressDeducer():
@@ -67,22 +69,35 @@ class AddressDeducer():
             return parts[pos].strip()
         return ""
 
+    def _splitByHyphenAndSpace(self, string):
+        parts = string.split(u" ")
+        final = []
+        for p in parts:
+            final.extend(p.split('-'))
+        return final
+
     def extractStreetAndNumber(self, streetWithNumber):
-        parts = streetWithNumber.split(u" ")
-        number = [p for p in parts if p.isdigit() == True]
-        number = " ".join(number)
-        number = number.strip()
+        number = ""
+        flatNumber = ""
+
+        parts = self._splitByHyphenAndSpace(streetWithNumber)
+        digits = [d for d in parts if d.isdigit()]
+        if (len(digits) > 0):
+            number = digits[0]
+        if (len(digits) > 1):
+            flatNumber = digits[1]
 
         street = [p for p in parts if p.isdigit() == False]
         street = " ".join(street)
         street = street.strip()
-        return (street, number)
+        return (street, number, flatNumber)
 
     def containsNumber(self, str):
-        parts = str.split(" ")
-        for p in parts:
-            if p.isdigit():
-                return True
+        parts = str.split(u" ")
+        for p1 in parts:
+            for p in p1.split(u"-"):
+                if p.isdigit():
+                    return True
         return False
 
     def containsStreet(self, str):
@@ -131,9 +146,9 @@ class AddressDeducer():
 
         if (stringList.find(u",") >= 0):
             parts = stringList.split(u",")
-            # if first part contains either number, or street, thet it is street, city, municipality
+            # if first part contains either number, or street, then it is street, city, municipality
             if (self.containsNumber(parts[0])) or (self.containsStreet(parts[0])):
-                address.street, address.number = self.extractStreetAndNumber(self.takePart(parts, 0))
+                address.street, address.number, address.flatNumber  = self.extractStreetAndNumber(self.takePart(parts, 0))
                 address.city = self.takePart(parts, 1)
                 address.municipality = self.takePart(parts, 2)
             else:
@@ -143,7 +158,7 @@ class AddressDeducer():
         else:
             parts = self.splitNoCommas(stringList)
             if (self.containsNumber(parts[0])) or (self.containsStreet(parts[0])):
-                address.street, address.number = self.extractStreetAndNumber(self.takePart(parts, 0))
+                address.street, address.number, address.flatNumber = self.extractStreetAndNumber(self.takePart(parts, 0))
                 address.city = self.takePart(parts, 1)
                 address.municipality = self.takePart(parts, 2)
             else:
@@ -210,6 +225,7 @@ def searchInIndex(addressContext):
     addressContext.street = addressContext.street.capitalize()
 
     logger.debug(u"searching in index")
+    logger.debug(u"addressContext.flatNumber '%s'" % ( addressContext.flatNumber))
     logger.debug(u"addressContext.number '%s'" % ( addressContext.number))
     logger.debug(u"addressContext.street '%s'" % ( addressContext.street))
     logger.debug(u"addressContext.city '%s'" % ( addressContext.city))
