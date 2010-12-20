@@ -26,7 +26,12 @@ admin.autodiscover()
 #    label = display_suggestion,
 #)
 
-sentenceRegExp = u"[a-zA-Z0-9ąčęėįšųūžĄČĘĖĮŠŲŪŽ_ \.]+"
+# allowing all alphanumeric
+# allowing all lithuanian, capital and non-capital
+# allowing hyphen '-'
+# allowing dot
+# allowing space
+sentenceRegExp = u"[a-zA-Z0-9ąčęėįšųūžĄČĘĖĮŠŲŪŽ_\- \.]+"
 
 urlpatterns = patterns('parasykjiems.pjweb.views',
     # Example:
