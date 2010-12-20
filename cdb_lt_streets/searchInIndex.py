@@ -81,23 +81,28 @@ class AddressDeducer():
         flatNumber = ""
 
         parts = self._splitByHyphenAndSpace(streetWithNumber)
-        digits = [d for d in parts if d.isdigit()]
+        digits = [d for d in parts if self._stringContainsDigits(d)]
         if (len(digits) > 0):
             number = digits[0]
         if (len(digits) > 1):
             flatNumber = digits[1]
 
-        street = [p for p in parts if p.isdigit() == False]
+        street = [p for p in parts if self._stringContainsDigits(p) == False]
         street = " ".join(street)
         street = street.strip()
         return (street, number, flatNumber)
 
+    def _stringContainsDigits(self, string):
+        for letter in string:
+            if letter.isdigit() == True:
+                return True
+        return False
+
     def containsNumber(self, str):
-        parts = str.split(u" ")
+        parts = self._splitByHyphenAndSpace(str)
         for p1 in parts:
-            for p in p1.split(u"-"):
-                if p.isdigit():
-                    return True
+            if self._stringContainsDigits(p1):
+                return True
         return False
 
     def containsStreet(self, str):
