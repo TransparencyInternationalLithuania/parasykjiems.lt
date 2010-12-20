@@ -534,7 +534,7 @@ def contact(request, rtype, mp_id):
         _(u'November'),
         _(u'December')
     ]
-    print current_site
+
     if not receiver.email and not receiver.officeEmail:
         return HttpResponseRedirect('no_email')
     publ = False
@@ -555,10 +555,14 @@ def contact(request, rtype, mp_id):
 
             response_hash = response_hash[0]
 
-            if (GlobalSettings.mail.sendEmailToRepresentatives == "sendToRepresentatives"):
-                recipients = [mail.recipient_mail]
+#            if (GlobalSettings.mail.sendEmailToRepresentatives == "sendToRepresentatives"):
+#                recipients = [mail.recipient_mail]
+#            else:
+#                recipients = [GlobalSettings.mail.sendEmailToRepresentatives];
+            if receiver.email:
+                recipients = [receiver.email]
             else:
-                recipients = [GlobalSettings.mail.sendEmailToRepresentatives];
+                recipients = [receiver.officeEmail]
 
             # if representative has no email - show message
             if not recipients[0]:
