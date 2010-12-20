@@ -668,7 +668,7 @@ def confirm(request, mail_id, secret):
         if (GlobalSettings.mail.sendEmailToRepresentatives == "sendToRepresentatives"):
             recipients = [mail.recipient_mail]
         else:
-            recipients = [GlobalSettings.mail.sendEmailToRepresentatives];
+            recipients = GlobalSettings.mail.sendEmailToRepresentatives
 
 
         # send an actual email message to government representative
