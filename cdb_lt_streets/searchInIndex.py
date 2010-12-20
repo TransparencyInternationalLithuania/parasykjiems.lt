@@ -70,10 +70,21 @@ class AddressDeducer():
         return ""
 
     def _splitByHyphenAndSpace(self, string):
+        # string such as "Sausio 13-osios g., vilnius" must be split only by spaces, since the number is not a house
+        # number and flat number
+        # string "Gedimino 15-13, vilnius" will be split by hyphen, since it is a flat number and house number
         parts = string.split(u" ")
         final = []
         for p in parts:
-            final.extend(p.split('-'))
+            if (p.find('-') == -1):
+                final.append(p)
+            else:
+                p1, p2 = p.split('-')
+                if p1.isdigit() and p2.isdigit():
+                    final.append(p1)
+                    final.append(p2)
+                else:
+                    final.append(p)
         return final
 
     def extractStreetAndNumber(self, streetWithNumber):
@@ -81,27 +92,46 @@ class AddressDeducer():
         flatNumber = ""
 
         parts = self._splitByHyphenAndSpace(streetWithNumber)
-        digits = [d for d in parts if self._stringContainsDigits(d)]
+        digits = [d for d in parts if self._stringIsStreetHouseNumber(d)]
         if (len(digits) > 0):
             number = digits[0]
         if (len(digits) > 1):
             flatNumber = digits[1]
 
-        street = [p for p in parts if self._stringContainsDigits(p) == False]
+        street = [p for p in parts if self._stringIsStreetHouseNumber(p) == False]
         street = " ".join(street)
         street = street.strip()
         return (street, number, flatNumber)
 
-    def _stringContainsDigits(self, string):
-        for letter in string:
-            if letter.isdigit() == True:
-                return True
-        return False
+    def _stringIsStreetHouseNumber(self, string):
+        # first element must be digit
+        # first before last must be strictly digit
+        # last element must be either digit, or letter
+        if (string == ""):
+            return False
+        if (string == None):
+            return False
+
+        if string[0].isdigit() == False:
+            return False
+        if (len(string)) < 2:
+            return True
+
+        # check that last element is alphanumeric
+        if string[-1].isalnum() == False:
+            return False
+
+        # check last element before last must be strictly digit. I.e. we do not allow street addresses to contain
+        # two letters, such as "Kings road 5ad"
+        if string[-2].isdigit() == False:
+            return False;
+
+        return True
 
     def containsNumber(self, str):
         parts = self._splitByHyphenAndSpace(str)
         for p1 in parts:
-            if self._stringContainsDigits(p1):
+            if self._stringIsStreetHouseNumber(p1):
                 return True
         return False
 
