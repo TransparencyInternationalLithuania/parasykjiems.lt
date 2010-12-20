@@ -31,9 +31,8 @@ class CivilParishMembersReader:
             member = CivilParishMember()
             member.name = readRow(row, "name")
             member.surname = readRow(row, "surname")
-            #member.email = row["e-mail"]
+            member.email = row["officee-mail"]
             member.personalPhone = readRow(row, "personaltelephonenumber")
-            member.officeEmail = readRow(row, "officee-mail")
             member.officePhone = readRow(row, "officetelephonenumber")
             member.officeAddress = readRow(row, "officeaddress")
             member.civilParishStr = readRow(row, "institution")

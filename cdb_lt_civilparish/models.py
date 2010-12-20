@@ -18,7 +18,6 @@ class CivilParishMember(models.Model):
     email = models.EmailField()
     civilParish = models.ForeignKey(CivilParish, null=True)
     personalPhone = PhoneField()
-    officeEmail = models.EmailField()
     officePhone = PhoneField()
     officeAddress = models.CharField(max_length = 100)
     uniqueKey = models.IntegerField()
