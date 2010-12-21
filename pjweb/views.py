@@ -29,6 +29,7 @@ from django.db.models.query_utils import Q, Q
 from django.utils.encoding import iri_to_uri
 from pjutils.deprecated import deprecated
 from cdb_lt_streets.searchInIndex import searchInIndex, deduceAddress, removeGenericPartFromStreet, removeGenericPartFromMunicipality
+from django.core.paginator import Paginator, InvalidPage, EmptyPage
 
 
 logger = logging.getLogger(__name__)
@@ -380,6 +381,7 @@ def no_email(request, rtype, mp_id):
 def public_mails(request):
     all_mails = Email.objects.all().filter(public__exact=True, msg_type__exact='Question').exclude(msg_state__exact='NotConfirmed')
     mail_list = []
+    
     for mail in all_mails:
         id = mail.id
         recipient_name = mail.recipient_name
@@ -393,8 +395,23 @@ def public_mails(request):
             has_response = _('Yes')
         mail_dict = {'id':id,'recipient_name':recipient_name, 'sender':sender, 'message':message, 'send_date':send_date,'has_response':has_response}
         mail_list.append(mail_dict)
+    
+    paginator = Paginator(mail_list, 10) # Show 10 contacts per page
+    # Make sure page request is an int. If not, deliver first page.
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+
+    # If page request (9999) is out of range, deliver last page of results.
+    try:
+        mails = paginator.page(page)
+    except (EmptyPage, InvalidPage):
+        mails = paginator.page(paginator.num_pages)
+        
     return render_to_response('pjweb/public_mails.html', {
         'all_mails': all_mails,
+        'mails': mails,
         'mail_list': mail_list,
         'LANGUAGES': GlobalSettings.LANGUAGES,
         'step1': '',
@@ -535,7 +552,7 @@ def contact(request, rtype, mp_id):
         _(u'December')
     ]
 
-    if not receiver.email and not receiver.officeEmail:
+    if not receiver.email:
         return HttpResponseRedirect('no_email')
     publ = False
     if request.method == 'POST':
@@ -559,10 +576,7 @@ def contact(request, rtype, mp_id):
 #                recipients = [mail.recipient_mail]
 #            else:
 #                recipients = [GlobalSettings.mail.sendEmailToRepresentatives];
-            if receiver.email:
-                recipients = [receiver.email]
-            else:
-                recipients = [receiver.officeEmail]
+            recipients = [receiver.email]
 
             # if representative has no email - show message
             if not recipients[0]:
