@@ -13,7 +13,7 @@
 <th width="100px">{% trans "Was sent on" %}</th>
 <th width="50px">{% trans "Answered" %}</th>
 </tr>
-{% for mail in mail_list %}
+{% for mail in mails %}
 <tr>
 <td><a href="/pjweb/public/{{ mail.id }}/">{{ mail.recipient_name }}</a></td>
 <td>{{ mail.message }}</td>
@@ -23,4 +23,21 @@
 </tr>
 {% endfor %}
 </table>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if mails.has_previous %}
+            <a href="?page={{ mails.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ mails.number }} of {{ mails.paginator.num_pages }}.
+        </span>
+
+        {% if mails.has_next %}
+            <a href="?page={{ mails.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+
 {% endblock %}
