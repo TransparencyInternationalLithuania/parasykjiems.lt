@@ -107,10 +107,6 @@ def addHouseNumberQuery(query, house_number):
 
     orQuery = houseNumberEquals | houseNumberIsNull
 
-    #query = query.filter(numberFrom__lte = house_number ) \
-     #   .filter(numberTo__gte = house_number) \
-      #  .filter(numberOdd = isOdd)
-
     query = query.filter(orQuery)
     return query
 
