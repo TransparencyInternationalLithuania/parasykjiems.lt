@@ -29,7 +29,7 @@ from django.utils.encoding import iri_to_uri
 from pjutils.deprecated import deprecated
 from cdb_lt_streets.searchInIndex import searchInIndex, deduceAddress, removeGenericPartFromStreet, removeGenericPartFromMunicipality
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
-from pjweb.forms import IndexForm
+from pjweb.forms import IndexForm, ContactForm
 
 
 logger = logging.getLogger(__name__)
