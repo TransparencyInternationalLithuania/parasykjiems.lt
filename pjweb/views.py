@@ -595,11 +595,9 @@ def contact(request, rtype, mp_id):
                 if send:
                     print mail.message
                     mail.save()
-                    #domain = settings.MAIL_USERNAME.split('@')[1]
                     reply_to = 'reply%s_%s@dev.parasykjiems.lt' % (mail.id, mail.response_hash)
                     # generate confirmation email message and send it
                     message = _('You sent an email to ')+ mail.recipient_name + _(' with text:\n\n')+ message_disp + _('\n\nYou must confirm this message by clicking link below:\n') + 'http://%s/confirm/%s/%s' % (current_site.domain, mail.id, mail.response_hash)
-                    #print message
                     email = EmailMessage(u'Confirm your message %s' % sender_name, message, settings.EMAIL_HOST_USER,
                         [sender], [],
                         headers = {'Reply-To': reply_to})
