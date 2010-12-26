@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+
+<h2 class="c-h">{% trans "Here you can see all public emails" %}</h2>
+<p>&nbsp</p>
+
+<table id="public_mails">
+<tr>
+<th width="150px">{% trans "Receiver" %}</th>
+<th width="250px">{% trans "Message" %}</th>
+<th width="150px">{% trans "Sender" %}</th>
+<th width="100px">{% trans "Was sent on" %}</th>
+<th width="50px">{% trans "Answered" %}</th>
+</tr>
+{% for mail in mails %}
+<tr>
+<td><a href="/pjweb/public/{{ mail.id }}/">{{ mail.recipient_name }}</a></td>
+<td>{{ mail.message }}</td>
+<td>{{ mail.sender }}</td>
+<td>{{ mail.send_date }}</td>
+<td>{{ mail.has_response }}</td>
+</tr>
+{% endfor %}
+</table>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if mails.has_previous %}
+            <a href="?page={{ mails.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ mails.number }} of {{ mails.paginator.num_pages }}.
+        </span>
+
+        {% if mails.has_next %}
+            <a href="?page={{ mails.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+
+{% endblock %}
