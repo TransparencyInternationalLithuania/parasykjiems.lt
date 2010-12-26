@@ -54,8 +54,7 @@ class InsertResponse():
                     message = unicode(response,'UTF-8')
                 except:
                     message = unicode(response,'iso-8859-13')
-                sender = responder.email
-                recipients = mail.sender_mail
+                
                 resp = Email(
                     sender_name = mail.recipient_name,
                     sender_mail = responder.email,
@@ -83,13 +82,6 @@ class InsertResponse():
                     headers = {'Reply-To': 'no_reply_parasykjiems@gmail.com'})
                 email.send()
 
-#                mail_history = MailHistory(
-#                    sender = mail.sender_mail,
-#                    recipient = mail.recipient_mail,
-#                    mail = mail,
-#                    mail_state = 'A',
-#                )
-#                mail_history.save()
             if resp:
                 return resp
             else:
