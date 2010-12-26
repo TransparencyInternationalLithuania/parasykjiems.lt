@@ -554,16 +554,15 @@ def contact(request, rtype, mp_id):
 
     if not receiver.email:
         return HttpResponseRedirect('no_email')
-    publ = False
+
     if request.method == 'POST':
         send = request.POST.has_key('send')
         form = ContactForm(data=request.POST)
         if form.is_valid():
             public = form.cleaned_data[u'public']
+            publ = False
             if public=='public':
                 publ = True
-            else:
-                publ = False
             sender_name = form.cleaned_data[u'sender_name']
             phone = form.cleaned_data[u'phone']
             message = form.cleaned_data[u'message']
@@ -579,8 +578,6 @@ def contact(request, rtype, mp_id):
                 logger.debug('%s %s has no email' % (receiver.name, receiver.surname))
                 return HttpResponseRedirect('no_email')
             else:
-                #from django.core.mail import send_mail
-                #try:
                 message_disp = message
                 mail = Email(
                     sender_name = sender_name,
