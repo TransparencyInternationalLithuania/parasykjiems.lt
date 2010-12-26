@@ -572,10 +572,6 @@ def contact(request, rtype, mp_id):
 
             response_hash = response_hash[0]
 
-#            if (GlobalSettings.mail.sendEmailToRepresentatives == "sendToRepresentatives"):
-#                recipients = [mail.recipient_mail]
-#            else:
-#                recipients = [GlobalSettings.mail.sendEmailToRepresentatives];
             recipients = [receiver.email]
 
             # if representative has no email - show message
