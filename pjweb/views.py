@@ -124,7 +124,6 @@ def findMPs(municipality = None, city = None, street = None, house_number = None
             .filter(street__contains = street) \
             .filter(city__contains = city)
         query = addHouseNumberQuery(query, house_number)
-        #print query.query
 
         query = query.distinct() \
             .values('constituency')
@@ -132,7 +131,7 @@ def findMPs(municipality = None, city = None, street = None, house_number = None
     except PollingDistrictStreet.DoesNotExist:
         logging.info("no polling district")
         return []
-    print "found MPs in following constituency : %s" % (idList)
+    logging.debug("found MPs in following constituency : %s" % (idList))
     members = ParliamentMember.objects.all().filter(constituency__in = idList)
     return members
 
@@ -203,10 +202,10 @@ def findSeniunaitijaMembers(municipality = None, city = None, street = None, hou
 
 
 def choose_representative(request, municipality = None, city = None, street = None, house_number = None):
-    print "choose_rep: municipality %s" % municipality
-    print "choose_rep: city %s" % city
-    print "choose_rep: street %s" % street
-    print "choose_rep: house_number %s" % house_number
+    logger.debug("choose_rep: municipality %s" % municipality)
+    logger.debug("choose_rep: city %s" % city)
+    logger.debug("choose_rep: street %s" % street)
+    logger.debug("choose_rep: house_number %s" % house_number)
 
     parliament_members = findMPs(municipality, city, street, house_number)
     municipality_members = findMunicipalityMembers(municipality, city, street, house_number)
