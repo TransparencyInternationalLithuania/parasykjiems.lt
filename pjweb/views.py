@@ -29,6 +29,7 @@ from django.utils.encoding import iri_to_uri
 from pjutils.deprecated import deprecated
 from cdb_lt_streets.searchInIndex import searchInIndex, deduceAddress, removeGenericPartFromStreet, removeGenericPartFromMunicipality
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
+from pjweb.forms import IndexForm
 
 
 logger = logging.getLogger(__name__)
@@ -238,19 +239,16 @@ def json_lookup(request, queryset, field, limit=5, login_required=False):
 
 def index(request):
     query_string = ' '
-    entered = ''
     address = {
         'found_entries': None,
         'found_geodata': None,
         'not_found': '',
         }
-    suggestion = ''
     lang = request.LANGUAGE_CODE
     if request.method == 'POST':
         form = IndexForm(request.POST)
         if form.is_valid():
             query_string = form.cleaned_data['address_input']
-            entered = form.cleaned_data['address_input']
         else:
             query_string = ''
         address = searchInStreetIndex(query_string)
