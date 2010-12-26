@@ -646,7 +646,6 @@ def contact(request, rtype, mp_id):
 
 def confirm(request, mail_id, secret):
     mail = Email.objects.get(id=mail_id)
-    ConfirmMessage = _('Sorry, but your message could not be confirmed.')
     if (int(mail_id)==mail.id) and (int(secret)==mail.response_hash):
         print mail.id
         ConfirmMessage = _('Thank you. Your message has been sent.')
