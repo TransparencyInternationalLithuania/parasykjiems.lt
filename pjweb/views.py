@@ -12,7 +12,6 @@ from django.core.mail import send_mail, EmailMessage
 from parasykjiems.pjweb.models import Email, MailHistory
 from parasykjiems.pjweb.forms import *
 from pjutils.address_search import AddressSearch
-#from pjutils.get_mail import GetMail
 from pjutils.insert_response import InsertResponse
 from pjutils.declension import DeclensionLt
 from django.utils import simplejson
@@ -70,8 +69,8 @@ def searchInStreetIndex(query_string):
 
 
     for e in found_entries:
-        print "%s %s %s %s %s" % (e.id, e.street, e.city, e.municipality, e.number)
-    print "len %s " % len(found_entries)
+        logger.debug("%s %s %s %s %s" % (e.id, e.street, e.city, e.municipality, e.number))
+    logger.debug("len %s " % len(found_entries))
 
     if not found_entries:
         found_entries = {}
