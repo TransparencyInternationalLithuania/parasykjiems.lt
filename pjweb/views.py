@@ -6,7 +6,7 @@ import re
 from settings import *
 from django import forms
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from django.utils.translation import ugettext as _, ugettext_lazy, ungettext, check_for_language
 from django.core.mail import send_mail, EmailMessage
 from parasykjiems.pjweb.models import Email, MailHistory
@@ -40,8 +40,7 @@ def is_odd(number):
     else:
         return False
 
-
-
+    
 def searchInStreetIndex(query_string):
     """ Searches throught street index and returns municipality / city / street/ house number
     Additionally returns more data for rendering in template"""
@@ -203,6 +202,9 @@ def findSeniunaitijaMembers(municipality = None, city = None, street = None, hou
 
 
 def choose_representative(request, municipality = None, city = None, street = None, house_number = None):
+    referer = request.META.get('HTTP_REFERER', '')
+    if not referer:
+        return HttpResponseRedirect('/')
     logger.debug("choose_rep: municipality %s" % municipality)
     logger.debug("choose_rep: city %s" % city)
     logger.debug("choose_rep: street %s" % street)
@@ -377,9 +379,13 @@ def smtp_error(request, rtype, mp_id, private=None):
         'step3': 'active-step',
     })
 
+    
 def contact(request, rtype, mp_id):
     insert = InsertResponse()
     # find required representative
+    referer = request.META.get('HTTP_REFERER', '')
+    if not referer:
+        return HttpResponseRedirect('/')
     receiver = insert.get_rep(mp_id, rtype)
     current_site = Site.objects.get_current()
     months = [
@@ -396,10 +402,8 @@ def contact(request, rtype, mp_id):
         _(u'November'),
         _(u'December')
     ]
-
     if not receiver.email:
         return HttpResponseRedirect('no_email')
-
     if request.method == 'POST':
         send = request.POST.has_key('send')
         form = ContactForm(data=request.POST)
