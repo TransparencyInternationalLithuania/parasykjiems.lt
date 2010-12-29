@@ -292,7 +292,7 @@ def no_email(request, rtype, mp_id):
 
 
 def public_mails(request):
-    all_mails = Email.objects.all().filter(public__exact=True, msg_type__exact='Question').exclude(msg_state__exact='NotConfirmed')
+    all_mails = Email.objects.all().filter(public__exact=True, msg_type__exact='Question').exclude(msg_state__exact='NotConfirmed').order_by('-mail_date')
     mail_list = []
     
     for mail in all_mails:
@@ -321,7 +321,7 @@ def public_mails(request):
         mails = paginator.page(page)
     except (EmptyPage, InvalidPage):
         mails = paginator.page(paginator.num_pages)
-        
+
     return render_to_response('pjweb/public_mails.html', {
         'all_mails': all_mails,
         'mails': mails,
@@ -447,7 +447,7 @@ def contact(request, rtype, mp_id):
                     reply_to = 'reply%s_%s@dev.parasykjiems.lt' % (mail.id, mail.response_hash)
                     # generate confirmation email message and send it
                     message = _('You sent an email to ')+ mail.recipient_name + _(' with text:\n\n')+ message_disp + _('\n\nYou must confirm this message by clicking link below:\n') + 'http://%s/confirm/%s/%s' % (current_site.domain, mail.id, mail.response_hash)
-                    email = EmailMessage(u'Confirm your message %s' % sender_name, message, settings.EMAIL_HOST_USER,
+                    email = EmailMessage(_(u'Confirm your message %s') % sender_name, message, settings.EMAIL_HOST_USER,
                         [sender], [],
                         headers = {'Reply-To': reply_to})
                     email.send()
@@ -525,7 +525,7 @@ def confirm(request, mail_id, secret):
 
 
         # send an actual email message to government representative
-        email = EmailMessage(u'Gavote laišką nuo %s' % mail.sender_name, message, settings.EMAIL_HOST_USER,
+        email = EmailMessage(_(u'You got a letter from %s') % mail.sender_name, message, settings.EMAIL_HOST_USER,
             recipients, [],
             headers = {'Reply-To': reply_to})
         email.send()

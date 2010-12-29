@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-15 22:11+0200\n"
-"PO-Revision-Date: 2010-12-15 22:12+0300\n"
+"POT-Creation-Date: 2010-12-29 23:27+0200\n"
+"PO-Revision-Date: 2010-12-29 23:28+0300\n"
 "Last-Translator: Vytautas <didysis@vytrautas.lt>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -67,75 +67,83 @@ msgstr "Viešas"
 msgid "No addressess were found. Please refine your search. Or use feedback form to inform us about missing address"
 msgstr "Nerasta jokių adresų. Patikslinkite paiešką. Arba pasinaudokite susisiekimo forma ir praneškite apie trūkstamą adresą"
 
-#: pjweb/views.py:367
+#: pjweb/views.py:281
 #, python-format
 msgid "%(name)s %(surname)s email cannot be found in database."
 msgstr "%(name)s %(surname)s el. paštas nerastas duomenų bazėje."
 
-#: pjweb/views.py:439
+#: pjweb/views.py:306
+msgid "No"
+msgstr "Ne"
+
+#: pjweb/views.py:308
+msgid "Yes"
+msgstr "Taip"
+
+#: pjweb/views.py:369
 #, python-format
 msgid "Problem occurred. Your Email to %(name)s %(surname)s has not been sent. Please try again later."
 msgstr "Iškilo problema. Jūsų laiškas, kurio adresatas yra %(name)s %(surname)s, nebuvo išsiųstas. Prašome pamėginti vėliau."
 
-#: pjweb/views.py:524
+#: pjweb/views.py:392
 msgid "January"
 msgstr "Sausio"
 
-#: pjweb/views.py:525
+#: pjweb/views.py:393
 msgid "February"
 msgstr "Vasario"
 
-#: pjweb/views.py:526
+#: pjweb/views.py:394
 msgid "March"
 msgstr "Kovo"
 
-#: pjweb/views.py:527
+#: pjweb/views.py:395
 msgid "April"
 msgstr "Balandžio"
 
-#: pjweb/views.py:528
+#: pjweb/views.py:396
 msgid "May"
 msgstr "Gegužės"
 
-#: pjweb/views.py:529
+#: pjweb/views.py:397
 msgid "June"
 msgstr "Birželio"
 
-#: pjweb/views.py:530
+#: pjweb/views.py:398
 msgid "July"
 msgstr "Liepos"
 
-#: pjweb/views.py:531
+#: pjweb/views.py:399
 msgid "August"
 msgstr "Rugpjūčio"
 
-#: pjweb/views.py:532
+#: pjweb/views.py:400
 msgid "September"
 msgstr "Rugsėjo"
 
-#: pjweb/views.py:533
+#: pjweb/views.py:401
 msgid "October"
 msgstr "Spalio"
 
-#: pjweb/views.py:534
+#: pjweb/views.py:402
 msgid "November"
 msgstr "Lapkričio"
 
-#: pjweb/views.py:535
+#: pjweb/views.py:403
 msgid "December"
 msgstr "Gruodžio"
 
-#: pjweb/views.py:587
+#: pjweb/views.py:449
 msgid "You sent an email to "
 msgstr "Siuntėte laišką "
 
-#: pjweb/views.py:587
+#: pjweb/views.py:449
 msgid ""
 " with text:\n"
 "\n"
 msgstr " su tekstu:\n"
 
-#: pjweb/views.py:587
+#: pjweb/views.py:449
 msgid ""
 "\n"
 "\n"
@@ -145,11 +153,16 @@ msgstr ""
 "\n"
 "Privalote patvirtinti žinutę paspausdami žemiau:\n"
 
-#: pjweb/views.py:593
+#: pjweb/views.py:450
+#, python-format
+msgid "Confirm your message %s"
+msgstr "%s, patvirtinkite laišką"
+
+#: pjweb/views.py:454
 msgid "Thank you. This message must be confirmed. Please check your email."
 msgstr "Dėkojame. Ši žinutė privalo būti patvirtinta. Patikrinkite savo el. pašto dėžutę."
 
-#: pjweb/views.py:621
+#: pjweb/views.py:482
 #, python-format
 msgid ""
 "Dear. Mr. %s, \n"
@@ -158,43 +171,47 @@ msgid ""
 "\n"
 "Have a nice day."
 msgstr ""
-"Gerb. p. %s \n"
+"Gerb. p. %s, \n"
 "\n"
 "\n"
 "\n"
 "Geros dienos."
 
-#: pjweb/views.py:637
-#: pjweb/views.py:685
-msgid "Sorry, but your message could not be confirmed."
-msgstr "Apgailestaujame, bet Jūsų žinutė negali būti patvirtinta."
-
-#: pjweb/views.py:640
-#: pjweb/views.py:708
+#: pjweb/views.py:500
+#: pjweb/views.py:568
 msgid "Thank you. Your message has been sent."
 msgstr "Dėkojame. Jūsų žinutė išsiųsta."
 
-#: pjweb/views.py:747
+#: pjweb/views.py:528
+#, python-format
+msgid "You got a letter from %s"
+msgstr "Gavote laišką nuo %s"
+
+#: pjweb/views.py:545
+msgid "Sorry, but your message could not be confirmed."
+msgstr "Apgailestaujame, bet Jūsų žinutė negali būti patvirtinta."
+
+#: pjweb/views.py:607
 #, python-format
 msgid "In selected period (from %(from)s to %(to)s):"
 msgstr "Pasirinktame periode (nuo %(from)s iki %(to)s):"
 
-#: pjweb/views.py:749
+#: pjweb/views.py:609
 #, python-format
 msgid "Questions sent: %s"
 msgstr "Klausimų siųsta: %s"
 
-#: pjweb/views.py:750
+#: pjweb/views.py:610
 #, python-format
 msgid "Answers got: %s"
 msgstr "Atsakymų gauta: %s"
 
-#: pjweb/views.py:751
+#: pjweb/views.py:611
 #, python-format
 msgid "New users: %s"
 msgstr "Naujų vartotojų: %s"
 
-#: pjweb/views.py:800
+#: pjweb/views.py:660
 msgid "Thank you. Your response has been posted."
 msgstr "Dėkojame. Jūsų atsakymas paviešintas."
 
@@ -566,8 +583,6 @@ msgstr "Filtruoti"
 #~ msgstr "Viešas laiškas:"
 #~ msgid "Found Addresses for civil parish:"
 #~ msgstr "Rasti seniūnijų adresai:"
-#~ msgid "Check your message"
-#~ msgstr "Patikrinkite laišką"
 #~ msgid "Your Constituency is:"
 #~ msgstr "Jūsų apygarda yra:"
 #~ msgid "Your Municipality is:"
