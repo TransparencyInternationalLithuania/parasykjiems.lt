@@ -446,7 +446,17 @@ def contact(request, rtype, mp_id):
                     mail.save()
                     reply_to = 'reply%s_%s@dev.parasykjiems.lt' % (mail.id, mail.response_hash)
                     # generate confirmation email message and send it
-                    message = _('You sent an email to ')+ mail.recipient_name + _(' with text:\n\n')+ message_disp + _('\n\nYou must confirm this message by clicking link below:\n') + 'http://%s/confirm/%s/%s' % (current_site.domain, mail.id, mail.response_hash)
+                    confirm_link = ("http://%s/confirm/%s/%s") % (current_site.domain, mail.id, mail.response_hash)
+                    line1 = _(u"Hello,")
+                    line2 = _(u"in ParašykJiems.lt from Your address(%s) was written a leter to a representative.") % (sender, sender)
+                    line3 = _(u"Please <a href="+ '"' + confirm_link + '"' +">confirm</a>, that You want to send this message. If a letter was written not by You, it won't be sent without Your confirmation.")
+                    line4 = _(u"If You suspect abuse, please write an email to abuse@parasykjiems.lt <mailto:abuse@parasykjiems.lt>")
+                    line5 = _(u"Your message:")
+                    line6 = _(u"Receiver: %s.") % mail.recipient_name
+                    endline = _(u"Send this email by clicking on link below:\n\n %s") % confirm_link
+
+                    message = line1 + "\n\n" + line2 + "\n\n" + line3 + "\n\n" + line4 + "\n\n" + line5 + "\n\n" + line6 + "\n\n" + message_disp + "\n\n" + endline
+#                    _('You sent an email to ')+ mail.recipient_name + _(' with text:\n\n')+ message_disp + _('\n\nYou must confirm this message by clicking link \below:\n') + 'http://%s/confirm/%s/%s' % (current_site.domain, mail.id, mail.response_hash)
                     email = EmailMessage(_(u'Confirm your message %s') % sender_name, message, settings.EMAIL_HOST_USER,
                         [sender], [],
                         headers = {'Reply-To': reply_to})
