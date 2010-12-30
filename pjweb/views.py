@@ -6,7 +6,7 @@ import re
 from settings import *
 from django import forms
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from django.utils.translation import ugettext as _, ugettext_lazy, ungettext, check_for_language
 from django.core.mail import send_mail, EmailMessage
 from parasykjiems.pjweb.models import Email, MailHistory
@@ -40,8 +40,7 @@ def is_odd(number):
     else:
         return False
 
-
-
+    
 def searchInStreetIndex(query_string):
     """ Searches throught street index and returns municipality / city / street/ house number
     Additionally returns more data for rendering in template"""
@@ -203,6 +202,9 @@ def findSeniunaitijaMembers(municipality = None, city = None, street = None, hou
 
 
 def choose_representative(request, municipality = None, city = None, street = None, house_number = None):
+    referer = request.META.get('HTTP_REFERER', '')
+    if not referer:
+        return HttpResponseRedirect('/')
     logger.debug("choose_rep: municipality %s" % municipality)
     logger.debug("choose_rep: city %s" % city)
     logger.debug("choose_rep: street %s" % street)
@@ -290,7 +292,7 @@ def no_email(request, rtype, mp_id):
 
 
 def public_mails(request):
-    all_mails = Email.objects.all().filter(public__exact=True, msg_type__exact='Question').exclude(msg_state__exact='NotConfirmed')
+    all_mails = Email.objects.all().filter(public__exact=True, msg_type__exact='Question').exclude(msg_state__exact='NotConfirmed').order_by('-mail_date')
     mail_list = []
     
     for mail in all_mails:
@@ -319,7 +321,7 @@ def public_mails(request):
         mails = paginator.page(page)
     except (EmptyPage, InvalidPage):
         mails = paginator.page(paginator.num_pages)
-        
+
     return render_to_response('pjweb/public_mails.html', {
         'all_mails': all_mails,
         'mails': mails,
@@ -370,9 +372,13 @@ def smtp_error(request, rtype, mp_id, private=None):
         'step3': 'active-step',
     })
 
+    
 def contact(request, rtype, mp_id):
     insert = InsertResponse()
     # find required representative
+    referer = request.META.get('HTTP_REFERER', '')
+    if not referer:
+        return HttpResponseRedirect('/')
     receiver = insert.get_rep(mp_id, rtype)
     current_site = Site.objects.get_current()
     months = [
@@ -389,10 +395,8 @@ def contact(request, rtype, mp_id):
         _(u'November'),
         _(u'December')
     ]
-
     if not receiver.email:
         return HttpResponseRedirect('no_email')
-
     if request.method == 'POST':
         send = request.POST.has_key('send')
         form = ContactForm(data=request.POST)
@@ -435,8 +439,18 @@ def contact(request, rtype, mp_id):
                     mail.save()
                     reply_to = 'reply%s_%s@dev.parasykjiems.lt' % (mail.id, mail.response_hash)
                     # generate confirmation email message and send it
-                    message = _('You sent an email to ')+ mail.recipient_name + _(' with text:\n\n')+ message_disp + _('\n\nYou must confirm this message by clicking link below:\n') + 'http://%s/confirm/%s/%s' % (current_site.domain, mail.id, mail.response_hash)
-                    email = EmailMessage(u'Confirm your message %s' % sender_name, message, settings.EMAIL_HOST_USER,
+                    confirm_link = ("http://%s/confirm/%s/%s") % (current_site.domain, mail.id, mail.response_hash)
+                    line1 = _(u"Hello,")
+                    line2 = _(u"in ParašykJiems.lt from Your address(%s) was written a leter to a representative.") % (sender, sender)
+                    line3 = _(u"Please <a href="+ '"' + confirm_link + '"' +">confirm</a>, that You want to send this message. If a letter was written not by You, it won't be sent without Your confirmation.")
+                    line4 = _(u"If You suspect abuse, please write an email to abuse@parasykjiems.lt <mailto:abuse@parasykjiems.lt>")
+                    line5 = _(u"Your message:")
+                    line6 = _(u"Receiver: %s.") % mail.recipient_name
+                    endline = _(u"Send this email by clicking on link below:\n\n %s") % confirm_link
+
+                    message = line1 + "\n\n" + line2 + "\n\n" + line3 + "\n\n" + line4 + "\n\n" + line5 + "\n\n" + line6 + "\n\n" + message_disp + "\n\n" + endline
+#                    _('You sent an email to ')+ mail.recipient_name + _(' with text:\n\n')+ message_disp + _('\n\nYou must confirm this message by clicking link \below:\n') + 'http://%s/confirm/%s/%s' % (current_site.domain, mail.id, mail.response_hash)
+                    email = EmailMessage(_(u'Confirm your message %s') % sender_name, message, settings.EMAIL_HOST_USER,
                         [sender], [],
                         headers = {'Reply-To': reply_to})
                     email.send()
@@ -514,7 +528,7 @@ def confirm(request, mail_id, secret):
 
 
         # send an actual email message to government representative
-        email = EmailMessage(u'Gavote laišką nuo %s' % mail.sender_name, message, settings.EMAIL_HOST_USER,
+        email = EmailMessage(_(u'You got a letter from %s') % mail.sender_name, message, settings.EMAIL_HOST_USER,
             recipients, [],
             headers = {'Reply-To': reply_to})
         email.send()
