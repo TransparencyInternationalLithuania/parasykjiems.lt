@@ -23,6 +23,8 @@ class Email(models.Model):
     recipient_id = models.IntegerField()
     recipient_type = models.CharField(max_length = 5)
     recipient_mail = models.EmailField()
+
+    " a relation to previous email, to which this email is an anwer"
     answer_to = models.IntegerField(null=True)
     response_hash = models.IntegerField()
     message = models.TextField(blank=True)
