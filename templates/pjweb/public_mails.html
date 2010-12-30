@@ -13,7 +13,7 @@
 <th width="100px">{% trans "Was sent on" %}</th>
 <th width="50px">{% trans "Answered" %}</th>
 </tr>
-{% for mail in mails %}
+{% for mail in mails.object_list %}
 <tr>
 <td><a href="/pjweb/public/{{ mail.id }}/">{{ mail.recipient_name }}</a></td>
 <td>{{ mail.message }}</td>
