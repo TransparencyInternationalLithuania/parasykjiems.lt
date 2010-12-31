@@ -441,7 +441,7 @@ def contact(request, rtype, mp_id):
                     # generate confirmation email message and send it
                     confirm_link = ("http://%s/confirm/%s/%s") % (current_site.domain, mail.id, mail.response_hash)
                     line1 = _(u"Hello,")
-                    line2 = _(u"in ParašykJiems.lt from Your address(%s) was written a leter to a representative.") % (sender, sender)
+                    line2 = _(u"in ParašykJiems.lt from Your address(%s) was written a leter to a representative.") % (sender)
                     line3 = _(u"Please <a href="+ '"' + confirm_link + '"' +">confirm</a>, that You want to send this message. If a letter was written not by You, it won't be sent without Your confirmation.")
                     line4 = _(u"If You suspect abuse, please write an email to abuse@parasykjiems.lt <mailto:abuse@parasykjiems.lt>")
                     line5 = _(u"Your message:")
