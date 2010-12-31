@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-12-30 18:18+0200\n"
-"PO-Revision-Date: 2010-12-30 18:20+0300\n"
-"Last-Translator: darius <darius.damalakas@gmail.com>\n"
+"PO-Revision-Date: 2010-12-31 12:57+0200\n"
+"Last-Translator: Kroitus <kroitus@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -140,20 +140,19 @@ msgstr "Sveiki,"
 #: pjweb/views.py:444
 #, python-format
 msgid "in ParašykJiems.lt from Your address(%s) was written a leter to a representative."
-msgstr "Svetain"
+msgstr "Svetainėje ParašykJiems.lt iš Jūsų adreso(%s) buvo parašytas laiškas valdžios atstovui."
 
 #: pjweb/views.py:445
 msgid "Please <a href="
-msgstr ""
+msgstr "Prašome <a href="
 
 #: pjweb/views.py:446
 msgid "If You suspect abuse, please write an email to abuse@parasykjiems.lt <mailto:abuse@parasykjiems.lt>"
-msgstr ""
+msgstr "Jei įtariate piktnaudžiavimą, prašome parašyti laišką į abuse@parasykjiems.lt <mailto:abuse@parasykjiems.lt>"
 
 #: pjweb/views.py:447
-#, fuzzy
 msgid "Your message:"
-msgstr "Jūsų El. Paštas:"
+msgstr "Jūsų žinutė:"
 
 #: pjweb/views.py:448
 #, python-format
@@ -161,15 +160,15 @@ msgid "Receiver: %s."
 msgstr "Gavėjas: %s."
 
 #: pjweb/views.py:449
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Send this email by clicking on link below:\n"
 "\n"
 " %s"
 msgstr ""
+"Išsiųskite žinutę, paspausdami nuorodą žemiau:\n"
 "\n"
-"\n"
-"Privalote patvirtinti žinutę paspausdami žemiau:\n"
+"%s"
 
 #: pjweb/views.py:453
 #, python-format
@@ -581,50 +580,69 @@ msgstr "Filtruoti"
 
 #~ msgid "You sent an email to "
 #~ msgstr "Siuntėte laišką "
+
 #~ msgid ""
 #~ " with text:\n"
 #~ "\n"
 #~ msgstr " su tekstu:\n"
+
 #~ msgid ""
 #~ "\n"
 #~ "If You want to response, click this link:"
 #~ msgstr ""
 #~ "\n"
 #~ "Jei norite atsakyti, paspauskite šią nuorodą:"
+
 #~ msgid "Send Message"
 #~ msgstr "Siųsti laišką"
+
 #~ msgid "Write a letter to"
 #~ msgstr "Rašyti laišką"
+
 #~ msgid "Responsible for everything"
 #~ msgstr "Atsakingas už viską"
+
 #~ msgid "Responsible for your municipality"
 #~ msgstr "Atsakingas už rajoną"
+
 #~ msgid "Responsible for your civil parish"
 #~ msgstr "Atsakingas už Jūsų seniūniją:"
+
 #~ msgid "Responsible for your seniūnaitija"
 #~ msgstr "Atsakingas už seniūnaitiją"
+
 #~ msgid "Public Mail:"
 #~ msgstr "Viešas laiškas:"
+
 #~ msgid "Found Addresses for civil parish:"
 #~ msgstr "Rasti seniūnijų adresai:"
+
 #~ msgid "Your Constituency is:"
 #~ msgstr "Jūsų apygarda yra:"
+
 #~ msgid "Your Municipality is:"
 #~ msgstr "Jūsų rajonas yra:"
+
 #~ msgid "Your Civil Parish is:"
 #~ msgstr "Jūsų seniūnija yra:"
+
 #~ msgid "Subject of the Letter:"
 #~ msgstr "Laiško tema:"
+
 #~ msgid "Message Text:"
 #~ msgstr "Žinutė:"
+
 #~ msgid "Try to use national letters."
 #~ msgstr "Pasistenkite naudoti tautines raides."
+
 #~ msgid "You entered:"
 #~ msgstr "Įvedėte:"
+
 #~ msgid "Or you can select one from all Members of Parliament"
 #~ msgstr "Arba galite pasirinkti vieną iš visų Seimo narių"
+
 #~ msgid "Preffered format is: Street, City, District"
 #~ msgstr "Pageidautinas formatas: Gatvė, Miestas, Rajonas"
+
 #~ msgid "Street, City and District have to be separated with \",\""
 #~ msgstr "Gatvė, miestas ir rajonas turi būti atskirti \",\""
-
