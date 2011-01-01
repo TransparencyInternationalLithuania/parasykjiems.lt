@@ -202,9 +202,11 @@ def findSeniunaitijaMembers(municipality = None, city = None, street = None, hou
 
 
 def choose_representative(request, municipality = None, city = None, street = None, house_number = None):
-    referer = request.META.get('HTTP_REFERER', '')
-    if not referer:
-        return HttpResponseRedirect('/')
+    # check if we have a valid referrer
+    if (DEBUG == False):
+        referer = request.META.get('HTTP_REFERER', '')
+        if not referer:
+            return HttpResponseRedirect('/')
     logger.debug("choose_rep: municipality %s" % municipality)
     logger.debug("choose_rep: city %s" % city)
     logger.debug("choose_rep: street %s" % street)
@@ -375,10 +377,14 @@ def smtp_error(request, rtype, mp_id, private=None):
     
 def contact(request, rtype, mp_id):
     insert = InsertResponse()
+
+    # check if we have a valid referrer
+    if (DEBUG == False):
+        referer = request.META.get('HTTP_REFERER', '')
+        if not referer:
+            return HttpResponseRedirect('/')
+
     # find required representative
-    referer = request.META.get('HTTP_REFERER', '')
-    if not referer:
-        return HttpResponseRedirect('/')
     receiver = insert.get_rep(mp_id, rtype)
     current_site = Site.objects.get_current()
     months = [
