@@ -117,10 +117,10 @@ class TestReadParliamentMembers(TestCase):
         reader = LithuanianMPsReader(self.allRecords)
         for loc in reader.ReadParliamentMembers():
             self.assertEqual(loc.constituency.nr, 1)
-            self.assertEqual(loc.constituency.name, "Naujamiesčio")
+            self.assertEqual(loc.constituency.name, u"Naujamiesčio")
             self.assertEqual(loc.name, "Irena")
             self.assertEqual(loc.surname, u"Degutienė")
-            self.assertEqual(loc.email, "Irena.Degutiene@lrs.lt, irdegu@lrs.lt")
+            self.assertEqual(loc.email, "Irena.Degutiene@lrs.lt")
             break;
 
 class TestPollingDistrictStreetExpander(TestCase):
