@@ -129,11 +129,20 @@ class AddressDeducer():
         return True
 
     def containsNumber(self, str):
+        """ check if string contains a house number. String is split by hyphen and space first"""
         parts = self._splitByHyphenAndSpace(str)
         for p1 in parts:
             if self._stringIsStreetHouseNumber(p1):
                 return True
         return False
+
+    def containsAnyNumber(self, str):
+        """ returns if string contains number anywhere in the string"""
+        m = re.search('[0-9]', str)
+        if (m is not None):
+            return True
+        return False
+        
 
     def containsStreet(self, str):
         for ending in allStreetEndings:
@@ -176,13 +185,42 @@ class AddressDeducer():
         returnList.append(rest)
         return returnList
 
+    def splitFirstNumberAndEverythingElse(self, str):
+        """ examines a string, and divides it into 2. First part is everything up to first word with number,
+        and then the rest. For example having str 'Verkių g. 30 Vilnius Vilniaus m. sav.'
+        first part will be 'Verki7 g. 30', and 'Vilnius Vilniaus m. sav.' as everything else.
+
+        'Sausio 13-osios gatvė' will be only first part, rest part will be empty
+        """
+
+        wasNumber = False
+        words = str.split(u" ")
+        firstPart = []
+        secondPart = []
+        for s in words:
+            if (wasNumber == False):
+                firstPart.append(s)
+                if self.containsAnyNumber(s):
+                    wasNumber = True
+                    continue
+
+            if (wasNumber == True):
+                if (self.containsStreet(s)):
+                    firstPart.append(s)
+                else:
+                    secondPart.append(s)
+
+        firstPart = " ".join(firstPart)
+        secondPart = " ".join(secondPart)
+        return firstPart, secondPart
+
     def deduce(self, stringList):
         address = ContactDbAddress()
 
         if (stringList.find(u",") >= 0):
             parts = stringList.split(u",")
             # if first part contains either number, or street, then it is street, city, municipality
-            if (self.containsNumber(parts[0])) or (self.containsStreet(parts[0])):
+            if (self.containsNumber(parts[0])) or (self.containsStreet(parts[0])) or (self.containsAnyNumber(parts[0])):
                 address.street, address.number, address.flatNumber  = self.extractStreetAndNumber(self.takePart(parts, 0))
                 address.city = self.takePart(parts, 1)
                 address.municipality = self.takePart(parts, 2)
@@ -191,15 +229,24 @@ class AddressDeducer():
                 address.city = self.takePart(parts, 0)
                 address.municipality = self.takePart(parts, 1)
         else:
-            parts = self.splitNoCommas(stringList)
-            if (self.containsNumber(parts[0])) or (self.containsStreet(parts[0])):
-                address.street, address.number, address.flatNumber = self.extractStreetAndNumber(self.takePart(parts, 0))
-                address.city = self.takePart(parts, 1)
-                address.municipality = self.takePart(parts, 2)
+            # try treating as if it a street with number
+            firstPartWithNumber, everythingElse = self.splitFirstNumberAndEverythingElse(stringList)
+            
+            if (self.containsAnyNumber(firstPartWithNumber)):
+                address.street, address.number, address.flatNumber = self.extractStreetAndNumber(firstPartWithNumber)
+                everythingElse = self.splitNoCommas(everythingElse)
+                address.city = self.takePart(everythingElse, 0)
+                address.municipality = self.takePart(everythingElse, 1)
             else:
-                # else this is city, and municipality only
-                address.city = self.takePart(parts, 0)
-                address.municipality = self.takePart(parts, 1)
+                parts = self.splitNoCommas(stringList)
+                if (self.containsNumber(parts[0])) or (self.containsStreet(parts[0])):
+                    address.street, address.number, address.flatNumber = self.extractStreetAndNumber(self.takePart(parts, 0))
+                    address.city = self.takePart(parts, 1)
+                    address.municipality = self.takePart(parts, 2)
+                else:
+                    # else this is city, and municipality only
+                    address.city = self.takePart(parts, 0)
+                    address.municipality = self.takePart(parts, 1)
 
         return address
 
