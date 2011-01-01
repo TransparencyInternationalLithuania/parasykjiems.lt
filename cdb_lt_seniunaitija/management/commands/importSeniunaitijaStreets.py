@@ -127,6 +127,7 @@ class SeniunaitijaAddressExpander:
             if (index >= 0):
                 expanded = "%s%s" % (street[0:index], longPrefix)
                 return expanded
+        return street
 
     def ExpandStreet(self, streets):
         """ yield a ExpandedStreet object for each house number found in street """

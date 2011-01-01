@@ -30,8 +30,8 @@ class TestSeniunaitijaAddressExpander(TestCase):
         self.assertTuplesEqual(original, self.parser.ExpandStreet("    "))
 
     def test_WithCityAndStreets(self):
-        original = [ExpandedStreet(street = u"Ateities g.", city = u"Vandžiogalos miestelis"),
-                    ExpandedStreet(street = u"Kauno g.", city = u"Vandžiogalos miestelis")]
+        original = [ExpandedStreet(street = u"Ateities gatvė", city = u"Vandžiogalos miestelis"),
+                    ExpandedStreet(street = u"Kauno gatvė", city = u"Vandžiogalos miestelis")]
         self.assertTuplesEqual(original, self.parser.ExpandStreet(u"Vandžiogalos mstl. Ateities g., Kauno g."))
 
 
@@ -44,37 +44,37 @@ class TestSeniunaitijaAddressExpander(TestCase):
 
         
     def test_HouseRanges(self):
-        original = [ExpandedStreet(street = u"Vytauto g.", numberFrom = 2, numberTo = 36)]
+        original = [ExpandedStreet(street = u"Vytauto gatvė", numberFrom = 2, numberTo = 36)]
         self.assertTuplesEqual(original, self.parser.ExpandStreet(u"Vytauto g. 2-36"))
 
     def test_HouseRanges_Tillinfinity(self):
 
-       original = [ExpandedStreet(street = u"Technikos g.", numberFrom = 78, numberTo= ExpandedStreet.MaxEvenValue)]
+       original = [ExpandedStreet(street = u"Technikos gatvė", numberFrom = 78, numberTo= ExpandedStreet.MaxEvenValue)]
        self.assertTuplesEqual(original, self.parser.ExpandStreet(u"Technikos g. poriniai numeriai nuo Nr. 78 iki galo"))
 
 
 
     def test_NoCityStreetNumbers(self):
 
-        original = [ExpandedStreet(street = u"Žeimių g.", numberFrom = 2),
-                    ExpandedStreet(street = u"Žeimių g.", numberFrom = 2),
-                    ExpandedStreet(street = u"Žeimių g.", numberFrom = 4),
-                    ExpandedStreet(street = u"Žeimių g.", numberFrom = 6),
-                    ExpandedStreet(street = u"Žeimių g.", numberFrom = 6),]
+        original = [ExpandedStreet(street = u"Žeimių gatvė", numberFrom = 2),
+                    ExpandedStreet(street = u"Žeimių gatvė", numberFrom = 2),
+                    ExpandedStreet(street = u"Žeimių gatvė", numberFrom = 4),
+                    ExpandedStreet(street = u"Žeimių gatvė", numberFrom = 6),
+                    ExpandedStreet(street = u"Žeimių gatvė", numberFrom = 6),]
         self.assertTuplesEqual(original, self.parser.ExpandStreet(u"Žeimių g. 2,2a,4,6,6a"))
 
     def test_HouseRangesWithWords(self):
-        original = [ExpandedStreet(street = u"Vilniaus g.", numberFrom = 1, numberTo = 45),
-                    ExpandedStreet(street = u"Vilniaus g.", numberFrom = 2, numberTo = 66),
-                    ExpandedStreet(street = u"Kranto g.")]
+        original = [ExpandedStreet(street = u"Vilniaus gatvė", numberFrom = 1, numberTo = 45),
+                    ExpandedStreet(street = u"Vilniaus gatvė", numberFrom = 2, numberTo = 66),
+                    ExpandedStreet(street = u"Kranto gatvė")]
 
         self.assertTuplesEqual(original, self.parser.ExpandStreet(u"Vilniaus g. neporiniai nuo Nr.1 iki Nr. 45, poriniai nuo Nr. 2 iki Nr. 66, Kranto g."))
 
 
     def test_street_g(self):
-        original = [ExpandedStreet(city = u"Mankiškės k."),
-                    ExpandedStreet(city = u"Palaimos k."),
-                    ExpandedStreet(city = u"Tūjainių k.")]
+        original = [ExpandedStreet(city = u"Mankiškės kaimas"),
+                    ExpandedStreet(city = u"Palaimos kaimas"),
+                    ExpandedStreet(city = u"Tūjainių kaimas")]
         self.assertTuplesEqual(original, self.parser.ExpandStreet(u"Mankiškės k., Palaimos k., Tūjainių k."))
 
     #Vilniaus g. individualiųjų namų dalis (nuo namo Nr.1 iki Nr. 45 ir nuo Nr. 2 iki Nr. 66), Kranto g., Svajonių g., Upės g., Žeimenos g.
