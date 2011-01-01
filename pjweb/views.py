@@ -52,12 +52,12 @@ def searchInStreetIndex(query_string):
     addressContext = deduceAddress(query_string)
     found_entries = searchInIndex(addressContext)
 
-    # attach house numbers
-    number = None
-    if (len(addressContext.number) > 0):
-        number = addressContext.number[0]
+    # construct final uriss
     for f in found_entries:
-        f.number = number
+        # attach house numbers
+        f.number = addressContext.number
+
+        # construct a final uri, and attach it
         if (f.number is not None):
             iri = "/pjweb/choose_rep/%s/%s/%s/%s/" % (f.municipality, f.city, f.street, f.number)
         elif (f.street is not None and f.street != u""):
