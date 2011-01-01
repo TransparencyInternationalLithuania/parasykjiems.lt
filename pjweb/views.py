@@ -58,7 +58,7 @@ def searchInStreetIndex(query_string):
         f.number = addressContext.number
 
         # construct a final uri, and attach it
-        if (f.number is not None):
+        if (f.number is not None) and (f.number != ""):
             iri = "/pjweb/choose_rep/%s/%s/%s/%s/" % (f.municipality, f.city, f.street, f.number)
         elif (f.street is not None and f.street != u""):
             iri = "/pjweb/choose_rep/%s/%s/%s/" % (f.municipality, f.city, f.street)

@@ -45,6 +45,39 @@ class TestAddressDeducer(TestCase):
         self.assertEqual(u"Šiauliai", address.city)
         self.assertEqual(u"", address.municipality)
 
+    def testSausio_street_with_number_in_name_with_street_part_no_comma(self):
+        address = deduceAddress(u"Sausio 13-osios gatvė Vilnius")
+        self.assertEqual(u"", address.flatNumber)
+        self.assertEqual(u"", address.number)
+        self.assertEqual(u"Sausio 13-osios gatvė", address.street)
+        self.assertEqual(u"Vilnius", address.city)
+        self.assertEqual(u"", address.municipality)
+
+    def testSausio_street_with_number_in_name(self):
+        address = deduceAddress(u"Sausio 13-osios, Vilnius")
+        self.assertEqual(u"", address.flatNumber)
+        self.assertEqual(u"", address.number)
+        self.assertEqual(u"Sausio 13-osios", address.street)
+        self.assertEqual(u"Vilnius", address.city)
+        self.assertEqual(u"", address.municipality)
+
+    def testSausio_street_with_number_in_name_no_city(self):
+        address = deduceAddress(u"Sausio 13-osios")
+        self.assertEqual(u"", address.flatNumber)
+        self.assertEqual(u"", address.number)
+        self.assertEqual(u"Sausio 13-osios", address.street)
+        self.assertEqual(u"", address.city)
+        self.assertEqual(u"", address.municipality)
+
+    def testSausio_street_with_number_in_name_no_city_with_street_part(self):
+        address = deduceAddress(u"Sausio 13-osios gatvė")
+        self.assertEqual(u"", address.flatNumber)
+        self.assertEqual(u"", address.number)
+        self.assertEqual(u"Sausio 13-osios gatvė", address.street)
+        self.assertEqual(u"", address.city)
+        self.assertEqual(u"", address.municipality)
+
+
     def testGedimino_with_flat_number(self):
         address = deduceAddress(u"Gedimino 9-15, Vilnius")
         self.assertEqual(u"15", address.flatNumber)
