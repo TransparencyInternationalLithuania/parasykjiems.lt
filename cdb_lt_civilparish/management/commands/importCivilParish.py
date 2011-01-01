@@ -12,13 +12,17 @@ from pjutils.exc import ChainnedException
 from cdb_lt_municipality.models import MunicipalityMember, Municipality
 from pjutils.timemeasurement import TimeMeasurer
 from cdb_lt_civilparish.models import CivilParish
+import logging
+
+logger = logging.getLogger(__name__)
 
 def readRow(row, key):
     key = key.lower()
     key = key.replace("_", "")
     if (row.has_key(key) == False):
+        logger.debug("Could not find civil paris with key '%s'.  Will print now all possible keys:" % key)
         for p in row.iterkeys():
-            print p
+            logger.debug("key: '%s'" % p)
         row[key].strip()
     val = row[key]
     if (val is None):
