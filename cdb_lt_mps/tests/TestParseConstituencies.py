@@ -95,8 +95,8 @@ class TestLithuanianConstituencyParser(TestCase):
         self.assertEqual(9, Constituency.nr)
 
     def test_ExtractConstituencyFromMPsFile(self):
-        Constituency = self.parser.ExtractConstituencyFromMPsFile("Naujamiesčio (Nr. 1)")
-        self.assertEqual("Naujamiesčio", Constituency.name)
+        Constituency = self.parser.ExtractConstituencyFromMPsFile(u"Naujamiesčio (Nr. 1)")
+        self.assertEqual(u"Naujamiesčio", Constituency.name)
         self.assertEqual(1, Constituency.nr)
 
 class TestReadParliamentMembers(TestCase):
