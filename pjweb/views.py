@@ -203,9 +203,11 @@ def findSeniunaitijaMembers(municipality = None, city = None, street = None, hou
 
 def choose_representative(request, municipality = None, city = None, street = None, house_number = None):
     # check if we have a valid referrer
+    current_site = Site.objects.get_current()
     if (DEBUG == False):
         referer = request.META.get('HTTP_REFERER', '')
-        if not referer:
+        host = 'http://%s/' % current_site.domain
+        if not referer or (referer != host):
             return HttpResponseRedirect('/')
     logger.debug("choose_rep: municipality %s" % municipality)
     logger.debug("choose_rep: city %s" % city)
@@ -377,16 +379,16 @@ def smtp_error(request, rtype, mp_id, private=None):
     
 def contact(request, rtype, mp_id):
     insert = InsertResponse()
-
+    current_site = Site.objects.get_current()
     # check if we have a valid referrer
     if (DEBUG == False):
         referer = request.META.get('HTTP_REFERER', '')
-        if not referer:
+        host = 'http://%s/' % current_site.domain
+        if not referer or (current_site.domain not in referer):
             return HttpResponseRedirect('/')
 
     # find required representative
     receiver = insert.get_rep(mp_id, rtype)
-    current_site = Site.objects.get_current()
     months = [
         _(u'January'),
         _(u'February'),
@@ -447,8 +449,8 @@ def contact(request, rtype, mp_id):
                     # generate confirmation email message and send it
                     confirm_link = ("http://%s/confirm/%s/%s") % (current_site.domain, mail.id, mail.response_hash)
                     line1 = _(u"Hello,")
-                    line2 = _(u"in ParašykJiems.lt from Your address(%s) was written a leter to a representative.") % (sender)
-                    line3 = _(u"Please <a href="+ '"' + confirm_link + '"' +">confirm</a>, that You want to send this message. If a letter was written not by You, it won't be sent without Your confirmation.")
+                    line2 = _(u"in %s from Your address(%s) was written a leter to a representative.") % (current_site.domain, sender)
+                    line3 = _(u"Please <a href=")+ '"' + confirm_link + '"' +_(">confirm</a>, that You want to send this message. If a letter was written not by You, it won't be sent without Your confirmation.")
                     line4 = _(u"If You suspect abuse, please write an email to abuse@parasykjiems.lt <mailto:abuse@parasykjiems.lt>")
                     line5 = _(u"Your message:")
                     line6 = _(u"Receiver: %s.") % mail.recipient_name
@@ -504,6 +506,7 @@ def contact(request, rtype, mp_id):
 
 def confirm(request, mail_id, secret):
     mail = Email.objects.get(id=mail_id)
+    current_site = Site.objects.get_current()
     if (int(mail_id)==mail.id) and (int(secret)==mail.response_hash):
         print mail.id
         ConfirmMessage = _('Thank you. Your message has been sent.')
@@ -521,8 +524,11 @@ def confirm(request, mail_id, secret):
 
         # if message is private - clear it in db
         if not mail.public:
+            public = _('private')
             message = mail.message
             mail.message = ''
+        else:
+            public = _('public')
 
         # save message state to db
         mail.save()
@@ -530,10 +536,18 @@ def confirm(request, mail_id, secret):
         if (GlobalSettings.mail.sendEmailToRepresentatives == "sendToRepresentatives"):
             recipients = [mail.recipient_mail]
         else:
-            recipients = GlobalSettings.mail.sendEmailToRepresentatives
-
-
+            recipients = [GlobalSettings.mail.sendEmailToRepresentatives]
+        line1 = _(u"You got a letter from %s via %s.") % (mail.sender_name, current_site.domain)
+        line2 = _(u"This mail is %s. ") % (public)
+        if not mail.public:
+            line3 = _(u"Your answer will be sent to interesee and wont be read by other people. ")
+            line4 = ""
+        else:
+            line3 = _(u"Your answer will be sent to interesee and put on %s by this address:") % (current_site.domain)
+            line4 = "http://%s/pjweb/public/%s/" % (current_site.domain, mail.id)
         # send an actual email message to government representative
+        message = line1 + "\n\n" + line2 + line3 + line4 + "\n\n" + message
+        print recipients
         email = EmailMessage(_(u'You got a letter from %s') % mail.sender_name, message, settings.EMAIL_HOST_USER,
             recipients, [],
             headers = {'Reply-To': reply_to})
