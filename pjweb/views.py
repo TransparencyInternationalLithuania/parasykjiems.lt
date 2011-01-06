@@ -503,78 +503,99 @@ def contact(request, rtype, mp_id):
         'step3': '',
     })
 
+def confirmMessageAndSendEmailToRepresentative(mail):
+    current_site = Site.objects.get_current()
+
+    # update message state
+    mail.msg_state = 'Confirmed'
+
+    # determine where to send email
+    domain = GlobalSettings.MAIL_SERVER
+    reply_to = 'reply%s_%s@%s' % (mail.id, mail.response_hash, domain)
+
+    # assigning message to email
+    message = mail.message
+
+    # if message is private - clear it in db, since even if it was private,
+    # it has been saved in DB so that we could confirm it later and send it
+    if not mail.public:
+        public = _('private')
+        message = mail.message
+        mail.message = ''
+    else:
+        public = _('public')
+
+    # save message state to db
+    mail.save()
+
+    if (GlobalSettings.mail.sendEmailToRepresentatives == "sendToRepresentatives"):
+        recipients = [mail.recipient_mail]
+    else:
+        recipients = GlobalSettings.mail.sendEmailToRepresentatives
+    logger.debug("sending email to these recipients: %s" % recipients)
+
+    # compile a standard message header
+    line1 = _(u"You got a letter from %s via %s.") % (mail.sender_name, current_site.domain)
+    line2 = _(u"This mail is %s. ") % (public)
+    if not mail.public:
+        line3 = _(u"Your answer will be sent to interesee and wont be read by other people. ")
+        line4 = ""
+    else:
+        line3 = _(u"Your answer will be sent to interesee and put on %s by this address:") % (current_site.domain)
+        line4 = "http://%s/pjweb/public/%s/" % (current_site.domain, mail.id)
+
+    message = line1 + "\n\n" + line2 + line3 + line4 + "\n\n" + message
+
+    # send an actual email message to government representative
+    email = EmailMessage(_(u'You got a letter from %s') % mail.sender_name, message, settings.EMAIL_HOST_USER,
+        recipients, [],
+        headers = {'Reply-To': reply_to})
+    email.send()
+
+    # store in email history status of message, so we can know that this message got sent
+    history = MailHistory(
+        sender = mail.sender_mail,
+        recipient = recipients[0],
+        mail = mail,
+        mail_state = 'Sent',
+    )
+    history.save()
+
 
 def confirm(request, mail_id, secret):
     """ When user clicks on confirmation link in his email,
         we set message state as confirmed, compile a standard message header and
         send email to final recipient (usually government representative)  """
     mail = Email.objects.get(id=mail_id)
-    current_site = Site.objects.get_current()
+
+    # check if email was already confirmed or not
+    if mail.msg_state != 'Confirmed':
+        # check if provided hash does match with our own hash stored in db
+        if (int(mail_id)==mail.id) and (int(secret)==mail.response_hash):
+            # save message State as confirmed, and send email to representative
+            confirmMessageAndSendEmailToRepresentative(mail)
+            ConfirmMessage = _('Thank you. Your message has been sent.')
+        else:
+            # render response with failed message
+            ConfirmMessage = _('Sorry, but your message could not be confirmed.')
+    else:
+        # this message was already confirmed, so display some info for that
+        ConfirmMessage = _("Your message was already confirmed")
+
+
+
+    """current_site = Site.objects.get_current()
     if (int(mail_id)==mail.id) and (int(secret)==mail.response_hash):
         print mail.id
         ConfirmMessage = _('Thank you. Your message has been sent.')
 
-        # update message state 
-        mail.msg_state = 'Confirmed'
 
-        # determine where to send email
-        domain = GlobalSettings.MAIL_SERVER
-        #reply_to = 'reply%s_%s@dev.parasykjiems.lt' % (mail.id, mail.response_hash)
-        reply_to = 'reply%s_%s@%s' % (mail.id, mail.response_hash, domain)
-
-        # assigning message to email
-        message = mail.message
-
-        # if message is private - clear it in db, since even if it was private,
-        # it has been saved in DB so that we could confirm it later and send it
-        if not mail.public:
-            public = _('private')
-            message = mail.message
-            mail.message = ''
-        else:
-            public = _('public')
-
-        # save message state to db
-        mail.save()
-
-        if (GlobalSettings.mail.sendEmailToRepresentatives == "sendToRepresentatives"):
-            recipients = [mail.recipient_mail]
-        else:
-            recipients = GlobalSettings.mail.sendEmailToRepresentatives
-        logger.debug("sending email to these recipients: %s" % recipients)
-
-        # compile a standard message header
-        line1 = _(u"You got a letter from %s via %s.") % (mail.sender_name, current_site.domain)
-        line2 = _(u"This mail is %s. ") % (public)
-        if not mail.public:
-            line3 = _(u"Your answer will be sent to interesee and wont be read by other people. ")
-            line4 = ""
-        else:
-            line3 = _(u"Your answer will be sent to interesee and put on %s by this address:") % (current_site.domain)
-            line4 = "http://%s/pjweb/public/%s/" % (current_site.domain, mail.id)
-
-        message = line1 + "\n\n" + line2 + line3 + line4 + "\n\n" + message
-
-        # send an actual email message to government representative
-        email = EmailMessage(_(u'You got a letter from %s') % mail.sender_name, message, settings.EMAIL_HOST_USER,
-            recipients, [],
-            headers = {'Reply-To': reply_to})
-        email.send()
-
-        # store in email history status of message, so we can know that this message got sent
-        history = MailHistory(
-            sender = mail.sender_mail,
-            recipient = recipients[0],
-            mail = mail,
-            mail_state = 'Sent',
-        )
-        history.save()
 
         # finished confirminging, just render response
     else:
         # render response with failed message
         ConfirmMessage = _('Sorry, but your message could not be confirmed.')
-
+"""
     logger.debug('%s' % (ConfirmMessage))
     return render_to_response('pjweb/confirm.html', {
         'ConfirmMessage': ConfirmMessage,
