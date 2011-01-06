@@ -582,20 +582,6 @@ def confirm(request, mail_id, secret):
         # this message was already confirmed, so display some info for that
         ConfirmMessage = _("Your message was already confirmed")
 
-
-
-    """current_site = Site.objects.get_current()
-    if (int(mail_id)==mail.id) and (int(secret)==mail.response_hash):
-        print mail.id
-        ConfirmMessage = _('Thank you. Your message has been sent.')
-
-
-
-        # finished confirminging, just render response
-    else:
-        # render response with failed message
-        ConfirmMessage = _('Sorry, but your message could not be confirmed.')
-"""
     logger.debug('%s' % (ConfirmMessage))
     return render_to_response('pjweb/confirm.html', {
         'ConfirmMessage': ConfirmMessage,
