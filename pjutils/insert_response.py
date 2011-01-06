@@ -67,10 +67,13 @@ class InsertResponse():
                     answer_to = mail.id,
                     public = mail.public,
                 )
+                # if previous email was public, then we save the reply message text to db
+                # else we delete it, and simply send whole email straight to the person
+                # who asked the question in the first place
                 if mail.public:
-                    mail.message = message
+                    resp.message = message
                 else:
-                    mail.message = ''
+                    resp.message = ''
                 resp.save()
 
                 # send a mail message to original person who asked a question.
