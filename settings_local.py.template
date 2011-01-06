@@ -93,4 +93,4 @@ GlobalSettings.LiveServerApps = []
 
 # Whether to send emails to real representatives, or only to specific addresses
 # Possible values - list of emails, single email, literal string "sendToRepresentatives", which will send email to representatives
-GlobalSettings.mail.sendEmailToRepresentatives = "parasykjiems@gmail.com"
+GlobalSettings.mail.sendEmailToRepresentatives = ["parasykjiems@gmail.com"]
