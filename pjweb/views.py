@@ -543,8 +543,9 @@ def confirmMessageAndSendEmailToRepresentative(mail):
     else:
         line3 = _(u"Your answer will be sent to interesee and put on %s by this address:") % (current_site.domain)
         line4 = "http://%s/pjweb/public/%s/" % (current_site.domain, mail.id)
+    line5 = _(u"Please reply to this email by simply clicking 'reply' in your mail client.")
 
-    message = line1 + "\n\n" + line2 + line3 + line4 + "\n\n" + message
+    message = line1 + "\n\n" + line2 + line3 + line4 + "\n\n" + line5 + "\n\n" + message
 
     # send an actual email message to government representative
     email = EmailMessage(_(u'You got a letter from %s') % mail.sender_name, message, settings.EMAIL_HOST_USER,
