@@ -312,10 +312,12 @@ a:hover {
     #public_question {
         border:1px dotted #c9c9c9;
         width:780px;
+        padding-left:10px;
+        
         }
 
     #date_sent {
-            color: #606b5c;
+            color: #202b2c;
         }
 
     #public_response {
