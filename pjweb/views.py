@@ -449,7 +449,7 @@ def contact(request, rtype, mp_id):
                     # generate confirmation email message and send it
                     confirm_link = ("http://%s/confirm/%s/%s") % (current_site.domain, mail.id, mail.response_hash)
                     line1 = _(u"Hello,")
-                    line2 = _(u"in %s from Your address(%s) was written a leter to a representative.") % (current_site.domain, sender)
+                    line2 = _(u"in %(domain)s from Your address(%(sender)s) was written a leter to a representative.") % {'domain':current_site.domain, 'sender':sender}
                     line3 = _(u"Please <a href=")+ '"' + confirm_link + '"' +_(">confirm</a>, that You want to send this message. If a letter was written not by You, it won't be sent without Your confirmation.")
                     line4 = _(u"If You suspect abuse, please write an email to abuse@parasykjiems.lt <mailto:abuse@parasykjiems.lt>")
                     line5 = _(u"Your message:")
@@ -535,7 +535,7 @@ def confirmMessageAndSendEmailToRepresentative(mail):
     logger.debug("sending email to these recipients: %s" % recipients)
 
     # compile a standard message header
-    line1 = _(u"You got a letter from %s via %s.") % (mail.sender_name, current_site.domain)
+    line1 = _(u"You got a letter from %(sender_name)s via %(domain)s.") % {'sender_name': mail.sender_name, 'domain': current_site.domain)
     line2 = _(u"This mail is %s. ") % (public)
     if not mail.public:
         line3 = _(u"Your answer will be sent to interesee and wont be read by other people. ")
