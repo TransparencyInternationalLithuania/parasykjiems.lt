@@ -535,7 +535,7 @@ def confirmMessageAndSendEmailToRepresentative(mail):
     logger.debug("sending email to these recipients: %s" % recipients)
 
     # compile a standard message header
-    line1 = _(u"You got a letter from %(sender_name)s via %(domain)s.") % {'sender_name': mail.sender_name, 'domain': current_site.domain)
+    line1 = _(u"You got a letter from %(sender_name)s via %(domain)s.") % {'sender_name': mail.sender_name, 'domain': current_site.domain}
     line2 = _(u"This mail is %s. ") % (public)
     if not mail.public:
         line3 = _(u"Your answer will be sent to interesee and wont be read by other people. ")
