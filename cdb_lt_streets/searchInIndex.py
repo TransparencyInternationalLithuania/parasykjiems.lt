@@ -214,6 +214,30 @@ class AddressDeducer():
         secondPart = " ".join(secondPart)
         return firstPart, secondPart
 
+    def splitIntoCityAndMunicipality(self, string):
+        splitted = string.split(" ")
+        # if we have less than two words, just return what we have
+        if (len(splitted) < 2):
+            return splitted
+        # first part is always city name
+        cityString = [splitted[0]]
+
+        # if second part is one of the generic city endings, append it to city name
+        # such as instead of 'new york", return "new york city" + everything else
+        if (splitted[1] in wholeCityEndings):
+            cityString.append(splitted[1])
+            cityString = " ".join(cityString)
+            return [cityString] + splitted[2:]
+
+        # return everything else, since only the second part can be city ending
+        return splitted
+
+
+
+
+
+
+
     def deduce(self, stringList):
         address = ContactDbAddress()
 
@@ -238,15 +262,10 @@ class AddressDeducer():
                 address.city = self.takePart(everythingElse, 0)
                 address.municipality = self.takePart(everythingElse, 1)
             else:
-                parts = self.splitNoCommas(stringList)
-                if (self.containsNumber(parts[0])) or (self.containsStreet(parts[0])):
-                    address.street, address.number, address.flatNumber = self.extractStreetAndNumber(self.takePart(parts, 0))
-                    address.city = self.takePart(parts, 1)
-                    address.municipality = self.takePart(parts, 2)
-                else:
-                    # else this is city, and municipality only
-                    address.city = self.takePart(parts, 0)
-                    address.municipality = self.takePart(parts, 1)
+                parts = self.splitIntoCityAndMunicipality(stringList)
+                # else this is city, and municipality only
+                address.city = self.takePart(parts, 0)
+                address.municipality = self.takePart(parts, 1)
 
         return address
 
@@ -323,9 +342,11 @@ def searchInIndex(addressContext):
 
     #print "before filter %s %s %s" %(streetFilters, cityFilters)
     streetFilters = getOrQuery("street", [street])
+    # Lithuanian cities have cities in two forms - genitive and nominative
     cityFilters = getOrQuery("city", [city])
+    cityFiltersGenitive = getOrQuery("city_genitive", [city])
     municipalityFilters = getOrQuery("municipality", [municipality])
-    finalQuery = getAndQuery(streetFilters, cityFilters, municipalityFilters)
+    finalQuery = getAndQuery(streetFilters, cityFilters | cityFiltersGenitive, municipalityFilters)
     #logger.debug("streetFilters %s" % (streetFilters))
     #logger.debug("cityFilters %s" % (cityFilters))
     #logger.debug("municipalityFilters %s" % (municipalityFilters))
