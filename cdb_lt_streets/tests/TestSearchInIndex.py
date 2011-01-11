@@ -86,6 +86,14 @@ class TestAddressDeducer(TestCase):
         self.assertEqual(u"Vilnius", address.city)
         self.assertEqual(u"", address.municipality)
 
+    def testWithCitySuffix(self):
+        """  """
+        address = deduceAddress(u"Pugainių kaimas")
+        self.assertEqual(u"", address.number)
+        self.assertEqual(u"", address.street)
+        self.assertEqual(u"Pugainių kaimas", address.city)
+        self.assertEqual(u"", address.municipality)
+
     def testVerkiu(self):
         """ adds municipality """
         address = deduceAddress(u"Verkių g., Vilnius, Vilniaus m. sav.")
