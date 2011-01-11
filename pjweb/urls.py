@@ -49,7 +49,7 @@ urlpatterns = patterns('parasykjiems.pjweb.views',
     #(r'^choose_rep/(\w+)/(\w+)/(\w+)/(\d+)$', 'choose_representative'),
     (u'^choose_rep/(%(sentence)s)/(%(sentence)s)/$' % {'sentence' : sentenceRegExp}, 'choose_representative'),
     (u'^choose_rep/(%(sentence)s)/(%(sentence)s)/(%(sentence)s)/$' % {'sentence' : sentenceRegExp}, 'choose_representative'),
-    (u'^choose_rep/(%(sentence)s)/(%(sentence)s)/(%(sentence)s)/(\d+)/$' % {'sentence' : sentenceRegExp}, 'choose_representative'),
+    (u'^choose_rep/(%(sentence)s)/(%(sentence)s)/(%(sentence)s)/(%(sentence)s)/$' % {'sentence' : sentenceRegExp}, 'choose_representative'),
     #(r'^choose_rep/(\w+)/$', 'choose_representative'),
 
 
