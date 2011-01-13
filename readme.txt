@@ -66,7 +66,7 @@ sudo hg pull
 sudo hg update --clean
 
 #runing server with nginx and gunicorn 
-sudo python26 manage.py run_gunicorn 127.0.0.1:1234 --daemon
+sudo python manage.py run_gunicorn 127.0.0.1:1234 --daemon
 
 # to kill a running gunicorn instance
 ps ax | grep manage.py
