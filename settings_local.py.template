@@ -5,6 +5,7 @@ import os
 from GlobalSettingsClass import *
 from distutils import dir_util
 import logging
+import cdb_lt_streets.lt_profanities_list
 from settings import *
 
 
@@ -101,7 +102,7 @@ GlobalSettings.LANGUAGES = (
 )
 
 #list of "nasty" words
-GlobalSettings.PROFANITIES_LIST = (u'bybys', u'šikna', u'pyderas')
+GlobalSettings.PROFANITIES_LIST = cdb_lt_streets.lt_profanities_list.profanities_list
 
 # set this to True if you want to run geo tests for Lithuanian data against real world data / real www servers
 GlobalSettings.EnableWWWForLTGeoTests = False
