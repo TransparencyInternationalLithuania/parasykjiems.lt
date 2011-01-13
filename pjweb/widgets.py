@@ -8,6 +8,20 @@ from settings import *
 import re
 from django.utils.translation import ugettext as _
 
+def convertLithuanianLettersToLatin(str):
+    """ converts Lithuanian """
+    str = str.replace(u"ą", u"a")
+    str = str.replace(u"č", u"c")
+    str = str.replace(u"ę", u"e")
+    str = str.replace(u"ė", u"e")
+    str = str.replace(u"į", u"i")
+    str = str.replace(u"š", u"s")
+    str = str.replace(u"ų", u"u")
+    str = str.replace(u"ū", u"u")
+    str = str.replace(u"ž", u"z")
+    return str
+    
+
 def hasNoProfanities(field_data):
     """ 
     Checks that the given string has no profanities in it. This does a simple 
@@ -15,7 +29,8 @@ def hasNoProfanities(field_data):
     catch 'motherfucker' as well. Raises a ValidationError such as: 
        Watch your mouth! The words "f--k" and "s--t" are not allowed here. 
     """ 
-    field_data = field_data.lower() # normalize 
+    field_data = field_data.lower() # normalize
+    field_data = convertLithuanianLettersToLatin(field_data)
     words_seen = [w for w in GlobalSettings.PROFANITIES_LIST if w in field_data] 
     if words_seen: 
         from django.utils.text import get_text_list 
