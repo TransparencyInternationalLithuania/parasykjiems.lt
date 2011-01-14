@@ -18,4 +18,32 @@ wholeMunicipalityEndings = [u"miesto savivaldybė"]
 shortMunicipalityEndings = [u"m. sav."]
 allMunicipalityEndings = wholeMunicipalityEndings + shortMunicipalityEndings
 
-  
+
+zippedStreetPrefixes = zip(shortStreetEndings, wholeStreetEndings)
+zippedCityPrefixes = zip(shortCityEndings, wholeCityEndings)
+
+def changeStreetFromShortToLongForm(street):
+    """ Changes for example from "Respublikos g." to "Respublikos gatvė" """
+    if (street is None):
+        return None
+    if (street == ""):
+        return ""
+    for shortPrefix, longPrefix in zippedStreetPrefixes:
+        index = street.find(shortPrefix)
+        if (index >= 0):
+            expanded = "%s%s" % (street[0:index], longPrefix)
+            return expanded
+    return street
+
+def changeCityFromShortToLongForm(city):
+    """ Changes for example from "Balbieriškių k." to "Balbieriškių kaimas" """
+    if (city is None):
+        return None
+    if (city == ""):
+        return ""
+    for shortPrefix, longPrefix in zippedCityPrefixes:
+        index = city.find(shortPrefix)
+        if (index >= 0):
+            expanded = "%s%s" % (city[0:index], longPrefix)
+            return expanded
+    return city
