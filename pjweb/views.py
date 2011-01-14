@@ -176,14 +176,16 @@ def findMunicipalityMembers(municipality = None, city = None, street = None, hou
     members = MunicipalityMember.objects.all().filter(municipality__in = idList)
     return members
 
-def findCivilParishMembers(municipality = None, city = None, street = None, house_number = None):
+def findCivilParishMembers(municipality = None, city = None, street = None, house_number = None,  *args, **kwargs):
     street = removeGenericPartFromStreet(street)
     municipality = removeGenericPartFromMunicipality(municipality)
 
+    city_gen = kwargs["city_genitive"]
+    
     try:
         query = CivilParishStreet.objects.all().filter(municipality__contains = municipality)\
             .filter(street__contains = street) \
-            .filter(city__contains = city)
+            .filter(city_genitive__contains = city_gen)
 
         query = query.distinct() \
             .values('civilParish')
@@ -262,9 +264,10 @@ def choose_representative(request, municipality = None, city = None, street = No
 
     cityGenitive = getCityGenitive(municipality, city, street)
 
-    parliament_members = findMPs(municipality, city, street, house_number, **{"city_genitive" : cityGenitive})
+    additionalKeys = {"city_genitive" : cityGenitive}
+    parliament_members = findMPs(municipality, city, street, house_number, **additionalKeys)
     municipality_members = findMunicipalityMembers(municipality, city, street, house_number)
-    civilparish_members = findCivilParishMembers(municipality, city, street, house_number)
+    civilparish_members = findCivilParishMembers(municipality, city, street, house_number, **additionalKeys)
     seniunaitija_members = findSeniunaitijaMembers(municipality, city, street, house_number)
 
 
