@@ -47,3 +47,24 @@ def changeCityFromShortToLongForm(city):
             expanded = "%s%s" % (city[0:index], longPrefix)
             return expanded
     return city
+
+def removeGenericPartFromStreet(street):
+    if (street is None):
+        return ""
+    for e in allStreetEndings:
+        if street.endswith(e):
+            street = street.replace(e, u"")
+    return street.strip()
+
+def removeGenericPartFromCity(city):
+    for e in allCityEndings:
+        if city.endswith(e):
+            city = city.replace(e, u"")
+    return city.strip()
+
+
+def removeGenericPartFromMunicipality(municipality):
+    for e in allMunicipalityEndings:
+        if municipality.endswith(e):
+            municipality = municipality.replace(e, u"")
+    return municipality.strip()

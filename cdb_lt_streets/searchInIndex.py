@@ -12,20 +12,6 @@ from pjutils.queryHelper import getAndQuery, getOrQuery
 
 logger = logging.getLogger(__name__)
 
-def removeGenericPartFromStreet(street):
-    if (street is None):
-        return ""
-    for e in allStreetEndings:
-        if street.endswith(e):
-            street = street.replace(e, u"")
-    return street.strip()
-
-def removeGenericPartFromMunicipality(municipality):
-    for e in allMunicipalityEndings:
-        if municipality.endswith(e):
-            municipality = municipality.replace(e, u"")
-    return municipality.strip()
-
 class ContactDbAddress:
     def __init__(self):
         self.street = u""
@@ -213,7 +199,7 @@ class AddressDeducer():
 
         # if second part is one of the generic city endings, append it to city name
         # such as instead of 'new york", return "new york city" + everything else
-        if (splitted[1] in wholeCityEndings):
+        if (splitted[1] in allCityEndings):
             cityString.append(splitted[1])
             cityString = " ".join(cityString)
             return [cityString] + splitted[2:]
@@ -298,9 +284,13 @@ def searchInIndex(addressContext):
     logger.debug(u"addressContext.city '%s'" % ( addressContext.city))
     logger.debug(u"addressContext.municipality '%s'" % ( addressContext.municipality))
 
-    street = removeGenericPartFromStreet(addressContext.street)
-    municipality = removeGenericPartFromMunicipality(addressContext.municipality)
     city = addressContext.city
+    street = addressContext.street
+    street = changeStreetFromShortToLongForm(street)
+    #street = removeGenericPartFromStreet(addressContext.street)
+    city = changeCityFromShortToLongForm(city)
+    municipality = removeGenericPartFromMunicipality(addressContext.municipality)
+
 
     logger.debug(u"street %s" % ( street))
     logger.debug(u"city %s" % ( city))
