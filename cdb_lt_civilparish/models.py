@@ -30,3 +30,4 @@ class CivilParishStreet(models.Model):
     municipality = AddressNameField()
     street = AddressNameField(db_index = True)
     city = AddressNameField(db_index = True)
+    city_genitive = AddressNameField(db_index = True)

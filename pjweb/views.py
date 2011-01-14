@@ -230,10 +230,17 @@ def getCityGenitive(municipality, city, street):
     """ given municipality, city name in nominative, and street
     return city name in genitive. This is only for Lithuanian data"""
 
-    streetFilters = getOrQuery("street", [street])
-    cityFilters = getOrQuery("city", [city])
-    municipalityFilters = getOrQuery("municipality", [municipality])
-    finalQuery = getAndQuery(streetFilters, cityFilters, municipalityFilters)
+    streetFilters = None
+    if (street is not None and street !=""):
+        streetFilters = Q(**{"street__icontains": street})
+    cityFilters = Q(**{"city__icontains": city})
+    municipalityFilters = Q(**{"municipality__icontains": municipality})
+        
+    if (streetFilters != None):
+        finalQuery = municipalityFilters & cityFilters & streetFilters
+    else:
+        finalQuery = municipalityFilters & cityFilters
+
     query = LithuanianStreetIndexes.objects.filter(finalQuery).order_by('street')[0:1]
     for q in query:
         return q.city_genitive

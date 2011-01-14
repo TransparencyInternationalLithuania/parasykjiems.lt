@@ -34,12 +34,13 @@ class Command(BaseCommand):
 
 
 
-    def createIfNotNull(self, street, city, municipality, civilParishStr):
+    def createIfNotNull(self, street, city, municipality, civilParishStr, city_genitive = None):
         civilParish = self.getCivilParish(civilParishStr)
 
         civilParishStreet = CivilParishStreet()
         civilParishStreet.street = street
         civilParishStreet.city = city
+        civilParishStreet.city_genitive = city_genitive
         civilParishStreet.municipality = municipality
         civilParishStreet.civilParish = civilParish
         civilParishStreet.save()
@@ -59,12 +60,13 @@ class Command(BaseCommand):
             municipality = readRow(row, "municipality")
             civilParish = readRow(row, "civilparish")
             city = readRow(row, "city")
+            city_genitive = readRow(row, "city_genitive")
             street = readRow(row, "street")
 
             if (civilParish == u""):
                 continue
 
-            self.createIfNotNull(street, city, municipality, civilParish)
+            self.createIfNotNull(street, city, municipality, civilParish, city_genitive=city_genitive)
 
 
 
