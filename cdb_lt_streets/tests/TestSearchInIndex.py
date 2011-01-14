@@ -119,6 +119,13 @@ class TestAddressDeducer(TestCase):
         self.assertEqual(u"Dubėnai", address.city)
         self.assertEqual(u"Alytaus r. sav.", address.municipality)
 
+    def testDubenaiNoMunicipality_with_short_generic_part(self):
+        address = deduceAddress(u"Dubėnų k.")
+        self.assertEqual(u"", address.number)
+        self.assertEqual(u"", address.street)
+        self.assertEqual(u"Dubėnų k.", address.city)
+        self.assertEqual(u"", address.municipality)
+
     def testDubenaiNoMunicipality(self):
         """ has no street part"""
         address = deduceAddress(u"Dubėnai")
