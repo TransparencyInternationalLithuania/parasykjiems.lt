@@ -7,21 +7,9 @@ from cdb_lt_streets.models import LithuanianStreetIndexes
 from django.db.models.query_utils import Q
 import logging
 from pjutils.deprecated import deprecated
+from ltPrefixes import *
 
 logger = logging.getLogger(__name__)
-
-shortCityEndings = [u"mstl.", u"vs.", u"m.", u"k."]
-wholeCityEndings = [u"miestelis", u"viensėdis", u"miestas", u"kaimas"]
-allCityEndings = wholeCityEndings + shortCityEndings
-
-wholeStreetEndings = [u"skersgatvis", u"kelias", u"plentas", u"prospektas",
-                    u"alėja", u"gatvė", u"aikštė", u"takas"]
-shortStreetEndings = [u"skg.", u"kel.", u"pl.", u"pr.", u"al.", u"g.", u"a.", u"tak."]
-allStreetEndings = wholeStreetEndings + shortStreetEndings
-
-wholeMunicipalityEndings = [u"miesto savivaldybė"]
-shortMunicipalityEndings = [u"m. sav."]
-allMunicipalityEndings = wholeMunicipalityEndings + shortMunicipalityEndings
 
 def removeGenericPartFromStreet(street):
     if (street is None):

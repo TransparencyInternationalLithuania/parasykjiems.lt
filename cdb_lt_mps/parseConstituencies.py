@@ -5,6 +5,7 @@ import re
 from pjutils.exc import ChainnedException
 from cdb_lt_mps.models import Constituency
 from pjutils.deprecated import deprecated
+from cdb_lt_streets.ltPrefixes import *
 import copy
 
 
@@ -255,6 +256,9 @@ class ExpandedStreet(object):
         self.numberTo = numberTo
         self.city = city
 
+
+zippedStreetPrefixes = zip(shortStreetEndings, wholeStreetEndings)
+
 class PollingDistrictStreetExpander:
     """ When PollingDistrictStreets are parsed from txt file, some streets are subidivied into house numbers.
     Here are a few examples of how these look like:
@@ -296,6 +300,32 @@ class PollingDistrictStreetExpander:
             fromNumber = fromNumber.replace(group, "")
         return fromNumber
 
+    def getStreetTuple(self, part):
+        streetTuple = None
+        # loop all street endings and remove it if found
+        for ending in shortStreetEndings:
+            if (streetTuple is not None):
+                break
+            streetTuple = self._RemoveStreetPart(part, ending)
+
+        # if it is still None, there is a special "SB", which stands for
+        # "Some kind of communal gardens, or smth like that"
+        if (streetTuple is None):
+            streetTuple = self._RemoveStreetPartSB(part, "SB")
+        return streetTuple
+
+    def changeStreetFromShortToLongForm(self, street):
+        """ Changes for example from "Respublikos g." to "Respublikos gatvė" """
+        if (street is None):
+            return None
+        if (street == ""):
+            return ""
+        for shortPrefix, longPrefix in zippedStreetPrefixes:
+            index = street.find(shortPrefix)
+            if (index >= 0):
+                expanded = "%s%s" % (street[0:index], longPrefix)
+                return expanded
+        return street
 
     def ExpandStreet(self, street):
         """ yield a ExpandedStreet object for each house number found in street """
@@ -311,6 +341,7 @@ class PollingDistrictStreetExpander:
         street = street.strip()
         # if no street nr, return single tuple
         if (street.find("Nr") < 0):
+            street = self.changeStreetFromShortToLongForm(street)
             yield ExpandedStreet(street = street)
             return
 
@@ -318,21 +349,12 @@ class PollingDistrictStreetExpander:
 
         #print "expand: %s"  % street
         for part in parts:
-            streetTuple = self._RemoveStreetPart(part, "g.")
-            if (streetTuple is None):
-                streetTuple = self._RemoveStreetPart(part, "a.")
-            if (streetTuple is None):
-                streetTuple = self._RemoveStreetPart(part, "pr.")
-            if (streetTuple is None):
-                streetTuple = self._RemoveStreetPart(part, "pl.")
-            if (streetTuple is None):
-                streetTuple = self._RemoveStreetPart(part, "al.")
-            if (streetTuple is None):
-                streetTuple = self._RemoveStreetPartSB(part, "SB")
-
+            streetTuple = self.getStreetTuple(part)
 
             if (streetTuple is not None):
                 part, str = streetTuple
+                # street will be in short form, so transform it to be in long form
+                str = self.changeStreetFromShortToLongForm(str)
 
             if (part.find('nuo') >= 0):
                 noName = part.replace("Nr.", "").replace("numeriai", "").replace("nuo", "").strip()
