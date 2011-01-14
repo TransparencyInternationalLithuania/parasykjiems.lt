@@ -60,17 +60,17 @@ def searchInStreetIndex(query_string):
 
         # construct a final uri, and attach it
         if (f.number is not None) and (f.number != ""):
-            iri = "/pjweb/choose_rep/%s/%s/%s/%s/" % (f.municipality, f.city, f.street, f.number)
+            iri = "/pjweb/choose_rep/%s/%s/%s/%s/" % (f.municipality, f.city_genitive, f.street, f.number)
         elif (f.street is not None and f.street != u""):
-            iri = "/pjweb/choose_rep/%s/%s/%s/" % (f.municipality, f.city, f.street)
+            iri = "/pjweb/choose_rep/%s/%s/%s/" % (f.municipality, f.city_genitive, f.street)
         else:
-            iri = "/pjweb/choose_rep/%s/%s/" % (f.municipality, f.city)
+            iri = "/pjweb/choose_rep/%s/%s/" % (f.municipality, f.city_genitive)
         uri = iri_to_uri(iri)
         f.url = uri
 
 
     for e in found_entries:
-        logger.debug("%s %s %s %s %s" % (e.id, e.street, e.city, e.municipality, e.number))
+        logger.debug("%s %s %s %s %s" % (e.id, e.street, e.city_genitive, e.municipality, e.number))
     logger.debug("len %s " % len(found_entries))
 
     if not found_entries:
@@ -197,11 +197,14 @@ def findCivilParishMembers(municipality = None, city = None, street = None, hous
     members = CivilParishMember.objects.all().filter(civilParish__in = idList)
     return members
 
+def findSeniunaitijaMembersIDs(municipality = None, city = None, street = None, house_number = None):
+    
 
 def findSeniunaitijaMembers(municipality = None, city = None, street = None, house_number = None):
     street = removeGenericPartFromStreet(street)
     municipality = removeGenericPartFromMunicipality(municipality)
 
+    # search for seniunaitija with street and house number
     query = SeniunaitijaStreet.objects.all().filter(municipality__contains = municipality)\
         .filter(street__contains = street) \
         .filter(city__contains = city)
@@ -228,14 +231,14 @@ def findSeniunaitijaMembers(municipality = None, city = None, street = None, hou
     members = SeniunaitijaMember.objects.all().filter(seniunaitija__in = idList)
     return members
 
-def getCityGenitive(municipality, city, street):
+def getCityNominative(municipality, city_genitive, street):
     """ given municipality, city name in nominative, and street
     return city name in genitive. This is only for Lithuanian data"""
 
     streetFilters = None
     if (street is not None and street !=""):
         streetFilters = Q(**{"street__icontains": street})
-    cityFilters = Q(**{"city__icontains": city})
+    cityFilters = Q(**{"city_genitive__icontains": city_genitive})
     municipalityFilters = Q(**{"municipality__icontains": municipality})
         
     if (streetFilters != None):
@@ -245,7 +248,7 @@ def getCityGenitive(municipality, city, street):
 
     query = LithuanianStreetIndexes.objects.filter(finalQuery).order_by('street')[0:1]
     for q in query:
-        return q.city_genitive
+        return q.city
     return None
 
 
@@ -262,7 +265,11 @@ def choose_representative(request, municipality = None, city = None, street = No
     logger.debug("choose_rep: street %s" % street)
     logger.debug("choose_rep: house_number %s" % house_number)
 
-    cityGenitive = getCityGenitive(municipality, city, street)
+    # there is a mix at the moment. city is actually a genitive form for Lithuania data
+    # so we need here to get data for nominative as well
+    # when this changes in the future, remove this complexity as well
+    cityGenitive = city
+    city = getCityNominative(municipality, city, street)
 
     additionalKeys = {"city_genitive" : cityGenitive}
     parliament_members = findMPs(municipality, city, street, house_number, **additionalKeys)
