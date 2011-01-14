@@ -245,7 +245,7 @@ class AddressDeducer():
             # try treating as if it a street with number
             firstPartWithNumber, everythingElse = self.splitFirstNumberAndEverythingElse(stringList)
             
-            if (self.containsAnyNumber(firstPartWithNumber)):
+            if self.containsAnyNumber(firstPartWithNumber) or self.containsStreet(firstPartWithNumber):
                 address.street, address.number, address.flatNumber = self.extractStreetAndNumber(firstPartWithNumber)
                 everythingElse = self.splitNoCommas(everythingElse)
                 address.city = self.takePart(everythingElse, 0)
