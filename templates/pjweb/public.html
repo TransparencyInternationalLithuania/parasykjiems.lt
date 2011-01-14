@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+<div id="public_question">
+<p id="date_sent">{% trans "Letter was sent to" %} {{ mail.recipient_name }} {% trans "from" %} {{ mail.sender_name }} {% trans "on" %} {{ mail.mail_date|date:"Y-m-d" }}, {{ mail.mail_date|time:"H:i" }}</p>
+<div style="border:1px solid;height:0px;width:99%;color:gray"></div>
+  {{ mail.message|linebreaks }}
+</div>
+  {% if responses %}
+    <div id="public_response">
+      {% for response in responses %}
+        <p id="date_sent">{% trans "Got response from" %} {{ response.sender_name }} {% trans "on" %} {{ mail.mail_date|date:"Y-m-d" }}, {{ mail.mail_date|time:"H:i" }}</p>
+        <div style="border:1px solid;height:0px;width:99%;color:gray"></div>
+        {{ response.message|linebreaks }}
+      {% endfor %}
+    </div>
+  {% endif %}
+
+{% endblock %}
