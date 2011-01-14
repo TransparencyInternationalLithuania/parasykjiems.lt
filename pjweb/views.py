@@ -161,7 +161,7 @@ def findMPs(municipality = None, city = None, street = None, house_number = None
     members = ParliamentMember.objects.all().filter(constituency__in = idList)
     return members
 
-def findMunicipalityMembers(municipality = None, city = None, street = None, house_number = None):
+def findMunicipalityMembers(municipality = None, city = None, street = None, house_number = None, *args, **kwargs):
 
     try:
         query = Municipality.objects.all().filter(name__contains = municipality)
@@ -198,36 +198,38 @@ def findCivilParishMembers(municipality = None, city = None, street = None, hous
     return members
 
 def findSeniunaitijaMembersIDs(municipality = None, city = None, street = None, house_number = None):
-    
-
-def findSeniunaitijaMembers(municipality = None, city = None, street = None, house_number = None):
-    street = removeGenericPartFromStreet(street)
-    municipality = removeGenericPartFromMunicipality(municipality)
-
     # search for seniunaitija with street and house number
-    query = SeniunaitijaStreet.objects.all().filter(municipality__contains = municipality)\
-        .filter(street__contains = street) \
-        .filter(city__contains = city)
-    query = addHouseNumberQuery(query, house_number)
-
-    query = query.distinct().values('seniunaitija')
-    idList = [p['seniunaitija'] for p in query]
-
-    if (len(idList) == 0):
-        logging.debug("no seniunaitija street at first attempt")
-
+    if (street is not None):
         query = SeniunaitijaStreet.objects.all().filter(municipality__contains = municipality)\
+            .filter(street__contains = street) \
             .filter(city__contains = city)
-
+        query = addHouseNumberQuery(query, house_number)
 
         query = query.distinct().values('seniunaitija')
         idList = [p['seniunaitija'] for p in query]
 
-    if (len(idList) == 0):
-        logging.debug("no seniunaitija street at second attempt")
-        return []
+        if (len(idList) != 0):
+            return idList
 
 
+    # search second time without streets
+    query = SeniunaitijaStreet.objects.all()\
+        .filter(municipality__contains = municipality)\
+        .filter(city__contains = city)
+
+    query = query.distinct().values('seniunaitija')
+    idList = [p['seniunaitija'] for p in query]
+
+    return idList
+
+def findSeniunaitijaMembers(municipality = None, city = None, street = None, house_number = None, *args, **kwargs):
+    street = removeGenericPartFromStreet(street)
+    municipality = removeGenericPartFromMunicipality(municipality)
+    city_gen = kwargs["city_genitive"]
+
+    # city is not used, instead we use city_gen
+    # since in Lithuania it is the primary key to identify cities
+    idList = findSeniunaitijaMembersIDs(municipality=municipality, city= city_gen, street= street, house_number= house_number)
     members = SeniunaitijaMember.objects.all().filter(seniunaitija__in = idList)
     return members
 
@@ -273,9 +275,9 @@ def choose_representative(request, municipality = None, city = None, street = No
 
     additionalKeys = {"city_genitive" : cityGenitive}
     parliament_members = findMPs(municipality, city, street, house_number, **additionalKeys)
-    municipality_members = findMunicipalityMembers(municipality, city, street, house_number)
+    municipality_members = findMunicipalityMembers(municipality, city, street, house_number, **additionalKeys)
     civilparish_members = findCivilParishMembers(municipality, city, street, house_number, **additionalKeys)
-    seniunaitija_members = findSeniunaitijaMembers(municipality, city, street, house_number)
+    seniunaitija_members = findSeniunaitijaMembers(municipality, city, street, house_number, **additionalKeys)
 
 
     return render_to_response('pjweb/const.html', {
