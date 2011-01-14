@@ -14,8 +14,8 @@ wholeStreetEndings = [u"skersgatvis", u"kelias", u"plentas", u"prospektas",
 shortStreetEndings = [u"skg.", u"kel.", u"pl.", u"pr.", u"al.", u"g.", u"a.", u"tak."]
 allStreetEndings = wholeStreetEndings + shortStreetEndings
 
-wholeMunicipalityEndings = [u"miesto savivaldybė"]
-shortMunicipalityEndings = [u"m. sav."]
+wholeMunicipalityEndings = [u"miesto savivaldybė", u"rajono savivaldybė"]
+shortMunicipalityEndings = [u"m. sav.", u"r. sav."]
 allMunicipalityEndings = wholeMunicipalityEndings + shortMunicipalityEndings
 
 
