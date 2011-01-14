@@ -30,6 +30,7 @@ from pjutils.deprecated import deprecated
 from cdb_lt_streets.searchInIndex import searchInIndex, deduceAddress, removeGenericPartFromStreet, removeGenericPartFromMunicipality
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from pjweb.forms import IndexForm, ContactForm
+from pjutils.queryHelper import getOrQuery, getAndQuery
 
 
 logger = logging.getLogger(__name__)
@@ -111,26 +112,51 @@ def addHouseNumberQuery(query, house_number):
     return query
 
 
+def findLT_MPs_Id(municipality = None, city = None, city_gen = None, street = None, house_number = None):
+    """ return a list of ids for MPs for Lithuania"""
 
-
-def findMPs(municipality = None, city = None, street = None, house_number = None):
-    street = removeGenericPartFromStreet(street)
-    municipality = removeGenericPartFromMunicipality(municipality)
-
-    logging.info("searching for MP: street %s, city %s, municipality %s" % (street, city, municipality))
+    # first search by street and house number
+    cityQuery = Q(**{"city__icontains" : city}) | Q(**{"city__icontains" : city_gen})
 
     try:
         query = PollingDistrictStreet.objects.all().filter(municipality__contains = municipality)\
             .filter(street__contains = street) \
-            .filter(city__contains = city)
+            .filter(cityQuery)
         query = addHouseNumberQuery(query, house_number)
 
         query = query.distinct() \
             .values('constituency')
         idList = [p['constituency'] for p in query]
+        if (len(idList) > 0):
+            return idList
     except PollingDistrictStreet.DoesNotExist:
-        logging.info("no polling district")
-        return []
+        pass
+
+    # search without street
+    try:
+        query = PollingDistrictStreet.objects.all().filter(municipality__contains = municipality)\
+            .filter(cityQuery)
+
+        query = query.distinct() \
+            .values('constituency')
+        idList = [p['constituency'] for p in query]
+        return idList
+    except PollingDistrictStreet.DoesNotExist:
+        pass
+
+    logger.debug("Did not find any MP")
+    return []
+
+
+def findMPs(municipality = None, city = None, street = None, house_number = None,  *args, **kwargs):
+    """ kwargs can contain city_genitive to pass city in genitive form"""
+    street = removeGenericPartFromStreet(street)
+    municipality = removeGenericPartFromMunicipality(municipality)
+    city_gen = kwargs["city_genitive"]
+
+    logging.info("searching for MP: street %s, city %s, city_gen %s, municipality %s" % (street, city, city_gen, municipality))
+    idList = findLT_MPs_Id(municipality=municipality, city=city,  city_gen= city_gen, street=street, house_number=house_number)
+
     logging.debug("found MPs in following constituency : %s" % (idList))
     members = ParliamentMember.objects.all().filter(constituency__in = idList)
     return members
@@ -200,6 +226,19 @@ def findSeniunaitijaMembers(municipality = None, city = None, street = None, hou
     members = SeniunaitijaMember.objects.all().filter(seniunaitija__in = idList)
     return members
 
+def getCityGenitive(municipality, city, street):
+    """ given municipality, city name in nominative, and street
+    return city name in genitive. This is only for Lithuanian data"""
+
+    streetFilters = getOrQuery("street", [street])
+    cityFilters = getOrQuery("city", [city])
+    municipalityFilters = getOrQuery("municipality", [municipality])
+    finalQuery = getAndQuery(streetFilters, cityFilters, municipalityFilters)
+    query = LithuanianStreetIndexes.objects.filter(finalQuery).order_by('street')[0:1]
+    for q in query:
+        return q.city_genitive
+    return None
+
 
 def choose_representative(request, municipality = None, city = None, street = None, house_number = None):
     # check if we have a valid referrer
@@ -214,7 +253,9 @@ def choose_representative(request, municipality = None, city = None, street = No
     logger.debug("choose_rep: street %s" % street)
     logger.debug("choose_rep: house_number %s" % house_number)
 
-    parliament_members = findMPs(municipality, city, street, house_number)
+    cityGenitive = getCityGenitive(municipality, city, street)
+
+    parliament_members = findMPs(municipality, city, street, house_number, **{"city_genitive" : cityGenitive})
     municipality_members = findMunicipalityMembers(municipality, city, street, house_number)
     civilparish_members = findCivilParishMembers(municipality, city, street, house_number)
     seniunaitija_members = findSeniunaitijaMembers(municipality, city, street, house_number)

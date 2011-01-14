@@ -8,6 +8,7 @@ from django.db.models.query_utils import Q
 import logging
 from pjutils.deprecated import deprecated
 from ltPrefixes import *
+from pjutils.queryHelper import getAndQuery, getOrQuery
 
 logger = logging.getLogger(__name__)
 
@@ -274,29 +275,6 @@ class AddressCruncher:
         # but keep numbers
         qery_list = [l for l in qery_list if (l.isalpha() and len(l) < 3) == False]
         return qery_list
-
-
-
-def getOrQuery(fieldName, fieldValues):
-    streetFilters = None
-    for s in fieldValues:
-        q = Q(**{"%s__icontains" % fieldName: s})
-        if streetFilters is None:
-            streetFilters = q
-        else:
-            streetFilters = streetFilters | q
-    return streetFilters
-
-def getAndQuery(*args):
-    finalQuery = None
-    for q in args:
-        if (q is None):
-            continue
-        if (finalQuery is None):
-            finalQuery = q
-        else:
-            finalQuery = finalQuery & q
-    return finalQuery
 
 
 def deduceAddress(query_string):
