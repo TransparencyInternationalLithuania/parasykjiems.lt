@@ -48,6 +48,8 @@ class ltGeoDataSources:
 
     """ A list of document for importing streets for civil parishes"""
     CivilParishIndexes = commonIndexes
+    # a custom pdf generated only for city Kaunas
+    CivilParishIndexes_Kaunas = os.path.join("contactdb", "sources", "CivilParish", "Kauno seniunijos.raw.txt")
 
     """ A complete Lithuanian street source"""
     LithuanianStreetIndexes = commonIndexes + lithuanianAdditionalStreets
