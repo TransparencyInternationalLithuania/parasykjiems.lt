@@ -39,7 +39,9 @@ class ImportSources:
 that an appropriate google doc was not downloaded yet.  You can do that by calling manage.py %s """ % (file, downloadCommand))
 
 class GoogleDocsSources:
-    """ collection of google docs documents for Lithuanian data"""
+    """ collection of google docs documents for Lithuanian data. The data from these sources
+    are downloaded and saved on disk, for further much faster access. A relating ImportSources variable
+     is used for the file name when storing on disk"""
 
     # parliament members
     LithuanianMPs = "parasykjiems.lt 2"
