@@ -17,6 +17,13 @@ class Command(BaseCommand):
         responses_list = []
         questions_list = []
         waiting_list = []
+        server_info = {
+            'server':GlobalSettings.MAIL_SERVER,
+            'port':GlobalSettings.MAIL_PORT,
+            'username':GlobalSettings.MAIL_USERNAME,
+            'password':GlobalSettings.MAIL_PASSWORD,
+            'type':GlobalSettings.MAIL_SERVER_TYPE
+        }
         questions = Email.objects.filter(msg_type__iexact='Question', msg_state__iexact='Confirmed')
         responses = Email.objects.filter(msg_type__iexact='Response')
         waiting = len(questions) - len(responses)
