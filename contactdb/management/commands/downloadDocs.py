@@ -86,30 +86,17 @@ class SpreadSheetDiffUploader:
                 updater.UpdateRow(i, self.dictReader[i])
 
 
-@deprecated
-class GoogleDocUploader:
-    def __init__(self, docName, fileName):
-        logger.debug("logging in to GDocs")
-        self.client = SpreadSheetClient(GlobalSettings.GOOGLE_DOCS_USER, GlobalSettings.GOOGLE_DOCS_PASSWORD)
-        self.client.SelectSpreadsheet(docName)
-        self.client.SelectWorksheet(0)
-        logger.debug("logged into GDocs")
-
-        entry = self.client.gd_client.Upload('/path/to/your/test.doc', 'MyDocTitle', content_type='application/msword')
-        logger.info('Document now accessible online at: %s' % entry.GetAlternateLink().href)
-
-
-
-
-
 class GoogleDocDownloader:
     """ Downloads a google doc, and saves it to a file as csv file.
+    This class is using an old way to connect to google docs and download a doc. This takes much longer,
+    but we can control the way the file is saved to disk.
+
     You can use some of the helper methods defined in the same package instead of using this class directly"""
 
     def __init__(self):
         self.client = SpreadSheetClient(GlobalSettings.GOOGLE_DOCS_USER, GlobalSettings.GOOGLE_DOCS_PASSWORD)
 
-    def openWriter(self, fileName, row):
+    def _openWriter(self, fileName, row):
         """ creates a new DictWriter object from row object. Writes header row"""
         fieldNames = [k for k in row.iterkeys()]
 
@@ -135,7 +122,7 @@ class GoogleDocDownloader:
             # row is a custom object, so lets construct a normal dictionary from it with keys and values
             val = self.client.ToDictionaryFromRow(row)
             if (writer is None):
-                writer = self.openWriter(fileName, val)
+                writer = self._openWriter(fileName, val)
             writer.writerow(val)
         print "ok"
 
