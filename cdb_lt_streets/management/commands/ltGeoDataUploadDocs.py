@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 from cdb_lt_streets.management.commands.ltGeoDataImportCsv import ltGeoDataSources
-from contactdb.gdocs import GoogleDocsLogin, GoogleDocsDocument
+from contactdb.gdocs import GoogleDocsLogin, GoogleDocsUploader
 from settings import *
 from cdb_lt_streets.management.commands.ltGeoDataCrawl import RegisterCenterPageLocations, ExtractRange
 from pydoc import doc
@@ -35,5 +35,5 @@ class Command(BaseCommand):
             if (os.path.exists(file) == False):
                 continue
             logger.info("uploading document from file '%s' to location '%s'" % (file, street[0]))
-            document = GoogleDocsDocument(login, street[0])
+            document = GoogleDocsUploader(login, street[0])
             document.replaceContents(file)

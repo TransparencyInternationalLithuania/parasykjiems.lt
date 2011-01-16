@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 from django.db import transaction
-from contactdb.gdocs import SpreadSheetClient, GoogleDocsLogin, GoogleDocsDocument
+from contactdb.gdocs import SpreadSheetClient, GoogleDocsLogin
 from settings import *
 import csv
 import pjutils.uniconsole
