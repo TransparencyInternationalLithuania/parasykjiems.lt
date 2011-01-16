@@ -1,6 +1,7 @@
 from __future__ import absolute_import
 from cdb_lt_mps.tests.TestParseConstituencies import *
 from cdb_lt_mps.tests.TestImportLithuanianCounties import TestImportLithuanianCounties
+from cdb_lt_mps.tests.TestReadParliamentMembers import TestReadParliamentMembers
 
 __test__ = {
     'TestPollingDistrictStreetExpander' : TestPollingDistrictStreetExpander,

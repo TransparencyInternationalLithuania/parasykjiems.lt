@@ -1,5 +1,9 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from django.test.testcases import TestCase
 from cdb_lt_mps.management.commands.importMPs import LithuanianMPsReader
+import os
 
 scriptPath = os.path.dirname( os.path.realpath( __file__ ) )
 
