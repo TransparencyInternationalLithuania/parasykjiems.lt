@@ -1,21 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import copy
-import re
 import os
 from pjutils.exc import ChainnedException
-from pjutils.deprecated import deprecated
-from cdb_lt_mps.models import Constituency, Constituency
-from cdb_lt_mps.parseConstituencies import ExpandedStreet
 
 class ImportSourceNotExistsException(ChainnedException):
     pass
 
 class ImportSources:
     Delimiter = ","
-#delimiter = "\t"
-
 
     constituencyPath = os.path.join("contactdb", "sources", "import data")
     LithuanianConstituencies = os.path.join(constituencyPath, "apygardos.txt")

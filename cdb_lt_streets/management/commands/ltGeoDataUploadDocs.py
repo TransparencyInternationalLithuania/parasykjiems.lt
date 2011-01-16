@@ -3,7 +3,6 @@ from cdb_lt_streets.management.commands.ltGeoDataImportCsv import ltGeoDataSourc
 from contactdb.gdocs import GoogleDocsLogin, GoogleDocsUploader
 from settings import *
 from cdb_lt_streets.management.commands.ltGeoDataCrawl import RegisterCenterPageLocations, ExtractRange
-from pydoc import doc
 logger = logging.getLogger(__name__)
 
 class Command(BaseCommand):

@@ -1,5 +1,4 @@
 from django.core.management.base import BaseCommand
-from contactdb.models import *
 from django.db import connection, transaction
 from cdb_lt_mps.models import PollingDistrictStreet, ParliamentMember, Constituency
 from cdb_lt_civilparish.models import CivilParishMember, CivilParish, CivilParishStreet
@@ -29,8 +28,6 @@ class Command(BaseCommand):
 
 
     def handle(self, *args, **options):
-        cursor = connection.cursor()
-
         models = [PollingDistrictStreet, # MPs
                   ParliamentMember,
                   Constituency,

@@ -2,10 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from django.utils.translation import ugettext as _
-from django.db import models
 from django.db.models.fields import CharField
-from enum import Enum
-
 
 class PhoneField(CharField):
     description = _("Phone field")
