@@ -15,6 +15,7 @@ from contactdb.imp import ImportSources
 from cdb_lt_seniunaitija.management.commands.importSeniunaitijaMembers import SeniunaitijaMembersReader
 from cdb_lt_mps.models import PollingDistrictStreet
 from cdb_lt_streets.searchInIndex import *
+from cdb_lt_streets.houseNumberUtils import removeLetterFromHouseNumber
 
 logger = logging.getLogger(__name__)
 
@@ -207,7 +208,7 @@ class SeniunaitijaAddressExpander:
                         numberFrom = numberFrom.strip()
                         numberTo = numberTo.strip()
                         try:
-                            numberFrom = self.RemoveLetter(numberFrom)
+                            numberFrom = removeLetterFromHouseNumber(numberFrom)
                             numberFrom = int(numberFrom)
                         except:
                             raise SeniunaitijaAddressExpanderException("could not convert string '%s' to number" % numberFrom)
@@ -220,7 +221,7 @@ class SeniunaitijaAddressExpander:
                                 else:
                                     numberTo = ExpandedStreet.MaxOddValue
                             else:
-                                numberTo = self.RemoveLetter(numberTo)
+                                numberTo = removeLetterFromHouseNumber(numberTo)
                                 numberTo = int(numberTo)
                         except:
                             raise SeniunaitijaAddressExpanderException("could not convert string '%s' to number" % numberTo)
@@ -235,7 +236,7 @@ class SeniunaitijaAddressExpander:
                     if (self.ContainsNumbers(streetProperties) == False):
                         raise SeniunaitijaAddressExpanderException("string '%s' does not contain numbers. Though i expected it to be a house number" % streetProperties)
 
-                    streetProperties = self.RemoveLetter(streetProperties)
+                    streetProperties = removeLetterFromHouseNumber(streetProperties)
                     #print streetProperties
                     try:
                         numberFrom = int(streetProperties)

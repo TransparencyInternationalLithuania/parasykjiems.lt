@@ -148,24 +148,26 @@ class TestPollingDistrictStreetExpander(TestCase):
         self.assertTuplesEqual(original, self.parser.ExpandStreet("    "))
 
     def test_street_g(self):
-        original = [ExpandedStreet(street = "Mano g.")]
+        original = [ExpandedStreet(street = u"Mano gatvė")]
         self.assertTuplesEqual(original, self.parser.ExpandStreet("Mano g."))
 
     def test_street_pr(self):
-        original = [ExpandedStreet("Baltų pr.", 1), ExpandedStreet("Baltų pr.", 2)]
-        self.assertTuplesEqual(original, self.parser.ExpandStreet("Baltų pr. Nr.1; Nr. 2"))
+        original = [ExpandedStreet(u"Baltų prospektas", 1),
+                    ExpandedStreet(u"Baltų prospektas", 2)]
+        self.assertTuplesEqual(original, self.parser.ExpandStreet(u"Baltų pr. Nr.1; Nr. 2"))
 
     def test_street_pl(self):
-        original = [ExpandedStreet("Baltų pl.", 1), ExpandedStreet("Baltų pl.", 2)]
-        self.assertTuplesEqual(original, self.parser.ExpandStreet("Baltų pl. Nr.1; Nr. 2"))
+        original = [ExpandedStreet(u"Baltų plentas", 1),
+                    ExpandedStreet(u"Baltų plentas", 2)]
+        self.assertTuplesEqual(original, self.parser.ExpandStreet(u"Baltų pl. Nr.1; Nr. 2"))
 
     def test_street_al(self):
-        original = [ExpandedStreet("Baltų al.", 1), ExpandedStreet("Baltų al.", 2)]
-        self.assertTuplesEqual(original, self.parser.ExpandStreet("Baltų al. Nr.1; Nr. 2"))
+        original = [ExpandedStreet(u"Baltų alėja", 1), ExpandedStreet(u"Baltų alėja", 2)]
+        self.assertTuplesEqual(original, self.parser.ExpandStreet(u"Baltų al. Nr.1; Nr. 2"))
 
     def test_SB(self):
-        original = [ExpandedStreet("SB Dailė.", 1), ExpandedStreet("SB Dailė.", 2)]
-        self.assertTuplesEqual(original, self.parser.ExpandStreet("SB Dailė. Nr.1; Nr. 2"))
+        original = [ExpandedStreet(u"SB Dailė.", 1), ExpandedStreet(u"SB Dailė.", 2)]
+        self.assertTuplesEqual(original, self.parser.ExpandStreet(u"SB Dailė. Nr.1; Nr. 2"))
         #SB „Dailė“ Nr. 1, Nr. 27, Nr. 30, Nr. 50, Nr. 52, Nr. 56
 
 
@@ -173,80 +175,80 @@ class TestPollingDistrictStreetExpander(TestCase):
     def test_OneHouse(self):
 
         vec = [18, 20, 22, 24, 26, 27, 29]
-        original = [ExpandedStreet("Respublikos g.", x) for x in vec]
+        original = [ExpandedStreet(u"Respublikos gatvė", x) for x in vec]
 
         self.assertTuplesEqual(original, self.parser.ExpandStreet("Respublikos g. Nr. 18; Nr. 20; Nr. 22; Nr. 24; Nr. 26; Nr. 27; Nr. 29"))
 
     def test_OneHouse_OneContinuosRange(self):
-        original = [ExpandedStreet("Respublikos g.", 1, 17)]
+        original = [ExpandedStreet(u"Respublikos gatvė", 1, 17)]
         self.assertTuplesEqual(original, self.parser.ExpandStreet("Respublikos g. poriniai numeriai nuo Nr.1 iki Nr. 17"))
 
     def test_OneHouse_TwoRanges_2(self):
         vec = [19, 26, 28]
-        original = [ExpandedStreet("Respublikos g.", x) for x in vec]
-        original += [ExpandedStreet("Respublikos g.", 1, 17),
-                     ExpandedStreet("Respublikos g.", 2, 16)]
+        original = [ExpandedStreet(u"Respublikos gatvė", x) for x in vec]
+        original += [ExpandedStreet(u"Respublikos gatvė", 1, 17),
+                     ExpandedStreet(u"Respublikos gatvė", 2, 16)]
 
         self.assertTuplesEqual(original, self.parser.ExpandStreet("Respublikos g. Nr. 19; Nr. 26; Nr. 28; numeriai nuo Nr.1 iki Nr. 17"))
 
     def test_(self):
-        str = "Chemikų g. neporiniai numeriai nuo Nr. 13 iki Nr. 31; nuo Nr. 130 iki Nr. 134."
-        original = [ExpandedStreet("Chemikų g.", 13, 31),
-                    ExpandedStreet("Chemikų g.", 131, 133),
-                    ExpandedStreet("Chemikų g.", 130, 134)]
+        str = u"Chemikų g. neporiniai numeriai nuo Nr. 13 iki Nr. 31; nuo Nr. 130 iki Nr. 134."
+        original = [ExpandedStreet(u"Chemikų gatvė", 13, 31),
+                    ExpandedStreet(u"Chemikų gatvė", 131, 133),
+                    ExpandedStreet(u"Chemikų gatvė", 130, 134)]
 
         self.assertTuplesEqual(original, self.parser.ExpandStreet(str))
 
 
     def test_OneHouse_TwoRanges(self):
-        original = [ExpandedStreet("S. Dariaus ir S. Girėno g.", 1, ExpandedStreet.MaxOddValue),
-                    ExpandedStreet("S. Dariaus ir S. Girėno g.", 4, ExpandedStreet.MaxEvenValue)]
+        original = [ExpandedStreet(u"S. Dariaus ir S. Girėno gatvė", 1, ExpandedStreet.MaxOddValue),
+                    ExpandedStreet(u"S. Dariaus ir S. Girėno gatvė", 4, ExpandedStreet.MaxEvenValue)]
 
-        self.assertTuplesEqual(original, self.parser.ExpandStreet("S. Dariaus ir S. Girėno g. neporiniai numeriai nuo Nr. 1 iki galo; poriniai numeriai nuo Nr. 4 iki galo"))
+        self.assertTuplesEqual(original, self.parser.ExpandStreet(u"S. Dariaus ir S. Girėno g. neporiniai numeriai nuo Nr. 1 iki galo; poriniai numeriai nuo Nr. 4 iki galo"))
 
     def test_OneHouse_ThreeRanges(self):
-        original = [ExpandedStreet("AlyvųTako g.", 17, ExpandedStreet.MaxOddValue),
-                    ExpandedStreet("AlyvųTako g.", 10, ExpandedStreet.MaxEvenValue),
-                    ExpandedStreet("AlyvųTako g.", 1, 7),
-                    ExpandedStreet("AlyvųTako g.", 2, 8)]
+        original = [ExpandedStreet(u"AlyvųTako gatvė", 17, ExpandedStreet.MaxOddValue),
+                    ExpandedStreet(u"AlyvųTako gatvė", 10, ExpandedStreet.MaxEvenValue),
+                    ExpandedStreet(u"AlyvųTako gatvė", 1, 7),
+                    ExpandedStreet(u"AlyvųTako gatvė", 2, 8)]
 
-        self.assertTuplesEqual(original, self.parser.ExpandStreet("AlyvųTako g. neporiniai numeriai nuo Nr. 17 iki galo; poriniai numeriai nuo Nr. 10 iki galo; numeriai nuo Nr. 1 iki Nr. 8"))
+        self.assertTuplesEqual(original, self.parser.ExpandStreet(u"AlyvųTako g. neporiniai numeriai nuo Nr. 17 iki galo; poriniai numeriai nuo Nr. 10 iki galo; numeriai nuo Nr. 1 iki Nr. 8"))
 
     def test_OneHouse_WithSquare(self):
-        original = [ExpandedStreet("Respublikos a.", 2)]
-        self.assertTuplesEqual(original, self.parser.ExpandStreet("Respublikos a. Nr. 2"))
+        original = [ExpandedStreet(u"Respublikos aikštė", 2)]
+        self.assertTuplesEqual(original, self.parser.ExpandStreet(u"Respublikos a. Nr. 2"))
 
     def test_Number_WithLetter(self):
-        original = [ExpandedStreet("Respublikos a.", 2)]
-        self.assertTuplesEqual(original, self.parser.ExpandStreet("Respublikos a. Nr. 2D"))
+        original = [ExpandedStreet(u"Respublikos aikštė", 2)]
+        self.assertTuplesEqual(original, self.parser.ExpandStreet(u"Respublikos a. Nr. 2D"))
 
 
     def test_HouseNumberWithDot(self):
-        original = [ExpandedStreet("Respublikos a.", 2)]
-        self.assertTuplesEqual(original, self.parser.ExpandStreet("Respublikos a. Nr. 2."))
+        original = [ExpandedStreet(u"Respublikos aikštė", 2)]
+        self.assertTuplesEqual(original, self.parser.ExpandStreet(u"Respublikos a. Nr. 2."))
 
 
     def test_OneHouse_HouseNumber_WithLetter(self):
 
-        original = [ExpandedStreet("S. Dariaus ir S. Girėno g.", 2)]
-        self.assertTuplesEqual(original, self.parser.ExpandStreet("S. Dariaus ir S. Girėno g. numeriai nuo Nr. 2 iki Nr. 2A"))
+        original = [ExpandedStreet(u"S. Dariaus ir S. Girėno gatvė", 2)]
+        self.assertTuplesEqual(original, self.parser.ExpandStreet(u"S. Dariaus ir S. Girėno g. numeriai nuo Nr. 2 iki Nr. 2A"))
 
     def test_OneHouse_WithDotInTheEnd(self):
 
-        original = [ExpandedStreet("Naujosios g.", 4, 42)]
+        original = [ExpandedStreet(u"Naujosios gatvė", 4, 42)]
 
         self.assertTuplesEqual(original, self.parser.ExpandStreet("Naujosios g. poriniai numeriai nuo Nr. 4 iki Nr. 42."))
 
     def test_OneHouse_WithLetter_InStart(self):
 
-        original = [ExpandedStreet("Vytauto g.", 3, 11),
-                    ExpandedStreet("Vytauto g.", 4, 10)]
+        original = [ExpandedStreet(u"Vytauto gatvė", 3, 11),
+                    ExpandedStreet(u"Vytauto gatvė", 4, 10)]
         self.assertTuplesEqual(original, self.parser.ExpandStreet("Vytauto g. neporiniai numeriai nuo Nr. 3A iki Nr. 11; poriniai numeriai nuo Nr. 4 iki Nr. 10"))
 
     def test_NoSpaceBetweenStreet(self):
-        original = [ExpandedStreet("Kuršių g.", 46, ExpandedStreet.MaxEvenValue)]
+        original = [ExpandedStreet(u"Kuršių gatvė", 46, ExpandedStreet.MaxEvenValue)]
 
-        self.assertTuplesEqual(original, self.parser.ExpandStreet("Kuršių g.poriniai numeriai nuo Nr. 46 iki galo"))
+        self.assertTuplesEqual(original, self.parser.ExpandStreet(u"Kuršių g.poriniai numeriai nuo Nr. 46 iki galo"))
 
 
 class TestAddressParser(TestCase):
@@ -301,28 +303,28 @@ class TestAddressParser(TestCase):
 
     def test_Bug005(self):
         """ some streets are not parsed"""
-        streetStr = "Panevėžys: Aldonos g.; Danutės g. neporiniai numeriai nuo Nr. 1 iki Nr. 27, poriniai numeriai nuo Nr. 2 iki Nr. 16; J. Tilvyčio g. neporiniai numeriai nuo Nr. 1 iki Nr. 35, poriniai numeriai nuo Nr. 2 iki Nr. 10; Katedros g., Katedros a.; Klaipėdos g. neporiniai numeriai nuo Nr. 3 iki Nr. 19; Krekenavos g. neporiniai numeriai nuo Nr. 1 iki galo; Nemuno g. poriniai numeriai nuo Nr. 2 iki Nr. 6; Nepriklausomybės a.; Ramygalos g. poriniai numeriai nuo Nr. 14 iki Nr. 50; S. Daukanto g. neporiniai numeriai nuo Nr. 39 iki Nr. 51; Sodų g., Vaižganto g., Varnaičių g.; Vysk. K. Paltaroko g. neporiniai numeriai nuo Nr. 1 iki galo; poriniai numeriai nuo Nr. 2 iki Nr. 16."
+        streetStr = u"Panevėžys: Aldonos g.; Danutės g. neporiniai numeriai nuo Nr. 1 iki Nr. 27, poriniai numeriai nuo Nr. 2 iki Nr. 16; J. Tilvyčio g. neporiniai numeriai nuo Nr. 1 iki Nr. 35, poriniai numeriai nuo Nr. 2 iki Nr. 10; Katedros g., Katedros a.; Klaipėdos g. neporiniai numeriai nuo Nr. 3 iki Nr. 19; Krekenavos g. neporiniai numeriai nuo Nr. 1 iki galo; Nemuno g. poriniai numeriai nuo Nr. 2 iki Nr. 6; Nepriklausomybės a.; Ramygalos g. poriniai numeriai nuo Nr. 14 iki Nr. 50; S. Daukanto g. neporiniai numeriai nuo Nr. 39 iki Nr. 51; Sodų g., Vaižganto g., Varnaičių g.; Vysk. K. Paltaroko g. neporiniai numeriai nuo Nr. 1 iki galo; poriniai numeriai nuo Nr. 2 iki Nr. 16."
 
         parsed = list(self.parser.GetAddresses(streetStr))
 
-        streets = ["Aldonos g.",
-                   "Danutės g. neporiniai numeriai nuo Nr. 1 iki Nr. 27; poriniai numeriai nuo Nr. 2 iki Nr. 16",
-                   "J. Tilvyčio g. neporiniai numeriai nuo Nr. 1 iki Nr. 35; poriniai numeriai nuo Nr. 2 iki Nr. 10",
-                   "Katedros g.",
-                   "Katedros a.",
-                   "Klaipėdos g. neporiniai numeriai nuo Nr. 3 iki Nr. 19",
-                   "Krekenavos g. neporiniai numeriai nuo Nr. 1 iki galo",
-                   "Nemuno g. poriniai numeriai nuo Nr. 2 iki Nr. 6",
-                   "Nepriklausomybės a.",
-                   "Ramygalos g. poriniai numeriai nuo Nr. 14 iki Nr. 50",
-                   "S. Daukanto g. neporiniai numeriai nuo Nr. 39 iki Nr. 51",
-                   "Sodų g.",
-                   "Vaižganto g.",
-                   "Varnaičių g.",
-                   "Vysk. K. Paltaroko g. neporiniai numeriai nuo Nr. 1 iki galo; poriniai numeriai nuo Nr. 2 iki Nr. 16."]
+        streets = [u"Aldonos g.",
+                   u"Danutės g. neporiniai numeriai nuo Nr. 1 iki Nr. 27; poriniai numeriai nuo Nr. 2 iki Nr. 16",
+                   u"J. Tilvyčio g. neporiniai numeriai nuo Nr. 1 iki Nr. 35; poriniai numeriai nuo Nr. 2 iki Nr. 10",
+                   u"Katedros g.",
+                   u"Katedros a.",
+                   u"Klaipėdos g. neporiniai numeriai nuo Nr. 3 iki Nr. 19",
+                   u"Krekenavos g. neporiniai numeriai nuo Nr. 1 iki galo",
+                   u"Nemuno g. poriniai numeriai nuo Nr. 2 iki Nr. 6",
+                   u"Nepriklausomybės a.",
+                   u"Ramygalos g. poriniai numeriai nuo Nr. 14 iki Nr. 50",
+                   u"S. Daukanto g. neporiniai numeriai nuo Nr. 39 iki Nr. 51",
+                   u"Sodų g.",
+                   u"Vaižganto g.",
+                   u"Varnaičių g.",
+                   u"Vysk. K. Paltaroko g. neporiniai numeriai nuo Nr. 1 iki galo; poriniai numeriai nuo Nr. 2 iki Nr. 16."]
 
         for i in range(0, len(streets)):
-            self.assertCity("Panevėžys", streets[i], parsed[i])
+            self.assertCity(u"Panevėžys", streets[i], parsed[i])
 
         self.assertEqual(len(streets), len(parsed))
 
@@ -506,33 +508,33 @@ class TestAddressParser(TestCase):
         self.assertEqual(28, len(parsed))
 
     def test_SmallCity(self):
-        streetStr = "Apušroto k., Biržų k., Bražiškių k., Dovydžių k., Dulbių k., Gembūčių k., Gerkiškių k., Kalnelio k., Karniškių k., Kruopių mstl., Laumėnų I k., Laumėnų II k., Liepkalnio k., Maušų k., Narbūčių k., Pagervių k. dalis, Pagervių k., Rudeliškių k., Saunorių I k., Saunorių II k., Senlaukio k., Spaigių k., Šiauliukų k., Šliupščių k., Vilkaičių k."
+        streetStr = u"Apušroto k., Biržų k., Bražiškių k., Dovydžių k., Dulbių k., Gembūčių k., Gerkiškių k., Kalnelio k., Karniškių k., Kruopių mstl., Laumėnų I k., Laumėnų II k., Liepkalnio k., Maušų k., Narbūčių k., Pagervių k. dalis, Pagervių k., Rudeliškių k., Saunorių I k., Saunorių II k., Senlaukio k., Spaigių k., Šiauliukų k., Šliupščių k., Vilkaičių k."
         parsed = list(self.parser.GetAddresses(streetStr))
-        self.assertCity("Apušroto k.",      "", parsed[0])
-        self.assertCity("Biržų k.",         "", parsed[1])
-        self.assertCity("Bražiškių k.",     "", parsed[2])
-        self.assertCity("Dovydžių k.",      "", parsed[3])
-        self.assertCity("Dulbių k.",        "", parsed[4])
-        self.assertCity("Gembūčių k.",      "", parsed[5])
-        self.assertCity("Gerkiškių k.",     "", parsed[6])
-        self.assertCity("Kalnelio k.",      "", parsed[7])
-        self.assertCity("Karniškių k.",     "", parsed[8])
-        self.assertCity("Kruopių mstl.",    "", parsed[9])
-        self.assertCity("Laumėnų I k.",     "", parsed[10])
-        self.assertCity("Laumėnų II k.",    "", parsed[11])
-        self.assertCity("Liepkalnio k.",    "", parsed[12])
-        self.assertCity("Maušų k.",         "", parsed[13])
-        self.assertCity("Narbūčių k.",      "", parsed[14])
-        self.assertCity("Pagervių k. dalis","", parsed[15])
-        self.assertCity("Pagervių k.",      "", parsed[16])
-        self.assertCity("Rudeliškių k.",    "", parsed[17])
-        self.assertCity("Saunorių I k.",    "", parsed[18])
-        self.assertCity("Saunorių II k.",   "", parsed[19])
-        self.assertCity("Senlaukio k.",     "", parsed[20])
-        self.assertCity("Spaigių k.",       "", parsed[21])
-        self.assertCity("Šiauliukų k.",     "", parsed[22])
-        self.assertCity("Šliupščių k.",     "", parsed[23])
-        self.assertCity("Vilkaičių k.",     "", parsed[24])
+        self.assertCity(u"Apušroto kaimas",      "", parsed[0])
+        self.assertCity(u"Biržų kaimas",         "", parsed[1])
+        self.assertCity(u"Bražiškių kaimas",     "", parsed[2])
+        self.assertCity(u"Dovydžių kaimas",      "", parsed[3])
+        self.assertCity(u"Dulbių kaimas",        "", parsed[4])
+        self.assertCity(u"Gembūčių kaimas",      "", parsed[5])
+        self.assertCity(u"Gerkiškių kaimas",     "", parsed[6])
+        self.assertCity(u"Kalnelio kaimas",      "", parsed[7])
+        self.assertCity(u"Karniškių kaimas",     "", parsed[8])
+        self.assertCity(u"Kruopių miestelis",    "", parsed[9])
+        self.assertCity(u"Laumėnų I kaimas",     "", parsed[10])
+        self.assertCity(u"Laumėnų II kaimas",    "", parsed[11])
+        self.assertCity(u"Liepkalnio kaimas",    "", parsed[12])
+        self.assertCity(u"Maušų kaimas",         "", parsed[13])
+        self.assertCity(u"Narbūčių kaimas",      "", parsed[14])
+        self.assertCity(u"Pagervių kaimas",      "", parsed[15])
+        self.assertCity(u"Pagervių kaimas",      "", parsed[16])
+        self.assertCity(u"Rudeliškių kaimas",    "", parsed[17])
+        self.assertCity(u"Saunorių I kaimas",    "", parsed[18])
+        self.assertCity(u"Saunorių II kaimas",   "", parsed[19])
+        self.assertCity(u"Senlaukio kaimas",     "", parsed[20])
+        self.assertCity(u"Spaigių kaimas",       "", parsed[21])
+        self.assertCity(u"Šiauliukų kaimas",     "", parsed[22])
+        self.assertCity(u"Šliupščių kaimas",     "", parsed[23])
+        self.assertCity(u"Vilkaičių kaimas",     "", parsed[24])
         self.assertEqual(25, len(parsed))
 
 
@@ -541,46 +543,46 @@ class TestAddressParser(TestCase):
         self.assertEqual(streetName, cityAddress.streetName)
 
     def test_Street_WithPoriniai(self):
-        streetStr = "Naujoji Akmenė: Respublikos g. Nr. 19, Nr. 26, Nr. 28, numeriai nuo Nr. 1 iki Nr. 17; Respublikos a. Nr. 2."
+        streetStr = u"Naujoji Akmenė: Respublikos g. Nr. 19, Nr. 26, Nr. 28, numeriai nuo Nr. 1 iki Nr. 17; Respublikos a. Nr. 2."
         parsed = list(self.parser.GetAddresses(streetStr))
-        self.assertCity("Naujoji Akmenė", "Respublikos g. Nr. 19; Nr. 26; Nr. 28; numeriai nuo Nr. 1 iki Nr. 17", parsed[0])
-        self.assertCity("Naujoji Akmenė", "Respublikos a. Nr. 2.", parsed[1])
+        self.assertCity(u"Naujoji Akmenė", u"Respublikos g. Nr. 19; Nr. 26; Nr. 28; numeriai nuo Nr. 1 iki Nr. 17", parsed[0])
+        self.assertCity(u"Naujoji Akmenė", u"Respublikos a. Nr. 2.", parsed[1])
         self.assertEqual(2, len(parsed))
 
     def test_Street_WithHouseNumbers(self):
-        streetStr = "Naujoji Akmenė: Respublikos g. Nr. 18, Nr. 20, Nr. 21, Nr. 23, Nr. 24, Nr. 25, Nr. 27; SB „Ąžuolas“, V. Kudirkos g."
+        streetStr = u"Naujoji Akmenė: Respublikos g. Nr. 18, Nr. 20, Nr. 21, Nr. 23, Nr. 24, Nr. 25, Nr. 27; SB „Ąžuolas“, V. Kudirkos g."
         parsed = list(self.parser.GetAddresses(streetStr))
-        self.assertCity("Naujoji Akmenė", "Respublikos g. Nr. 18; Nr. 20; Nr. 21; Nr. 23; Nr. 24; Nr. 25; Nr. 27", parsed[0])
-        self.assertCity("Naujoji Akmenė", "SB „Ąžuolas“", parsed[1])
-        self.assertCity("Naujoji Akmenė", "V. Kudirkos g.", parsed[2])
+        self.assertCity(u"Naujoji Akmenė", u"Respublikos g. Nr. 18; Nr. 20; Nr. 21; Nr. 23; Nr. 24; Nr. 25; Nr. 27", parsed[0])
+        self.assertCity(u"Naujoji Akmenė", u"SB „Ąžuolas“", parsed[1])
+        self.assertCity(u"Naujoji Akmenė", u"V. Kudirkos g.", parsed[2])
         self.assertEqual(3, len(parsed))
 
 
 
     def test_TwoCities(self):
-        streetStr = "Gajauciškio k., Gemaitiškių k., Jurkionių k.: SB „Dzūkija“, Medukštos k., Navasiolkų k., Norgeliškių k., Padvariškių k., Panemuninkėlių k.; Panemuninkų k.: SB „Versmė“; Raganiškių k., Strielčių k., Taučionių k., Vaidaugų k., Vaisodžių k., Vaišupio k., Valiūnų k., Žiūkų k."
+        streetStr = u"Gajauciškio k., Gemaitiškių k., Jurkionių k.: SB „Dzūkija“, Medukštos k., Navasiolkų k., Norgeliškių k., Padvariškių k., Panemuninkėlių k.; Panemuninkų k.: SB „Versmė“; Raganiškių k., Strielčių k., Taučionių k., Vaidaugų k., Vaisodžių k., Vaišupio k., Valiūnų k., Žiūkų k."
         parsed = list(self.parser.GetAddresses(streetStr))
-        self.assertCity("Gajauciškio k.", "", parsed[0])
-        self.assertCity("Gemaitiškių k.", "", parsed[1])
-        self.assertCity("Jurkionių k.", "SB „Dzūkija“", parsed[2])
-        self.assertCity("Medukštos k.", "", parsed[3])
-        self.assertCity("Navasiolkų k.", "", parsed[4])
-        self.assertCity("Norgeliškių k.", "", parsed[5])
-        self.assertCity("Padvariškių k.", "", parsed[6] )
-        self.assertCity("Panemuninkėlių k.", "", parsed[7])
-        self.assertCity("Panemuninkų k.", "SB „Versmė“", parsed[8])
-        self.assertCity("Raganiškių k.", "", parsed[9])
-        self.assertCity("Strielčių k.", "", parsed[10])
-        self.assertCity("Taučionių k.", "", parsed[11])
-        self.assertCity("Vaidaugų k.", "", parsed[12]  )
-        self.assertCity("Vaisodžių k.", "", parsed[13]  )
-        self.assertCity("Vaišupio k.", "", parsed[14])
-        self.assertCity("Valiūnų k.", "", parsed[15])
-        self.assertCity("Žiūkų k.", "", parsed[16])
+        self.assertCity(u"Gajauciškio kaimas", "", parsed[0])
+        self.assertCity(u"Gemaitiškių kaimas", "", parsed[1])
+        self.assertCity(u"Jurkionių kaimas", u"SB „Dzūkija“", parsed[2])
+        self.assertCity(u"Medukštos kaimas", "", parsed[3])
+        self.assertCity(u"Navasiolkų kaimas", "", parsed[4])
+        self.assertCity(u"Norgeliškių kaimas", "", parsed[5])
+        self.assertCity(u"Padvariškių kaimas", "", parsed[6] )
+        self.assertCity(u"Panemuninkėlių kaimas", "", parsed[7])
+        self.assertCity(u"Panemuninkų kaimas", u"SB „Versmė“", parsed[8])
+        self.assertCity(u"Raganiškių kaimas", "", parsed[9])
+        self.assertCity(u"Strielčių kaimas", "", parsed[10])
+        self.assertCity(u"Taučionių kaimas", "", parsed[11])
+        self.assertCity(u"Vaidaugų kaimas", "", parsed[12]  )
+        self.assertCity(u"Vaisodžių kaimas", "", parsed[13]  )
+        self.assertCity(u"Vaišupio kaimas", "", parsed[14])
+        self.assertCity(u"Valiūnų kaimas", "", parsed[15])
+        self.assertCity(u"Žiūkų kaimas", "", parsed[16])
         self.assertEqual(17, len(parsed))
 
     def test_Villages_And_OneCity(self):
-        streetStr = "Bažavos k., Kolonistų k.; Simnas: Alytaus g., Ateities g., Birutės g., Dariaus ir Girėno g., Draugystės g., Ežero g., Jaunimo g., Kaimynų g., Kreivoji g., Laisvės g., Melioratorių g., Naujoji g., Paupio g., Pavasario g., S. Nėries g., Saulėtekio g., Šviesos g., Taikos g., Vanagėlio g., Vytauto g., Žalioji g., Žemaitės g."
+        streetStr = u"Bažavos k., Kolonistų k.; Simnas: Alytaus g., Ateities g., Birutės g., Dariaus ir Girėno g., Draugystės g., Ežero g., Jaunimo g., Kaimynų g., Kreivoji g., Laisvės g., Melioratorių g., Naujoji g., Paupio g., Pavasario g., S. Nėries g., Saulėtekio g., Šviesos g., Taikos g., Vanagėlio g., Vytauto g., Žalioji g., Žemaitės g."
 
         parsed = list(self.parser.GetAddresses(streetStr))
         bazavos = parsed[0]
@@ -588,11 +590,11 @@ class TestAddressParser(TestCase):
         simnasAlytaus = parsed[2]
         simnasAteities = parsed[3]
         simnasBirutes = parsed[4]
-        self.assertCity("Bažavos k.", "", bazavos)
-        self.assertCity("Kolonistų k.", "", kolonistu)
-        self.assertCity("Simnas", "Alytaus g.", simnasAlytaus)
-        self.assertCity("Simnas", "Ateities g.", simnasAteities)
-        self.assertCity("Simnas", "Birutės g.", simnasBirutes)
+        self.assertCity(u"Bažavos kaimas", u"", bazavos)
+        self.assertCity(u"Kolonistų kaimas", u"", kolonistu)
+        self.assertCity(u"Simnas", u"Alytaus g.", simnasAlytaus)
+        self.assertCity(u"Simnas", u"Ateities g.", simnasAteities)
+        self.assertCity(u"Simnas", u"Birutės g.", simnasBirutes)
 
         self.assertEqual(24, len(parsed))
 

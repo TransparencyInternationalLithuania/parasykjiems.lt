@@ -310,18 +310,18 @@ class PollingDistrictStreetExpander:
         #print "street %s" % street
 
 
-        if (street == "" or street == None):
-            yield ExpandedStreet(street = "")
+        if (street == u"" or street == None):
+            yield ExpandedStreet(street = u"")
             return
 
         street = street.strip()
         # if no street nr, return single tuple
-        if (street.find("Nr") < 0):
+        if (street.find(u"Nr") < 0):
             street = changeStreetFromShortToLongForm(street)
             yield ExpandedStreet(street = street)
             return
 
-        parts = street.split(';')
+        parts = street.split(u';')
 
         #print "expand: %s"  % street
         for part in parts:
@@ -332,21 +332,21 @@ class PollingDistrictStreetExpander:
                 # street will be in short form, so transform it to be in long form
                 str = changeStreetFromShortToLongForm(str)
 
-            if (part.find('nuo') >= 0):
-                noName = part.replace("Nr.", "").replace("numeriai", "").replace("nuo", "").strip()
+            if (part.find(u'nuo') >= 0):
+                noName = part.replace(u"Nr.", u"").replace(u"numeriai", u"").replace(u"nuo", u"").strip()
 
                 # None means that range contains both odd and even numbers
                 # True means that contains either of them
                 oddNumbers = None
-                if (noName.find('poriniai') >= 0):
-                    noName = noName.replace("neporiniai", "")
-                    noName = noName.replace("poriniai", "")
+                if (noName.find(u'poriniai') >= 0):
+                    noName = noName.replace(u"neporiniai", u"")
+                    noName = noName.replace(u"poriniai", u"")
                     oddNumbers = True
 
                 letterTo = None
                 letterFrom = None
                 noName = noName.strip()
-                noName = noName.split('iki')
+                noName = noName.split(u'iki')
 
                 # parse fromNumber
                 fromNumber = noName[0].strip()
@@ -356,7 +356,7 @@ class PollingDistrictStreetExpander:
 
                 # parse toNumber
                 toNumber = noName[1].strip().strip('.')
-                if (toNumber == "galo"):
+                if (toNumber == u"galo"):
                     odd = fromNumber % 2
                     if (odd == 0):
                         toNumber = ExpandedStreet.MaxEvenValue
@@ -401,13 +401,11 @@ class PollingDistrictStreetExpander:
 #                if (letterFrom is not None):
 #                    yield (str, "%s%s" % (fromNumber, letterFrom))
 
-            elif part.find('Nr.') >= 0:
+            elif part.find(u'Nr.') >= 0:
 
-                noName = part.replace("Nr.", "")
-                noName = noName.strip(" .")
+                noName = part.replace(u"Nr.", u"")
+                noName = noName.strip(u" .")
                 noName = removeLetterFromHouseNumber(noName)
-                if (noName.find("uo  39 iki  57") >= 0):
-                    a = 5
                 noName = int(noName)
 
                 yield ExpandedStreet(street = str, numberFrom = noName)
