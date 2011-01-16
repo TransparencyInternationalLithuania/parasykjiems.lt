@@ -11,16 +11,6 @@ class Command(BaseCommand):
     help = ''
 
     def handle(self, *args, **options):
-
-
-
-        """docName = ltGeoDataSources.commonIndexes[0]
-        login = GoogleDocsLogin(GlobalSettings.GOOGLE_DOCS_USER, GlobalSettings.GOOGLE_DOCS_PASSWORD)
-        document = GoogleDocsDocument(login, docName[0])
-        document.replaceContents(docName[1])
-           """
-        #GoogleDocUploader(docName[0], docName[1])
-
         l = zip(ltGeoDataSources.LithuanianStreetIndexes, RegisterCenterPageLocations.AllData)
 
         fromNumber = 0
