@@ -11,6 +11,7 @@ import os
 from pjutils.exc import ChainnedException
 from cdb_lt_mps.parseConstituencies import LithuanianConstituencyReader, PollingDistrictStreetExpander, AddressParser
 from cdb_lt_mps.models import Constituency, PollingDistrictStreet
+from cdb_lt_streets.houseNumberUtils import isHouseNumberOdd
 
 class ImportStreetsConstituencyDoesNotExist(ChainnedException):
     pass
@@ -150,7 +151,7 @@ importStreets 5:8 - will import streets for counties from 5 to 8 constituencies 
                     pollingDistrictStreet.numberFrom =  expandedStreet.numberFrom
                     pollingDistrictStreet.numberTo = expandedStreet.numberTo
                     if (expandedStreet.numberFrom is not None):
-                        pollingDistrictStreet.numberOdd = expandedStreet.numberFrom % 2
+                        pollingDistrictStreet.numberOdd = isHouseNumberOdd(expandedStreet.numberFrom)
                     pollingDistrictStreet.pollingDistrict = pollingDistrict.PollingDistrict
                     pollingDistrictStreet.save()
                     numberOfStreets += 1
