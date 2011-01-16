@@ -323,7 +323,6 @@ class PollingDistrictStreetExpander:
 
         parts = street.split(u';')
 
-        #print "expand: %s"  % street
         for part in parts:
             streetTuple = self.getStreetTuple(part)
 
@@ -343,8 +342,6 @@ class PollingDistrictStreetExpander:
                     noName = noName.replace(u"poriniai", u"")
                     oddNumbers = True
 
-                letterTo = None
-                letterFrom = None
                 noName = noName.strip()
                 noName = noName.split(u'iki')
 
@@ -394,13 +391,6 @@ class PollingDistrictStreetExpander:
                 else:
                     yield ExpandedStreet(str, fromNumber, toNumber)
 
-                #for x in range(fromNumber, toNumber + 1, step):
-                #    yield (str, "%s" % x)
-#                if (letterTo is not None):
-#                    yield (str, "%s%s" % (toNumber, letterTo))
-#                if (letterFrom is not None):
-#                    yield (str, "%s%s" % (fromNumber, letterFrom))
-
             elif part.find(u'Nr.') >= 0:
 
                 noName = part.replace(u"Nr.", u"")
@@ -409,20 +399,6 @@ class PollingDistrictStreetExpander:
                 noName = int(noName)
 
                 yield ExpandedStreet(street = str, numberFrom = noName)
-
-
-
-
-#        streets = street.split("g.")
-#        str = streets[0].strip()
-#        str = "%s g." % str
-#        nrs = streets[1].split("Nr.")
-#        for nr in nrs:
-#            nr = nr.replace(";", "")
-#            nr = nr.strip()
-#            if (nr == ""):
-#                continue
-#            yield (str, nr)
 
 
 
