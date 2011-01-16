@@ -1,22 +1,12 @@
 from django.core.management.base import BaseCommand
-from django.db import transaction
-from contactdb.gdocs import SpreadSheetClient, GoogleDocsLogin
 from settings import *
-import csv
-import pjutils.uniconsole
 from contactdb.imp import GoogleDocsSources, ImportSources
-import os
-from cdb_lt_streets.management.commands.ltGeoDataImportCsv import ltGeoDataSources
-import gdata
-from pjutils.deprecated import deprecated
 from pjutils.timemeasurement import TimeMeasurer
 from cdb_lt_streets.management.commands.ltGeoDataCrawl import ExtractRange
+from contactdb.gdocs import GoogleDocsLogin, downloadDoc
+import logging
 
 logger = logging.getLogger(__name__)
-
-
-
-
 
 class Command(BaseCommand):
     args = '<>'
