@@ -2,13 +2,11 @@
 # -*- coding: utf-8 -*-
 
 from django.core.management.base import BaseCommand
-from django.core import management
 from pjutils.timemeasurement import TimeMeasurer
-import types
 import time
-from contactdb.management.commands.importAll import ExecManagementCommand
 import os
 import logging
+from pjutils.djangocommands import ExecManagementCommand
 
 logger = logging.getLogger(__name__)
 

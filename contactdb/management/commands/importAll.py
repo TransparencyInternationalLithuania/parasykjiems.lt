@@ -1,21 +1,6 @@
 from django.core.management.base import BaseCommand
-from django.core import management
 from pjutils.timemeasurement import TimeMeasurer
-import types
-
-
-def ExecManagementCommand(commands):
-    for i in commands:
-        commandName = i
-        commandArgs = {}
-        if (isinstance(i, types.TupleType)):
-            commandName = i[0]
-            commandArgs = i[1]
-
-        print "importing %s" % commandName
-        management.call_command(name = commandName, **commandArgs)
-
-
+from pjutils.djangocommands import ExecManagementCommand
 
 class Command(BaseCommand):
     args = '<>'
@@ -35,7 +20,6 @@ class Command(BaseCommand):
                    "importMunicipalityMembers",
                    "importSeniunaitija",     # LT Seniunaitija data
                    "importSeniunaitijaMembers"]
-        #imports = imports[8:9]
 
         print "Will import following data:"
         for i in imports:

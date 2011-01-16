@@ -1,8 +1,6 @@
 from django.core.management.base import BaseCommand
-from django.core import management
 from pjutils.timemeasurement import TimeMeasurer
-from importAll import ExecManagementCommand
-import types
+from pjutils.djangocommands import ExecManagementCommand
 
 class Command(BaseCommand):
     args = '<>'
@@ -11,7 +9,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         time = TimeMeasurer()
-        #"ltGeoDataDownloadDocs",
+
         imports = ["ltStreetIndexImport",     # LT street index
                    "importConstituencies",   # LT MP data
                    "importMPs",
@@ -25,7 +23,6 @@ class Command(BaseCommand):
                    "importSeniunaitija",     # LT Seniunaitija data
                    "importSeniunaitijaMembers",
                    "importSeniunaitijaStreets"]
-        #imports = imports[8:9]
 
         print "Will import following data:"
         for i in imports:
