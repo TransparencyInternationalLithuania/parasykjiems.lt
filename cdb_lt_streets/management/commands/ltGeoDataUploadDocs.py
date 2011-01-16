@@ -1,5 +1,4 @@
 from django.core.management.base import BaseCommand
-from contactdb.management.commands.downloadDocs import GoogleDocUploader
 from cdb_lt_streets.management.commands.ltGeoDataImportCsv import ltGeoDataSources
 from contactdb.gdocs import GoogleDocsLogin, GoogleDocsDocument
 from settings import *

@@ -97,7 +97,10 @@ class GoogleDocsDocument():
     def downloadDocument(self, fileName):
         """ this function downloads a file as csv file.
         However, if the cells have new line symols, the csv file will not handle them correctly, i.e. there
-        will be line breaks in the csv file"""
+        will be line breaks in the csv file
+
+        Use GoogleDocDownloader instead to downloadDocs. T
+        """
 
         logger.info('Downloading spreadsheet to %s...' % fileName)
         dir_util.mkpath(os.path.dirname(fileName))
@@ -112,7 +115,7 @@ class GoogleDocsDocument():
 
 
 
-@deprecated
+
 class SpreadSheetClient:
     """ A class to connect to Google docs and download spreadsheet document
     To download a doc you first need to know an email and password for that email.
