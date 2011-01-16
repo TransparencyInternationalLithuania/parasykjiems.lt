@@ -1,5 +1,6 @@
 from pjutils.exc import ChainnedException
 import re
+import types
 
 class StringIsNotAHouseNumberException(ChainnedException):
     pass
@@ -38,8 +39,21 @@ def ifHouseNumberContainLetter(fromNumber):
         return True
     return False
 
+def isHouseNumberOdd(fromNumber):
+    # convert to string
+    if (fromNumber is None):
+        return None
+    number = removeLetterFromHouseNumber(fromNumber)
+    number = u"%s" % number
+
+    # check if we contain letter
+    number = int(number)
+    return number % 2 == 1
+
 def removeLetterFromHouseNumber(fromNumber):
     # maybe it contains letter
+    if (type(fromNumber) == types.IntType):
+        return fromNumber
     m = re.search('[a-zA-Z]', fromNumber)
     if (m is not None):
         group = m.group()
