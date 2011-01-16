@@ -1,8 +1,6 @@
 from django.core.management.base import BaseCommand
-from django.core import management
 from pjutils.timemeasurement import TimeMeasurer
-from importAll import ExecManagementCommand
-import types
+from pjutils.djangocommands import ExecManagementCommand
 
 class Command(BaseCommand):
     args = '<>'
