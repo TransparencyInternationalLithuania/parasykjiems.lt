@@ -1,5 +1,5 @@
-import management
 import types
+from django.core import management
 
 def ExecManagementCommand(commands):
     for i in commands:
