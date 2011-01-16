@@ -21,26 +21,6 @@ import gdata.docs.client
 import gdata.spreadsheet.service
 from distutils import dir_util
 
-class SpreadSheetUpdater:
-    def __init__(self, spreadSheetClient):
-        self.spreadSheetClient = spreadSheetClient
-        self.gd_client = self.spreadSheetClient.gd_client
-        self.feed = self.spreadSheetClient.GetListFeed()
-
-    def AppendRow(self, row_data):
-        entry = self.gd_client.InsertRow(row_data, self.spreadSheetClient.curr_key, self.spreadSheetClient.curr_wksht_id)
-        if isinstance(entry, gdata.spreadsheet.SpreadsheetsList) == False:
-            logger.error('Insert failed')
-
-    def UpdateRow(self, i, row_data):
-        entry = self.gd_client.UpdateRow(self.feed.entry[i], row_data)
-        if isinstance(entry, gdata.spreadsheet.SpreadsheetsList) == False:
-            logger.error('Update failed')
-
-    def DeleteRow(self, i):
-        self.gd_client.DeleteRow(self.feed.entry[i])
-
-
 class GoogleDocsLogin():
     def __init__(self, username, passw):
         self.username = username
