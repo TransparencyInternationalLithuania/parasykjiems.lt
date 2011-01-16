@@ -98,13 +98,6 @@ class GoogleDocUploader:
         entry = self.client.gd_client.Upload('/path/to/your/test.doc', 'MyDocTitle', content_type='application/msword')
         logger.info('Document now accessible online at: %s' % entry.GetAlternateLink().href)
 
-@deprecated
-class GoogleDocUpdater:
-    def __init__(self, docName, fileName):
-        ms = gdata.data.MediaSource(file_path=fileName, content_type='application/msword')
-        self.client = SpreadSheetClient(GlobalSettings.GOOGLE_DOCS_USER, GlobalSettings.GOOGLE_DOCS_PASSWORD)
-        updated_entry = self.client.Update(self.entry, media_source=ms)
-
 
 
 
