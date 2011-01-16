@@ -51,7 +51,7 @@ class GoogleDocNotFound(ChainnedException):
     pass
 
 
-class GoogleDocsDocument():
+class GoogleDocsUploader():
     def __init__(self, gdocsLogin, documentTitle):
         self.gdocsLogin = gdocsLogin
         self.entry = None
@@ -79,7 +79,7 @@ class GoogleDocsDocument():
         However, if the cells have new line symols, the csv file will not handle them correctly, i.e. there
         will be line breaks in the csv file
 
-        Use GoogleDocDownloader instead to downloadDocs. T
+        Use GoogleDocDownloader instead to downloadDocs.
         """
 
         logger.info('Downloading spreadsheet to %s...' % fileName)
@@ -99,6 +99,11 @@ class GoogleDocsDocument():
 class SpreadSheetClient:
     """ A class to connect to Google docs and download spreadsheet document
     To download a doc you first need to know an email and password for that email.
+
+    This is an old method to connect to google docs,  GoogleDocsLogin and GoogleDocsUploader use the new
+     way to connect and work with data, but it did not work good enough for all cases
+
+    method GetAllRows can be used to download document and then manually save all the data to file
     """
 
     def __init__(self, email, password):
