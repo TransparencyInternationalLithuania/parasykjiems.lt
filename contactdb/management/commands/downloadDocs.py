@@ -87,15 +87,6 @@ class SpreadSheetDiffUploader:
 
 
 @deprecated
-class GoogleDocDeleter:
-    def __init__(self, docName, fileName):
-        logger.debug("logging in to GDocs")
-        self.client = SpreadSheetClient(GlobalSettings.GOOGLE_DOCS_USER, GlobalSettings.GOOGLE_DOCS_PASSWORD)
-        self.client.SelectSpreadsheet(docName)
-        doc = None
-        self.client.gd_client.Delete(doc)
-
-@deprecated
 class GoogleDocUploader:
     def __init__(self, docName, fileName):
         logger.debug("logging in to GDocs")
