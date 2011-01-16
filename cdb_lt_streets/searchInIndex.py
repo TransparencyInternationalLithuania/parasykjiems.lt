@@ -9,6 +9,7 @@ import logging
 from pjutils.deprecated import deprecated
 from ltPrefixes import *
 from pjutils.queryHelper import getAndQuery, getOrQuery
+from cdb_lt_streets.houseNumberUtils import isStringStreetHouseNumber
 
 logger = logging.getLogger(__name__)
 
@@ -67,47 +68,22 @@ class AddressDeducer():
         flatNumber = ""
 
         parts = self._splitByHyphenAndSpace(streetWithNumber)
-        digits = [d for d in parts if self._stringIsStreetHouseNumber(d)]
+        digits = [d for d in parts if isStringStreetHouseNumber(d)]
         if (len(digits) > 0):
             number = digits[0]
         if (len(digits) > 1):
             flatNumber = digits[1]
 
-        street = [p for p in parts if self._stringIsStreetHouseNumber(p) == False]
+        street = [p for p in parts if isStringStreetHouseNumber(p) == False]
         street = " ".join(street)
         street = street.strip()
         return (street, number, flatNumber)
-
-    def _stringIsStreetHouseNumber(self, string):
-        # first element must be digit
-        # first before last must be strictly digit
-        # last element must be either digit, or letter
-        if (string == ""):
-            return False
-        if (string == None):
-            return False
-
-        if string[0].isdigit() == False:
-            return False
-        if (len(string)) < 2:
-            return True
-
-        # check that last element is alphanumeric
-        if string[-1].isalnum() == False:
-            return False
-
-        # check last element before last must be strictly digit. I.e. we do not allow street addresses to contain
-        # two letters, such as "Kings road 5ad"
-        if string[-2].isdigit() == False:
-            return False;
-
-        return True
 
     def containsNumber(self, str):
         """ check if string contains a house number. String is split by hyphen and space first"""
         parts = self._splitByHyphenAndSpace(str)
         for p1 in parts:
-            if self._stringIsStreetHouseNumber(p1):
+            if isStringStreetHouseNumber(p1):
                 return True
         return False
 

@@ -19,6 +19,7 @@ class Command(BaseCommand):
                    "importCivilParish",      # LT CivilParish data
                    "importCivilParishMembers",
                    "importCivilParishStreets",
+                   "importCivilParishStreets_Kaunas",
                    "importMunicipality",     # LT Municipality data
                    "importMunicipalityMembers",
                    "importSeniunaitija",     # LT Seniunaitija data

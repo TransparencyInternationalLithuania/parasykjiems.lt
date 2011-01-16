@@ -31,6 +31,7 @@ from cdb_lt_streets.searchInIndex import searchInIndex, deduceAddress, removeGen
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from pjweb.forms import IndexForm, ContactForm
 from pjutils.queryHelper import getOrQuery, getAndQuery
+from django.template.loader import render_to_string
 
 
 logger = logging.getLogger(__name__)
@@ -516,7 +517,11 @@ def contact(request, rtype, mp_id):
                     line6 = _(u"Receiver: %s.") % mail.recipient_name
                     endline = _(u"Send this email by clicking on link below:\n\n %s") % confirm_link
 
-                    message = line1 + "\n\n" + line2 + "\n\n" + line3 + "\n\n" + line4 + "\n\n" + line5 + "\n\n" + line6 + "\n\n" + message_disp + "\n\n" + endline
+
+                    languageId = "lt"
+                    messsage = render_to_string("mail_body.txt")
+
+                    #message = line1 + "\n\n" + line2 + "\n\n" + line3 + "\n\n" + line4 + "\n\n" + line5 + "\n\n" + line6 + "\n\n" + message_disp + "\n\n" + endline
 #                    _('You sent an email to ')+ mail.recipient_name + _(' with text:\n\n')+ message_disp + _('\n\nYou must confirm this message by clicking link \below:\n') + 'http://%s/confirm/%s/%s' % (current_site.domain, mail.id, mail.response_hash)
                     email = EmailMessage(_(u'Confirm your message %s') % sender_name, message, settings.EMAIL_HOST_USER,
                         [sender], [],
@@ -534,7 +539,7 @@ def contact(request, rtype, mp_id):
             if not send:
                 d = datetime.date.today()
                 date_words = '%s %s %s' % (d.year, months[d.month-1], d.day)
-                return render_to_response('pjweb/preview.html', {
+                return render_to_response(mail_template_location + 'pjweb/preview.html', {
                     'form': form,
                     'mp_id': mp_id,
                     'rtype': rtype,

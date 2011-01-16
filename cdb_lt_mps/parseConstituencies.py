@@ -7,6 +7,7 @@ from cdb_lt_mps.models import Constituency
 from pjutils.deprecated import deprecated
 from cdb_lt_streets.ltPrefixes import *
 import copy
+from cdb_lt_streets.houseNumberUtils import removeLetterFromHouseNumber
 
 class CityStreet:
     cityName = ""
@@ -288,15 +289,6 @@ class PollingDistrictStreetExpander:
             return (part, str)
         return None
 
-    def RemoveLetter(self, fromNumber):
-        # maybe it contains letter
-        m = re.search('[a-zA-Z]', fromNumber)
-        if (m is not None):
-            group = m.group()
-            letterFrom = group
-            fromNumber = fromNumber.replace(group, "")
-        return fromNumber
-
     def getStreetTuple(self, part):
         streetTuple = None
         # loop all street endings and remove it if found
@@ -358,7 +350,7 @@ class PollingDistrictStreetExpander:
 
                 # parse fromNumber
                 fromNumber = noName[0].strip()
-                fromNumber = self.RemoveLetter(fromNumber)
+                fromNumber = removeLetterFromHouseNumber(fromNumber)
                 fromNumber = int(fromNumber)
 
 
@@ -372,7 +364,7 @@ class PollingDistrictStreetExpander:
                         toNumber = ExpandedStreet.MaxOddValue
                 else:
                     # maybe it contains letter
-                    toNumber = self.RemoveLetter(toNumber)
+                    toNumber = removeLetterFromHouseNumber(toNumber)
                     toNumber = int(toNumber)
 
                 if (fromNumber == toNumber):
@@ -413,7 +405,7 @@ class PollingDistrictStreetExpander:
 
                 noName = part.replace("Nr.", "")
                 noName = noName.strip(" .")
-                noName = self.RemoveLetter(noName)
+                noName = removeLetterFromHouseNumber(noName)
                 if (noName.find("uo  39 iki  57") >= 0):
                     a = 5
                 noName = int(noName)

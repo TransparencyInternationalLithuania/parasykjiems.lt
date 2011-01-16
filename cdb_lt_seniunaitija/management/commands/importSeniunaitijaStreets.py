@@ -101,15 +101,6 @@ class SeniunaitijaAddressExpander:
             return (str, part)
         return None
 
-    def RemoveLetter(self, fromNumber):
-        # maybe it contains letter
-        m = re.search('[a-zA-Z]', fromNumber)
-        if (m is not None):
-            group = m.group()
-            letterFrom = group
-            fromNumber = fromNumber.replace(group, "")
-        return fromNumber
-
     def ContainsNumbers(self, fromNumber):
         m = re.search('[0-9]', fromNumber)
         if (m is not None):
