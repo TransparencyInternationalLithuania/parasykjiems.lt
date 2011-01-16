@@ -11,11 +11,72 @@ from pjutils.exc import ChainnedException
 from cdb_lt_civilparish.management.commands.importCivilParish import readRow
 from cdb_lt_streets.ltPrefixes import *
 import logging
+from cdb_lt_streets.houseNumberUtils import isStringStreetHouseNumber, StringIsNotAHouseNumberException, ifHouseNumberContainLetter, removeLetterFromHouseNumber
 
 logger = logging.getLogger(__name__)
 
 class CivilParishNotFound(ChainnedException):
     pass
+
+class HouseRange:
+    def __init__(self, numberFrom = None, numberTo = None, numberOdd = None):
+        self.numberFrom = numberFrom
+        self.numberTo = numberTo
+        if (numberTo is None):
+            numberFrom = removeLetterFromHouseNumber(numberFrom)
+            self.numberOdd = int(numberFrom) % 2 == 1
+        else:
+            self.numberOdd = numberOdd
+
+def _collectRanges(numberList):
+    if (len(numberList) == 0):
+        return 
+    first = numberList[0]
+    last = first
+    for next in numberList[1:]:
+        if last + 2 == next:
+            last = next
+            continue
+
+        # yield current number
+        if (first == last):
+            yield HouseRange(str(first))
+        else:
+            yield HouseRange(str(first), str(last), first % 2 == 1)
+        first = next
+        last = next
+
+    if (first == last):
+        yield HouseRange(str(first))
+    else:
+        yield HouseRange(str(first), str(last), first % 2 == 1)
+
+def yieldRanges(listOfHouseNumbers):
+    oddNumbers = []
+    evenNumbers = []
+
+    # Divide house numbers into even and odd
+    # spit out house numbers with letters immediatelly
+    for num in listOfHouseNumbers:
+        if isStringStreetHouseNumber(num) == False:
+            raise StringIsNotAHouseNumberException(message="string '%s' is not a house number " % num)
+        if ifHouseNumberContainLetter(num):
+            yield HouseRange(num)
+            continue
+        num = int(num)
+        isOdd = (num % 2) == 1
+        if isOdd:
+            oddNumbers.append(num)
+        else:
+            evenNumbers.append(num)
+
+
+    for range in _collectRanges(oddNumbers):
+        yield range
+
+    for range in _collectRanges(evenNumbers):
+        yield range
+            
 
 class Command(BaseCommand):
     args = ''
@@ -38,7 +99,7 @@ class Command(BaseCommand):
 
 
 
-    def create(self, civilParish = None, street = None, houseNumber = None):
+    def create(self, civilParish = None, street = None, range = None):
         city = u"Kaunas"
         city_genitive= u"Kauno miestas"
         municipality= u"Kauno miesto savivaldybė"
@@ -46,15 +107,14 @@ class Command(BaseCommand):
         civilParishStreet = CivilParishStreet()
         civilParishStreet.street = street
         civilParishStreet.city = city
-        civilParishStreet.numberFrom = houseNumber
-        civilParishStreet.numberTo = None
-        civilParishStreet.numberOdd = False
+        civilParishStreet.numberFrom = range.numberFrom
+        civilParishStreet.numberTo = range.numberTo
+        civilParishStreet.numberOdd = range.numberOdd
         civilParishStreet.city_genitive = city_genitive
         civilParishStreet.municipality = municipality
         civilParishStreet.civilParish = civilParish
         civilParishStreet.save()
-        self.count += 1
-
+        
 
     @transaction.commit_on_success
     def importFile(self, fileName):
@@ -104,17 +164,21 @@ class Command(BaseCommand):
             houseNumbers = houseNumbers[0:-1]
             # split by comma to have house numbers
             houseNumbers = houseNumbers.split(",")
-            for number in houseNumbers:
-                number = number.strip()
+            houseNumbers = [n.strip() for n in houseNumbers if (n != "")]
+
+            #print "\n \n"
+            #print "row: %s" % row
+
+            for range in yieldRanges(houseNumbers):
+                #print "from: %s to %s  isOdd %s" % (range.numberFrom, range.numberTo, range.numberOdd)
                 self.count += 1
-                self.create(civilParish= civilParish, street = street, houseNumber = number)
+                self.create(civilParish= civilParish, street = street, range= range)
                 if self.count % 100 == 0:
                     logger.debug("Inserted %s streets and counting" % self.count)
             """
 
             self.createIfNotNull(street, city, municipality, civilParish, city_genitive=city_genitive)
 """
-
 
     def handle(self, *args, **options):
         elapsedTime = TimeMeasurer()
