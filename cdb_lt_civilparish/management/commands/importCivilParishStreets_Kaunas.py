@@ -58,6 +58,10 @@ def yieldRanges(listOfHouseNumbers):
     # Divide house numbers into even and odd
     # spit out house numbers with letters immediatelly
     for num in listOfHouseNumbers:
+        if (num is None):
+            continue
+        if (num == ""):
+            continue
         if isStringStreetHouseNumber(num) == False:
             raise StringIsNotAHouseNumberException(message="string '%s' is not a house number " % num)
         if ifHouseNumberContainLetter(num):
