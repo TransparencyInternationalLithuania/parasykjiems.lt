@@ -178,7 +178,7 @@ class Command(BaseCommand):
                 self.count += 1
                 self.create(civilParish= civilParish, street = street, range= range)
                 if self.count % 100 == 0:
-                    logger.debug("Inserted %s streets and counting" % self.count)
+                    logger.info("Inserted %s streets and counting" % self.count)
             """
 
             self.createIfNotNull(street, city, municipality, civilParish, city_genitive=city_genitive)
