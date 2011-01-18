@@ -3,6 +3,7 @@ import os
 from pjutils.exc import ChainnedException
 import csv
 from contactdb.imp import ImportSources
+from settings import GlobalSettings
 
 try:
   from xml.etree import ElementTree
