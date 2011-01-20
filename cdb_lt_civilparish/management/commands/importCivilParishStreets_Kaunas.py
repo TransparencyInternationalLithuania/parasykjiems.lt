@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from django.core.management.base import BaseCommand
+from simplejson.ordered_dict import OrderedDict
 from contactdb.imp import ImportSources
 from django.db import transaction
 import csv
@@ -33,6 +34,7 @@ def _collectRanges(numberList):
         return 
     first = numberList[0]
     last = first
+
     for next in numberList[1:]:
         if last + 2 == next:
             last = next
@@ -52,8 +54,8 @@ def _collectRanges(numberList):
         yield HouseRange(str(first), str(last), first % 2 == 1)
 
 def yieldRanges(listOfHouseNumbers):
-    oddNumbers = []
-    evenNumbers = []
+    oddNumbers = OrderedDict()
+    evenNumbers = OrderedDict()
 
     # Divide house numbers into even and odd
     # spit out house numbers with letters immediatelly
@@ -70,15 +72,14 @@ def yieldRanges(listOfHouseNumbers):
         num = int(num)
         isOdd = (num % 2) == 1
         if isOdd:
-            oddNumbers.append(num)
+            oddNumbers[num] = num
         else:
-            evenNumbers.append(num)
+            evenNumbers[num] = num
 
-
-    for range in _collectRanges(oddNumbers):
+    for range in _collectRanges(list(oddNumbers.iterkeys())):
         yield range
 
-    for range in _collectRanges(evenNumbers):
+    for range in _collectRanges(list(evenNumbers.iterkeys())):
         yield range
             
 
@@ -179,10 +180,6 @@ class Command(BaseCommand):
                 self.create(civilParish= civilParish, street = street, range= range)
                 if self.count % 100 == 0:
                     logger.info("Inserted %s streets and counting" % self.count)
-            """
-
-            self.createIfNotNull(street, city, municipality, civilParish, city_genitive=city_genitive)
-"""
 
     def handle(self, *args, **options):
         elapsedTime = TimeMeasurer()
