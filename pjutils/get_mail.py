@@ -5,11 +5,11 @@ import os, sys, imaplib, rfc822
 import string, re, StringIO
 import email
 from email.charset import Charset
-import quopri
+import settings
 
 class GetMail():
 
-    def get_imap(self, server_info, msg_id, response_hash):
+    def get_imap(self, server_info):
 # use IMAP4_SSL when SSL is supported on mail server
 #        M = imaplib.IMAP4_SSL(server_info['server'])
 # use login, when plaintext login is supported
@@ -18,41 +18,80 @@ class GetMail():
         M = imaplib.IMAP4(server_info['server'], server_info['port'])
 # use login_cram_md5(or some other supported login type) plaintext login is not supported
         M.login_cram_md5(server_info['username'], server_info['password'])
-        M.select()
+        code, mailboxen = M.list()
+        M.select('INBOX')
         messages = []
         chrst = Charset()
-#        typ, data = M.search(None, 'To', 'reply%s_%s' % (msg_id, response_hash))
-        typ, data = M.search(None, 'To', 'reply%s_%s' % (msg_id, response_hash))
+        #insert_response = InsertResponse()
+# we will check all new messages
+        typ, data = M.search(None, 'UNSEEN')
+
+        messages_list = []
+
         for num in data[0].split():
-            message = ""
-#            typ, data = M.fetch(num, '(RFC822)')
+            detach_dir = settings.ATTACHMENTS_PATH
+            typ, msg_data = M.fetch(num, '(BODY.PEEK[HEADER.FIELDS (To)])')
+            to = msg_data[0][1].split('@')[0].replace('To: ','')
+            if 'reply' in to:
+                receiver = to.split('_')
+                msg_id = receiver[0].replace('reply','')
+                msg_hash = receiver[1]
+                msg_text = ''
+                att_path = ''
+                msg_encoding = ''
+                typ, msg_data = M.fetch(num, '(RFC822)')
+                for response_part in msg_data:
 
-            typ, data = M.fetch(num, '(BODY[1])')
+                    if isinstance(response_part, tuple):
+                        msg = email.message_from_string(response_part[1])
+# if message is multipart...
+                        if msg.is_multipart():
+                            for part in msg.walk():
+# we will take only plain text...
+                                if part.get_content_type() == 'text/plain':
+                                    msg_encoding = part.get_param('charset')
+                                    msg_text = part.get_payload().decode('quoted-printable')
+                        else:
+                            msg_text = msg.get_payload().decode('quoted-printable')
+# and attachment
+                        if not(part.get('Content-Disposition') is None):
+                            filename = part.get_filename()
+                            attachment_type = part.get_content_type()
+                            content = part.get_payload()
+                            counter = 1
+                            if not filename:
+                                filename = 'part-%03d%s' % (counter, 'bin')
+                                counter += 1
+                            att_path = os.path.join(detach_dir, filename)
+                            if not os.path.isfile(att_path) :
+                                # finally write the stuff
+                                fp = open(att_path, 'wb')
+                                fp.write(part.get_payload(decode=True))
+                                fp.close()
 
-            file = StringIO.StringIO(data[0][1])
+                message_data = {'msg_id':msg_id,
+                                'msg_hash':msg_hash,
+                                'msg_text':msg_text,
+                                'msg_encoding':msg_encoding,
+                                'filename':filename}
+                messages_list.append(message_data)
 
-            message = rfc822.Message(file)
+            else:
+                M.store(num, '+FLAGS', '\\Deleted')
 
-            mssg = message.fp.read()
-            mssg = mssg.decode('quoted-printable')
-#            encoded = mssg.encode('iso-8859-13')
-#            decoded = unicode(encoded, 'utf-8')
-#            print decoded
-            messages.append(mssg)
-
+        M.expunge()
         M.close()
         M.logout()
-        return messages
+        return messages_list
 
-    def get_pop3(self, server_info, msg_id):
+    def get_pop3(self, server_info):
         print 'Not yet implemented'
         return []
 
-    def get_mail(self, server_info, msg_id, response_hash):
+    def get_mail(self, server_info):
         messages = []
         if server_info['type'] == 'IMAP':
-            messages = self.get_imap(server_info, msg_id, response_hash)
+            messages = self.get_imap(server_info)
         elif server_info['type'] == 'POP3':
-            messages = self.get_pop3(server_info, msg_id, response_hash)
+            messages = self.get_pop3(server_info)
         return messages
-

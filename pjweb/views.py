@@ -511,17 +511,17 @@ def contact(request, rtype, mp_id):
                     confirm_link = ("http://%s/confirm/%s/%s") % (current_site.domain, mail.id, mail.response_hash)
                     line1 = _(u"Hello,")
                     line2 = _(u"in %(domain)s from Your address(%(sender)s) was written a leter to a representative.") % {'domain':current_site.domain, 'sender':sender}
-                    line3 = _(u"Please <a href=")+ '"' + confirm_link + '"' +_(">confirm</a>, that You want to send this message. If a letter was written not by You, it won't be sent without Your confirmation.")
-                    line4 = _(u"If You suspect abuse, please write an email to abuse@parasykjiems.lt <mailto:abuse@parasykjiems.lt>")
+                    line3 = _(u"Please confirm, that You want to send this message. If a letter was written not by You, it won't be sent without Your confirmation.")
+                    line4 = _(u"If You suspect abuse, please write an email to abuse@parasykjiems.lt")
                     line5 = _(u"Your message:")
                     line6 = _(u"Receiver: %s.") % mail.recipient_name
                     endline = _(u"Send this email by clicking on link below:\n\n %s") % confirm_link
 
 
-                    languageId = "lt"
-                    messsage = render_to_string("mail_body.txt")
+#                    languageId = "lt"
+#                    messsage = render_to_string("mail_body.txt")
 
-                    #message = line1 + "\n\n" + line2 + "\n\n" + line3 + "\n\n" + line4 + "\n\n" + line5 + "\n\n" + line6 + "\n\n" + message_disp + "\n\n" + endline
+                    message = line1 + "\n\n" + line2 + "\n\n" + line3 + "\n\n" + line4 + "\n\n" + line5 + "\n\n" + line6 + "\n\n" + message_disp + "\n\n" + endline
 #                    _('You sent an email to ')+ mail.recipient_name + _(' with text:\n\n')+ message_disp + _('\n\nYou must confirm this message by clicking link \below:\n') + 'http://%s/confirm/%s/%s' % (current_site.domain, mail.id, mail.response_hash)
                     email = EmailMessage(_(u'Confirm your message %s') % sender_name, message, settings.EMAIL_HOST_USER,
                         [sender], [],
@@ -539,7 +539,7 @@ def contact(request, rtype, mp_id):
             if not send:
                 d = datetime.date.today()
                 date_words = '%s %s %s' % (d.year, months[d.month-1], d.day)
-                return render_to_response(mail_template_location + 'pjweb/preview.html', {
+                return render_to_response('pjweb/preview.html', {
                     'form': form,
                     'mp_id': mp_id,
                     'rtype': rtype,
