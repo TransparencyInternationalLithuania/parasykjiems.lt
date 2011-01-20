@@ -24,13 +24,14 @@ class Email(models.Model):
     recipient_type = models.CharField(max_length = 5)
     recipient_mail = models.EmailField()
 
-    " a relation to previous email, to which this email is an anwer"
-    answer_to = models.IntegerField(null=True)
+    " a relation to previous email, to which this email is an answer"
+    answer_to = models.ForeignKey('Email',null=True)
     response_hash = models.IntegerField()
     message = models.TextField(blank=True)
     msg_state = models.CharField(max_length=12, choices=MSG_STATES, null=True)
     msg_type = models.CharField(max_length=10, choices=MSG_TYPES, null=True)
     mail_date = models.DateTimeField(auto_now=True, editable=False)
+    attachment_path = models.CharField(max_length=256, null=True)
     public = models.BooleanField()
 
     def __unicode__(self):

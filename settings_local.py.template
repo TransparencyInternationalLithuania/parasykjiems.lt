@@ -75,6 +75,12 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # where the static media files are
 STATIC_DOC_ROOT = os.path.join(scriptPath, "static")
 
+# path, where attachments are stored - should be publicly accessible, if you ar planning tu include them on site
+ATTACHMENTS_PATH = os.path.join(scriptPath, "static/files")
+
+# path, from where attachments are taken, when display on site (without trailing "/")
+ATTACHMENTS_MEDIA_PATH = '/static/files'
+
 # enable logging
 logPath = os.path.join(scriptPath, "logs")
 dir_util.mkpath(logPath)

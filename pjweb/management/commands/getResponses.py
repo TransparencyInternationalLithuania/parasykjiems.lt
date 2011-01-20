@@ -8,6 +8,7 @@ from parasykjiems.pjutils.get_mail import GetMail
 from parasykjiems.pjutils.insert_response import InsertResponse
 from parasykjiems.pjweb.models import Email, MailHistory
 from django.core.mail import send_mail, EmailMessage
+from parasykjiems.GlobalSettingsClass import GlobalSettingsClass
 
 class Command(BaseCommand):
     args = '<>'
@@ -17,32 +18,19 @@ class Command(BaseCommand):
         responses_list = []
         questions_list = []
         waiting_list = []
-        server_info = {
-            'server':GlobalSettings.MAIL_SERVER,
-            'port':GlobalSettings.MAIL_PORT,
-            'username':GlobalSettings.MAIL_USERNAME,
-            'password':GlobalSettings.MAIL_PASSWORD,
-            'type':GlobalSettings.MAIL_SERVER_TYPE
-        }
-        questions = Email.objects.filter(msg_type__iexact='Question', msg_state__iexact='Confirmed')
-        responses = Email.objects.filter(msg_type__iexact='Response')
-        waiting = len(questions) - len(responses)
-        print "%s questions are waiting for responses." % waiting
-        for question in questions:
-            questions_list.append(question.id)
-        for response in responses:
-            responses_list.append(response.answer_to)
-        for question in questions_list:
-            if not (question in responses_list):
-                waiting_list.append(question)
         answered = 0
-        waiting_list = list(set(waiting_list))
-        print waiting_list
+        server_info = {
+            'server':settings.GlobalSettings.MAIL_SERVER,
+            'port':settings.GlobalSettings.MAIL_PORT,
+            'username':settings.GlobalSettings.MAIL_USERNAME,
+            'password':settings.GlobalSettings.MAIL_PASSWORD,
+            'type':settings.GlobalSettings.MAIL_SERVER_TYPE
+        }
+        getmail = GetMail()
         insert = InsertResponse()
-        if waiting_list:
-            for question in waiting_list:
-                response = insert.insert_response(question)
-                if response:
-                    answered += 1
+        mail_list = getmail.get_mail(server_info)
+        for email in mail_list:
+            insert.insert_resp(email)
+            answered += 1
 
         print "%s question got responses." % answered
