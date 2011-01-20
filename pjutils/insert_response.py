@@ -131,4 +131,3 @@ class InsertResponse():
             return resp
         else:
             return False
-    return False

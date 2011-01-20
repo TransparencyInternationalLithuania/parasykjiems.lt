@@ -22,6 +22,12 @@ class TestYieldHouseRanges(TestCase):
         self.assertRangesEqual("11", result = result[1])
         self.assertEqual(2, len(result))
 
+    def test_Double_similar_numbers(self):
+        houseNumbers = ["1", "1", "1"]
+        result = list(yieldRanges(houseNumbers))
+        self.assertRangesEqual("1", result = result[0])
+        self.assertEqual(1, len(result))
+
     def test_single_range_even(self):
         houseNumbers = ["0", "2", "10"]
         result = list(yieldRanges(houseNumbers))

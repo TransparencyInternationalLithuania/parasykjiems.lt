@@ -32,8 +32,41 @@ def isStringStreetHouseNumber(string):
 
     return True
 
+def ContainsNumbers(fromNumber):
+    """ returns True if string contains at least one number"""
+    if (fromNumber is None):
+        return False
+    m = re.search('[0-9]', fromNumber)
+    if (m is not None):
+        return True
+    return False
+
+def ContainsHouseNumbers(fromNumber):
+    """ returns True if string contains at least one number, and that number is not in the middle of the word.
+    For comparison, ContainsNumbers method will return True when a number is found anywhere.
+    This will return True only if number is not followed by more than two letters, ore by hyphens, commas, etc"""
+    if fromNumber is None:
+        return False
+
+    # this regex is not valid, so just do some stupid if checks
+
+    m = re.findall('[0-9]+', fromNumber)
+    if m is None:
+        return False
+    for number in m:
+        index = fromNumber.find(number) + len(number)
+        if (index < len(fromNumber)):
+            ch = fromNumber[index]
+            if (ch == u'-'):
+                continue
+        return True
+    return False
+
 def ifHouseNumberContainLetter(fromNumber):
-    # maybe it contains letter
+    # pass a string which is likely to be a house number.
+    # However, some house numbers contains a letter in the end
+    # so this just performs a basic search and will return True if it will
+    # find ANY letter (even in beginning of string)
     m = re.search('[a-zA-Z]', fromNumber)
     if (m is not None):
         return True

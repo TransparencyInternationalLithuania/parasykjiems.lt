@@ -15,7 +15,7 @@ from contactdb.imp import ImportSources
 from cdb_lt_seniunaitija.management.commands.importSeniunaitijaMembers import SeniunaitijaMembersReader
 from cdb_lt_mps.models import PollingDistrictStreet
 from cdb_lt_streets.searchInIndex import *
-from cdb_lt_streets.houseNumberUtils import removeLetterFromHouseNumber
+from cdb_lt_streets.houseNumberUtils import removeLetterFromHouseNumber, ContainsNumbers
 
 logger = logging.getLogger(__name__)
 
@@ -102,12 +102,6 @@ class SeniunaitijaAddressExpander:
             return (str, part)
         return None
 
-    def ContainsNumbers(self, fromNumber):
-        m = re.search('[0-9]', fromNumber)
-        if (m is not None):
-            return True
-        return False
-
     def ExpandStreetEnding(self, street):
         if (street is None):
             return None
@@ -162,7 +156,7 @@ class SeniunaitijaAddressExpander:
                 street, streetProperties = streetTuple
             else:
                 if (street != u""):
-                    if (self.ContainsNumbers(street) == True):
+                    if (ContainsNumbers(street) == True):
                         streetProperties = street
                         street = lastStreet
                     else:
@@ -233,7 +227,7 @@ class SeniunaitijaAddressExpander:
 
                 else:
                     # else it will be simple number
-                    if (self.ContainsNumbers(streetProperties) == False):
+                    if (ContainsNumbers(streetProperties) == False):
                         raise SeniunaitijaAddressExpanderException("string '%s' does not contain numbers. Though i expected it to be a house number" % streetProperties)
 
                     streetProperties = removeLetterFromHouseNumber(streetProperties)
