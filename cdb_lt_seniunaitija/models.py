@@ -18,7 +18,7 @@ class SeniunaitijaStreet(models.Model):
     seniunaitija = models.ForeignKey(Seniunaitija, null=True)
     numberFrom = models.IntegerField(null = True, db_index = True)
     numberTo = models.IntegerField(null = True, db_index = True)
-    numberOdd = models.BooleanField()
+    numberOdd = models.IntegerField(null = True, db_index = True)
 
 
 
