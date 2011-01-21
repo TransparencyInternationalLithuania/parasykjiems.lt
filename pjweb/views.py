@@ -220,7 +220,7 @@ def findCivilParishMembers(municipality = None, city = None, street = None, hous
     municipality = removeGenericPartFromMunicipality(municipality)
 
     city_gen = kwargs["city_genitive"]
-
+ 
     idList = findLT_CivilParish_Id(municipality=municipality, city=city,  city_gen= city_gen, street=street, house_number=house_number)
     
     members = CivilParishMember.objects.all().filter(civilParish__in = idList)

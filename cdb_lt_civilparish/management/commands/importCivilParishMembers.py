@@ -36,6 +36,7 @@ class CivilParishMembersReader:
             member.officePhone = readRow(row, "officetelephonenumber")
             member.officeAddress = readRow(row, "officeaddress")
             member.civilParishStr = readRow(row, "institution")
+            member.municipality= readRow(row, "municipality")
             member.uniqueKey = readRow(row, "uniquekeynotchangeable")
 
             yield member
@@ -74,11 +75,13 @@ class Command(BaseCommand):
             # relate existing constituency to an MP
             try:
                 name = member.civilParishStr
-                member.civilParish = CivilParish.objects.filter(name = name)[0:1].get()
+
+                member.civilParish = CivilParish.objects.filter(name = name)\
+                    .filter(municipality__icontains = member.municipality)[0:1].get()
             except ObjectDoesNotExist:
-                str = u"""Parish with name '%s' and type '%s' could not be found in database table
+                str = u"""Parish with name '%s' could not be found in database table
 %s while import CivilParishMembers. Data source taken from Google doc '%s'. Unique key '%s'  )""" % \
-                    (name, type, CivilParish.objects.model._meta.db_table,
+                    (name, CivilParish.objects.model._meta.db_table,
                     GoogleDocsSources.LithuanianCivilParishMembers, member.uniqueKey)
                 logger.error(str)
                 raise ImportCivilParishMemberException(str)
