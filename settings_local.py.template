@@ -80,6 +80,8 @@ ATTACHMENTS_PATH = os.path.join(scriptPath, "static/files")
 
 # path, from where attachments are taken, when display on site (without trailing "/")
 ATTACHMENTS_MEDIA_PATH = '/static/files'
+dir_util.mkpath(ATTACHMENTS_PATH)
+dir_util.mkpath(ATTACHMENTS_MEDIA_PATH)
 
 # enable logging
 logPath = os.path.join(scriptPath, "logs")
