@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import logging
+from pjutils.get_mail import GetMail
 import settings
 from settings import *
 from django.core.management.base import BaseCommand
