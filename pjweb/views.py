@@ -177,24 +177,52 @@ def findMunicipalityMembers(municipality = None, city = None, street = None, hou
     members = MunicipalityMember.objects.all().filter(municipality__in = idList)
     return members
 
+
+def findLT_CivilParish_Id(municipality = None, city = None, city_gen = None, street = None, house_number = None):
+    """ return a list of ids for CivilParish members for Lithuania"""
+
+
+    # first search by street and house number
+    cityQuery = Q(**{"city__icontains" : city}) | Q(**{"city__icontains" : city_gen})
+    try:
+        query = CivilParishStreet.objects.all().filter(municipality__contains = municipality)\
+            .filter(street__contains = street) \
+            .filter(cityQuery)
+        query = addHouseNumberQuery(query, house_number)
+
+        logger.info("civil parish query: %s" % query.query)
+
+        query = query.distinct() \
+            .values('civilParish')
+        idList = [p['civilParish'] for p in query]
+        if len(idList) > 0:
+            return idList
+    except CivilParishStreet.DoesNotExist:
+        pass
+
+    # search without street
+    try:
+        query = CivilParishStreet.objects.all().filter(municipality__contains = municipality)\
+            .filter(cityQuery)
+
+        query = query.distinct() \
+            .values('civilParish')
+        idList = [p['civilParish'] for p in query]
+        return idList
+    except PollingDistrictStreet.DoesNotExist:
+        pass
+
+    logger.debug("Did not find any Civil parish member")
+    return []
+
 def findCivilParishMembers(municipality = None, city = None, street = None, house_number = None,  *args, **kwargs):
     street = removeGenericPartFromStreet(street)
     municipality = removeGenericPartFromMunicipality(municipality)
 
     city_gen = kwargs["city_genitive"]
+
+    idList = findLT_CivilParish_Id(municipality=municipality, city=city,  city_gen= city_gen, street=street, house_number=house_number)
     
-    try:
-        query = CivilParishStreet.objects.all().filter(municipality__contains = municipality)\
-            .filter(street__contains = street) \
-            .filter(city_genitive__contains = city_gen)
-
-        query = query.distinct() \
-            .values('civilParish')
-        idList = [p['civilParish'] for p in query]
-    except CivilParishStreet.DoesNotExist:
-        logging.info("no civilParish")
-        return []
-
     members = CivilParishMember.objects.all().filter(civilParish__in = idList)
     return members
 

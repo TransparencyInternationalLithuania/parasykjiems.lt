@@ -1,6 +1,8 @@
+import logging
 from pjutils.exc import ChainnedException
 import re
 import types
+logger = logging.getLogger(__name__)
 
 class StringIsNotAHouseNumberException(ChainnedException):
     pass
@@ -68,13 +70,13 @@ def ifHouseNumberContainLetter(fromNumber):
     # so this just performs a basic search and will return True if it will
     # find ANY letter (even in beginning of string)
     m = re.search('[a-zA-Z]', fromNumber)
-    if (m is not None):
+    if m is not None:
         return True
     return False
 
 def isHouseNumberOdd(fromNumber):
     # convert to string
-    if (fromNumber is None):
+    if fromNumber is None:
         return None
     number = removeLetterFromHouseNumber(fromNumber)
     number = u"%s" % number
@@ -84,11 +86,18 @@ def isHouseNumberOdd(fromNumber):
     return number % 2 == 1
 
 def removeLetterFromHouseNumber(fromNumber):
-    # maybe it contains letter
-    if (type(fromNumber) == types.IntType):
+    if (fromNumber is None):
         return fromNumber
-    m = re.search('[a-zA-Z]', fromNumber)
-    if (m is not None):
+    # maybe it contains letter
+    if type(fromNumber) == types.IntType:
+        return fromNumber
+    try:
+        m = re.search('[a-zA-Z]', fromNumber)
+    except TypeError as e:
+        logger.info("type was %s" % type(fromNumber))
+        raise e
+
+    if m is not None:
         group = m.group()
         letterFrom = group
         fromNumber = fromNumber.replace(group, "")

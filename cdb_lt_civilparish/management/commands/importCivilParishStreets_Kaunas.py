@@ -21,8 +21,8 @@ class CivilParishNotFound(ChainnedException):
 
 class HouseRange:
     def __init__(self, numberFrom = None, numberTo = None, numberOdd = None):
-        self.numberFrom = numberFrom
-        self.numberTo = numberTo
+        self.numberFrom = removeLetterFromHouseNumber(numberFrom)
+        self.numberTo = removeLetterFromHouseNumber(numberTo)
         if (numberTo is None):
             numberFrom = removeLetterFromHouseNumber(numberFrom)
             self.numberOdd = int(numberFrom) % 2 == 1
@@ -82,6 +82,9 @@ def yieldRanges(listOfHouseNumbers):
     for range in _collectRanges(list(evenNumbers.iterkeys())):
         yield range
             
+city = u"Kaunas"
+city_genitive= u"Kauno miestas"
+municipality= u"Kauno miesto savivaldybė"
 
 class Command(BaseCommand):
     args = ''
@@ -90,13 +93,14 @@ class Command(BaseCommand):
     def __init__(self):
         self.localCache = {}
 
-    def getCivilParish(self, civilParishStr):
+    def getCivilParish(self, civilParishStr, municipality = None):
         key = "%s" % (civilParishStr)
         if (self.localCache.has_key(key) == True):
             return self.localCache[key]
 
         try:
-            civilParish = CivilParish.objects.all().filter(name = civilParishStr)[0:1].get()
+            civilParish = CivilParish.objects.all().filter(name = civilParishStr)\
+                .filter(municipality__icontains = municipality)[0:1].get()
             self.localCache[key] = civilParish
             return civilParish
         except CivilParish.DoesNotExist:
@@ -105,10 +109,6 @@ class Command(BaseCommand):
 
 
     def create(self, civilParish = None, street = None, range = None):
-        city = u"Kaunas"
-        city_genitive= u"Kauno miestas"
-        municipality= u"Kauno miesto savivaldybė"
-        
         civilParishStreet = CivilParishStreet()
         civilParishStreet.street = street
         civilParishStreet.city = city
@@ -148,7 +148,7 @@ class Command(BaseCommand):
             civilParish = int(civilParish)
             civilParish = civilParishes[civilParish - 1]
             # map string to civil parish object
-            civilParish = self.getCivilParish(civilParish)
+            civilParish = self.getCivilParish(civilParish, municipality)
 
             # split into street and house numbers
             street = None

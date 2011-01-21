@@ -36,6 +36,11 @@ def splitIntoStreetAndHouseNumbers(string):
         raise CouldNotSpleetIntoStreetAndHouseNumber("Could not split string '%s' into street and house number" % rest)
     return street, houseNumber
 
+city = u"Vilnius"
+city_genitive= u"Vilniaus miestas"
+municipality= u"Vilniaus miesto savivaldybė"
+
+
 class CivilParishNotFound(ChainnedException):
     pass
 
@@ -46,13 +51,14 @@ class Command(BaseCommand):
     def __init__(self):
         self.localCache = {}
 
-    def getCivilParish(self, civilParishStr):
+    def getCivilParish(self, civilParishStr, municipality):
         key = "%s" % (civilParishStr)
         if (self.localCache.has_key(key) == True):
             return self.localCache[key]
 
         try:
-            civilParish = CivilParish.objects.all().filter(name = civilParishStr)[0:1].get()
+            civilParish = CivilParish.objects.all().filter(name = civilParishStr)\
+                .filter(municipality__icontains = municipality)[0:1].get()
             self.localCache[key] = civilParish
             return civilParish
         except CivilParish.DoesNotExist:
@@ -61,10 +67,6 @@ class Command(BaseCommand):
 
 
     def create(self, civilParish = None, street = None, range = None):
-        city = u"Kaunas"
-        city_genitive= u"Vilniaus miestas"
-        municipality= u"Vilniaus miesto savivaldybė"
-
         civilParishStreet = CivilParishStreet()
         civilParishStreet.street = street
         civilParishStreet.city = city
@@ -128,7 +130,7 @@ class Command(BaseCommand):
                 # change state back to read street name
                 state = u"ReadStreetName"
 
-
+    @transaction.commit_on_success
     def handle(self, *args, **options):
         elapsedTime = TimeMeasurer()
         print "Will import street data for CivilParish for city Vilnius:"
@@ -187,12 +189,13 @@ class Command(BaseCommand):
 
         self.count = 0
 
-        # read each file one by one, and insert streets
-        for file, civilParishName in zipped:
-            logger.info("\n parsing file %s \n" %  file)
-            # map string to civil parish object
+        # fetch in one loop all civil parish objects,
+        # zipped will contain file and civil parish object
+        zipped = [(file, self.getCivilParish(civilParishName, municipality)) for file, civilParishName in zipped]
 
-            civilParish = self.getCivilParish(civilParishName)
+        # read each file one by one, and insert streets
+        for file, civilParish in zipped:
+            logger.info("\n parsing file %s \n" %  file)
 
             streetMap = {}
             # first collect all streets, and their house numbers
@@ -208,7 +211,6 @@ class Command(BaseCommand):
         print u"Took %s seconds" % elapsedTime.ElapsedSeconds()
         print u"finished, written total %s lines" % self.count
 
-    @transaction.commit_on_success
     def insertAll(self, streetMap, civilParish):
         for street, houseNumbers in streetMap.iteritems():
             #logger.debug("will import street %s" % street)
