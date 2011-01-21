@@ -5,7 +5,6 @@ import logging
 import settings
 from settings import *
 from django.core.management.base import BaseCommand
-from parasykjiems.pjutils.get_mail1 import GetMail
 from parasykjiems.pjweb.models import Email, MailHistory
 from django.core.mail import send_mail, EmailMessage
 from cdb_lt_municipality.models import MunicipalityMember
