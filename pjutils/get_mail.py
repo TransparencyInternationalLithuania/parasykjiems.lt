@@ -6,6 +6,7 @@ import string, re, StringIO
 import email
 from email.charset import Charset
 import settings
+from distutils import dir_util
 
 class GetMail():
 
@@ -37,7 +38,7 @@ class GetMail():
                 msg_id = receiver[0].replace('reply','')
                 msg_hash = receiver[1]
                 msg_text = ''
-                att_path = ''
+                filename = ''
                 msg_encoding = ''
                 typ, msg_data = M.fetch(num, '(RFC822)')
                 for response_part in msg_data:
@@ -62,6 +63,7 @@ class GetMail():
                             if not filename:
                                 filename = 'part-%03d%s' % (counter, 'bin')
                                 counter += 1
+                            dir_util.mkpath(detach_dir)
                             att_path = os.path.join(detach_dir, filename)
                             if not os.path.isfile(att_path) :
                                 # finally write the stuff

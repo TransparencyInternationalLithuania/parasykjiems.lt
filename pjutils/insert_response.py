@@ -134,7 +134,10 @@ class InsertResponse():
             email = EmailMessage(u'Gavote atsakymą nuo %s' % resp.sender_name, mail_info['msg_text'], settings.EMAIL_HOST_USER,
                 [resp.recipient_mail], [],
                 headers = {'Reply-To': 'no_reply_parasykjiems@gmail.com'})
-            email.attach_file(att_path)
+
+            if mail_info['filename']:
+                email.attach_file(att_path)
+
             email.send()
 
             if resp:
