@@ -11,20 +11,18 @@ from distutils import dir_util
 class GetMail():
 
     def get_imap(self, server_info):
-# use IMAP4_SSL when SSL is supported on mail server
-#        M = imaplib.IMAP4_SSL(server_info['server'])
-# use login, when plaintext login is supported
-#        M.login(server_info['username'], server_info['password'])
-# use IMAP4 when SSL is not supported on mail server
+        # use IMAP4_SSL when SSL is supported on mail server
+        # M = imaplib.IMAP4_SSL(server_info['server'])
+        # use login, when plaintext login is supported
+        # M.login(server_info['username'], server_info['password'])
+        # use IMAP4 when SSL is not supported on mail server
         M = imaplib.IMAP4(server_info['server'], server_info['port'])
-# use login_cram_md5(or some other supported login type) plaintext login is not supported
+        # use login_cram_md5(or some other supported login type) plaintext login is not supported
         M.login_cram_md5(server_info['username'], server_info['password'])
-        code, mailboxen = M.list()
+
         M.select('INBOX')
-        messages = []
-        chrst = Charset()
-        #insert_response = InsertResponse()
-# we will check all new messages
+        
+        # we will check all new messages
         typ, data = M.search(None, 'UNSEEN')
 
         messages_list = []
