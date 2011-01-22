@@ -40,6 +40,7 @@ class GetMail():
                 msg_text = ''
                 filename = ''
                 msg_encoding = ''
+                filename = ""
                 typ, msg_data = M.fetch(num, '(RFC822)')
                 for response_part in msg_data:
 

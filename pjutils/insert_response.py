@@ -120,6 +120,7 @@ class InsertResponse():
             else:
                 resp.message = ''
 
+            att_path = None
             if mail_info['filename']:
                 web_path = '%s/%s' % (settings.ATTACHMENTS_MEDIA_PATH,mail_info['filename'])
                 att_path = '%s/%s' % (settings.ATTACHMENTS_PATH,mail_info['filename'])
@@ -134,8 +135,7 @@ class InsertResponse():
             email = EmailMessage(u'Gavote atsakymą nuo %s' % resp.sender_name, mail_info['msg_text'], settings.EMAIL_HOST_USER,
                 [resp.recipient_mail], [],
                 headers = {'Reply-To': 'no_reply_parasykjiems@gmail.com'})
-
-            if mail_info['filename']:
+            if att_path is not None:
                 email.attach_file(att_path)
 
             email.send()
