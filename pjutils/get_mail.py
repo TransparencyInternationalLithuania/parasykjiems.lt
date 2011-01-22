@@ -1,12 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import logging
 
 import os, sys, imaplib, rfc822
 import string, re, StringIO
 import email
-from email.charset import Charset
+from pjutils.exc import MethodNotImplementedException
 import settings
 from distutils import dir_util
+
+logger = logging.getLogger(__name__)
 
 class GetMail():
 
@@ -17,6 +20,7 @@ class GetMail():
         # M.login(server_info['username'], server_info['password'])
         # use IMAP4 when SSL is not supported on mail server
         M = imaplib.IMAP4(server_info['server'], server_info['port'])
+        
         # use login_cram_md5(or some other supported login type) plaintext login is not supported
         M.login_cram_md5(server_info['username'], server_info['password'])
 
@@ -44,16 +48,17 @@ class GetMail():
 
                     if isinstance(response_part, tuple):
                         msg = email.message_from_string(response_part[1])
-# if message is multipart...
+                        # if message is multipart...
                         if msg.is_multipart():
                             for part in msg.walk():
-# we will take only plain text...
+                                # we will take only plain text...
                                 if part.get_content_type() == 'text/plain':
                                     msg_encoding = part.get_param('charset')
                                     msg_text = part.get_payload().decode('quoted-printable')
                         else:
                             msg_text = msg.get_payload().decode('quoted-printable')
-# and attachment
+
+                        # and attachment
                         if not(part.get('Content-Disposition') is None):
                             filename = part.get_filename()
                             attachment_type = part.get_content_type()
@@ -86,8 +91,8 @@ class GetMail():
         return messages_list
 
     def get_pop3(self, server_info):
-        print 'Not yet implemented'
-        return []
+        logger.info('Not yet implemented')
+        raise MethodNotImplementedException("get_pop3 is not yet implemented")
 
     def get_mail(self, server_info):
         messages = []

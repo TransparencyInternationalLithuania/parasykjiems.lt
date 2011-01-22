@@ -1,7 +1,6 @@
 import traceback
 import sys
 
-
 class ChainnedException(Exception):
     """This whole akward construct is solely for supporting nested exceptions.
     Imagine a situation where a file is being read. Then an IO exception is raised.
@@ -44,6 +43,9 @@ class ChainnedException(Exception):
             print "\nend of inner exception \n"
         return repr(self.message)
 
+
+class MethodNotImplementedException(ChainnedException):
+    pass
 
 
 if (__name__ == "__main__"):
