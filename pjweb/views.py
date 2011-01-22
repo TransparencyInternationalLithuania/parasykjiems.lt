@@ -190,7 +190,7 @@ def findLT_CivilParish_Id(municipality = None, city = None, city_gen = None, str
             .filter(cityQuery)
         query = addHouseNumberQuery(query, house_number)
 
-        logger.info("civil parish query: %s" % query.query)
+        #logger.info("civil parish query: %s" % query.query)
 
         query = query.distinct() \
             .values('civilParish')
@@ -220,7 +220,7 @@ def findCivilParishMembers(municipality = None, city = None, street = None, hous
     municipality = removeGenericPartFromMunicipality(municipality)
 
     city_gen = kwargs["city_genitive"]
-
+ 
     idList = findLT_CivilParish_Id(municipality=municipality, city=city,  city_gen= city_gen, street=street, house_number=house_number)
     
     members = CivilParishMember.objects.all().filter(civilParish__in = idList)
