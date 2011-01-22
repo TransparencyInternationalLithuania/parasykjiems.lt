@@ -4,7 +4,7 @@
 import logging
 from pjutils.get_mail import GetMail
 import settings
-from settings import *
+from settings import GlobalSettings
 from django.core.management.base import BaseCommand
 from parasykjiems.pjweb.models import Email, MailHistory
 from django.core.mail import send_mail, EmailMessage
@@ -122,8 +122,8 @@ class InsertResponse():
 
             att_path = None
             if mail_info['filename']:
-                web_path = '%s/%s' % (settings.ATTACHMENTS_MEDIA_PATH,mail_info['filename'])
-                att_path = '%s/%s' % (settings.ATTACHMENTS_PATH,mail_info['filename'])
+                web_path = '%s/%s' % (GlobalSettings.ATTACHMENTS_MEDIA_PATH,mail_info['filename'])
+                att_path = '%s/%s' % (GlobalSettings.ATTACHMENTS_PATH,mail_info['filename'])
                 resp.attachment_path = web_path
 
             resp.save()
