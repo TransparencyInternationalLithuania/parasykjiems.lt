@@ -438,6 +438,14 @@ def about(request):
 def public(request, mail_id):
     mail = Email.objects.get(id=mail_id)
     responses = Email.objects.filter(answer_to__exact=mail_id)
+    current_site = Site.objects.get_current()
+    # attachment paths are relative in DB
+    # construct real attachment paths
+    for r in responses:
+        if (r.attachment_path is not None):
+            path = "%s/%s" % (GlobalSettings.ATTACHMENTS_MEDIA_PATH, r.attachment_path)
+            path = path.replace("\\", "/")
+            r.attachment_path = "http://%s/%s" % (current_site.domain, path)
     return render_to_response('pjweb/public.html', {
         'mail': mail,
         'responses': responses,
