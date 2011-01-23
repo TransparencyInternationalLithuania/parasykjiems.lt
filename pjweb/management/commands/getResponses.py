@@ -45,6 +45,9 @@ class Command(BaseCommand):
 
 
         skippedEmails = []
+        deletedEmails = []
+        responseEmails = []
+
         
 
         for num in mailNumbers[fromNumber:toNumber]:
@@ -53,6 +56,7 @@ class Command(BaseCommand):
             if email is None:
                 print "marking message %s for deletion" % num
                 getmail.markMessageForDeletion(num)
+                deletedEmails.append(num)
                 continue
             # try to insert response
             # if an exception will be raised, leave this message, we will fix the bug and
@@ -67,6 +71,10 @@ class Command(BaseCommand):
                 print ex.message
                 skippedEmails.append(num)
                 continue
+
+            print "message imported succesfully. deleting original"
+            getmail.markMessageForDeletion(num)
+            responseEmails.append(num)
             answered += 1
 
         # always logging out, and removing marked messages for deletion
@@ -74,5 +82,7 @@ class Command(BaseCommand):
 
         print "\n\n"
         print "quitting"
-        print "following emails were skipped %s" % skippedEmails
+        print "following emails were skipped because of error: %s" % skippedEmails
+        print "following emails were deleted (spam, or incorrect header): %s" % deletedEmails
+        print "following emails were imported succesfully: %s" % responseEmails
         print "%s question got responses." % answered

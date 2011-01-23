@@ -50,7 +50,7 @@ class GetMail():
     def getEmailTextAndEncodingAndAttachments(self, msg_id, msg):
         """ msg_id is the email number in IMAP server. used only for logging.
         msg is the message object"""
-        msg_encoding = ''
+        msg_encoding = msg.get_content_charset()
 
         # if message is not multipart, just decode everything using QP encoding
         # see more: http://en.wikipedia.org/wiki/Quoted-printable
