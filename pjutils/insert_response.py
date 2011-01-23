@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import logging
+import os
 from pjutils.exc import ChainnedException
 from pjutils.get_mail import GetMail
 import settings
@@ -89,8 +90,8 @@ class InsertResponse():
         if attachments is not None and len(attachments) > 0:
             # for now just handle single attachment only
             attachment = attachments[0]
-            web_path = '%s/%s' % (GlobalSettings.ATTACHMENTS_MEDIA_PATH,attachment[0])
-            att_path = '%s/%s' % (GlobalSettings.ATTACHMENTS_PATH,attachment[0])
+            web_path = attachment[0]
+            att_path = os.path.join(GlobalSettings.ATTACHMENTS_PATH,attachment[0])
             resp.attachment_path = web_path
 
         resp.save()

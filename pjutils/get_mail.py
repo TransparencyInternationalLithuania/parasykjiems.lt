@@ -48,7 +48,7 @@ class GetMail():
         
 
     def getEmailTextAndEncodingAndAttachments(self, msg_id, msg):
-        """ msg_id is the email number in IMAP server. used only for logging.
+        """ msg_id is email number in our database. used only for logging and creating directory for attachments
         msg is the message object"""
         msg_encoding = msg.get_content_charset()
 
@@ -68,7 +68,7 @@ class GetMail():
             # we will take only plain text...
             if part.get_content_type() == 'text/plain':
                 # this part is plain text, so extract and return
-                msg_encoding = part.get_param('charset')
+                msg_encoding = part.get_content_charset()
                 msg_text = part.get_payload().decode('quoted-printable')
                 continue
         
@@ -83,19 +83,22 @@ class GetMail():
 
                 # create folder for an attachment
                 year = "%s" % datetime.datetime.now().year
-                att_path = os.path.join(GlobalSettings.ATTACHMENTS_PATH, year, msg_id)
-                att_fileName = os.path.join(att_path, filename)
-                dir_util.mkpath(att_path)
+                fullDir = os.path.join(GlobalSettings.ATTACHMENTS_PATH, year, msg_id)
+                dir_util.mkpath(fullDir)
+                
 
                 # check if we are not overwriting old attachment
-                if os.path.isfile(att_path):
+                att_fileName = os.path.join(fullDir, filename)
+                if os.path.isfile(att_fileName):
                     raise AttachmentAlreadyExistsException(message= "attachment at location '%s' already exists. msg num is '%s'" % (att_fileName, msg_id))
                 # finally write the stuff
                 fp = open(att_fileName, 'wb')
                 fp.write(part.get_payload(decode=True))
                 fp.close()
 
-                attachments.append((att_fileName, attachment_type))
+                # return relative file path, and attachment type
+                relativeFilePath = os.path.join(year, msg_id, filename)
+                attachments.append((relativeFilePath, attachment_type))
 
         if msg_text is None:
             # we did not find text/plain section, raise exception
@@ -195,7 +198,7 @@ class GetMail():
         msg = email.message_from_string(response_part[1])
 
         # extract text, encoding and attachments
-        msg_text, msg_encoding, msg_attachments = self.getEmailTextAndEncodingAndAttachments(num, msg)
+        msg_text, msg_encoding, msg_attachments = self.getEmailTextAndEncodingAndAttachments(msg_id, msg)
 
 
         message_data = {'msg_id':msg_id,
