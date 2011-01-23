@@ -27,6 +27,22 @@ class MailDoesNotExistInDBException(InsertResponseException):
 class MailHashIsNotCorrect(InsertResponseException):
     pass
 
+ENCODINGS = [
+    "utf-8",
+    "latin1",
+    "ascii"
+]
+
+def SmartUnicode( s ):
+    for encode in ENCODINGS:
+        try:
+            t = smart_unicode( s, encode )
+            return t
+        except:
+            pass
+    return u""
+
+
 class InsertResponse():
 
     def get_rep(self, rep_id, rtype):
@@ -133,6 +149,8 @@ class InsertResponse():
         # if previous email was public, then we save the reply message text to db
         # else we delete it, and simply send whole email straight to the person
         # who asked the question in the first place
+        #text = SmartUnicode(mail_info['msg_text'])
+        #text = unicode(mail_info['msg_text'], 'utf-8')
         text = smart_unicode(mail_info['msg_text'], encoding=mail_info['msg_encoding'], strings_only=False, errors='strict')
         if mail.public:
             resp.message = text
@@ -140,9 +158,12 @@ class InsertResponse():
             resp.message = ''
 
         att_path = None
-        if mail_info['filename']:
-            web_path = '%s/%s' % (GlobalSettings.ATTACHMENTS_MEDIA_PATH,mail_info['filename'])
-            att_path = '%s/%s' % (GlobalSettings.ATTACHMENTS_PATH,mail_info['filename'])
+        attachments = mail_info["attachments"]
+        if attachments is not None and len(attachments) > 0:
+            # for now just handle single attachment only
+            attachment = attachments[0]
+            web_path = '%s/%s' % (GlobalSettings.ATTACHMENTS_MEDIA_PATH,attachment[0])
+            att_path = '%s/%s' % (GlobalSettings.ATTACHMENTS_PATH,attachment[0])
             resp.attachment_path = web_path
 
         resp.save()
