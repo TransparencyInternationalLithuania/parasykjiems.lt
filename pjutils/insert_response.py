@@ -27,22 +27,6 @@ class MailDoesNotExistInDBException(InsertResponseException):
 class MailHashIsNotCorrect(InsertResponseException):
     pass
 
-ENCODINGS = [
-    "utf-8",
-    "latin1",
-    "ascii"
-]
-
-def SmartUnicode( s ):
-    for encode in ENCODINGS:
-        try:
-            t = smart_unicode( s, encode )
-            return t
-        except:
-            pass
-    return u""
-
-
 class InsertResponse():
 
     def get_rep(self, rep_id, rtype):
