@@ -533,8 +533,8 @@ def contact(request, rtype, mp_id):
                 )
                 if send:
                     print mail.message
-                    mail.save()
-                    reply_to = 'reply%s_%s@dev.parasykjiems.lt' % (mail.id, mail.response_hash)
+                    mail.save()  
+                    reply_to = '%s%s_%s@%s' % (GlobalSettings.DefaultMailPrefix, mail.id, mail.response_hash, GlobalSettings.MAIL_SERVER)
                     # generate confirmation email message and send it
                     confirm_link = ("http://%s/confirm/%s/%s") % (current_site.domain, mail.id, mail.response_hash)
                     line1 = _(u"Hello,")

@@ -75,13 +75,18 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # where the static media files are
 STATIC_DOC_ROOT = os.path.join(scriptPath, "static")
 
+# this prefix will be attached to every email sent to representatives
+# Final reply_to field will be calculated more or less like this:
+# reply_to = '%s%s_%s@%s' % (GlobalSettings.DefaultMailPrefix, mail.id, mail.response_hash, GlobalSettings.MAIL_SERVER)
+GlobalSettings.DefaultMailPrefix = "reply"
+
 # path, where attachments are stored - should be publicly accessible, if you ar planning tu include them on site
-ATTACHMENTS_PATH = os.path.join(scriptPath, "static/files")
+GlobalSettings.ATTACHMENTS_PATH = os.path.join(scriptPath, "static", "files")
 
 # path, from where attachments are taken, when display on site (without trailing "/")
-ATTACHMENTS_MEDIA_PATH = '/static/files'
-dir_util.mkpath(ATTACHMENTS_PATH)
-dir_util.mkpath(ATTACHMENTS_MEDIA_PATH)
+GlobalSettings.ATTACHMENTS_MEDIA_PATH = os.path.join("static", "files")
+dir_util.mkpath(GlobalSettings.ATTACHMENTS_PATH)
+dir_util.mkpath(GlobalSettings.ATTACHMENTS_MEDIA_PATH)
 
 # enable logging
 logPath = os.path.join(scriptPath, "logs")
