@@ -2,35 +2,77 @@
 # -*- coding: utf-8 -*-
 
 import logging
-import settings
+from cdb_lt_streets.management.commands.ltGeoDataCrawl import ExtractRange
+from pjutils.get_mail import GetMail
+from pjutils.insert_response import MailHashIsNotCorrect, InsertResponse, MailDoesNotExistInDBException
+from settings import GlobalSettings
+import sys
 from django.core.management.base import BaseCommand
-from parasykjiems.pjutils.get_mail import GetMail
-from parasykjiems.pjutils.insert_response import InsertResponse
-from parasykjiems.pjweb.models import Email, MailHistory
-from django.core.mail import send_mail, EmailMessage
-from parasykjiems.GlobalSettingsClass import GlobalSettingsClass
 
 class Command(BaseCommand):
     args = '<>'
     help = ''
 
     def handle(self, *args, **options):
-        responses_list = []
-        questions_list = []
-        waiting_list = []
-        answered = 0
+        """ Will scan IMAP server and search for valid emails. Valid emails are those,
+        which have a standard header, i.e. start with a common prefix, have a mail id and a hash.
+        Non valid emails will be marked for deletion immediatelly.
+        Valid emails will be yielded for immediate processing."""
+
         server_info = {
-            'server':settings.GlobalSettings.MAIL_SERVER,
-            'port':settings.GlobalSettings.MAIL_PORT,
-            'username':settings.GlobalSettings.MAIL_USERNAME,
-            'password':settings.GlobalSettings.MAIL_PASSWORD,
-            'type':settings.GlobalSettings.MAIL_SERVER_TYPE
-        }
+            'server':GlobalSettings.MAIL_SERVER,
+            'port':GlobalSettings.MAIL_PORT,
+            'username':GlobalSettings.MAIL_USERNAME,
+            'password':GlobalSettings.MAIL_PASSWORD,
+            'type':GlobalSettings.MAIL_SERVER_TYPE
+            }
+
         getmail = GetMail()
+        getmail.login(server_info)
         insert = InsertResponse()
-        mail_list = getmail.get_mail(server_info)
-        for email in mail_list:
-            insert.insert_resp(email)
+        mailNumbers = getmail.getUnseenMessages() + getmail.getSeenMessages()
+
+        fromNumber = 0
+        toNumber = None
+        if len(args) >= 1:
+            fromNumber, toNumber = ExtractRange(args[0])
+        if toNumber is None:
+            toNumber = len(mailNumbers)
+        print "Will receive mails from %s to %s" % (fromNumber, toNumber)
+
+
+        answered = 0
+
+
+        skippedEmails = []
+        
+
+        for num in mailNumbers[fromNumber:toNumber]:
+            print "\n \nreading mail %s" % num
+            email = getmail.readMessage(num)
+            if email is None:
+                print "marking message %s for deletion" % num
+                getmail.markMessageForDeletion(num)
+                continue
+            # try to insert response
+            # if an exception will be raised, leave this message, we will fix the bug and
+            # insert it
+            try:
+                insert.insert_resp(email)
+            except MailHashIsNotCorrect as e:
+                print e.message
+                skippedEmails.append(num)
+                continue
+            except MailDoesNotExistInDBException as ex:
+                print ex.message
+                skippedEmails.append(num)
+                continue
             answered += 1
 
+        # always logging out, and removing marked messages for deletion
+        getmail.logout()
+
+        print "\n\n"
+        print "quitting"
+        print "following emails were skipped %s" % skippedEmails
         print "%s question got responses." % answered
