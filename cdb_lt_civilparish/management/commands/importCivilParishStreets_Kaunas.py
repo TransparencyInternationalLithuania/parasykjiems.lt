@@ -1,15 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from django.core.management.base import BaseCommand
-from simplejson.ordered_dict import OrderedDict
 from contactdb.imp import ImportSources
 from django.db import transaction
-import csv
 from cdb_lt_streets.management.commands.ltGeoDataImportCsv import ltGeoDataSources
 from pjutils.timemeasurement import TimeMeasurer
 from cdb_lt_civilparish.models import CivilParish, CivilParishStreet
 from pjutils.exc import ChainnedException
-from cdb_lt_civilparish.management.commands.importCivilParish import readRow
 from cdb_lt_streets.ltPrefixes import *
 import logging
 from cdb_lt_streets.houseNumberUtils import isStringStreetHouseNumber, StringIsNotAHouseNumberException, ifHouseNumberContainLetter, removeLetterFromHouseNumber
