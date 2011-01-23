@@ -54,8 +54,8 @@ def _collectRanges(numberList):
         yield HouseRange(str(first), str(last), first % 2 == 1)
 
 def yieldRanges(listOfHouseNumbers):
-    oddNumbers = OrderedDict()
-    evenNumbers = OrderedDict()
+    oddNumbers = {}
+    evenNumbers = {}
 
     # Divide house numbers into even and odd
     # spit out house numbers with letters immediatelly
@@ -76,10 +76,15 @@ def yieldRanges(listOfHouseNumbers):
         else:
             evenNumbers[num] = num
 
-    for range in _collectRanges(list(oddNumbers.iterkeys())):
+    oddNumbers = [n for n in oddNumbers.iterkeys()]
+    oddNumbers.sort()
+    evenNumbers = [n for n in evenNumbers.iterkeys()]
+    evenNumbers.sort()
+
+    for range in _collectRanges(oddNumbers):
         yield range
 
-    for range in _collectRanges(list(evenNumbers.iterkeys())):
+    for range in _collectRanges(evenNumbers):
         yield range
             
 city = u"Kaunas"
