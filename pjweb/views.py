@@ -3,6 +3,7 @@
 
 import logging
 import re
+from cdb_lt_streets.houseNumberUtils import removeLetterFromHouseNumber, ifHouseNumberContainLetter
 from settings import *
 from django import forms
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest
@@ -91,9 +92,12 @@ def searchInStreetIndex(query_string):
 def addHouseNumberQuery(query, house_number):
     """ if house number is a numeric, add special conditions to check
     if house number is matched"""
-    if (house_number is None):
+    if house_number is None:
         return query
-    if (house_number.isdigit() == False):
+    if ifHouseNumberContainLetter(house_number):
+        house_number = removeLetterFromHouseNumber(house_number)
+
+    if house_number.isdigit() == False:
         return query
 
     # convert to integer
@@ -104,10 +108,13 @@ def addHouseNumberQuery(query, house_number):
         Q(**{"%s__gte" % "numberTo": house_number}) & \
         Q(**{"%s" % "numberOdd": isOdd})
 
+    houseNumberEualsFrom = Q(**{"%s" % "numberFrom": house_number})
+    houseNumberEualsTo = Q(**{"%s" % "numberTo": house_number})
+
     houseNumberIsNull = Q(**{"%s__isnull" % "numberFrom": True}) & \
         Q(**{"%s__isnull" % "numberTo": True})
 
-    orQuery = houseNumberEquals | houseNumberIsNull
+    orQuery = houseNumberEquals | houseNumberIsNull | houseNumberEualsFrom | houseNumberEualsTo
 
     query = query.filter(orQuery)
     return query
