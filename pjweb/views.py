@@ -3,7 +3,6 @@
 
 import logging
 import re
-from nose.plugins.deprecated import Deprecated
 from cdb_lt_streets.houseNumberUtils import removeLetterFromHouseNumber, ifHouseNumberContainLetter
 from settings import *
 from django import forms
@@ -28,7 +27,6 @@ from cdb_lt_seniunaitija.models import SeniunaitijaMember, SeniunaitijaStreet
 from cdb_lt_streets.models import HierarchicalGeoData, LithuanianStreetIndexes
 from django.db.models.query_utils import Q, Q
 from django.utils.encoding import iri_to_uri
-from pjutils.deprecated import deprecated
 from cdb_lt_streets.searchInIndex import searchInIndex, deduceAddress, removeGenericPartFromStreet, removeGenericPartFromMunicipality
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from pjweb.forms import IndexForm, ContactForm
@@ -120,43 +118,6 @@ def addHouseNumberQuery(query, house_number):
     query = query.filter(orQuery)
     return query
 
-@deprecated()
-def findLT_MPs_Id(municipality = None, city = None, city_gen = None, street = None, house_number = None):
-    """ return a list of ids for MPs for Lithuania"""
-
-    # first search by street and house number
-    cityQuery = Q(**{"city__icontains" : city}) | Q(**{"city__icontains" : city_gen})
-
-    try:
-        query = PollingDistrictStreet.objects.all().filter(municipality__contains = municipality)\
-            .filter(street__contains = street) \
-            .filter(cityQuery)
-        query = addHouseNumberQuery(query, house_number)
-
-        query = query.distinct() \
-            .values('constituency')
-        idList = [p['constituency'] for p in query]
-        if (len(idList) > 0):
-            return idList
-    except PollingDistrictStreet.DoesNotExist:
-        pass
-
-    # search without street
-    try:
-        query = PollingDistrictStreet.objects.all().filter(municipality__contains = municipality)\
-            .filter(cityQuery)
-
-        query = query.distinct() \
-            .values('constituency')
-        idList = [p['constituency'] for p in query]
-        return idList
-    except PollingDistrictStreet.DoesNotExist:
-        pass
-
-    logger.debug("Did not find any MP")
-    return []
-
-
 def findMPs(municipality = None, city = None, street = None, house_number = None,  *args, **kwargs):
     """ kwargs can contain city_genitive to pass city in genitive form"""
     street = removeGenericPartFromStreet(street)
@@ -187,13 +148,6 @@ def findMunicipalityMembers(municipality = None, city = None, street = None, hou
 
     members = MunicipalityMember.objects.all().filter(municipality__in = idList)
     return members
-
-@deprecated()
-def extractCivilParishIDS(query):
-    query = query.distinct() \
-            .values('civilParish')
-    idList = [p['civilParish'] for p in query]
-    return idList
 
 def extractInstitutionColumIds(query, institutionColumName):
     query = query.distinct() \
@@ -262,45 +216,6 @@ def findLT_street_index_id(modelToSearchIn, institutionColumName = None, municip
     logger.debug("Did not find any ids")
     return []
 
-
-@deprecated(message="Use findLT_street_index_id() instead. That method works for all relations")
-def findLT_CivilParish_Id(municipality = None, city = None, city_gen = None, street = None, house_number = None):
-    """ return a list of ids for CivilParish members for Lithuania"""
-    cityQuery = Q(**{"city__icontains" : city}) | Q(**{"city__icontains" : city_gen})
-    # first search by street without house number
-    try:
-        query = CivilParishStreet.objects.all().filter(municipality__contains = municipality)\
-            .filter(street__contains = street) \
-            .filter(cityQuery)
-        idList = extractCivilParishIDS(query)
-        if len(idList) > 0:
-            if len(idList) == 1:
-                return idList
-
-            # we have found more than 1 member.  Try to search with street number to narrow
-            query = CivilParishStreet.objects.all().filter(municipality__contains = municipality)\
-                .filter(street__contains = street) \
-                .filter(cityQuery)
-            query = addHouseNumberQuery(query, house_number)
-            idList = extractCivilParishIDS(query)
-            if len(idList) > 0:
-                return idList
-    except CivilParishStreet.DoesNotExist:
-        pass
-
-    # search without street. Will return tens of results, but it is better than nothing
-    try:
-        query = CivilParishStreet.objects.all().filter(municipality__contains = municipality)\
-            .filter(cityQuery)
-
-        idList = extractCivilParishIDS(query)
-        return idList
-    except PollingDistrictStreet.DoesNotExist:
-        pass
-
-    logger.debug("Did not find any Civil parish member")
-    return []
-
 def findCivilParishMembers(municipality = None, city = None, street = None, house_number = None,  *args, **kwargs):
     street = removeGenericPartFromStreet(street)
     municipality = removeGenericPartFromMunicipality(municipality)
@@ -312,32 +227,6 @@ def findCivilParishMembers(municipality = None, city = None, street = None, hous
     
     members = CivilParishMember.objects.all().filter(civilParish__in = idList)
     return members
-
-@deprecated(message="Use findLT_street_index_id() instead. That method works for all relations")
-def findSeniunaitijaMembersIDs(municipality = None, city = None, street = None, house_number = None):
-    # search for seniunaitija with street and house number
-    if (street is not None):
-        query = SeniunaitijaStreet.objects.all().filter(municipality__contains = municipality)\
-            .filter(street__contains = street) \
-            .filter(city__contains = city)
-        query = addHouseNumberQuery(query, house_number)
-
-        query = query.distinct().values('seniunaitija')
-        idList = [p['seniunaitija'] for p in query]
-
-        if (len(idList) != 0):
-            return idList
-
-
-    # search second time without streets
-    query = SeniunaitijaStreet.objects.all()\
-        .filter(municipality__contains = municipality)\
-        .filter(city__contains = city)
-
-    query = query.distinct().values('seniunaitija')
-    idList = [p['seniunaitija'] for p in query]
-
-    return idList
 
 def findSeniunaitijaMembers(municipality = None, city = None, street = None, house_number = None, *args, **kwargs):
     street = removeGenericPartFromStreet(street)
