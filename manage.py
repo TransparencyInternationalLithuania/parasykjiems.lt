@@ -16,4 +16,5 @@ if __name__ == "__main__":
     except Exception as e:
         msg = "Unhandeld exception occureed while calling %s" % sys.argv
         print msg
+        print e
         logging.exception(msg)
