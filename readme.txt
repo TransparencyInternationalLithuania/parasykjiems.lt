@@ -97,3 +97,14 @@ passwd username
 mkdir /home/username
 chown vytautas:users /home/username/
 usermod -a -G admin username
+
+
+
+
+When server is installed, add these cronjobs to special dedicated user (for example, wtt)
+
+
+MAILTO=wtterrors@gmail.com
+45 * * * * /var/www/beta.parasykjiems.lt/scripts/updateDaily.sh
+5,15,25,35,45,55 * * * * /var/www/beta.parasykjiems.lt/scripts/getResponses.sh
+
