@@ -155,14 +155,8 @@ def extractInstitutionColumIds(query, institutionColumName):
     idList = [p[institutionColumName] for p in query]
     return idList
 
-def findLT_street_index_id(modelToSearchIn, institutionColumName = None, municipality = None, city = None, city_gen = None, street = None, house_number = None):
-    """ At the moment territory data for each representative is stored in separate table.
-    This query searches some table (objectToSearchIn) for instituions pointed by an address.
 
-    All representative searches will be done through this method"""
-
-    logger.info("Will search for representatives in object: %s" % modelToSearchIn.objects.model._meta.object_name)
-
+def getCityQuery(city = None, city_gen = None):
     cityQuery = None
     if city is not None:
         cityQuery = Q(**{"city__icontains" : city})
@@ -171,12 +165,23 @@ def findLT_street_index_id(modelToSearchIn, institutionColumName = None, municip
         if cityQuery is None:
             cityQuery = genQuery
         else:
-            cityQuery = cityQuery | genQuery 
+            cityQuery = cityQuery | genQuery
+    return cityQuery
 
+def searchPartial(streetQuery = None, **kwargs):
+    modelToSearchIn = kwargs['modelToSearchIn']
+    institutionColumName = kwargs['institutionColumName']
+    municipality = kwargs['municipality']
+    city = kwargs['city']
+    city_gen = kwargs['city_gen']
+    street = kwargs['street']
+    house_number = kwargs['house_number']
+
+    cityQuery = getCityQuery(city=city, city_gen= city_gen)
     # first search by street without house number
     try:
         query = modelToSearchIn.objects.all().filter(municipality__contains = municipality)\
-            .filter(street__contains = street) \
+            .filter(streetQuery) \
             .filter(cityQuery)
         streetIdList = extractInstitutionColumIds(query, institutionColumName)
         if len(streetIdList) > 0:
@@ -186,7 +191,7 @@ def findLT_street_index_id(modelToSearchIn, institutionColumName = None, municip
 
             # we have found more than 1 member.  Try to search with street number to narrow
             query = modelToSearchIn.objects.all().filter(municipality__contains = municipality)\
-                .filter(street__contains = street) \
+                .filter(streetQuery) \
                 .filter(cityQuery)
             query = addHouseNumberQuery(query, house_number)
             #print query.query
@@ -201,9 +206,63 @@ def findLT_street_index_id(modelToSearchIn, institutionColumName = None, municip
 
     except modelToSearchIn.DoesNotExist:
         pass
+    return []
 
+def findLT_street_index_id(modelToSearchIn, institutionColumName = None, municipality = None, city = None, city_gen = None, street = None, house_number = None):
+    """ At the moment territory data for each representative is stored in separate table.
+    This query searches some table (objectToSearchIn) for instituions pointed by an address.
+
+    All representative searches will be done through this method"""
+    logger.info("Will search for representatives in object: %s" % modelToSearchIn.objects.model._meta.object_name)
+
+    streetQuery = Q(**{"street__istartswith" : street})
+
+    # at first search with starts with query for street
+    list = searchPartial(streetQuery = streetQuery, modelToSearchIn = modelToSearchIn, institutionColumName = institutionColumName, municipality = municipality, city = city, \
+                         city_gen = city_gen, street = street, house_number = house_number)
+    if len(list) > 0:
+        return list
+
+    # if starts with did not work, search by icontains
+    streetQuery = Q(**{"street__icontains" : street})
+    list = searchPartial(streetQuery = streetQuery, modelToSearchIn = modelToSearchIn, institutionColumName = institutionColumName, municipality = municipality, city = city, \
+                         city_gen = city_gen, street = street, house_number = house_number)
+
+    if len(list) > 0:
+        return list
+    """
+    # first search by street without house number
+    try:
+        query = modelToSearchIn.objects.all().filter(municipality__contains = municipality)\
+            .filter(street__contains = street) \
+            .filter(cityQuery)
+        streetIdList = extractInstitutionColumIds(query, institutionColumName)
+        if len(streetIdList) > 0:
+            if len(streetIdList) == 1:
+                print "found following ids %s" % streetIdList
+                return streetIdList
+
+            # we have found more than 1 member.  Try to search with street number to narrow
+            query = modelToSearchIn.objects.all().filter(municipality__contains = municipality)\
+                .filter(street__icontains = street) \
+                .filter(cityQuery)
+            query = addHouseNumberQuery(query, house_number)
+            #print query.query
+
+            streetNumberIdList = extractInstitutionColumIds(query, institutionColumName)
+            if len(streetNumberIdList) > 0:
+                print "found following ids %s" % streetNumberIdList
+                return streetNumberIdList
+            else:
+                print "found following ids %s" % streetIdList
+                return streetIdList
+
+    except modelToSearchIn.DoesNotExist:
+        pass
+"""
     # search without street. Will return tens of results, but it is better than nothing
     try:
+        cityQuery = getCityQuery(city=city, city_gen= city_gen)
         query = modelToSearchIn.objects.all().filter(municipality__contains = municipality)\
             .filter(cityQuery)
 
