@@ -222,6 +222,9 @@ class Command(BaseCommand):
 
     def insertAll(self, streetMap, civilParish):
         for street, houseNumbers in streetMap.iteritems():
+            if street == u"V. Druskio gatvė":
+                street = u"Virginijaus Druskio gatvė"
+
             #logger.debug("will import street %s" % street)
             for range in yieldRanges(houseNumbers):
                 #logger.info("from: %s to %s  isOdd %s" % (range.numberFrom, range.numberTo, range.numberOdd))
