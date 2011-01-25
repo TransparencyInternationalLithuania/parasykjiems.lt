@@ -1,4 +1,4 @@
-from parasykjiems.pjweb.models import Email, MailHistory
+from pjweb.models import Email, MailHistory
 from django.contrib import admin
 from django.utils.translation import ugettext as _
 

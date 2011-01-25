@@ -7,13 +7,13 @@ import settings
 from django import forms
 from django.utils.translation import ugettext as _, ugettext_lazy, ungettext
 from django.core.exceptions import ValidationError
-from parasykjiems.pjweb.models import Email
-from parasykjiems.pjweb.widgets import *
+from pjweb.models import Email
+from pjweb.widgets import *
 from django.utils.safestring import mark_safe
 from django.forms.extras.widgets import SelectDateWidget
 import datetime
 
-#from parasykjiems.cdb_lt_streets.models import LithuanianStreetIndexes
+#from cdb_lt_streets.models import LithuanianStreetIndexes
 
 #from autocomplete.widgets import AutoCompleteWidget
 #from autocomplete.fields import ModelChoiceField

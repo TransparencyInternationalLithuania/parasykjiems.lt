@@ -1,4 +1,4 @@
-from parasykjiems.contactdb import models
+from contactdb import models
 from django.contrib import admin
 from django.utils.translation import ugettext as _
 from django.db import models as djangoModel

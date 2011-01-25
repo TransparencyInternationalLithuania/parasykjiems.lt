@@ -10,8 +10,8 @@ from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadReque
 from django.shortcuts import render_to_response, redirect
 from django.utils.translation import ugettext as _, ugettext_lazy, ungettext, check_for_language
 from django.core.mail import send_mail, EmailMessage
-from parasykjiems.pjweb.models import Email, MailHistory
-from parasykjiems.pjweb.forms import *
+from pjweb.models import Email, MailHistory
+from pjweb.forms import *
 from pjutils.address_search import AddressSearch
 from pjutils.insert_response import InsertResponse
 from pjutils.declension import DeclensionLt

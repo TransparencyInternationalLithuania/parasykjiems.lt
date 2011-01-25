@@ -7,7 +7,7 @@ from django.conf.urls.defaults import *
 
 #from autocomplete.views import autocomplete
 
-#from parasykjiems.pjweb.views import ContactForm
+#from pjweb.views import ContactForm
 #from django import forms
 
 # Uncomment the next two lines to enable the admin:
@@ -33,7 +33,7 @@ admin.autodiscover()
 # allowing space
 sentenceRegExp = u"[a-zA-Z0-9ąčęėįšųūžĄČĘĖĮŠŲŪŽ_\- \.]+"
 
-urlpatterns = patterns('parasykjiems.pjweb.views',
+urlpatterns = patterns('pjweb.views',
     # Example:
     # (r'^parasykjiems/', include('parasykjiems.foo.urls')),
 

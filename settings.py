@@ -38,7 +38,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.locale.LocaleMiddleware',
 )
 
-ROOT_URLCONF = 'parasykjiems.urls'
+ROOT_URLCONF = 'urls'
 
 #HAYSTACK_INCLUDE_SPELLING = True
 
@@ -65,9 +65,9 @@ commonApps = ['django.contrib.auth',
     'django.contrib.formtools',
 #    'chronograph',
 #    'parasykjiems.polls',
-    'parasykjiems.contactdb',
-    'parasykjiems.pjweb',
-    'parasykjiems.pjutils',
+    'contactdb',
+    'pjweb',
+    'pjutils',
     'django.contrib.admin',
     #'gunicorn',
 #    'haystack',
