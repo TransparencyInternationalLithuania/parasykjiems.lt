@@ -115,7 +115,9 @@ class GetMail():
     def getHeaderFieldTo(self, num):
         typ, msg_data = self.M.fetch(num, '(BODY.PEEK[HEADER.FIELDS (To)])')
         headers = msg_data[0][1].split("\r\n")
-        return headers[0].split('@')[0].replace('To: ','')
+        r = headers[0].split('@')[0].replace('To: ','')
+        r = r.strip('<')
+        return r
 
     def getHeaderFieldFrom(self, num):
         typ, msg_data = self.M.fetch(num, '(BODY.PEEK[HEADER.FIELDS (From)])')
