@@ -27,6 +27,7 @@ class Command(BaseCommand):
             'type':GlobalSettings.MAIL_SERVER_TYPE
             }
 
+        print "logging into mail server %s %s:%s" % (server_info['type'], server_info['server'], server_info['port'])
         getmail = GetMail()
         getmail.login(server_info)
         insert = InsertResponse()
@@ -38,6 +39,10 @@ class Command(BaseCommand):
             fromNumber, toNumber = ExtractRange(args[0])
         if toNumber is None:
             toNumber = len(mailNumbers)
+
+        if len(mailNumbers) == 0:
+            print "No emails in server, exiting"
+            return
         print "Will receive mails from %s to %s" % (fromNumber, toNumber)
 
 
