@@ -147,6 +147,8 @@ importStreets 5:8 - will import streets for counties from 5 to 8 constituencies 
                     pollingDistrictStreet.municipality = pollingDistrict.District
                     pollingDistrictStreet.city = street.cityName
                     expandedStreetStr = expandedStreet.street
+                    if expandedStreetStr == u"V. Druskio gatvė":
+                        expandedStreetStr = u"Virginijaus Druskio gatvė"
                     pollingDistrictStreet.street = expandedStreetStr
                     pollingDistrictStreet.numberFrom =  expandedStreet.numberFrom
                     pollingDistrictStreet.numberTo = expandedStreet.numberTo
