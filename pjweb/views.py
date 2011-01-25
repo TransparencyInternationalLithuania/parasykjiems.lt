@@ -120,7 +120,7 @@ def addHouseNumberQuery(query, house_number):
     query = query.filter(orQuery)
     return query
 
-
+@deprecated()
 def findLT_MPs_Id(municipality = None, city = None, city_gen = None, street = None, house_number = None):
     """ return a list of ids for MPs for Lithuania"""
 
@@ -164,7 +164,10 @@ def findMPs(municipality = None, city = None, street = None, house_number = None
     city_gen = kwargs["city_genitive"]
 
     logging.info("searching for MP: street %s, city %s, city_gen %s, municipality %s" % (street, city, city_gen, municipality))
-    idList = findLT_MPs_Id(municipality=municipality, city=city,  city_gen= city_gen, street=street, house_number=house_number)
+
+
+    idList = findLT_street_index_id(PollingDistrictStreet, 'constituency', municipality=municipality, city=city,  city_gen= city_gen, street=street, house_number=house_number)
+    #idList = findLT_MPs_Id(municipality=municipality, city=city,  city_gen= city_gen, street=street, house_number=house_number)
 
     logging.debug("found MPs in following constituency : %s" % (idList))
     members = ParliamentMember.objects.all().filter(constituency__in = idList)
@@ -206,26 +209,42 @@ def findLT_street_index_id(modelToSearchIn, institutionColumName = None, municip
 
     logger.info("Will search for representatives in object: %s" % modelToSearchIn.objects.model._meta.object_name)
 
-    cityQuery = Q(**{"city__icontains" : city}) | Q(**{"city__icontains" : city_gen})
+    cityQuery = None
+    if city is not None:
+        cityQuery = Q(**{"city__icontains" : city})
+    if city_gen is not None:
+        genQuery = Q(**{"city__icontains" : city_gen})
+        if cityQuery is None:
+            cityQuery = genQuery
+        else:
+            cityQuery = cityQuery | genQuery 
 
     # first search by street without house number
     try:
         query = modelToSearchIn.objects.all().filter(municipality__contains = municipality)\
             .filter(street__contains = street) \
             .filter(cityQuery)
-        idList = extractInstitutionColumIds(query, institutionColumName)
-        if len(idList) > 0:
-            if len(idList) == 1:
-                return idList
+        streetIdList = extractInstitutionColumIds(query, institutionColumName)
+        if len(streetIdList) > 0:
+            if len(streetIdList) == 1:
+                print "found following ids %s" % streetIdList
+                return streetIdList
 
             # we have found more than 1 member.  Try to search with street number to narrow
             query = modelToSearchIn.objects.all().filter(municipality__contains = municipality)\
                 .filter(street__contains = street) \
                 .filter(cityQuery)
             query = addHouseNumberQuery(query, house_number)
-            idList = extractInstitutionColumIds(query, institutionColumName)
-            if len(idList) > 0:
-                return idList
+            #print query.query
+
+            streetNumberIdList = extractInstitutionColumIds(query, institutionColumName)
+            if len(streetNumberIdList) > 0:
+                print "found following ids %s" % streetNumberIdList
+                return streetNumberIdList
+            else:
+                print "found following ids %s" % streetIdList
+                return streetIdList
+
     except modelToSearchIn.DoesNotExist:
         pass
 
@@ -235,11 +254,12 @@ def findLT_street_index_id(modelToSearchIn, institutionColumName = None, municip
             .filter(cityQuery)
 
         idList = extractInstitutionColumIds(query, institutionColumName)
+        print "found following ids %s" % idList
         return idList
     except modelToSearchIn.DoesNotExist:
         pass
 
-    logger.debug("Did not find any Civil parish member")
+    logger.debug("Did not find any ids")
     return []
 
 
@@ -286,12 +306,14 @@ def findCivilParishMembers(municipality = None, city = None, street = None, hous
     municipality = removeGenericPartFromMunicipality(municipality)
 
     city_gen = kwargs["city_genitive"]
- 
-    idList = findLT_CivilParish_Id(municipality=municipality, city=city,  city_gen= city_gen, street=street, house_number=house_number)
+
+    idList = findLT_street_index_id(modelToSearchIn=CivilParishStreet, institutionColumName= "civilParish", municipality=municipality, city=city,  city_gen= city_gen, street=street, house_number=house_number)
+    #idList = findLT_CivilParish_Id(municipality=municipality, city=city,  city_gen= city_gen, street=street, house_number=house_number)
     
     members = CivilParishMember.objects.all().filter(civilParish__in = idList)
     return members
 
+@deprecated(message="Use findLT_street_index_id() instead. That method works for all relations")
 def findSeniunaitijaMembersIDs(municipality = None, city = None, street = None, house_number = None):
     # search for seniunaitija with street and house number
     if (street is not None):
@@ -324,7 +346,8 @@ def findSeniunaitijaMembers(municipality = None, city = None, street = None, hou
 
     # city is not used, instead we use city_gen
     # since in Lithuania it is the primary key to identify cities
-    idList = findSeniunaitijaMembersIDs(municipality=municipality, city= city_gen, street= street, house_number= house_number)
+    idList = findLT_street_index_id(SeniunaitijaStreet, "seniunaitija", municipality=municipality, city= city_gen, street= street, house_number= house_number)
+    #idList = findSeniunaitijaMembersIDs(municipality=municipality, city= city_gen, street= street, house_number= house_number)
     members = SeniunaitijaMember.objects.all().filter(seniunaitija__in = idList)
     return members
 
