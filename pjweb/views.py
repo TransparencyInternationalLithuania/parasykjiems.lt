@@ -3,6 +3,7 @@
 
 import logging
 import re
+from nose.plugins.deprecated import Deprecated
 from cdb_lt_streets.houseNumberUtils import removeLetterFromHouseNumber, ifHouseNumberContainLetter
 from settings import *
 from django import forms
@@ -184,21 +185,68 @@ def findMunicipalityMembers(municipality = None, city = None, street = None, hou
     members = MunicipalityMember.objects.all().filter(municipality__in = idList)
     return members
 
+@deprecated()
 def extractCivilParishIDS(query):
     query = query.distinct() \
             .values('civilParish')
     idList = [p['civilParish'] for p in query]
     return idList
 
+def extractInstitutionColumIds(query, institutionColumName):
+    query = query.distinct() \
+            .values(institutionColumName)
+    idList = [p[institutionColumName] for p in query]
+    return idList
 
-def findLT_CivilParish_Id(municipality = None, city = None, city_gen = None, street = None, house_number = None):
-    """ return a list of ids for CivilParish members for Lithuania"""
+def findLT_street_index_id(modelToSearchIn, institutionColumName = None, municipality = None, city = None, city_gen = None, street = None, house_number = None):
+    """ At the moment territory data for each representative is stored in separate table.
+    This query searches some table (objectToSearchIn) for instituions pointed by an address.
 
+    All representative searches will be done through this method"""
 
+    logger.info("Will search for representatives in object: %s" % modelToSearchIn.objects.model._meta.object_name)
 
     cityQuery = Q(**{"city__icontains" : city}) | Q(**{"city__icontains" : city_gen})
 
+    # first search by street without house number
+    try:
+        query = modelToSearchIn.objects.all().filter(municipality__contains = municipality)\
+            .filter(street__contains = street) \
+            .filter(cityQuery)
+        idList = extractInstitutionColumIds(query, institutionColumName)
+        if len(idList) > 0:
+            if len(idList) == 1:
+                return idList
 
+            # we have found more than 1 member.  Try to search with street number to narrow
+            query = modelToSearchIn.objects.all().filter(municipality__contains = municipality)\
+                .filter(street__contains = street) \
+                .filter(cityQuery)
+            query = addHouseNumberQuery(query, house_number)
+            idList = extractInstitutionColumIds(query, institutionColumName)
+            if len(idList) > 0:
+                return idList
+    except modelToSearchIn.DoesNotExist:
+        pass
+
+    # search without street. Will return tens of results, but it is better than nothing
+    try:
+        query = modelToSearchIn.objects.all().filter(municipality__contains = municipality)\
+            .filter(cityQuery)
+
+        idList = extractInstitutionColumIds(query, institutionColumName)
+        return idList
+    except modelToSearchIn.DoesNotExist:
+        pass
+
+    logger.debug("Did not find any Civil parish member")
+    return []
+
+
+@deprecated(message="Use findLT_street_index_id() instead. That method works for all relations")
+def findLT_CivilParish_Id(municipality = None, city = None, city_gen = None, street = None, house_number = None):
+    """ return a list of ids for CivilParish members for Lithuania"""
+    cityQuery = Q(**{"city__icontains" : city}) | Q(**{"city__icontains" : city_gen})
     # first search by street without house number
     try:
         query = CivilParishStreet.objects.all().filter(municipality__contains = municipality)\
