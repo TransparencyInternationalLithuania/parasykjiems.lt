@@ -1,0 +1,6 @@
+{% load i18n %}
+<div style="float:right;">
+{% for lang in LANGUAGES %}
+  <a class="myopacity" href="/setlang/{{ lang.0 }}/"><img src="/static/img/flags/png/{{ lang.0 }}.png" /></a>
+{% endfor %}
+</div>

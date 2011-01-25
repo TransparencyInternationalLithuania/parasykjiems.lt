@@ -1,0 +1,29 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <title>{% block title %}ParašykJiems{% endblock %}</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body>
+{% include 'pjweb/change_lang.html' %}
+<div id="top">
+<div>
+    <a href="/" id="logo"><img width="359" height="50" src="/static/img/logo.png" alt="{% trans "ParašykJiems - Fast method to find representatives and contact them." %}"></a>
+    <a href="/pjweb/about/" id="about">{% trans "About project" %}</a>
+    <a href="/pjweb/public_mails/" id="archive"><img src="/static/img/info.png" align="absmiddle">{% trans "List of all public mails" %}</a>
+</div>
+</div>
+<div id="content">
+<img class="step" src="/static/img/{{ step1 }}" alt="{% trans "Find desired representative (will be found by address)" %}">
+<img class="step" src="/static/img/{{ step2 }}" alt="{% trans "Body of the message (you can write public or private mail)" %}">
+<img class="step" src="/static/img/{{ step3 }}" alt="{% trans "Preview and send (check your spelling ;-))" %}">
+{% block content %}{% endblock %}
+</form>
+</div>
+<p align="center">{% trans "Have any notes, suggestions?" %} <a href="/pjweb/feedback/" >{% trans "Write to us" %}</a></p>
+
+</body>
+</html>
