@@ -184,37 +184,48 @@ def findMunicipalityMembers(municipality = None, city = None, street = None, hou
     members = MunicipalityMember.objects.all().filter(municipality__in = idList)
     return members
 
+def extractCivilParishIDS(query):
+    query = query.distinct() \
+            .values('civilParish')
+    idList = [p['civilParish'] for p in query]
+    return idList
+
 
 def findLT_CivilParish_Id(municipality = None, city = None, city_gen = None, street = None, house_number = None):
     """ return a list of ids for CivilParish members for Lithuania"""
 
 
-    # first search by street and house number
+
     cityQuery = Q(**{"city__icontains" : city}) | Q(**{"city__icontains" : city_gen})
+
+
+    # first search by street without house number
     try:
         query = CivilParishStreet.objects.all().filter(municipality__contains = municipality)\
             .filter(street__contains = street) \
             .filter(cityQuery)
-        query = addHouseNumberQuery(query, house_number)
-
-        #logger.info("civil parish query: %s" % query.query)
-
-        query = query.distinct() \
-            .values('civilParish')
-        idList = [p['civilParish'] for p in query]
+        idList = extractCivilParishIDS(query)
         if len(idList) > 0:
-            return idList
+            if len(idList) == 1:
+                return idList
+
+            # we have found more than 1 member.  Try to search with street number to narrow
+            query = CivilParishStreet.objects.all().filter(municipality__contains = municipality)\
+                .filter(street__contains = street) \
+                .filter(cityQuery)
+            query = addHouseNumberQuery(query, house_number)
+            idList = extractCivilParishIDS(query)
+            if len(idList) > 0:
+                return idList
     except CivilParishStreet.DoesNotExist:
         pass
 
-    # search without street
+    # search without street. Will return tens of results, but it is better than nothing
     try:
         query = CivilParishStreet.objects.all().filter(municipality__contains = municipality)\
             .filter(cityQuery)
 
-        query = query.distinct() \
-            .values('civilParish')
-        idList = [p['civilParish'] for p in query]
+        idList = extractCivilParishIDS(query)
         return idList
     except PollingDistrictStreet.DoesNotExist:
         pass
