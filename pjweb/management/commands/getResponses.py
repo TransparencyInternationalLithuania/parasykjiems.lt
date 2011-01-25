@@ -50,35 +50,36 @@ class Command(BaseCommand):
 
         
 
-        for num in mailNumbers[fromNumber:toNumber]:
-            print "\n \nreading mail %s" % num
-            email = getmail.readMessage(num)
-            if email is None:
-                print "marking message %s for deletion" % num
+        try:
+            for num in mailNumbers[fromNumber:toNumber]:
+                print "\n \nreading mail %s" % num
+                email = getmail.readMessage(num)
+                if email is None:
+                    print "marking message %s for deletion" % num
+                    getmail.markMessageForDeletion(num)
+                    deletedEmails.append(num)
+                    continue
+                # try to insert response
+                # if an exception will be raised, leave this message, we will fix the bug and
+                # insert it
+                try:
+                    insert.insert_resp(email)
+                except MailHashIsNotCorrect as e:
+                    print e.message
+                    skippedEmails.append(num)
+                    continue
+                except MailDoesNotExistInDBException as ex:
+                    print ex.message
+                    skippedEmails.append(num)
+                    continue
+
+                print "message imported succesfully. deleting original"
                 getmail.markMessageForDeletion(num)
-                deletedEmails.append(num)
-                continue
-            # try to insert response
-            # if an exception will be raised, leave this message, we will fix the bug and
-            # insert it
-            try:
-                insert.insert_resp(email)
-            except MailHashIsNotCorrect as e:
-                print e.message
-                skippedEmails.append(num)
-                continue
-            except MailDoesNotExistInDBException as ex:
-                print ex.message
-                skippedEmails.append(num)
-                continue
-
-            print "message imported succesfully. deleting original"
-            getmail.markMessageForDeletion(num)
-            responseEmails.append(num)
-            answered += 1
-
-        # always logging out, and removing marked messages for deletion
-        getmail.logout()
+                responseEmails.append(num)
+                answered += 1
+        finally:
+            # always logging out, and removing marked messages for deletion
+            getmail.logout()
 
         print "\n\n"
         print "quitting"
