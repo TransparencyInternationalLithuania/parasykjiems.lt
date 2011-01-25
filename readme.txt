@@ -78,3 +78,22 @@ sudo kill (process number)
 If you have any problems setting up the project, or get unexpected exsceptions, dont hesistate to report everything at http://bitbucket.org/dariusdamalakas/parasykjiems
 
 This project is part of http://manovalstybe.lt/ initiative
+
+
+
+
+Linux for newbies:
+To create an admin group and add it to sudoers
+
+visudo
+%admin ALL=(ALL) ALL
+
+groupadd admin
+
+
+Create a new user and add user to group admin
+useradd username
+passwd username
+mkdir /home/username
+chown vytautas:users /home/username/
+usermod -a -G admin username
