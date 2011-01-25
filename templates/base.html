@@ -1,0 +1,60 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <title>{% block title %}ParašykJiems{% endblock %}</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <script type="text/javascript" src="http://yui.yahooapis.com/combo?2.6.0/build/yahoo-dom-event/yahoo-dom-event.js&2.6.0/build/connection/connection-min.js&2.6.0/build/datasource/datasource-min.js&2.6.0/build/autocomplete/autocomplete-min.js"></script> 
+    <script type="text/javascript" src="/static/js/yui_autocomplete.js"></script> 
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-20741864-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+
+</head>
+
+<body>
+{% include 'pjweb/change_lang.html' %}
+    <div id="head">
+      <div class="cont">
+        <p id="lang">
+
+        <p id="logo">
+          <a href="/"><img src="/static/img/logo.png" width="359" height="50"
+              alt="{% trans "ParašykJiems - Fast method to find representatives and contact them." %}"></a>
+
+        <p id="nav">
+          <a href="/pjweb/public_mails/" id="nav-archive"><img src="/static/img/info.png" align="absmiddle">{% trans "List of all public mails" %}</a>
+          <a href="/pjweb/about/" id="nav-about">{% trans "About project" %}</a>
+
+      </div>
+    </div>
+
+    <div id="content">
+      <div id="c-head">
+        <h1 class="step step-1 {{ step1 }}">{% trans "Find desired representative" %}<br>
+          <small>{% trans "Will be found by address" %}</small></h1>
+
+        <p class="step step-2 {{ step2 }}">{% trans "Body of the message" %}<br>
+          <small>{% trans "You can write public or private mail" %}</small>
+
+        <p class="step step-3 {{ step3 }}">{% trans "Preview and send" %}<br>
+          <small>{% trans "Check your spelling ;-)" %}</small>
+      </div>
+
+    {% block content %}{% endblock %}
+    </div>
+<p align="center">{% trans "Have any notes, suggestions?" %} <a href="/pjweb/feedback/" >{% trans "Write to us" %}</a></p>
+
+</body>
+</html>
