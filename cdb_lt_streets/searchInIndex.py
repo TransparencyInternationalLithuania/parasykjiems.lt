@@ -273,15 +273,25 @@ def searchInIndex(addressContext):
     logger.debug(u"municipality %s" % ( municipality))
 
     #print "before filter %s %s %s" %(streetFilters, cityFilters)
-    streetFilters = getOrQuery("street", [street])
+    streetFilters = q = Q(**{"street__icontains": street})
     # Lithuanian cities have cities in two forms - genitive and nominative
-    cityFilters = getOrQuery("city", [city])
-    cityFiltersGenitive = getOrQuery("city_genitive", [city])
-    municipalityFilters = getOrQuery("municipality", [municipality])
+    cityFilters = Q(**{"city__icontains": city}) 
+    cityFiltersGenitive = Q(**{"city_genitive__icontains": city})
+    municipalityFilters = Q(**{"municipality__icontains": municipality})
+    streetFiltersStartsWith = Q(**{"street__istartswith" : street})
+
+    # search search with street istarts with
+    finalQueryStartsWith = getAndQuery(streetFiltersStartsWith, cityFilters | cityFiltersGenitive, municipalityFilters)
+    results = list(LithuanianStreetIndexes.objects.filter(finalQueryStartsWith).order_by('street')[0:50])
+    if len(results) > 0:
+        return results
+    
+
+    # if not, search with street icontains
     finalQuery = getAndQuery(streetFilters, cityFilters | cityFiltersGenitive, municipalityFilters)
     #logger.debug("streetFilters %s" % (streetFilters))
     #logger.debug("cityFilters %s" % (cityFilters))
     #logger.debug("municipalityFilters %s" % (municipalityFilters))
     query = LithuanianStreetIndexes.objects.filter(finalQuery).order_by('street')[0:50]
     #logger.debug(query.query)
-    return query
+    return list(query)
