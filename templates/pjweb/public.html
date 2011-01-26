@@ -3,14 +3,14 @@
 {% block content %}
 <div id="public_question">
 <p id="date_sent">{% trans "Letter was sent to" %} {{ mail.recipient_name }} {% trans "from" %} {{ mail.sender_name }} {% trans "on" %} {{ mail.mail_date|date:"Y-m-d" }}, {{ mail.mail_date|time:"H:i" }}</p>
-<div style="border:1px solid;height:0px;width:99%;color:gray"></div>
+<div class="hr"></div>
   {{ mail.message|linebreaks }}
 </div>
 {% if responses %}
     {% for response in responses %}
     <div id="public_response">
         <p id="date_sent">{% trans "Got response from" %} {{ response.sender_name }} {% trans "on" %} {{ mail.mail_date|date:"Y-m-d" }}, {{ mail.mail_date|time:"H:i" }}</p>
-        <div style="border:1px solid;height:0px;width:99%;color:gray"></div>
+        <div class="hr"></div>
         {{ response.message|linebreaks }}
         {% if response.attachment_path %}
             <a href="{{ response.attachment_path }}">{% trans "Attached file" %}</a>
