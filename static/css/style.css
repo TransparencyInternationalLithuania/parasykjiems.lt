@@ -312,7 +312,7 @@ a:hover {
     #public_question {
         border:1px dotted #c9c9c9;
         width:780px;
-        padding-left:10px;
+        padding:10px;
         
         }
 
@@ -322,8 +322,10 @@ a:hover {
 
     #public_response {
         border:1px dotted #c9c9c9;
-        width:770px;
-        margin-left: 10px;
+        width:730px;
+        margin-left: 30px;
+        padding: 10px;
+        background-color: #ffd;
         }
 
     #invisible {
