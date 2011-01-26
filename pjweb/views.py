@@ -478,6 +478,7 @@ def public(request, mail_id):
     current_site = Site.objects.get_current()
     # attachment paths are relative in DB
     # construct real attachment paths
+    responses = list(responses)
     for r in responses:
         if (r.attachment_path is not None):
             path = "%s/%s" % (GlobalSettings.ATTACHMENTS_MEDIA_PATH, r.attachment_path)
