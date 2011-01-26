@@ -86,7 +86,7 @@
 
 .step small { font-weight: normal; }
 .step-1 { width: 231px; -webkit-border-top-left-radius: 5px; }
-.step-3 { width: 231px; -webkit-border-top-right-radius: 5px; border-right-color: #fff; }
+.step-3 { width: 237px; -webkit-border-top-right-radius: 5px; border-right-color: #fff; }
 
 .active-step {
   color: #39454b;
@@ -314,7 +314,7 @@ a:hover {
     div.hr {
         border:1px solid;
         height:0px;
-        width:99%;
+        width:auto;
         color:gray;
     }
 
@@ -365,6 +365,7 @@ a:hover {
     /* Each mail will be rendered in a div, which will have special border, and font, etc */
     div.mail_canvas_common {
         -moz-border-radius: 7px 7px 7px 7px;
+        border-radius: 7px 7px 7px 7px;
         border:1px solid #DDDDDD;
         width:760px;
         padding-left:10px;
@@ -373,22 +374,12 @@ a:hover {
 
     /*  */
     div.mail_canvas_response {
-        border:1px dotted #c9c9c9;
-        width:760px;
         margin-top: 10px;
-        margin-left: 0px;
-        padding: 10px;
-        background-color: #ffd;
+        background-color: #ffd; /* yellow */
     }
 
     div.mail_canvas_question {
-        -moz-border-radius: 7px 7px 7px 7px;
-        border:1px solid #DDDDDD;
-        width:760px;
-        padding-left:10px;
-        padding-right:10px;
-
-        }
+    }
 
     #invisible {
         display:none;
