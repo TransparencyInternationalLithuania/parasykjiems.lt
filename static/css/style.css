@@ -309,6 +309,15 @@ a:hover {
             list-style-position:inside;
             }
 
+    /* Horizontal line
+    */
+    div.hr {
+        border:1px solid;
+        height:0px;
+        width:99%;
+        color:gray;
+    }
+
     #public_question {
         border:1px dotted #c9c9c9;
         width:760px;
@@ -322,9 +331,9 @@ a:hover {
 
     #public_response {
         border:1px dotted #c9c9c9;
-        width:730px;
+        width:760px;
         margin-top: 10px;
-        margin-left: 30px;
+        margin-left: 0px;
         padding: 10px;
         background-color: #ffd;
         }
