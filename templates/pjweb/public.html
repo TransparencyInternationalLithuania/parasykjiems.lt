@@ -1,21 +1,49 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block content %}
-<div id="public_question">
-<p id="date_sent">{% trans "Letter was sent to" %} {{ mail.recipient_name }} {% trans "from" %} {{ mail.sender_name }} {% trans "on" %} {{ mail.mail_date|date:"Y-m-d" }}, {{ mail.mail_date|time:"H:i" }}</p>
-<div class="hr"></div>
-  {{ mail.message|linebreaks }}
+<div class="mail_canvas_common mail_canvas_question">
+    <table class="mail_heading">
+        <tbody>
+            <tr>
+                <td class="mail_heading_column_1">
+                <span class="color_dark_green mail_sender_common">{{ mail.sender_name }}</span>
+                {% trans "sent to" %} {{ mail.recipient_name }}
+                </td>
+                <td class="mail_heading_column_2">
+                    {{ mail.mail_date|date:"Y-m-d" }}, {{ mail.mail_date|time:"H:i" }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p id="date_sent">{% trans "Letter was sent to" %} {{ mail.recipient_name }} {% trans "from" %} {{ mail.sender_name }} {% trans "on" %} {{ mail.mail_date|date:"Y-m-d" }}, {{ mail.mail_date|time:"H:i" }}</p>
+    <div class="hr"></div>
+      {{ mail.message|linebreaks }}
 </div>
+
 {% if responses %}
     {% for response in responses %}
-    <div id="public_response">
-        <p id="date_sent">{% trans "Got response from" %} {{ response.sender_name }} {% trans "on" %} {{ mail.mail_date|date:"Y-m-d" }}, {{ mail.mail_date|time:"H:i" }}</p>
-        <div class="hr"></div>
-        {{ response.message|linebreaks }}
-        {% if response.attachment_path %}
-            <a href="{{ response.attachment_path }}">{% trans "Attached file" %}</a>
-        {% endif %}
-      </div>
-      {% endfor %}
+<div class="mail_canvas_common mail_canvas_response">
+    <table class="mail_heading">
+        <tbody>
+            <tr>
+                <td class="mail_heading_column_1">
+                <span class="color_dark_red mail_sender_common">{{ response.sender_name }}</span>
+                {% trans "sent to" %} {{ response.recipient_name }}
+                </td>
+                <td class="mail_heading_column_2">
+                    {{ response.mail_date|date:"Y-m-d" }}, {{ response.mail_date|time:"H:i" }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="hr"></div>
+    {{ response.message|linebreaks }}
+    {% if response.attachment_path %}
+        <a href="{{ response.attachment_path }}">{% trans "Attached file" %}</a>
+    {% endif %}
+  </div>
+    {% endfor %}
 {% endif %}
 {% endblock %}

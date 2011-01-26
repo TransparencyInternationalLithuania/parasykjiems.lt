@@ -112,7 +112,7 @@
 
 body {
     background-color:#f7faf7;
-    font-family:Arial, sans-serif;
+    font-family: arial,sans-serif;
     font-size:12px;
     margin:0;
     padding:0;
@@ -318,24 +318,76 @@ a:hover {
         color:gray;
     }
 
-    #public_question {
-        border:1px dotted #c9c9c9;
-        width:760px;
-        padding:10px;
-        
-        }
+    /* Dark red colour
+    */
+    .color_dark_red{
+        color:#790619
+    }
 
+    .color_dark_green{
+        color:#00681C
+    }
+
+    /* Style for setting senders name.  Usually used with one of the colours either red or green*/
+    .mail_sender_common {
+        display: inline;
+        font-size: 100%;
+        font-weight: bold;
+        white-space: nowrap;
+    }
+
+    /* Paragraph style for letter heading, when displaying question and answer
+    */
     #date_sent {
             color: #202b2c;
         }
 
-    #public_response {
+    /* Each email displayed will have a heading table
+    */
+    table.mail_heading {
+        width:100%
+    }
+
+    /* mail_heading table will have two columns - first will display sender and recipient
+    */
+    td.mail_heading_column_1 {
+        padding-left:0px;
+    }
+
+    /* mail_heading table will have two columns - second will display time in far right
+    */
+    td.mail_heading_column_2{
+        padding-right:0px;
+        text-align:right;
+    }
+
+
+    /* Each mail will be rendered in a div, which will have special border, and font, etc */
+    div.mail_canvas_common {
+        -moz-border-radius: 7px 7px 7px 7px;
+        border:1px solid #DDDDDD;
+        width:760px;
+        padding-left:10px;
+        padding-right:10px;
+    }
+
+    /*  */
+    div.mail_canvas_response {
         border:1px dotted #c9c9c9;
         width:760px;
         margin-top: 10px;
         margin-left: 0px;
         padding: 10px;
         background-color: #ffd;
+    }
+
+    div.mail_canvas_question {
+        -moz-border-radius: 7px 7px 7px 7px;
+        border:1px solid #DDDDDD;
+        width:760px;
+        padding-left:10px;
+        padding-right:10px;
+
         }
 
     #invisible {
