@@ -16,7 +16,6 @@
         </tbody>
     </table>
 
-    <p id="date_sent">{% trans "Letter was sent to" %} {{ mail.recipient_name }} {% trans "from" %} {{ mail.sender_name }} {% trans "on" %} {{ mail.mail_date|date:"Y-m-d" }}, {{ mail.mail_date|time:"H:i" }}</p>
     <div class="hr"></div>
       {{ mail.message|linebreaks }}
 </div>
