@@ -3,14 +3,14 @@
 
 ---------------------------------
 
-Šis laiškas atsiųstas per {{current_site.domain}} svetainę. Laiško siuntėjas {{mail.sender_name}}.
+Šis laiškas atsiųstas per {{current_site.domain}} svetainę. Laiško siuntėjas: {{mail.sender_name}}.
 
-Ši svetainė yra projektas, skirtas padėti LR piliečiams lengviau susisiekti su savivaldybių, seniūnijų ir kitais valdžios atstovais. 
 
+
+ParašykJiems.lt svetainė yra visuomeninis projektas, skirtas padėti LR piliečiams lengviau susisiekti su savo valdžios atstovais (Seimo nariais, merais, seniūnais, seniūnaičiais).
 {% if mail.public %}
-Šis laiskas yra viešas. Jūsų atsakymas bus persiųstas siuntėjui, bei patalptinas svetainėje ir pasiekiamas šiuo adresu: {{mail.response_url}}
+Šis laiskas yra viešas. Jūsų atsakymas bus persiųstas siuntėjui, bei patalpintas internete šiuo adresu: {{mail.response_url}}
 {% else %}
-Jūsų atsakymas bus persiųstas tiesiogiai interesantui, ir nebus perskaitytas kitų žmonių
+Siuntėjas pageidavo, kad šis susirašinėjimas būtų konfidencialus. Šis laiškas ir atsakymai į jį nebus skelbiami internete.
 {% endif %}
-
-Prašome atsakytį šį laišką paspaudami mygtuką "atsakyti" jūsų pašto programoje
+Prašome atsakytį į šį laišką spaudami mygtuką "atsakyti" jūsų pašto programoje.
