@@ -3,6 +3,7 @@
 
 import logging
 import re
+from django.template import loader
 from cdb_lt_streets.houseNumberUtils import removeLetterFromHouseNumber, ifHouseNumberContainLetter
 from settings import *
 from django import forms
@@ -538,6 +539,7 @@ def contact(request, rtype, mp_id):
         _(u'November'),
         _(u'December')
     ]
+
     if not receiver.email:
         return HttpResponseRedirect('no_email')
     if request.method == 'POST':
@@ -658,14 +660,22 @@ def confirmMessageAndSendEmailToRepresentative(mail):
     # if message is private - clear it in db, since even if it was private,
     # it has been saved in DB so that we could confirm it later and send it
     if not mail.public:
-        public = _('private')
-        message = mail.message
+        #public = _('private')
         mail.message = ''
-    else:
-        public = _('public')
+    #else:
+    #    public = _('public')
 
     # save message state to db
     mail.save()
+
+
+    mail.response_url = "http://%s/pjweb/public/%s/" % (current_site.domain, mail.id)
+
+    message = loader.render_to_string('pjweb/emails/email_to_representative.txt', {
+        'current_site' : current_site,
+        'mail' : mail,
+        'messageBody' :message
+    })
 
     if GlobalSettings.mail.sendEmailToRepresentatives == "sendToRepresentatives":
         recipients = [mail.recipient_mail]
@@ -674,6 +684,7 @@ def confirmMessageAndSendEmailToRepresentative(mail):
     logger.debug("sending email to these recipients: %s" % recipients)
 
     # compile a standard message header
+    """
     line1 = _(u"You got a letter from %(sender_name)s via %(domain)s.") % {'sender_name': mail.sender_name, 'domain': current_site.domain}
     line2 = _(u"This mail is %s. ") % (public)
     if not mail.public:
@@ -683,8 +694,8 @@ def confirmMessageAndSendEmailToRepresentative(mail):
         line3 = _(u"Your answer will be sent to interesee and put on %s by this address:") % (current_site.domain)
         line4 = "http://%s/pjweb/public/%s/" % (current_site.domain, mail.id)
     line5 = _(u"Please reply to this email by simply clicking 'reply' in your mail client.")
+    message = line1 + "\n\n" + line2 + line3 + line4 + "\n\n" + line5 + "\n\n" + message"""
 
-    message = line1 + "\n\n" + line2 + line3 + line4 + "\n\n" + line5 + "\n\n" + message
 
     # send an actual email message to government representative
     email = EmailMessage(_(u'You got a letter from %s') % mail.sender_name, message, settings.EMAIL_HOST_USER,
