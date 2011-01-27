@@ -671,6 +671,7 @@ def confirmMessageAndSendEmailToRepresentative(mail):
 
     mail.response_url = "http://%s/pjweb/public/%s/" % (current_site.domain, mail.id)
 
+    # compile an actual message
     message = loader.render_to_string('pjweb/emails/email_to_representative.txt', {
         'current_site' : current_site,
         'mail' : mail,
@@ -682,20 +683,6 @@ def confirmMessageAndSendEmailToRepresentative(mail):
     else:
         recipients = GlobalSettings.mail.sendEmailToRepresentatives
     logger.debug("sending email to these recipients: %s" % recipients)
-
-    # compile a standard message header
-    """
-    line1 = _(u"You got a letter from %(sender_name)s via %(domain)s.") % {'sender_name': mail.sender_name, 'domain': current_site.domain}
-    line2 = _(u"This mail is %s. ") % (public)
-    if not mail.public:
-        line3 = _(u"Your answer will be sent to interesee and wont be read by other people. ")
-        line4 = ""
-    else:
-        line3 = _(u"Your answer will be sent to interesee and put on %s by this address:") % (current_site.domain)
-        line4 = "http://%s/pjweb/public/%s/" % (current_site.domain, mail.id)
-    line5 = _(u"Please reply to this email by simply clicking 'reply' in your mail client.")
-    message = line1 + "\n\n" + line2 + line3 + line4 + "\n\n" + line5 + "\n\n" + message"""
-
 
     # send an actual email message to government representative
     email = EmailMessage(_(u'You got a letter from %s') % mail.sender_name, message, settings.EMAIL_HOST_USER,
