@@ -667,7 +667,7 @@ def confirmMessageAndSendEmailToRepresentative(mail):
     # save message state to db
     mail.save()
 
-    if (GlobalSettings.mail.sendEmailToRepresentatives == "sendToRepresentatives"):
+    if GlobalSettings.mail.sendEmailToRepresentatives == "sendToRepresentatives":
         recipients = [mail.recipient_mail]
     else:
         recipients = GlobalSettings.mail.sendEmailToRepresentatives

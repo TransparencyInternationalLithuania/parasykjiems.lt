@@ -95,7 +95,7 @@ Create a new user and add user to group admin
 useradd username
 passwd username
 mkdir /home/username
-chown vytautas:users /home/username/
+chown username:users /home/username/
 usermod -a -G admin username
 
 
