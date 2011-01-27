@@ -254,7 +254,6 @@ def findCivilParishMembers(municipality = None, city = None, street = None, hous
     city_gen = kwargs["city_genitive"]
 
     idList = findLT_street_index_id(modelToSearchIn=CivilParishStreet, institutionColumName= "civilParish", municipality=municipality, city=city,  city_gen= city_gen, street=street, house_number=house_number)
-    #idList = findLT_CivilParish_Id(municipality=municipality, city=city,  city_gen= city_gen, street=street, house_number=house_number)
     
     members = CivilParishMember.objects.all().filter(civilParish__in = idList)
     return members
@@ -267,7 +266,6 @@ def findSeniunaitijaMembers(municipality = None, city = None, street = None, hou
     # city is not used, instead we use city_gen
     # since in Lithuania it is the primary key to identify cities
     idList = findLT_street_index_id(SeniunaitijaStreet, "seniunaitija", municipality=municipality, city= city_gen, street= street, house_number= house_number)
-    #idList = findSeniunaitijaMembersIDs(municipality=municipality, city= city_gen, street= street, house_number= house_number)
     members = SeniunaitijaMember.objects.all().filter(seniunaitija__in = idList)
     return members
 
@@ -276,12 +274,12 @@ def getCityNominative(municipality, city_genitive, street):
     return city name in genitive. This is only for Lithuanian data"""
 
     streetFilters = None
-    if (street is not None and street !=""):
+    if street is not None and street !="":
         streetFilters = Q(**{"street__icontains": street})
     cityFilters = Q(**{"city_genitive__icontains": city_genitive})
     municipalityFilters = Q(**{"municipality__icontains": municipality})
         
-    if (streetFilters != None):
+    if streetFilters != None:
         finalQuery = municipalityFilters & cityFilters & streetFilters
     else:
         finalQuery = municipalityFilters & cityFilters
