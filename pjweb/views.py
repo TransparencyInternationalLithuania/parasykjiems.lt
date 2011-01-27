@@ -650,39 +650,35 @@ def confirmMessageAndSendEmailToRepresentative(mail):
     # update message state
     mail.msg_state = 'Confirmed'
 
-    # determine where to send email
-    domain = GlobalSettings.MAIL_SERVER
-    reply_to = 'reply%s_%s@%s' % (mail.id, mail.response_hash, domain)
-
     # assigning message to email
     message = mail.message
 
     # if message is private - clear it in db, since even if it was private,
     # it has been saved in DB so that we could confirm it later and send it
     if not mail.public:
-        #public = _('private')
         mail.message = ''
-    #else:
-    #    public = _('public')
 
     # save message state to db
     mail.save()
 
-
-    mail.response_url = "http://%s/pjweb/public/%s/" % (current_site.domain, mail.id)
-
     # compile an actual message
+    mail.response_url = "http://%s/pjweb/public/%s/" % (current_site.domain, mail.id)
     message = loader.render_to_string('pjweb/emails/email_to_representative.txt', {
         'current_site' : current_site,
         'mail' : mail,
         'messageBody' :message
     })
 
+    # checking whether emails must be forwared to some specific address
+    # or to real representative addresses
+    recipients = GlobalSettings.mail.sendEmailToRepresentatives
     if GlobalSettings.mail.sendEmailToRepresentatives == "sendToRepresentatives":
         recipients = [mail.recipient_mail]
-    else:
-        recipients = GlobalSettings.mail.sendEmailToRepresentatives
     logger.debug("sending email to these recipients: %s" % recipients)
+
+    # determine reply address
+    domain = GlobalSettings.MAIL_SERVER
+    reply_to = 'reply%s_%s@%s' % (mail.id, mail.response_hash, domain)
 
     # send an actual email message to government representative
     email = EmailMessage(_(u'You got a letter from %s') % mail.sender_name, message, settings.EMAIL_HOST_USER,
