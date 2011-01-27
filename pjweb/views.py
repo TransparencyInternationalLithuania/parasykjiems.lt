@@ -231,36 +231,7 @@ def findLT_street_index_id(modelToSearchIn, institutionColumName = None, municip
 
     if len(list) > 0:
         return list
-    """
-    # first search by street without house number
-    try:
-        query = modelToSearchIn.objects.all().filter(municipality__contains = municipality)\
-            .filter(street__contains = street) \
-            .filter(cityQuery)
-        streetIdList = extractInstitutionColumIds(query, institutionColumName)
-        if len(streetIdList) > 0:
-            if len(streetIdList) == 1:
-                print "found following ids %s" % streetIdList
-                return streetIdList
-
-            # we have found more than 1 member.  Try to search with street number to narrow
-            query = modelToSearchIn.objects.all().filter(municipality__contains = municipality)\
-                .filter(street__icontains = street) \
-                .filter(cityQuery)
-            query = addHouseNumberQuery(query, house_number)
-            #print query.query
-
-            streetNumberIdList = extractInstitutionColumIds(query, institutionColumName)
-            if len(streetNumberIdList) > 0:
-                print "found following ids %s" % streetNumberIdList
-                return streetNumberIdList
-            else:
-                print "found following ids %s" % streetIdList
-                return streetIdList
-
-    except modelToSearchIn.DoesNotExist:
-        pass
-"""
+   
     # search without street. Will return tens of results, but it is better than nothing
     try:
         cityQuery = getCityQuery(city=city, city_gen= city_gen)
