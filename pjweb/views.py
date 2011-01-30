@@ -568,9 +568,8 @@ def contact(request, rtype, mp_id):
 
                     message = line1 + "\n\n" + line2 + "\n\n" + line3 + "\n\n" + line4 + "\n\n" + line5 + "\n\n" + line6 + "\n\n" + message_disp + "\n\n" + endline
 #                    _('You sent an email to ')+ mail.recipient_name + _(' with text:\n\n')+ message_disp + _('\n\nYou must confirm this message by clicking link \below:\n') + 'http://%s/confirm/%s/%s' % (current_site.domain, mail.id, mail.response_hash)
-                    email = EmailMessage(_(u'Confirm your message %s') % sender_name, message, settings.EMAIL_HOST_USER,
-                        [sender], [],
-                        headers = {'Reply-To': reply_to})
+                    email = EmailMessage(subject=_(u'Confirm your message %s') % sender_name, body=message, from_email=reply_to,
+                        to=[sender], bcc=[], headers = {'Reply-To': reply_to})
                     email.send()
                     ThanksMessage = _('Thank you. This message must be confirmed. Please check your email.')
                     logger.debug('%s' % (ThanksMessage))
