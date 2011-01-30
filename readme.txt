@@ -67,6 +67,8 @@ sudo hg update --clean
 
 #runing server with nginx and gunicorn. Do not run python with super user 
 python manage.py run_gunicorn 127.0.0.1:1234 --daemon
+# use this to run server with user parasykjiems
+sudo -u parasykjiems python manage.py run_gunicorn 127.0.0.1:1234 --daemon
 
 # to kill a running gunicorn instance
 ps ax | grep manage.py
