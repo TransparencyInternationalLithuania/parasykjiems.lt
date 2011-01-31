@@ -24,7 +24,8 @@ class Command(BaseCommand):
             'port':GlobalSettings.mail.IMAP.EMAIL_PORT,
             'username':GlobalSettings.mail.IMAP.EMAIL_HOST_USER,
             'password':GlobalSettings.mail.IMAP.EMAIL_HOST_PASSWORD,
-            'type':GlobalSettings.mail.IMAP.EMAIL_HOST_TYPE
+            'type':GlobalSettings.mail.IMAP.EMAIL_HOST_TYPE,
+            'EMAIL_LOGIN_TYPE':GlobalSettings.mail.IMAP.EMAIL_LOGIN_TYPE
             }
 
         print "logging into mail server %s %s:%s" % (server_info['type'], server_info['server'], server_info['port'])

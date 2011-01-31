@@ -26,20 +26,32 @@ class IMAPException(ChainnedException):
 class GetMail():
 
     def login(self, server_info):
-        if server_info['type'] != 'IMAP':
+        serverType = server_info['type']
+        if serverType == 'IMAP':
+            # use IMAP4_SSL when SSL is supported on mail server
+            # M = imaplib.IMAP4_SSL(server_info['server'])
+            # use login, when plaintext login is supported
+            # M.login(server_info['username'], server_info['password'])
+            # use IMAP4 when SSL is not supported on mail server
+            self.M = imaplib.IMAP4(server_info['server'], server_info['port'])
+        elif serverType == 'IMAP4_SSL':
+            self.M = imaplib.IMAP4_SSL(server_info['server'], server_info['port'])
+        else:
             raise MethodNotImplementedException("Server type %s is not yet implemented" % server_info['type'])
 
-        # use IMAP4_SSL when SSL is supported on mail server
-        # M = imaplib.IMAP4_SSL(server_info['server'])
-        # use login, when plaintext login is supported
-        # M.login(server_info['username'], server_info['password'])
-        # use IMAP4 when SSL is not supported on mail server
-        self.M = imaplib.IMAP4(server_info['server'], server_info['port'])
+        loginType = server_info['EMAIL_LOGIN_TYPE']
+        if loginType == "PLAIN":
+            self.M.login(server_info['username'], server_info['password'])
+        elif loginType == CRAM_MD5:
+            # use login_cram_md5(or some other supported login type) plaintext login is not supported
+            self.M.login_cram_md5(server_info['username'], server_info['password'])
+        else:
+            raise MethodNotImplementedException("EMAIL_LOGIN_TYPE  %s is not yet implemented" % loginType)
 
-        # use login_cram_md5(or some other supported login type) plaintext login is not supported
-        self.M.login_cram_md5(server_info['username'], server_info['password'])
 
         self.M.select('INBOX')
+
+
 
     def logout(self):
         self.M.expunge()
