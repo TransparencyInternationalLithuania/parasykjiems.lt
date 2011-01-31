@@ -60,11 +60,24 @@ dir_util.mkpath(indexPath)
 #HAYSTACK_XAPIAN_PATH = os.path.join(scriptPath, 'parasyk_index')
 
 # variables for email sending
-EMAIL_HOST = ''
-EMAIL_PORT = '25'
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
-EMAIL_USE_TLS = False
+GlobalSettings.mail.SMTP.EMAIL_HOST = 'smtp.gmail.com'
+GlobalSettings.mail.SMTP.EMAIL_PORT = 587
+GlobalSettings.mail.SMTP.EMAIL_HOST_USER = "parasykjiemsimap@gmail.com"
+GlobalSettings.mail.SMTP.EMAIL_HOST_PASSWORD = ""
+GlobalSettings.mail.SMTP.EMAIL_USE_TLS = True
+# a value in the "from" field when a confirmation email is sent. Usually something like "wtt@wtt.com"
+GlobalSettings.mail.SMTP.CONFIRMATION_EMAIL_SENT_FROM = "darius localhost web server"
+
+# a value in the "from" field when a representative receives an email. Can bei either an email address (usually
+# it is GlobalSettings.mail.SMTP.EMAIL_HOST_USER, since SMTP might allow only specific email addres)
+# or a string literal "name@imaphost", in which case name will be senders first name, and IMAP public host name in the end
+#GlobalSettings.mail.SMTP.REPRESENTATIVE_EMAIL_SENT_FROM = GlobalSettings.mail.SMTP.EMAIL_HOST_USER
+GlobalSettings.mail.SMTP.REPRESENTATIVE_EMAIL_SENT_FROM = "name@imaphost"
+
+# a "from" field when a representative email is forwarded back to respondent
+GlobalSettings.mail.SMTP.REPRESENTATIVE_REPLY_EMAIl_SENT_FROM = "parasykjiems@parasykjiems.lt"
+
+
 
 # email sending backend - works only from django 1.2
 # to console
@@ -94,14 +107,18 @@ dir_util.mkpath(logPath)
 LOG_FILENAME = os.path.join(logPath, 'pjweb.log')
 logging.basicConfig(filename=LOG_FILENAME,level=logging.DEBUG)
 
-# Setttings repository for ParašykJiems.LT
 
+# Setttings repository for ParasykJiems.LT
 #variables for getting email
-GlobalSettings.MAIL_SERVER_TYPE = 'IMAP'
-GlobalSettings.MAIL_SERVER = 'dev.parasykjiems.lt'
-GlobalSettings.MAIL_USERNAME = 'vytautas'
-GlobalSettings.MAIL_PASSWORD = 'devdev'
-GlobalSettings.MAIL_PORT = '5143'
+GlobalSettings.mail.IMAP.EMAIL_PUBLIC_HOST = 'gmail.com'
+# IMAP or IMAP4_SSL
+GlobalSettings.mail.IMAP.EMAIL_HOST_TYPE = 'IMAP4_SSL'
+# PLAIN or CRAM_MD5
+GlobalSettings.mail.IMAP.EMAIL_LOGIN_TYPE = 'PLAIN'
+GlobalSettings.mail.IMAP.EMAIL_HOST = 'imap.gmail.com'
+GlobalSettings.mail.IMAP.EMAIL_PORT = '993'
+GlobalSettings.mail.IMAP.EMAIL_HOST_USER = 'parasykjiemsimap@gmail.com'
+GlobalSettings.mail.IMAP.EMAIL_HOST_PASSWORD = ''
 
 # variables for accessing Lithuanian contact db documents on google docs
 #GlobalSettings.GOOGLE_DOCS_USER = 'parasykjiems@gmail.com'
