@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 from django.core.management import execute_manager
 import sys
-import logging
 
 try:
     import settings # Assumed to be in the same directory.
@@ -11,10 +10,4 @@ except ImportError:
     sys.exit(1)
 
 if __name__ == "__main__":
-    try:
-        execute_manager(settings)
-    except Exception as e:
-        msg = "Unhandeld exception occureed while calling %s" % sys.argv
-        print msg
-        print e
-        logging.exception(msg)
+    execute_manager(settings)
