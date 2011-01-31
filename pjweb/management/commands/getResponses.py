@@ -20,11 +20,11 @@ class Command(BaseCommand):
         Valid emails will be yielded for immediate processing."""
 
         server_info = {
-            'server':GlobalSettings.MAIL_SERVER,
-            'port':GlobalSettings.MAIL_PORT,
-            'username':GlobalSettings.MAIL_USERNAME,
-            'password':GlobalSettings.MAIL_PASSWORD,
-            'type':GlobalSettings.MAIL_SERVER_TYPE
+            'server':GlobalSettings.mail.IMAP.EMAIL_HOST,
+            'port':GlobalSettings.mail.IMAP.EMAIL_PORT,
+            'username':GlobalSettings.mail.IMAP.EMAIL_HOST_USER,
+            'password':GlobalSettings.mail.IMAP.EMAIL_HOST_PASSWORD,
+            'type':GlobalSettings.mail.IMAP.EMAIL_HOST_TYPE
             }
 
         print "logging into mail server %s %s:%s" % (server_info['type'], server_info['server'], server_info['port'])
