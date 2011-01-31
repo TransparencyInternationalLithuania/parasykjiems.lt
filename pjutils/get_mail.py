@@ -44,7 +44,7 @@ class GetMail():
         loginType = server_info['EMAIL_LOGIN_TYPE']
         if loginType == "PLAIN":
             self.M.login(server_info['username'], server_info['password'])
-        elif loginType == CRAM_MD5:
+        elif loginType == "CRAM_MD5":
             # use login_cram_md5(or some other supported login type) plaintext login is not supported
             self.M.login_cram_md5(server_info['username'], server_info['password'])
         else:
