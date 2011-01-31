@@ -27,6 +27,12 @@ class GlobalSettingsBase(object):
 
         raise Exception("Please define %s  setting" % name)
 
+class GlobalSettingsSMTP(GlobalSettingsBase):
+    pass
+
+class GlobalSettingsIMAP(GlobalSettingsBase):
+    pass
+
 class GlobalSettingsMail(GlobalSettingsBase):
 
     def _feedbackEmail(self):

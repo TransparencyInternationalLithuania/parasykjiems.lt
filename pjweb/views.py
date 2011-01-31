@@ -551,7 +551,7 @@ def contact(request, rtype, mp_id):
                 if send:
                     print mail.message
                     mail.save()  
-                    reply_to = '%s%s_%s@%s' % (GlobalSettings.DefaultMailPrefix, mail.id, mail.response_hash, GlobalSettings.MAIL_SERVER)
+                    reply_to = '%s%s_%s@%s' % (GlobalSettings.DefaultMailPrefix, mail.id, mail.response_hash, GlobalSettings.mail.IMAP.EMAIL_HOST)
                     # generate confirmation email message and send it
                     confirm_link = ("http://%s/confirm/%s/%s") % (current_site.domain, mail.id, mail.response_hash)
                     line1 = _(u"Hello,")
@@ -568,8 +568,9 @@ def contact(request, rtype, mp_id):
 
                     message = line1 + "\n\n" + line2 + "\n\n" + line3 + "\n\n" + line4 + "\n\n" + line5 + "\n\n" + line6 + "\n\n" + message_disp + "\n\n" + endline
 #                    _('You sent an email to ')+ mail.recipient_name + _(' with text:\n\n')+ message_disp + _('\n\nYou must confirm this message by clicking link \below:\n') + 'http://%s/confirm/%s/%s' % (current_site.domain, mail.id, mail.response_hash)
-                    email = EmailMessage(subject=_(u'Confirm your message %s') % sender_name, body=message, from_email=reply_to,
-                        to=[sender], bcc=[], headers = {'Reply-To': reply_to})
+                    email = EmailMessage(subject=_(u'Confirm your message %s') % sender_name, body=message, from_email=settings.EMAIL_HOST_USER,
+                        to=[sender], bcc=[], 
+                        headers = {'Reply-To': reply_to})
                     email.send()
                     ThanksMessage = _('Thank you. This message must be confirmed. Please check your email.')
                     logger.debug('%s' % (ThanksMessage))
@@ -637,15 +638,15 @@ def confirmMessageAndSendEmailToRepresentative(mail):
         'messageBody' :message
     })
 
-    # checking whether emails must be forwared to some specific address
+    # checking whether emails must be forwarded to some specific address
     # or to real representative addresses
     recipients = GlobalSettings.mail.sendEmailToRepresentatives
     if GlobalSettings.mail.sendEmailToRepresentatives == "sendToRepresentatives":
         recipients = [mail.recipient_mail]
-    logger.debug("sending email to these recipients: %s" % recipients)
+    logger.info("sending email to these recipients: %s" % recipients)
 
     # determine reply address
-    domain = GlobalSettings.MAIL_SERVER
+    domain = GlobalSettings.mail.IMAP.EMAIL_HOST
     reply_to = 'reply%s_%s@%s' % (mail.id, mail.response_hash, domain)
 
     # send an actual email message to government representative

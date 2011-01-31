@@ -1,5 +1,5 @@
 # Django settings for parasykjiems project.
-from GlobalSettingsClass import GlobalSettingsClass, GlobalSettingsMail
+from GlobalSettingsClass import GlobalSettingsClass, GlobalSettingsMail, GlobalSettingsIMAP, GlobalSettingsSMTP
 
 SITE_ID = 1
 
@@ -40,23 +40,6 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'urls'
 
-#HAYSTACK_INCLUDE_SPELLING = True
-
-def prepareSettingsLocal():
-    import os
-    import shutil
-    if (os.path.exists("settings_local.py") == False):
-        print "settings_local.py does not exist"
-        print "creating new settings from settings_local.py.template"
-        shutil.copy("settings_local.py.template", "settings_local.py")
-    
-
-GlobalSettings = GlobalSettingsClass()
-GlobalSettings.mail = GlobalSettingsMail();
-
-prepareSettingsLocal()
-from settings_local import *
-
 
 commonApps = ['django.contrib.auth',
     'django.contrib.contenttypes',
@@ -77,7 +60,60 @@ commonApps = ['django.contrib.auth',
     'cdb_lt_seniunaitija',
     'cdb_lt_streets']
 
-INSTALLED_APPS = tuple(commonApps + GlobalSettings.LiveServerApps)
+#HAYSTACK_INCLUDE_SPELLING = True
 
-# send feedback from website to this email address
-GlobalSettings.mail.feedbackEmail = "parasykjiems@gmail.com"
+def applyDefaultSettings():
+    GlobalSettings.mail = GlobalSettingsMail();
+    # send feedback from website to this email address
+    GlobalSettings.mail.feedbackEmail = "parasykjiems@gmail.com"
+
+    # IMAP settings
+    GlobalSettings.mail.IMAP = GlobalSettingsIMAP()
+
+    # this is used to build a reply to address when sending emails
+    GlobalSettings.mail.IMAP.EMAIl_PUBLIC_HOST = 'dev.parasykjiems.lt'
+    GlobalSettings.mail.IMAP.EMAIL_HOST_TYPE = 'IMAP'
+    GlobalSettings.mail.IMAP.EMAIL_HOST = 'dev.parasykjiems.lt'
+    GlobalSettings.mail.IMAP.EMAIL_PORT = '5143'
+    GlobalSettings.mail.IMAP.EMAIL_HOST_USER = 'vytautas'
+    GlobalSettings.mail.IMAP.EMAIL_HOST_PASSWORD = 'devdev'
+
+
+
+    # SMTP settings
+    GlobalSettings.mail.SMTP = GlobalSettingsSMTP()
+    GlobalSettings.mail.SMTP.EMAIL_HOST = ''
+    GlobalSettings.mail.SMTP.EMAIL_PORT = 25
+    GlobalSettings.mail.SMTP.EMAIL_HOST_USER = ""
+    GlobalSettings.mail.SMTP.EMAIL_HOST_PASSWORD = ""
+
+# Create settings_local.py file from template, if does not exist
+def prepareSettingsLocal():
+    import os
+    import shutil
+    if os.path.exists("settings_local.py") == False:
+        print "settings_local.py does not exist"
+        print "creating new settings from settings_local.py.template"
+        shutil.copy("settings_local.py.template", "settings_local.py")
+
+# Create GlobalSetttings class to store app specific settings (compared to Django specific)
+
+GlobalSettings = GlobalSettingsClass()
+applyDefaultSettings()
+
+# load settings_local file.
+prepareSettingsLocal()
+from settings_local import *
+
+INSTALLED_APPS = tuple(commonApps + GlobalSettings.LiveServerApps)
+# no settings should be below this line. Add standard settings to applyDefaultSettings
+# or write them in settings_local file, if they are specific for your deployment
+
+# copy to DJANGO smtp variables our own settings
+# You should never use Django SMTP variables. Instead use
+# settings from GlobalSettings.mail.SMTP object
+# Define values for these settings in settings_local.py file
+EMAIL_HOST = GlobalSettings.mail.SMTP.EMAIL_HOST
+EMAIL_PORT = GlobalSettings.mail.SMTP.EMAIL_PORT
+EMAIL_HOST_USER = GlobalSettings.mail.SMTP.EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = GlobalSettings.mail.SMTP.EMAIL_HOST_PASSWORD
