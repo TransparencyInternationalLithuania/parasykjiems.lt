@@ -96,12 +96,15 @@ class InsertResponse():
 
         resp.save()
 
+
+        from_email = settings.mail.SMTP.REPRESENTATIVE_REPLY_EMAIl_SENT_FROM
+
         # send a mail message to original person who asked a question.
         # Reply-to will not be an exact recipients email (resp.sender_mail),
         # but a "no_reply" address, meaning that we do not support "discussion" style
         # responses now.
-        email = EmailMessage(u'Gavote atsakymą nuo %s' % resp.sender_name, mail_info['msg_text'], settings.EMAIL_HOST_USER,
-            [resp.recipient_mail], [],
+        email = EmailMessage(subject=u'Gavote atsakymą nuo %s' % resp.sender_name, body=mail_info['msg_text'], from_email=from_email,
+            to=[resp.recipient_mail], bcc=[],
             headers = {'Reply-To': 'no_reply_parasykjiems@gmail.com'})
         if att_path is not None:
             email.attach_file(att_path)
