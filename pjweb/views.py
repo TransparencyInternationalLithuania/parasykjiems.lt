@@ -566,9 +566,11 @@ def contact(request, rtype, mp_id):
 #                    languageId = "lt"
 #                    messsage = render_to_string("mail_body.txt")
 
+                    from_email = GlobalSettings.mail.SMTP.CONFIRMATION_EMAIL_SENT_FROM
+
                     message = line1 + "\n\n" + line2 + "\n\n" + line3 + "\n\n" + line4 + "\n\n" + line5 + "\n\n" + line6 + "\n\n" + message_disp + "\n\n" + endline
 #                    _('You sent an email to ')+ mail.recipient_name + _(' with text:\n\n')+ message_disp + _('\n\nYou must confirm this message by clicking link \below:\n') + 'http://%s/confirm/%s/%s' % (current_site.domain, mail.id, mail.response_hash)
-                    email = EmailMessage(subject=_(u'Confirm your message %s') % sender_name, body=message, from_email=settings.EMAIL_HOST_USER,
+                    email = EmailMessage(subject=_(u'Confirm your message %s') % sender_name, body=message, from_email=from_email,
                         to=[sender], bcc=[], 
                         headers = {'Reply-To': reply_to})
                     email.send()
@@ -616,26 +618,12 @@ def contact(request, rtype, mp_id):
 def confirmMessageAndSendEmailToRepresentative(mail):
     current_site = Site.objects.get_current()
 
-    # update message state
-    mail.msg_state = 'Confirmed'
-
-    # assigning message to email
-    message = mail.message
-
-    # if message is private - clear it in db, since even if it was private,
-    # it has been saved in DB so that we could confirm it later and send it
-    if not mail.public:
-        mail.message = ''
-
-    # save message state to db
-    mail.save()
-
     # compile an actual message
     mail.response_url = "http://%s/pjweb/public/%s/" % (current_site.domain, mail.id)
     message = loader.render_to_string('pjweb/emails/email_to_representative.txt', {
         'current_site' : current_site,
         'mail' : mail,
-        'messageBody' :message
+        'messageBody' :mail.message
     })
 
     # checking whether emails must be forwarded to some specific address
@@ -649,9 +637,13 @@ def confirmMessageAndSendEmailToRepresentative(mail):
     domain = GlobalSettings.mail.IMAP.EMAIL_HOST
     reply_to = 'reply%s_%s@%s' % (mail.id, mail.response_hash, domain)
 
+    from_email=GlobalSettings.mail.SMTP.REPRESENTATIVE_EMAIL_SENT_FROM
+    if from_email == "name@imaphost":
+        from_email = "%s@%s" % (mail.sender_name, GlobalSettings.mail.IMAP.EMAIL_PUBLIC_HOST)
+
     # send an actual email message to government representative
-    email = EmailMessage(_(u'You got a letter from %s') % mail.sender_name, message, settings.EMAIL_HOST_USER,
-        recipients, [],
+    email = EmailMessage(subject=_(u'You got a letter from %s') % mail.sender_name, body=message, from_email=from_email,
+        to=recipients, bcc=[],
         headers = {'Reply-To': reply_to})
     email.send()
 
@@ -663,6 +655,20 @@ def confirmMessageAndSendEmailToRepresentative(mail):
         mail_state = 'Sent',
     )
     history.save()
+
+
+    # Mark finally that message has been finally confirmed and sent to representative
+    # update message state.  Do this only after email has been sent, so that email fail error
+    # would not mark this message as confirmed prematurely
+    mail.msg_state = 'Confirmed'
+
+    # if message is private - clear it in db, since even if it was private,
+    # it has been saved in DB so that we could confirm it later and send it
+    if not mail.public:
+        mail.message = ''
+
+    # save message state to db
+    mail.save()
 
 
 def confirm(request, mail_id, secret):
