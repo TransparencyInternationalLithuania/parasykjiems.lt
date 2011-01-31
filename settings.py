@@ -86,6 +86,7 @@ def applyDefaultSettings():
     GlobalSettings.mail.SMTP.EMAIL_PORT = 25
     GlobalSettings.mail.SMTP.EMAIL_HOST_USER = ""
     GlobalSettings.mail.SMTP.EMAIL_HOST_PASSWORD = ""
+    GlobalSettings.mail.SMTP.EMAIL_USE_TLS = False
 
 # Create settings_local.py file from template, if does not exist
 def prepareSettingsLocal():
@@ -117,3 +118,4 @@ EMAIL_HOST = GlobalSettings.mail.SMTP.EMAIL_HOST
 EMAIL_PORT = GlobalSettings.mail.SMTP.EMAIL_PORT
 EMAIL_HOST_USER = GlobalSettings.mail.SMTP.EMAIL_HOST_USER
 EMAIL_HOST_PASSWORD = GlobalSettings.mail.SMTP.EMAIL_HOST_PASSWORD
+EMAIL_USE_TLS = GlobalSettings.mail.SMTP.EMAIL_USE_TLS
