@@ -634,7 +634,7 @@ def confirmMessageAndSendEmailToRepresentative(mail):
     logger.info("sending email to these recipients: %s" % recipients)
 
     # determine reply address
-    domain = GlobalSettings.mail.IMAP.EMAIL_HOST
+    domain = GlobalSettings.mail.IMAP.EMAIL_PUBLIC_HOST
     reply_to = 'reply%s_%s@%s' % (mail.id, mail.response_hash, domain)
 
     from_email=GlobalSettings.mail.SMTP.REPRESENTATIVE_EMAIL_SENT_FROM
