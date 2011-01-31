@@ -4,7 +4,8 @@
 import logging
 from cdb_lt_streets.management.commands.ltGeoDataCrawl import ExtractRange
 from pjutils.get_mail import GetMail
-from pjutils.insert_response import MailHashIsNotCorrect, InsertResponse, MailDoesNotExistInDBException
+from pjutils.insert_response import InsertResponse
+from pjweb.email.backends import CanNotExtractEmailIdAndHash, MailHashIsNotCorrect, MailDoesNotExistInDBException
 from settings import GlobalSettings
 import sys
 from django.core.management.base import BaseCommand
@@ -59,25 +60,24 @@ class Command(BaseCommand):
         try:
             for num in mailNumbers[fromNumber:toNumber]:
                 print "\n \nreading mail %s" % num
-                email = getmail.readMessage(num)
-                if email is None:
-                    print "marking message %s for deletion" % num
-                    getmail.markMessageForDeletion(num)
-                    deletedEmails.append(num)
-                    continue
                 # try to insert response
                 # if an exception will be raised, leave this message, we will fix the bug and
                 # insert it
                 try:
-                    insert.insert_resp(email)
-                except MailHashIsNotCorrect as e:
+                    email = getmail.readMessage(num)
+                    if email is None:
+                        print "marking message %s for deletion" % num
+                        getmail.markMessageForDeletion(num)
+                        deletedEmails.append(num)
+                        continue
+                    email_id, msg_text, msg_attachments = email
+                    insert.insert_resp(email_id, msg_text, msg_attachments)
+                except (MailHashIsNotCorrect, MailDoesNotExistInDBException) as e:
                     print e.message
                     skippedEmails.append(num)
                     continue
-                except MailDoesNotExistInDBException as ex:
-                    print ex.message
-                    skippedEmails.append(num)
-                    continue
+
+
 
                 print "message imported succesfully. deleting original"
                 getmail.markMessageForDeletion(num)

@@ -5,6 +5,7 @@ import logging
 import os
 from pjutils.exc import ChainnedException
 from pjutils.get_mail import GetMail
+from pjweb.email.backends import MailDoesNotExistInDBException
 import settings
 from settings import GlobalSettings
 from django.core.management.base import BaseCommand
@@ -14,19 +15,9 @@ from cdb_lt_municipality.models import MunicipalityMember
 from cdb_lt_mps.models import ParliamentMember
 from cdb_lt_civilparish.models import CivilParishMember
 from cdb_lt_seniunaitija.models import SeniunaitijaMember
-from django.utils.encoding import smart_unicode
+
 
 logger = logging.getLogger(__name__)
-
-
-class InsertResponseException(ChainnedException):
-    pass
-
-class MailDoesNotExistInDBException(InsertResponseException):
-    pass
-
-class MailHashIsNotCorrect(InsertResponseException):
-    pass
 
 class InsertResponse():
 
@@ -50,17 +41,12 @@ class InsertResponse():
 
         return receiver[0]
 
-    def insert_resp(self, mail_info):
+    def insert_resp(self, email_id, msg_text, msg_attachments):
         mail = None
         try:
-            mail = Email.objects.get(id=mail_info['msg_id'])
+            mail = Email.objects.get(id=email_id)
         except Email.DoesNotExist as e:
-            raise MailDoesNotExistInDBException(message="We do not have email in database with id '%s'" % mail_info['msg_id'], inner=e)
-
-        # print mail.response_hash, mail_info['msg_hash']
-        if mail.response_hash != int(mail_info['msg_hash']):
-            params = (mail_info['msg_id'], mail.response_hash, mail_info['msg_hash'])
-            raise MailHashIsNotCorrect(message="Hash for mail '%s' was not correct. It should be '%s', but was '%s'" % params)
+            raise MailDoesNotExistInDBException(message="We do not have email in database with id '%s'" % email_id, inner=e)
 
         responder = self.get_rep(mail.recipient_id, mail.recipient_type)
         # print responder
@@ -77,16 +63,13 @@ class InsertResponse():
         # if previous email was public, then we save the reply message text to db
         # else we delete it, and simply send whole email straight to the person
         # who asked the question in the first place
-        #text = SmartUnicode(mail_info['msg_text'])
-        #text = unicode(mail_info['msg_text'], 'utf-8')
-        text = smart_unicode(mail_info['msg_text'], encoding=mail_info['msg_encoding'], strings_only=False, errors='strict')
         if mail.public:
-            resp.message = text
+            resp.message = msg_text
         else:
             resp.message = ''
 
         att_path = None
-        attachments = mail_info["attachments"]
+        attachments = msg_attachments
         if attachments is not None and len(attachments) > 0:
             # for now just handle single attachment only
             attachment = attachments[0]
@@ -103,7 +86,7 @@ class InsertResponse():
         # Reply-to will not be an exact recipients email (resp.sender_mail),
         # but a "no_reply" address, meaning that we do not support "discussion" style
         # responses now.
-        email = EmailMessage(subject=u'Gavote atsakymą nuo %s' % resp.sender_name, body=mail_info['msg_text'], from_email=from_email,
+        email = EmailMessage(subject=u'Gavote atsakymą nuo %s' % resp.sender_name, body=msg_text, from_email=from_email,
             to=[resp.recipient_mail], bcc=[],
             headers = {'Reply-To': 'no_reply_parasykjiems@gmail.com'})
         if att_path is not None:
