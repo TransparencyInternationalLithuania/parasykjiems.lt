@@ -633,16 +633,19 @@ def confirmMessageAndSendEmailToRepresentative(mail):
         recipients = [mail.recipient_mail]
     logger.info("sending email to these recipients: %s" % recipients)
 
+
+    composition = GlobalSettings.mail.composition_backends[0]
     # determine reply address
-    domain = GlobalSettings.mail.IMAP.EMAIL_PUBLIC_HOST
-    reply_to = 'reply%s_%s@%s' % (mail.id, mail.response_hash, domain)
+    reply_to = composition.getReplyTo(mail)
 
     from_email=GlobalSettings.mail.SMTP.REPRESENTATIVE_EMAIL_SENT_FROM
     if from_email == "name@imaphost":
         from_email = "%s@%s" % (mail.sender_name, GlobalSettings.mail.IMAP.EMAIL_PUBLIC_HOST)
 
+    subject = composition.getSubject(mail)
+
     # send an actual email message to government representative
-    email = EmailMessage(subject=_(u'You got a letter from %s') % mail.sender_name, body=message, from_email=from_email,
+    email = EmailMessage(subject=subject, body=message, from_email=from_email,
         to=recipients, bcc=[],
         headers = {'Reply-To': reply_to})
     email.send()

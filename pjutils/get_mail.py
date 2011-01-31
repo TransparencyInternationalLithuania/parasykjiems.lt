@@ -7,7 +7,9 @@ import os, sys, imaplib, rfc822
 import string, re, StringIO
 import email
 from pjutils.exc import MethodNotImplementedException, ChainnedException
+from pjweb.email.backends import CanNotExtractEmailIdAndHash
 from settings import *
+from django.utils.encoding import smart_unicode
 
 logger = logging.getLogger(__name__)
 
@@ -180,24 +182,24 @@ class GetMail():
 
         print ("Got email num %s \n \t from: %s \n \t To: %s \n \t Subject: %s \n \t Received: %s") % (num, header_from, header_to, header_subject, header_received)
 
-        # if to: field does not contain our defined mail prefix
-        # delete the email, and continue processing other mails
-        if GlobalSettings.DefaultMailPrefix not in header_to:
-            print "Email %s did not have correct header, either spam, or some other email" % num
+
+        # check if a message id can be extracted from this email
+        email_id = None
+        for composition_backend in GlobalSettings.mail.composition_backends:
+            try:
+                email_id = composition_backend.getEmailId(header_to = header_to, header_from=header_from, header_subject=header_subject, header_received = header_received)
+            except CanNotExtractEmailIdAndHash:
+                continue
+        if email_id is None:
             return None
 
-
         # extract everything and process mail
-        return self.fetchAndParseMail(num, header_to)
+        msg_text, msg_encoding, msg_attachments = self.fetchAndParseMail(num, email_id)
+        msg_text = smart_unicode(msg_text, encoding=msg_encoding, strings_only=False, errors='strict')
+        return email_id, msg_text, msg_attachments
 
 
-    def fetchAndParseMail(self, num, header_to):
-
-        receiver = header_to.split('_')
-        msg_id = receiver[0].replace('reply','')
-        msg_hash = receiver[1]
-        msg_text = ''
-        filename = ""
+    def fetchAndParseMail(self, num, email_id):
         typ, msg_data = self.M.fetch(num, '(RFC822)')
 
         # for some reason msg_date is always len of 2. first element is tuple
@@ -212,12 +214,5 @@ class GetMail():
         msg = email.message_from_string(response_part[1])
 
         # extract text, encoding and attachments
-        msg_text, msg_encoding, msg_attachments = self.getEmailTextAndEncodingAndAttachments(msg_id, msg)
-
-
-        message_data = {'msg_id':msg_id,
-                        'msg_hash':msg_hash,
-                        'msg_text':msg_text,
-                        'msg_encoding':msg_encoding,
-                        'attachments':msg_attachments}
-        return message_data
+        msg_text, msg_encoding, msg_attachments = self.getEmailTextAndEncodingAndAttachments(email_id, msg)
+        return msg_text, msg_encoding, msg_attachments

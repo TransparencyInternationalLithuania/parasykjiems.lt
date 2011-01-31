@@ -1,5 +1,6 @@
 # Django settings for parasykjiems project.
 from GlobalSettingsClass import GlobalSettingsClass, GlobalSettingsMail, GlobalSettingsIMAP, GlobalSettingsSMTP
+from pjweb.email.backends import EmailInfoInToField, EmailInfoInSubject
 
 SITE_ID = 1
 
@@ -71,7 +72,7 @@ def applyDefaultSettings():
     GlobalSettings.mail.IMAP = GlobalSettingsIMAP()
 
     # this is used to build a reply to address when sending emails
-    GlobalSettings.mail.IMAP.EMAIl_PUBLIC_HOST = 'dev.parasykjiems.lt'
+    GlobalSettings.mail.IMAP.EMAIL_PUBLIC_HOST = 'dev.parasykjiems.lt'
     GlobalSettings.mail.IMAP.EMAIL_HOST_TYPE = 'IMAP'
     GlobalSettings.mail.IMAP.EMAIL_HOST = 'dev.parasykjiems.lt'
     GlobalSettings.mail.IMAP.EMAIL_PORT = '5143'
@@ -87,6 +88,25 @@ def applyDefaultSettings():
     GlobalSettings.mail.SMTP.EMAIL_HOST_USER = ""
     GlobalSettings.mail.SMTP.EMAIL_HOST_PASSWORD = ""
     GlobalSettings.mail.SMTP.EMAIL_USE_TLS = False
+
+
+    # this controls where a info about which emails relates to which message in database is put.
+    # At the moment there are plans to support three backends:
+    # EmailInfoInToField - stores information in to field. So when representative gets an email,
+    #     a reply-to field will be semething like 'somepreifx_%s_%s@yourdomain' % (mail.id, mail.hash)
+    # EmailInfoInSubject - stores information in subject field. This allows us to use this backend with gmail boxes
+    #     where an IMAP server does not have to support catch-all (i.e. all messages go to single mail box)
+    # EmailInfoDogsAndCats - instead of saving message id in one of the field, a reply-to address is a combination
+    #     of random words, where is smaller than 3 letters. This will circumvent (probably) spam filters reliably.
+    emailInfoInToField = EmailInfoInToField()
+    emailInfoInToField.Email_public_host = GlobalSettings.mail.IMAP.EMAIL_PUBLIC_HOST
+
+    emailInfoInSubject = EmailInfoInSubject()
+    EmailInfoInSubject.DefaultReplyTo = GlobalSettings.mail.IMAP.EMAIL_HOST_USER
+
+    GlobalSettings.mail.composition_backends = [emailInfoInToField, emailInfoInSubject]
+
+
 
 # Create settings_local.py file from template, if does not exist
 def prepareSettingsLocal():
