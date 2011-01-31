@@ -15,12 +15,12 @@ class Command(BaseCommand):
         """ Sometimes IMAP will get invalid emails.  use this to delete those unwanted emails"""
 
         server_info = {
-            'server':GlobalSettings.MAIL_SERVER,
-            'port':GlobalSettings.MAIL_PORT,
-            'username':GlobalSettings.MAIL_USERNAME,
-            'password':GlobalSettings.MAIL_PASSWORD,
-            'type':GlobalSettings.MAIL_SERVER_TYPE
-        }
+            'server':GlobalSettings.mail.IMAP.EMAIL_HOST,
+            'port':GlobalSettings.mail.IMAP.EMAIL_PORT,
+            'username':GlobalSettings.mail.IMAP.EMAIL_HOST_USER,
+            'password':GlobalSettings.mail.IMAP.EMAIL_HOST_PASSWORD,
+            'type':GlobalSettings.mail.IMAP.EMAIL_HOST_TYPE
+            }
 
         fromNumber, toNumber = ExtractRange(args[0])
 
