@@ -97,7 +97,7 @@ class InsertResponse():
         resp.save()
 
 
-        from_email = settings.mail.SMTP.REPRESENTATIVE_REPLY_EMAIl_SENT_FROM
+        from_email = GlobalSettings.mail.SMTP.REPRESENTATIVE_REPLY_EMAIl_SENT_FROM
 
         # send a mail message to original person who asked a question.
         # Reply-to will not be an exact recipients email (resp.sender_mail),
