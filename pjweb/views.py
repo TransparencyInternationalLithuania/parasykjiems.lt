@@ -639,9 +639,6 @@ def confirmMessageAndSendEmailToRepresentative(mail):
     reply_to = composition.getReplyTo(mail)
 
     from_email=GlobalSettings.mail.SMTP.REPRESENTATIVE_EMAIL_SENT_FROM
-    if from_email == "name@imaphost":
-        from_email = "%s@%s" % (mail.sender_name, GlobalSettings.mail.IMAP.EMAIL_PUBLIC_HOST)
-
     subject = composition.getSubject(mail)
 
     # send an actual email message to government representative

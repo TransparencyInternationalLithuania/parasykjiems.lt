@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from django.core.management.base import BaseCommand
+from cdb_lt_streets.management.commands.ltGeoDataImportCsv import ltGeoDataSources
 from pjutils.timemeasurement import TimeMeasurer
 import time
 import os
@@ -12,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 class RegisterCenterPageLocations:
     fileType = ".csv"
-    commonPath = os.path.join("contactdb", "sources", "register center", "municipalities")
+    commonPath = os.path.join("contactdb", "sources", "import data", "municipalities")
 
     alytaus = ("http://www.registrucentras.lt/adr/p/index.php?aps_id=1", os.path.join(commonPath, "Alytaus apskritis%s" % fileType))
     kauno = ("http://www.registrucentras.lt/adr/p/index.php?aps_id=41", os.path.join(commonPath, "Kauno apskritis%s" % fileType))
@@ -26,7 +27,9 @@ class RegisterCenterPageLocations:
     vilniaus = ("http://www.registrucentras.lt/adr/p/index.php?aps_id=460", os.path.join(commonPath, "Vilniaus apskritis%s" % fileType))
 
     # third option is the nominative form of City. This will be passed also as param --city when calling ltGeoDataExportCsv
-    commonStreetPath = os.path.join("contactdb", "sources", "register center", "streets")
+
+
+    """commonStreetPath = os.path.join("contactdb", "sources", "import data", "street indexes")
     vilniusStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=1", os.path.join(commonStreetPath, "city_Vilnius%s" % fileType), {'city': "Vilnius"})
     kaunasStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=6", os.path.join(commonStreetPath, "city_Kaunas%s" % fileType), {'city': "Kaunas"})
     alytusStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=2", os.path.join(commonStreetPath, "city_alytus%s" % fileType), {'city': "Alytus"})
@@ -37,9 +40,10 @@ class RegisterCenterPageLocations:
     taurageStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=82", os.path.join(commonStreetPath, "city_taurage%s" % fileType), {'city': "Tauragė", 'insertCivilParish' : False})
     telsiuStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=84", os.path.join(commonStreetPath, "city_telsiai%s" % fileType), {'city': "Telšiai", 'insertCivilParish' : False})
     utenaStreets = ("http://www.registrucentras.lt/adr/p/index.php?gyv_id=93", os.path.join(commonStreetPath, "city_utena%s" % fileType), {'city': "Utena", 'insertCivilParish' : False})
+"""
 
-
-    allStreets = [
+    allStreets = ltGeoDataSources.lithuanianAdditionalStreets
+    """allStreets = [
                 alytusStreets,
                 kaunasStreets,
                 klaipedaStreets,
@@ -49,7 +53,7 @@ class RegisterCenterPageLocations:
                 taurageStreets,
                 telsiuStreets,
                 utenaStreets,
-                vilniusStreets]
+                vilniusStreets]"""
 
     AllDistricts = [alytaus,
                      kauno,
