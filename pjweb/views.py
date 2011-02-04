@@ -188,7 +188,7 @@ def searchPartial(streetQuery = None, **kwargs):
         streetIdList = extractInstitutionColumIds(query, institutionColumName)
         if len(streetIdList) > 0:
             if len(streetIdList) == 1:
-                print "found following ids %s" % streetIdList
+                #print "found following ids %s" % streetIdList
                 return streetIdList
 
             # we have found more than 1 member.  Try to search with street number to narrow
@@ -200,10 +200,10 @@ def searchPartial(streetQuery = None, **kwargs):
 
             streetNumberIdList = extractInstitutionColumIds(query, institutionColumName)
             if len(streetNumberIdList) > 0:
-                print "found following ids %s" % streetNumberIdList
+                #print "found following ids %s" % streetNumberIdList
                 return streetNumberIdList
             else:
-                print "found following ids %s" % streetIdList
+                #print "found following ids %s" % streetIdList
                 return streetIdList
 
     except modelToSearchIn.DoesNotExist:

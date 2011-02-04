@@ -57,20 +57,24 @@ checking if there are no errors in data"""
         wasError = 0
         count = 0
         for member in reader.ReadMembers():
-            if (member.territoryStr == ""):
+            if member.territoryStr == "":
                 continue
             count += 1
-            if (fromPrint > member.uniqueKey):
+            if fromPrint > member.uniqueKey:
                 continue
-            if (toPrint < member.uniqueKey):
+            if toPrint < member.uniqueKey:
                 break
             numberOfStreets = 0
-            print "territory for: %s %s" % (member.uniqueKey, member.seniunaitijaStr)
+
 
             try:
                 for street in streetExpander.ExpandStreet(member.territoryStr):
-                    print "street \t %s \t %s \t %s \t %s" % (street.city, street.street, street.numberFrom, street.numberTo)
-                    numberOfStreets += 1
+                    #print "street \t %s \t %s \t %s \t %s" % (street.city, street.street, street.numberFrom, street.numberTo)
+                    if street.city is None:
+                        print "territory for: %s %s" % (member.uniqueKey, member.seniunaitijaStr)
+                        print "street \t %s \t %s \t %s \t %s" % (street.city, street.street, street.numberFrom, street.numberTo)
+                        numberOfStreets += 1
+                        break
             except SeniunaitijaAddressExpanderException as e:
                 logger.error("""Error in seniunaitija teritory nr '%s'
 ErrorDetails = %s""" % (member.uniqueKey, e.message))
@@ -80,12 +84,12 @@ ErrorDetails = %s""" % (member.uniqueKey, e.message))
             imported += 1
             totalNumberOfStreets += numberOfStreets
             seconds = start.ElapsedSeconds()
-            if (seconds == 0):
+            if seconds == 0:
                 rate = "unknown"
             else:
                 rate = str(totalNumberOfStreets / seconds)
 
-        if (wasError == 0):
+        if wasError == 0:
             print "succesfully imported %d seniunaitija territories, total %d streets" % (imported, totalNumberOfStreets)
         else:
             print "Errors. Imported only part of the seniunaitija territories"
