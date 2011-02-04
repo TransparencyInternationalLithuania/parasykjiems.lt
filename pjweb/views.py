@@ -239,7 +239,7 @@ def findLT_street_index_id(modelToSearchIn, institutionColumName = None, municip
             .filter(cityQuery)
 
         idList = extractInstitutionColumIds(query, institutionColumName)
-        print "found following ids %s" % idList
+        #print "found following ids %s" % idList
         return idList
     except modelToSearchIn.DoesNotExist:
         pass
@@ -268,26 +268,6 @@ def findSeniunaitijaMembers(municipality = None, city = None, street = None, hou
     idList = findLT_street_index_id(SeniunaitijaStreet, "seniunaitija", municipality=municipality, city= city_gen, street= street, house_number= house_number)
     members = SeniunaitijaMember.objects.all().filter(seniunaitija__in = idList)
     return members
-
-def getCityNominative(municipality, city_genitive, street):
-    """ given municipality, city name in nominative, and street
-    return city name in genitive. This is only for Lithuanian data"""
-
-    streetFilters = None
-    if street is not None and street !="":
-        streetFilters = Q(**{"street__icontains": street})
-    cityFilters = Q(**{"city_genitive__icontains": city_genitive})
-    municipalityFilters = Q(**{"municipality__icontains": municipality})
-        
-    if streetFilters != None:
-        finalQuery = municipalityFilters & cityFilters & streetFilters
-    else:
-        finalQuery = municipalityFilters & cityFilters
-
-    query = LithuanianStreetIndexes.objects.filter(finalQuery).order_by('street')[0:1]
-    for q in query:
-        return q.city
-    return None
 
 
 def choose_representative(request, municipality = None, city = None, street = None, house_number = None):
