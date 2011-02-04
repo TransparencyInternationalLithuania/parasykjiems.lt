@@ -5,6 +5,7 @@ import logging
 import re
 from django.template import loader
 from cdb_lt_streets.houseNumberUtils import removeLetterFromHouseNumber, ifHouseNumberContainLetter
+from cdb_lt_streets.streetUtils import getCityNominative
 from settings import *
 from django import forms
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest
@@ -157,12 +158,12 @@ def extractInstitutionColumIds(query, institutionColumName):
     return idList
 
 
-def getCityQuery(city = None, city_gen = None):
+def getCityQuery(city = None, city_gen = None, operator="__icontains"):
     cityQuery = None
     if city is not None:
-        cityQuery = Q(**{"city__icontains" : city})
+        cityQuery = Q(**{"city%s" % operator : city})
     if city_gen is not None:
-        genQuery = Q(**{"city__icontains" : city_gen})
+        genQuery = Q(**{"city%s" % operator : city_gen})
         if cityQuery is None:
             cityQuery = genQuery
         else:
@@ -181,7 +182,7 @@ def searchPartial(streetQuery = None, **kwargs):
     cityQuery = getCityQuery(city=city, city_gen= city_gen)
     # first search by street without house number
     try:
-        query = modelToSearchIn.objects.all().filter(municipality__contains = municipality)\
+        query = modelToSearchIn.objects.all().filter(municipality__icontains = municipality)\
             .filter(streetQuery) \
             .filter(cityQuery)
         streetIdList = extractInstitutionColumIds(query, institutionColumName)
@@ -191,7 +192,7 @@ def searchPartial(streetQuery = None, **kwargs):
                 return streetIdList
 
             # we have found more than 1 member.  Try to search with street number to narrow
-            query = modelToSearchIn.objects.all().filter(municipality__contains = municipality)\
+            query = modelToSearchIn.objects.all().filter(municipality__icontains = municipality)\
                 .filter(streetQuery) \
                 .filter(cityQuery)
             query = addHouseNumberQuery(query, house_number)
@@ -216,9 +217,15 @@ def findLT_street_index_id(modelToSearchIn, institutionColumName = None, municip
     All representative searches will be done through this method"""
     logger.info("Will search for representatives in object: %s" % modelToSearchIn.objects.model._meta.object_name)
 
-    streetQuery = Q(**{"street__istartswith" : street})
+    # at first search with exact match street
+    streetQuery = Q(**{"street" : street})
+    list = searchPartial(streetQuery = streetQuery, modelToSearchIn = modelToSearchIn, institutionColumName = institutionColumName, municipality = municipality, city = city, \
+                         city_gen = city_gen, street = street, house_number = house_number)
+    if len(list) > 0:
+        return list
 
-    # at first search with starts with query for street
+    # search with "starts with" query for street
+    streetQuery = Q(**{"street__istartswith" : street})
     list = searchPartial(streetQuery = streetQuery, modelToSearchIn = modelToSearchIn, institutionColumName = institutionColumName, municipality = municipality, city = city, \
                          city_gen = city_gen, street = street, house_number = house_number)
     if len(list) > 0:
@@ -232,20 +239,39 @@ def findLT_street_index_id(modelToSearchIn, institutionColumName = None, municip
     if len(list) > 0:
         return list
    
-    # search without street. Will return tens of results, but it is better than nothing
-    try:
-        cityQuery = getCityQuery(city=city, city_gen= city_gen)
-        query = modelToSearchIn.objects.all().filter(municipality__contains = municipality)\
-            .filter(cityQuery)
 
-        idList = extractInstitutionColumIds(query, institutionColumName)
-        #print "found following ids %s" % idList
-        return idList
-    except modelToSearchIn.DoesNotExist:
-        pass
+    municipalityQuery = Q(**{"municipality__icontains" : municipality})
+    # search without street. Will return tens of results, but it is better than nothing
+    cityQuery = getCityQuery(city=city, city_gen= city_gen, operator = "")
+    list = searchPartialCity(modelToSearchIn= modelToSearchIn, institutionColumName=institutionColumName, municipalityQuery=municipalityQuery, cityQuery=cityQuery)
+    if len(list) > 0:
+        return list
+
+    cityQuery = getCityQuery(city=city, city_gen= city_gen, operator = "__startswith")
+    list = searchPartialCity(modelToSearchIn= modelToSearchIn, institutionColumName=institutionColumName, municipalityQuery=municipalityQuery, cityQuery=cityQuery)
+    if len(list) > 0:
+        return list
+
+    
+    cityQuery = getCityQuery(city=city, city_gen= city_gen, operator = "__icontains")
+    list = searchPartialCity(modelToSearchIn= modelToSearchIn, institutionColumName=institutionColumName, municipalityQuery=municipalityQuery, cityQuery=cityQuery)
+    if len(list) > 0:
+        return list
 
     logger.debug("Did not find any ids")
     return []
+
+def searchPartialCity(modelToSearchIn, institutionColumName, municipalityQuery = None, cityQuery = None):
+    try:
+        query = modelToSearchIn.objects.all().filter(municipalityQuery)\
+            .filter(cityQuery)
+
+        idList = extractInstitutionColumIds(query, institutionColumName)
+        return idList
+    except modelToSearchIn.DoesNotExist:
+        pass
+    return []
+
 
 def findCivilParishMembers(municipality = None, city = None, street = None, house_number = None,  *args, **kwargs):
     street = removeGenericPartFromStreet(street)

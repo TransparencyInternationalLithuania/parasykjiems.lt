@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from cdb_lt_seniunaitija.models import SeniunaitijaStreet
 from cdb_lt_streets.streetUtils import getCityNominative
 from django.core.management.base import BaseCommand
@@ -17,6 +20,14 @@ class Command(BaseCommand):
             city_genitive = city
             street = streetObject.street
             city = getCityNominative(municipality=municipality, city_genitive=city_genitive, street= street)
+
+
+            municipality = u"Šilalės rajono"
+            city_genitive = u"Kalniškių kaimas"
+            street = None
+            house_number = None
+            city = None
+
             additionalKeys = {"city_genitive" : city_genitive}
             members = findSeniunaitijaMembers(municipality, city, street, house_number, **additionalKeys)
 
