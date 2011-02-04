@@ -23,7 +23,6 @@ class ContactDbAddress:
         self.number = u""
         self.flatNumber = u""
 
-
 class AddressDeducer():
     """ Deduces which strings are city, which street, and which is municipality """
 
