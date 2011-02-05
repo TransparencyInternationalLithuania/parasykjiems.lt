@@ -3,6 +3,7 @@
 
 import logging
 import re
+import types
 from django.template import loader
 from cdb_lt_streets.houseNumberUtils import removeLetterFromHouseNumber, ifHouseNumberContainLetter
 from cdb_lt_streets.streetUtils import getCityNominative
@@ -95,14 +96,15 @@ def addHouseNumberQuery(query, house_number):
     if house number is matched"""
     if house_number is None:
         return query
-    if ifHouseNumberContainLetter(house_number):
-        house_number = removeLetterFromHouseNumber(house_number)
+    if type(house_number) != types.IntType:
+        if ifHouseNumberContainLetter(house_number):
+            house_number = removeLetterFromHouseNumber(house_number)
 
-    if house_number.isdigit() == False:
-        return query
+        if house_number.isdigit() == False:
+            return query
 
     # convert to integer
-    house_number = int(house_number)
+        house_number = int(house_number)
     isOdd = house_number % 2
 
     houseNumberEquals = Q(**{"%s__lte" % "numberFrom": house_number}) & \
@@ -217,28 +219,29 @@ def findLT_street_index_id(modelToSearchIn, institutionColumName = None, municip
     All representative searches will be done through this method"""
     logger.info("Will search for representatives in object: %s" % modelToSearchIn.objects.model._meta.object_name)
 
-    # at first search with exact match street
-    streetQuery = Q(**{"street" : street})
-    list = searchPartial(streetQuery = streetQuery, modelToSearchIn = modelToSearchIn, institutionColumName = institutionColumName, municipality = municipality, city = city, \
-                         city_gen = city_gen, street = street, house_number = house_number)
-    if len(list) > 0:
-        return list
+    if street != u"" and street is not None:
+        # at first search with exact match street
+        streetQuery = Q(**{"street" : street})
+        list = searchPartial(streetQuery = streetQuery, modelToSearchIn = modelToSearchIn, institutionColumName = institutionColumName, municipality = municipality, city = city, \
+                             city_gen = city_gen, street = street, house_number = house_number)
+        if len(list) > 0:
+            return list
 
-    # search with "starts with" query for street
-    streetQuery = Q(**{"street__istartswith" : street})
-    list = searchPartial(streetQuery = streetQuery, modelToSearchIn = modelToSearchIn, institutionColumName = institutionColumName, municipality = municipality, city = city, \
-                         city_gen = city_gen, street = street, house_number = house_number)
-    if len(list) > 0:
-        return list
+        # search with "starts with" query for street
+        streetQuery = Q(**{"street__istartswith" : street})
+        list = searchPartial(streetQuery = streetQuery, modelToSearchIn = modelToSearchIn, institutionColumName = institutionColumName, municipality = municipality, city = city, \
+                             city_gen = city_gen, street = street, house_number = house_number)
+        if len(list) > 0:
+            return list
 
-    # if starts with did not work, search by icontains
-    streetQuery = Q(**{"street__icontains" : street})
-    list = searchPartial(streetQuery = streetQuery, modelToSearchIn = modelToSearchIn, institutionColumName = institutionColumName, municipality = municipality, city = city, \
-                         city_gen = city_gen, street = street, house_number = house_number)
+        # if starts with did not work, search by icontains
+        streetQuery = Q(**{"street__icontains" : street})
+        list = searchPartial(streetQuery = streetQuery, modelToSearchIn = modelToSearchIn, institutionColumName = institutionColumName, municipality = municipality, city = city, \
+                             city_gen = city_gen, street = street, house_number = house_number)
 
-    if len(list) > 0:
-        return list
-   
+        if len(list) > 0:
+            return list
+
 
     municipalityQuery = Q(**{"municipality__icontains" : municipality})
     # search without street. Will return tens of results, but it is better than nothing

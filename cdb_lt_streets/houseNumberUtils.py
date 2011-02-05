@@ -69,6 +69,8 @@ def ifHouseNumberContainLetter(fromNumber):
     # However, some house numbers contains a letter in the end
     # so this just performs a basic search and will return True if it will
     # find ANY letter (even in beginning of string)
+    if type(fromNumber) == types.IntType:
+        return fromNumber
     m = re.search('[a-zA-Z]', fromNumber)
     if m is not None:
         return True
