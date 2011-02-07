@@ -3,7 +3,7 @@
 
 from pjutils.uniconsole import *
 import re
-from cdb_lt_streets.models import LithuanianStreetIndexes
+from cdb_lt_streets.models import LithuanianStreetIndexes, LithuanianCases
 from django.db.models.query_utils import Q
 import logging
 from pjutils.deprecated import deprecated
@@ -245,6 +245,13 @@ def deduceAddress(query_string):
     return addressContext
 
 
+def getGenericCaseMunicipality(municipalityNominative):
+
+    mun = LithuanianCases.objects.all().filter(institutionType = LithuanianCases.Type.Municipality)\
+        .filter(nominative__icontains = municipalityNominative)[0:1]
+    if len(mun) == 0:
+        return municipalityNominative
+    return mun[0].genitive
 
 def searchInIndex(addressContext):
     """ Searches for streets using a given address."""
@@ -266,6 +273,9 @@ def searchInIndex(addressContext):
     city = changeCityFromShortToLongForm(city)
     municipality = removeGenericPartFromMunicipality(addressContext.municipality)
 
+
+    if municipality is not None and municipality != u"":
+        municipality = getGenericCaseMunicipality(municipality)
 
     logger.debug(u"street %s" % ( street))
     logger.debug(u"city %s" % ( city))

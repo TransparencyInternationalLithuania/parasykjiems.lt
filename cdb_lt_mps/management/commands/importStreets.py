@@ -16,8 +16,8 @@ from cdb_lt_streets.houseNumberUtils import isHouseNumberOdd
 class ImportStreetsConstituencyDoesNotExist(ChainnedException):
     pass
 
-def changeMunicipalityToCorrectForm(municipality):
-    municipalities = {
+
+municipalities = {
         u"Akmenės rajonas":u"Akmenės rajono savivaldybė",
         u"Alytaus miestas":u"Alytaus miesto savivaldybė",
         u"Alytaus rajonas":u"Alytaus rajono savivaldybė",
@@ -77,9 +77,10 @@ def changeMunicipalityToCorrectForm(municipality):
         u"Šilalės rajonas":u"Šilalės rajono savivaldybė",
         u"Šilutės rajonas":u"Šilutės rajono savivaldybė",
         u"Širvintų rajonas":u"Širvintų rajono savivaldybė",
-        u"Švenčionių rajonas":u"Švenčionių rajono savivaldybė"
-    }
-    if not municipalities.has_key(municipality):
+        u"Švenčionių rajonas":u"Švenčionių rajono savivaldybė"}
+
+def changeMunicipalityToCorrectForm(municipality):
+    if not MunicipalityCases.has_key(municipality):
         raise ImportStreetsConstituencyDoesNotExist(message="municipality '%s' was not found in standard municipality form list" % municipality)
     return municipalities[municipality]
 

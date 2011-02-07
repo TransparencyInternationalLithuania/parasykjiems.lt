@@ -13,10 +13,22 @@ class LithuanianStreetIndexes(models.Model):
     municipality = AddressNameField(db_index = True)
 
 
+class LithuanianCases(models.Model):
+    """ each Lithuanian object can be written in several cases. This mapping helps map from various form
+    http://en.wikipedia.org/wiki/List_of_grammatical_cases """
+
+    class Type:
+        """ possible types of institution types"""
+        Municipality = 1
+
+    nominative = AddressNameField(db_index = True)
+    genitive = AddressNameField(db_index = True)
+    institutionType = models.IntegerField(db_index = True)
+
+
 class HierarchicalGeoData(models.Model):
     """ A hierarchical geo data structure. Used to extract data from lithuanian street index page
      http://www.registrucentras.lt/adr/p/index.php?sen_id=5
-
      """
 
     class HierarchicalGeoDataType:

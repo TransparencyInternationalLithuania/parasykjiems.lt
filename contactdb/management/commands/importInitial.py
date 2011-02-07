@@ -10,7 +10,8 @@ class Command(BaseCommand):
 
         time = TimeMeasurer()
 
-        imports = ["ltStreetIndexImport",     # LT street index
+        imports = ["importMunicipalityCases"
+                    "ltStreetIndexImport",     # LT street index
                    "importConstituencies",   # LT MP data
                    "importMPs",
                    "importStreets",
