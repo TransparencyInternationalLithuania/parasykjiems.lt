@@ -1,0 +1,53 @@
+[
+  {
+    "pk": 1, 
+    "model": "cdb_lt_mps.PollingDistrictStreet",
+    "fields": {
+      "city": "Vilniaus miestas",
+      "municipality": "Vilniaus miesto savivaldybė",
+      "street": "Gedimino prospektas",
+      "numberFrom": 9,
+      "numberTo": 13,
+      "numberOdd": 1,
+      "institution": 1
+    }
+  },
+  {
+    "pk": 2, 
+    "model": "cdb_lt_mps.PollingDistrictStreet",
+    "fields": {
+      "city": "Vilniaus miestas",
+      "municipality": "Vilniaus miesto savivaldybė",
+      "street": "Gedimino prospektas",
+      "numberFrom": 10,
+      "numberTo": 12,
+      "numberOdd": 0,
+      "institution": 2
+    }
+  },
+  {
+    "pk": 3, 
+    "model": "cdb_lt_mps.PollingDistrictStreet",
+    "fields": {
+      "city": "Vilniaus miestas",
+      "municipality": "Vilniaus miesto savivaldybė",
+      "street": "Single ended house number street",
+      "numberFrom": 10,
+      "numberOdd": 0,
+      "institution": 3
+    }
+  } ,
+  {
+    "pk": 4, 
+    "model": "cdb_lt_mps.PollingDistrictStreet",
+    "fields": {
+      "city": "Vilniaus miestas",
+      "municipality": "Vilniaus miesto savivaldybė",
+      "street": "random1",
+      "numberFrom": 10,
+      "numberTo" : 12,
+      "numberOdd": 0,
+      "institution": 4
+    }
+  }
+]

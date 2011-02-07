@@ -10,7 +10,8 @@ from django.db.models.query_utils import Q
 from cdb_lt_streets.ltPrefixes import removeGenericPartFromStreet, removeGenericPartFromMunicipality
 logger = logging.getLogger(__name__)
 
-def addHouseNumberQuery(query, house_number):
+
+def addHouseNumberQuery2(query, house_number):
     """ if house number is a numeric, add special conditions to check
     if house number is matched"""
     if house_number is None:
@@ -40,6 +41,29 @@ def addHouseNumberQuery(query, house_number):
 
     query = query.filter(orQuery)
     return query
+
+def getHouseNumberQuery(house_number = None):
+    if house_number is None:
+        return query
+
+    # convert house number to int
+    if type(house_number) != types.IntType:
+        if ifHouseNumberContainLetter(house_number):
+            house_number = removeLetterFromHouseNumber(house_number)
+
+        if not house_number.isdigit():
+            return query
+        house_number = int(house_number)
+        
+    isOdd = house_number % 2
+
+    houseNumberInRange = Q(**{"%s__lte" % "numberFrom": house_number}) & \
+        Q(**{"%s__gte" % "numberTo": house_number}) & \
+        Q(**{"%s" % "numberOdd": isOdd})
+
+    orQuery = houseNumberInRange  # | houseNumberIsNull | houseNumberEualsFrom | houseNumberEualsTo
+    return orQuery
+
 
 def findMPs(municipality = None, city = None, street = None, house_number = None,  *args, **kwargs):
     #street = removeGenericPartFromStreet(street)
@@ -132,24 +156,47 @@ def findLT_street_index_id(modelToSearchIn, municipality = None, city = None, st
 
     logger.info("Will search for representatives in object: %s" % modelToSearchIn.objects.model._meta.object_name)
 
-
-
     municipalityQuery = Q(**{"municipality" : municipality})
-    # search without street. Will return tens of results, but it is better than nothing
+    # search without street. Might return more results, if there is a street number in the data
     cityQuery = Q(**{"city" : city})
-    list = searchPartialCity(modelToSearchIn= modelToSearchIn, municipalityQuery=municipalityQuery, cityQuery=cityQuery)
-    if len(list) > 0:
+    cityList = searchPartialCity(modelToSearchIn= modelToSearchIn, queries=[municipalityQuery, cityQuery])
+    if len(cityList) < 2:
+        return cityList
+
+
+    # search with street
+    streetQuery = Q(**{"street" : street})
+    streetList = searchPartialCity(modelToSearchIn= modelToSearchIn, queries=[municipalityQuery, cityQuery, streetQuery])
+    if len(streetList) < 2:
+        return streetList
+
+    # in case we do not have number, return all we have
+    if house_number is None or house_number == "":
         return list
 
-    logger.debug("Did not find any ids")
-    return []
+    # we have got more than two rows. So now search with house number
+    numberQuery = getHouseNumberQuery(house_number)
+    #print buildFinalQuery(modelToSearchIn= modelToSearchIn, queries=[municipalityQuery, cityQuery, numberQuery]).query
 
-def searchPartialCity(modelToSearchIn, municipalityQuery = None, cityQuery = None):
+    houseList = searchPartialCity(modelToSearchIn= modelToSearchIn, queries=[municipalityQuery, cityQuery, streetQuery, numberQuery], doPrint=False)
+
+    if len(houseList) > 0:
+        return houseList
+    return streetList
+
+def buildFinalQuery(modelToSearchIn, queries):
+    query = modelToSearchIn.objects.all()
+    for q in queries:
+        query = query.filter(q)
+    return query
+
+def searchPartialCity(modelToSearchIn, queries, doPrint = False):
     try:
-        query = modelToSearchIn.objects.all().filter(municipalityQuery)\
-            .filter(cityQuery)
-        #print query.query
-
+        query = buildFinalQuery(modelToSearchIn, queries)
+        if doPrint:
+            strQuery = str(query.query)
+            strQuery = strQuery.encode("utf_8")
+            print strQuery
         idList = extractInstitutionColumIds(query)
         return idList
     except modelToSearchIn.DoesNotExist:
