@@ -14,7 +14,7 @@ class MunicipalityMember(models.Model):
     surname = PersonNameField()
     email = models.EmailField()
     email2 = models.EmailField()
-    municipality = models.ForeignKey(Municipality, null=True)
+    institution = models.ForeignKey(Municipality, null=True)
     phone = PhoneField()
     phone2 = PhoneField()
     mobilePhone = PhoneField()

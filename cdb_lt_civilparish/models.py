@@ -16,7 +16,7 @@ class CivilParishMember(models.Model):
     name = PersonNameField()
     surname = PersonNameField()
     email = models.EmailField()
-    civilParish = models.ForeignKey(CivilParish, null=True)
+    institution = models.ForeignKey(CivilParish, null=True)
     personalPhone = PhoneField()
     officePhone = PhoneField()
     officeAddress = models.CharField(max_length = 100)
@@ -26,11 +26,10 @@ class CivilParishMember(models.Model):
 class CivilParishStreet(models.Model):
     """ Represents a mapping between a constituency, a district and a street in Lithuania
     """
-    civilParish = models.ForeignKey(CivilParish)
-    municipality = AddressNameField()
+    institution = models.ForeignKey(CivilParish)
+    municipality = AddressNameField(db_index= True)
     street = AddressNameField(db_index = True)
     city = AddressNameField(db_index = True)
-    city_genitive = AddressNameField(db_index = True)
     numberFrom = models.IntegerField(null = True, db_index = True)
     numberTo = models.IntegerField(null = True, db_index = True)
     numberOdd = models.IntegerField(null = True, db_index = True)

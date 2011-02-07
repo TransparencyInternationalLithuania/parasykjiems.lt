@@ -12,15 +12,13 @@ class Seniunaitija(models.Model):
     municipality = InstitutionNameField()
 
 class SeniunaitijaStreet(models.Model):
-    city = AddressNameField(null = True)
-    street = AddressNameField(null = True)
-    municipality = AddressNameField()
-    seniunaitija = models.ForeignKey(Seniunaitija, null=True)
+    institution = models.ForeignKey(Seniunaitija)
+    municipality = AddressNameField(db_index= True)
+    street = AddressNameField(db_index = True)
+    city = AddressNameField(db_index = True)
     numberFrom = models.IntegerField(null = True, db_index = True)
     numberTo = models.IntegerField(null = True, db_index = True)
     numberOdd = models.IntegerField(null = True, db_index = True)
-
-
 
 class SeniunaitijaMember(models.Model):
     """ Seniunaitis. Is accountable to CivilParishMember. Basically he performs any sub-management
@@ -28,7 +26,7 @@ class SeniunaitijaMember(models.Model):
     name = PersonNameField()
     surname = PersonNameField()
     email = models.EmailField()
-    seniunaitija = models.ForeignKey(Seniunaitija, null=True)
+    institution = models.ForeignKey(Seniunaitija, null=True)
     role = models.CharField(max_length = 20)
     phone = PhoneField()
     homePhone = PhoneField()

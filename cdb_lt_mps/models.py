@@ -32,7 +32,7 @@ class ParliamentMember(models.Model):
     name = PersonNameField()
     surname = PersonNameField()
     email = models.EmailField()
-    constituency = models.ForeignKey(Constituency, null=True)
+    institution = models.ForeignKey(Constituency, null=True)
     uniqueKey = models.IntegerField()
 
     @property
@@ -47,11 +47,11 @@ class ParliamentMember(models.Model):
 class PollingDistrictStreet(models.Model):
     """ Represents a mapping between a constituency, a district and a street in Lithuania
     """
-    municipality = AddressNameField()
-    constituency = models.ForeignKey(Constituency)
+    institution = models.ForeignKey(Constituency)
+    municipality = AddressNameField(db_index= True)
     street = AddressNameField(db_index = True)
+    city = AddressNameField(db_index = True)
     numberFrom = models.IntegerField(null = True, db_index = True)
     numberTo = models.IntegerField(null = True, db_index = True)
     numberOdd = models.IntegerField(null = True, db_index = True)
-    city = AddressNameField(max_length = 50)
     pollingDistrict = models.CharField(max_length = 100)

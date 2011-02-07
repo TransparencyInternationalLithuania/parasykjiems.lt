@@ -1,0 +1,15 @@
+[
+  {
+    "pk": 1, 
+    "model": "cdb_lt_civilparish.civilparishstreet",
+    "fields": {
+      "city": "Ani\u0161kio kaimas",
+      "numberOdd": null,
+      "municipality": "Alytaus rajono savivaldyb\u0117",
+      "street": "",
+      "numberFrom": null,
+      "numberTo": null,
+      "institution": 8
+    }
+  }
+]
