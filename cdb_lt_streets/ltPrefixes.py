@@ -24,9 +24,9 @@ zippedCityPrefixes = zip(shortCityEndings, wholeCityEndings)
 
 def changeStreetFromShortToLongForm(street):
     """ Changes for example from "Respublikos g." to "Respublikos gatvė" """
-    if (street is None):
+    if street is None:
         return None
-    if (street == ""):
+    if street == "":
         return ""
     for shortPrefix, longPrefix in zippedStreetPrefixes:
         index = street.find(shortPrefix)

@@ -39,8 +39,7 @@ class Command(BaseCommand):
 
         civilParishStreet = CivilParishStreet()
         civilParishStreet.street = street
-        civilParishStreet.city = city
-        civilParishStreet.city_genitive = city_genitive
+        civilParishStreet.city = city_genitive
         civilParishStreet.municipality = municipality
         civilParishStreet.institution = civilParish
         civilParishStreet.save()

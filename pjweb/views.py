@@ -4,6 +4,7 @@
 import logging
 import re
 from django.template import loader
+from cdb_lt_streets.searchMembers import findMPs, findMunicipalityMembers, findCivilParishMembers, findSeniunaitijaMembers
 from cdb_lt_streets.streetUtils import getCityNominative
 from settings import *
 from django import forms
@@ -86,13 +87,11 @@ def choose_representative(request, municipality = None, city = None, street = No
     logger.debug("choose_rep: street %s" % street)
     logger.debug("choose_rep: house_number %s" % house_number)
 
-    # there is a mix at the moment. city is actually a genitive form for Lithuania data
-    # so we need here to get data for nominative as well
-    # when this changes in the future, remove this complexity as well
-    cityGenitive = city
-    city = getCityNominative(municipality, city, street)
+    #cityGenitive = city
+    #city = getCityNominative(municipality, city, street)
 
-    additionalKeys = {"city_genitive" : cityGenitive}
+    #additionalKeys = {"city_genitive" : cityGenitive}
+    additionalKeys = {}
     parliament_members = findMPs(municipality, city, street, house_number, **additionalKeys)
     municipality_members = findMunicipalityMembers(municipality, city, street, house_number, **additionalKeys)
     civilparish_members = findCivilParishMembers(municipality, city, street, house_number, **additionalKeys)

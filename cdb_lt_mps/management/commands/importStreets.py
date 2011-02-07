@@ -16,6 +16,192 @@ from cdb_lt_streets.houseNumberUtils import isHouseNumberOdd
 class ImportStreetsConstituencyDoesNotExist(ChainnedException):
     pass
 
+def changeMunicipalityToCorrectForm(municipality):
+    municipalities = {
+        u"Akmenės rajonas":u"Akmenės rajono savivaldybė",
+        u"Alytaus miestas":u"Alytaus miesto savivaldybė",
+        u"Alytaus rajonas":u"Alytaus rajono savivaldybė",
+        u"Anykščių rajonas":u"Anykščių rajono savivaldybė",
+        u"BirštonAS":u"Birštono savivaldybė",
+        u"Biržų rajonas":u"Biržų rajono savivaldybė",
+        u"Druskininkų miestas":u"Druskininkų savivaldybė",
+        u"Elektrėnai":u"Elektrėnų savivaldybė",
+        u"Ignalinos rajonas":u"Ignalinos rajono savivaldybė",
+        u"Jonavos rajonas":u"Jonavos rajono savivaldybė",
+        u"Joniškio rajonas":u"Joniškio rajono savivaldybė",
+        u"Jurbarko rajonas":u"Jurbarko rajono savivaldybė",
+        u"Kaišiadorių rajonas":u"Kaišiadorių rajono savivaldybė",
+        u"Kalvarija":u"Kalvarijos savivaldybė",
+        u"Kauno miestas":u"Kauno miesto savivaldybė",
+        u"Kauno rajonas":u"Kauno rajono savivaldybė",
+        u"Kazlų RūdA":u"Kazlų Rūdos savivaldybė",
+        u"Kelmės rajonas":u"Kelmės rajono savivaldybė",
+        u"Klaipėdos miestas":u"Klaipėdos miesto savivaldybė",
+        u"Klaipėdos rajonas":u"Klaipėdos rajono savivaldybė",
+        u"Kretingos rajonas":u"Kretingos rajono savivaldybė",
+        u"Kupiškio rajonas":u"Kupiškio rajono savivaldybė",
+        u"Kėdainių rajonas":u"Kėdainių rajono savivaldybė",
+        u"Lazdijų rajonas":u"Lazdijų rajono savivaldybė",
+        u"Marijampolės miestas":u"Marijampolės savivaldybė",
+        u"Mažeikių rajonas":u"Mažeikių rajono savivaldybė",
+        u"Molėtų rajonas":u"Molėtų rajono savivaldybė",
+        u"NeringA":u"Neringos savivaldybė",
+        u"PagėgIAI":u"Pagėgių savivaldybė",
+        u"Pakruojo rajonas":u"Pakruojo rajono savivaldybė",
+        u"Palangos miestas":u"Palangos miesto savivaldybė",
+        u"Panevėžio miestas":u"Panevėžio miesto savivaldybė",
+        u"Panevėžio rajonas":u"Panevėžio rajono savivaldybė",
+        u"Pasvalio rajonas":u"Pasvalio rajono savivaldybė",
+        u"Plungės rajonas":u"Plungės rajono savivaldybė",
+        u"Prienų rajonas":u"Prienų rajono savivaldybė",
+        u"Radviliškio rajonas":u"Radviliškio rajono savivaldybė",
+        u"Raseinių rajonas":u"Raseinių rajono savivaldybė",
+        u"RietavAS":u"Rietavo savivaldybė",
+        u"Rokiškio rajonas":u"Rokiškio rajono savivaldybė",
+        u"Skuodo rajonas":u"Skuodo rajono savivaldybė",
+        u"Tauragės rajonas":u"Tauragės rajono savivaldybė",
+        u"Telšių rajonas":u"Telšių rajono savivaldybė",
+        u"Trakų rajonas":u"Trakų rajono savivaldybė",
+        u"Ukmergės rajonas":u"Ukmergės rajono savivaldybė",
+        u"Utenos rajonas":u"Utenos rajono savivaldybė",
+        u"Varėnos rajonas":u"Varėnos rajono savivaldybė",
+        u"Vilkaviškio rajonas":u"Vilkaviškio rajono savivaldybė",
+        u"Vilniaus miestas":u"Vilniaus miesto savivaldybė",
+        u"Vilniaus rajonas":u"Vilniaus rajono savivaldybė",
+        u"VisaginAS":u"Visagino savivaldybė",
+        u"Zarasų rajonas":u"Zarasų rajono savivaldybė",
+        u"Šakių rajonas":u"Šakių rajono savivaldybė",
+        u"Šalčininkų rajonas":u"Šalčininkų rajono savivaldybė",
+        u"Šiaulių miestas":u"Šiaulių miesto savivaldybė",
+        u"Šiaulių rajonas":u"Šiaulių rajono savivaldybė",
+        u"Šilalės rajonas":u"Šilalės rajono savivaldybė",
+        u"Šilutės rajonas":u"Šilutės rajono savivaldybė",
+        u"Širvintų rajonas":u"Širvintų rajono savivaldybė",
+        u"Švenčionių rajonas":u"Švenčionių rajono savivaldybė"
+    }
+    if not municipalities.has_key(municipality):
+        raise ImportStreetsConstituencyDoesNotExist(message="municipality '%s' was not found in standard municipality form list" % municipality)
+    return municipalities[municipality]
+
+def changeToGenitiveCityName(city):
+    cities = {
+        u"Akmenė":u"Akmenės miestas",
+        u"Alytus":u"Alytaus miestas",
+        u"Anykščiai":u"Anykščių miestas",
+        u"Ariogala":u"Ariogalos miestas",
+        u"Baltoji Vokė":u"Baltosios Vokės miestas",
+        u"Birštonas":u"Birštono miestas",
+        u"Biržai":u"Biržų miestas",
+        u"Daugai":u"Daugų miestas",
+        u"Didieji Gulbinai":u"Didžiųjų Gulbinų kaimas",
+        u"Druskininkai":u"Druskininkų miestas",
+        u"Dusetos":u"Dusetų miestas",
+        u"Dūkštas":u"Dūkšto miestas",
+        u"Eišiškės":u"Eišiškių miestas",
+        u"Elektrėnai":u"Elektrėnų miestas",
+        u"Ežerėlis":u"Ežerėlio miestas",
+        u"Galgiai":u"Galgių kaimas",
+        u"Gargždai":u"Gargždų miestas",
+        u"Garliava":u"Garliavos miestas",
+        u"Gelgaudiškis":u"Gelgaudiškio miestas",
+        u"Grigiškės":u"Grigiškių miestas",
+        u"Ignalina":u"Ignalinos miestas",
+        u"Jieznas":u"Jiezno miestas",
+        u"Jonava":u"Jonavos miestas",
+        u"Joniškis":u"Joniškio miestas",
+        u"Joniškėlis":u"Joniškėlio miestas",
+        u"Jurbarkas":u"Jurbarko miestas",
+        u"Kaišiadorys":u"Kaišiadorių miestas",
+        u"Kalvarija":u"Kalvarijų miestas",
+        u"Kaunas":u"Kauno miestas",
+        u"Kavarskas":u"Kavarsko miestas",
+        u"Kazlų Rūda":u"Kazlų Rūdos miestas",
+        u"Kačerginė":u"Kačerginės miestelis",
+        u"Kelmė":u"Kelmės miestas",
+        u"Klaipėda":u"Klaipėdaos miestas",
+        u"Kretinga":u"Kretingo smiestas",
+        u"Kudirkos Naumiestis":u"Kudirkos Naumiesčio miestas",
+        u"Kupiškis":u"Kupiškio miestas",
+        u"Kuršėnai":u"Kuršėnų miestas",
+        u"Kybartai":u"Kybartų miestas",
+        u"Kėdainiai":u"Kėdainių miestas",
+        u"Lazdijai":u"Lazdijų miestas",
+        u"Lentvaris":u"Lentvario miestas",
+        u"Linkuva":u"Linkuvos miestas",
+        u"Marijampolė":u"Marijampolės miestas",
+        u"Mažeikiai":u"Mažeikių miestas",
+        u"Molėtai":u"Molėtų miestas",
+        u"Naujoji Akmenė":u"Naujosios Akmenės miestas",
+        u"Nemenčinė":u"Nemenčinės miestas",
+        u"Neringa":u"Neringos miestas",
+        u"Obeliai":u"Obelių miestas",
+        u"Pabradė":u"Pabradės miestas",
+        u"Pagėgiai":u"Pagėgių miestas",
+        u"Pakruojis":u"Pakruojo miestas",
+        u"Palanga":u"Palangos miestas",
+        u"Pandėlys":u"Pandėlio miestas",
+        u"Panemunė":u"Panemunės miestas",
+        u"Panevėžys":u"Panevėžio miestas",
+        u"Pasvalys":u"Pasvalio miestas",
+        u"Plungė":u"Plungės miestas",
+        u"Priekulė":u"Priekulės miestas",
+        u"Prienai":u"Prienų miestas",
+        u"Radviliškis":u"Radviliškio miestas",
+        u"Raseiniai":u"Raseinių miestas",
+        u"Rietavas":u"Rietavo miestas",
+        u"Rokiškis":u"Rokiškio miestas",
+        u"Rusnė":u"Rusnės miestas",
+        u"Rūdiškės":u"Rūdiškių miestas",
+        u"Simnas":u"Simno miestas",
+        u"Skaudvilė":u"Skaudvilės miestas",
+        u"Skuodas":u"Skuodo miestas",
+        u"Smalininkai":u"Smalininkų miestas",
+        u"Tauragė":u"Tauragės miestas",
+        u"Telšiai":u"Telšių miestas",
+        u"Trakai":u"Trakų miestas",
+        u"Troškūnai":u"Troškūnų miestas",
+        u"Tyruliai":u"Tyrulių miestas",
+        u"Tytuvėnai":u"Tytuvėnų miestas",
+        u"Ukmergė":u"Ukmergės miestas",
+        u"Utena":u"Utenos miestas",
+        u"Užventis":u"Užvenčio miestas",
+        u"Vabalninkas":u"Vabalninko miestas",
+        u"Varniai":u"Varnių miestas",
+        u"Varėna":u"Varėnos miestas",
+        u"Veisiejai":u"Veisiejų miestas",
+        u"Venta":u"Ventos miestas",
+        u"Viekšniai":u"Viekšnių miestas",
+        u"Vievis":u"Vievio miestas",
+        u"Vilkaviškis":u"Vilkaviškio miestas",
+        u"Vilkija":u"Vilkijos miestas",
+        u"Vilnius":u"Vilniaus miestas",
+        u"Virbalis":u"Virbalio miestas",
+        u"Visaginas":u"Visagino miestas",
+        u"Zarasai":u"Zarasų miestas",
+        u"Šakiai":u"Šakių miestas",
+        u"Šalčininkai":u"Šalčininkų miestas",
+        u"Šeduva":u"Šeduvos miestas",
+        u"Šiauliai":u"Šiaulių miestas",
+        u"Šilalė":u"Šilalės miestas",
+        u"Šilutė":u"Šilutės miestas",
+        u"Širvintos":u"Širvintų miestas",
+        u"Švenčionys":u"Švenčionių miestas",
+        u"Švenčionėliai":u"Švenčionėlių miestas",
+        u"Žagarė":u"Žagarės miestas",
+        u"Žemaičių Naumiestis":u"Žemaičių Naumiesčio miestas",
+        u"Žiežmariai":u"Žiežmarių miestas",
+    }
+    if not cities.has_key(city) :
+        return city
+
+    newcity = cities[city]
+    #print "substituting %s to %s" %(city, newcity)
+    return newcity
+
+
+
+
+
 class Command(BaseCommand):
     args = '<number of elelctoral districts (sub-units of counties) to import streets into db>'
     help = """Imports into database all Lithuanian streets and relates to Lithuanian Counties
@@ -81,7 +267,7 @@ importStreets 5:8 - will import streets for counties from 5 to 8 constituencies 
         # will execute lots of selects against database
         # it will be very slow, but works for now
         for expandedStreet in expandedStreets:
-            query = PollingDistrictStreet.objects.filter(constituency = pollingDistrict.Constituency)
+            query = PollingDistrictStreet.objects.filter(institution = pollingDistrict.Constituency)
             query = query.filter(city = street.cityName)
             query = query.filter(street = expandedStreet.street)
             query = query.filter(pollingDistrict = pollingDistrict.PollingDistrict)
@@ -144,8 +330,8 @@ importStreets 5:8 - will import streets for counties from 5 to 8 constituencies 
                 for expandedStreet in expandedStreets:            
                     pollingDistrictStreet = PollingDistrictStreet()
                     pollingDistrictStreet.institution = pollingDistrict.Constituency
-                    pollingDistrictStreet.municipality = pollingDistrict.District
-                    pollingDistrictStreet.city = street.cityName
+                    pollingDistrictStreet.municipality = changeMunicipalityToCorrectForm(pollingDistrict.District)
+                    pollingDistrictStreet.city = changeToGenitiveCityName(street.cityName)
                     expandedStreetStr = expandedStreet.street
                     if expandedStreetStr == u"V. Druskio gatvė":
                         expandedStreetStr = u"Virginijaus Druskio gatvė"
