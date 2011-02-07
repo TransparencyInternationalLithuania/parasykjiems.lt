@@ -25,7 +25,7 @@ class LithuanianMPsReader:
 
         for row in self.dictReader:
             member = ParliamentMember()
-            member.constituency = parser.ExtractConstituencyFromMPsFile(readRow(row, "electoraldistrict"))
+            member.institution = parser.ExtractConstituencyFromMPsFile(readRow(row, "electoraldistrict"))
             member.name = readRow(row, "name")
             member.surname = readRow(row,"surname")
             member.email = readRow(row, "e-mail")
@@ -60,15 +60,15 @@ class Command(BaseCommand):
         for member in reader.ReadParliamentMembers():
 
             # skipping empty members
-            if (member.name.strip() == ""):
+            if member.name.strip() == "":
                 continue
 
             # relate existing constituency to an MP
             try:
-                if (member.constituency is None):
-                    member.constituency = None
+                if member.institution is None:
+                    member.institution = None
                 else:
-                    member.constituency = Constituency.objects.get(nr = member.constituency.nr)
+                    member.institution = Constituency.objects.get(nr = member.institution.nr)
             except ObjectDoesNotExist:
                 print u"Constituency with nr '%d' could not be found in database. Either the database is not yet populated with contstituencies, or it is missing (probably because import data does not contain it)" % (member.constituency.nr)
                 print u"Skipping this MPs. Continuing with the rest"

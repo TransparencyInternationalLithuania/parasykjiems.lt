@@ -22,7 +22,7 @@ class Command(BaseCommand):
 
     def getCivilParish(self, civilParishStr):
         key = "%s" % (civilParishStr)
-        if (self.localCache.has_key(key) == True):
+        if self.localCache.has_key(key) == True:
             return self.localCache[key]
 
         try:
@@ -42,7 +42,7 @@ class Command(BaseCommand):
         civilParishStreet.city = city
         civilParishStreet.city_genitive = city_genitive
         civilParishStreet.municipality = municipality
-        civilParishStreet.civilParish = civilParish
+        civilParishStreet.institution = civilParish
         civilParishStreet.save()
         self.count += 1
 

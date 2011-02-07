@@ -67,7 +67,7 @@ class Command(BaseCommand):
 
         for member in reader.ReadMembers():
 
-            if (member.name.strip() == ""):
+            if member.name.strip() == "":
                 continue
 
             # check if already such member exists. Name and surname are primary keys
@@ -76,7 +76,7 @@ class Command(BaseCommand):
             try:
                 name = member.civilParishStr
 
-                member.civilParish = CivilParish.objects.filter(name = name)\
+                member.institution = CivilParish.objects.filter(name = name)\
                     .filter(municipality__icontains = member.municipality)[0:1].get()
             except ObjectDoesNotExist:
                 str = u"""Parish with name '%s' could not be found in database table
@@ -86,7 +86,7 @@ class Command(BaseCommand):
                 logger.error(str)
                 raise ImportCivilParishMemberException(str)
 
-            if (m is None):
+            if m is None:
                 print (u"Imported parish member %s %s %s" % (member.name, member.surname, member.civilParish.name))
                 member.save()
             else:
@@ -96,6 +96,6 @@ class Command(BaseCommand):
 
 
             count += 1
-            if (count >= maxNumberToImport):
+            if count >= maxNumberToImport:
                 break
         print u"succesfully imported/updated %d Parish Members" % (count)

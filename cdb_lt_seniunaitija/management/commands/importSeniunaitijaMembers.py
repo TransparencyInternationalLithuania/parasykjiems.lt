@@ -63,7 +63,7 @@ class Command(BaseCommand):
             # relate existing seniunaitija to seniūnaitis
             try:
                 name = member.seniunaitijaStr
-                member.seniunaitija = Seniunaitija.objects.filter(id = member.uniqueKey)[0:1].get()
+                member.institution = Seniunaitija.objects.filter(id = member.uniqueKey)[0:1].get()
             except ObjectDoesNotExist:
                 raise ImportCivilParishMemberException("""Seniunaitija with name '%s' and type '%s' could not be found in database. Either the database is
 not yet populated with seniunaitija, or it is missing (probably because import data does not contain it)""" % \

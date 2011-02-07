@@ -412,11 +412,15 @@ class Command(BaseCommand):
                     #print "street %s %s %s" %(numberOfStreets, street.city, street.street)
                     s = SeniunaitijaStreet()
                     s.municipality = member.municipalityStr
-                    s.seniunaitija = seniunaitija
+                    s.institution = seniunaitija
                     s.city = street.city
+                    if s.city is None:
+                        s.city = u""
                     s.street = street.street
+                    if s.street is None:
+                        s.street = u""
                     s.numberFrom = street.numberFrom
-                    if (street.numberFrom is not None):
+                    if street.numberFrom is not None:
                         s.numberOdd = street.numberFrom % 2
                     s.numberTo = street.numberTo
                     s.save()
@@ -433,7 +437,7 @@ ErrorDetails = %s""" % (member.uniqueKey, e.message))
             imported += 1
             totalNumberOfStreets += numberOfStreets
             seconds = start.ElapsedSeconds()
-            if (seconds == 0):
+            if seconds == 0:
                 rate = "unknown"
             else:
                 rate = str(totalNumberOfStreets / seconds)
@@ -442,7 +446,7 @@ ErrorDetails = %s""" % (member.uniqueKey, e.message))
             #print "\n\n"
 
 
-        if (wasError == 0):
+        if wasError == 0:
             print u"succesfully imported %d seniunaitija territories, total %d streets" % (imported, totalNumberOfStreets)
         else:
             print u"Errors. Imported only part of the seniunaitija territories"

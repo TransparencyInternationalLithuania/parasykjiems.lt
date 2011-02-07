@@ -119,7 +119,7 @@ class Command(BaseCommand):
         civilParishStreet.numberOdd = range.numberOdd
         civilParishStreet.city_genitive = city_genitive
         civilParishStreet.municipality = municipality
-        civilParishStreet.civilParish = civilParish
+        civilParishStreet.institution = civilParish
         civilParishStreet.save()
         
 
@@ -156,13 +156,13 @@ class Command(BaseCommand):
             street = None
             endings = allStreetEndings + [u"krantinė"]
             for streetEnding in endings:
-                if (rest.find(streetEnding) >= 0):
+                if rest.find(streetEnding) >= 0:
                     street, houseNumbers = rest.split(streetEnding)
                     # attach again street ending
                     street = "%s%s" % (street, streetEnding)
                     street = changeStreetFromShortToLongForm(street)
                     break
-            if (street is None):
+            if street is None:
                 raise CivilParishNotFound("Could not split string '%s' into street and house number" % rest) 
 
             # remove unwanted symbols

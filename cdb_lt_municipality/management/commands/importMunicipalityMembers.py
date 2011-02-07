@@ -61,7 +61,7 @@ class Command(BaseCommand):
         count = 0
 
         for member in reader.ReadMembers():
-            if (member.name.strip() == ""):
+            if member.name.strip() == "":
                 continue
 
             # check if already such member exists. Name and surname are primary keys
@@ -71,7 +71,7 @@ class Command(BaseCommand):
                 name = member.municipalityStr.strip()
                 #name = name.replace(u'rajono', '')
                 name = u"%s savivaldybė" % (name)
-                member.municipality = Municipality.objects.filter(name__contains=name)[0:1].get()
+                member.institution = Municipality.objects.filter(name__contains=name)[0:1].get()
             except ObjectDoesNotExist:
                 raise ImportMunicipalityMemberException("""Municipality with name '%s' and type '%s' could not be found in database. Either the database is
 not yet populated with Municipalities, or it is missing (probably because import data does not contain it)""" % \
