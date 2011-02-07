@@ -34,10 +34,10 @@ importStreets 5:8 - will import streets for counties from 5 to 8 constituencies 
         pollingDistricts = []
 
         for pollingDistrict in aggregator.getLocations():
-            if (count + 1 > toPrint):
+            if count + 1 > toPrint:
                 break
             count += 1
-            if (count + 1 <= fromPrint):
+            if count + 1 <= fromPrint:
                 continue
             pollingDistricts.append(pollingDistrict)
         return pollingDistricts
@@ -50,7 +50,7 @@ importStreets 5:8 - will import streets for counties from 5 to 8 constituencies 
         constituencies = {}
 
         for pol in pollingDistricts:
-            if (constituencies.has_key(pol.Constituency.nr) == False):
+            if constituencies.has_key(pol.Constituency.nr) == False:
                 try:
                     constituencies[pol.Constituency.nr] = Constituency.objects.get(nr = pol.Constituency.nr)
                 except Constituency.DoesNotExist as e:
@@ -70,12 +70,12 @@ importStreets 5:8 - will import streets for counties from 5 to 8 constituencies 
         # a minor optimization hack, to improve speed when inserting data first time
 
         # check how many rows we have initially
-        if (self.previousDBRowCount is None):
+        if self.previousDBRowCount is None:
             self.previousDBRowCount = PollingDistrictStreet.objects.count()
 
         # if we have none rows, then just return list, and do any checks,
         # no need to do that, right
-        if (self.previousDBRowCount == 0):
+        if self.previousDBRowCount == 0:
             return expandedStreets
 
         # will execute lots of selects against database
@@ -90,7 +90,7 @@ importStreets 5:8 - will import streets for counties from 5 to 8 constituencies 
             #print query.query
             results = list(query)
 
-            if (len(results) == 0):
+            if len(results) == 0:
                 nonExisting.append(expandedStreet)
 
         return nonExisting
@@ -108,7 +108,7 @@ importStreets 5:8 - will import streets for counties from 5 to 8 constituencies 
         toPrint = 9999999
 
         if len(args) > 0:
-            if (args[0].find(":") > 0):
+            if args[0].find(":") > 0:
                 split = args[0].split(':')
                 fromPrint = int(split[0])
                 toPrint = int(split[1])
@@ -143,7 +143,7 @@ importStreets 5:8 - will import streets for counties from 5 to 8 constituencies 
                 expandedStreets = self.RemoveExistingStreets(expandedStreets, street, pollingDistrict)
                 for expandedStreet in expandedStreets:            
                     pollingDistrictStreet = PollingDistrictStreet()
-                    pollingDistrictStreet.constituency = pollingDistrict.Constituency
+                    pollingDistrictStreet.institution = pollingDistrict.Constituency
                     pollingDistrictStreet.municipality = pollingDistrict.District
                     pollingDistrictStreet.city = street.cityName
                     expandedStreetStr = expandedStreet.street

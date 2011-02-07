@@ -189,7 +189,7 @@ class Command(BaseCommand):
         civilParishStreet.numberOdd = range.numberOdd
         civilParishStreet.city_genitive = city_genitive
         civilParishStreet.municipality = municipality
-        civilParishStreet.civilParish = civilParish
+        civilParishStreet.institution = civilParish
         civilParishStreet.save()
 
     @transaction.commit_on_success
