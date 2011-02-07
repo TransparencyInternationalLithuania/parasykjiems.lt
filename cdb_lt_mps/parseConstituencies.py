@@ -204,13 +204,13 @@ class AddressParser:
         for str in self._getStreets(addressStr):
 
             city = self.PopCity(str)
-            if (city is not None):
+            if city is not None:
                 yield city
 
             # colon tests is this a village. After a village name, follows a colon and then
             # a list of streets belonging to that village.
             # test for colon must come first, before village testing (otherwise tests fail)
-            if (str.find(":") >= 0):
+            if str.find(":") >= 0:
                 splitStr = str.split(":")
                 cityName = splitStr[0].strip()
                 c = CityStreet(cityName, splitStr[1].strip())
@@ -218,7 +218,7 @@ class AddressParser:
                 continue
 
             # "mstl" stand for small town in Lithuanian
-            if (str.find("mstl") >= 0):
+            if str.find("mstl") >= 0:
                 c = CityStreet(str, "")
                 self.PushCity(c)
                 continue
@@ -538,7 +538,7 @@ class LithuanianConstituencyReader:
         for s in self.file:
             s = unicode(s, 'utf-8')
             s = self._removeDumbCharacters(s)
-            if (s == u""):
+            if s == u"":
                 break
             strings.append(u" ")
             strings.append(s)
@@ -592,7 +592,7 @@ class LithuanianConstituencyReader:
                 # So just instruct so skip reading streets for this Constituency
                 # HACK for now, but works
                 # If you remove it, a test will fail
-                if (line.find(u"Jūreivių rinkimų apylinkė") >=0 ):
+                if line.find(u"Jūreivių rinkimų apylinkė") >=0 :
                     yield location
                     state = State.Constituency
                     continue

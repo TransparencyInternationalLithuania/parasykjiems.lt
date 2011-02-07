@@ -87,7 +87,7 @@ class Command(BaseCommand):
                 raise ImportCivilParishMemberException(str)
 
             if m is None:
-                print (u"Imported parish member %s %s %s" % (member.name, member.surname, member.civilParish.name))
+                print (u"Imported parish member %s %s %s" % (member.name, member.surname, member.institution.name))
                 member.save()
             else:
                 member.id = m.id

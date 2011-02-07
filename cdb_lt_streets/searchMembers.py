@@ -1,7 +1,7 @@
 import logging
 import types
 from cdb_lt_civilparish.models import CivilParishMember, CivilParishStreet
-from cdb_lt_mps.models import ParliamentMember
+from cdb_lt_mps.models import ParliamentMember, PollingDistrictStreet
 from cdb_lt_municipality.models import Municipality, MunicipalityMember
 from cdb_lt_seniunaitija.models import SeniunaitijaMember, SeniunaitijaStreet
 from cdb_lt_streets.houseNumberUtils import ifHouseNumberContainLetter, removeLetterFromHouseNumber
@@ -42,17 +42,17 @@ def addHouseNumberQuery(query, house_number):
     return query
 
 def findMPs(municipality = None, city = None, street = None, house_number = None,  *args, **kwargs):
-    street = removeGenericPartFromStreet(street)
-    municipality = removeGenericPartFromMunicipality(municipality)
+    #street = removeGenericPartFromStreet(street)
+    #municipality = removeGenericPartFromMunicipality(municipality)
 
-    logging.info("searching for MP: street %s, city %s, city_gen %s, municipality %s" % (street, city, city_gen, municipality))
+    logging.info("searching for MP: street %s, city %s, municipality %s" % (street, city, municipality))
 
 
-    idList = findLT_street_index_id(PollingDistrictStreet, 'constituency', municipality=municipality, city=city,  city_gen= city_gen, street=street, house_number=house_number)
+    idList = findLT_street_index_id(PollingDistrictStreet, municipality=municipality, city=city,  street=street, house_number=house_number)
     #idList = findLT_MPs_Id(municipality=municipality, city=city,  city_gen= city_gen, street=street, house_number=house_number)
 
     logging.debug("found MPs in following constituency : %s" % (idList))
-    members = ParliamentMember.objects.all().filter(constituency__in = idList)
+    members = ParliamentMember.objects.all().filter(institution__in = idList)
     return members
 
 def findMunicipalityMembers(municipality = None, city = None, street = None, house_number = None, *args, **kwargs):
@@ -67,10 +67,11 @@ def findMunicipalityMembers(municipality = None, city = None, street = None, hou
         logging.info("no municipalities found")
         return []
 
-    members = MunicipalityMember.objects.all().filter(municipality__in = idList)
+    members = MunicipalityMember.objects.all().filter(institution__in = idList)
     return members
 
-def extractInstitutionColumIds(query, institutionColumName):
+def extractInstitutionColumIds(query):
+    institutionColumName = "institution"
     query = query.distinct() \
             .values(institutionColumName)
     idList = [p[institutionColumName] for p in query]
@@ -85,7 +86,6 @@ def getCityQuery(city = None, operator="__icontains"):
 
 def searchPartial(streetQuery = None, **kwargs):
     modelToSearchIn = kwargs['modelToSearchIn']
-    institutionColumName = kwargs['institutionColumName']
     municipality = kwargs['municipality']
     city = kwargs['city']
     city_gen = kwargs['city_gen']
@@ -98,7 +98,7 @@ def searchPartial(streetQuery = None, **kwargs):
         query = modelToSearchIn.objects.all().filter(municipality__icontains = municipality)\
             .filter(streetQuery) \
             .filter(cityQuery)
-        streetIdList = extractInstitutionColumIds(query, institutionColumName)
+        streetIdList = extractInstitutionColumIds(query)
         if len(streetIdList) > 0:
             if len(streetIdList) == 1:
                 #print "found following ids %s" % streetIdList
@@ -111,7 +111,7 @@ def searchPartial(streetQuery = None, **kwargs):
             query = addHouseNumberQuery(query, house_number)
             #print query.query
 
-            streetNumberIdList = extractInstitutionColumIds(query, institutionColumName)
+            streetNumberIdList = extractInstitutionColumIds(query)
             if len(streetNumberIdList) > 0:
                 #print "found following ids %s" % streetNumberIdList
                 return streetNumberIdList
@@ -123,7 +123,7 @@ def searchPartial(streetQuery = None, **kwargs):
         pass
     return []
 
-def findLT_street_index_id(modelToSearchIn, institutionColumName = "institution", municipality = None, city = None, street = None, house_number = None):
+def findLT_street_index_id(modelToSearchIn, municipality = None, city = None, street = None, house_number = None):
     """ At the moment territory data for each representative is stored in separate table.
     This query searches some table (objectToSearchIn) for instituions pointed by an address.
 
@@ -137,66 +137,20 @@ def findLT_street_index_id(modelToSearchIn, institutionColumName = "institution"
     municipalityQuery = Q(**{"municipality" : municipality})
     # search without street. Will return tens of results, but it is better than nothing
     cityQuery = Q(**{"city" : city})
-    list = searchPartialCity(modelToSearchIn= modelToSearchIn, institutionColumName=institutionColumName, municipalityQuery=municipalityQuery, cityQuery=cityQuery)
+    list = searchPartialCity(modelToSearchIn= modelToSearchIn, municipalityQuery=municipalityQuery, cityQuery=cityQuery)
     if len(list) > 0:
         return list
 
     logger.debug("Did not find any ids")
     return []
 
-    """logger.info("Will search for representatives in object: %s" % modelToSearchIn.objects.model._meta.object_name)
-
-    if street != u"" and street is not None:
-        # at first search with exact match street
-        streetQuery = Q(**{"street" : street})
-        list = searchPartial(streetQuery = streetQuery, modelToSearchIn = modelToSearchIn, institutionColumName = institutionColumName, municipality = municipality, city = city, \
-                             street = street, house_number = house_number)
-        if len(list) > 0:
-            return list
-
-        # search with "starts with" query for street
-        streetQuery = Q(**{"street__istartswith" : street})
-        list = searchPartial(streetQuery = streetQuery, modelToSearchIn = modelToSearchIn, institutionColumName = institutionColumName, municipality = municipality, city = city, \
-                             street = street, house_number = house_number)
-        if len(list) > 0:
-            return list
-
-        # if starts with did not work, search by icontains
-        streetQuery = Q(**{"street__icontains" : street})
-        list = searchPartial(streetQuery = streetQuery, modelToSearchIn = modelToSearchIn, institutionColumName = institutionColumName, municipality = municipality, city = city, \
-                             street = street, house_number = house_number)
-
-        if len(list) > 0:
-            return list
-
-
-    municipalityQuery = Q(**{"municipality__icontains" : municipality})
-    # search without street. Will return tens of results, but it is better than nothing
-    cityQuery = getCityQuery(city=city, operator = "")
-    list = searchPartialCity(modelToSearchIn= modelToSearchIn, institutionColumName=institutionColumName, municipalityQuery=municipalityQuery, cityQuery=cityQuery)
-    if len(list) > 0:
-        return list
-
-    cityQuery = getCityQuery(city=city, operator = "__startswith")
-    list = searchPartialCity(modelToSearchIn= modelToSearchIn, institutionColumName=institutionColumName, municipalityQuery=municipalityQuery, cityQuery=cityQuery)
-    if len(list) > 0:
-        return list
-
-
-    cityQuery = getCityQuery(city=city, operator = "__icontains")
-    list = searchPartialCity(modelToSearchIn= modelToSearchIn, institutionColumName=institutionColumName, municipalityQuery=municipalityQuery, cityQuery=cityQuery)
-    if len(list) > 0:
-        return list
-
-    logger.debug("Did not find any ids")
-    return []"""
-
-def searchPartialCity(modelToSearchIn, institutionColumName, municipalityQuery = None, cityQuery = None):
+def searchPartialCity(modelToSearchIn, municipalityQuery = None, cityQuery = None):
     try:
         query = modelToSearchIn.objects.all().filter(municipalityQuery)\
             .filter(cityQuery)
+        #print query.query
 
-        idList = extractInstitutionColumIds(query, institutionColumName)
+        idList = extractInstitutionColumIds(query)
         return idList
     except modelToSearchIn.DoesNotExist:
         pass
@@ -204,20 +158,19 @@ def searchPartialCity(modelToSearchIn, institutionColumName, municipalityQuery =
 
 
 def findCivilParishMembers(municipality = None, city = None, street = None, house_number = None,  *args, **kwargs):
-    street = removeGenericPartFromStreet(street)
-    municipality = removeGenericPartFromMunicipality(municipality)
+    #street = removeGenericPartFromStreet(street)
+    #municipality = removeGenericPartFromMunicipality(municipality)
 
-    idList = findLT_street_index_id(modelToSearchIn=CivilParishStreet, institutionColumName= "civilParish", municipality=municipality, city=city,  street=street, house_number=house_number)
+    idList = findLT_street_index_id(modelToSearchIn=CivilParishStreet, municipality=municipality, city=city,  street=street, house_number=house_number)
 
-    members = CivilParishMember.objects.all().filter(civilParish__in = idList)
+    members = CivilParishMember.objects.all().filter(institution__in = idList)
     return members
 
 def findSeniunaitijaMembers(municipality = None, city = None, street = None, house_number = None, *args, **kwargs):
-    street = removeGenericPartFromStreet(street)
-    municipality = removeGenericPartFromMunicipality(municipality)
+    #street = removeGenericPartFromStreet(street)
+    #municipality = removeGenericPartFromMunicipality(municipality)
 
-    # city is not used, instead we use city_gen
     # since in Lithuania it is the primary key to identify cities
-    idList = findLT_street_index_id(SeniunaitijaStreet, "seniunaitija", municipality=municipality, city= city_gen, street= street, house_number= house_number)
-    members = SeniunaitijaMember.objects.all().filter(seniunaitija__in = idList)
+    idList = findLT_street_index_id(SeniunaitijaStreet, municipality=municipality, street= street, house_number= house_number)
+    members = SeniunaitijaMember.objects.all().filter(institution__in = idList)
     return members

@@ -84,7 +84,6 @@ def yieldRanges(listOfHouseNumbers):
     for range in _collectRanges(evenNumbers):
         yield range
             
-city = u"Kaunas"
 city_genitive= u"Kauno miestas"
 municipality= u"Kauno miesto savivaldybė"
 
@@ -113,11 +112,10 @@ class Command(BaseCommand):
     def create(self, civilParish = None, street = None, range = None):
         civilParishStreet = CivilParishStreet()
         civilParishStreet.street = street
-        civilParishStreet.city = city
+        civilParishStreet.city = city_genitive
         civilParishStreet.numberFrom = range.numberFrom
         civilParishStreet.numberTo = range.numberTo
         civilParishStreet.numberOdd = range.numberOdd
-        civilParishStreet.city_genitive = city_genitive
         civilParishStreet.municipality = municipality
         civilParishStreet.institution = civilParish
         civilParishStreet.save()

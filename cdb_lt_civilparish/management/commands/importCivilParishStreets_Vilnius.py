@@ -85,7 +85,6 @@ def splitIntoStreetAndHouseNumbers(string):
         raise CouldNotSpleetIntoStreetAndHouseNumber("Could not split string '%s' into street and house number" % rest)
     return street, houseNumber
 
-city = u"Vilnius"
 city_genitive= u"Vilniaus miestas"
 municipality= u"Vilniaus miesto savivaldybė"
 
@@ -183,11 +182,10 @@ class Command(BaseCommand):
     def create(self, civilParish = None, street = None, range = None):
         civilParishStreet = CivilParishStreet()
         civilParishStreet.street = street
-        civilParishStreet.city = city
         civilParishStreet.numberFrom = range.numberFrom
         civilParishStreet.numberTo = range.numberTo
         civilParishStreet.numberOdd = range.numberOdd
-        civilParishStreet.city_genitive = city_genitive
+        civilParishStreet.city = city_genitive
         civilParishStreet.municipality = municipality
         civilParishStreet.institution = civilParish
         civilParishStreet.save()
