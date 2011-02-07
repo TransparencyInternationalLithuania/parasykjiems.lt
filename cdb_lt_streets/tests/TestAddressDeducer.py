@@ -11,6 +11,13 @@ class TestAddressDeducer(TestCase):
     def setUp(self):
         pass
 
+    def testStreet_WithouCommaSeparataion_from_City(self):
+        address = deduceAddress(u"gaidžių g. vilnius")
+        self.assertEqual(u"", address.number)
+        self.assertEqual(u"gaidžių g.", address.street)
+        self.assertEqual(u"vilnius", address.city)
+        self.assertEqual(u"", address.municipality)
+
     def testGedimino_NoCity(self):
         """ basic test"""
         address = deduceAddress(u"Gedimino pr. 9")
@@ -20,7 +27,6 @@ class TestAddressDeducer(TestCase):
         self.assertEqual(u"", address.municipality)
 
     def testGedimino_NoCity_NoNumber(self):
-        """ basic test"""
         address = deduceAddress(u"Gedimino pr.")
         self.assertEqual(u"", address.number)
         self.assertEqual(u"Gedimino pr.", address.street)
