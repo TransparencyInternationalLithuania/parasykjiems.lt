@@ -24,8 +24,8 @@ class TestReadParliamentMembers(TestCase):
 
         reader = LithuanianMPsReader(self.allRecords)
         for loc in reader.ReadParliamentMembers():
-            self.assertEqual(loc.constituency.nr, 1)
-            self.assertEqual(loc.constituency.name, u"Naujamiesčio")
+            self.assertEqual(loc.institution.nr, 1)
+            self.assertEqual(loc.institution.name, u"Naujamiesčio")
             self.assertEqual(loc.name, "Irena")
             self.assertEqual(loc.surname, u"Degutienė")
             self.assertEqual(loc.email, "Irena.Degutiene@lrs.lt")
