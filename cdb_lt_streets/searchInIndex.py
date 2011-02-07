@@ -147,18 +147,28 @@ class AddressDeducer():
         words = str.split(u" ")
         firstPart = []
         secondPart = []
+        wasPreviousStreet = False
         for s in words:
-            if (wasNumber == False):
+            # Handle also this case : gaidžių g. vilnius
+            # After city part, there is no street number, so explicitly check for that
+            # if we do not find street number, that means street part is finisehd, so go to next block
+            if wasPreviousStreet == True:
+                if self.containsAnyNumber(s) == False:
+                    wasNumber = True
+            
+            if wasNumber == False:
                 firstPart.append(s)
                 if self.containsAnyNumber(s):
                     wasNumber = True
                     continue
 
-            if (wasNumber == True):
-                if (self.containsStreet(s)):
+            if wasNumber == True:
+                if self.containsStreet(s):
                     firstPart.append(s)
                 else:
                     secondPart.append(s)
+            
+            wasPreviousStreet = self.containsStreet(s)
 
         firstPart = " ".join(firstPart)
         secondPart = " ".join(secondPart)
@@ -191,7 +201,7 @@ class AddressDeducer():
     def deduce(self, stringList):
         address = ContactDbAddress()
 
-        if (stringList.find(u",") >= 0):
+        if stringList.find(u",") >= 0:
             parts = stringList.split(u",")
             # if first part contains either number, or street, then it is street, city, municipality
             if (self.containsNumber(parts[0])) or (self.containsStreet(parts[0])) or (self.containsAnyNumber(parts[0])):
