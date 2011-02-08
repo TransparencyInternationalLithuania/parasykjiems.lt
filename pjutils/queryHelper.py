@@ -11,11 +11,12 @@ def getOrQuery(fieldName, fieldValues):
     return streetFilters
 
 def getAndQuery(*args):
+    """ adds all queries into one. Skips empty queries"""
     finalQuery = None
     for q in args:
-        if (q is None):
+        if q is None:
             continue
-        if (finalQuery is None):
+        if finalQuery is None:
             finalQuery = q
         else:
             finalQuery = finalQuery & q

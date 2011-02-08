@@ -4,6 +4,7 @@ from cdb_lt_streets.tests.TestAddressDeducer import TestAddressDeducer
 from cdb_lt_streets.tests.TestHouseNumberUtils import TestContainsHouseNumbers
 from cdb_lt_streets.tests.TestLTRegisterCenter import TestLTRegisterCenterLocations, TestLTRegisterCenterLinks, TestLTRegisterCenterOtherLinks
 from cdb_lt_streets.tests.TestSearchInIndex import TestSearchInIndex
+from cdb_lt_streets.tests.ltStreetIndexes.testLtStreetIndexes import TestSearchLtStreetIndex_SingleStreet, TestSearchLtStreetIndex_StreetsWithNumbersInName
 
 
 __test__ = {
@@ -15,5 +16,7 @@ __test__ = {
     'TestContainsHouseNumbers' : TestContainsHouseNumbers,
     'TestSearchCivilParishStreets_SingleStreet' : TestSearchCivilParishStreets_SingleStreet,
     'TestSearchInstitutionStreets_WithStreetAndHouseNumber' : TestSearchInstitutionStreets_WithStreetAndHouseNumber,
-    'TestSearchInstitutionStreets_SingleRepresentative': TestSearchInstitutionStreets_SingleRepresentative
+    'TestSearchInstitutionStreets_SingleRepresentative': TestSearchInstitutionStreets_SingleRepresentative,
+    'TestSearchLtStreetIndex_SingleStreet' : TestSearchLtStreetIndex_SingleStreet,
+    'TestSearchLtStreetIndex_StreetsWithNumbersInName': TestSearchLtStreetIndex_StreetsWithNumbersInName
 }
