@@ -28,5 +28,15 @@
       "municipality": "Kauno miesto savivaldybė",
       "street": "palemono gatvė"
     }
+  },
+  {
+    "pk": 4,
+    "model": "cdb_lt_streets.LithuanianStreetIndexes",
+    "fields": {
+      "city": "Žiežmariai",
+      "city_genitive": "Žiežmarių miestas",
+      "municipality": "Žiežmarių miesto savivaldybė",
+      "street": "Žygio gatvė"
+    }
   }
 ]
