@@ -8,7 +8,8 @@ from settings import *
 scriptPath = os.path.dirname( os.path.realpath( __file__ ) )
 
 class TestSearchLtStreetIndex_SingleStreet(TestCase):
-    fixtures = ['ltstreetindexes/several ordinary streets.json']
+    fixtures = ['ltstreetindexes/several ordinary streets.json',
+                'ltstreetindexes/LithuanianMunicipalityCases.json']
 
     def setUp(self):
         pass
@@ -21,6 +22,15 @@ class TestSearchLtStreetIndex_SingleStreet(TestCase):
 
         ids = [a.id for a in addresses]
         self.assertEquals([3], ids)
+
+    def testSearchMunicipality_GenitiveForm(self):
+        """ Municiaplity can be in two froms, such as "Rokiškis" and "Roškio rajono savivaldybė". """
+        municipality = u"Vilnius" 
+        city=u""
+        addresses = searchInIndex(municipality=municipality, city=city)
+
+        ids = [a.id for a in addresses]
+        self.assertEquals([1, 2], ids)
 
     def testSearchMunicipalityNotExact(self):
         """ municipality is not exact, but possible enough to guess a result. need contains query"""

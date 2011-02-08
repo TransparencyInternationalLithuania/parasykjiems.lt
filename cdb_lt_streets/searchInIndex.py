@@ -258,6 +258,10 @@ def searchInIndex(municipality = None, city = None, street = None):
         municipality = municipality.strip()
         if municipality == u"":
             municipality = None
+
+    if municipality is not None:
+        municipality = getGenericCaseMunicipality(municipality)
+
     if street is not None:
         street = street.strip()
         if street == u"":

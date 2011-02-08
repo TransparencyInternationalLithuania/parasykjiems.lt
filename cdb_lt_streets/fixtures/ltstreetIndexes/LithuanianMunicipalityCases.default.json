@@ -1,0 +1,11 @@
+[
+  {
+    "pk": 1,
+    "model": "cdb_lt_streets.LithuanianCases",
+    "fields": {
+      "nominative": "Vilnius",
+      "genitive": "Vilniaus miesto savivaldybė",
+      "institutionType" : 1
+    }
+  }
+]
