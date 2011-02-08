@@ -100,41 +100,6 @@ class AddressDeducer():
                 return True
         return False
 
-    def splitNoCommas(self, str):
-        """ when an address is entered without commas, use some custom logic to split it into parts"""
-        returnList = []
-        parts = str.split(u" ")
-        containsNumbers = False
-        for p in parts:
-            if (self.containsStreet(p) or self.containsNumber(p)):
-                containsNumbers = True
-
-        if (containsNumbers == False):
-            returnList.append(parts[0])
-            rest = u" ".join(parts[1:])
-            rest = rest.strip()
-            returnList.append(rest)
-            return returnList
-
-        current = parts[0]
-        i = 0
-        i1 = 1
-        while i1 < len(parts):
-            next = parts[i1]
-            if self.containsStreet(next) or self.containsNumber(next):
-                current = u"%s %s" % (current, next)
-            else:
-                break
-            i1 += 1
-            i += 1
-        returnList.append(current)
-        if (len(parts) > i + 1):
-            returnList.append(parts[i + 1])
-        rest = u" ".join(parts[i + 2:])
-        rest = rest.strip()
-        returnList.append(rest)
-        return returnList
-
     def splitFirstNumberAndEverythingElse(self, str):
         """ examines a string, and divides it into 2. First part is everything up to first word with number,
         and then the rest. For example having str 'Verkių g. 30 Vilnius Vilniaus m. sav.'
@@ -175,22 +140,27 @@ class AddressDeducer():
         return firstPart, secondPart
 
     def splitIntoCityAndMunicipality(self, string):
+        string = string.strip()
         splitted = string.split(" ")
         # if we have less than two words, just return what we have
-        if (len(splitted) < 2):
+        if len(splitted) < 2:
             return splitted
         # first part is always city name
         cityString = [splitted[0]]
 
         # if second part is one of the generic city endings, append it to city name
         # such as instead of 'new york", return "new york city" + everything else
-        if (splitted[1] in allCityEndings):
+        if splitted[1] in allCityEndings:
             cityString.append(splitted[1])
             cityString = " ".join(cityString)
-            return [cityString] + splitted[2:]
+            allElse = u" ".join(splitted[2:])
+            return [cityString, allElse]
+        else:
+            # return everything else, since only the second part can be city ending
+            allElse = u" ".join(splitted[1:])
+            cityString.append(allElse)
+            return cityString
 
-        # return everything else, since only the second part can be city ending
-        return splitted
 
 
 
@@ -206,8 +176,13 @@ class AddressDeducer():
             # if first part contains either number, or street, then it is street, city, municipality
             if (self.containsNumber(parts[0])) or (self.containsStreet(parts[0])) or (self.containsAnyNumber(parts[0])):
                 address.street, address.number, address.flatNumber  = self.extractStreetAndNumber(self.takePart(parts, 0))
-                address.city = self.takePart(parts, 1)
-                address.municipality = self.takePart(parts, 2)
+
+                # combine everything else again into string
+                joined = u" ".join(parts[1:])
+                # and then extract city and municipality
+                parts = self.splitIntoCityAndMunicipality(joined)
+                address.city = self.takePart(parts, 0)
+                address.municipality = self.takePart(parts, 1)
             else:
                 # else this is city, and municipality only
                 address.city = self.takePart(parts, 0)
@@ -218,7 +193,7 @@ class AddressDeducer():
             
             if self.containsAnyNumber(firstPartWithNumber) or self.containsStreet(firstPartWithNumber):
                 address.street, address.number, address.flatNumber = self.extractStreetAndNumber(firstPartWithNumber)
-                everythingElse = self.splitNoCommas(everythingElse)
+                everythingElse = self.splitIntoCityAndMunicipality(everythingElse)
                 address.city = self.takePart(everythingElse, 0)
                 address.municipality = self.takePart(everythingElse, 1)
             else:

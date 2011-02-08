@@ -145,3 +145,21 @@ class TestAddressDeducer(TestCase):
         self.assertEqual(u"Verkių g.", address.street)
         self.assertEqual(u"Vilnius", address.city)
         self.assertEqual(u"Vilniaus m. sav.", address.municipality)
+
+    def testStreetMunicipalityAndCity(self):
+        """  """
+        address = deduceAddress(u"mickevičiaus g., obelių miestas rokiškis")
+        self.assertEqual(u"", address.number)
+        self.assertEqual(u"mickevičiaus g.", address.street)
+        self.assertEqual(u"obelių miestas", address.city)
+        self.assertEqual(u"rokiškis", address.municipality)
+
+    def testStreetMunicipalityAndCity_2_no_comma(self):
+        """  """
+        address = deduceAddress(u"mickevičiaus g. obelių miestas rokiškis")
+        self.assertEqual(u"", address.number)
+        self.assertEqual(u"mickevičiaus g.", address.street)
+        self.assertEqual(u"obelių miestas", address.city)
+        self.assertEqual(u"rokiškis", address.municipality)
+
+
