@@ -295,11 +295,13 @@ def searchInIndex(municipality = None, city = None, street = None):
 
 
     # Lithuanian cities have cities in two forms - genitive and nominative
-    cityQuery = Q(**{"city__icontains": city})
-    #cityFiltersGenitive = Q(**{"city_genitive__icontains": city})
+
+    cityQuery_Nominative = Q(**{"city__icontains": city})
+    cityQuery_Genitive = Q(**{"city_genitive__icontains": city})
+    cityQuery = cityQuery_Genitive | cityQuery_Nominative
     municipalityQuery = None
     if municipality is not None:
-        municipalityQuery = Q(**{"municipality": municipality})
+        municipalityQuery = Q(**{"municipality__icontains": municipality})
     #streetFiltersStartsWith = Q(**{"street__istartswith" : street})
 
     if street is None:

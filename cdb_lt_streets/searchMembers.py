@@ -172,7 +172,7 @@ def findLT_street_index_id(modelToSearchIn, municipality = None, city = None, st
 
     # in case we do not have number, return all we have
     if house_number is None or house_number == "":
-        return list
+        return streetList
 
     # we have got more than two rows. So now search with house number
     numberQuery = getHouseNumberQuery(house_number)

@@ -13,6 +13,24 @@ class TestSearchLtStreetIndex_SingleStreet(TestCase):
     def setUp(self):
         pass
 
+    def testSearchCity_GentiveForm(self):
+        """ City can be in two forms. such as Vilnius and 'Vilniaus miestas'. The latter is the genitive form"""
+        municipality = u""  # will match Kauno
+        city=u"Kauno"
+        addresses = searchInIndex(municipality=municipality, city=city)
+
+        ids = [a.id for a in addresses]
+        self.assertEquals([3], ids)
+
+    def testSearchMunicipalityNotExact(self):
+        """ municipality is not exact, but possible enough to guess a result. need contains query"""
+        municipality = u"auno"  # will match Kauno
+        city=u""
+        addresses = searchInIndex(municipality=municipality, city=city)
+
+        ids = [a.id for a in addresses]
+        self.assertEquals([3], ids)
+
     def testSearchWithCity(self):
         municipality = u"Vilniaus miesto savivaldybė"
         city=u"Vilnius"
