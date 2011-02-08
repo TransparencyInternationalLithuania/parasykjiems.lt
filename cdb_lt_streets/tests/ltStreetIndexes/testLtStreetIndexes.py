@@ -50,6 +50,39 @@ class TestSearchLtStreetIndex_SingleStreet(TestCase):
         self.assertEquals([1, 2], ids)
         self.assertEquals(2, len(addresses))
 
+    def testSearch_StreetWith_LithuanianLetters(self):
+        """ It appears that, at least for sqlite, a and A are the same letters when doing icontains, but not for
+        national letters, such as ž and Ž"""
+        municipality = u""
+        city=u""
+        street= u"žygio"
+        addresses = searchInIndex(municipality=municipality, city=city,  street=street)
+
+        ids = [a.id for a in addresses]
+        self.assertEquals([4], ids)
+
+    def testSearch_CityWith_LithuanianLetters(self):
+        """ It appears that, at least for sqlite, a and A are the same letters when doing icontains, but not for
+        national letters, such as ž and Ž"""
+        municipality = u""
+        city=u"žiežmariai"
+        street= u""
+        addresses = searchInIndex(municipality=municipality, city=city,  street=street)
+
+        ids = [a.id for a in addresses]
+        self.assertEquals([4], ids)
+
+    def testSearch_MunicipalityWith_LithuanianLetters(self):
+        """ It appears that, at least for sqlite, a and A are the same letters when doing icontains, but not for
+        national letters, such as ž and Ž"""
+        municipality = u"žiežmarių"
+        city=u""
+        street= u""
+        addresses = searchInIndex(municipality=municipality, city=city,  street=street)
+
+        ids = [a.id for a in addresses]
+        self.assertEquals([4], ids)
+
     def testSearchWithStreet(self):
         municipality = u"Vilniaus miesto savivaldybė"
         city=u"Vilnius"

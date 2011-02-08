@@ -255,6 +255,7 @@ def searchInIndex(municipality = None, city = None, street = None):
 
     """
     if municipality is not None:
+        municipality = municipality.capitalize()
         municipality = municipality.strip()
         if municipality == u"":
             municipality = None
@@ -263,6 +264,7 @@ def searchInIndex(municipality = None, city = None, street = None):
         municipality = getGenericCaseMunicipality(municipality)
 
     if street is not None:
+        street = street.capitalize()
         street = street.strip()
         if street == u"":
             street = None
@@ -274,7 +276,7 @@ def searchInIndex(municipality = None, city = None, street = None):
 
 
     # Lithuanian cities have cities in two forms - genitive and nominative
-
+    city = city.capitalize()
     cityQuery_Nominative = Q(**{"city__icontains": city})
     cityQuery_Genitive = Q(**{"city_genitive__icontains": city})
     cityQuery = cityQuery_Genitive | cityQuery_Nominative
