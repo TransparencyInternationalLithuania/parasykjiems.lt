@@ -85,8 +85,8 @@ class Command(BaseCommand):
 
         self.args = args
         self.start = TimeMeasurer()
-        #self.findGeneric(SeniunaitijaStreet, findSeniunaitijaMembers)
-        self.findGeneric(CivilParishStreet, findCivilParishMembers)
+        self.findGeneric(SeniunaitijaStreet, findSeniunaitijaMembers)
+        #self.findGeneric(CivilParishStreet, findCivilParishMembers)
 
         print u"total spent time %d seconds" % (self.start.ElapsedSeconds())
         
