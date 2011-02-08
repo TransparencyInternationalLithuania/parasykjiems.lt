@@ -59,6 +59,12 @@ class TestSearchInstitutionStreets_WithStreetAndHouseNumber(TestCase):
         ids = findLT_street_index_id(modelToSearchIn=PollingDistrictStreet, municipality=self.municipality, city=self.city,  street=u"Single ended house number street", house_number=house_number)
         self.assertEquals([3], ids)
 
+    def testSearch_Multiple_Results_ForDStreet(self):
+        """ Single streets has more than one representative, but house number is not given  """
+        house_number = None
+        ids = findLT_street_index_id(modelToSearchIn=PollingDistrictStreet, municipality=self.municipality, city=self.city,  street=self.street, house_number=house_number)
+        self.assertEquals([1,2], ids)
+
 
 class TestSearchInstitutionStreets_SingleRepresentative(TestCase):
     fixtures = ['InstitutionIndexes/single representative in street.json']
