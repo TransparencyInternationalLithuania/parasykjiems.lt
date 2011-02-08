@@ -39,7 +39,8 @@ def searchInStreetIndex(query_string):
     not_found = ''
 
     addressContext = deduceAddress(query_string)
-    found_entries = searchInIndex(addressContext)
+    found_entries = searchInIndex(municipality= addressContext.municipality, city= addressContext.city,
+                                  street= addressContext.street)
 
     # construct final uriss
     for f in found_entries:
