@@ -80,3 +80,14 @@ class TestSearchInstitutionStreets_SingleRepresentative(TestCase):
         """ There are two streets by different name, find the correct one"""
         ids = findLT_street_index_id(modelToSearchIn=PollingDistrictStreet, municipality=self.municipality, city=self.city,  street=self.street)
         self.assertEquals([1], ids)
+
+class TestSearchInstitutionStreets_ArminuKaimas(TestCase):
+    fixtures = ['InstitutionIndexes/arminu i kaimas.json']
+
+    def setUp(self):
+        pass
+
+    def testSearchWhenStreetIsNOne(self):
+        """ When street is "" or None, results must be same"""
+        ids = findLT_street_index_id(modelToSearchIn=CivilParishStreet, municipality=u"Alytaus rajono savivaldybė", city=u"Arminų I kaimas",  street=None)
+        self.assertEquals([8, 12], ids)
