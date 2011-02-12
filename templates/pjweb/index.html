@@ -19,7 +19,18 @@
         <tr>
             <td>
                 <a href="{{ found_entry.url }}">
-                {% if found_entry.street %}{{ found_entry.street }}{% if found_entry.number %} {{ found_entry.number }}{% endif %}, {% endif %}{% if found_entry.city_genitive %}{{ found_entry.city_genitive }},{% endif %} {% if found_entry.municipality %}{{ found_entry.municipality }}{% endif %}</a>
+                {% if found_entry.street %}{{ found_entry.street }}
+                    {% if found_entry.number %} {{ found_entry.number }}{% endif %},
+                {% endif %}
+                {% if found_entry.city_genitive %}
+                    {{ found_entry.city_genitive }},
+                {% endif %}
+                {% if found_entry.civilparish %}
+                    {{ found_entry.civilparish }},
+                {% endif %}
+                {% if found_entry.municipality %}
+                    {{ found_entry.municipality }}
+                {% endif %}</a>
             </td>
         </tr>
       {% endfor %}
