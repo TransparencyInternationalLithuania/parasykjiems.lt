@@ -48,7 +48,9 @@ def searchInStreetIndex(query_string):
         f.number = addressContext.number
 
         # construct a final uri, and attach it
-        if (f.number is not None) and (f.number != ""):
+        if (f.civilparish is not None) and (f.civilparish != u""):
+            iri = "/pjweb/choose_rep_civilparish/%s/%s/%s/" % (f.municipality, f.civilparish, f.city_genitive)
+        elif (f.number is not None) and (f.number != ""):
             iri = "/pjweb/choose_rep/%s/%s/%s/%s/" % (f.municipality, f.city_genitive, f.street, f.number)
         elif (f.street is not None and f.street != u""):
             iri = "/pjweb/choose_rep/%s/%s/%s/" % (f.municipality, f.city_genitive, f.street)
@@ -74,8 +76,13 @@ def searchInStreetIndex(query_string):
     return result
 
 
+def choose_representative_civil_parish(request, municipality = None, civilParish = None, city = None):
+    return choose_representative_internal(request=request, municipality=municipality, civilParish=civilParish, city=city)
 
 def choose_representative(request, municipality = None, city = None, street = None, house_number = None):
+    return choose_representative_internal(request=request, municipality=municipality, city=city, street=street, house_number= house_number)
+
+def choose_representative_internal(request, municipality = None, civilParish = None, city = None, street = None, house_number = None):
     # check if we have a valid referrer
     current_site = Site.objects.get_current()
     if (DEBUG == False):
@@ -93,10 +100,10 @@ def choose_representative(request, municipality = None, city = None, street = No
 
     #additionalKeys = {"city_genitive" : cityGenitive}
     additionalKeys = {}
-    parliament_members = findMPs(municipality, city, street, house_number, **additionalKeys)
-    municipality_members = findMunicipalityMembers(municipality, city, street, house_number, **additionalKeys)
-    civilparish_members = findCivilParishMembers(municipality, city, street, house_number, **additionalKeys)
-    seniunaitija_members = findSeniunaitijaMembers(municipality, city, street, house_number, **additionalKeys)
+    parliament_members = findMPs(municipality=municipality, civilParish=civilParish, city=city, street=street, house_number=house_number, **additionalKeys)
+    municipality_members = findMunicipalityMembers(municipality, civilParish=civilParish, city=city, street=street, house_number=house_number, **additionalKeys)
+    civilparish_members = findCivilParishMembers(municipality, civilParish=civilParish, city=city, street=street, house_number=house_number, **additionalKeys)
+    seniunaitija_members = findSeniunaitijaMembers(municipality, civilParish=civilParish, city=city, street=street, house_number=house_number, **additionalKeys)
 
 
     return render_to_response('pjweb/const.html', {

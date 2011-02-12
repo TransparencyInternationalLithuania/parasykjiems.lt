@@ -65,21 +65,21 @@ def getHouseNumberQuery(house_number = None):
     return orQuery
 
 
-def findMPs(municipality = None, city = None, street = None, house_number = None,  *args, **kwargs):
+def findMPs(municipality = None, civilParish = None, city = None, street = None, house_number = None,  *args, **kwargs):
     #street = removeGenericPartFromStreet(street)
     #municipality = removeGenericPartFromMunicipality(municipality)
 
     logging.info("searching for MP: street %s, city %s, municipality %s" % (street, city, municipality))
 
 
-    idList = findLT_street_index_id(PollingDistrictStreet, municipality=municipality, city=city,  street=street, house_number=house_number)
+    idList = findLT_street_index_id(PollingDistrictStreet, municipality=municipality, civilParish= civilParish, city=city,  street=street, house_number=house_number)
     #idList = findLT_MPs_Id(municipality=municipality, city=city,  city_gen= city_gen, street=street, house_number=house_number)
 
     logging.debug("found MPs in following constituency : %s" % (idList))
     members = ParliamentMember.objects.all().filter(institution__in = idList)
     return members
 
-def findMunicipalityMembers(municipality = None, city = None, street = None, house_number = None, *args, **kwargs):
+def findMunicipalityMembers(municipality = None, civilParish = None, city = None, street = None, house_number = None, *args, **kwargs):
 
     try:
         query = Municipality.objects.all().filter(name__contains = municipality)
@@ -147,15 +147,15 @@ def searchPartial(streetQuery = None, **kwargs):
         pass
     return []
 
-def findLT_street_index_id(modelToSearchIn, municipality = None, civilparish = None, city = None, street = None, house_number = None):
+def findLT_street_index_id(modelToSearchIn, municipality = None, civilParish = None, city = None, street = None, house_number = None):
     """ At the moment territory data for each representative is stored in separate table.
     This query searches some table (objectToSearchIn) for instituions pointed by an address.
 
     All representative searches will be done through this method"""
 
-    if civilparish is None:
-        civilparish = u""
-    civilparish = civilparish.strip()
+    if civilParish is None:
+        civilParish = u""
+    civilParish = civilParish.strip()
 
     if street is None:
         street = u""
@@ -172,8 +172,8 @@ def findLT_street_index_id(modelToSearchIn, municipality = None, civilparish = N
 
 
     # try searchign with civilParish if it is not None
-    if civilparish != u"":
-        civilparishQuery = Q(**{"civilparish": civilparish})
+    if civilParish != u"":
+        civilparishQuery = Q(**{"civilparish": civilParish})
         civilParishList = searchPartialCity(modelToSearchIn= modelToSearchIn, queries=[municipalityQuery, civilparishQuery, cityQuery])
 
         if len(civilParishList) == 0:
@@ -233,20 +233,20 @@ def searchPartialCity(modelToSearchIn, queries, doPrint = False):
     return []
 
 
-def findCivilParishMembers(municipality = None, city = None, street = None, house_number = None,  *args, **kwargs):
+def findCivilParishMembers(municipality = None, civilParish = None,city = None, street = None, house_number = None,  *args, **kwargs):
     #street = removeGenericPartFromStreet(street)
     #municipality = removeGenericPartFromMunicipality(municipality)
 
-    idList = findLT_street_index_id(modelToSearchIn=CivilParishStreet, municipality=municipality, city=city,  street=street, house_number=house_number)
+    idList = findLT_street_index_id(modelToSearchIn=CivilParishStreet, municipality=municipality, civilParish = civilParish, city=city,  street=street, house_number=house_number)
 
     members = CivilParishMember.objects.all().filter(institution__in = idList)
     return members
 
-def findSeniunaitijaMembers(municipality = None, city = None, street = None, house_number = None, *args, **kwargs):
+def findSeniunaitijaMembers(municipality = None, civilParish = None, city = None, street = None, house_number = None, *args, **kwargs):
     #street = removeGenericPartFromStreet(street)
     #municipality = removeGenericPartFromMunicipality(municipality)
 
     # since in Lithuania it is the primary key to identify cities
-    idList = findLT_street_index_id(SeniunaitijaStreet, municipality=municipality, street= street, house_number= house_number)
+    idList = findLT_street_index_id(SeniunaitijaStreet, municipality=municipality, civilParish = civilParish, city=city, street= street, house_number= house_number)
     members = SeniunaitijaMember.objects.all().filter(institution__in = idList)
     return members
