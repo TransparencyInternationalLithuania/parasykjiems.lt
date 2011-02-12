@@ -141,26 +141,34 @@ class AddressDeducer():
 
     def splitIntoCityAndMunicipality(self, string):
         string = string.strip()
-        splitted = string.split(" ")
+        splitted = string.split(u" ")
+        splitted = [p for p in splitted if p.strip() != u""]
         # if we have less than two words, just return what we have
         if len(splitted) < 2:
             return splitted
         # first part is always city name
-        cityString = [splitted[0]]
 
-        # if second part is one of the generic city endings, append it to city name
-        # such as instead of 'new york", return "new york city" + everything else
-        if splitted[1] in allCityEndings:
-            cityString.append(splitted[1])
-            cityString = " ".join(cityString)
-            allElse = u" ".join(splitted[2:])
-            return [cityString, allElse]
-        else:
-            # return everything else, since only the second part can be city ending
-            allElse = u" ".join(splitted[1:])
-            cityString.append(allElse)
-            return cityString
+        wasCity = -1
+        for i in range(1, len(splitted)):
+            if splitted[i] in allCityEndings:
 
+                # This is not accurate, since address Vilnius, Viniaus m. sav. will fail
+                # the first part is the city, and the second is municipality. But note that
+                # municipality part contains "m." part, which is a city ending in short form
+                # so just check if "sav." follows it, which stands for "municipality"
+                if i + 1< len(splitted):
+                    next = splitted[i+1]
+                    if next == u"sav.":
+                        continue
+                wasCity = i
+
+
+        if wasCity == -1:
+            wasCity = 0;
+
+        cityString = " ".join(splitted[0:wasCity + 1])
+        allElse = u" ".join(splitted[wasCity + 1:])
+        return [cityString, allElse]
 
 
 
