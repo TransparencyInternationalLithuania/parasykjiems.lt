@@ -23,46 +23,39 @@ class Command(BaseCommand):
         self.initializeCache()
         pass
 
-    def getCacheKey(self, municipality, city, street):
-        return "%s %s %s" % (municipality, city, street)
+    def getCacheKey(self, municipality, civilparish, city, street):
+        return "%s %s %s %s" % (municipality, civilparish, city, street)
 
 
     def addToCache(self, record):
-        self.streetCache[self.getCacheKey(record.municipality, record.city, record.street)] = record
+        self.streetCache[self.getCacheKey(record.municipality, record.civilparish, record.city, record.street)] = record
 
     def initializeCache(self):
         for r in LithuanianStreetIndexes.objects.all():
             self.addToCache(r)
 
-    def isInCache(self, municipality, city, street):
-        key = self.getCacheKey(municipality, city, street)
+    def isInCache(self, municipality, civilparish, city, street):
+        key = self.getCacheKey(municipality, civilparish, city, street)
         return self.streetCache.has_key(key)
 
-    def createIfNotNull(self, street, city, municipality, city_genitive = None):
+    def createIfNotNull(self, street, city, municipality, civilparish = None, city_genitive = None):
         self.processedRecords += 1
 
-        if (self.isInCache(municipality, city, street) == False):
-            """try:
-
-            LithuanianStreetIndexes.objects.all().filter(street = street) \
-                .filter(city = city) \
-                .filter(municipality = municipality) \
-                [0:1].get()
-            #print u"object %s %s %s exists, skipping" % (street, city, municipality)
-        except LithuanianStreetIndexes.DoesNotExist:"""
+        if self.isInCache(municipality, civilparish, city, street) == False:
             self.count += 1
             newObject = LithuanianStreetIndexes()
             newObject.street = street
             newObject.municipality = municipality
             newObject.city = city
             newObject.city_genitive = city_genitive
+            newObject.civilparish = civilparish
             newObject.save()
             self.addToCache(newObject)
 
         seconds = (datetime.now() - self.start).seconds
-        if (seconds - self.previousSecond > 1):
+        if seconds - self.previousSecond > 1:
             self.previousSecond = seconds
-            if (seconds == 0):
+            if seconds == 0:
                 rate = "unknown"
                 rateProcessing = "unknown"
             else:
@@ -89,7 +82,7 @@ class Command(BaseCommand):
             city_genitive = readRow(row, "City_genitive")
             street = readRow(row, "Street")
 
-            self.createIfNotNull(street, city, municipality, city_genitive = city_genitive)
+            self.createIfNotNull(street, city, municipality, city_genitive = city_genitive, civilparish=civilParish)
 
 
     def handle(self, *args, **options):
