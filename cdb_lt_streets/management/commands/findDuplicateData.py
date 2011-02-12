@@ -41,21 +41,21 @@ class Command(BaseCommand):
             house_number = streetObject.numberFrom
 
             street= streetObject.street
-            if cityNameIsGenitive(municipality=municipality, city_genitive=city, street= street):
+            """if cityNameIsGenitive(municipality=municipality, city_genitive=city, street= street):
                 city_genitive = city
                 city = getCityNominative(municipality=municipality, city_genitive=city_genitive, street= street)
             else:
                 city = city
                 city_genitive = getCityGenitive(municipality=municipality, city=city, street= street)
+            """
 
 
-            """municipality = u"Šilalės rajono"
-            city_genitive = u"Kalniškių kaimas"
+            municipality = u"Alytaus rajono savivaldybė"
             street = None
             house_number = None
-            city = None"""
-
-            additionalKeys = {"city_genitive" : city_genitive}
+            city = u"Arminų I kaimas"
+            
+            additionalKeys = {}
             members = functionToCall(municipality, city, street, house_number, **additionalKeys)
 
             if house_number is None:
@@ -68,7 +68,7 @@ class Command(BaseCommand):
             if total == 1:
                 continue
             print "row %s" % (totalNumberOfStreets + fromNumber)
-            print "adress: %s %s %s %s" % (street, house_number, city_genitive, municipality)
+            print "adress: %s %s %s %s" % (street, house_number, city, municipality)
             print "%s member" % total
 
             for m in members:
@@ -76,6 +76,8 @@ class Command(BaseCommand):
 
             print ""
         seconds = self.start.ElapsedSeconds()
+        if seconds == 0:
+            seconds = 1
         rate = str(totalNumberOfStreets / seconds)
         print "checking at %s rows per second (total sec: %d, rows: %d)" % (rate, seconds, totalNumberOfStreets)
 
@@ -85,8 +87,8 @@ class Command(BaseCommand):
 
         self.args = args
         self.start = TimeMeasurer()
-        self.findGeneric(SeniunaitijaStreet, findSeniunaitijaMembers)
-        #self.findGeneric(CivilParishStreet, findCivilParishMembers)
+        #self.findGeneric(SeniunaitijaStreet, findSeniunaitijaMembers)
+        self.findGeneric(CivilParishStreet, findCivilParishMembers)
 
         print u"total spent time %d seconds" % (self.start.ElapsedSeconds())
         

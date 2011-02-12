@@ -1,0 +1,28 @@
+[
+  {
+    "pk": 1,
+    "model": "cdb_lt_civilparish.civilparishstreet",
+    "fields": {
+      "city": "Arminų I kaimas",
+      "numberOdd": null,
+      "municipality": "Alytaus rajono savivaldyb\u0117",
+      "street": "",
+      "numberFrom": null,
+      "numberTo": null,
+      "institution": 8
+    }
+  },
+  {
+    "pk": 2,
+    "model": "cdb_lt_civilparish.civilparishstreet",
+    "fields": {
+      "city": "Arminų I kaimas",
+      "numberOdd": null,
+      "municipality": "Alytaus rajono savivaldyb\u0117",
+      "street": "",
+      "numberFrom": null,
+      "numberTo": null,
+      "institution": 12
+    }
+  }
+]

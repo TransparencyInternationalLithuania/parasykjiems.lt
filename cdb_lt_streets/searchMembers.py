@@ -153,6 +153,10 @@ def findLT_street_index_id(modelToSearchIn, municipality = None, city = None, st
 
     All representative searches will be done through this method"""
 
+    if street is None:
+        street = u""
+    else:
+        street = street.strip()
 
     logger.info("Will search for representatives in object: %s" % modelToSearchIn.objects.model._meta.object_name)
 
@@ -163,6 +167,10 @@ def findLT_street_index_id(modelToSearchIn, municipality = None, city = None, st
     if len(cityList) < 2:
         return cityList
 
+
+    # if street is empty or None, just return what we have
+    if street == u"":
+       return cityList
 
     # search with street
     streetQuery = Q(**{"street" : street})
