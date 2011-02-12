@@ -50,10 +50,10 @@ class Command(BaseCommand):
             """
 
 
-            municipality = u"Alytaus rajono savivaldybė"
+            """municipality = u"Alytaus rajono savivaldybė"
             street = None
             house_number = None
-            city = u"Arminų I kaimas"
+            city = u"Arminų I kaimas"""
             
             additionalKeys = {}
             members = functionToCall(municipality, city, street, house_number, **additionalKeys)
