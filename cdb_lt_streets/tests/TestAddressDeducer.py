@@ -146,6 +146,14 @@ class TestAddressDeducer(TestCase):
         self.assertEqual(u"Vilnius", address.city)
         self.assertEqual(u"Vilniaus m. sav.", address.municipality)
 
+
+        # test with lots of spaces 
+        address = deduceAddress(u"Verkių g. 30 Vilnius Vilniaus     m.     sav.")
+        self.assertEqual(u"30", address.number)
+        self.assertEqual(u"Verkių g.", address.street)
+        self.assertEqual(u"Vilnius", address.city)
+        self.assertEqual(u"Vilniaus m. sav.", address.municipality)
+
     def testStreetMunicipalityAndCity(self):
         """  """
         address = deduceAddress(u"mickevičiaus g., obelių miestas rokiškis")
@@ -161,5 +169,16 @@ class TestAddressDeducer(TestCase):
         self.assertEqual(u"mickevičiaus g.", address.street)
         self.assertEqual(u"obelių miestas", address.city)
         self.assertEqual(u"rokiškis", address.municipality)
+
+    def testLongCityAndMunicipalityNames(self):
+        """ This fails: Žalioji gatvė,  Senųjų Trakų kaimas, Trakų rajono savivaldybė"""
+
+        address = deduceAddress(u"Žalioji gatvė,  Senųjų Trakų kaimas, Trakų rajono savivaldybė")
+        self.assertEqual(u"", address.number)
+        self.assertEqual(u"Žalioji gatvė", address.street)
+        self.assertEqual(u"Senųjų Trakų kaimas", address.city)
+        self.assertEqual(u"Trakų rajono savivaldybė", address.municipality)
+
+
 
 
