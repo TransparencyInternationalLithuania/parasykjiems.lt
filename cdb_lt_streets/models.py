@@ -9,11 +9,11 @@ from contactdb.models import AddressNameField
 class LithuanianStreetIndexes(models.Model):
     street = AddressNameField(db_index = True)
     city = AddressNameField(db_index = True)
-    city_genitive = AddressNameField(db_index = True, null = True)
+    city_genitive = AddressNameField(db_index = True)
     municipality = AddressNameField(db_index = True)
     # http://en.wikipedia.org/wiki/Elderships_of_Lithuania
     # elderships are sometimes called CivilParish in the code. actually everywhere :)
-    civilparish = AddressNameField(db_index = True, null = True)
+    civilparish = AddressNameField(db_index = True)
 
 
 class LithuanianCases(models.Model):
