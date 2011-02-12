@@ -28,6 +28,7 @@ class CivilParishStreet(models.Model):
     """
     institution = models.ForeignKey(CivilParish)
     municipality = AddressNameField(db_index= True)
+    civilparish = AddressNameField(db_index = True)
     street = AddressNameField(db_index = True)
     city = AddressNameField(db_index = True)
     numberFrom = models.IntegerField(null = True, db_index = True)

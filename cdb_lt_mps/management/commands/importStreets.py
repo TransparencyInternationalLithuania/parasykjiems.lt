@@ -80,7 +80,7 @@ municipalities = {
         u"Švenčionių rajonas":u"Švenčionių rajono savivaldybė"}
 
 def changeMunicipalityToCorrectForm(municipality):
-    if not MunicipalityCases.has_key(municipality):
+    if not municipalities.has_key(municipality):
         raise ImportStreetsConstituencyDoesNotExist(message="municipality '%s' was not found in standard municipality form list" % municipality)
     return municipalities[municipality]
 

@@ -147,16 +147,19 @@ def searchPartial(streetQuery = None, **kwargs):
         pass
     return []
 
-def findLT_street_index_id(modelToSearchIn, municipality = None, city = None, street = None, house_number = None):
+def findLT_street_index_id(modelToSearchIn, municipality = None, civilparish = None, city = None, street = None, house_number = None):
     """ At the moment territory data for each representative is stored in separate table.
     This query searches some table (objectToSearchIn) for instituions pointed by an address.
 
     All representative searches will be done through this method"""
 
+    if civilparish is None:
+        civilparish = u""
+    civilparish = civilparish.strip()
+
     if street is None:
         street = u""
-    else:
-        street = street.strip()
+    street = street.strip()
 
     logger.info("Will search for representatives in object: %s" % modelToSearchIn.objects.model._meta.object_name)
 
@@ -166,6 +169,24 @@ def findLT_street_index_id(modelToSearchIn, municipality = None, city = None, st
     cityList = searchPartialCity(modelToSearchIn= modelToSearchIn, queries=[municipalityQuery, cityQuery])
     if len(cityList) < 2:
         return cityList
+
+
+    # try searchign with civilParish if it is not None
+    if civilparish != u"":
+        civilparishQuery = Q(**{"civilparish": civilparish})
+        civilParishList = searchPartialCity(modelToSearchIn= modelToSearchIn, queries=[municipalityQuery, civilparishQuery, cityQuery])
+
+        if len(civilParishList) == 0:
+            return cityList
+
+        if len(civilParishList) == 1:
+            return civilParishList
+
+        # if we have more than one result, replace city list with our result
+        if len(civilParishList) > 0:
+            cityList = civilParishList
+
+
 
 
     # if street is empty or None, just return what we have
