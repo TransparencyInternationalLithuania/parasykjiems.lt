@@ -455,3 +455,7 @@ a.myopacity:hover img{
   opacity: 1.0;
 }
 
+
+li.faq_content_item {
+    margin-bottom:5px
+}
