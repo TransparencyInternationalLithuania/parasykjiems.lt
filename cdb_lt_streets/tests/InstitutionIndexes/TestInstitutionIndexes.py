@@ -93,5 +93,5 @@ class TestSearchInstitutionStreets_ArminuKaimas(TestCase):
         self.assertEquals([8, 12], ids)
 
     def testSearchWhenStreetIsNOne(self):
-        ids = findLT_street_index_id(modelToSearchIn=CivilParishStreet, municipality=u"Alytaus rajono savivaldybė", civilparish=u"Krokialaukio seniūnija", city=u"Arminų I kaimas",  street=None)
+        ids = findLT_street_index_id(modelToSearchIn=CivilParishStreet, municipality=u"Alytaus rajono savivaldybė", civilParish=u"Krokialaukio seniūnija", city=u"Arminų I kaimas",  street=None)
         self.assertEquals([12], ids)

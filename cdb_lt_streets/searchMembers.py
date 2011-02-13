@@ -173,7 +173,7 @@ def findLT_street_index_id(modelToSearchIn, municipality = None, civilParish = N
 
     # try searchign with civilParish if it is not None
     if civilParish != u"":
-        civilparishQuery = Q(**{"civilparish": civilParish})
+        civilparishQuery = Q(**{"civilParish": civilParish})
         civilParishList = searchPartialCity(modelToSearchIn= modelToSearchIn, queries=[municipalityQuery, civilparishQuery, cityQuery])
 
         if len(civilParishList) == 0:

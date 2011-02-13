@@ -4,6 +4,7 @@ from cdb_lt_civilparish.models import CivilParishStreet
 import logging
 from cdb_lt_seniunaitija.models import SeniunaitijaStreet
 from cdb_lt_streets.management.commands.ltGeoDataCrawl import ExtractRange
+from cdb_lt_streets.searchMembers import findLT_street_index_id
 from cdb_lt_streets.streetUtils import getCityNominative, cityNameIsGenitive, getCityGenitive
 from django.core.management.base import BaseCommand
 from pjutils.timemeasurement import TimeMeasurer
@@ -39,7 +40,7 @@ class Command(BaseCommand):
             municipality = streetObject.municipality
             city = streetObject.city
             house_number = streetObject.numberFrom
-
+            civilParish =  streetObject.civilParish
             street= streetObject.street
             """if cityNameIsGenitive(municipality=municipality, city_genitive=city, street= street):
                 city_genitive = city
@@ -56,7 +57,8 @@ class Command(BaseCommand):
             city = u"Arminų I kaimas"""
             
             additionalKeys = {}
-            members = functionToCall(municipality, city, street, house_number, **additionalKeys)
+            institutionIdList = findLT_street_index_id(modelToSearchIn=CivilParishStreet, municipality=municipality, civilParish = civilParish, city=city,  street=street, house_number=house_number)
+            #members = functionToCall(municipality=municipality, civilParish=civilParish, city=city, street=street, house_number=house_number, **additionalKeys)
 
             if house_number is None:
                 house_number = ""
@@ -64,15 +66,14 @@ class Command(BaseCommand):
                 street = ""
 
             logger.info("row: %s" % (totalNumberOfStreets + fromNumber ))
-            total = len(members)
+            total = len(institutionIdList)
             if total == 1:
                 continue
             print "row %s" % (totalNumberOfStreets + fromNumber)
             print "adress: %s %s %s %s" % (street, house_number, city, municipality)
-            print "%s member" % total
+            print "%s institutions found" % total
 
-            for m in members:
-                print "%s %s" % (m.name, m.surname)
+            print institutionIdList
 
             print ""
         seconds = self.start.ElapsedSeconds()
