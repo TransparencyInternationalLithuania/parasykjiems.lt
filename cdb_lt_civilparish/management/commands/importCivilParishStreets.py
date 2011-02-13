@@ -41,7 +41,7 @@ class Command(BaseCommand):
         civilParishStreet.street = street
         civilParishStreet.city = city_genitive
         civilParishStreet.municipality = municipality
-        civilParishStreet.civilparish = civilParishStr
+        civilParishStreet.civilParish = civilParishStr
         civilParishStreet.institution = civilParish
         civilParishStreet.save()
         self.count += 1
