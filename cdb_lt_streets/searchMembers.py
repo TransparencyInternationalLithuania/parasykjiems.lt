@@ -61,7 +61,10 @@ def getHouseNumberQuery(house_number = None):
         Q(**{"%s__gte" % "numberTo": house_number}) & \
         Q(**{"%s" % "numberOdd": isOdd})
 
-    orQuery = houseNumberInRange  # | houseNumberIsNull | houseNumberEualsFrom | houseNumberEualsTo
+
+    houseNumberEualsFrom = Q(**{"%s" % "numberFrom": house_number}) & Q(**{"%s" % "numberTo": None})
+
+    orQuery = houseNumberInRange | houseNumberEualsFrom  # | houseNumberIsNull | houseNumberEualsFrom | houseNumberEualsTo
     return orQuery
 
 

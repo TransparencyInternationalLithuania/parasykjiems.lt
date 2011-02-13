@@ -95,3 +95,15 @@ class TestSearchInstitutionStreets_ArminuKaimas(TestCase):
     def testSearchWhenStreetIsNOne(self):
         ids = findLT_street_index_id(modelToSearchIn=CivilParishStreet, municipality=u"Alytaus rajono savivaldybė", civilParish=u"Krokialaukio seniūnija", city=u"Arminų I kaimas",  street=None)
         self.assertEquals([12], ids)
+
+class TestSearchInstitutionStreets_NumberToIsNone(TestCase):
+    fixtures = ['InstitutionIndexes/number To is None.json']
+
+    def setUp(self):
+        pass
+
+    def testSearchNumberToIsNone(self):
+        """ Data contains exact house value: numberFrom is give, numberTo is None.
+        Query should consider that numberTo might be None, but not necesarrily"""
+        ids = findLT_street_index_id(modelToSearchIn=PollingDistrictStreet, municipality=u"Vilniaus miesto savivaldybė", city=u"Vilniaus miestas",  street="Gedimino prospektas", house_number=9)
+        self.assertEquals([1], ids)
