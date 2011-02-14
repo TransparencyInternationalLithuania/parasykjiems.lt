@@ -20,14 +20,14 @@ class HouseRange:
     def __init__(self, numberFrom = None, numberTo = None, numberOdd = None):
         self.numberFrom = removeLetterFromHouseNumber(numberFrom)
         self.numberTo = removeLetterFromHouseNumber(numberTo)
-        if (numberTo is None):
+        if numberTo is None:
             numberFrom = removeLetterFromHouseNumber(numberFrom)
             self.numberOdd = int(numberFrom) % 2 == 1
         else:
             self.numberOdd = numberOdd
 
 def _collectRanges(numberList):
-    if (len(numberList) == 0):
+    if len(numberList) == 0:
         return 
     first = numberList[0]
     last = first
@@ -38,14 +38,14 @@ def _collectRanges(numberList):
             continue
 
         # yield current number
-        if (first == last):
+        if first == last:
             yield HouseRange(str(first))
         else:
             yield HouseRange(str(first), str(last), first % 2 == 1)
         first = next
         last = next
 
-    if (first == last):
+    if first == last:
         yield HouseRange(str(first))
     else:
         yield HouseRange(str(first), str(last), first % 2 == 1)
@@ -57,9 +57,9 @@ def yieldRanges(listOfHouseNumbers):
     # Divide house numbers into even and odd
     # spit out house numbers with letters immediatelly
     for num in listOfHouseNumbers:
-        if (num is None):
+        if num is None:
             continue
-        if (num == ""):
+        if num == "":
             continue
         if isStringStreetHouseNumber(num) == False:
             raise StringIsNotAHouseNumberException(message="string '%s' is not a house number " % num)
@@ -96,7 +96,7 @@ class Command(BaseCommand):
 
     def getCivilParish(self, civilParishStr, municipality = None):
         key = "%s" % (civilParishStr)
-        if (self.localCache.has_key(key) == True):
+        if self.localCache.has_key(key) == True:
             return self.localCache[key]
 
         try:
