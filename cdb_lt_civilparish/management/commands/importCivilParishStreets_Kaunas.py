@@ -9,7 +9,7 @@ from cdb_lt_civilparish.models import CivilParish, CivilParishStreet
 from pjutils.exc import ChainnedException
 from cdb_lt_streets.ltPrefixes import *
 import logging
-from cdb_lt_streets.houseNumberUtils import isStringStreetHouseNumber, StringIsNotAHouseNumberException, ifHouseNumberContainLetter, removeLetterFromHouseNumber
+from cdb_lt_streets.houseNumberUtils import isStringStreetHouseNumber, StringIsNotAHouseNumberException, ifHouseNumberContainLetter, removeLetterFromHouseNumber, padHouseNumberWithZeroes
 
 logger = logging.getLogger(__name__)
 
@@ -18,9 +18,13 @@ class CivilParishNotFound(ChainnedException):
 
 class HouseRange:
     def __init__(self, numberFrom = None, numberTo = None, numberOdd = None):
-        self.numberFrom = removeLetterFromHouseNumber(numberFrom)
-        self.numberTo = removeLetterFromHouseNumber(numberTo)
         if numberTo is None:
+            numberTo = u""
+        if numberFrom is None:
+            numberFrom = u""
+        self.numberFrom = numberFrom
+        self.numberTo = numberTo
+        if numberTo is u"":
             numberFrom = removeLetterFromHouseNumber(numberFrom)
             self.numberOdd = int(numberFrom) % 2 == 1
         else:
@@ -51,6 +55,10 @@ def _collectRanges(numberList):
         yield HouseRange(str(first), str(last), first % 2 == 1)
 
 def yieldRanges(listOfHouseNumbers):
+    """ From a list of house numbers, construct house ranges.  For example, if list is
+    [2, 4, 6], a single reange will be produced.
+
+    Numbers with letters will be spit out immediatelly, as single numbers, not range"""
     oddNumbers = {}
     evenNumbers = {}
 
@@ -113,8 +121,8 @@ class Command(BaseCommand):
         civilParishStreet = CivilParishStreet()
         civilParishStreet.street = street
         civilParishStreet.city = city_genitive
-        civilParishStreet.numberFrom = range.numberFrom
-        civilParishStreet.numberTo = range.numberTo
+        civilParishStreet.numberFrom = padHouseNumberWithZeroes(range.numberFrom)
+        civilParishStreet.numberTo = padHouseNumberWithZeroes(range.numberTo)
         civilParishStreet.numberOdd = range.numberOdd
         civilParishStreet.municipality = municipality
         civilParishStreet.institution = civilParish

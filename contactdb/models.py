@@ -25,6 +25,15 @@ class AddressNameField(CharField):
         kwargs['max_length'] = kwargs.get('max_length', 50)
         CharField.__init__(self, *args, **kwargs)
 
+class HouseNumberField(CharField):
+    description = _("A house number field, capable of storing house letter")
+
+    def __init__(self, *args, **kwargs):
+        kwargs['max_length'] = kwargs.get('max_length', 5)
+        kwargs['db_index'] = kwargs.get('db_index', True)
+        kwargs['null'] = kwargs.get('null', False)
+        CharField.__init__(self, *args, **kwargs)
+
 
 class PersonNameField(CharField):
     description = _("A person name field")

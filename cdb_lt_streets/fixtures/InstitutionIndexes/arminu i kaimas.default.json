@@ -8,8 +8,8 @@
       "municipality": "Alytaus rajono savivaldyb\u0117",
       "street": "",
       "civilParish": "Alytaus seniūnija",
-      "numberFrom": null,
-      "numberTo": null,
+      "numberFrom": "",
+      "numberTo": "",
       "institution": 8
     }
   },
@@ -22,8 +22,8 @@
       "municipality": "Alytaus rajono savivaldyb\u0117",
       "civilParish": "Krokialaukio seniūnija",
       "street": "",
-      "numberFrom": null,
-      "numberTo": null,
+      "numberFrom": "",
+      "numberTo": "",
       "institution": 12
     }
   }

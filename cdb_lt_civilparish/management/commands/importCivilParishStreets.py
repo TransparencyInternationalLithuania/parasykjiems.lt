@@ -63,7 +63,7 @@ class Command(BaseCommand):
             city_genitive = readRow(row, "city_genitive")
             street = readRow(row, "street")
 
-            if (civilParish == u""):
+            if civilParish == u"":
                 continue
 
             self.createIfNotNull(street, city, municipality, civilParish, city_genitive=city_genitive)

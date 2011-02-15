@@ -87,8 +87,23 @@ def isHouseNumberOdd(fromNumber):
     number = int(number)
     return number % 2 == 1
 
+def padHouseNumberWithZeroes(number):
+    if type(number) == types.IntType:
+        number = u"%s" % number
+    if number == u"":
+        return number
+    letter = u"0"
+    if ifHouseNumberContainLetter(number):
+        letter = number[-1]
+    number = removeLetterFromHouseNumber(number)
+    stringLen = len(number)
+    pad = 4 - stringLen
+    padz = u"".join("0" for i in range(0, pad))
+
+    return "%s%s%s" % (padz, number, letter)
+
 def removeLetterFromHouseNumber(fromNumber):
-    if (fromNumber is None):
+    if fromNumber is None:
         return fromNumber
     # maybe it contains letter
     if type(fromNumber) == types.IntType:
