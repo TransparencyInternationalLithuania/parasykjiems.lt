@@ -4,7 +4,7 @@
 from django.db import models
 
 # Create your models here.
-from contactdb.models import PersonNameField, PhoneField, InstitutionNameField, AddressNameField
+from contactdb.models import PersonNameField, PhoneField, InstitutionNameField, AddressNameField, HouseNumberField, HouseNumberOddField
 
 class Seniunaitija(models.Model):
     name = InstitutionNameField()
@@ -16,9 +16,9 @@ class SeniunaitijaStreet(models.Model):
     municipality = AddressNameField(db_index= True)
     street = AddressNameField(db_index = True)
     city = AddressNameField(db_index = True)
-    numberFrom = models.IntegerField(null = True, db_index = True)
-    numberTo = models.IntegerField(null = True, db_index = True)
-    numberOdd = models.IntegerField(null = True, db_index = True)
+    numberFrom = HouseNumberField()
+    numberTo = HouseNumberField()
+    numberOdd = HouseNumberOddField()
 
 class SeniunaitijaMember(models.Model):
     """ Seniunaitis. Is accountable to CivilParishMember. Basically he performs any sub-management

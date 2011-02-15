@@ -4,7 +4,7 @@
 from django.db import models
 
 # Create your models here.
-from contactdb.models import PersonNameField, InstitutionNameField, PhoneField, AddressNameField, HouseNumberField
+from contactdb.models import PersonNameField, InstitutionNameField, PhoneField, AddressNameField, HouseNumberField, HouseNumberOddField
 
 class CivilParish(models.Model):
     name = InstitutionNameField()
@@ -33,4 +33,4 @@ class CivilParishStreet(models.Model):
     city = AddressNameField(db_index = True)
     numberFrom = HouseNumberField()
     numberTo = HouseNumberField()
-    numberOdd = models.IntegerField(null = True, db_index = True)
+    numberOdd = HouseNumberOddField()
