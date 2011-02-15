@@ -16,7 +16,7 @@
 {% for mail in mails.object_list %}
 <tr>
 <td><a href="/pjweb/public/{{ mail.id }}/">{{ mail.recipient_name }}</a></td>
-<td>{{ mail.message }}</td>
+<td>{{ mail.message|urlizetrunc:32 }}</td>
 <td>{{ mail.sender }}</td>
 <td>{{ mail.send_date }}</td>
 <td>{{ mail.has_response }}</td>
