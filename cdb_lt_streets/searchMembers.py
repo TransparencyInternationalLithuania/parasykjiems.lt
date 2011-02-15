@@ -4,7 +4,7 @@ from cdb_lt_civilparish.models import CivilParishMember, CivilParishStreet
 from cdb_lt_mps.models import ParliamentMember, PollingDistrictStreet
 from cdb_lt_municipality.models import Municipality, MunicipalityMember
 from cdb_lt_seniunaitija.models import SeniunaitijaMember, SeniunaitijaStreet
-from cdb_lt_streets.houseNumberUtils import ifHouseNumberContainLetter, removeLetterFromHouseNumber
+from cdb_lt_streets.houseNumberUtils import ifHouseNumberContainLetter, removeLetterFromHouseNumber, convertNumberToString
 import types
 from django.db.models.query_utils import Q
 from cdb_lt_streets.ltPrefixes import removeGenericPartFromStreet, removeGenericPartFromMunicipality
@@ -155,6 +155,8 @@ def findLT_street_index_id(modelToSearchIn, municipality = None, civilParish = N
     This query searches some table (objectToSearchIn) for instituions pointed by an address.
 
     All representative searches will be done through this method"""
+
+    house_number = convertNumberToString(house_number)
 
     if civilParish is None:
         civilParish = u""
