@@ -1,24 +1,24 @@
 [
   {
     "pk": 1,
-    "model": "cdb_lt_mps.CivilParishStreet",
+    "model": "cdb_lt_civilparish.CivilParishStreet",
     "fields": {
       "city": "Vilniaus miestas",
       "municipality": "Vilniaus miesto savivaldybė",
       "street": "Gedimino prospektas",
-      "numberFrom": "9a",
+      "numberFrom": "0009a",
       "numberOdd": 1,
       "institution": 1
     }
   },
   {
     "pk": 2,
-    "model": "cdb_lt_mps.CivilParishStreet",
+    "model": "cdb_lt_civilparish.CivilParishStreet",
     "fields": {
       "city": "Vilniaus miestas",
       "municipality": "Vilniaus miesto savivaldybė",
       "street": "Gedimino prospektas",
-      "numberFrom": 9,
+      "numberFrom": "00090",
       "numberOdd": 0,
       "institution": 2
     }

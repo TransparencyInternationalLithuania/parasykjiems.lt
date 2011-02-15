@@ -6,8 +6,8 @@
       "city": "Vilniaus miestas",
       "municipality": "Vilniaus miesto savivaldybė",
       "street": "Gedimino prospektas",
-      "numberFrom": 9,
-      "numberTo": 13,
+      "numberFrom": "00090",
+      "numberTo": "00130",
       "numberOdd": 1,
       "institution": 1
     }
@@ -19,8 +19,8 @@
       "city": "Vilniaus miestas",
       "municipality": "Vilniaus miesto savivaldybė",
       "street": "Gedimino prospektas",
-      "numberFrom": 10,
-      "numberTo": 12,
+      "numberFrom": "00010",
+      "numberTo": "00120",
       "numberOdd": 0,
       "institution": 2
     }
@@ -32,7 +32,7 @@
       "city": "Vilniaus miestas",
       "municipality": "Vilniaus miesto savivaldybė",
       "street": "Single ended house number street",
-      "numberFrom": 10,
+      "numberFrom": "00100",
       "numberOdd": 0,
       "institution": 3
     }
@@ -44,8 +44,8 @@
       "city": "Vilniaus miestas",
       "municipality": "Vilniaus miesto savivaldybė",
       "street": "random1",
-      "numberFrom": 10,
-      "numberTo" : 12,
+      "numberFrom": "00100",
+      "numberTo" : "00120",
       "numberOdd": 0,
       "institution": 4
     }

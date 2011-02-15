@@ -4,12 +4,13 @@ from cdb_lt_civilparish.models import CivilParishMember, CivilParishStreet
 from cdb_lt_mps.models import ParliamentMember, PollingDistrictStreet
 from cdb_lt_municipality.models import Municipality, MunicipalityMember
 from cdb_lt_seniunaitija.models import SeniunaitijaMember, SeniunaitijaStreet
-from cdb_lt_streets.houseNumberUtils import ifHouseNumberContainLetter, removeLetterFromHouseNumber, convertNumberToString
+from cdb_lt_streets.houseNumberUtils import ifHouseNumberContainLetter, removeLetterFromHouseNumber, convertNumberToString, padHouseNumberWithZeroes, isHouseNumberOdd
 import types
 from django.db.models.query_utils import Q
 from cdb_lt_streets.ltPrefixes import removeGenericPartFromStreet, removeGenericPartFromMunicipality
-logger = logging.getLogger(__name__)
+from pjutils.exc import ChainnedException
 
+logger = logging.getLogger(__name__)
 
 def addHouseNumberQuery2(query, house_number):
     """ if house number is a numeric, add special conditions to check
@@ -46,23 +47,15 @@ def getHouseNumberQuery(house_number = None):
     if house_number is None:
         return query
 
-    # convert house number to int
-    if type(house_number) != types.IntType:
-        if ifHouseNumberContainLetter(house_number):
-            house_number = removeLetterFromHouseNumber(house_number)
-
-        if not house_number.isdigit():
-            return query
-        house_number = int(house_number)
-        
-    isOdd = house_number % 2
+    isOdd = isHouseNumberOdd(house_number)
+    house_number = padHouseNumberWithZeroes(house_number)
 
     houseNumberInRange = Q(**{"%s__lte" % "numberFrom": house_number}) & \
         Q(**{"%s__gte" % "numberTo": house_number}) & \
         Q(**{"%s" % "numberOdd": isOdd})
 
 
-    houseNumberEualsFrom = Q(**{"%s" % "numberFrom": house_number}) & Q(**{"%s" % "numberTo": None})
+    houseNumberEualsFrom = Q(**{"%s" % "numberFrom": house_number}) & Q(**{"%s" % "numberTo": u""})
 
     orQuery = houseNumberInRange | houseNumberEualsFrom  # | houseNumberIsNull | houseNumberEualsFrom | houseNumberEualsTo
     return orQuery
@@ -154,9 +147,9 @@ def findLT_street_index_id(modelToSearchIn, municipality = None, civilParish = N
     """ At the moment territory data for each representative is stored in separate table.
     This query searches some table (objectToSearchIn) for instituions pointed by an address.
 
-    All representative searches will be done through this method"""
+    House_number can either be integer, or a string in case the house number has a letter. Do not pad house number with zeroes.
 
-    house_number = convertNumberToString(house_number)
+    All representative searches will be done through this method"""
 
     if civilParish is None:
         civilParish = u""
@@ -205,7 +198,7 @@ def findLT_street_index_id(modelToSearchIn, municipality = None, civilParish = N
         return streetList
 
     # in case we do not have number, return all we have
-    if house_number is None or house_number == "":
+    if house_number is None or house_number == u"":
         return streetList
 
     # we have got more than two rows. So now search with house number
