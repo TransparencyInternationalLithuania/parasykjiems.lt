@@ -48,14 +48,17 @@ def getHouseNumberQuery(house_number = None):
         return query
 
     isOdd = isHouseNumberOdd(house_number)
+    isLetter = ifHouseNumberContainLetter(house_number)
     house_number = padHouseNumberWithZeroes(house_number)
+
+    houseNumberEualsFrom = Q(**{"%s" % "numberFrom": house_number}) & Q(**{"%s" % "numberTo": u""})
+
+    if isLetter:
+        return houseNumberEualsFrom
 
     houseNumberInRange = Q(**{"%s__lte" % "numberFrom": house_number}) & \
         Q(**{"%s__gte" % "numberTo": house_number}) & \
         Q(**{"%s" % "numberOdd": isOdd})
-
-
-    houseNumberEualsFrom = Q(**{"%s" % "numberFrom": house_number}) & Q(**{"%s" % "numberTo": u""})
 
     orQuery = houseNumberInRange | houseNumberEualsFrom  # | houseNumberIsNull | houseNumberEualsFrom | houseNumberEualsTo
     return orQuery

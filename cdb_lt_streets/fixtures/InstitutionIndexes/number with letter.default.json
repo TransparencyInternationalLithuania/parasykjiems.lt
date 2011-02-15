@@ -22,5 +22,30 @@
       "numberOdd": 0,
       "institution": 2
     }
+  },
+  {
+    "pk": 3,
+    "model": "cdb_lt_civilparish.CivilParishStreet",
+    "fields": {
+      "city": "Vilniaus miestas",
+      "municipality": "Vilniaus miesto savivaldybė",
+      "street": "Vaižganto gatvė",
+      "numberFrom": "00500",
+      "numberTo": "00600",
+      "numberOdd": 0,
+      "institution": 3
+    }
+  },
+  {
+    "pk": 4,
+    "model": "cdb_lt_civilparish.CivilParishStreet",
+    "fields": {
+      "city": "Vilniaus miestas",
+      "municipality": "Vilniaus miesto savivaldybė",
+      "street": "Vaižganto gatvė",
+      "numberFrom": "0056a",
+      "numberOdd": 0,
+      "institution": 4
+    }
   }
 ]

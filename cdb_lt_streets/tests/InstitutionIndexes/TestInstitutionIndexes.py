@@ -122,3 +122,11 @@ class TestSearchInstitutionStreets_NumberWithLetter(TestCase):
 
         ids = findLT_street_index_id(modelToSearchIn=CivilParishStreet, municipality=u"Vilniaus miesto savivaldybė", city=u"Vilniaus miestas",  street="Gedimino prospektas", house_number="9a")
         self.assertEquals([1], ids)
+
+    def testSearchNumberWithLetter_Letter_is_in_another_house_range(self):
+        """ One street from 10 to 20, another street 14a    Should find correctly one or another"""
+        ids = findLT_street_index_id(modelToSearchIn=CivilParishStreet, municipality=u"Vilniaus miesto savivaldybė", city=u"Vilniaus miestas",  street="Vaižganto gatvė", house_number="56")
+        self.assertEquals([3], ids)
+
+        ids = findLT_street_index_id(modelToSearchIn=CivilParishStreet, municipality=u"Vilniaus miesto savivaldybė", city=u"Vilniaus miestas",  street="Vaižganto gatvė", house_number="56a")
+        self.assertEquals([4], ids)
