@@ -87,9 +87,13 @@ def isHouseNumberOdd(fromNumber):
     number = int(number)
     return number % 2 == 1
 
-def padHouseNumberWithZeroes(number):
+def convertNumberToString(number):
     if type(number) == types.IntType:
         number = u"%s" % number
+    return number
+
+def padHouseNumberWithZeroes(number):
+    number = convertNumberToString(number)
     if number == u"":
         return number
     letter = u"0"
