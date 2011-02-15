@@ -13,7 +13,7 @@ from pjutils.exc import ChainnedException
 from cdb_lt_civilparish.management.commands.importCivilParish import readRow
 from cdb_lt_streets.ltPrefixes import *
 import logging
-from cdb_lt_streets.houseNumberUtils import isStringStreetHouseNumber, StringIsNotAHouseNumberException, ifHouseNumberContainLetter, removeLetterFromHouseNumber, ContainsNumbers, ContainsHouseNumbers
+from cdb_lt_streets.houseNumberUtils import isStringStreetHouseNumber, StringIsNotAHouseNumberException, ifHouseNumberContainLetter, removeLetterFromHouseNumber, ContainsNumbers, ContainsHouseNumbers, padHouseNumberWithZeroes
 
 logger = logging.getLogger(__name__)
 
@@ -182,8 +182,8 @@ class Command(BaseCommand):
     def create(self, civilParish = None, street = None, range = None):
         civilParishStreet = CivilParishStreet()
         civilParishStreet.street = street
-        civilParishStreet.numberFrom = range.numberFrom
-        civilParishStreet.numberTo = range.numberTo
+        civilParishStreet.numberFrom = padHouseNumberWithZeroes(range.numberFrom)
+        civilParishStreet.numberTo = padHouseNumberWithZeroes(range.numberTo)
         civilParishStreet.numberOdd = range.numberOdd
         civilParishStreet.city = city_genitive
         civilParishStreet.municipality = municipality

@@ -6,7 +6,7 @@ import os
 from cdb_lt_civilparish.management.commands.importCivilParishStreets_Kaunas import yieldRanges
 
 class TestYieldHouseRanges(TestCase):
-    def assertRangesEqual(self, fromNumber = None, toNumber = None, result = None):
+    def assertRangesEqual(self, fromNumber = u"", toNumber = u"", result = None):
         if (result is None):
             self.fail("Result was null, but we expect fromNumber to be %s" % fromNumber)
 

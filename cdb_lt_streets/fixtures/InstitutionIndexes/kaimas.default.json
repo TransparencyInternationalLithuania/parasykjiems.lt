@@ -7,8 +7,8 @@
       "numberOdd": null,
       "municipality": "Alytaus rajono savivaldyb\u0117",
       "street": "",
-      "numberFrom": null,
-      "numberTo": null,
+      "numberFrom": "",
+      "numberTo": "",
       "institution": 8
     }
   }
