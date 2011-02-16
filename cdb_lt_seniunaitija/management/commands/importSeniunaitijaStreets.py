@@ -4,6 +4,7 @@ from django.core.management.base import BaseCommand
 from django.db import transaction
 from datetime import datetime
 from django.db import connection, transaction
+from cdb_lt_mps.parseConstituencies import ExpandedStreet
 from pjutils.timemeasurement import TimeMeasurer
 import pjutils.uniconsole
 import os
@@ -15,22 +16,9 @@ from contactdb.imp import ImportSources
 from cdb_lt_seniunaitija.management.commands.importSeniunaitijaMembers import SeniunaitijaMembersReader
 from cdb_lt_mps.models import PollingDistrictStreet
 from cdb_lt_streets.searchInIndex import *
-from cdb_lt_streets.houseNumberUtils import removeLetterFromHouseNumber, ContainsNumbers
+from cdb_lt_streets.houseNumberUtils import removeLetterFromHouseNumber, ContainsNumbers, isHouseNumberOdd, padHouseNumberWithZeroes
 
 logger = logging.getLogger(__name__)
-
-class ExpandedStreet(object):
-    """ The biggest house number that can possibly exist. This is usually used
-    when in address range is refered in this form "from number 5 till the end".
-    So the end in this case is this number"""
-    MaxOddValue = 999999
-    MaxEvenValue = 999999 - 1
-
-    def __init__(self, street = None, numberFrom = None, numberTo = None, city = None):
-        self.street = street
-        self.numberFrom = numberFrom
-        self.numberTo = numberTo
-        self.city = city
 
 class SeniunaitijaAddressExpanderException(ChainnedException):
     pass
@@ -246,17 +234,17 @@ class SeniunaitijaAddressExpander:
             for s in s1.split(u";"):
                 if s.find("iki") >=0:
                     r = s.split("iki")
-                    if (len(r) != 2):
+                    if len(r) != 2:
                         raise SeniunaitijaAddressExpanderException("string '%s' had more than 1 range" % s)
                     yield r
-                elif (s.find(u"-") >= 0):
+                elif s.find(u"-") >= 0:
                     r = s.split("-")
-                    if (len(r) != 2):
+                    if len(r) != 2:
                         raise SeniunaitijaAddressExpanderException("string '%s' had more than 1 range" % s)
                     yield r
-                elif (s.find(u"–") >= 0):
+                elif s.find(u"–") >= 0:
                     r = s.split(u"–")
-                    if (len(r) != 2):
+                    if len(r) != 2:
                         raise SeniunaitijaAddressExpanderException("string '%s' had more than 1 range" % s)
                     yield r
 
@@ -290,10 +278,10 @@ class Command(BaseCommand):
         pollingDistricts = []
 
         for pollingDistrict in aggregator.getLocations():
-            if (count + 1 > toPrint):
+            if count + 1 > toPrint:
                 break
             count += 1
-            if (count + 1 <= fromPrint):
+            if count + 1 <= fromPrint:
                 continue
             pollingDistricts.append(pollingDistrict)
         return pollingDistricts
@@ -306,7 +294,7 @@ class Command(BaseCommand):
         constituencies = {}
 
         for pol in pollingDistricts:
-            if (constituencies.has_key(pol.Constituency.nr) == False):
+            if constituencies.has_key(pol.Constituency.nr) == False:
                 try:
                     constituencies[pol.Constituency.nr] = Constituency.objects.get(nr = pol.Constituency.nr)
                 except Constituency.DoesNotExist as e:
@@ -324,12 +312,12 @@ class Command(BaseCommand):
         # a minor optimization hack, to improve speed when inserting data first time
 
         # check how many rows we have initially
-        if (self.previousDBRowCount is None):
+        if self.previousDBRowCount is None:
             self.previousDBRowCount = PollingDistrictStreet.objects.count()
 
         # if we have none rows, then just return list, and do any checks,
         # no need to do that, right
-        if (self.previousDBRowCount == 0):
+        if self.previousDBRowCount == 0:
             return expandedStreets
 
         # will execute looots of selectes against database
@@ -345,7 +333,7 @@ class Command(BaseCommand):
             #print query.query
             results = list(query)
 
-            if (len(results) == 0):
+            if len(results) == 0:
                 nonExisting.append(expandedStreet)
 
         return nonExisting
@@ -361,7 +349,7 @@ class Command(BaseCommand):
         toPrint = 9999999
 
         if len(args) > 0:
-            if (args[0].find(":") > 0):
+            if args[0].find(":") > 0:
                 split = args[0].split(':')
                 fromPrint = int(split[0])
                 try:
@@ -391,16 +379,16 @@ class Command(BaseCommand):
         wasError = 0
         count = 0
         for member in reader.ReadMembers():
-            if (member.territoryStr == u""):
+            if member.territoryStr == u"":
                 continue
-            if (member.seniunaitijaStr == u""):
-                print "skipping teritory %s" % (member.uniqueKey)
+            if member.seniunaitijaStr == u"":
+                print "skipping teritory %s" % member.uniqueKey
                 continue
 
             count += 1
-            if (fromPrint > member.uniqueKey):
+            if fromPrint > member.uniqueKey:
                 continue
-            if (toPrint < member.uniqueKey):
+            if toPrint < member.uniqueKey:
                 break
             numberOfStreets = 0
             print "territory for: %s %s" % (member.uniqueKey, member.seniunaitijaStr)
@@ -419,19 +407,19 @@ class Command(BaseCommand):
                     s.street = street.street
                     if s.street is None:
                         s.street = u""
-                    s.numberFrom = street.numberFrom
+                    s.numberFrom = padHouseNumberWithZeroes(street.numberFrom)
                     if street.numberFrom is not None:
-                        s.numberOdd = street.numberFrom % 2
-                    s.numberTo = street.numberTo
+                        s.numberOdd = isHouseNumberOdd(street.numberFrom)
+                    s.numberTo = padHouseNumberWithZeroes(street.numberTo)
                     s.save()
             except Seniunaitija.DoesNotExist as e:
                 logger.error(u"""Seniunaitija with id %s was not found""" % member.uniqueKey)
-                wasError = wasError + 1
+                wasError += + 1
                 continue
             except SeniunaitijaAddressExpanderException as e:
                 logger.error(u"""Error in seniunaitija teritory nr '%s'
 ErrorDetails = %s""" % (member.uniqueKey, e.message))
-                wasError = wasError + 1
+                wasError += 1
                 continue
 
             imported += 1
