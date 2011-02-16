@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from django.test import TestCase
-from cdb_lt_streets.houseNumberUtils import ContainsHouseNumbers, padHouseNumberWithZeroes
+from cdb_lt_streets.houseNumberUtils import ContainsHouseNumbers, padHouseNumberWithZeroes, depadHouseNumberWithZeroes
 from settings import *
 
 scriptPath = os.path.dirname( os.path.realpath( __file__ ) )
@@ -34,5 +34,10 @@ class TestPadHouseNumberWithZeroes(TestCase):
         self.assertEqual(u"00110", padHouseNumberWithZeroes(u"11"))
         self.assertEqual(u"0001a", padHouseNumberWithZeroes(u"1a"))
         self.assertEqual(u"00150", padHouseNumberWithZeroes(15))
+
+    def testDePad(self):
+        self.assertEqual(u"1", depadHouseNumberWithZeroes(u"00010"))
+        self.assertEqual(u"100", depadHouseNumberWithZeroes(u"01000"))
+        self.assertEqual(u"100a", depadHouseNumberWithZeroes(u"0100a"))
 
 

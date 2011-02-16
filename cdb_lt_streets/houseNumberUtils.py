@@ -92,6 +92,15 @@ def convertNumberToString(number):
         number = u"%s" % number
     return number
 
+
+def depadHouseNumberWithZeroes(number):
+    number = convertNumberToString(number)
+    number = number.lstrip(u"0")
+    if number[-1] == u"0":
+        number = number [:-1]
+    return number
+
+
 def padHouseNumberWithZeroes(number):
     number = convertNumberToString(number)
     if number == u"":
