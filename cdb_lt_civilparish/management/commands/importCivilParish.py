@@ -53,7 +53,7 @@ class Command(BaseCommand):
             municipalityStr = readRow(row, "municipality")
             civilParishStr = readRow(row, "civilparish")
 
-            if (civilParishStr == u""):
+            if civilParishStr == u"":
                 continue
 
             civilParish = CivilParish()

@@ -46,8 +46,10 @@ class ltGeoDataSources:
                     ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Vilniaus apskr.", os.path.join(commonPath, "cdb_lt_street_index_vilnius_apskritis.csv"))
     ]
 
+    testIndexes = [("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Test Data", os.path.join(commonPath, "cdb_lt_street_index_test.csv")) ]
+
     """ A list of document for importing streets for civil parishes"""
-    CivilParishIndexes = commonIndexes
+    CivilParishIndexes = commonIndexes + testIndexes
     # a custom pdf generated only for city Kaunas
     CivilParishIndexes_Kaunas = os.path.join("contactdb", "sources", "CivilParish", "Kauno seniunijos.raw.txt")
     # a directory where Vilnius city civil parish streets reside

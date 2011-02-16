@@ -166,6 +166,10 @@ class GetMail():
         self.M.store(num, '+FLAGS', '\\Deleted')
 
 
+    def readMail(self, num):
+        typ, msg_data = self.M.fetch(num, '(RFC822)')
+        return msg_data
+
     def readMessage(self, num):
         """ Will read message from IMAP. message num is passed as argument.
         Use getUnseenMessages or getSeenMessages to get a list of mails.
@@ -200,7 +204,7 @@ class GetMail():
 
 
     def fetchAndParseMail(self, num, email_id):
-        typ, msg_data = self.M.fetch(num, '(RFC822)')
+        msg_data = self.readMail(num)
 
         # for some reason msg_date is always len of 2. first element is tuple
         # second element is left parenthesis
