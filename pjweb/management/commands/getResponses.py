@@ -66,9 +66,11 @@ class Command(BaseCommand):
                 try:
                     email = getmail.readMessage(num)
                     if email is None:
-                        print "marking message %s for deletion" % num
-                        getmail.markMessageForDeletion(num)
-                        deletedEmails.append(num)
+                        print "could not extract email from message %s, skipping" % num
+                        skippedEmails.append(num)
+                        #print "marking message %s for deletion" % num
+                        #getmail.markMessageForDeletion(num)
+                        #deletedEmails.append(num)
                         continue
                     email_id, msg_text, msg_attachments = email
                     insert.insert_resp(email_id, msg_text, msg_attachments)

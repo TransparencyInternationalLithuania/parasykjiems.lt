@@ -15,9 +15,9 @@ class Command(BaseCommand):
 
         fromNumber = 0
         toNumber = None
-        if (len(args) >= 1):
+        if len(args) >= 1:
             fromNumber, toNumber = ExtractRange(args[0])
-        if (toNumber is None):
+        if toNumber is None:
             toNumber = len(ltGeoDataSources.LithuanianStreetIndexes)
 
         for doc, file in ltGeoDataSources.LithuanianStreetIndexes[fromNumber: toNumber]:
