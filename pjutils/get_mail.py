@@ -59,7 +59,21 @@ class GetMail():
         self.M.expunge()
         self.M.close()
         self.M.logout()
-        
+
+    def getNewAttachmentName(self, fullDir, fileName):
+        att_fileName = os.path.join(fullDir, fileName)
+        if not os.path.isfile(att_fileName):
+            return fileName
+
+        fileName, extension = os.path.splitext(fileName)
+        i = 1
+        while True:
+            f = u"%s-%s%s" % (fileName, i, extension)
+            att_fileName = os.path.join(fullDir, f )
+            if not os.path.isfile(att_fileName):
+                return f
+            i += 1
+        raise AttachmentAlreadyExistsException(message= "attachment at location '%s' already exists" % fileName)
 
     def getEmailTextAndEncodingAndAttachments(self, msg_id, msg):
         """ msg_id is email number in our database. used only for logging and creating directory for attachments
@@ -102,10 +116,12 @@ class GetMail():
                 dir_util.mkpath(fullDir)
                 
 
-                # check if we are not overwriting old attachment
+                # check if we are not overwriting old attachment. get a new filename if necessary
+                filename = self.getNewAttachmentName(fullDir, filename)
+
+                # construct final path
                 att_fileName = os.path.join(fullDir, filename)
-                if os.path.isfile(att_fileName):
-                    raise AttachmentAlreadyExistsException(message= "attachment at location '%s' already exists. msg num is '%s'" % (att_fileName, msg_id))
+                
                 # finally write the stuff
                 fp = open(att_fileName, 'wb')
                 fp.write(part.get_payload(decode=True))
