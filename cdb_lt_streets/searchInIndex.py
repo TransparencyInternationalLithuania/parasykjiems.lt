@@ -298,17 +298,50 @@ def searchInIndex(municipality = None, city = None, street = None):
         return LithuanianStreetIndexes.objects.all().filter(finalQuery)\
         .order_by('street')[0:50]
     else:
+
+        # try searching with istarts with on whole street
+        # just transform short street ending to long form
+        street = changeStreetFromShortToLongForm(street)
+        streetStartsWithEnding = q = Q(**{"street__istartswith": street})
+        streetExactWithEndingFilter = getAndQuery(municipalityQuery, cityQuery, streetStartsWithEnding)
+        streetExactWithEnding = LithuanianStreetIndexes.objects.all().filter(streetExactWithEndingFilter)\
+            .order_by('street')[0:50]
+        streetExactWithEnding = list(streetExactWithEnding)
+        if len(streetExactWithEnding) > 0:
+            return streetExactWithEnding
+
+
+        streetEnding = extractStreetEndingForm(street)
         streetWihoutEnding = removeGenericPartFromStreet(street)
-        streetWihoutEndingQueryStartsWith = q = Q(**{"street__istartswith": streetWihoutEnding})
+        streetWihoutEndingQueryStartsWith = Q(**{"street__istartswith": streetWihoutEnding})
+        streetEndingQuery = Q(**{"street__icontains": streetEnding})
+
+        # search for street without stripped street ending, and street ending as separate query
+        streetExactFilter = getAndQuery(municipalityQuery, cityQuery, streetWihoutEndingQueryStartsWith, streetEndingQuery)
+        streetExact = LithuanianStreetIndexes.objects.all().filter(streetExactFilter)\
+            .order_by('street')[0:50]
+        streetExact = list(streetExact)
+        if len(streetExact) > 0:
+            return streetExact
+
         # find with exact street
         streetExactFilter = getAndQuery(municipalityQuery, cityQuery, streetWihoutEndingQueryStartsWith)
         streetExact = LithuanianStreetIndexes.objects.all().filter(streetExactFilter)\
             .order_by('street')[0:50]
+        streetExact = list(streetExact)
         if len(streetExact) > 0:
             return streetExact
 
-        # remove street ending, and try again
-        streetWihoutEndingQueryContains = q = Q(**{"street__icontains": streetWihoutEnding})
+        #search for street without using street ending and starts with
+        streetExactFilter = getAndQuery(municipalityQuery, cityQuery, streetWihoutEndingQueryStartsWith)
+        streetExact = LithuanianStreetIndexes.objects.all().filter(streetExactFilter)\
+            .order_by('street')[0:50]
+        streetExact = list(streetExact)
+        if len(streetExact) > 0:
+            return streetExact
+
+        #search for street without using street ending   and starts icontains
+        streetWihoutEndingQueryContains = Q(**{"street__icontains": streetWihoutEnding})
         streetWithoutEndingFilter = getAndQuery(municipalityQuery, cityQuery, streetWihoutEndingQueryContains)
         streetWithouEndingResult = LithuanianStreetIndexes.objects.all().filter(streetWithoutEndingFilter)\
             .order_by('street')[0:50]

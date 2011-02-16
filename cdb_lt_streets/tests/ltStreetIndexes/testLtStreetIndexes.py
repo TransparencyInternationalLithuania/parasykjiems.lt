@@ -176,3 +176,29 @@ class TestSearchLtStreetIndex_StreetsWithNumbersInName(TestCase):
         ids = [a.id for a in addresses]
         self.assertEquals([3], ids)
         self.assertEquals(1, len(addresses))
+
+
+class TestSearchLtStreetIndex_DifferentEndings(TestCase):
+    fixtures = ['ltstreetindexes/different street endings.default.json']
+
+    def setUp(self):
+        pass
+
+    def testSearch_ExactNameAndExactStreet_ending(self):
+        """ Street name is correct, and also street ending matches the result.
+        Do not strip street ending."""
+        addresses = searchInIndex(municipality=u"Vilniaus miesto savivaldybė", city=u"Vilnius",  street=u"Gedimino prospektas")
+        ids = [a.id for a in addresses]
+        self.assertEquals([1], ids)
+
+    def testSearch_ConvertEndingToLongForm(self):
+        # convert street ending from short to long form
+        addresses = searchInIndex(municipality=u"Vilniaus miesto savivaldybė", city=u"Vilnius",  street=u"Gedimino pr.")
+        ids = [a.id for a in addresses]
+        self.assertEquals([1], ids)
+
+    def testSearch_Search_By_Street_ending_form(self):
+        # convert street ending from short to long form
+        addresses = searchInIndex(municipality=u"Vilniaus miesto savivaldybė", city=u"Vilnius",  street=u"Gedimino g.")
+        ids = [a.id for a in addresses]
+        self.assertEquals([2], ids)
