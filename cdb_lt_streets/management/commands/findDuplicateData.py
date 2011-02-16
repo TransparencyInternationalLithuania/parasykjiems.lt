@@ -3,6 +3,7 @@
 from cdb_lt_civilparish.models import CivilParishStreet
 import logging
 from cdb_lt_seniunaitija.models import SeniunaitijaStreet
+from cdb_lt_streets.houseNumberUtils import depadHouseNumberWithZeroes
 from cdb_lt_streets.management.commands.ltGeoDataCrawl import ExtractRange
 from cdb_lt_streets.searchMembers import findLT_street_index_id
 from cdb_lt_streets.streetUtils import getCityNominative, cityNameIsGenitive, getCityGenitive
@@ -40,6 +41,7 @@ class Command(BaseCommand):
             municipality = streetObject.municipality
             city = streetObject.city
             house_number = streetObject.numberFrom
+            house_number = depadHouseNumberWithZeroes(house_number)
             civilParish =  streetObject.civilParish
             street= streetObject.street
             """if cityNameIsGenitive(municipality=municipality, city_genitive=city, street= street):
