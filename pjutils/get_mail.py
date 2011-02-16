@@ -97,6 +97,7 @@ class GetMail():
 
                 # create folder for an attachment
                 year = "%s" % datetime.datetime.now().year
+                msg_id = u"%s" % msg_id
                 fullDir = os.path.join(GlobalSettings.ATTACHMENTS_PATH, year, msg_id)
                 dir_util.mkpath(fullDir)
                 
