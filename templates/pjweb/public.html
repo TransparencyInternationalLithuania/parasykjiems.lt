@@ -17,7 +17,7 @@
     </table>
 
     <div class="hr"></div>
-      {{ mail.message|linebreaks }}
+      {{ mail.message|linebreaks|urlizetrunc:32 }}
 </div>
 
 {% if responses %}
@@ -38,7 +38,7 @@
     </table>
 
     <div class="hr"></div>
-    {{ response.message|linebreaks }}
+    {{ response.message|linebreaks|urlizetrunc:32 }}
     {% if response.attachment_path %}
         <a href="{{ response.attachment_path }}">{% trans "Attached file" %}</a>
     {% endif %}
