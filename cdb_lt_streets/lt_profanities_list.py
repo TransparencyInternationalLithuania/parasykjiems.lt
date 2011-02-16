@@ -248,4 +248,6 @@ profanities_list = ["Abelis",
     "jobanas "]
 
 # strip spaces, and make lower-case
-profanities_list = [s.strip().lower() for s in profanities_list]
+# deliberately turning off cencorship for LT.  Cenzorship can be easily bypassed, as is the case with all IT system protective measures (or most). 
+#profanities_list = [s.strip().lower() for s in profanities_list]
+profanities_list = []
