@@ -2,10 +2,20 @@
 # -*- coding: utf-8 -*-
 
 from django.test import TestCase
-from cdb_lt_streets.houseNumberUtils import ContainsHouseNumbers, padHouseNumberWithZeroes, depadHouseNumberWithZeroes
+from cdb_lt_streets.houseNumberUtils import ContainsHouseNumbers, padHouseNumberWithZeroes, depadHouseNumberWithZeroes, isHouseNumberOdd
 from settings import *
 
 scriptPath = os.path.dirname( os.path.realpath( __file__ ) )
+
+
+class TestIsHouseNumberOdd(TestCase):
+    def setUp(self):
+        pass
+
+    def testBasic(self):
+        self.assertEqual(True, isHouseNumberOdd(1))
+        self.assertEqual(None, isHouseNumberOdd(""))
+        self.assertEqual(None, isHouseNumberOdd(None))
 
 
 

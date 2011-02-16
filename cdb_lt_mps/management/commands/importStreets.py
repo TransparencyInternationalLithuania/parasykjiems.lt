@@ -11,7 +11,7 @@ import os
 from pjutils.exc import ChainnedException
 from cdb_lt_mps.parseConstituencies import LithuanianConstituencyReader, PollingDistrictStreetExpander, AddressParser
 from cdb_lt_mps.models import Constituency, PollingDistrictStreet
-from cdb_lt_streets.houseNumberUtils import isHouseNumberOdd
+from cdb_lt_streets.houseNumberUtils import isHouseNumberOdd, padHouseNumberWithZeroes
 
 class ImportStreetsConstituencyDoesNotExist(ChainnedException):
     pass
@@ -337,9 +337,9 @@ importStreets 5:8 - will import streets for counties from 5 to 8 constituencies 
                     if expandedStreetStr == u"V. Druskio gatvė":
                         expandedStreetStr = u"Virginijaus Druskio gatvė"
                     pollingDistrictStreet.street = expandedStreetStr
-                    pollingDistrictStreet.numberFrom =  expandedStreet.numberFrom
-                    pollingDistrictStreet.numberTo = expandedStreet.numberTo
-                    if (expandedStreet.numberFrom is not None):
+                    pollingDistrictStreet.numberFrom =  padHouseNumberWithZeroes(expandedStreet.numberFrom)
+                    pollingDistrictStreet.numberTo = padHouseNumberWithZeroes(expandedStreet.numberTo)
+                    if expandedStreet.numberFrom is not None:
                         pollingDistrictStreet.numberOdd = isHouseNumberOdd(expandedStreet.numberFrom)
                     pollingDistrictStreet.pollingDistrict = pollingDistrict.PollingDistrict
                     pollingDistrictStreet.save()
@@ -347,7 +347,7 @@ importStreets 5:8 - will import streets for counties from 5 to 8 constituencies 
 
             totalNumberOfStreets += numberOfStreets
             seconds = (datetime.now() - start).seconds
-            if (seconds == 0):
+            if seconds == 0:
                 rate = "unknown"
             else:
                 rate = str(totalNumberOfStreets / seconds)

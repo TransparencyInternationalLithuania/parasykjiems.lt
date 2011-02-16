@@ -82,6 +82,8 @@ def isHouseNumberOdd(fromNumber):
         return None
     number = removeLetterFromHouseNumber(fromNumber)
     number = u"%s" % number
+    if number == u"":
+        return None
 
     # check if we contain letter
     number = int(number)

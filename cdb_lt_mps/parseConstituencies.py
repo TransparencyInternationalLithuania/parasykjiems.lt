@@ -253,6 +253,10 @@ class ExpandedStreet(object):
 
     def __init__(self, street = None, numberFrom = None, numberTo = None, city = None):
         self.street = street
+        if numberFrom is None:
+            numberFrom = u""
+        if numberTo is None:
+            numberTo = u""
         self.numberFrom = numberFrom
         self.numberTo = numberTo
         self.city = city
@@ -270,7 +274,7 @@ class PollingDistrictStreetExpander:
     """
 
     def _RemoveStreetPart(self, part, streetPartName):
-        if (part.find(streetPartName) >= 0):
+        if part.find(streetPartName) >= 0:
             noName = part.split(streetPartName)
             noName = [s.strip() for s in noName]
             str = "".join(noName[0:-1])
@@ -280,7 +284,7 @@ class PollingDistrictStreetExpander:
         return None
 
     def _RemoveStreetPartSB(self, part, streetPartName):
-        if (part.find(streetPartName) >= 0):
+        if part.find(streetPartName) >= 0:
             noName = part.split("Nr.")
             noName = [s.strip() for s in noName]
             str = "".join(noName[0:-1])
@@ -293,13 +297,13 @@ class PollingDistrictStreetExpander:
         streetTuple = None
         # loop all street endings and remove it if found
         for ending in shortStreetEndings:
-            if (streetTuple is not None):
+            if streetTuple is not None:
                 break
             streetTuple = self._RemoveStreetPart(part, ending)
 
         # if it is still None, there is a special "SB", which stands for
         # "Some kind of communal gardens, or smth like that"
-        if (streetTuple is None):
+        if streetTuple is None:
             streetTuple = self._RemoveStreetPartSB(part, "SB")
         return streetTuple
 
@@ -310,13 +314,13 @@ class PollingDistrictStreetExpander:
         #print "street %s" % street
 
 
-        if (street == u"" or street == None):
+        if street == u"" or street == None:
             yield ExpandedStreet(street = u"")
             return
 
         street = street.strip()
         # if no street nr, return single tuple
-        if (street.find(u"Nr") < 0):
+        if street.find(u"Nr") < 0:
             street = changeStreetFromShortToLongForm(street)
             yield ExpandedStreet(street = street)
             return
@@ -326,18 +330,18 @@ class PollingDistrictStreetExpander:
         for part in parts:
             streetTuple = self.getStreetTuple(part)
 
-            if (streetTuple is not None):
+            if streetTuple is not None:
                 part, str = streetTuple
                 # street will be in short form, so transform it to be in long form
                 str = changeStreetFromShortToLongForm(str)
 
-            if (part.find(u'nuo') >= 0):
+            if part.find(u'nuo') >= 0:
                 noName = part.replace(u"Nr.", u"").replace(u"numeriai", u"").replace(u"nuo", u"").strip()
 
                 # None means that range contains both odd and even numbers
                 # True means that contains either of them
                 oddNumbers = None
-                if (noName.find(u'poriniai') >= 0):
+                if noName.find(u'poriniai') >= 0:
                     noName = noName.replace(u"neporiniai", u"")
                     noName = noName.replace(u"poriniai", u"")
                     oddNumbers = True
@@ -353,7 +357,7 @@ class PollingDistrictStreetExpander:
 
                 # parse toNumber
                 toNumber = noName[1].strip().strip('.')
-                if (toNumber == u"galo"):
+                if toNumber == u"galo":
                     odd = fromNumber % 2
                     if (odd == 0):
                         toNumber = ExpandedStreet.MaxEvenValue
@@ -364,14 +368,14 @@ class PollingDistrictStreetExpander:
                     toNumber = removeLetterFromHouseNumber(toNumber)
                     toNumber = int(toNumber)
 
-                if (fromNumber == toNumber):
+                if fromNumber == toNumber:
                     yield ExpandedStreet(str, fromNumber)
                     continue
 
-                if (oddNumbers is None):
+                if oddNumbers is None:
                     odd = fromNumber % 2
 
-                    if (odd == 1):
+                    if odd == 1:
                         oddLow = fromNumber
                         evenLow = fromNumber + 1
                     else:
@@ -379,7 +383,7 @@ class PollingDistrictStreetExpander:
                         evenLow = fromNumber
 
                     odd = toNumber % 2
-                    if (odd == 1):
+                    if odd == 1:
                         oddHigh = toNumber
                         evenHigh = toNumber - 1
                     else:
