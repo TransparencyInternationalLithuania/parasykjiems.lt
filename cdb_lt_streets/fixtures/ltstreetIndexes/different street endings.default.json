@@ -1,0 +1,22 @@
+[
+  {
+    "pk": 1,
+    "model": "cdb_lt_streets.LithuanianStreetIndexes",
+    "fields": {
+      "city": "Vilnius",
+      "city_genitive": "Vilniaus miestas",
+      "municipality": "Vilniaus miesto savivaldybė",
+      "street": "Gedimino prospektas"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "cdb_lt_streets.LithuanianStreetIndexes",
+    "fields": {
+      "city": "Vilnius",
+      "city_genitive": "Vilniaus miestas",
+      "municipality": "Vilniaus miesto savivaldybė",
+      "street": "Gedimino Baravyko gatvė"
+    }
+  }
+]

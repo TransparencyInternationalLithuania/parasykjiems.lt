@@ -22,6 +22,17 @@ allMunicipalityEndings = wholeMunicipalityEndings + shortMunicipalityEndings
 zippedStreetPrefixes = zip(shortStreetEndings, wholeStreetEndings)
 zippedCityPrefixes = zip(shortCityEndings, wholeCityEndings)
 
+def extractStreetEndingForm(street):
+    """ for example, from string "MyStreet g." will return "g." """
+    if street is None:
+        return u""
+    if street == u"":
+        return street
+    for prefix in allStreetEndings:
+        index = street.find(prefix)
+        if index >= 0:
+            return prefix
+
 def changeStreetFromShortToLongForm(street):
     """ Changes for example from "Respublikos g." to "Respublikos gatvė" """
     if street is None:
@@ -30,7 +41,7 @@ def changeStreetFromShortToLongForm(street):
         return ""
     for shortPrefix, longPrefix in zippedStreetPrefixes:
         index = street.find(shortPrefix)
-        if (index >= 0):
+        if index >= 0:
             expanded = "%s%s" % (street[0:index], longPrefix)
             return expanded
     return street
