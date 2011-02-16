@@ -85,11 +85,6 @@ def choose_representative(request, municipality = None, city = None, street = No
 def choose_representative_internal(request, municipality = None, civilParish = None, city = None, street = None, house_number = None):
     # check if we have a valid referrer
     current_site = Site.objects.get_current()
-    if (DEBUG == False):
-        referer = request.META.get('HTTP_REFERER', '')
-        host = 'http://%s/' % current_site.domain
-        if not referer or (referer != host):
-            return HttpResponseRedirect('/')
     logger.debug("choose_rep: municipality %s" % municipality)
     logger.debug("choose_rep: city %s" % city)
     logger.debug("choose_rep: street %s" % street)
@@ -275,12 +270,6 @@ def smtp_error(request, rtype, mp_id, private=None):
 def contact(request, rtype, mp_id):
     insert = InsertResponse()
     current_site = Site.objects.get_current()
-    # check if we have a valid referrer
-    if (DEBUG == False):
-        referer = request.META.get('HTTP_REFERER', '')
-        host = 'http://%s/' % current_site.domain
-        if not referer or (current_site.domain not in referer):
-            return HttpResponseRedirect('/')
 
     # find required representative
     receiver = insert.get_rep(mp_id, rtype)
