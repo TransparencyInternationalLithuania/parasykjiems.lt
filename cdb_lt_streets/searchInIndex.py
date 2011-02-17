@@ -246,7 +246,6 @@ def getGenericCaseMunicipality(municipalityNominative):
         return municipalityNominative
     return mun[0].genitive
 
-
 def searchInIndex(municipality = None, city = None, street = None):
     """ Search what kind of addresses exist in our street index.
      Usually you call this function when you want to be sure that the values are real, and not some
@@ -272,7 +271,9 @@ def searchInIndex(municipality = None, city = None, street = None):
         municipality = getGenericCaseMunicipality(municipality)
 
     if street is not None:
-        street = street.capitalize()
+        if len(street) >1:
+            # capitalise, and presereve other uppercase letters
+            street = street[0].upper() + street[1:]
         street = street.strip()
         if street == u"":
             street = None
