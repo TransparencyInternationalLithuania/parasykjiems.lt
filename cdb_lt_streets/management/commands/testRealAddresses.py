@@ -22,6 +22,14 @@ class Command(BaseCommand):
                     u"šaulių 23a, klaipėda",
                     u"J. Žemgulio gatvė 10 Kauno miestas Kauno miesto savivaldybė"]
 
+        exactQueries = [{'municipality':u"Šilutės rajono savivaldybė",
+                              'civilParish':u"Šilutės seniūnija",
+                              'city':u"Kalininkų kaimas",
+                              'street':u"",
+                              'house_number':u""}
+        ]
+
+
         functions = {"MP": findMPs,
                      "Mayor": findMunicipalityMembers,
                      "CivilParish": findCivilParishMembers,
@@ -58,6 +66,14 @@ class Command(BaseCommand):
                 if len(members) != 1:
                     queue = missingData[key]
                     queue.append([address, members])
+
+        for keys in exactQueries:
+            for key, function in functions.iteritems():
+                members = function(**keys)
+                if len(members) != 1:
+                    queue = missingData[key]
+                    addr = u"%s %s %s" % (keys['municipality'], keys['civilParish'], keys['city'])
+                    queue.append([addr, members])
 
 
         print "\n\n"
