@@ -49,6 +49,7 @@ class PollingDistrictStreet(models.Model):
     """
     institution = models.ForeignKey(Constituency)
     municipality = AddressNameField(db_index= True)
+    civilParish = AddressNameField(db_index = True)
     street = AddressNameField(db_index = True)
     city = AddressNameField(db_index = True)
     numberFrom = HouseNumberField()
