@@ -30,6 +30,13 @@ from pjweb.forms import IndexForm, ContactForm
 
 logger = logging.getLogger(__name__)
 
+def logAddressQueryToFile(queryString):
+    if GlobalSettings.logAddressesToFile is None:
+        return
+    with open(GlobalSettings.logAddressesToFile, "a") as f:
+        f.write("%s\n" % queryString)
+
+
 def searchInStreetIndex(query_string):
     """ Searches throught street index and returns municipality / city / street/ house number
     Additionally returns more data for rendering in template"""
@@ -37,6 +44,9 @@ def searchInStreetIndex(query_string):
     logger.debug("query_string %s" % query_string)
     found_geodata = None
     not_found = ''
+
+
+    logAddressQueryToFile(query_string)
 
     addressContext = deduceAddress(query_string)
     found_entries = searchInIndex(municipality= addressContext.municipality, city= addressContext.city,
