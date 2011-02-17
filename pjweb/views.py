@@ -34,7 +34,8 @@ def logAddressQueryToFile(queryString):
     if GlobalSettings.logAddressesToFile is None:
         return
     with open(GlobalSettings.logAddressesToFile, "a") as f:
-        f.write("%s\n" % queryString)
+        s = u"%s\n" % queryString
+        f.write(s.encode('utf-8'))
 
 
 def searchInStreetIndex(query_string):
