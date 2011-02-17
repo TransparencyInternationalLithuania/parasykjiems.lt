@@ -19,7 +19,8 @@ class Command(BaseCommand):
         addresses = [u"Palemono 74",
                     u"žygio g., Vilnius",
                     u"sodų g. vilnius",
-                    u"šaulių 23a, klaipėda"]
+                    u"šaulių 23a, klaipėda",
+                    u"J. Žemgulio gatvė 10 Kauno miestas Kauno miesto savivaldybė"]
 
         functions = {"MP": findMPs,
                      "Mayor": findMunicipalityMembers,

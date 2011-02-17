@@ -202,3 +202,16 @@ class TestSearchLtStreetIndex_DifferentEndings(TestCase):
         addresses = searchInIndex(municipality=u"Vilniaus miesto savivaldybė", city=u"Vilnius",  street=u"Gedimino g.")
         ids = [a.id for a in addresses]
         self.assertEquals([2], ids)
+
+class TestSearchLtStreetIndex_StreetDoubleWordAndLithuanianLetter(TestCase):
+    fixtures = ['ltstreetindexes/Double letter lithuanian.json']
+
+    def setUp(self):
+        pass
+
+    def testSearch_ExactNameAndExactStreet_ending(self):
+        """ Street is correct, data is correct. But we should not remove uppercase letters, since this is important.
+        For example, sqlite does treat lowercase lithuanian letters the same as uppercase, so this must be correct"""
+        addresses = searchInIndex(municipality=u"Vilniaus miesto savivaldybė", city=u"Vilnius",  street=u"J. Žemgulio gatvė")
+        ids = [a.id for a in addresses]
+        self.assertEquals([1], ids)

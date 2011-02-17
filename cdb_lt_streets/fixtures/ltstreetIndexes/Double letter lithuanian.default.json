@@ -1,0 +1,12 @@
+[
+  {
+    "pk": 1,
+    "model": "cdb_lt_streets.LithuanianStreetIndexes",
+    "fields": {
+      "city": "Vilnius",
+      "city_genitive": "Vilniaus miestas",
+      "municipality": "Vilniaus miesto savivaldybė",
+      "street": "J. Žemgulio gatvė"
+    }
+  }
+]
