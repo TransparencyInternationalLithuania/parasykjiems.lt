@@ -144,3 +144,6 @@ GlobalSettings.LiveServerApps = []
 # Whether to send emails to real representatives, or only to specific addresses
 # Possible values - list of emails, single email, literal string "sendToRepresentatives", which will send email to representatives
 GlobalSettings.mail.sendEmailToRepresentatives = ["parasykjiems@gmail.com"]
+
+# Logs all user eneters address queries into specified file. Set to None to disable this
+GlobalSettings.logAddressesToFile = "logs/addresses.log"
