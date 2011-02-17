@@ -16,14 +16,14 @@ class Command(BaseCommand):
 
         queue = LTRegisterQueue()
 
-        if (queue.IsEmpty()):
+        if queue.IsEmpty():
             print "Queue is empty"
             return
 
         count = 0
-        while (True):
+        while True:
             msg = queue.ReadMessage()
-            if (msg is None):
+            if msg is None:
                 break;
             count +=1
             print msg.body
