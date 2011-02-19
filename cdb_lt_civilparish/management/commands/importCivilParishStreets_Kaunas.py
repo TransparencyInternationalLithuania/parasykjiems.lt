@@ -9,7 +9,7 @@ from cdb_lt_civilparish.models import CivilParish, CivilParishStreet
 from pjutils.exc import ChainnedException
 from cdb_lt_streets.ltPrefixes import *
 import logging
-from cdb_lt_streets.houseNumberUtils import isStringStreetHouseNumber, StringIsNotAHouseNumberException, ifHouseNumberContainLetter, removeLetterFromHouseNumber, padHouseNumberWithZeroes
+from cdb_lt_streets.houseNumberUtils import isStringStreetHouseNumber, StringIsNotAHouseNumberException, ifHouseNumberContainLetter, removeLetterFromHouseNumber, padHouseNumberWithZeroes, isHouseNumberOdd
 
 logger = logging.getLogger(__name__)
 
@@ -25,10 +25,12 @@ class HouseRange:
         self.numberFrom = numberFrom
         self.numberTo = numberTo
         if numberTo is u"":
-            numberFrom = removeLetterFromHouseNumber(numberFrom)
-            self.numberOdd = int(numberFrom) % 2 == 1
+            self.numberOdd = isHouseNumberOdd(numberFrom)
         else:
-            self.numberOdd = numberOdd
+            if numberOdd is None:
+                self.numberOdd = isHouseNumberOdd(numberFrom)
+            else:
+                self.numberOdd = numberOdd
 
 def _collectRanges(numberList):
     if len(numberList) == 0:
