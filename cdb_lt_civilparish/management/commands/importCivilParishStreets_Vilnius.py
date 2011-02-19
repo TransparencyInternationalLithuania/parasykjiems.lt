@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 import os
 from django.core.management.base import BaseCommand
-from cdb_lt_civilparish.management.commands.importCivilParishStreets_Kaunas import yieldRanges
+from cdb_lt_civilparish.management.commands.importCivilParishStreets_Kaunas import yieldRanges, HouseRange
+from cdb_lt_streets.searchInIndex import AddressDeducer
 from contactdb.imp import ImportSources
 from django.db import transaction
 import csv
@@ -17,28 +18,7 @@ from cdb_lt_streets.houseNumberUtils import isStringStreetHouseNumber, StringIsN
 
 logger = logging.getLogger(__name__)
 
-civilParishFiles = [u"antakalnis.csv",
-            u"fabijoniskes.csv",
-            u"justiniskes.csv",
-            u"karoliniskes.csv",
-            u"lazdynai.csv",
-            u"naujamiestis.csv",
-            u"naujininkai.csv",
-            u"naujoji_vilnia.csv",
-            u"paneriai.csv",
-            u"pasilaiciai.csv",
-            u"pilaite.csv",
-            u"rasos.csv",
-            u"senamiestis.csv",
-            u"seskine.csv",
-            u"snipiskes.csv",
-            u"verkiai.csv",
-            u"vilkpede.csv",
-            u"virsuliskes.csv",
-            u"zirmunai.csv",
-            u"zverynas.csv"]
-
-civilParishFiles = [os.path.join(ltGeoDataSources.CivilParishIndexes_Vilnius, p) for p in civilParishFiles]
+civilParishFile = os.path.join(ltGeoDataSources.CivilParishIndexes_Vilnius, "vilniaus_miesto_seniunijos_visos.csv")
 
 civilParishNames = [u"Antakalnio seniūnija",
     u"Fabijoniškių seniūnija",
@@ -61,101 +41,26 @@ civilParishNames = [u"Antakalnio seniūnija",
     u"Žirmūnų seniūnija",
     u"Žvėryno seniūnija"]
 
-zippedVilniusCivilParishes = zip(civilParishFiles, civilParishNames)
-
-class CouldNotSpleetIntoStreetAndHouseNumber(ChainnedException):
-    pass
-
-
-
-
-def splitIntoStreetAndHouseNumbers(string):
-    # split into street and house numbers
-    street = None
-    houseNumber = None
-    endings = allStreetEndings + [u"krantinė"]
-    for streetEnding in endings:
-        if string.find(streetEnding) >= 0:
-            street, houseNumber = string.split(streetEnding)
-            # attach again street ending
-            street = "%s%s" % (street, streetEnding)
-            street = changeStreetFromShortToLongForm(street)
-            break
-    if street is None:
-        raise CouldNotSpleetIntoStreetAndHouseNumber("Could not split string '%s' into street and house number" % rest)
-    return street, houseNumber
-
-city_genitive= u"Vilniaus miestas"
 municipality= u"Vilniaus miesto savivaldybė"
-
-
-def extractStreetsAndHouseNumbers(fileName):
-    """ Will read one of files in Vilnius Civil Parish street, and will return street and numbers"""
-    reader = open(fileName, "rt")
-    lines = reader.readlines()
-
-
-    currentStreet = None
-    state = u"ReadStreetName"
-    for row in lines:
-        row = unicode(row, 'utf-8')
-        row = row.strip()
-
-        #logger.info("parsing row: '%s'" % row)
-
-        # skip empty lines
-        if row == u"":
-            continue
-
-        # first line is street name, second is house numbers
-        if state == u"ReadStreetName":
-            # first line can sometimes contain two streets, so handle this case
-            # P.s. some streets, such as "Sausio 13-osios g.", contains number in the middle
-            # This case ideally should be handheld with regexp, but for now just use single - if to filter this out
-            if ContainsHouseNumbers(row) and row.find(u"13-osios") < 0:
-                # split into two streets, and yield first street with house number
-                firstStreet, secondStreet = row.split(u",")
-                streetName, houseNumber = splitIntoStreetAndHouseNumbers(firstStreet)
-                houseNumber = houseNumber.strip()
-                yield (streetName, houseNumber)
-
-                # store second street for later loop
-                currentStreet = secondStreet
-                currentStreet = changeStreetFromShortToLongForm(currentStreet)
-            else:
-                # store second street for later loop
-                currentStreet = row
-                currentStreet = changeStreetFromShortToLongForm(currentStreet)
-            state = u"ReadHouseNumbers"
-        else:
-            # extract house numbers, and yield with current street
-            houseNumbers = row.split(",")
-            for number in houseNumbers:
-                if (number.find(u"_") >=0):
-                    number = number.split(u"_")[0]
-                number = number.strip()
-                if number == u"":
-                    continue
-                yield (currentStreet, number)
-
-            # change state back to read street name
-            state = u"ReadStreetName"
-
-def getCivilParishStreetMap(file):
-    """ Given a vilnius city street index file,
-    will read it, and create a dictionary where key is street name,
-    and value is a list of all house numbers in that street"""
-    streetMap = {}
-    # first collect all streets, and their house numbers
-    # since these are scattered throughout the files
-    for street, houseNumber in extractStreetsAndHouseNumbers(file):
-        list = streetMap.get(street, [])
-        list.append(houseNumber)
-        streetMap[street] = list
-    return streetMap
 
 class CivilParishNotFound(ChainnedException):
     pass
+
+deducer = AddressDeducer()
+
+class VilniusCivilParishReader:
+    def __init__(self, fileName):
+        self.dictReader = csv.DictReader(open(fileName, "rt"), delimiter = ImportSources.Delimiter)
+
+
+    def readStreet(self):
+        for row in self.dictReader:
+            civilParishname = readRow(row, u"Seniunijos pav.")
+            street = readRow(row, u"Gatves pavadinimas")
+            house_numbers = readRow(row, u"Pastatu numeriai")
+            city = readRow(row, u"miestas")
+
+            yield civilParishname, city, street, house_numbers
 
 class Command(BaseCommand):
     args = ''
@@ -166,7 +71,7 @@ class Command(BaseCommand):
 
     def getCivilParish(self, civilParishStr, municipality):
         key = "%s" % (civilParishStr)
-        if (self.localCache.has_key(key) == True):
+        if self.localCache.has_key(key) == True:
             return self.localCache[key]
 
         try:
@@ -179,13 +84,14 @@ class Command(BaseCommand):
 
 
 
-    def create(self, civilParish = None, street = None, range = None):
+    def create(self, civilParish = None, city = None, street = None, range = None):
         civilParishStreet = CivilParishStreet()
         civilParishStreet.street = street
-        civilParishStreet.numberFrom = padHouseNumberWithZeroes(range.numberFrom)
-        civilParishStreet.numberTo = padHouseNumberWithZeroes(range.numberTo)
-        civilParishStreet.numberOdd = range.numberOdd
-        civilParishStreet.city = city_genitive
+        if range is not None:
+            civilParishStreet.numberFrom = padHouseNumberWithZeroes(range.numberFrom)
+            civilParishStreet.numberTo = padHouseNumberWithZeroes(range.numberTo)
+            civilParishStreet.numberOdd = range.numberOdd
+        civilParishStreet.city = city
         civilParishStreet.municipality = municipality
         civilParishStreet.institution = civilParish
         civilParishStreet.save()
@@ -196,29 +102,36 @@ class Command(BaseCommand):
         print "Will import street data for CivilParish for city Vilnius:"
 
         logger.info("Will import Vilnius civil parish streets from following files")
-        for file, name in zippedVilniusCivilParishes:
-            logger.info("name: %s" % (name))
-            logger.info("file: %s \n" % (file))
-            ImportSources.EsnureExists(file)
+
+        ImportSources.EsnureExists(civilParishFile)
 
         self.count = 0
 
         # fetch in one loop all civil parish objects,
         # zipped will contain file and civil parish object
-        zipped = [(file, self.getCivilParish(civilParishName, municipality)) for file, civilParishName in zippedVilniusCivilParishes]
+        preFetchedCivilParishes = [self.getCivilParish(civilParishName, municipality) for civilParishName in civilParishNames]
 
-        # read each file one by one, and insert streets
-        for file, civilParish in zipped:
-            logger.info("\n parsing file %s \n" %  file)
+        reader = VilniusCivilParishReader(civilParishFile)
+        for civilParish, city, street, house_range in reader.readStreet():
+            street = street.strip()
+            street = changeStreetFromShortToLongForm(street)
+            print "%s %s %s %s" % (civilParish, city, street, house_range)
 
-            civilParishStreetMap = getCivilParishStreetMap(file)
-            # now loop again, construct house ranges from house numbers, and insert
-            self.insertAll(civilParishStreetMap, civilParish= civilParish)
+            civilParish = self.getCivilParish(civilParishStr=civilParish, municipality=municipality)
+            for range in house_range.split(","):
+                splittedRange = range.split("-")
+                r = None
+                if len(splittedRange) == 1:
+                    if splittedRange[0] != u"":
+                        r = HouseRange(numberFrom=splittedRange[0])
+                else:
+                    r = HouseRange(numberFrom=splittedRange[0], numberTo=splittedRange[1])
+                self.create(civilParish=civilParish, city=city, street=street, range=r)
 
         print u"Took %s seconds" % elapsedTime.ElapsedSeconds()
         print u"finished, written total %s lines" % self.count
 
-    def insertAll(self, streetMap, civilParish):
+    """def insertAll(self, streetMap, civilParish):
         for street, houseNumbers in streetMap.iteritems():
             if street == u"V. Druskio gatvė":
                 street = u"Virginijaus Druskio gatvė"
@@ -230,3 +143,4 @@ class Command(BaseCommand):
                 self.create(civilParish= civilParish, street = street, range= range)
                 if self.count % 100 == 0:
                     logger.info("Inserted %s streets and counting" % self.count)
+"""

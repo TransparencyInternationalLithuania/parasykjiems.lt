@@ -98,6 +98,8 @@ def convertNumberToString(number):
 def depadHouseNumberWithZeroes(number):
     number = convertNumberToString(number)
     number = number.lstrip(u"0")
+    if number == u"":
+        return u""
     if number[-1] == u"0":
         number = number [:-1]
     return number
