@@ -5,29 +5,46 @@ from django.core.management.base import BaseCommand
 from django.core import management
 from cdb_lt_streets.searchInIndex import deduceAddress, searchInIndex
 from cdb_lt_streets.searchMembers import findMPs, findMunicipalityMembers, findCivilParishMembers, findSeniunaitijaMembers
-
+import os
 
 class Command(BaseCommand):
     args = '<>'
     help = """Searches for members against hand-written list of addresses and checks whether exactly 1 representative is returned"""
 
-    def handle(self, *args, **options):
-        """ Not very usefull command, until we know what result exactly we want. Now will print lots of information when running.
-        Will search for every address in addresses list and check if exactly one member is found"""
 
-
-        addresses = [u"Palemono 74",
+    def getDefaultAddresses(self):
+        return [u"Palemono 74",
                     u"žygio g., Vilnius",
                     u"sodų g. vilnius",
                     u"šaulių 23a, klaipėda",
                     u"J. Žemgulio gatvė 10 Kauno miestas Kauno miesto savivaldybė"]
 
-        exactQueries = [{'municipality':u"Šilutės rajono savivaldybė",
+
+    def handle(self, *args, **options):
+        """ Not very usefull command, until we know what result exactly we want. Now will print lots of information when running.
+        Will search for every address in addresses list and check if exactly one member is found"""
+
+        exactQueries = []
+        addresses = []
+
+
+        if len(args) > 0:
+            file = args[0]
+            curDir = os.getcwd()
+
+            file = os.path.join(curDir, file)
+            f = open(file, mode="r")
+            addresses = f.readlines()
+            addresses = [unicode(val.strip(), 'utf-8') for val in addresses]
+        else:
+            addresses = self.getDefaultAddresses()
+
+            exactQueries = [{'municipality':u"Šilutės rajono savivaldybė",
                               'civilParish':u"Šilutės seniūnija",
                               'city':u"Kalininkų kaimas",
                               'street':u"",
                               'house_number':u""}
-        ]
+            ]
 
 
         functions = {"MP": findMPs,
@@ -47,6 +64,7 @@ class Command(BaseCommand):
             if len(found_entries) != 1:
                 print "Found more than one entry for address %s " % address
                 print found_entries
+                continue
 
             f = found_entries[0]
             civilParish = f.civilparish
