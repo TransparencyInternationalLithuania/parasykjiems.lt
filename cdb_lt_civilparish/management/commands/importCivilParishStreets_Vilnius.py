@@ -46,6 +46,9 @@ municipality= u"Vilniaus miesto savivaldybė"
 class CivilParishNotFound(ChainnedException):
     pass
 
+class ImportError(ChainnedException):
+    pass
+
 deducer = AddressDeducer()
 
 class VilniusCivilParishReader:
@@ -115,11 +118,16 @@ class Command(BaseCommand):
         for civilParish, city, street, house_range in reader.readStreet():
             street = street.strip()
             street = changeStreetFromShortToLongForm(street)
+            street = street.strip()
             print "%s %s %s %s" % (civilParish, city, street, house_range)
+            if street == u"":
+                #raise ImportError("street can not be null")
+                continue
 
             civilParish = self.getCivilParish(civilParishStr=civilParish, municipality=municipality)
             for range in house_range.split(","):
                 splittedRange = range.split("-")
+                splittedRange = [p.strip() for p in splittedRange]
                 r = None
                 if len(splittedRange) == 1:
                     if splittedRange[0] != u"":

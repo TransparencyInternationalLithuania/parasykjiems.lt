@@ -44,15 +44,6 @@ class Command(BaseCommand):
             house_number = depadHouseNumberWithZeroes(house_number)
             civilParish =  streetObject.civilParish
             street= streetObject.street
-            """if cityNameIsGenitive(municipality=municipality, city_genitive=city, street= street):
-                city_genitive = city
-                city = getCityNominative(municipality=municipality, city_genitive=city_genitive, street= street)
-            else:
-                city = city
-                city_genitive = getCityGenitive(municipality=municipality, city=city, street= street)
-            """
-
-
             """municipality = u"Alytaus rajono savivaldybė"
             street = None
             house_number = None
@@ -71,13 +62,18 @@ class Command(BaseCommand):
             total = len(institutionIdList)
             if total == 1:
                 continue
-            print "row %s" % (totalNumberOfStreets + fromNumber)
-            print "adress: %s %s %s %s" % (street, house_number, city, municipality)
-            print "%s institutions found" % total
+            if self.printOnlyStreets == False:
+                print "row %s" % (totalNumberOfStreets + fromNumber)
+                print "adress: %s %s %s %s" % (street, house_number, city, municipality)
+                print "%s institutions found" % total
+                print institutionIdList
+                print ""
+            else:
+                print "%s %s %s %s, total %s institutions found %s" % (street, house_number, city, municipality, total, institutionIdList)
 
-            print institutionIdList
 
-            print ""
+
+
         seconds = self.start.ElapsedSeconds()
         if seconds == 0:
             seconds = 1
@@ -88,6 +84,8 @@ class Command(BaseCommand):
     @transaction.commit_on_success
     def handle(self, *args, **options):
 
+
+        self.printOnlyStreets = True
         self.args = args
         self.start = TimeMeasurer()
         #self.findGeneric(SeniunaitijaStreet, findSeniunaitijaMembers)
