@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from cdb_lt_civilparish.models import CivilParishStreet
+from cdb_lt_civilparish.models import CivilParishStreet, CivilParish
 import logging
 from cdb_lt_seniunaitija.models import SeniunaitijaStreet
 from cdb_lt_streets.houseNumberUtils import depadHouseNumberWithZeroes
@@ -17,7 +17,7 @@ class Command(BaseCommand):
     args = '<>'
     help = ''
 
-    def findGeneric(self, streetDataToLooop, functionToCall):
+    def findGeneric(self, streetDataToLooop, functionToCall, institutions = None):
         totalNumberOfStreets = 0
 
         fromNumber = 0
@@ -35,6 +35,7 @@ class Command(BaseCommand):
             allStreets = streetDataToLooop.objects.all()
             allStreets = list(allStreets)
 
+        streetsWithMultipleInstitutions = {}
 
         for streetObject in allStreets:
             totalNumberOfStreets += 1
@@ -62,6 +63,16 @@ class Command(BaseCommand):
             total = len(institutionIdList)
             if total == 1:
                 continue
+            hash = "%s %s %s" % (municipality, city, street)
+            if streetsWithMultipleInstitutions.has_key(hash) == False:
+                lst = []
+            else:
+                lst = streetsWithMultipleInstitutions[hash]
+            # attach street object, and list of institution objects
+            inst = [institutions[id] for id in institutionIdList]
+            lst.append((streetObject, inst))
+            streetsWithMultipleInstitutions[hash] = lst
+                
             if self.printOnlyStreets == False:
                 print "row %s" % (totalNumberOfStreets + fromNumber)
                 print "adress: %s %s %s %s" % (street, house_number, city, municipality)
@@ -72,7 +83,18 @@ class Command(BaseCommand):
                 print "%s %s %s %s, total %s institutions found %s" % (street, house_number, city, municipality, total, institutionIdList)
 
 
-
+        print "\n\n"
+        for val in streetsWithMultipleInstitutions.itervalues():
+            streetObject = val[0][0]
+            print "%s %s %s %s" % (streetObject.municipality, streetObject.city, streetObject.civilParish, streetObject.street)
+            for s, institutions in val:
+                institutionNames = [inst.name for inst in institutions]
+                if s.numberFrom == u"":
+                    street = u"Visa gatvė"
+                else:
+                    street = depadHouseNumberWithZeroes(s.numberFrom)
+                print u"Gatvės numeris: %s.    Priklauso šioms seniūnijoms: %s" % (street, u", ".join(institutionNames))
+            print "\n"
 
         seconds = self.start.ElapsedSeconds()
         if seconds == 0:
@@ -89,7 +111,8 @@ class Command(BaseCommand):
         self.args = args
         self.start = TimeMeasurer()
         #self.findGeneric(SeniunaitijaStreet, findSeniunaitijaMembers)
-        self.findGeneric(CivilParishStreet, findCivilParishMembers)
+        institutions = dict((p.id, p) for p in CivilParish.objects.all())
+        self.findGeneric(CivilParishStreet, findCivilParishMembers, institutions = institutions)
 
         print u"total spent time %d seconds" % (self.start.ElapsedSeconds())
         
