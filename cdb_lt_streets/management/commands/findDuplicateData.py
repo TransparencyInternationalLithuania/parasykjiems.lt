@@ -1,23 +1,35 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from cdb_lt_civilparish.models import CivilParishStreet, CivilParish
+from cdb_lt_civilparish.models import CivilParishStreet, CivilParish, CivilParishMember
 import logging
-from cdb_lt_seniunaitija.models import SeniunaitijaStreet
+from cdb_lt_mps.models import PollingDistrictStreet, ParliamentMember, Constituency
+from cdb_lt_municipality.models import Municipality, MunicipalityMember
+from cdb_lt_seniunaitija.models import SeniunaitijaStreet, Seniunaitija, SeniunaitijaMember
 from cdb_lt_streets.houseNumberUtils import depadHouseNumberWithZeroes
 from cdb_lt_streets.management.commands.ltGeoDataCrawl import ExtractRange
-from cdb_lt_streets.searchMembers import findLT_street_index_id
+from cdb_lt_streets.searchMembers import findLT_street_index_id, findMPs, findMunicipalityMembers
 from cdb_lt_streets.streetUtils import getCityNominative, cityNameIsGenitive, getCityGenitive
 from django.core.management.base import BaseCommand
 from pjutils.timemeasurement import TimeMeasurer
 from pjweb.views import findSeniunaitijaMembers, findCivilParishMembers
 from django.db import transaction
 logger = logging.getLogger(__name__)
+from optparse import make_option
 
 class Command(BaseCommand):
     args = '<>'
     help = ''
 
-    def findGeneric(self, streetDataToLooop, functionToCall, institutions = None):
+    option_list = BaseCommand.option_list + (
+        make_option('-d', '--member',
+            dest='member',
+            metavar="member",
+            default = "civilParish",
+            help='Choose one of 4 members to check: civilParish, MP, seniunaitija, municipality'),
+        )
+
+
+    def findGeneric(self, streetModel = None, institutions = None, memberModel = None):
         totalNumberOfStreets = 0
 
         fromNumber = 0
@@ -28,14 +40,16 @@ class Command(BaseCommand):
 
         if toNumber is not None:
             print "will test streets from %s to %s" % (fromNumber, toNumber)
-            allStreets = streetDataToLooop.objects.all()
+            allStreets = streetModel.objects.all()
             allStreets = list(allStreets[fromNumber: toNumber])
         else:
             print "will test all streets"
-            allStreets = streetDataToLooop.objects.all()
+            allStreets = streetModel.objects.all()
             allStreets = list(allStreets)
 
         streetsWithMultipleInstitutions = {}
+
+        print "total %s streets to test" % len(allStreets)
 
         for streetObject in allStreets:
             totalNumberOfStreets += 1
@@ -51,7 +65,7 @@ class Command(BaseCommand):
             city = u"Arminų I kaimas"""
             
             additionalKeys = {}
-            institutionIdList = findLT_street_index_id(modelToSearchIn=CivilParishStreet, municipality=municipality, civilParish = civilParish, city=city,  street=street, house_number=house_number)
+            institutionIdList = findLT_street_index_id(modelToSearchIn=streetModel, municipality=municipality, civilParish = civilParish, city=city,  street=street, house_number=house_number)
             #members = functionToCall(municipality=municipality, civilParish=civilParish, city=city, street=street, house_number=house_number, **additionalKeys)
 
             if house_number is None:
@@ -59,7 +73,8 @@ class Command(BaseCommand):
             if street is None:
                 street = ""
 
-            logger.info("row: %s" % (totalNumberOfStreets + fromNumber ))
+            if totalNumberOfStreets % 100 == 0:
+                logger.info("row: %s" % (totalNumberOfStreets + fromNumber ))
             total = len(institutionIdList)
             if total == 1:
                 continue
@@ -86,7 +101,7 @@ class Command(BaseCommand):
         print "\n\n"
         for val in streetsWithMultipleInstitutions.itervalues():
             streetObject = val[0][0]
-            print "%s %s %s %s" % (streetObject.municipality, streetObject.city, streetObject.civilParish, streetObject.street)
+            print "%s %s %s %s" % (streetObject.street, streetObject.civilParish, streetObject.city, streetObject.municipality)
             for s, institutions in val:
                 institutionNames = [inst.name for inst in institutions]
                 if s.numberFrom == u"":
@@ -106,13 +121,31 @@ class Command(BaseCommand):
     @transaction.commit_on_success
     def handle(self, *args, **options):
 
+        print u"memberType set to %s" % options['member']
+        memberType = options['member']
+
+        allMemberTypes = {"civilParish": (CivilParishStreet, CivilParish, CivilParishMember),
+                          "seniunaitija": (SeniunaitijaStreet, Seniunaitija, SeniunaitijaMember),
+                          "municipality": (None, Municipality, MunicipalityMember),
+                          "MP": (PollingDistrictStreet, Constituency, ParliamentMember)
+        }
+
+        if not allMemberTypes.has_key(memberType):
+            print "Unrecognized type, %s. Possible values %s " % (memberType, list(allMemberTypes.iterkeys()))
+            return
+
+        streetModel, institutionModel, memberModel = allMemberTypes[memberType]
+
+
+        
 
         self.printOnlyStreets = True
         self.args = args
         self.start = TimeMeasurer()
-        #self.findGeneric(SeniunaitijaStreet, findSeniunaitijaMembers)
-        institutions = dict((p.id, p) for p in CivilParish.objects.all())
-        self.findGeneric(CivilParishStreet, findCivilParishMembers, institutions = institutions)
+
+        print "member function %s" % memberModel
+        institutions = dict((p.id, p) for p in institutionModel.objects.all())
+        self.findGeneric(streetModel=streetModel, memberModel= memberModel, institutions = institutions)
 
         print u"total spent time %d seconds" % (self.start.ElapsedSeconds())
         

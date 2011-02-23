@@ -162,7 +162,7 @@ def findLT_street_index_id(modelToSearchIn, municipality = None, civilParish = N
         street = u""
     street = street.strip()
 
-    logger.info("Will search for representatives in object: %s" % modelToSearchIn.objects.model._meta.object_name)
+    #logger.info("Will search for representatives in object: %s" % modelToSearchIn.objects.model._meta.object_name)
 
     municipalityQuery = Q(**{"municipality" : municipality})
     # search without street. Might return more results, if there is a street number in the data
