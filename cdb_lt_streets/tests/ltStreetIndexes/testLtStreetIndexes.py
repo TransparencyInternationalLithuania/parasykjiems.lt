@@ -215,3 +215,12 @@ class TestSearchLtStreetIndex_StreetDoubleWordAndLithuanianLetter(TestCase):
         addresses = searchInIndex(municipality=u"Vilniaus miesto savivaldybė", city=u"Vilnius",  street=u"J. Žemgulio gatvė")
         ids = [a.id for a in addresses]
         self.assertEquals([1], ids)
+
+    def testSearch_FindAddress_With_street_Even_If_Data_does_not_contain_street(self):
+        """ Sometimes user will enter street name. however, the data might not contain any streets, only city,
+        municipality. So if queries with street fail, search without """
+
+        # we will have one address in Vilnius city, even though some unknown street will know exist
+        addresses = searchInIndex(municipality=u"Vilniaus miesto savivaldybė", city=u"Vilnius",  street=u"some unknown gatvė")
+        ids = [a.id for a in addresses]
+        self.assertEquals([1], ids)
