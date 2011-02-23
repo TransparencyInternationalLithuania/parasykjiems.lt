@@ -14,11 +14,13 @@ class Seniunaitija(models.Model):
 class SeniunaitijaStreet(models.Model):
     institution = models.ForeignKey(Seniunaitija)
     municipality = AddressNameField(db_index= True)
-    street = AddressNameField(db_index = True)
+    civilParish = AddressNameField(db_index = True)
     city = AddressNameField(db_index = True)
+    street = AddressNameField(db_index = True)
     numberFrom = HouseNumberField()
     numberTo = HouseNumberField()
     numberOdd = HouseNumberOddField()
+
 
 class SeniunaitijaMember(models.Model):
     """ Seniunaitis. Is accountable to CivilParishMember. Basically he performs any sub-management
