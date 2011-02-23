@@ -299,7 +299,6 @@ def searchInIndex(municipality = None, city = None, street = None):
         return LithuanianStreetIndexes.objects.all().filter(finalQuery)\
         .order_by('street')[0:50]
     else:
-
         # try searching with istarts with on whole street
         # just transform short street ending to long form
         street = changeStreetFromShortToLongForm(street)
@@ -348,52 +347,9 @@ def searchInIndex(municipality = None, city = None, street = None):
             .order_by('street')[0:50]
         if len(streetWithouEndingResult) > 0:
             return streetWithouEndingResult
-        return []
-
-    """
-    city = city.capitalize()
-    street = street.capitalize()
-
-    logger.debug(u"searching in index")
-    logger.debug(u"addressContext.flatNumber '%s'" % flatNumber)
-    logger.debug(u"addressContext.number '%s'" % house_number)
-    logger.debug(u"addressContext.street '%s'" % street)
-    logger.debug(u"addressContext.city '%s'" % city)
-    logger.debug(u"addressContext.municipality '%s'" % municipality)
-
-    street = changeStreetFromShortToLongForm(street)
-    streetWihoutEnding = removeGenericPartFromStreet(stret)
-    city = changeCityFromShortToLongForm(city)
-    municipality = removeGenericPartFromMunicipality(municipality)
 
 
-    if municipality is not None and municipality != u"":
-        municipality = getGenericCaseMunicipality(municipality)
-
-    logger.debug(u"street %s" % street)
-    logger.debug(u"city %s" % city)
-    logger.debug(u"municipality %s" % municipality)
-
-    streetFilters = q = Q(**{"street__icontains": street})
-    # Lithuanian cities have cities in two forms - genitive and nominative
-    cityFilters = Q(**{"city__icontains": city})
-    cityFiltersGenitive = Q(**{"city_genitive__icontains": city})
-    municipalityFilters = Q(**{"municipality__icontains": municipality})
-    streetFiltersStartsWith = Q(**{"street__istartswith" : street})
-
-
-    finalQueryStreetWithoutEnding = getAndQuery(streetFilters, cityFilters | cityFiltersGenitive, municipalityFilters)
-
-
-    # if not, search with street icontains
-    finalQuery = getAndQuery(streetFilters, cityFilters | cityFiltersGenitive, municipalityFilters)
-    query = LithuanianStreetIndexes.objects.filter(finalQuery).order_by('street')[0:50]
-    return list(query)
-
-    # search with street istarts with
-    finalQueryStartsWith = getAndQuery(streetFiltersStartsWith, cityFilters | cityFiltersGenitive, municipalityFilters)
-    results = list(LithuanianStreetIndexes.objects.filter(finalQueryStartsWith).order_by('street')[0:50])
-    if len(results) > 0:
-        return results"""
-
-
+        # search by street failed. Try searching wihout street
+        finalQuery = getAndQuery(cityQuery, municipalityQuery)
+        return LithuanianStreetIndexes.objects.all().filter(finalQuery)\
+            .order_by('street')[0:50]
