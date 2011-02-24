@@ -286,9 +286,12 @@ def searchInIndex(municipality = None, city = None, street = None):
 
     # Lithuanian cities have cities in two forms - genitive and nominative
     city = city.capitalize()
-    cityQuery_Nominative = Q(**{"city__icontains": city})
-    cityQuery_Genitive = Q(**{"city_genitive__icontains": city})
-    cityQuery = cityQuery_Genitive | cityQuery_Nominative
+    cityQuery = None
+    if not (city == u"" or city == None):
+        cityQuery_Nominative = Q(**{"city__icontains": city})
+        cityQuery_Genitive = Q(**{"city_genitive__icontains": city})
+        cityQuery = cityQuery_Genitive | cityQuery_Nominative
+        
     municipalityQuery = None
     if municipality is not None:
         municipalityQuery = Q(**{"municipality__icontains": municipality})
@@ -314,7 +317,9 @@ def searchInIndex(municipality = None, city = None, street = None):
         streetEnding = extractStreetEndingForm(street)
         streetWihoutEnding = removeGenericPartFromStreet(street)
         streetWihoutEndingQueryStartsWith = Q(**{"street__istartswith": streetWihoutEnding})
-        streetEndingQuery = Q(**{"street__icontains": streetEnding})
+        streetEndingQuery = None
+        if streetEnding is not None:
+            streetEndingQuery = Q(**{"street__icontains": streetEnding})
 
         # search for street without stripped street ending, and street ending as separate query
         streetExactFilter = getAndQuery(municipalityQuery, cityQuery, streetWihoutEndingQueryStartsWith, streetEndingQuery)
@@ -351,5 +356,7 @@ def searchInIndex(municipality = None, city = None, street = None):
 
         # search by street failed. Try searching wihout street
         finalQuery = getAndQuery(cityQuery, municipalityQuery)
+        if finalQuery == None:
+            return []
         return LithuanianStreetIndexes.objects.all().filter(finalQuery)\
             .order_by('street')[0:50]
