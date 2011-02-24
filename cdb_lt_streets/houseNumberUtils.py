@@ -107,6 +107,7 @@ def depadHouseNumberWithZeroes(number):
 
 def padHouseNumberWithZeroes(number):
     number = convertNumberToString(number)
+    number = number.upper()
     if number == u"":
         return number
     letter = u"0"

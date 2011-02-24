@@ -120,7 +120,7 @@ class TestSearchInstitutionStreets_NumberWithLetter(TestCase):
         ids = findLT_street_index_id(modelToSearchIn=CivilParishStreet, municipality=u"Vilniaus miesto savivaldybė", city=u"Vilniaus miestas",  street="Gedimino prospektas", house_number=9)
         self.assertEquals([2], ids)
 
-        ids = findLT_street_index_id(modelToSearchIn=CivilParishStreet, municipality=u"Vilniaus miesto savivaldybė", city=u"Vilniaus miestas",  street="Gedimino prospektas", house_number="9a")
+        ids = findLT_street_index_id(modelToSearchIn=CivilParishStreet, municipality=u"Vilniaus miesto savivaldybė", city=u"Vilniaus miestas",  street="Gedimino prospektas", house_number="9A")
         self.assertEquals([1], ids)
 
     def testSearchNumberWithLetter_Letter_is_in_another_house_range(self):
@@ -128,5 +128,10 @@ class TestSearchInstitutionStreets_NumberWithLetter(TestCase):
         ids = findLT_street_index_id(modelToSearchIn=CivilParishStreet, municipality=u"Vilniaus miesto savivaldybė", city=u"Vilniaus miestas",  street="Vaižganto gatvė", house_number="56")
         self.assertEquals([3], ids)
 
+        ids = findLT_street_index_id(modelToSearchIn=CivilParishStreet, municipality=u"Vilniaus miesto savivaldybė", city=u"Vilniaus miestas",  street="Vaižganto gatvė", house_number="56A")
+        self.assertEquals([4], ids)
+
+    def testSearchNumberWithLetter_Letter_is_lowercaes(self):
+        """ All house numbers if contains letter, data must be in uppercase. However, if we query with lowercase, still find it """
         ids = findLT_street_index_id(modelToSearchIn=CivilParishStreet, municipality=u"Vilniaus miesto savivaldybė", city=u"Vilniaus miestas",  street="Vaižganto gatvė", house_number="56a")
         self.assertEquals([4], ids)

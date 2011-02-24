@@ -42,8 +42,11 @@ class TestPadHouseNumberWithZeroes(TestCase):
         self.assertEqual(u"", padHouseNumberWithZeroes(u""))
         self.assertEqual(u"00010", padHouseNumberWithZeroes(u"1"))
         self.assertEqual(u"00110", padHouseNumberWithZeroes(u"11"))
-        self.assertEqual(u"0001a", padHouseNumberWithZeroes(u"1a"))
         self.assertEqual(u"00150", padHouseNumberWithZeroes(15))
+        self.assertEqual(u"0001A", padHouseNumberWithZeroes(u"1A"))
+
+        # convert letter to uppercaes
+        self.assertEqual(u"0001A", padHouseNumberWithZeroes(u"1a"))
 
     def testDePad(self):
         self.assertEqual(u"1", depadHouseNumberWithZeroes(u"00010"))
