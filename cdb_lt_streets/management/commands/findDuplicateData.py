@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from django.db.models.aggregates import Count
 from cdb_lt_civilparish.models import CivilParishStreet, CivilParish, CivilParishMember
 import logging
 from cdb_lt_mps.models import PollingDistrictStreet, ParliamentMember, Constituency
@@ -12,9 +13,9 @@ from cdb_lt_streets.streetUtils import getCityNominative, cityNameIsGenitive, ge
 from django.core.management.base import BaseCommand
 from pjutils.timemeasurement import TimeMeasurer
 from pjweb.views import findSeniunaitijaMembers, findCivilParishMembers
-from django.db import transaction
 logger = logging.getLogger(__name__)
 from optparse import make_option
+from django.db import connection, transaction
 
 class Command(BaseCommand):
     args = '<>'
@@ -29,6 +30,13 @@ class Command(BaseCommand):
         )
 
 
+    def getDistinctStreetCount(self, streetModel):
+        dbTable = streetModel.objects.model._meta.db_table
+        cursor = connection.cursor()
+        cursor.execute("SELECT COUNT(*) FROM (SELECT DISTINCT municipality, city, street FROM %s)  as t" % (dbTable))
+        row = cursor.fetchone()
+        return row[0]
+
     def findGeneric(self, streetModel = None, institutions = None, memberModel = None):
         totalNumberOfStreets = 0
 
@@ -37,19 +45,24 @@ class Command(BaseCommand):
         if len(self.args) >= 1:
             fromNumber, toNumber = ExtractRange(self.args[0])
 
+        count = self.getDistinctStreetCount(streetModel=streetModel)
+        print "count %s " % count
 
         if toNumber is not None:
             print "will test streets from %s to %s" % (fromNumber, toNumber)
             allStreets = streetModel.objects.all()
-            allStreets = list(allStreets[fromNumber: toNumber])
+            allStreets.query.group_by = ['municipality', 'city', 'street']
+            allStreets = allStreets[fromNumber:toNumber]
         else:
             print "will test all streets"
             allStreets = streetModel.objects.all()
-            allStreets = list(allStreets)
+        allStreets = list(allStreets)
 
         streetsWithMultipleInstitutions = {}
 
-        print "total %s streets to test" % len(allStreets)
+        allStreetCount = len(allStreets)
+        #print "total %s streets to test" % allStreetCount
+
 
         for streetObject in allStreets:
             totalNumberOfStreets += 1
@@ -74,7 +87,8 @@ class Command(BaseCommand):
                 street = ""
 
             if totalNumberOfStreets % 100 == 0:
-                logger.info("row: %s" % (totalNumberOfStreets + fromNumber ))
+                logger.info("row: %s,  %s%%" % (totalNumberOfStreets + fromNumber, totalNumberOfStreets / float(allStreetCount) * 100 ))
+
             total = len(institutionIdList)
             if total == 1:
                 continue
@@ -88,7 +102,7 @@ class Command(BaseCommand):
             lst.append((streetObject, inst))
             streetsWithMultipleInstitutions[hash] = lst
                 
-            if self.printOnlyStreets == False:
+            """if self.printOnlyStreets == False:
                 print "row %s" % (totalNumberOfStreets + fromNumber)
                 print "adress: %s %s %s %s" % (street, house_number, city, municipality)
                 print "%s institutions found" % total
@@ -96,7 +110,13 @@ class Command(BaseCommand):
                 print ""
             else:
                 print "%s %s %s %s, total %s institutions found %s" % (street, house_number, city, municipality, total, institutionIdList)
+            """
 
+        seconds = self.start.ElapsedSeconds()
+        if seconds == 0:
+            seconds = 1
+        rate = str(totalNumberOfStreets / seconds)
+        print "checked at %s rows per second (total sec: %d, rows: %d)" % (rate, seconds, totalNumberOfStreets)
 
         print "\n\n"
         for val in streetsWithMultipleInstitutions.itervalues():
@@ -111,11 +131,9 @@ class Command(BaseCommand):
                 print u"Gatvės numeris: %s.    Priklauso šioms seniūnijoms: %s" % (street, u", ".join(institutionNames))
             print "\n"
 
-        seconds = self.start.ElapsedSeconds()
-        if seconds == 0:
-            seconds = 1
-        rate = str(totalNumberOfStreets / seconds)
-        print "checking at %s rows per second (total sec: %d, rows: %d)" % (rate, seconds, totalNumberOfStreets)
+        print "percent of incorrect data %s%%" % (len(streetsWithMultipleInstitutions) / float(count) * 100)
+
+
 
 
     @transaction.commit_on_success

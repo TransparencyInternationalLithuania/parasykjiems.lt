@@ -352,9 +352,10 @@ importStreets 5:8 - will import streets for counties from 5 to 8 constituencies 
             else:
                 rate = str(totalNumberOfStreets / seconds)
             #print (u"%d: saved Constituency '%s %d', \nElectoral District '%s' streets (%d). \nTotal streets so far %d" % (count, pollingDistrict.Constituency.name, pollingDistrict.Constituency.nr, pollingDistrict.PollingDistrict, numberOfStreets, totalNumberOfStreets)).encode('utf-8')
-            print (u"%d: saved Constituency. Number of streets: '%d', \nTotal streets so far %d" % (count, numberOfStreets, totalNumberOfStreets)).encode('utf-8')
-            print u"inserting at %s rows per second (total sec: %d, rows: %d)" % (rate, seconds, totalNumberOfStreets)
-            print "\n\n"
+            if totalNumberOfStreets % 100 == 0:
+                print (u"%d: saved Constituency. Number of streets: '%d', \nTotal streets so far %d" % (count, numberOfStreets, totalNumberOfStreets)).encode('utf-8')
+                print u"inserting at %s rows per second (total sec: %d, rows: %d)" % (rate, seconds, totalNumberOfStreets)
+                print "\n\n"
 
 
         print u"succesfully imported %d counties, total %d streets" % (imported, totalNumberOfStreets)

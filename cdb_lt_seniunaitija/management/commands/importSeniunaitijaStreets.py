@@ -391,7 +391,8 @@ class Command(BaseCommand):
             if toPrint < member.uniqueKey:
                 break
             numberOfStreets = 0
-            print "territory for: %s %s" % (member.uniqueKey, member.seniunaitijaStr)
+            if count % 100 == 0:
+                print "territory for: %s %s" % (member.uniqueKey, member.seniunaitijaStr)
 
             try:
                 seniunaitija = Seniunaitija.objects.all().filter(id = member.uniqueKey)[0:1].get()

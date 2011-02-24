@@ -7,7 +7,7 @@ from cdb_lt_mps.models import Constituency
 from pjutils.deprecated import deprecated
 from cdb_lt_streets.ltPrefixes import *
 import copy
-from cdb_lt_streets.houseNumberUtils import removeLetterFromHouseNumber
+from cdb_lt_streets.houseNumberUtils import removeLetterFromHouseNumber, ContainsHouseNumbers, ifHouseNumberContainLetter
 
 class CityStreet:
     cityName = ""
@@ -327,6 +327,9 @@ class PollingDistrictStreetExpander:
 
         parts = street.split(u';')
 
+        # rembember if previous number was even/odd, or both (i.e. None)
+        previousNumberOdd = None
+
         for part in parts:
             streetTuple = self.getStreetTuple(part)
 
@@ -345,14 +348,23 @@ class PollingDistrictStreetExpander:
                     noName = noName.replace(u"neporiniai", u"")
                     noName = noName.replace(u"poriniai", u"")
                     oddNumbers = True
+                    previousNumberOdd = True
+
+                # if current range does not define whether we are even or odd, check what previous range was
+                if oddNumbers == None:
+                    oddNumbers = previousNumberOdd 
 
                 noName = noName.strip()
                 noName = noName.split(u'iki')
 
                 # parse fromNumber
                 fromNumber = noName[0].strip()
-                fromNumber = removeLetterFromHouseNumber(fromNumber)
-                fromNumber = int(fromNumber)
+                if ifHouseNumberContainLetter(fromNumber):
+                    yield ExpandedStreet(str, fromNumber)
+                    fromNumber = removeLetterFromHouseNumber(fromNumber)
+                    fromNumber = int(fromNumber) + 2
+                else:
+                    fromNumber = int(fromNumber)
 
 
                 # parse toNumber
@@ -372,7 +384,8 @@ class PollingDistrictStreetExpander:
                     yield ExpandedStreet(str, fromNumber)
                     continue
 
-                if oddNumbers is None:
+                yield ExpandedStreet(str, fromNumber, toNumber)
+                """if oddNumbers is None:
                     odd = fromNumber % 2
 
                     if odd == 1:
@@ -393,14 +406,15 @@ class PollingDistrictStreetExpander:
                     yield ExpandedStreet(str, oddLow, oddHigh)
                     yield ExpandedStreet(str, evenLow, evenHigh)
                 else:
-                    yield ExpandedStreet(str, fromNumber, toNumber)
+                    yield ExpandedStreet(str, fromNumber, toNumber)"""
 
             elif part.find(u'Nr.') >= 0:
 
                 noName = part.replace(u"Nr.", u"")
                 noName = noName.strip(u" .")
-                noName = removeLetterFromHouseNumber(noName)
-                noName = int(noName)
+                noName = noName
+                if ifHouseNumberContainLetter(noName) == False:
+                    noName = int(noName)
 
                 yield ExpandedStreet(street = str, numberFrom = noName)
 
