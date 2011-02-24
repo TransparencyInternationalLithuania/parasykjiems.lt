@@ -135,6 +135,17 @@ class TestSearchLtStreetIndex_SingleStreet(TestCase):
         self.assertEquals(1, len(addresses))
 
 
+    def testSearchWithStreet_No_street_ending(self):
+        """ street does not have an ending"""
+        municipality = u""
+        city=u"random"
+        street= u"keksto 19"
+        addresses = searchInIndex(municipality=municipality, city=city,  street=street)
+
+        ids = [a.id for a in addresses]
+        self.assertEquals([], ids)
+
+
 class TestSearchLtStreetIndex_StreetsWithNumbersInName(TestCase):
     fixtures = ['ltstreetindexes/streets with numbers in name.default.json']
 
