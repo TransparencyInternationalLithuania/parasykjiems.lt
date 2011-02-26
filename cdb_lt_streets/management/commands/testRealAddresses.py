@@ -3,9 +3,11 @@
 
 from django.core.management.base import BaseCommand
 from django.core import management
+from cdb_lt_streets.management.commands.ltGeoDataCrawl import ExtractRange
 from cdb_lt_streets.searchInIndex import deduceAddress, searchInIndex
 from cdb_lt_streets.searchMembers import findMPs, findMunicipalityMembers, findCivilParishMembers, findSeniunaitijaMembers
 import os
+from pjutils.timemeasurement import TimeMeasurer
 
 class Command(BaseCommand):
     args = '<>'
@@ -26,7 +28,12 @@ class Command(BaseCommand):
 
         exactQueries = []
         addresses = []
+        self.start = TimeMeasurer()
 
+        fromNumber = 0
+        toNumber = None
+        if len(args) >= 2:
+            fromNumber, toNumber = ExtractRange(args[1])
 
         if len(args) > 0:
             file = args[0]
@@ -57,7 +64,25 @@ class Command(BaseCommand):
                      "CivilParish": [],
                      "Seniunaitija": []}
 
+        addresses = addresses[fromNumber: toNumber]
+        count = 0
+        total = len(addresses)
         for address in addresses:
+
+            address = address.strip()
+            if address == u"":
+                continue
+            if address.find(u"--") >=0:
+                continue
+
+            count += 1
+            print "%s" % address
+
+            if count % 100 == 0:
+                sec = self.start.ElapsedSeconds()
+                print "tested %s from %s, percentage tested: %s.  Elapsed seconds %s, %s seconds per row" % (count, total, count / float(total), sec, sec / float(count))
+
+
             addressContext = deduceAddress(address)
             found_entries = searchInIndex(municipality= addressContext.municipality, city= addressContext.city, street= addressContext.street)
 
@@ -94,15 +119,39 @@ class Command(BaseCommand):
                     queue.append([addr, members])
 
 
+
+
+
         print "\n\n"
+        # print streets and percentages
         for type, queue in missingData.iteritems():
             print "\n"
-            print "printing missing data for %s" % type
+            print "missing data for %s" % type
 
             for item in queue:
                 street, members = item
                 print "%s \t: %s members" % (street.rjust(25, ' '), len(members))
+            print "total rows: %s " % count
+            print "total incorrect results: %s" % len(queue)
+            if len(queue) == 0:
+                print "percentage %s%%" % (0.00)
+            else:
+                print "percentage %s%%" % (float(len(queue))/ count * 100)
 
+
+        # just print percentages
+        print "\n\n\n"
+        for type, queue in missingData.iteritems():
+            print "\n"
+            print "missing data for %s" % type
+            print "total rows: %s " % count
+            print "total incorrect results: %s" % len(queue)
+            if len(queue) == 0:
+                print "percentage %s%%" % (0.00)
+            else:
+                print "percentage %s%%" % (float(len(queue))/ count * 100)
+
+        print u"total spent time %d seconds" % (self.start.ElapsedSeconds())
 
 
 

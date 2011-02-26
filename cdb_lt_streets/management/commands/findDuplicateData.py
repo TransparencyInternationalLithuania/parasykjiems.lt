@@ -131,6 +131,8 @@ class Command(BaseCommand):
                 print u"Gatvės numeris: %s.    Priklauso šioms seniūnijoms: %s" % (street, u", ".join(institutionNames))
             print "\n"
 
+        print "total addresses %s" % count
+        print "total incorrect addresses %s" % len(streetsWithMultipleInstitutions)
         print "percent of incorrect data %s%%" % (len(streetsWithMultipleInstitutions) / float(count) * 100)
 
 
