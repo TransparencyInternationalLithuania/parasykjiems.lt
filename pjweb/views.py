@@ -4,6 +4,7 @@
 import logging
 import re
 from django.template import loader
+from cdb_lt_streets.houseNumberUtils import removeCornerFromHouseNumber
 from cdb_lt_streets.searchMembers import findMPs, findMunicipalityMembers, findCivilParishMembers, findSeniunaitijaMembers
 from cdb_lt_streets.streetUtils import getCityNominative
 from settings import *
@@ -50,6 +51,8 @@ def searchInStreetIndex(query_string):
     logAddressQueryToFile(query_string)
 
     addressContext = deduceAddress(query_string)
+    addressContext.number = removeCornerFromHouseNumber(addressContext.number)
+
     found_entries = searchInIndex(municipality= addressContext.municipality, city= addressContext.city,
                                   street= addressContext.street)
 

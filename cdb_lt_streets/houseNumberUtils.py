@@ -76,12 +76,24 @@ def ifHouseNumberContainLetter(fromNumber):
         return True
     return False
 
+def removeCornerFromHouseNumber(number):
+    if not (type(number) == types.StringType or type(number) == types.UnicodeType):
+        return number
+    """index = number.find("/")
+    if index >= 0:
+        return number[0:index]"""
+    index = number.find(u"/")
+    if index >= 0:
+        return number[0:index]
+    return number
+
 def isHouseNumberOdd(fromNumber):
     # convert to string
     if fromNumber is None:
         return None
     number = removeLetterFromHouseNumber(fromNumber)
     number = u"%s" % number
+    number = removeCornerFromHouseNumber(number)
     if number == u"":
         return None
 

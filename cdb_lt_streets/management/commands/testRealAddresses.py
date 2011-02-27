@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import csv
 
 from django.core.management.base import BaseCommand
 from django.core import management
@@ -43,6 +44,8 @@ class Command(BaseCommand):
             f = open(file, mode="r")
             addresses = f.readlines()
             addresses = [unicode(val.strip(), 'utf-8') for val in addresses]
+
+            exactQueries = []
         else:
             addresses = self.getDefaultAddresses()
 
@@ -59,10 +62,13 @@ class Command(BaseCommand):
                      "CivilParish": findCivilParishMembers,
                      "Seniunaitija": findSeniunaitijaMembers}
 
-        missingData = {"MP": [],
+        missingDataByType = {"MP": [],
                      "Mayor": [],
                      "CivilParish": [],
                      "Seniunaitija": []}
+
+        missingDataByStreet = {}
+
 
         addresses = addresses[fromNumber: toNumber]
         count = 0
@@ -87,7 +93,8 @@ class Command(BaseCommand):
             found_entries = searchInIndex(municipality= addressContext.municipality, city= addressContext.city, street= addressContext.street)
 
             if len(found_entries) != 1:
-                print "Found more than one entry for address %s " % address
+                missingDataByStreet[address] = [address, u"", u"", u"", len(found_entries)]
+                print "Found more than one entry for address %s, %s " % (count + fromNumber, address)
                 print found_entries
                 continue
 
@@ -106,25 +113,34 @@ class Command(BaseCommand):
 
             for key, function in functions.iteritems():
                 members = function(**additionalKeys)
+                missingDataByStreet.setdefault(address, [address])
+                missingDataByStreet[address].append(len(members))
                 if len(members) != 1:
-                    queue = missingData[key]
+                    queue = missingDataByType[key]
                     queue.append([address, members])
 
+
+
+
+        """
         for keys in exactQueries:
             for key, function in functions.iteritems():
                 members = function(**keys)
                 if len(members) != 1:
-                    queue = missingData[key]
+                    queue = missingDataByType[key]
                     addr = u"%s %s %s" % (keys['municipality'], keys['civilParish'], keys['city'])
                     queue.append([addr, members])
 
+                    missingDataByStreet.setdefault(address, [])
+                    missingDataByStreet[address].append(len(members))
+        """
 
 
 
 
         print "\n\n"
         # print streets and percentages
-        for type, queue in missingData.iteritems():
+        for type, queue in missingDataByType.iteritems():
             print "\n"
             print "missing data for %s" % type
 
@@ -141,7 +157,7 @@ class Command(BaseCommand):
 
         # just print percentages
         print "\n\n\n"
-        for type, queue in missingData.iteritems():
+        for type, queue in missingDataByType.iteritems():
             print "\n"
             print "missing data for %s" % type
             print "total rows: %s " % count
@@ -151,10 +167,24 @@ class Command(BaseCommand):
             else:
                 print "percentage %s%%" % (float(len(queue))/ count * 100)
 
+
+
+        # print as csv style
+        f = open(u"testRealAddresses.txt", "w")
+        writer = csv.writer(f)
+        header = [u'Adresas', u'Seimo narys', u'Meras', u'Seniūnas', u'Seniūnaitis', u'Nesuprantamas adresas']
+        header = [v.encode('utf-8') for v in header]
+        writer.writerow(header)
+        for address, values in missingDataByStreet.iteritems():
+            values = ["%s" % v for v in values]
+            values = [v.encode('utf-8') for v in values ]
+            writer.writerow(values)
+        f.close()
+
+
+        print "\n\n\n"
         print u"total spent time %d seconds" % (self.start.ElapsedSeconds())
-
-
-
-
-
-
+        if count == 0:
+            print "Total rows %s, %s seconds per row" % (count, 0)
+        else:
+            print "Total rows %s, %s seconds per row" % (count, self.start.ElapsedSeconds() / float(count))
