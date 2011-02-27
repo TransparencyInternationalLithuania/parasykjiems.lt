@@ -179,6 +179,25 @@ class TestAddressDeducer(TestCase):
         self.assertEqual(u"Senųjų Trakų kaimas", address.city)
         self.assertEqual(u"Trakų rajono savivaldybė", address.municipality)
 
+    def testWithCivilParish(self):
+        address = deduceAddress(u"Miroslavo kaimas, Miroslavo seniūnija, Alytaus rajono savivaldybė")
+        self.assertEqual(u"", address.number)
+        self.assertEqual(u"", address.street)
+        self.assertEqual(u"Miroslavo kaimas", address.city)
+        self.assertEqual(u"Miroslavo seniūnija", address.civilParish)
+        self.assertEqual(u"Alytaus rajono savivaldybė", address.municipality)
+
+
+    def testWithCivilParish_and_street(self):
+        address = deduceAddress(u"Šiltnamių gatvė 18, Pagirių kaimas, Pagirių seniūnija, Vilniaus rajono savivaldybė")
+        self.assertEqual(u"18", address.number)
+        self.assertEqual(u"Šiltnamių gatvė", address.street)
+        self.assertEqual(u"Pagirių kaimas", address.city)
+        self.assertEqual(u"Pagirių seniūnija", address.civilParish)
+        self.assertEqual(u"Vilniaus rajono savivaldybė", address.municipality)
+
+
+
 
 
 
