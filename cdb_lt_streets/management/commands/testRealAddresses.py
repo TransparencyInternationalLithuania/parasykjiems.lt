@@ -57,16 +57,16 @@ class Command(BaseCommand):
             ]
 
 
-        functions = {"MP": findMPs,
-                     "Mayor": findMunicipalityMembers,
-                     "CivilParish": findCivilParishMembers,
-                     "Seniunaitija": findSeniunaitijaMembers}
+        functions = [findMPs,
+                     findMunicipalityMembers,
+                     findCivilParishMembers,
+                     findSeniunaitijaMembers]
 
-        missingDataByType = {"MP": [],
+        """missingDataByType = {"MP": [],
                      "Mayor": [],
                      "CivilParish": [],
                      "Seniunaitija": []}
-
+"""
         missingDataByStreet = {}
 
 
@@ -115,12 +115,12 @@ class Command(BaseCommand):
                               'street':street,
                               'house_number':house_number}
 
-            for key, function in functions.iteritems():
+            for function in functions:
                 members = function(**additionalKeys)
                 missingDataByStreet[address].append(len(members))
-                if len(members) != 1:
+                """if len(members) != 1:
                     queue = missingDataByType[key]
-                    queue.append([address, members])
+                    queue.append([address, members])"""
 
 
 
@@ -142,7 +142,7 @@ class Command(BaseCommand):
 
 
         print "\n\n"
-        # print streets and percentages
+        """# print streets and percentages
         for type, queue in missingDataByType.iteritems():
             print "\n"
             print "missing data for %s" % type
@@ -169,7 +169,7 @@ class Command(BaseCommand):
                 print "percentage %s%%" % (0.00)
             else:
                 print "percentage %s%%" % (float(len(queue))/ count * 100)
-
+"""
 
 
         # print as csv style
