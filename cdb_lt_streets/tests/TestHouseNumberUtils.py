@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from django.test import TestCase
-from cdb_lt_streets.houseNumberUtils import ContainsHouseNumbers, padHouseNumberWithZeroes, depadHouseNumberWithZeroes, isHouseNumberOdd
+from cdb_lt_streets.houseNumberUtils import ContainsHouseNumbers, padHouseNumberWithZeroes, depadHouseNumberWithZeroes, isHouseNumberOdd, removeCornerFromHouseNumber
 from settings import *
 
 scriptPath = os.path.dirname( os.path.realpath( __file__ ) )
@@ -16,6 +16,16 @@ class TestIsHouseNumberOdd(TestCase):
         self.assertEqual(True, isHouseNumberOdd(1))
         self.assertEqual(None, isHouseNumberOdd(""))
         self.assertEqual(None, isHouseNumberOdd(None))
+
+    def testCornerAddress(self):
+        self.assertEqual(True, isHouseNumberOdd("3/11"))
+
+
+    def testRemoveCornerFromHouseNumber(self):
+        self.assertEqual("3", removeCornerFromHouseNumber("3"))
+        self.assertEqual(3, removeCornerFromHouseNumber(3))
+        self.assertEqual(u"3", removeCornerFromHouseNumber(u"3/11"))
+        self.assertEqual("3", removeCornerFromHouseNumber("3/11"))
 
 
 
