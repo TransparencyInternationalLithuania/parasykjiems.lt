@@ -22,6 +22,7 @@ class ContactDbAddress:
         # house number
         self.number = u""
         self.flatNumber = u""
+        self.civilParish = u""
 
 class AddressDeducer():
     """ Deduces which strings are city, which street, and which is municipality """
@@ -92,13 +93,7 @@ class AddressDeducer():
         if (m is not None):
             return True
         return False
-        
 
-    def containsStreet(self, str):
-        for ending in allStreetEndings:
-            if str.find(ending) >= 0:
-                return True
-        return False
 
     def splitFirstNumberAndEverythingElse(self, str):
         """ examines a string, and divides it into 2. First part is everything up to first word with number,
@@ -128,12 +123,12 @@ class AddressDeducer():
                     continue
 
             if wasNumber == True:
-                if self.containsStreet(s):
+                if containsStreet(s):
                     firstPart.append(s)
                 else:
                     secondPart.append(s)
             
-            wasPreviousStreet = self.containsStreet(s)
+            wasPreviousStreet = containsStreet(s)
 
         firstPart = " ".join(firstPart)
         secondPart = " ".join(secondPart)
@@ -174,6 +169,13 @@ class AddressDeducer():
 
 
 
+    def findInParts(self, parts, endings):
+        for i in range(0, len(parts)):
+            p = parts[i]
+            for e in endings:
+                if p.find(e) >= 0:
+                    return i
+        return None
 
 
     def deduce(self, stringList):
@@ -181,9 +183,16 @@ class AddressDeducer():
 
         if stringList.find(u",") >= 0:
             parts = stringList.split(u",")
+            parts = [p.strip() for p in parts]
             # if first part contains either number, or street, then it is street, city, municipality
-            if (self.containsNumber(parts[0])) or (self.containsStreet(parts[0])) or (self.containsAnyNumber(parts[0])):
+            if (self.containsNumber(parts[0])) or (containsStreet(parts[0])) or (self.containsAnyNumber(parts[0])):
                 address.street, address.number, address.flatNumber  = self.extractStreetAndNumber(self.takePart(parts, 0))
+
+                hasCivilParish = containsCivilParishEnding(stringList)
+                if hasCivilParish:
+                    index = self.findInParts(parts, allCivilParishEndings)
+                    address.civilParish = parts[index]
+                    del parts[index]
 
                 # combine everything else again into string
                 joined = u" ".join(parts[1:])
@@ -193,13 +202,21 @@ class AddressDeducer():
                 address.municipality = self.takePart(parts, 1)
             else:
                 # else this is city, and municipality only
+                hasCivilParish = containsCivilParishEnding(stringList)
+                if hasCivilParish:
+                    index = self.findInParts(parts, allCivilParishEndings)
+                    address.civilParish = parts[index]
+                    del parts[index]
+
+                joined = u" ".join(parts)
+                parts = self.splitIntoCityAndMunicipality(joined)
                 address.city = self.takePart(parts, 0)
                 address.municipality = self.takePart(parts, 1)
         else:
             # try treating as if it a street with number
             firstPartWithNumber, everythingElse = self.splitFirstNumberAndEverythingElse(stringList)
             
-            if self.containsAnyNumber(firstPartWithNumber) or self.containsStreet(firstPartWithNumber):
+            if self.containsAnyNumber(firstPartWithNumber) or containsStreet(firstPartWithNumber):
                 address.street, address.number, address.flatNumber = self.extractStreetAndNumber(firstPartWithNumber)
                 everythingElse = self.splitIntoCityAndMunicipality(everythingElse)
                 address.city = self.takePart(everythingElse, 0)
@@ -239,7 +256,8 @@ def deduceAddress(query_string):
 
 
 def getGenericCaseMunicipality(municipalityNominative):
-
+    """ Municipalities in Lithuania can be in short form, such as "Panevėžys", or in long, such as
+    "Panevėžio miesto savivaldybė".  Translate short to long"""
     mun = LithuanianCases.objects.all().filter(institutionType = LithuanianCases.Type.Municipality)\
         .filter(nominative__icontains = municipalityNominative)[0:1]
     if len(mun) == 0:
@@ -268,6 +286,7 @@ def searchInIndex(municipality = None, city = None, street = None):
             municipality = None
 
     if municipality is not None:
+        municipality = removeGenericPartFromMunicipality(municipality=municipality)
         municipality = getGenericCaseMunicipality(municipality)
 
     if street is not None:
@@ -288,6 +307,7 @@ def searchInIndex(municipality = None, city = None, street = None):
     city = city.capitalize()
     cityQuery = None
     if not (city == u"" or city == None):
+        city = changeCityFromShortToLongForm(city)
         cityQuery_Nominative = Q(**{"city__icontains": city})
         cityQuery_Genitive = Q(**{"city_genitive__icontains": city})
         cityQuery = cityQuery_Genitive | cityQuery_Nominative

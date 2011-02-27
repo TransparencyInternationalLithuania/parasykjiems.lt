@@ -145,6 +145,18 @@ class TestSearchLtStreetIndex_SingleStreet(TestCase):
         ids = [a.id for a in addresses]
         self.assertEquals([], ids)
 
+    def testMunicipalityShortForm(self):
+        """ Municipalities can be shortened, or long form. for example.
+        Vilniaus m. sav
+        Vilniaus miesto savivaldybė"""
+        municipality = u"Vilniaus m. sav."
+        city=u"Vilniaus miestas"
+        street= u"Gedimino prospektas"
+        addresses = searchInIndex(municipality=municipality, city=city,  street=street)
+
+        ids = [a.id for a in addresses]
+        self.assertEquals([1], ids)
+
 
 class TestSearchLtStreetIndex_StreetsWithNumbersInName(TestCase):
     fixtures = ['ltstreetindexes/streets with numbers in name.default.json']
@@ -233,5 +245,32 @@ class TestSearchLtStreetIndex_StreetDoubleWordAndLithuanianLetter(TestCase):
 
         # we will have one address in Vilnius city, even though some unknown street will know exist
         addresses = searchInIndex(municipality=u"Vilniaus miesto savivaldybė", city=u"Vilnius",  street=u"some unknown gatvė")
+        ids = [a.id for a in addresses]
+        self.assertEquals([1], ids)
+
+
+class TestSearchLtStreetIndex_Village(TestCase):
+    fixtures = ['ltstreetindexes/village.json']
+
+    def setUp(self):
+        pass
+
+    def testSearch_city_short_ending(self):
+        """ Miroslavo k. and Miroslavo kaimas is the same.
+        Allow searching it by both forms, i.e. by short and long city form"""
+
+        addresses = searchInIndex(municipality=u"Alytaus rajono savivaldybė", city=u"Miroslavo k.",  street=u"")
+        ids = [a.id for a in addresses]
+        self.assertEquals([1], ids)
+
+    def testSearch_Municipality_can_be_either_two_or_one_word(self):
+        """ Vilniaus savivaldybė and Vilniaus miesto savivaldybė and Vilniaus m. savivaldybė
+        Allow searching it by both forms, i.e. by shorter and long form"""
+
+        addresses = searchInIndex(municipality=u"Alytaus savivaldybė", city=u"Miroslavo kaimas",  street=u"")
+        ids = [a.id for a in addresses]
+        self.assertEquals([1], ids)
+
+        addresses = searchInIndex(municipality=u"Alytaus r. savivaldybė", city=u"Miroslavo kaimas",  street=u"")
         ids = [a.id for a in addresses]
         self.assertEquals([1], ids)

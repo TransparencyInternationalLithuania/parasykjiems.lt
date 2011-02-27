@@ -14,6 +14,10 @@ wholeStreetEndings = [u"skersgatvis", u"kelias", u"plentas", u"prospektas",
 shortStreetEndings = [u"skg.", u"kel.", u"pl.", u"pr.", u"al.", u"g.", u"a.", u"tak."]
 allStreetEndings = wholeStreetEndings + shortStreetEndings
 
+shortCivilParishEndings = [u"sen."]
+wholeCivilParishEndings = [u"seniūnija"]
+allCivilParishEndings = wholeCivilParishEndings + shortCivilParishEndings
+
 wholeMunicipalityEndings = [u"miesto savivaldybė", u"rajono savivaldybė"]
 shortMunicipalityEndings = [u"m. sav.", u"r. sav."]
 allMunicipalityEndings = wholeMunicipalityEndings + shortMunicipalityEndings
@@ -78,4 +82,27 @@ def removeGenericPartFromMunicipality(municipality):
     for e in allMunicipalityEndings:
         if municipality.endswith(e):
             municipality = municipality.replace(e, u"")
+
+    other = [u"savivaldybė", u"m.", u"r.", "sav."]
+    for e in other:
+        if municipality.find(e) >= 0:
+            municipality = municipality.replace(e, u"")
     return municipality.strip()
+
+def containsCivilParishEnding(civilParish):
+    for e in allCivilParishEndings:
+        if civilParish.find(e) >= 0:
+            return True
+    return False
+
+def containsStreet(str):
+    for ending in allStreetEndings:
+        if str.find(ending) >= 0:
+            return True
+    return False
+
+def containsMunicipalityEnding(municipality):
+    for e in allMunicipalityEndings:
+        if municipality.find(e) >= 0:
+            return True
+    return False

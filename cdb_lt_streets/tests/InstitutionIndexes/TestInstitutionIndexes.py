@@ -105,7 +105,7 @@ class TestSearchInstitutionStreets_NumberToIsNone(TestCase):
     def testSearchNumberToIsNone(self):
         """ Data contains exact house value: numberFrom is give, numberTo is None.
         Query should consider that numberTo might be None, but not necesarrily"""
-        ids = findLT_street_index_id(modelToSearchIn=PollingDistrictStreet, municipality=u"Vilniaus miesto savivaldybė", city=u"Vilniaus miestas",  street="Gedimino prospektas", house_number=9)
+        ids = findLT_street_index_id(modelToSearchIn=PollingDistrictStreet, municipality=u"Vilniaus miesto savivaldybė", city=u"Vilniaus miestas",  street=u"Gedimino prospektas", house_number=9)
         self.assertEquals([1], ids)
 
 class TestSearchInstitutionStreets_NumberWithLetter(TestCase):
@@ -117,21 +117,21 @@ class TestSearchInstitutionStreets_NumberWithLetter(TestCase):
     def testSearchNumberWithLetter(self):
         """ Data contains exact house value: numberFrom is give, numberTo is None.
         Query should consider that numberTo might be None, but not necesarrily"""
-        ids = findLT_street_index_id(modelToSearchIn=CivilParishStreet, municipality=u"Vilniaus miesto savivaldybė", city=u"Vilniaus miestas",  street="Gedimino prospektas", house_number=9)
+        ids = findLT_street_index_id(modelToSearchIn=CivilParishStreet, municipality=u"Vilniaus miesto savivaldybė", city=u"Vilniaus miestas",  street=u"Gedimino prospektas", house_number=9)
         self.assertEquals([2], ids)
 
-        ids = findLT_street_index_id(modelToSearchIn=CivilParishStreet, municipality=u"Vilniaus miesto savivaldybė", city=u"Vilniaus miestas",  street="Gedimino prospektas", house_number="9A")
+        ids = findLT_street_index_id(modelToSearchIn=CivilParishStreet, municipality=u"Vilniaus miesto savivaldybė", city=u"Vilniaus miestas",  street=u"Gedimino prospektas", house_number="9A")
         self.assertEquals([1], ids)
 
     def testSearchNumberWithLetter_Letter_is_in_another_house_range(self):
         """ One street from 10 to 20, another street 14a    Should find correctly one or another"""
-        ids = findLT_street_index_id(modelToSearchIn=CivilParishStreet, municipality=u"Vilniaus miesto savivaldybė", city=u"Vilniaus miestas",  street="Vaižganto gatvė", house_number="56")
+        ids = findLT_street_index_id(modelToSearchIn=CivilParishStreet, municipality=u"Vilniaus miesto savivaldybė", city=u"Vilniaus miestas",  street=u"Vaižganto gatvė", house_number="56")
         self.assertEquals([3], ids)
 
-        ids = findLT_street_index_id(modelToSearchIn=CivilParishStreet, municipality=u"Vilniaus miesto savivaldybė", city=u"Vilniaus miestas",  street="Vaižganto gatvė", house_number="56A")
+        ids = findLT_street_index_id(modelToSearchIn=CivilParishStreet, municipality=u"Vilniaus miesto savivaldybė", city=u"Vilniaus miestas",  street=u"Vaižganto gatvė", house_number="56A")
         self.assertEquals([4], ids)
 
     def testSearchNumberWithLetter_Letter_is_lowercaes(self):
         """ All house numbers if contains letter, data must be in uppercase. However, if we query with lowercase, still find it """
-        ids = findLT_street_index_id(modelToSearchIn=CivilParishStreet, municipality=u"Vilniaus miesto savivaldybė", city=u"Vilniaus miestas",  street="Vaižganto gatvė", house_number="56a")
+        ids = findLT_street_index_id(modelToSearchIn=CivilParishStreet, municipality=u"Vilniaus miesto savivaldybė", city=u"Vilniaus miestas",  street=u"Vaižganto gatvė", house_number="56a")
         self.assertEquals([4], ids)

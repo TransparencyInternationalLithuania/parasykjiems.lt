@@ -82,7 +82,10 @@ class Command(BaseCommand):
                 continue
 
             count += 1
-            print "%s" % address
+            #print "%s" % address
+
+            if missingDataByStreet.has_key(address):
+                continue
 
             if count % 100 == 0:
                 sec = self.start.ElapsedSeconds()
@@ -92,10 +95,11 @@ class Command(BaseCommand):
             addressContext = deduceAddress(address)
             found_entries = searchInIndex(municipality= addressContext.municipality, city= addressContext.city, street= addressContext.street)
 
+            missingDataByStreet.setdefault(address, [address, len(found_entries)])
             if len(found_entries) != 1:
-                missingDataByStreet[address] = [address, u"", u"", u"", len(found_entries)]
-                print "Found more than one entry for address %s, %s " % (count + fromNumber, address)
-                print found_entries
+                #missingDataByStreet[address] = [address, u"", u"", u"", len(found_entries)]
+                #print "Found more than one entry for address %s, %s " % (count + fromNumber, address)
+                #print found_entries
                 continue
 
             f = found_entries[0]
@@ -113,7 +117,6 @@ class Command(BaseCommand):
 
             for key, function in functions.iteritems():
                 members = function(**additionalKeys)
-                missingDataByStreet.setdefault(address, [address])
                 missingDataByStreet[address].append(len(members))
                 if len(members) != 1:
                     queue = missingDataByType[key]
@@ -170,9 +173,9 @@ class Command(BaseCommand):
 
 
         # print as csv style
-        f = open(u"testRealAddresses.txt", "w")
+        f = open(u"testRealAddresses.csv", "w")
         writer = csv.writer(f)
-        header = [u'Adresas', u'Seimo narys', u'Meras', u'Seniūnas', u'Seniūnaitis', u'Nesuprantamas adresas']
+        header = [u'Adresas', u'Surasta adresų', u'Seimo narys', u'Meras', u'Seniūnas', u'Seniūnaitis']
         header = [v.encode('utf-8') for v in header]
         writer.writerow(header)
         for address, values in missingDataByStreet.iteritems():

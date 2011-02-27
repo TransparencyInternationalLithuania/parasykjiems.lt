@@ -191,6 +191,8 @@ def findLT_street_index_id(modelToSearchIn, municipality = None, civilParish = N
 
 
     # if street is empty or None, just return what we have
+    if type(street) != types.UnicodeType:
+        raise UnicodeError("street was not given in unicode")
     if street == u"":
        return cityList
 
