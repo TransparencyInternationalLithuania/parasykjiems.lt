@@ -25,7 +25,6 @@ class Command(BaseCommand):
 
         getmail = GetMail()
         getmail.login(server_info)
-        insert = InsertResponse()
         mailNumbers = getmail.getUnseenMessages() + getmail.getSeenMessages()
 
         print "there are these emails: %s" % mailNumbers
