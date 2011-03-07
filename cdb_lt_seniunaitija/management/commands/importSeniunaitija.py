@@ -72,7 +72,7 @@ class Command(BaseCommand):
 
 
             # skip empty entries
-            if (self.seniunaitijaStr == ""):
+            if self.seniunaitijaStr == "":
                 continue
             self.FixNames()
 
@@ -84,7 +84,8 @@ class Command(BaseCommand):
             seniunaitija.civilParish = self.civilParishStr
             seniunaitija.id = self.uniqueKey
 
-            print "saving Seniunaitija %s %s %s %s" % (seniunaitija.id,  seniunaitija.name, seniunaitija.civilParish, seniunaitija.municipality)
+            if count % 100 == 0:
+                print "saving Seniunaitija %s %s %s %s" % (seniunaitija.id,  seniunaitija.name, seniunaitija.civilParish, seniunaitija.municipality)
 
             seniunaitija.save()
 
