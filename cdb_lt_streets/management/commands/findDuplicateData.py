@@ -102,22 +102,16 @@ class Command(BaseCommand):
             lst.append((streetObject, inst))
             streetsWithMultipleInstitutions[hash] = lst
                 
-            """if self.printOnlyStreets == False:
-                print "row %s" % (totalNumberOfStreets + fromNumber)
-                print "adress: %s %s %s %s" % (street, house_number, city, municipality)
-                print "%s institutions found" % total
-                print institutionIdList
-                print ""
-            else:
-                print "%s %s %s %s, total %s institutions found %s" % (street, house_number, city, municipality, total, institutionIdList)
-            """
-
         seconds = self.start.ElapsedSeconds()
         if seconds == 0:
             seconds = 1
         rate = str(totalNumberOfStreets / seconds)
         print "checked at %s rows per second (total sec: %d, rows: %d)" % (rate, seconds, totalNumberOfStreets)
 
+        print "total addresses %s" % count
+        print "total incorrect addresses %s" % len(streetsWithMultipleInstitutions)
+        print "percent of incorrect data %s%%" % (len(streetsWithMultipleInstitutions) / float(count) * 100)
+        
         print "\n\n"
         for val in streetsWithMultipleInstitutions.itervalues():
             streetObject = val[0][0]
@@ -131,9 +125,7 @@ class Command(BaseCommand):
                 print u"Gatvės numeris: %s.    Priklauso šioms seniūnijoms: %s" % (street, u", ".join(institutionNames))
             print "\n"
 
-        print "total addresses %s" % count
-        print "total incorrect addresses %s" % len(streetsWithMultipleInstitutions)
-        print "percent of incorrect data %s%%" % (len(streetsWithMultipleInstitutions) / float(count) * 100)
+
 
 
 
