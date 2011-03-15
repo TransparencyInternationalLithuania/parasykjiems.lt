@@ -48,19 +48,14 @@ commonApps = ['django.contrib.auth',
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.formtools',
-#    'chronograph',
-#    'parasykjiems.polls',
     'contactdb',
     'pjweb',
     'pjutils',
     'django.contrib.admin',
     #'gunicorn',
-#    'haystack',
-    'cdb_lt_civilparish',
-    'cdb_lt_mps',
-    'cdb_lt_municipality',
-    'cdb_lt_seniunaitija',
-    'cdb_lt_streets']
+    'territories',
+    'cdb_lt'
+    ]
 
 #HAYSTACK_INCLUDE_SPELLING = True
 
