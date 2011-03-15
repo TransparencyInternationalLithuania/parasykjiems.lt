@@ -73,7 +73,7 @@ class Person(models.Model):
 class InstitutionType(models.Model):
     # a code which identifies what kind of institution is this (parliament, mayor, etc)
     # This is user generated value, when inital value is inserted
-    code = models.CharField(max_length = 10)
+    code = models.CharField(max_length = 255)
 
 class Institution(models.Model):
     """ A local institution. Contains institution name, and institution type"""
