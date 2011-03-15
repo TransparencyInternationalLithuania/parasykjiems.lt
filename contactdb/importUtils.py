@@ -106,7 +106,8 @@ def getOrCreatePerson(personUniqueCode):
         p.uniqueKey = personUniqueCode
         return p
 
-def importInstitutionData(csvFileName, institutionCode, delimiter = ","):
+def importInstitutionData(csvFileName, institutionCode, uniqueKeyStartsFrom, delimiter = ","):
+    """ uniqueKeyStartsFrom defines the start number value of the uniqueKeyField """
 
     try:
         institutionType = getInstitutionTypeWithCode(institutionCode = institutionCode)
@@ -120,7 +121,7 @@ def importInstitutionData(csvFileName, institutionCode, delimiter = ","):
 
     institutionCount = 0
     for row in dictReader:
-        uniquekey = readRow(row, "uniquekey")
+        uniquekey = int(readRow(row, "uniquekey")) + uniqueKeyStartsFrom
         institutionName = readRow(row, "institution")
 
         personPosition = getPersonPosition(personUniqueCode = uniquekey, institutionName = institutionName, institutionType=institutionType)
