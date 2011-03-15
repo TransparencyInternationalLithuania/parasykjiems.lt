@@ -19,7 +19,7 @@ class CountryAddresses(models.Model):
 
 
 
-class InstitituionTerritory(models.Model):
+class InstititutionTerritory(models.Model):
     """ An institution territory defined by a list of addresses"""
     institution = models.ForeignKey(Institution)
 

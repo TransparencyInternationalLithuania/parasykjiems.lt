@@ -2,10 +2,12 @@ import csv
 import os
 from contactdb.models import Person, InstitutionType, Institution, PersonPosition
 from pjutils.exc import ChainnedException
+from django.db import transaction
+
 
 import logging
 logger = logging.getLogger(__name__)
-from django.db import connection, transaction
+
 
 class ImportSourceNotExistsException(ChainnedException):
     pass
@@ -18,23 +20,11 @@ class PersonPositionCache(object):
     def __init__(self, institutionCode):
         self.cache = {}
 
-        sql = """select p.uniqueKey, i.name, it.code from contactdb_personposition pp
-left join contactdb_person p on p.id = pp.person_id
-left join contactdb_institution i on pp.institution_id = i.id
-left join contactdb_institutiontype it on i.institutiontype_id = it.id
-where it.code = '%s'
-""" % institutionCode
-
         persons = PersonPosition.objects.all().filter(institution__institutionType__code = institutionCode)
-
-        #cursor = connection.cursor()
-        #val = cursor.execute(sql)
 
         for p in persons:
             key = self._makeKey(p.person.uniqueKey, p.institution.name)
             self.cache[key] = p
-
-        transaction.commit_unless_managed()
 
     def _makeKey(self, uniqueKey, name):
         return "%s %s" % (uniqueKey, name)
