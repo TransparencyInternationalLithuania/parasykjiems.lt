@@ -5,12 +5,46 @@ from pjutils.exc import ChainnedException
 
 import logging
 logger = logging.getLogger(__name__)
+from django.db import connection, transaction
 
 class ImportSourceNotExistsException(ChainnedException):
     pass
 
 class InstitutionTypeDoesNotExist(ChainnedException):
     pass
+
+class PersonPositionCache(object):
+
+    def __init__(self, institutionCode):
+        self.cache = {}
+
+        sql = """select p.uniqueKey, i.name, it.code from contactdb_personposition pp
+left join contactdb_person p on p.id = pp.person_id
+left join contactdb_institution i on pp.institution_id = i.id
+left join contactdb_institutiontype it on i.institutiontype_id = it.id
+where it.code = '%s'
+""" % institutionCode
+
+        persons = PersonPosition.objects.all().filter(institution__institutionType__code = institutionCode)
+
+        #cursor = connection.cursor()
+        #val = cursor.execute(sql)
+
+        for p in persons:
+            key = self._makeKey(p.person.uniqueKey, p.institution.name)
+            self.cache[key] = p
+
+        transaction.commit_unless_managed()
+
+    def _makeKey(self, uniqueKey, name):
+        return "%s %s" % (uniqueKey, name)
+
+    def getPersonPosition(self, uniqueKey, name):
+        """ returns person position based on unique key"""
+        key = self._makeKey(uniqueKey, name)
+        if not self.cache.has_key(key):
+            return None
+        return self.cache[key]
 
 
 
@@ -106,6 +140,7 @@ def getOrCreatePerson(personUniqueCode):
         p.uniqueKey = personUniqueCode
         return p
 
+@transaction.commit_on_success
 def importInstitutionData(csvFileName, institutionCode, uniqueKeyStartsFrom, delimiter = ","):
     """ uniqueKeyStartsFrom defines the start number value of the uniqueKeyField """
 
@@ -113,6 +148,8 @@ def importInstitutionData(csvFileName, institutionCode, uniqueKeyStartsFrom, del
         institutionType = getInstitutionTypeWithCode(institutionCode = institutionCode)
     except InstitutionType.DoesNotExist:
         raise InstitutionTypeDoesNotExist(message="Institution with type '%s' could not be found" % institutionCode)
+
+    personPositionCache = PersonPositionCache(institutionCode = institutionCode)
 
     EnsureExists(csvFileName)
     allRecords = os.path.join(os.getcwd(), csvFileName)
@@ -124,7 +161,9 @@ def importInstitutionData(csvFileName, institutionCode, uniqueKeyStartsFrom, del
         uniquekey = int(readRow(row, "uniquekey")) + uniqueKeyStartsFrom
         institutionName = readRow(row, "institution")
 
-        personPosition = getPersonPosition(personUniqueCode = uniquekey, institutionName = institutionName, institutionType=institutionType)
+
+        personPosition = personPositionCache.getPersonPosition(uniquekey, institutionName)
+        #personPosition = getPersonPosition(personUniqueCode = uniquekey, institutionName = institutionName, institutionType=institutionType)
         if personPosition == None:
             personPosition = PersonPosition()
             personPosition.institution = getOrCreateInstitution(name=institutionName, institutionType = institutionType)
@@ -134,8 +173,13 @@ def importInstitutionData(csvFileName, institutionCode, uniqueKeyStartsFrom, del
         personPosition.institution.officeAddress = readRow(row,"officeAddress", default=u"")
         personPosition.institution.officeEmail = readRow(row,"officeEmail", default=u"")
 
+        name = readRow(row, "name").strip()
+        if name == "":
+            continue
         personPosition.person.name = readRow(row, "name")
         personPosition.person.surname = readRow(row,"surname")
+
+        personPosition.email = readRow(row,"email", default=u"")
 
         personPosition.person.save()
         personPosition.institution.save()
@@ -146,6 +190,11 @@ def importInstitutionData(csvFileName, institutionCode, uniqueKeyStartsFrom, del
         personPosition.institution = personPosition.institution
         personPosition.save()
 
+        if institutionCount % 100 == 0:
+            logger.info("Imported %s institutions. Type %s" % (institutionCount, institutionCode))
+
         institutionCount+=1
 
     logger.info("Imported %s institutions. Type %s" % (institutionCount, institutionCode))
+
+
