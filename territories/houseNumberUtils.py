@@ -7,6 +7,85 @@ logger = logging.getLogger(__name__)
 class StringIsNotAHouseNumberException(ChainnedException):
     pass
 
+class HouseRange:
+    def __init__(self, numberFrom = None, numberTo = None, numberOdd = None):
+        if numberTo is None:
+            numberTo = u""
+        if numberFrom is None:
+            numberFrom = u""
+        self.numberFrom = numberFrom
+        self.numberTo = numberTo
+        if numberTo is u"":
+            self.numberOdd = isHouseNumberOdd(numberFrom)
+        else:
+            if numberOdd is None:
+                self.numberOdd = isHouseNumberOdd(numberFrom)
+            else:
+                self.numberOdd = numberOdd
+
+def _collectRanges(numberList):
+    if len(numberList) == 0:
+        return
+    first = numberList[0]
+    last = first
+
+    for next in numberList[1:]:
+        if last + 2 == next:
+            last = next
+            continue
+
+        # yield current number
+        if first == last:
+            yield HouseRange(str(first))
+        else:
+            yield HouseRange(str(first), str(last), first % 2 == 1)
+        first = next
+        last = next
+
+    if first == last:
+        yield HouseRange(str(first))
+    else:
+        yield HouseRange(str(first), str(last), first % 2 == 1)
+
+def yieldRanges(listOfHouseNumbers):
+    """ From a list of house numbers, construct house ranges.  For example, if list is
+    [2, 4, 6], a single reange will be produced.
+
+    Numbers with letters will be spit out immediatelly, as single numbers, not range"""
+    oddNumbers = {}
+    evenNumbers = {}
+
+    # Divide house numbers into even and odd
+    # spit out house numbers with letters immediatelly
+    for num in listOfHouseNumbers:
+        if num is None:
+            continue
+        if num == "":
+            continue
+        if isStringStreetHouseNumber(num) == False:
+            raise StringIsNotAHouseNumberException(message="string '%s' is not a house number " % num)
+        if ifHouseNumberContainLetter(num):
+            yield HouseRange(num)
+            continue
+        num = int(num)
+        isOdd = (num % 2) == 1
+        if isOdd:
+            oddNumbers[num] = num
+        else:
+            evenNumbers[num] = num
+
+    oddNumbers = [n for n in oddNumbers.iterkeys()]
+    oddNumbers.sort()
+    evenNumbers = [n for n in evenNumbers.iterkeys()]
+    evenNumbers.sort()
+
+    for range in _collectRanges(oddNumbers):
+        yield range
+
+    for range in _collectRanges(evenNumbers):
+        yield range
+
+
 def isStringStreetHouseNumber(string):
     """ returns where a string is a valid house number or not. For example,
     4, 3A, 6d, 8 are all valid house numbers,  18aa is not, since it contains double letter"""

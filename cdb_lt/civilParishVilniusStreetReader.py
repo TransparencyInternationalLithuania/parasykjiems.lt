@@ -34,22 +34,6 @@ civilParishNames = [u"Antakalnio seniūnija",
 
 municipality= u"Vilniaus miesto savivaldybė"
 
-class HouseRange:
-    def __init__(self, numberFrom = None, numberTo = None, numberOdd = None):
-        if numberTo is None:
-            numberTo = u""
-        if numberFrom is None:
-            numberFrom = u""
-        self.numberFrom = numberFrom
-        self.numberTo = numberTo
-        if numberTo is u"":
-            self.numberOdd = isHouseNumberOdd(numberFrom)
-        else:
-            if numberOdd is None:
-                self.numberOdd = isHouseNumberOdd(numberFrom)
-            else:
-                self.numberOdd = numberOdd
-
 class VilniusCivilParishReader:
     def __init__(self, fileName):
         self.dictReader = csv.DictReader(open(fileName, "rt"), delimiter = ",")
