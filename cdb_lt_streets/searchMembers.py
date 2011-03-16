@@ -1,12 +1,12 @@
 import logging
 import types
 from cdb_lt_civilparish.models import CivilParishMember, CivilParishStreet
-from cdb_lt_mps.models import ParliamentMember, PollingDistrictStreet
 from cdb_lt_municipality.models import Municipality, MunicipalityMember
 from cdb_lt_seniunaitija.models import SeniunaitijaMember, SeniunaitijaStreet
 from cdb_lt_streets.houseNumberUtils import ifHouseNumberContainLetter, removeLetterFromHouseNumber, convertNumberToString, padHouseNumberWithZeroes, isHouseNumberOdd
 import types
 from django.db.models.query_utils import Q
+from territories.models import InstitutionTerritory
 from cdb_lt_streets.ltPrefixes import removeGenericPartFromStreet, removeGenericPartFromMunicipality
 from pjutils.exc import ChainnedException
 
@@ -146,7 +146,7 @@ def searchPartial(streetQuery = None, **kwargs):
         pass
     return []
 
-def findLT_street_index_id(modelToSearchIn, municipality = None, civilParish = None, city = None, street = None, house_number = None):
+def findLT_street_index_id(municipality = None, civilParish = None, city = None, street = None, house_number = None):
     """ At the moment territory data for each representative is stored in separate table.
     This query searches some table (objectToSearchIn) for instituions pointed by an address.
 
@@ -167,7 +167,7 @@ def findLT_street_index_id(modelToSearchIn, municipality = None, civilParish = N
     municipalityQuery = Q(**{"municipality" : municipality})
     # search without street. Might return more results, if there is a street number in the data
     cityQuery = Q(**{"city" : city})
-    cityList = searchPartialCity(modelToSearchIn= modelToSearchIn, queries=[municipalityQuery, cityQuery])
+    cityList = searchPartialCity(queries=[municipalityQuery, cityQuery])
     if len(cityList) < 2:
         return cityList
 
@@ -175,7 +175,7 @@ def findLT_street_index_id(modelToSearchIn, municipality = None, civilParish = N
     # try searchign with civilParish if it is not None
     if civilParish != u"":
         civilparishQuery = Q(**{"civilParish": civilParish})
-        civilParishList = searchPartialCity(modelToSearchIn= modelToSearchIn, queries=[municipalityQuery, civilparishQuery, cityQuery])
+        civilParishList = searchPartialCity(queries=[municipalityQuery, civilparishQuery, cityQuery])
 
         if len(civilParishList) == 0:
             return cityList
@@ -198,7 +198,7 @@ def findLT_street_index_id(modelToSearchIn, municipality = None, civilParish = N
 
     # search with street
     streetQuery = Q(**{"street" : street})
-    streetList = searchPartialCity(modelToSearchIn= modelToSearchIn, queries=[municipalityQuery, cityQuery, streetQuery])
+    streetList = searchPartialCity(queries=[municipalityQuery, cityQuery, streetQuery])
     if len(streetList) < 2:
         return streetList
 
@@ -210,28 +210,28 @@ def findLT_street_index_id(modelToSearchIn, municipality = None, civilParish = N
     numberQuery = getHouseNumberQuery(house_number)
     #print buildFinalQuery(modelToSearchIn= modelToSearchIn, queries=[municipalityQuery, cityQuery, numberQuery]).query
 
-    houseList = searchPartialCity(modelToSearchIn= modelToSearchIn, queries=[municipalityQuery, cityQuery, streetQuery, numberQuery], doPrint=False)
+    houseList = searchPartialCity(queries=[municipalityQuery, cityQuery, streetQuery, numberQuery], doPrint=False)
 
     if len(houseList) > 0:
         return houseList
     return streetList
 
-def buildFinalQuery(modelToSearchIn, queries):
-    query = modelToSearchIn.objects.all()
+def buildFinalQuery(queries):
+    query = InstitutionTerritory.objects.all()
     for q in queries:
         query = query.filter(q)
     return query
 
-def searchPartialCity(modelToSearchIn, queries, doPrint = False):
+def searchPartialCity(queries, doPrint = False):
     try:
-        query = buildFinalQuery(modelToSearchIn, queries)
+        query = buildFinalQuery(queries)
         if doPrint:
             strQuery = str(query.query)
             strQuery = strQuery.encode("utf_8")
             print strQuery
         idList = extractInstitutionColumIds(query)
         return idList
-    except modelToSearchIn.DoesNotExist:
+    except InstitutionTerritory.DoesNotExist:
         pass
     return []
 
