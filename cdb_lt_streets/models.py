@@ -6,6 +6,7 @@ from django.db import models
 # Create your models here.
 from contactdb.models import AddressNameField
 
+"""
 class LithuanianStreetIndexes(models.Model):
     street = AddressNameField(db_index = True)
     city = AddressNameField(db_index = True)
@@ -14,19 +15,8 @@ class LithuanianStreetIndexes(models.Model):
     # http://en.wikipedia.org/wiki/Elderships_of_Lithuania
     # elderships are sometimes called CivilParish in the code. actually everywhere :)
     civilparish = AddressNameField(db_index = True)
+"""
 
-
-class LithuanianCases(models.Model):
-    """ each Lithuanian object can be written in several cases. This mapping helps map from various form
-    http://en.wikipedia.org/wiki/List_of_grammatical_cases """
-
-    class Type:
-        """ possible types of institution types"""
-        Municipality = 1
-
-    nominative = AddressNameField(db_index = True)
-    genitive = AddressNameField(db_index = True)
-    institutionType = models.IntegerField(db_index = True)
 
 
 class HierarchicalGeoData(models.Model):
