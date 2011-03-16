@@ -1,7 +1,7 @@
 [
   {
     "pk": 1,
-    "model": "cdb_lt_civilparish.CivilParishStreet",
+    "model": "territories.InstitutionTerritory",
     "fields": {
       "city": "Vilniaus miestas",
       "municipality": "Vilniaus miesto savivaldybė",
@@ -13,7 +13,7 @@
   },
   {
     "pk": 2,
-    "model": "cdb_lt_civilparish.CivilParishStreet",
+    "model": "territories.InstitutionTerritory",
     "fields": {
       "city": "Vilniaus miestas",
       "municipality": "Vilniaus miesto savivaldybė",
@@ -25,7 +25,7 @@
   },
   {
     "pk": 3,
-    "model": "cdb_lt_civilparish.CivilParishStreet",
+    "model": "territories.InstitutionTerritory",
     "fields": {
       "city": "Vilniaus miestas",
       "municipality": "Vilniaus miesto savivaldybė",
@@ -38,7 +38,7 @@
   },
   {
     "pk": 4,
-    "model": "cdb_lt_civilparish.CivilParishStreet",
+    "model": "territories.InstitutionTerritory",
     "fields": {
       "city": "Vilniaus miestas",
       "municipality": "Vilniaus miesto savivaldybė",

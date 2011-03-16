@@ -1,7 +1,7 @@
 [
   {
     "pk": 2, 
-    "model": "cdb_lt_mps.PollingDistrictStreet",
+    "model": "territories.InstitutionTerritory",
     "fields": {
       "city": "Vilniaus miestas",
       "municipality": "Vilniaus miesto savivaldybė",
@@ -14,7 +14,7 @@
   },
   {
     "pk": 1, 
-    "model": "cdb_lt_mps.PollingDistrictStreet",
+    "model": "territories.InstitutionTerritory",
     "fields": {
       "city": "Vilniaus miestas",
       "municipality": "Vilniaus miesto savivaldybė",
