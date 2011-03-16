@@ -130,8 +130,13 @@ def getOrCreatePerson(personUniqueCode):
         p.uniqueKey = personUniqueCode
         return p
 
+def getInstitutionNameFromColumn(csvRow):
+    """ sometimes institution name is combined from multiple fields.
+    Sometims it is just a field in csv file. In this case it is just a field"""
+    return readRow(csvRow, "institution")
+
 @transaction.commit_on_success
-def importInstitutionData(csvFileName, institutionCode, uniqueKeyStartsFrom, delimiter = ","):
+def importInstitutionData(csvFileName, institutionCode, uniqueKeyStartsFrom, institutionNameGetter=getInstitutionNameFromColumn, delimiter = ","):
     """ uniqueKeyStartsFrom defines the start number value of the uniqueKeyField """
 
     try:
@@ -149,20 +154,23 @@ def importInstitutionData(csvFileName, institutionCode, uniqueKeyStartsFrom, del
     institutionCount = 0
     for row in dictReader:
         uniquekey = int(readRow(row, "uniquekey")) + uniqueKeyStartsFrom
-        institutionName = readRow(row, "institution")
+        institutionName = institutionNameGetter(row)
 
-
+        institution = getOrCreateInstitution(name=institutionName, institutionType = institutionType)
+        person = getOrCreatePerson(personUniqueCode = uniquekey)
+        
         personPosition = personPositionCache.getPersonPosition(uniquekey, institutionName)
         #personPosition = getPersonPosition(personUniqueCode = uniquekey, institutionName = institutionName, institutionType=institutionType)
         if personPosition == None:
             personPosition = PersonPosition()
-            personPosition.institution = getOrCreateInstitution(name=institutionName, institutionType = institutionType)
-            personPosition.person = getOrCreatePerson(personUniqueCode = uniquekey)
+            personPosition.institution = institution
+            personPosition.person = person
 
         personPosition.institution.officePhone = readRow(row, "officePhone", default=u"")
         personPosition.institution.officeAddress = readRow(row,"officeAddress", default=u"")
         personPosition.institution.officeEmail = readRow(row,"officeEmail", default=u"")
-
+        personPosition.institution.save()
+        
         name = readRow(row, "name").strip()
         if name == "":
             continue
@@ -170,9 +178,8 @@ def importInstitutionData(csvFileName, institutionCode, uniqueKeyStartsFrom, del
         personPosition.person.surname = readRow(row,"surname")
 
         personPosition.email = readRow(row,"email", default=u"")
-
         personPosition.person.save()
-        personPosition.institution.save()
+        
         # set again person and position
         # this will set the id of these objects into personPosition.person_id and personPosition.institution_id
         # Looks weird though, should be automatic

@@ -10,7 +10,7 @@ class CountryAddresses(models.Model):
     municipality = AddressNameField(db_index = True)
     # http://en.wikipedia.org/wiki/Elderships_of_Lithuania
     # elderships are sometimes called CivilParish in the code. actually everywhere :)
-    civilparish = AddressNameField(db_index = True)
+    civilParish = AddressNameField(db_index = True)
     city = AddressNameField(db_index = True)
     city_genitive = AddressNameField(db_index = True)
     
