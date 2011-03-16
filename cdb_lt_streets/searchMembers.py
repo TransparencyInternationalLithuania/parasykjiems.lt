@@ -1,6 +1,5 @@
 import logging
 import types
-from cdb_lt_civilparish.models import CivilParishMember, CivilParishStreet
 from cdb_lt_municipality.models import Municipality, MunicipalityMember
 from cdb_lt_seniunaitija.models import SeniunaitijaMember, SeniunaitijaStreet
 from cdb_lt_streets.houseNumberUtils import ifHouseNumberContainLetter, removeLetterFromHouseNumber, convertNumberToString, padHouseNumberWithZeroes, isHouseNumberOdd
