@@ -35,12 +35,12 @@ class CountryStreetCache:
 
 
 class InstitutionStreetCash:
-    def __init__(self):
+    def __init__(self, institutionCode):
         self.streetCache = {}
         self.initializeCache()
 
+        self.institutionCode = institutionCode
         self.institutionCache = {}
-        pass
 
     def getCacheKey(self, institutionCode, municipality, civilParish, city, street, numberFrom, numberTo, numberOdd):
         return "%s %s %s %s %s %s %s %s" % (institutionCode, municipality, civilParish, city, street, numberFrom, numberTo, numberOdd)
@@ -81,7 +81,7 @@ left join contactdb_institutiontype itype on itype.id = i.institutionType_id"""
             return self.institutionCache[name]
 
         try:
-            i = Institution.objects.all().filter(name = name).get()
+            i = Institution.objects.all().filter(name = name).filter(institutionType__code=self.institutionCode).get()
             self.institutionCache[name] = i
             return i
         except Institution.DoesNotExist:
@@ -129,49 +129,10 @@ def cityNameGetterStandard(csvRow):
 
 class InstitutionStreetImporter(object):
 
-    def __init__(self):
+    def __init__(self, institutionCode):
         self.missingInstitutions = {}
         self.unparsedInstitutionTerritories = {}
-        self.importer = InstitutionStreetCash()
-
-        
-    @transaction.commit_on_success
-    def importInstitutionTerritoryFile(self, fileName, institutionNameGetter=getInstitutionNameFromColumn, cityNameGetter=cityNameGetterStandard, delimiter=","):
-        logger.info(u"Import street index data from csv file %s" % fileName)
-
-        dictReader = csv.DictReader(open(fileName, "rt"), delimiter = delimiter)
-
-        processed = 0
-        rowNumber = 0
-        for row in dictReader:
-            rowNumber += 1
-            municipality = readRow(row, "municipality")
-            civilParish = readRow(row, "civilparish")
-            city = cityNameGetter(row)
-            street = readRow(row, "street")
-            institution = institutionNameGetter(row)
-
-            if city.strip() == u"":
-                continue
-
-            processed += 1
-            if not self.importer.isInCache(municipality, civilParish, city, street):
-                newObject = InstititutionTerritory()
-                try:
-                    newObject.institution = self.importer.getInstitution(institution)
-                except InstitutionNotFound:
-                    self.missingInstitutions[institution]=u"%s %s" % (rowNumber, institution)
-                    continue
-                newObject.street = street
-                newObject.municipality = municipality
-                newObject.city = city
-                newObject.civilParish = civilParish
-                newObject.save()
-                importer.addToCache(newObject)
-
-            if processed % 400 == 0:
-                logger.info("Imported %s addresses" % processed)
-        logger.info("Imported %s addresses" % processed)
+        self.importer = InstitutionStreetCash(institutionCode = institutionCode)
 
     @transaction.commit_on_success
     def importInstitutionTerritoryYielder(self, addressYielder):
@@ -182,9 +143,6 @@ class InstitutionStreetImporter(object):
         for tuple in addressYielder.yieldTerritories():
             rowNumber += 1
             institutionKey, municipality, civilParish, city, street, numberFrom, numberTo, numberOdd = tuple
-
-            if city.strip() == u"":
-                continue
 
             processed += 1
 
@@ -217,17 +175,17 @@ class InstitutionStreetImporter(object):
 
         self.unparsedInstitutionTerritories = dict(self.unparsedInstitutionTerritories, **addressYielder.unparsedInstitutions)
 
-def importInstitutionTerritoryYielder(addressYielder):
+def importInstitutionTerritoryYielder(addressYielder, institutionCode):
     """ imports institution addresses.
     addressYielder is a class with method yieldTerritories, which yields tuples in this form:
     (institutionKey, municipality, civilParish, city, street, numberFrom, numberTo, numberOdd)
     """
 
-    importer = InstitutionStreetImporter()
+    importer = InstitutionStreetImporter(institutionCode = institutionCode)
     importer.importInstitutionTerritoryYielder(addressYielder = addressYielder)
 
     for institutionName, errorMessage in importer.missingInstitutions.iteritems():
-        print "could not parse territory %s: %s" % (institutionName, errorMessage)
+        print "missing institution %s: %s" % (institutionName, errorMessage)
 
 
     for institutionName, errorMessage in importer.unparsedInstitutionTerritories.iteritems():
