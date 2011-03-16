@@ -45,8 +45,7 @@ class ltGeoDataSources_Institution:
     """ A list of document for importing streets for civil parishes"""
     civilParishAddresses = ltGeoDataSources_Country.addressesInMunicipalities + testIndexes
 
-    """# a custom pdf generated only for city Kaunas
-    civilParishAddresses_Kaunas = os.path.join("contactdb", "sources", "CivilParish", "Kauno seniunijos.raw.txt")
+    # a custom pdf generated only for city Kaunas
+    civilParishAddresses_Kaunas = os.path.join("cdb_lt", "files", "territory", "institutionTerritory", "civilParish", "Kauno seniunijos.raw.txt")
     # a directory where Vilnius city civil parish streets reside
-    civilParishAddresses_Vilnius = os.path.join("contactdb", "sources", "import data", "civil parish street indexes", "vilnius city")
-    """
+    civilParishAddresses_Vilnius = os.path.join("cdb_lt", "files", "territory", "institutionTerritory", "civilParish", "vilniaus_miesto_seniunijos_visos.csv")
