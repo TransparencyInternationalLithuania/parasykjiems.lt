@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 from django.test import TestCase
-from cdb_lt_streets.searchInIndex import searchInIndex
 from settings import *
+from territories.searchInIndex import searchInIndex
 
 scriptPath = os.path.dirname( os.path.realpath( __file__ ) )
 

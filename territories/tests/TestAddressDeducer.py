@@ -3,7 +3,7 @@
 
 from django.test import TestCase
 from settings import *
-from cdb_lt_streets.searchInIndex import deduceAddress
+from territories.searchInIndex import deduceAddress
 
 scriptPath = os.path.dirname( os.path.realpath( __file__ ) )
 
