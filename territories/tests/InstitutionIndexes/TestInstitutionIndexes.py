@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 from django.test import TestCase
-from cdb_lt_streets.searchMembers import findLT_street_index_id
 from settings import *
+from territories.searchMembers import findLT_street_index_id
 
 scriptPath = os.path.dirname( os.path.realpath( __file__ ) )
 
