@@ -3,7 +3,7 @@
 
 from django.test.testcases import TestCase
 import os
-from cdb_lt_civilparish.management.commands.importCivilParishStreets_Kaunas import yieldRanges
+from territories.houseNumberUtils import yieldRanges
 
 class TestYieldHouseRanges(TestCase):
     def assertRangesEqual(self, fromNumber = u"", toNumber = u"", result = None):
