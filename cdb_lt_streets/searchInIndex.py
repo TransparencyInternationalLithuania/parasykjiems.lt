@@ -3,13 +3,14 @@
 
 from pjutils.uniconsole import *
 import re
-from cdb_lt_streets.models import LithuanianStreetIndexes, LithuanianCases
 from django.db.models.query_utils import Q
 import logging
 from pjutils.deprecated import deprecated
-from ltPrefixes import *
-from pjutils.queryHelper import getAndQuery, getOrQuery
-from cdb_lt_streets.houseNumberUtils import isStringStreetHouseNumber
+from pjutils.queryHelper import getAndQuery
+from territories.houseNumberUtils import isStringStreetHouseNumber
+from territories.ltPrefixes import removeGenericPartFromMunicipality, changeCityFromShortToLongForm, changeStreetFromShortToLongForm, extractStreetEndingForm, removeGenericPartFromStreet, containsCivilParishEnding, containsStreet, allCivilParishEndings, allCityEndings
+from territories.models import CountryAddresses, LithuanianCases
+
 
 logger = logging.getLogger(__name__)
 
@@ -26,20 +27,6 @@ class ContactDbAddress:
 
 class AddressDeducer():
     """ Deduces which strings are city, which street, and which is municipality """
-
-    def findStreet(self, streetName):
-        length = len(LithuanianStreetIndexes.objects.filter(street__icontains = streetName))
-        return length > 0
-
-    def findCity(self, streetName):
-        length = len(LithuanianStreetIndexes.objects.filter(city__icontains = streetName))
-        return length > 0
-
-    def findMunicipality(self, streetName):
-        length = len(LithuanianStreetIndexes.objects.filter(municipality__icontains = streetName))
-        return length > 0
-
-
     def takePart(self, parts, pos):
         if (len(parts) > pos):
             return parts[pos].strip()
@@ -69,9 +56,9 @@ class AddressDeducer():
 
         parts = self._splitByHyphenAndSpace(streetWithNumber)
         digits = [d for d in parts if isStringStreetHouseNumber(d)]
-        if (len(digits) > 0):
+        if len(digits) > 0:
             number = digits[0]
-        if (len(digits) > 1):
+        if len(digits) > 1:
             flatNumber = digits[1]
 
         street = [p for p in parts if isStringStreetHouseNumber(p) == False]
@@ -319,7 +306,7 @@ def searchInIndex(municipality = None, city = None, street = None):
 
     if street is None:
         finalQuery = getAndQuery(cityQuery, municipalityQuery)
-        return LithuanianStreetIndexes.objects.all().filter(finalQuery)\
+        return CountryAddresses.objects.all().filter(finalQuery)\
         .order_by('street')[0:50]
     else:
         # try searching with istarts with on whole street
@@ -327,7 +314,7 @@ def searchInIndex(municipality = None, city = None, street = None):
         street = changeStreetFromShortToLongForm(street)
         streetStartsWithEnding = q = Q(**{"street__istartswith": street})
         streetExactWithEndingFilter = getAndQuery(municipalityQuery, cityQuery, streetStartsWithEnding)
-        streetExactWithEnding = LithuanianStreetIndexes.objects.all().filter(streetExactWithEndingFilter)\
+        streetExactWithEnding = CountryAddresses.objects.all().filter(streetExactWithEndingFilter)\
             .order_by('street')[0:50]
         streetExactWithEnding = list(streetExactWithEnding)
         if len(streetExactWithEnding) > 0:
@@ -343,7 +330,7 @@ def searchInIndex(municipality = None, city = None, street = None):
 
         # search for street without stripped street ending, and street ending as separate query
         streetExactFilter = getAndQuery(municipalityQuery, cityQuery, streetWihoutEndingQueryStartsWith, streetEndingQuery)
-        streetExact = LithuanianStreetIndexes.objects.all().filter(streetExactFilter)\
+        streetExact = CountryAddresses.objects.all().filter(streetExactFilter)\
             .order_by('street')[0:50]
         streetExact = list(streetExact)
         if len(streetExact) > 0:
@@ -351,7 +338,7 @@ def searchInIndex(municipality = None, city = None, street = None):
 
         # find with exact street
         streetExactFilter = getAndQuery(municipalityQuery, cityQuery, streetWihoutEndingQueryStartsWith)
-        streetExact = LithuanianStreetIndexes.objects.all().filter(streetExactFilter)\
+        streetExact = CountryAddresses.objects.all().filter(streetExactFilter)\
             .order_by('street')[0:50]
         streetExact = list(streetExact)
         if len(streetExact) > 0:
@@ -359,7 +346,7 @@ def searchInIndex(municipality = None, city = None, street = None):
 
         #search for street without using street ending and starts with
         streetExactFilter = getAndQuery(municipalityQuery, cityQuery, streetWihoutEndingQueryStartsWith)
-        streetExact = LithuanianStreetIndexes.objects.all().filter(streetExactFilter)\
+        streetExact = CountryAddresses.objects.all().filter(streetExactFilter)\
             .order_by('street')[0:50]
         streetExact = list(streetExact)
         if len(streetExact) > 0:
@@ -368,7 +355,7 @@ def searchInIndex(municipality = None, city = None, street = None):
         #search for street without using street ending   and starts icontains
         streetWihoutEndingQueryContains = Q(**{"street__icontains": streetWihoutEnding})
         streetWithoutEndingFilter = getAndQuery(municipalityQuery, cityQuery, streetWihoutEndingQueryContains)
-        streetWithouEndingResult = LithuanianStreetIndexes.objects.all().filter(streetWithoutEndingFilter)\
+        streetWithouEndingResult = CountryAddresses.objects.all().filter(streetWithoutEndingFilter)\
             .order_by('street')[0:50]
         if len(streetWithouEndingResult) > 0:
             return streetWithouEndingResult
@@ -378,5 +365,5 @@ def searchInIndex(municipality = None, city = None, street = None):
         finalQuery = getAndQuery(cityQuery, municipalityQuery)
         if finalQuery == None:
             return []
-        return LithuanianStreetIndexes.objects.all().filter(finalQuery)\
+        return CountryAddresses.objects.all().filter(finalQuery)\
             .order_by('street')[0:50]

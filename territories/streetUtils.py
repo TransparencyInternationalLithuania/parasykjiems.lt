@@ -1,4 +1,3 @@
-from cdb_lt_streets.models import LithuanianStreetIndexes
 from django.db.models.query_utils import Q
 
 def cityNameIsGenitive(municipality, city_genitive, street):

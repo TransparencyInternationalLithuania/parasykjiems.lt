@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 from django.test import TestCase
-from cdb_lt_streets.ltPrefixes import extractStreetEndingForm
 from settings import *
+from territories.ltPrefixes import extractStreetEndingForm
 
 scriptPath = os.path.dirname( os.path.realpath( __file__ ) )
 

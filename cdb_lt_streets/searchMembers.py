@@ -1,8 +1,8 @@
 import logging
 import types
-from cdb_lt_streets.houseNumberUtils import ifHouseNumberContainLetter, removeLetterFromHouseNumber, padHouseNumberWithZeroes, isHouseNumberOdd
 import types
 from django.db.models.query_utils import Q
+from territories.houseNumberUtils import isHouseNumberOdd, ifHouseNumberContainLetter, padHouseNumberWithZeroes
 from territories.models import InstitutionTerritory
 
 logger = logging.getLogger(__name__)

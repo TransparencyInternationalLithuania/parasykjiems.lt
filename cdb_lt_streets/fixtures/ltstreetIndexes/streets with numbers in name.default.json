@@ -1,7 +1,7 @@
 [
   {
     "pk": 1,
-    "model": "cdb_lt_streets.LithuanianStreetIndexes",
+    "model": "territories.CountryAddresses",
     "fields": {
       "city": "Vilnius",
       "city_genitive": "Vilniaus miestas",
@@ -11,7 +11,7 @@
   },
   {
     "pk": 2,
-    "model": "cdb_lt_streets.LithuanianStreetIndexes",
+    "model": "territories.CountryAddresses",
     "fields": {
       "city": "Vilnius",
       "city_genitive": "Vilniaus miestas",
@@ -21,7 +21,7 @@
   },
   {
     "pk": 3,
-    "model": "cdb_lt_streets.LithuanianStreetIndexes",
+    "model": "territories.CountryAddresses",
     "fields": {
       "city": "Vilnius",
       "city_genitive": "Vilniaus miestas",

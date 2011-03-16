@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 from django.test import TestCase
-from cdb_lt_streets.houseNumberUtils import ContainsHouseNumbers, padHouseNumberWithZeroes, depadHouseNumberWithZeroes, isHouseNumberOdd, removeCornerFromHouseNumber
 from settings import *
+from territories.houseNumberUtils import depadHouseNumberWithZeroes, padHouseNumberWithZeroes, ContainsHouseNumbers, isHouseNumberOdd, removeCornerFromHouseNumber
 
 scriptPath = os.path.dirname( os.path.realpath( __file__ ) )
 
