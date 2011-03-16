@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.utils.translation import ugettext as _
-from django.db.models.fields import CharField, IntegerField
+from django.db.models.fields import CharField, IntegerField, NullBooleanField
 
 class PhoneField(CharField):
     description = _("Phone field")
@@ -35,13 +35,13 @@ class HouseNumberField(CharField):
         CharField.__init__(self, *args, **kwargs)
 
 
-class HouseNumberOddField(IntegerField):
+class HouseNumberOddField(NullBooleanField):
     description = _("Tells whether a house number is odd or even")
 
     def __init__(self, *args, **kwargs):
         kwargs['db_index'] = kwargs.get('db_index', True)
         kwargs['null'] = kwargs.get('null', True)
-        IntegerField.__init__(self, *args, **kwargs)
+        NullBooleanField.__init__(self, *args, **kwargs)
 
 
 class PersonNameField(CharField):

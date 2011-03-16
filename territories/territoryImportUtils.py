@@ -1,12 +1,18 @@
 import csv
 import os
-from contactdb.importUtils import readRow
-from django.db import transaction
-from territories.models import CountryAddresses
+from contactdb.importUtils import readRow, getInstitutionNameFromColumn
+from django.db import transaction, connection
+from pjutils import uniconsole
+from contactdb.models import Institution
+from pjutils.exc import ChainnedException
+from territories.models import CountryAddresses, InstititutionTerritory
 import logging
 logger = logging.getLogger(__name__)
 
-class CountryStreetImporter:
+class InstitutionNotFound(ChainnedException):
+    pass
+
+class CountryStreetCache:
     def __init__(self):
         self.streetCache = {}
         self.initializeCache()
@@ -16,7 +22,8 @@ class CountryStreetImporter:
         return "%s %s %s %s" % (municipality, civilparish, city, street)
 
     def addToCache(self, record):
-        self.streetCache[self.getCacheKey(record.municipality, record.civilparish, record.city, record.street)] = record
+        key = self.getCacheKey(record.municipality, record.civilParish, record.city, record.street)
+        self.streetCache[key] = record
 
     def initializeCache(self):
         for r in CountryAddresses.objects.all():
@@ -26,18 +33,74 @@ class CountryStreetImporter:
         key = self.getCacheKey(municipality, civilparish, city, street)
         return self.streetCache.has_key(key)
 
-@transaction.commit_on_success
-def importFile(fileName, delimiter=","):
+
+class InstitutionStreetCash:
+    def __init__(self):
+        self.streetCache = {}
+        self.initializeCache()
+
+        self.institutionCache = {}
+        pass
+
+    def getCacheKey(self, institutionCode, municipality, civilParish, city, street, numberFrom, numberTo, numberOdd):
+        return "%s %s %s %s %s %s %s %s" % (institutionCode, municipality, civilParish, city, street, numberFrom, numberTo, numberOdd)
+
+    def addToCache(self, record):
+        key = self.getCacheKey(record.institution.institutionType.code, record.municipality, record.civilParish, record.city, record.street, record.numberFrom, record.numberTo, record.numberOdd)
+        self.streetCache[key] = record
+
+    def initializeCache(self):
+        all = list(InstititutionTerritory.objects.all())
+
+
+        sql = """select code, municipality, civilParish, city, street, numberFrom, numberTo, numberOdd from territories_instititutionterritory it
+left join contactdb_institution i on i.id = it.institution_id
+left join contactdb_institutiontype itype on itype.id = i.institutionType_id"""
+
+        cursor = connection.cursor()
+        lst = list(cursor.execute(sql))
+        transaction.commit_unless_managed()
+
+        for i in range(0, len(all)):
+            obj = all[i]
+            keyTuple = lst[i]
+            institutionCode, municipality, civilParish, city, street, numberFrom, numberTo, numberOdd = keyTuple
+            if numberOdd != None:
+                numberOdd = bool(numberOdd)
+            key = self.getCacheKey(institutionCode, municipality, civilParish, city, street, numberFrom, numberTo, numberOdd)
+            self.streetCache[key] = obj
+
+
+
+    def isStreetInCache(self, institutionCode, municipality, civilParish, city, street, numberFrom, numberTo, numberOdd):
+        key = self.getCacheKey(institutionCode, municipality, civilParish, city, street, numberFrom, numberTo, numberOdd)
+        return self.streetCache.has_key(key)
+
+    def getInstitution(self, name):
+        if self.institutionCache.has_key(name):
+            return self.institutionCache[name]
+
+        try:
+            i = Institution.objects.all().filter(name = name).get()
+            self.institutionCache[name] = i
+            return i
+        except Institution.DoesNotExist:
+            raise InstitutionNotFound(message="Institution with name '%s' was not found. Perhaps it was not imported when members were created" % name)
+
+
+
+
+
+def importCountryFile(fileName, delimiter=",", streetCache = None):
     print u"Import street index data from csv file %s" % fileName
 
     dictReader = csv.DictReader(open(fileName, "rt"), delimiter = delimiter)
-    importer = CountryStreetImporter()
+    if streetCache is None:
+        streetCache = CountryStreetCache()
 
     processed = 0
     for row in dictReader:
         id = readRow(row, "id", default=u"")
-        #country = readRow(row, "country", default=u"")
-        #county = readRow(row, "county", default=u"")
         municipality = readRow(row, "municipality", default=u"")
         civilParish = readRow(row, "civilparish", default=u"")
         city = readRow(row, "city", default=u"")
@@ -48,7 +111,7 @@ def importFile(fileName, delimiter=","):
             continue
 
         processed += 1
-        if not importer.isInCache(municipality, civilParish, city, street):
+        if not streetCache.isInCache(municipality, civilParish, city, street):
             newObject = CountryAddresses()
             newObject.street = street
             newObject.municipality = municipality
@@ -56,14 +119,124 @@ def importFile(fileName, delimiter=","):
             newObject.city_genitive = city_genitive
             newObject.civilParish = civilParish
             newObject.save()
-            importer.addToCache(newObject)
+            streetCache.addToCache(newObject)
 
         if processed % 200 == 0:
             logger.info("Imported %s addresses" % processed)
 
+def cityNameGetterStandard(csvRow):
+    return readRow(csvRow, "city")
+
+class InstitutionStreetImporter(object):
+
+    def __init__(self):
+        self.missingInstitutions = {}
+        self.unparsedInstitutionTerritories = {}
+        self.importer = InstitutionStreetCash()
+
+        
+    @transaction.commit_on_success
+    def importInstitutionTerritoryFile(self, fileName, institutionNameGetter=getInstitutionNameFromColumn, cityNameGetter=cityNameGetterStandard, delimiter=","):
+        logger.info(u"Import street index data from csv file %s" % fileName)
+
+        dictReader = csv.DictReader(open(fileName, "rt"), delimiter = delimiter)
+
+        processed = 0
+        rowNumber = 0
+        for row in dictReader:
+            rowNumber += 1
+            municipality = readRow(row, "municipality")
+            civilParish = readRow(row, "civilparish")
+            city = cityNameGetter(row)
+            street = readRow(row, "street")
+            institution = institutionNameGetter(row)
+
+            if city.strip() == u"":
+                continue
+
+            processed += 1
+            if not self.importer.isInCache(municipality, civilParish, city, street):
+                newObject = InstititutionTerritory()
+                try:
+                    newObject.institution = self.importer.getInstitution(institution)
+                except InstitutionNotFound:
+                    self.missingInstitutions[institution]=u"%s %s" % (rowNumber, institution)
+                    continue
+                newObject.street = street
+                newObject.municipality = municipality
+                newObject.city = city
+                newObject.civilParish = civilParish
+                newObject.save()
+                importer.addToCache(newObject)
+
+            if processed % 400 == 0:
+                logger.info("Imported %s addresses" % processed)
+        logger.info("Imported %s addresses" % processed)
+
+    @transaction.commit_on_success
+    def importInstitutionTerritoryYielder(self, addressYielder):
+        logger.info(u"Import street index data ")
+
+        processed = 0
+        rowNumber = 0
+        for tuple in addressYielder.yieldTerritories():
+            rowNumber += 1
+            institutionKey, municipality, civilParish, city, street, numberFrom, numberTo, numberOdd = tuple
+
+            if city.strip() == u"":
+                continue
+
+            processed += 1
+
+            try:
+                institution = self.importer.getInstitution(institutionKey)
+            except InstitutionNotFound:
+                self.missingInstitutions[institutionKey]=u"%s %s" % (rowNumber, institutionKey)
+                continue
+            institutionCode = institution.institutionType.code
+
+            if numberFrom != None:
+                pass
+            if not self.importer.isStreetInCache(institutionCode, municipality, civilParish, city, street, numberFrom, numberTo, numberOdd):
+                newObject = InstititutionTerritory()
+                newObject.institution = institution
+
+                newObject.municipality = municipality
+                newObject.civilParish = civilParish
+                newObject.city = city
+                newObject.street = street
+                newObject.numberFrom = numberFrom
+                newObject.numberTo = numberTo
+                newObject.numberOdd = numberOdd
+                newObject.save()
+                self.importer.addToCache(newObject)
+
+            if processed % 400 == 0:
+                logger.info("Imported %s addresses" % processed)
+        logger.info("Imported %s addresses" % processed)
+
+        self.unparsedInstitutionTerritories = dict(self.unparsedInstitutionTerritories, **addressYielder.unparsedInstitutions)
+
+def importInstitutionTerritoryYielder(addressYielder):
+    """ imports institution addresses.
+    addressYielder is a class with method yieldTerritories, which yields tuples in this form:
+    (institutionKey, municipality, civilParish, city, street, numberFrom, numberTo, numberOdd)
+    """
+
+    importer = InstitutionStreetImporter()
+    importer.importInstitutionTerritoryYielder(addressYielder = addressYielder)
+
+    for institutionName, errorMessage in importer.missingInstitutions.iteritems():
+        print "could not parse territory %s: %s" % (institutionName, errorMessage)
 
 
+    for institutionName, errorMessage in importer.unparsedInstitutionTerritories.iteritems():
+        print "could not parse territory %s: %s" % (institutionName, errorMessage)
+
+
+@transaction.commit_on_success
 def importCountryData(csvFileNames):
+    streetCache = CountryStreetCache()
     for f in csvFileNames:
         f = os.path.join(os.getcwd(), f)
-        importFile(fileName=f)
+        importCountryFile(fileName=f, streetCache=streetCache)

@@ -3,11 +3,13 @@
 
 import os
 from django.core.management.base import BaseCommand
-from territories.territoryImportUtils import importCountryData
+from cdb_lt.civilParishStreetReader import civilParishStreetReader
+from cdb_lt.management.commands.createMembers import makeCivilParishInstitutionName, cityNameGetterGenitive
+from cdb_lt.seniunaitijaTerritoryReader import seniunaitijaStreetReader
+from territories.territoryImportUtils import importCountryData, importInstitutionTerritoryYielder
 
 class ltGeoDataSources_Country:
-
-    commonStreetPath = os.path.join("cdb_lt", "files", "territory", "city")
+    commonStreetPath = os.path.join("cdb_lt", "files", "territory", "countryTerritory", "city")
 
     addressesInCities = [
         ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Alytus City", os.path.join(commonStreetPath, "cdb_lt_street_index_Alytus_city.csv")),
@@ -22,7 +24,7 @@ class ltGeoDataSources_Country:
         ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Vilnius City", os.path.join(commonStreetPath, "cdb_lt_street_index_Vilnius_city.csv")),
     ]
 
-    commonPath = os.path.join("cdb_lt", "files", "territory", "municipality")
+    commonPath = os.path.join("cdb_lt", "files", "territory", "countryTerritory", "municipality")
     addressesInMunicipalities = [
                     ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Alytaus apskr.", os.path.join(commonPath, "cdb_lt_street_index_alytaus_apskritis.csv")),
                     ("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Kauno apskr.", os.path.join(commonPath, "cdb_lt_street_index_kaunas_apskritis.csv")),
@@ -37,7 +39,20 @@ class ltGeoDataSources_Country:
     ]
 
     """ A complete Lithuanian street source: cities plus municipalities"""
-    LithuanianStreetIndexes = addressesInMunicipalities + addressesInCities
+    LithuanianAddresses = addressesInMunicipalities + addressesInCities
+
+class ltGeoDataSources_Institution:
+    civilParishPath = os.path.join("cdb_lt", "files", "territory", "institutionTerritory", "civilParish")
+    testIndexes = [("Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Test Data", os.path.join(civilParishPath, "cdb_lt_street_index_test.csv")) ]
+
+    """ A list of document for importing streets for civil parishes"""
+    civilParishAddresses = ltGeoDataSources_Country.addressesInMunicipalities + testIndexes
+
+    """# a custom pdf generated only for city Kaunas
+    civilParishAddresses_Kaunas = os.path.join("contactdb", "sources", "CivilParish", "Kauno seniunijos.raw.txt")
+    # a directory where Vilnius city civil parish streets reside
+    civilParishAddresses_Vilnius = os.path.join("contactdb", "sources", "import data", "civil parish street indexes", "vilnius city")
+    """
 
 class Command(BaseCommand):
     args = '<>'
@@ -45,8 +60,14 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        # create MP
-        fileNames = [f[1] for f in ltGeoDataSources_Country.LithuanianStreetIndexes]
+        # create Country data
+        fileNames = [f[1] for f in ltGeoDataSources_Country.LithuanianAddresses]
         importCountryData(csvFileNames=fileNames)
 
+        # create addresses for civilParish
+        fileNames = [f[1] for f in ltGeoDataSources_Institution.civilParishAddresses]
+        importInstitutionTerritoryYielder(addressYielder=civilParishStreetReader(csvFileNames=fileNames, institutionNameGetter=makeCivilParishInstitutionName, cityNameGetter = cityNameGetterGenitive))
+
+        # create addresses for seniunaitija
+        importInstitutionTerritoryYielder(addressYielder=seniunaitijaStreetReader())
 
