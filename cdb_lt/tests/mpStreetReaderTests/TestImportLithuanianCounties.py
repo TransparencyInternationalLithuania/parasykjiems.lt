@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 from django.test.testcases import TestCase
-from cdb_lt_mps.parseConstituencies import LithuanianConstituencyReader, LithuanianConstituencyParser
 import os
+from cdb_lt.mpStreetReader import LithuanianConstituencyReader, LithuanianConstituencyParser
 
 scriptPath = os.path.dirname( os.path.realpath( __file__ ) )
 

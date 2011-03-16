@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from cdb_lt_mps.parseConstituencies import PollingDistrictStreetExpander, ExpandedStreet, LithuanianConstituencyParser, LithuanianConstituencyReader, AddressParser
 from django.test.testcases import TestCase
 import os
+from cdb_lt.mpStreetReader import LithuanianConstituencyParser, PollingDistrictStreetExpander, AddressParser, LithuanianConstituencyReader
+from cdb_lt.seniunaitijaTerritoryReader import ExpandedStreet
 
 
 scriptPath = os.path.dirname( os.path.realpath( __file__ ) )
