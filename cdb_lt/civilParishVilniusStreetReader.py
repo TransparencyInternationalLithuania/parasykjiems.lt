@@ -6,7 +6,7 @@ import os
 from cdb_lt.management.commands.importSources import ltGeoDataSources_Institution
 from contactdb.importUtils import readRow
 import logging
-from territories.houseNumberUtils import isHouseNumberOdd
+from territories.houseNumberUtils import HouseRange
 from territories.ltPrefixes import changeStreetFromShortToLongForm
 
 logger = logging.getLogger(__name__)
