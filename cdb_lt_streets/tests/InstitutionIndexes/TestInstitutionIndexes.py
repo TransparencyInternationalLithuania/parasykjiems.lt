@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 from django.test import TestCase
-from cdb_lt_civilparish.models import CivilParishStreet
 from cdb_lt_streets.searchMembers import findCivilParishMembers, findLT_street_index_id
 from settings import *
 
