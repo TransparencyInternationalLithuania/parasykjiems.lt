@@ -3,6 +3,7 @@
 
 import os
 from django.core.management.base import BaseCommand
+from cdb_lt.civilParishKaunasStreetReader import civilParishKaunasStreetReader
 from cdb_lt.civilParishStreetReader import civilParishStreetReader
 from cdb_lt.civilParishVilniusStreetReader import civilParishVilniusStreetReader
 from cdb_lt.management.commands.createMembers import makeCivilParishInstitutionName, cityNameGetterGenitive
@@ -27,8 +28,9 @@ class Command(BaseCommand):
         fileNames = [f[1] for f in ltGeoDataSources_Institution.civilParishAddresses]
         #importInstitutionTerritoryYielder(addressYielder=civilParishStreetReader(csvFileNames=fileNames, institutionNameGetter=makeCivilParishInstitutionName, cityNameGetter = cityNameGetterGenitive), , institutionCode = "civpar")
 
-        fileNames = [f[1] for f in ltGeoDataSources_Institution.civilParishAddresses]
-        importInstitutionTerritoryYielder(addressYielder=civilParishVilniusStreetReader(), institutionCode = "civpar")
+        #importInstitutionTerritoryYielder(addressYielder=civilParishVilniusStreetReader(), institutionCode = "civpar")
+
+        importInstitutionTerritoryYielder(addressYielder=civilParishKaunasStreetReader(), institutionCode = "civpar")
 
         """
         # create addresses for seniunaitija
