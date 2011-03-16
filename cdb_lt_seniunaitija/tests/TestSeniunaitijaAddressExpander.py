@@ -3,7 +3,7 @@
 
 from django.test import TestCase
 import os
-from cdb_lt_seniunaitija.management.commands.importSeniunaitijaStreets import SeniunaitijaAddressExpander, ExpandedStreet
+from cdb_lt.seniunaitijaTerritoryReader import ExpandedStreet, SeniunaitijaAddressExpander
 
 scriptPath = os.path.dirname( os.path.realpath( __file__ ) )
 
