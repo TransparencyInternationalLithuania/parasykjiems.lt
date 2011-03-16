@@ -1,13 +1,9 @@
 import logging
 import types
-from cdb_lt_municipality.models import Municipality, MunicipalityMember
-from cdb_lt_seniunaitija.models import SeniunaitijaMember, SeniunaitijaStreet
-from cdb_lt_streets.houseNumberUtils import ifHouseNumberContainLetter, removeLetterFromHouseNumber, convertNumberToString, padHouseNumberWithZeroes, isHouseNumberOdd
+from cdb_lt_streets.houseNumberUtils import ifHouseNumberContainLetter, removeLetterFromHouseNumber, padHouseNumberWithZeroes, isHouseNumberOdd
 import types
 from django.db.models.query_utils import Q
 from territories.models import InstitutionTerritory
-from cdb_lt_streets.ltPrefixes import removeGenericPartFromStreet, removeGenericPartFromMunicipality
-from pjutils.exc import ChainnedException
 
 logger = logging.getLogger(__name__)
 
