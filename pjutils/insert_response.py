@@ -3,6 +3,7 @@
 
 import logging
 import os
+from contactdb.models import PersonPosition
 from pjutils.exc import ChainnedException
 from pjutils.get_mail import GetMail
 from pjweb.email.backends import MailDoesNotExistInDBException
@@ -17,25 +18,11 @@ logger = logging.getLogger(__name__)
 
 class InsertResponse():
 
-    def get_rep(self, rep_id, rtype):
-        if rtype=='mp':
-            receiver = ParliamentMember.objects.all().filter(
-                    id__exact=rep_id
-                )
-        elif rtype=='mn':
-            receiver = MunicipalityMember.objects.all().filter(
-                    id__exact=rep_id
-                )
-        elif rtype=='cp':
-            receiver = CivilParishMember.objects.all().filter(
-                    id__exact=rep_id
-                )
-        elif rtype=='sn':
-            receiver = SeniunaitijaMember.objects.all().filter(
-                    id__exact=rep_id
-                )
-
-        return receiver[0]
+    def get_rep(self, rep_id):
+        try:
+            return PersonPosition.objects.all().filter(id__exact=rep_id).get()
+        except PersonPosition.DoesNotExist:
+            return None
 
     def insert_resp(self, email_id, msg_text, msg_attachments):
         mail = None
