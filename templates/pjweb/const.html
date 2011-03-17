@@ -11,13 +11,13 @@
 <tr>
 <td width="30%" >
 <p id="head-font"><b>{{ personPosition.person.name }} {{ personPosition.person.surname }}</b> <br>
-{% trans "Member of parliament" %} </p>
+{{ personPosition.institutionDescription.InstitutionPosition }} </p>
 {{ personPosition.primaryPhone }} <br>
 {{ personPosition.secondaryPhone }}
 </td>
 <td width="70%">
-<p id="head-font">{% trans "Member of parliament" %} - {{ personPosition.institution.name }} </p>
-<p>{% trans "Responsible for legislation, statutory bodies of the Lithuanian state leaders the appointment and dismissal from office, the state budget approval, the Lithuanian government surveillance activities." %}</p>
+<p id="head-font">{{ personPosition.institution.name }} </p>
+<p> {{ personPosition.institutionDescription.InstitutionResponsibility }}    </p>
 <p> {{ personPosition.institution.officeEmail }} {{ personPosition.institution.officePhone }} {{ personPosition.institution.officeAddress }}</p>
 <form action="/pjweb/contact/mp/{{ parliament_member.id }}/" method="get">
   <button><span>{% trans "Write" %}</span></button><br>

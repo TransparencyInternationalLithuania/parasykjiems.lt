@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import os
 from django.core.management.base import BaseCommand
 from contactdb.importUtils import createInstitutionType, importInstitutionData, readRow
@@ -29,6 +32,28 @@ def cityNameGetterGenitive(csvRow):
 
 InstitutionMunicipalityCode = "mayor"
 
+def loadInstitutionDescriptions():
+    institutionDescriptions = {
+            "mp":{
+                "InstitutionPosition" : u"Seimo narys",
+                "InstitutionResponsibility" : u"Atsakingas už įstatymų leidybą, įstatymu numatytų Lietuvos valstybės institucijų vadovų skyrimą ir atleidimą iš pareigų, valstybės biudžeto tvirtinimą, Lietuvos Respublikos Vyriausybės veiklos priežiūrą."
+            },
+            InstitutionMunicipalityCode:{
+                "InstitutionPosition" : u"Meras",
+                "InstitutionResponsibility" : u"Užtikrina, kad savivaldybės gyventojai turėtų galimybę įsitraukti į vietos reikalų tvarkymą, kad būtų tobulinamas savivaldybės tarybos sprendimų priėmimas ir savivaldybės tarybos komitetų veikla."
+            },
+            "civpar":{
+                "InstitutionPosition" : u"Seniūnas",
+                "InstitutionResponsibility" : u"Atlieka seniūnijos vidaus administravimą, prižiūri viešųjų paslaugų teikimą, neatlygintinai atlieka tam tikras notarines funkcijas, konsultuoja seniūnijai priskirtos teritorijos gyventojus, pagal kompetenciją gali surašyti administracinių teisės pažeidimų protokolus, nagrinėti administracinių teisės pažeidimų bylas, gali registruoti mirtis, išduoda leidimus laidoti."
+            },
+            "seniunaitija":{
+                "InstitutionPosition" : u"Seniūnaitis",
+                "InstitutionResponsibility" : u"Skatina seniūnaitijos gyventojus prižiūrėti gyvenamosios vietovės teritoriją, plėtoti ir organizuoti vietovės kultūrinį ir sportinį gyvenimą, turi teisę gauti ir teikia informaciją apie savivaldybės institucijų funkcijas, jų darbo laiką ir darbo tvarką, gali atstovauti seniūnaitijos gyventojams savivaldybės tarybos posėdžiuose."
+            }
+
+        }
+    return institutionDescriptions
+
 class Command(BaseCommand):
     args = '<>'
     help = ''
@@ -40,7 +65,7 @@ class Command(BaseCommand):
         importInstitutionData(csvFileName=ImportSources.LithuanianMPs, institutionCode = "mp", uniqueKeyStartsFrom=0)
 
         # create Mayor
-        createInstitutionType(code="mayor")
+        createInstitutionType(code=InstitutionMunicipalityCode)
         importInstitutionData(csvFileName=ImportSources.LithuanianMunicipalityMembers, institutionCode = InstitutionMunicipalityCode, uniqueKeyStartsFrom=100000)
 
         # create Civil Parish
@@ -50,5 +75,3 @@ class Command(BaseCommand):
         # create Seniunaitija
         createInstitutionType(code="seniunaitija")
         importInstitutionData(csvFileName=ImportSources.LithuanianSeniunaitijaMembers, institutionCode = "seniunaitija", institutionNameGetter=makeSeniunaitijaInstitutionName, uniqueKeyStartsFrom=300000)
-
-
