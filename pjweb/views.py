@@ -337,7 +337,6 @@ def contact(request, rtype, mp_id):
             if public=='public':
                 publ = True
             sender_name = form.cleaned_data[u'sender_name']
-            phone = form.cleaned_data[u'phone']
             message = form.cleaned_data[u'message']
             sender = form.cleaned_data[u'sender']
             response_hash = random.randrange(0, 1000000),
@@ -357,7 +356,7 @@ def contact(request, rtype, mp_id):
                     sender_mail = sender,
                     recipient_id = receiver.id,
                     recipient_type = rtype,
-                    recipient_name = '%s %s' % (receiver.name, receiver.surname),
+                    recipient_name = '%s %s' % (receiver.person.name, receiver.person.surname),
                     recipient_mail = recipients[0],
                     message = message,
                     msg_state = 'NotConfirmed',
