@@ -9,7 +9,8 @@ from territories.searchMembers import findInstitutionTerritories
 scriptPath = os.path.dirname( os.path.realpath( __file__ ) )
 
 class TestSearchCivilParishStreets_SingleStreet(TestCase):
-    fixtures = ['InstitutionIndexes/kaimas.json']
+    fixtures = ['InstitutionIndexes/kaimas.json',
+                'InstitutionIndexes/institutions_single_typed.json']
 
     def setUp(self):
         pass
@@ -20,10 +21,11 @@ class TestSearchCivilParishStreets_SingleStreet(TestCase):
         street=None
         house_number=None
         ids = findInstitutionTerritories(municipality=municipality, city=city,  street=street, house_number=house_number)
-        self.assertEquals([8], ids)
+        self.assertEquals([1], ids)
 
 class TestSearchInstitutionStreets_WithStreetAndHouseNumber(TestCase):
-    fixtures = ['InstitutionIndexes/several Gedimino 9, Vilnius MPs.json']
+    fixtures = ['InstitutionIndexes/several Gedimino 9, Vilnius MPs.json',
+                'InstitutionIndexes/institutions_single_typed.json']
 
     municipality = u"Vilniaus miesto savivaldybė"
     city=u"Vilniaus miestas"
@@ -41,6 +43,7 @@ class TestSearchInstitutionStreets_WithStreetAndHouseNumber(TestCase):
     def testSearch_Out_of_street_range(self):
         """ In case there are defined ranges for house numbers, but the provided house range is out of range, just return results for whole street"""
         house_number=14
+        all = list(InstitutionTerritory.objects.all())
         ids = findInstitutionTerritories(municipality=self.municipality, city=self.city,  street=self.street, house_number=house_number)
         self.assertEquals([1, 2], ids)
 
@@ -66,7 +69,8 @@ class TestSearchInstitutionStreets_WithStreetAndHouseNumber(TestCase):
 
 
 class TestSearchInstitutionStreets_SingleRepresentative(TestCase):
-    fixtures = ['InstitutionIndexes/single representative in street.json']
+    fixtures = ['InstitutionIndexes/single representative in street.json',
+                'InstitutionIndexes/institutions_single_typed.json']
 
     municipality = u"Vilniaus miesto savivaldybė"
     city=u"Vilniaus miestas"
@@ -81,7 +85,9 @@ class TestSearchInstitutionStreets_SingleRepresentative(TestCase):
         self.assertEquals([1], ids)
 
 class TestSearchInstitutionStreets_ArminuKaimas(TestCase):
-    fixtures = ['InstitutionIndexes/arminu i kaimas.json']
+    fixtures = ['InstitutionIndexes/arminu i kaimas.json',
+                'InstitutionIndexes/institutions_single_typed.json'
+                ]
 
     def setUp(self):
         pass
@@ -89,14 +95,15 @@ class TestSearchInstitutionStreets_ArminuKaimas(TestCase):
     def testSearchWhenStreetIsNOne(self):
         """ When street is "" or None, results must be same"""
         ids = findInstitutionTerritories(municipality=u"Alytaus rajono savivaldybė", city=u"Arminų I kaimas",  street=None)
-        self.assertEquals([8, 12], ids)
+        self.assertEquals([1, 2], ids)
 
     def testSearchWhenStreetIsNOne(self):
         ids = findInstitutionTerritories(municipality=u"Alytaus rajono savivaldybė", civilParish=u"Krokialaukio seniūnija", city=u"Arminų I kaimas",  street=None)
-        self.assertEquals([12], ids)
+        self.assertEquals([2], ids)
 
 class TestSearchInstitutionStreets_NumberToIsNone(TestCase):
-    fixtures = ['InstitutionIndexes/number To is None.json']
+    fixtures = ['InstitutionIndexes/number To is None.json',
+                'InstitutionIndexes/institutions_single_typed.json']
 
     def setUp(self):
         pass
@@ -108,7 +115,8 @@ class TestSearchInstitutionStreets_NumberToIsNone(TestCase):
         self.assertEquals([1], ids)
 
 class TestSearchInstitutionStreets_NumberWithLetter(TestCase):
-    fixtures = ['InstitutionIndexes/number with letter.json']
+    fixtures = ['InstitutionIndexes/number with letter.json',
+                'InstitutionIndexes/institutions_single_typed.json']
 
     def setUp(self):
         pass
