@@ -3,6 +3,7 @@
 
 import logging
 import re
+from django.contrib.auth.views import redirect_to_login
 from django.template import loader
 from settings import *
 from django import forms
@@ -25,6 +26,7 @@ from pjweb.forms import IndexForm, ContactForm
 from territories.houseNumberUtils import removeCornerFromHouseNumber
 from territories.searchInIndex import deduceAddress, searchInIndex
 from territories.searchMembers import findPersonPositions
+from cdb_lt.management.commands.createMembers import loadInstitutionDescriptions
 
 
 logger = logging.getLogger(__name__)
@@ -110,6 +112,10 @@ def choose_representative_internal(request, municipality = None, civilParish = N
     #additionalKeys = {"city_genitive" : cityGenitive}
     additionalKeys = {}
     personPositions = findPersonPositions(municipality=municipality, civilParish=civilParish, city=city, street=street, house_number=house_number, **additionalKeys)
+
+    institutionDescriptions = loadInstitutionDescriptions()
+    for p in personPositions:
+        p.institutionDescription = institutionDescriptions[p.institution.institutionType.code]
 
     return render_to_response('pjweb/const.html', {
         'personPositions': personPositions,
