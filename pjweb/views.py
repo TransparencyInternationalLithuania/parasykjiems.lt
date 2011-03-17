@@ -137,25 +137,28 @@ def json_lookup(request, queryset, field, limit=5, login_required=False):
     return HttpResponse(simplejson.dumps(object), mimetype='application/javascript')
 
 
-def renderIndexPage(request, form, query_string = ""):
-     lang = request.LANGUAGE_CODE
-     address = {
-        'found_entries': None,
-        'found_geodata': None,
-        'not_found': '',
-        }
-     return render_to_response('pjweb/index.html', {
-            'form': form,
-            'LANGUAGES': GlobalSettings.LANGUAGES,
-            'lang_code': lang,
-            'entered': query_string,
-            'found_entries': address['found_entries'],
-            'found_geodata': address['found_geodata'],
-            'not_found': address['not_found'],
-            'step1': 'active-step',
-            'step2': '',
-            'step3': '',
-        })
+def renderIndexPage(request, form = None, query_string = ""):
+    if form is None:
+        form = IndexForm(request.POST)
+
+    lang = request.LANGUAGE_CODE
+    address = {
+    'found_entries': None,
+    'found_geodata': None,
+    'not_found': '',
+    }
+    return render_to_response('pjweb/index.html', {
+        'form': form,
+        'LANGUAGES': GlobalSettings.LANGUAGES,
+        'lang_code': lang,
+        'entered': query_string,
+        'found_entries': address['found_entries'],
+        'found_geodata': address['found_geodata'],
+        'not_found': address['not_found'],
+        'step1': 'active-step',
+        'step2': '',
+        'step3': '',
+    })
 
 
 def index(request):
@@ -190,9 +193,9 @@ def index(request):
 
 def no_email(request, rtype, mp_id):
     insert = InsertResponse()
-    representative = insert.get_rep(mp_id, rtype)
+    representative = insert.get_rep(mp_id)
     NoEmailMsg = _('%(name)s %(surname)s email cannot be found in database.') % {
-        'name':representative.name, 'surname':representative.surname
+        'name':representative.person.name, 'surname':representative.person.surname
     }
     logger.debug('%s' % (NoEmailMsg))
     return render_to_response('pjweb/no_email.html', {
@@ -294,13 +297,20 @@ def smtp_error(request, rtype, mp_id, private=None):
         'step3': 'active-step',
     })
 
+
+def redirectToIndex():
+    url = "/pjweb/"
+    return HttpResponseRedirect(url)
     
 def contact(request, rtype, mp_id):
     insert = InsertResponse()
     current_site = Site.objects.get_current()
 
     # find required representative
-    receiver = insert.get_rep(mp_id, rtype)
+    receiver = insert.get_rep(mp_id)
+    if receiver == None:
+        return redirectToIndex()
+
     months = [
         _(u'January'),
         _(u'February'),
@@ -409,7 +419,7 @@ def contact(request, rtype, mp_id):
 
     else:
         decl = DeclensionLt()
-        form = ContactForm(initial={'message': _(u'Dear. Mr. %s, \n\n\n\nHave a nice day.') % decl.sauksm(receiver.name) })
+        form = ContactForm(initial={'message': _(u'Dear. Mr. %s, \n\n\n\nHave a nice day.') % decl.sauksm(receiver.person.name) })
         
     return render_to_response('pjweb/contact.html', {
         'form': form,
