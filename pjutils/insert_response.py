@@ -11,10 +11,6 @@ from settings import GlobalSettings
 from django.core.management.base import BaseCommand
 from pjweb.models import Email, MailHistory
 from django.core.mail import send_mail, EmailMessage
-from cdb_lt_municipality.models import MunicipalityMember
-from cdb_lt_mps.models import ParliamentMember
-from cdb_lt_civilparish.models import CivilParishMember
-from cdb_lt_seniunaitija.models import SeniunaitijaMember
 
 
 logger = logging.getLogger(__name__)

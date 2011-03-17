@@ -5,12 +5,11 @@ import sys
 
 from django.core.management.base import BaseCommand
 from django.core import management
-from cdb_lt_streets.management.commands.ltGeoDataCrawl import ExtractRange
-from cdb_lt_streets.searchInIndex import deduceAddress, searchInIndex
-from cdb_lt_streets.searchMembers import findMPs, findMunicipalityMembers, findCivilParishMembers, findSeniunaitijaMembers
 import os
 from pjutils.timemeasurement import TimeMeasurer
 from settings import GlobalSettings
+from territories.searchInIndex import deduceAddress, searchInIndex
+from territories.searchMembers import findMunicipalityMembers, findMPs, findCivilParishMembers, findSeniunaitijaMembers
 
 class Command(BaseCommand):
     args = '<>'
@@ -52,7 +51,7 @@ class Command(BaseCommand):
                 continue
 
             f = found_entries[0]
-            civilParish = f.civilparish
+            civilParish = f.civilParish
             municipality = f.municipality
             city = f.city_genitive
             street = f.street

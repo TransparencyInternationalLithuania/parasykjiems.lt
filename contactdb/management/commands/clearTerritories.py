@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 from contactdb.management.commands.clearAll import ClearTablesData
-from territories.models import CountryAddresses, InstititutionTerritory
+from territories.models import CountryAddresses, InstitutionTerritory
 
 class Command(BaseCommand):
     args = '<>'
@@ -10,7 +10,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         models = [CountryAddresses,
-                  InstititutionTerritory]
+                  InstitutionTerritory]
 
         ClearTablesData(models)
 
