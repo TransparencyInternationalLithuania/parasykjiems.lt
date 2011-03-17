@@ -13,10 +13,17 @@ class TestWriteToSingleRepr(TestCase):
         self.assertEqual("", resp.content)
         self.assertEqual(302, resp.status_code)
 
-    def test_SubmitExistentMember(self):
+    def test_ShowExistentMember(self):
         """ User enters an address, and WTT returns a normal response, no import errors"""
         c = Client()
         resp = c.get('/pjweb/contact/mayor/1/')
+
+        self.assertEqual(200, resp.status_code)
+
+    def test_ExistentMember_SubmitForPreview(self):
+        """ User enters an address, and WTT returns a normal response, no import errors"""
+        c = Client()
+        resp = c.post('/pjweb/contact/mayor/1/', {'sender_name': 'my name', 'message' : 'my message to representative', 'sender':'myEmail@gmail.com', 'public' : 'public'} )
 
         self.assertEqual(200, resp.status_code)
 
