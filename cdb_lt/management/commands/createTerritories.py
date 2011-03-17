@@ -11,13 +11,37 @@ from cdb_lt.management.commands.importSources import ltGeoDataSources_Institutio
 from cdb_lt.mpStreetReader import mpStreetReader
 from cdb_lt.municipalityStreetReader import municipalityStreetReader
 from cdb_lt.seniunaitijaTerritoryReader import seniunaitijaStreetReader
+from territories.models import LithuanianCases
+from cdb_lt.ltData import MunicipalityCases
 from territories.territoryImportUtils import importCountryData, importInstitutionTerritoryYielder
+
+
+def importCases():
+    print "Will import LithuanianCases for municipalities"
+
+    all = LithuanianCases.objects.all().filter(institutionType=LithuanianCases.Type.Municipality)
+    d = {}
+    for c in all:
+        d[c.nominative] = c
+    
+    for key, data in MunicipalityCases.iteritems():
+        if d.has_key(key):
+            continue
+        case = LithuanianCases()
+        case.nominative = key
+        case.genitive = data
+        case.institutionType = LithuanianCases.Type.Municipality
+        case.save()
+    print "finished"
 
 class Command(BaseCommand):
     args = '<>'
     help = ''
 
     def handle(self, *args, **options):
+
+
+        importCases()
 
         # create Country data
         fileNames = [f[1] for f in ltGeoDataSources_Country.LithuanianAddresses]
@@ -40,3 +64,5 @@ class Command(BaseCommand):
 
         # create MP data
         importInstitutionTerritoryYielder(addressYielder=mpStreetReader(), institutionCode = "mp")
+
+        

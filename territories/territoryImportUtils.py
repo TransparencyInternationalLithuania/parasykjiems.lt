@@ -5,7 +5,7 @@ from django.db import transaction, connection
 from pjutils import uniconsole
 from contactdb.models import Institution
 from pjutils.exc import ChainnedException
-from territories.models import CountryAddresses, InstititutionTerritory
+from territories.models import CountryAddresses, InstitutionTerritory
 import logging
 logger = logging.getLogger(__name__)
 
@@ -50,10 +50,10 @@ class InstitutionStreetCash:
         self.streetCache[key] = record
 
     def initializeCache(self):
-        all = list(InstititutionTerritory.objects.all())
+        all = list(InstitutionTerritory.objects.all())
 
 
-        sql = """select code, municipality, civilParish, city, street, numberFrom, numberTo, numberOdd from territories_instititutionterritory it
+        sql = """select code, municipality, civilParish, city, street, numberFrom, numberTo, numberOdd from territories_institutionterritory it
 left join contactdb_institution i on i.id = it.institution_id
 left join contactdb_institutiontype itype on itype.id = i.institutionType_id"""
 
@@ -156,7 +156,7 @@ class InstitutionStreetImporter(object):
             if numberFrom != None:
                 pass
             if not self.importer.isStreetInCache(institutionCode, municipality, civilParish, city, street, numberFrom, numberTo, numberOdd):
-                newObject = InstititutionTerritory()
+                newObject = InstitutionTerritory()
                 newObject.institution = institution
 
                 newObject.municipality = municipality

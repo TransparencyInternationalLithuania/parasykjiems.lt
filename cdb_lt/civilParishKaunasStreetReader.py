@@ -4,7 +4,6 @@
 import csv
 import os
 from cdb_lt.management.commands.importSources import ltGeoDataSources_Institution
-from cdb_lt_civilparish.management.commands.importCivilParishStreets_Vilnius import CivilParishNotFound
 from contactdb.importUtils import readRow
 import logging
 from territories.houseNumberUtils import isHouseNumberOdd, yieldRanges

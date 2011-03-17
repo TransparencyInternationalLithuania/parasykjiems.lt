@@ -2,6 +2,7 @@ import logging
 import types
 import types
 from django.db.models.query_utils import Q
+from contactdb.models import PersonPosition
 from territories.houseNumberUtils import isHouseNumberOdd, ifHouseNumberContainLetter, padHouseNumberWithZeroes
 from territories.models import InstitutionTerritory
 
@@ -59,35 +60,6 @@ def getHouseNumberQuery(house_number = None):
     return orQuery
 
 
-def findMPs(municipality = None, civilParish = None, city = None, street = None, house_number = None,  *args, **kwargs):
-    #street = removeGenericPartFromStreet(street)
-    #municipality = removeGenericPartFromMunicipality(municipality)
-
-    logging.info("searching for MP: street %s, city %s, municipality %s" % (street, city, municipality))
-
-
-    idList = findLT_street_index_id(PollingDistrictStreet, municipality=municipality, civilParish= civilParish, city=city,  street=street, house_number=house_number)
-    #idList = findLT_MPs_Id(municipality=municipality, city=city,  city_gen= city_gen, street=street, house_number=house_number)
-
-    logging.debug("found MPs in following constituency : %s" % (idList))
-    members = ParliamentMember.objects.all().filter(institution__in = idList)
-    return members
-
-def findMunicipalityMembers(municipality = None, civilParish = None, city = None, street = None, house_number = None, *args, **kwargs):
-
-    try:
-        query = Municipality.objects.all().filter(name__contains = municipality)
-
-        query = query.distinct() \
-            .values('id')
-        idList = [p['id'] for p in query]
-    except Municipality.DoesNotExist:
-        logging.info("no municipalities found")
-        return []
-
-    members = MunicipalityMember.objects.all().filter(institution__in = idList)
-    return members
-
 def extractInstitutionColumIds(query):
     institutionColumName = "institution"
     query = query.distinct() \
@@ -141,7 +113,7 @@ def searchPartial(streetQuery = None, **kwargs):
         pass
     return []
 
-def findLT_street_index_id(municipality = None, civilParish = None, city = None, street = None, house_number = None):
+def findInstitutionTerritories(municipality = None, civilParish = None, city = None, street = None, house_number = None):
     """ At the moment territory data for each representative is stored in separate table.
     This query searches some table (objectToSearchIn) for instituions pointed by an address.
 
@@ -231,20 +203,10 @@ def searchPartialCity(queries, doPrint = False):
     return []
 
 
-def findCivilParishMembers(municipality = None, civilParish = None,city = None, street = None, house_number = None,  *args, **kwargs):
-    #street = removeGenericPartFromStreet(street)
-    #municipality = removeGenericPartFromMunicipality(municipality)
+def findPersonPositions(municipality = None, civilParish = None,city = None, street = None, house_number = None,  *args, **kwargs):
+    idList = findInstitutionTerritories(municipality=municipality, civilParish = civilParish, city=city,  street=street, house_number=house_number)
 
-    idList = findLT_street_index_id(modelToSearchIn=CivilParishStreet, municipality=municipality, civilParish = civilParish, city=city,  street=street, house_number=house_number)
-
-    members = CivilParishMember.objects.all().filter(institution__in = idList)
+    
+    members = PersonPosition.objects.all().filter(institution__in = idList)
     return members
 
-def findSeniunaitijaMembers(municipality = None, civilParish = None, city = None, street = None, house_number = None, *args, **kwargs):
-    #street = removeGenericPartFromStreet(street)
-    #municipality = removeGenericPartFromMunicipality(municipality)
-
-    # since in Lithuania it is the primary key to identify cities
-    idList = findLT_street_index_id(SeniunaitijaStreet, municipality=municipality, civilParish = civilParish, city=city, street= street, house_number= house_number)
-    members = SeniunaitijaMember.objects.all().filter(institution__in = idList)
-    return members

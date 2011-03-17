@@ -3,8 +3,8 @@ from django.contrib import admin
 from django.utils.translation import ugettext as _
 from django.db import models as djangoModel
 import inspect
-from cdb_lt_mps.models import ParliamentMember, PollingDistrictStreet, Constituency
 
+"""
 class AddrAdmin(admin.ModelAdmin):
     list_display = ('street', 'city')
 
@@ -18,6 +18,7 @@ class ConstAdmin(admin.ModelAdmin):
 customModels = [(PollingDistrictStreet, AddrAdmin), (ParliamentMember, MPAdmin), (Constituency, ConstAdmin)]
 for klass, adminKlas in customModels:
     admin.site.register(klass, adminKlas)
+    """
 
 # auto-register all other models
 """moduleAttributes = [getattr(models, m) for m in dir(models)]
