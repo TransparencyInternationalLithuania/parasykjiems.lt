@@ -5,6 +5,7 @@ from django.db.models.query_utils import Q
 from contactdb.models import PersonPosition
 from territories.houseNumberUtils import isHouseNumberOdd, ifHouseNumberContainLetter, padHouseNumberWithZeroes
 from territories.models import InstitutionTerritory
+from cdb_lt.management.commands.createMembers import InstitutionMunicipalityCode
 
 logger = logging.getLogger(__name__)
 
@@ -59,13 +60,15 @@ def getHouseNumberQuery(house_number = None):
     orQuery = houseNumberInRange | houseNumberEualsFrom  # | houseNumberIsNull | houseNumberEualsFrom | houseNumberEualsTo
     return orQuery
 
-
+institutionColumName = "institution"
+institutionTypeColumName = "institution__institutionType__code"
 def extractInstitutionColumIds(query):
-    institutionColumName = "institution"
     query = query.distinct() \
-            .values(institutionColumName)
-    idList = [p[institutionColumName] for p in query]
-    return idList
+            .values(institutionColumName, institutionTypeColumName)
+    q = list(query)
+    return q
+    #idList = [p[institutionColumName] for p in query]
+    #return idList
 
 
 def getCityQuery(city = None, operator="__icontains"):
@@ -113,9 +116,24 @@ def searchPartial(streetQuery = None, **kwargs):
         pass
     return []
 
+def selectivelyReturnResults(*args):
+    institutionTypesServed = {}
+    results = []
+    for resultSet in args:
+        currentTypes = dict(institutionTypesServed)
+        for territory in resultSet:
+            institutionType = territory[institutionTypeColumName]
+            if currentTypes.has_key(institutionType):
+                continue
+            institutionTypesServed[institutionType] = institutionType
+            institutionId = territory[institutionColumName]
+            results.append(institutionId)
+    return results
+
 def findInstitutionTerritories(municipality = None, civilParish = None, city = None, street = None, house_number = None):
-    """ At the moment territory data for each representative is stored in separate table.
-    This query searches some table (objectToSearchIn) for instituions pointed by an address.
+    """ InstitutionTerritory is stored in single table.  We will try separate queries to narrow down results.
+    note that some institution territory data might be more detailed than the others, so we will have
+    to selectively filter the results by institution type when returning results.
 
     House_number can either be integer, or a string in case the house number has a letter. Do not pad house number with zeroes.
 
@@ -131,24 +149,32 @@ def findInstitutionTerritories(municipality = None, civilParish = None, city = N
 
     #logger.info("Will search for representatives in object: %s" % modelToSearchIn.objects.model._meta.object_name)
 
+
+
+
+    # search for municipality
+    # do a special query, limiting to only specific institution Type
     municipalityQuery = Q(**{"municipality" : municipality})
+    municipalityQueryType = Q(**{"institution__institutionType__code" : InstitutionMunicipalityCode})
+    municipalityList = searchPartialCity(queries=[municipalityQuery, municipalityQueryType])
+    
     # search without street. Might return more results, if there is a street number in the data
     cityQuery = Q(**{"city" : city})
     cityList = searchPartialCity(queries=[municipalityQuery, cityQuery])
     if len(cityList) < 2:
-        return cityList
+        return selectivelyReturnResults(cityList, municipalityList)
 
 
-    # try searchign with civilParish if it is not None
+    # try searching with civilParish if it is not None
     if civilParish != u"":
         civilparishQuery = Q(**{"civilParish": civilParish})
         civilParishList = searchPartialCity(queries=[municipalityQuery, civilparishQuery, cityQuery])
 
         if len(civilParishList) == 0:
-            return cityList
+            return selectivelyReturnResults(cityList, municipalityList)
 
         if len(civilParishList) == 1:
-            return civilParishList
+            return selectivelyReturnResults(civilParishList, municipalityList)
 
         # if we have more than one result, replace city list with our result
         if len(civilParishList) > 0:
@@ -161,17 +187,17 @@ def findInstitutionTerritories(municipality = None, civilParish = None, city = N
     if type(street) != types.UnicodeType:
         raise UnicodeError("street was not given in unicode")
     if street == u"":
-       return cityList
+       return selectivelyReturnResults(cityList, municipalityList)
 
     # search with street
     streetQuery = Q(**{"street" : street})
     streetList = searchPartialCity(queries=[municipalityQuery, cityQuery, streetQuery])
     if len(streetList) < 2:
-        return streetList
+        return selectivelyReturnResults(streetList, cityList, municipalityList)
 
     # in case we do not have number, return all we have
     if house_number is None or house_number == u"":
-        return streetList
+        return selectivelyReturnResults(municipalityList, streetList, cityList)
 
     # we have got more than two rows. So now search with house number
     numberQuery = getHouseNumberQuery(house_number)
@@ -180,8 +206,8 @@ def findInstitutionTerritories(municipality = None, civilParish = None, city = N
     houseList = searchPartialCity(queries=[municipalityQuery, cityQuery, streetQuery, numberQuery], doPrint=False)
 
     if len(houseList) > 0:
-        return houseList
-    return streetList
+        return selectivelyReturnResults(houseList, streetList, cityList, municipalityList)
+    return selectivelyReturnResults(streetList, cityList, municipalityList)
 
 def buildFinalQuery(queries):
     query = InstitutionTerritory.objects.all()

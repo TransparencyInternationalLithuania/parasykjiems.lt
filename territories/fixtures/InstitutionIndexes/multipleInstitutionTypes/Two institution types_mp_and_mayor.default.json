@@ -36,8 +36,8 @@
       "city": "Vilniaus miestas",
       "municipality": "Vilniaus miesto savivaldybė",
       "street": "Gedimino prospektas",
-      "numberFrom": 00090,
-      "numberTo": 00130,
+      "numberFrom": "00090",
+      "numberTo": "00130",
       "numberOdd": 1,
       "institution": 1
     }

@@ -60,7 +60,7 @@ class Command(BaseCommand):
         importInstitutionTerritoryYielder(addressYielder=seniunaitijaStreetReader(), institutionCode = "seniunaitija")
 
         # create Municipality data
-        importInstitutionTerritoryYielder(addressYielder=municipalityStreetReader(), institutionCode = "mayor")
+        importInstitutionTerritoryYielder(addressYielder=municipalityStreetReader(), institutionCode = InstitutionMunicipalityCode)
 
         # create MP data
         importInstitutionTerritoryYielder(addressYielder=mpStreetReader(), institutionCode = "mp")

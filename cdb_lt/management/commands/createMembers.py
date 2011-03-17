@@ -27,6 +27,8 @@ def cityNameGetterGenitive(csvRow):
     use both interchangeably"""
     return readRow(csvRow, "city_genitive")
 
+InstitutionMunicipalityCode = "mayor"
+
 class Command(BaseCommand):
     args = '<>'
     help = ''
@@ -39,7 +41,7 @@ class Command(BaseCommand):
 
         # create Mayor
         createInstitutionType(code="mayor")
-        importInstitutionData(csvFileName=ImportSources.LithuanianMunicipalityMembers, institutionCode = "mayor", uniqueKeyStartsFrom=100000)
+        importInstitutionData(csvFileName=ImportSources.LithuanianMunicipalityMembers, institutionCode = InstitutionMunicipalityCode, uniqueKeyStartsFrom=100000)
 
         # create Civil Parish
         createInstitutionType(code="civpar")
