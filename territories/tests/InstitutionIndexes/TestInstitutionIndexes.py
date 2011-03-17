@@ -3,6 +3,7 @@
 
 from django.test import TestCase
 from settings import *
+from territories.models import InstitutionTerritory
 from territories.searchMembers import findInstitutionTerritories
 
 scriptPath = os.path.dirname( os.path.realpath( __file__ ) )
@@ -133,3 +134,36 @@ class TestSearchInstitutionStreets_NumberWithLetter(TestCase):
         """ All house numbers if contains letter, data must be in uppercase. However, if we query with lowercase, still find it """
         ids = findInstitutionTerritories(municipality=u"Vilniaus miesto savivaldybė", city=u"Vilniaus miestas",  street=u"Vaižganto gatvė", house_number="56a")
         self.assertEquals([4], ids)
+
+class TestSearchInstitutionStreets_DifferentTypesOfInstitutions(TestCase):
+    fixtures = ['InstitutionIndexes/multipleInstitutionTypes/Two institution types_mp_and_mayor.json']
+
+    def setUp(self):
+        pass
+
+    def testSearchMPandMayor(self):
+        """ Different types of institutions might have different territory information. For example mayors
+        only rely on municipality, but MPs are searched down to the street and house number.
+
+        Ensure that both institutions are returned"""
+
+        # returns only [1] for now, but should return both institution ids
+        ids = findInstitutionTerritories(municipality=u"Vilniaus miesto savivaldybė", city=u"Vilniaus miestas",  street=u"Gedimino prospektas", house_number=9)
+        self.assertEquals([1, 2], ids)
+
+class TestSearchInstitutionStreets_DifferentTypesOfInstitutionsMPAndMayor(TestCase):
+    fixtures = ['InstitutionIndexes/multipleInstitutionTypes/Two institution types_mp_and_civilParish.json']
+
+    def setUp(self):
+        pass
+
+    def testSearchMPAndCivilParish(self):
+        """ Different types of institutions might have different territory information. For example mayors
+        only rely on municipality, but MPs are searched down to the street and house number.
+
+        Ensure that both institutions are returned"""
+
+        # returns only [1] for now, but should return both institution ids
+        all = list(InstitutionTerritory.objects.all())
+        ids = findInstitutionTerritories(municipality=u"Vilniaus miesto savivaldybė", city=u"Vilniaus miestas",  street=u"Gedimino prospektas", house_number=9)
+        self.assertEquals([1, 2], ids)
