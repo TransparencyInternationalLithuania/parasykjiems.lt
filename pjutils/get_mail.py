@@ -158,13 +158,44 @@ class GetMail():
             return ""
         return split[1]
 
+    def _splitHeader(self, header):
+        result = [header]
+        while True:
+            fromIndex = header.find("=?")
+            toIndex = header.find("?=") + 2
+            if fromIndex < 0:
+                break
+            extract = header[fromIndex: toIndex]
+            header = "%s----%s" % (header[0:fromIndex], header[toIndex:])
+            result.append(extract)
+        header = header.replace("----", "%s")
+        result[0] = header
+        return result
+
+    def _rebuildEncodeHeader(self, sheader):
+        for i in range(1, len(sheader)):
+            s = sheader[i]
+            x = email.header.decode_header(s)
+            s1 = x[0][0].decode(x[0][1])
+            sheader[i] = s1
+
+        tupl = tuple(sheader[1:])
+        finalHeader = sheader[0] % tupl
+        return finalHeader
+
+
+    def _decodeHeader(self, header):
+        # seee http://stackoverflow.com/questions/5343191/how-does-encoding-in-email-subjects-work-django-python
+        sheader = self._splitHeader(header)
+        h = self._rebuildEncodeHeader(sheader)
+        return h
+
+
     def getHeaderFieldSubject(self, num):
         typ, msg_data = self.M.fetch(num, '(BODY.PEEK[HEADER.FIELDS (Subject)])')
-        headers = msg_data[0][1].split("\r\n")
-        split = headers[0].split('Subject: ')
-        if len(split) < 2:
-            return ""
-        return split[1]
+        s = msg_data[0][1]
+        return _decodeHeader(s)
+
 
 
     def getUnseenMessages(self):
@@ -200,6 +231,7 @@ class GetMail():
         header_subject = self.getHeaderFieldSubject(num)
         header_received = self.getHeaderReceived(num).strip("\r\n")
 
+        
 
         print ("Got email num %s \n \t from: %s \n \t To: %s \n \t Subject: %s \n \t Received: %s") % (num, header_from, header_to, header_subject, header_received)
 
