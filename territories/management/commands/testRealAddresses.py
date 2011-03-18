@@ -6,22 +6,25 @@ import sys
 from django.core.management.base import BaseCommand
 from django.core import management
 import os
+from django.db import transaction
+from contactdb.models import InstitutionType
+from pjutils.args.Args import ExtractRange
 from pjutils.timemeasurement import TimeMeasurer
 from settings import GlobalSettings
 from territories.searchInIndex import deduceAddress, searchInIndex
-from territories.searchMembers import findMunicipalityMembers, findMPs, findCivilParishMembers, findSeniunaitijaMembers
+from territories.searchMembers import findInstitutionTerritoriesWithTypes, institutionTypeColumName, institutionColumName
 
 class Command(BaseCommand):
     args = '<>'
     help = """Searches for members against hand-written list of addresses and checks whether exactly 1 representative is returned"""
 
+    @transaction.commit_on_success
     def testAddresses(self, addresses):
-        functions = [findMPs,
-                     findMunicipalityMembers,
-                     findCivilParishMembers,
-                     findSeniunaitijaMembers]
-
         missingDataByStreet = {}
+
+        institutionTypes = list(InstitutionType.objects.all())
+        institutionTypes = [i.code for i in institutionTypes]
+        institutionTypes.sort()
 
         count = 0
         total = len(addresses)
@@ -63,12 +66,24 @@ class Command(BaseCommand):
                               'street':street,
                               'house_number':house_number}
 
-            for function in functions:
-                members = function(**additionalKeys)
-                missingDataByStreet[address].append(len(members))
+
+            result = findInstitutionTerritoriesWithTypes(**additionalKeys)
+
+            grouped = {}
+            for r in result:
+                code = r[institutionTypeColumName]
+                val = r[institutionColumName]
+                grouped.setdefault(code, [])
+                grouped[code].append(val)
+
+            for type in institutionTypes:
+                if grouped.has_key(type) == False:
+                    missingDataByStreet[address].append(0)
+                else:
+                    missingDataByStreet[address].append(len(grouped[type]))
                 
-        """print u"total spent time %d seconds" % (self.start.ElapsedSeconds())
-        if count == 0:
+        print u"total spent time %d seconds" % (self.start.ElapsedSeconds())
+        """if count == 0:
             print "Total rows %s, %s seconds per row" % (count, 0)
         else:
             print "Total rows %s, %s seconds per row" % (count, self.start.ElapsedSeconds() / float(count))"""
@@ -85,7 +100,7 @@ class Command(BaseCommand):
         addresses = [unicode(val.strip(), 'utf-8') for val in addresses]
         return addresses
 
-    def printPercentages(self, missingDataByStreet, allAddresses):
+    def printPercentages(self, missingDataByStreet, allAddresses, labels):
         totalStreets = len(allAddresses)
 
         incorrectData = [0, 0, 0, 0, 0, 0]
@@ -97,7 +112,7 @@ class Command(BaseCommand):
                     incorrectData[i] += 1
 
         print u"Iš viso gatvių: %s" % totalStreets
-        labels = [u"Gatvių", u"Seimo narių", u"Merų", u"Seniūnų", u"Seniūnaičių"]
+
         for i in range(0, len(labels)):
             print "%s %s: %s%%" % (labels[i], incorrectData[i + 1], incorrectData[i + 1] / float(totalStreets) * 100)
         print "\n\n"
@@ -127,12 +142,13 @@ class Command(BaseCommand):
 
         print "\n\n"
 
-        self.printPercentages(missingDataByStreet, addresses)
+        labels = [u"Gatvių", u"Seniūnų", u"Merų", u"Seimo narių", u"Seniūnaičių"]
+        self.printPercentages(missingDataByStreet, addresses, labels)
 
 
         # print as csv style
         writer = csv.writer(sys.stdout)
-        header = [u'Adresas', u'Surasta adresų', u'Seimo narys', u'Meras', u'Seniūnas', u'Seniūnaitis']
+        header = [u'Adresas', u'Surasta adresų', u'Seniūnas', u'Meras', u'Seimo narys', u'Seniūnaitis']
         header = [v.encode('utf-8') for v in header]
         writer.writerow(header)
         for address, values in missingDataByStreet.iteritems():

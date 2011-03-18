@@ -6,7 +6,7 @@ import os
 from cdb_lt.management.commands.importSources import ltGeoDataSources_Institution
 from contactdb.importUtils import readRow
 import logging
-from territories.houseNumberUtils import isHouseNumberOdd, yieldRanges
+from territories.houseNumberUtils import isHouseNumberOdd, yieldRanges, padHouseNumberWithZeroes
 from territories.ltPrefixes import changeStreetFromShortToLongForm, allStreetEndings
 
 logger = logging.getLogger(__name__)
@@ -71,5 +71,7 @@ class civilParishKaunasStreetReader(object):
             houseNumbers = [n.strip() for n in houseNumbers if (n != "")]
 
             for range in yieldRanges(houseNumbers):
-                yield (institutionKey, municipality, civilParish, city_genitive, street, range.numberFrom, range.numberTo, range.numberOdd)
+                numberFrom = padHouseNumberWithZeroes(range.numberFrom)
+                numberTo = padHouseNumberWithZeroes(range.numberTo)
+                yield (institutionKey, municipality, civilParish, city_genitive, street, numberFrom, numberTo, range.numberOdd)
 

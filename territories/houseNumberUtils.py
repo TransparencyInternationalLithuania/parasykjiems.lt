@@ -155,12 +155,17 @@ def ifHouseNumberContainLetter(fromNumber):
         return True
     return False
 
+def removeFlatNumber(number):
+    if not (type(number) == types.StringType or type(number) == types.UnicodeType):
+        return number
+    index = number.find(u"-")
+    if index >= 0:
+        return number[0:index]
+    return number
+
 def removeCornerFromHouseNumber(number):
     if not (type(number) == types.StringType or type(number) == types.UnicodeType):
         return number
-    """index = number.find("/")
-    if index >= 0:
-        return number[0:index]"""
     index = number.find(u"/")
     if index >= 0:
         return number[0:index]

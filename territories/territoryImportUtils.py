@@ -149,7 +149,12 @@ class InstitutionStreetImporter(object):
             try:
                 institution = self.importer.getInstitution(institutionKey)
             except InstitutionNotFound:
-                self.missingInstitutions[institutionKey]=u"%s %s" % (rowNumber, institutionKey)
+                moreInfo = u""
+
+                if hasattr(addressYielder, "currentTerritoryInfo"):
+                    moreInfo = addressYielder.currentTerritoryInfo()
+
+                self.missingInstitutions[institutionKey]=u"%s '%s'. More info: '%s'" % (rowNumber, institutionKey, moreInfo)
                 continue
             institutionCode = institution.institutionType.code
 

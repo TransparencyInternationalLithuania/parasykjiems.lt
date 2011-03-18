@@ -6,7 +6,7 @@ from django.core.management.base import BaseCommand
 from cdb_lt.civilParishKaunasStreetReader import civilParishKaunasStreetReader
 from cdb_lt.civilParishStreetReader import civilParishStreetReader
 from cdb_lt.civilParishVilniusStreetReader import civilParishVilniusStreetReader
-from cdb_lt.management.commands.createMembers import makeCivilParishInstitutionName, cityNameGetterGenitive
+from cdb_lt.management.commands.createMembers import makeCivilParishInstitutionName, cityNameGetterGenitive, InstitutionMunicipalityCode
 from cdb_lt.management.commands.importSources import ltGeoDataSources_Institution, ltGeoDataSources_Country
 from cdb_lt.mpStreetReader import mpStreetReader
 from cdb_lt.municipalityStreetReader import municipalityStreetReader

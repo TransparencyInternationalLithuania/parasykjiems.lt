@@ -79,7 +79,7 @@ def removeGenericPartFromCity(city):
 
 
 def removeGenericPartFromMunicipality(municipality):
-    for e in allMunicipalityEndings:
+    for e in shortMunicipalityEndings:
         if municipality.endswith(e):
             municipality = municipality.replace(e, u"")
 
