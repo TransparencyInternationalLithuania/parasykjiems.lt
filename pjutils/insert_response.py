@@ -31,7 +31,7 @@ class InsertResponse():
         except Email.DoesNotExist as e:
             raise MailDoesNotExistInDBException(message="We do not have email in database with id '%s'" % email_id, inner=e)
 
-        responder = self.get_rep(mail.recipient_id, mail.recipient_type)
+        responder = self.get_rep(mail.recipient_id)
         # print responder
         resp = Email(sender_name = mail.recipient_name,
                 sender_mail = responder.email,
