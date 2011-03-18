@@ -137,16 +137,17 @@ def json_lookup(request, queryset, field, limit=5, login_required=False):
     return HttpResponse(simplejson.dumps(object), mimetype='application/javascript')
 
 
-def renderIndexPage(request, form = None, query_string = ""):
+def renderIndexPage(request, form = None, query_string = "", address = None):
     if form is None:
         form = IndexForm(request.POST)
 
     lang = request.LANGUAGE_CODE
-    address = {
-    'found_entries': None,
-    'found_geodata': None,
-    'not_found': '',
-    }
+    if address is None:
+        address = {
+        'found_entries': None,
+        'found_geodata': None,
+        'not_found': '',
+        }
     return render_to_response('pjweb/index.html', {
         'form': form,
         'LANGUAGES': GlobalSettings.LANGUAGES,
@@ -187,7 +188,7 @@ def index(request):
         url = address['found_entries'][0].url
         return HttpResponseRedirect(url)
     else:
-        return renderIndexPage(request, form)
+        return renderIndexPage(request, form, address = address)
 
 
 

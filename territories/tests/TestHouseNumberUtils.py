@@ -3,7 +3,7 @@
 
 from django.test import TestCase
 from settings import *
-from territories.houseNumberUtils import depadHouseNumberWithZeroes, padHouseNumberWithZeroes, ContainsHouseNumbers, isHouseNumberOdd, removeCornerFromHouseNumber
+from territories.houseNumberUtils import depadHouseNumberWithZeroes, padHouseNumberWithZeroes, ContainsHouseNumbers, isHouseNumberOdd, removeCornerFromHouseNumber, removeFlatNumber
 
 scriptPath = os.path.dirname( os.path.realpath( __file__ ) )
 
@@ -26,6 +26,11 @@ class TestIsHouseNumberOdd(TestCase):
         self.assertEqual(3, removeCornerFromHouseNumber(3))
         self.assertEqual(u"3", removeCornerFromHouseNumber(u"3/11"))
         self.assertEqual("3", removeCornerFromHouseNumber("3/11"))
+
+    def testRemove(self):
+        self.assertEqual("3", removeFlatNumber("3"))
+        self.assertEqual("3", removeFlatNumber("3-5"))
+        self.assertEqual(3, removeFlatNumber(3))
 
 
 

@@ -284,11 +284,11 @@ def searchInIndex(municipality = None, city = None, street = None):
         if street == u"":
             street = None
 
-    """logger.info(u"searching in index")
+    logger.info(u"searching in index")
     logger.info(u"addressContext.street '%s'" % street)
     logger.info(u"addressContext.city '%s'" % city)
     logger.info(u"addressContext.municipality '%s'" % municipality)
-"""
+
 
     # Lithuanian cities have cities in two forms - genitive and nominative
     city = city.capitalize()

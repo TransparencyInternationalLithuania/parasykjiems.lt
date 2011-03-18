@@ -6,7 +6,7 @@ import os
 from cdb_lt.management.commands.importSources import ltGeoDataSources_Institution
 from contactdb.importUtils import readRow
 import logging
-from territories.houseNumberUtils import HouseRange
+from territories.houseNumberUtils import HouseRange, padHouseNumberWithZeroes
 from territories.ltPrefixes import changeStreetFromShortToLongForm
 
 logger = logging.getLogger(__name__)
@@ -76,5 +76,7 @@ class civilParishVilniusStreetReader(object):
                     r = HouseRange(numberFrom=splittedRange[0], numberTo=splittedRange[1])
                 institutionKey= "%s %s" % (municipality, civilParish)
 
-                yield (institutionKey, municipality, civilParish, city, street, r.numberFrom, r.numberTo, r.numberOdd)
+                numberFrom = padHouseNumberWithZeroes(r.numberFrom)
+                numberTo = padHouseNumberWithZeroes(r.numberTo)
+                yield (institutionKey, municipality, civilParish, city, street, numberFrom, numberTo, r.numberOdd)
 

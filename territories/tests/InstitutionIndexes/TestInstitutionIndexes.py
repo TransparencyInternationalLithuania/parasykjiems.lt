@@ -93,11 +93,13 @@ class TestSearchInstitutionStreets_ArminuKaimas(TestCase):
         pass
 
     def testSearchWhenStreetIsNOne(self):
-        """ When street is "" or None, results must be same"""
+        """ Two cities with same name exists, but they differ only by civil parish. Return both cities"""
         ids = findInstitutionTerritories(municipality=u"Alytaus rajono savivaldybė", city=u"Arminų I kaimas",  street=None)
         self.assertEquals([1, 2], ids)
 
     def testSearchWhenStreetIsNOne(self):
+        """ Two cities with same name exists, but they differ only by civil parish.
+        Return specific city"""
         ids = findInstitutionTerritories(municipality=u"Alytaus rajono savivaldybė", civilParish=u"Krokialaukio seniūnija", city=u"Arminų I kaimas",  street=None)
         self.assertEquals([2], ids)
 
@@ -112,6 +114,10 @@ class TestSearchInstitutionStreets_NumberToIsNone(TestCase):
         """ Data contains exact house value: numberFrom is give, numberTo is None.
         Query should consider that numberTo might be None, but not necesarrily"""
         ids = findInstitutionTerritories(municipality=u"Vilniaus miesto savivaldybė", city=u"Vilniaus miestas",  street=u"Gedimino prospektas", house_number=9)
+        self.assertEquals([1], ids)
+
+    def testNumberContainsFlatNumber(self):
+        ids = findInstitutionTerritories(municipality=u"Vilniaus miesto savivaldybė", city=u"Vilniaus miestas",  street=u"Gedimino prospektas", house_number="9-5")
         self.assertEquals([1], ids)
 
 class TestSearchInstitutionStreets_NumberWithLetter(TestCase):

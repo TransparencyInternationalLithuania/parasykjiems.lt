@@ -3,7 +3,7 @@ import types
 import types
 from django.db.models.query_utils import Q
 from contactdb.models import PersonPosition
-from territories.houseNumberUtils import isHouseNumberOdd, ifHouseNumberContainLetter, padHouseNumberWithZeroes
+from territories.houseNumberUtils import isHouseNumberOdd, ifHouseNumberContainLetter, padHouseNumberWithZeroes, removeFlatNumber
 from territories.models import InstitutionTerritory
 from cdb_lt.management.commands.createMembers import InstitutionMunicipalityCode
 
@@ -44,6 +44,7 @@ def getHouseNumberQuery(house_number = None):
     if house_number is None:
         return query
 
+    house_number = removeFlatNumber(house_number)
     isOdd = isHouseNumberOdd(house_number)
     isLetter = ifHouseNumberContainLetter(house_number)
     house_number = padHouseNumberWithZeroes(house_number)
@@ -126,11 +127,16 @@ def selectivelyReturnResults(*args):
             if currentTypes.has_key(institutionType):
                 continue
             institutionTypesServed[institutionType] = institutionType
-            institutionId = territory[institutionColumName]
-            results.append(institutionId)
+            #institutionId = territory[institutionColumName]
+            results.append(territory)
     return results
 
 def findInstitutionTerritories(municipality = None, civilParish = None, city = None, street = None, house_number = None):
+    results = findInstitutionTerritoriesWithTypes(municipality = municipality, civilParish = civilParish, city = city, street = street, house_number = house_number)
+    ter = [t[institutionColumName] for t in results]
+    return ter
+
+def findInstitutionTerritoriesWithTypes(municipality = None, civilParish = None, city = None, street = None, house_number = None):
     """ InstitutionTerritory is stored in single table.  We will try separate queries to narrow down results.
     note that some institution territory data might be more detailed than the others, so we will have
     to selectively filter the results by institution type when returning results.
@@ -166,7 +172,7 @@ def findInstitutionTerritories(municipality = None, civilParish = None, city = N
 
 
     # try searching with civilParish if it is not None
-    if civilParish != u"":
+    if civilParish != u"" and street == u"":
         civilparishQuery = Q(**{"civilParish": civilParish})
         civilParishList = searchPartialCity(queries=[municipalityQuery, civilparishQuery, cityQuery])
 
@@ -232,7 +238,8 @@ def searchPartialCity(queries, doPrint = False):
 def findPersonPositions(municipality = None, civilParish = None,city = None, street = None, house_number = None,  *args, **kwargs):
     idList = findInstitutionTerritories(municipality=municipality, civilParish = civilParish, city=city,  street=street, house_number=house_number)
 
-    
     members = PersonPosition.objects.all().filter(institution__in = idList)
     return members
+
+
 
