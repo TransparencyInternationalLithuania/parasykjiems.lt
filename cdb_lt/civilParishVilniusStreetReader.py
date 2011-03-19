@@ -55,10 +55,16 @@ class civilParishVilniusStreetReader(object):
         self.delimiter = delimiter
         self.unparsedInstitutions = {}
 
+    def currentTerritoryInfo(self):
+        return "rowNumber  '%s' file'%s'" % (self.rowNumber, self.csvFileName)
+
 
     def yieldTerritories(self):
         reader = VilniusCivilParishReader(self.csvFileName)
+        self.rowNumber = 0
+
         for civilParish, city, street, house_range in reader.readStreet():
+            self.rowNumber += 1
             street = street.strip()
             street = changeStreetFromShortToLongForm(street)
             street = street.strip()
