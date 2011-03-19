@@ -275,21 +275,25 @@ class SeniunaitijaAddressExpander:
 
 class seniunaitijaStreetReader(object):
     def __init__(self, fileName = ImportSources.LithuanianSeniunaitijaMembers, institutionNameGetter= makeSeniunaitijaInstitutionName, delimieter=","):
+        self.fileName = fileName
         self.dictReader = csv.DictReader(open(fileName, "rt"), delimiter=delimieter)
         self.institutionNameGetter = institutionNameGetter
         self.unparsedInstitutions = {}
 
 
+    def currentTerritoryInfo(self):
+        return "rowNumber  '%s' file'%s'" % (self.processedCount, self.fileName)
+
     def yieldTerritories(self):
         emptyTerritoryCount = 0
-        processedCount = 0
+        self.processedCount = 0
         streetExpander = SeniunaitijaAddressExpander()
         wasError = 0
 
 
 
         for row in self.dictReader:
-            processedCount += 1
+            self.processedCount += 1
             territoryStr = readRow(row, "territorycoveredbyseniunaitija")
             municipality = readRow(row, "municipality")
             uniquekey = readRow(row, "uniquekey")
@@ -302,12 +306,12 @@ class seniunaitijaStreetReader(object):
                 continue
 
             if seniunaitijaName == u"":
-                logger.info("skipping teritory %s" % processedCount)
+                logger.info("skipping teritory %s" % self.processedCount)
                 continue
 
             numberOfStreets = 0
-            if processedCount % 100 == 0:
-                logger.info("territory for: %s %s" % (processedCount, seniunaitijaName))
+            if self.processedCount % 100 == 0:
+                logger.info("territory for: %s %s" % (self.processedCount, seniunaitijaName))
 
 
 

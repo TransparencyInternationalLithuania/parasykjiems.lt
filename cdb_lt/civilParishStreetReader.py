@@ -36,9 +36,10 @@ class civilParishStreetReader(object):
             city = self.cityNameGetter(row)
             street = readRow(row, "street")
             institutionKey = self.institutionNameGetter(row)
-            yield (institutionKey, municipality, civilParish, city, street, numberFrom, numberTo, numberOdd)
             if city.strip() == u"":
                continue
+            yield (institutionKey, municipality, civilParish, city, street, numberFrom, numberTo, numberOdd)
+
 
 
 

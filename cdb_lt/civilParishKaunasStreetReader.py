@@ -21,6 +21,8 @@ class civilParishKaunasStreetReader(object):
         self.delimiter = delimiter
         self.unparsedInstitutions = {}
 
+    def currentTerritoryInfo(self):
+        return "rowNumber  '%s' file'%s'" % (self.rowNumber, self.csvFileName)
 
     def yieldTerritories(self):
         reader = open(self.csvFileName, "rt")
@@ -38,7 +40,9 @@ class civilParishKaunasStreetReader(object):
             u"Šilainių seniūnija"]
 
         lines = reader.readlines()
+        self.rowNumber = 0
         for row in lines:
+            self.rowNumber += 1
             row = unicode(row, 'utf-8')
             id, civilParish, cityPart, streetCode, rest = row.split(" ", 4)
 
