@@ -5,13 +5,12 @@
 # their short forms also
 
 
-shortCityEndings = [u"mstl.", u"vs.", u"m.", u"k."]
-wholeCityEndings = [u"miestelis", u"viensėdis", u"miestas", u"kaimas"]
+shortCityEndings = [u"mstl.",     u"gyv.",        u"gyv",         u"vns.",      u"vns",       u"vs.",       u"vs",        u"m.", u"k."]
+wholeCityEndings = [u"miestelis", u"gyvenvietė",  u"gyvenvietė",  u"viensėdis", u"viensėdis", u"viensėdis", u"viensėdis", u"miestas", u"kaimas"]
 allCityEndings = wholeCityEndings + shortCityEndings
 
-wholeStreetEndings = [u"skersgatvis", u"kelias", u"plentas", u"prospektas",
-                    u"alėja", u"gatvė", u"aikštė", u"takas"]
-shortStreetEndings = [u"skg.", u"kel.", u"pl.", u"pr.", u"al.", u"g.", u"a.", u"tak."]
+wholeStreetEndings = [u"skveras", u"skersgatvis", u"akligatvis", u"kelias", u"plentas", u"prospektas", u"alėja", u"gatvė", u"aikštė", u"takas"]
+shortStreetEndings = [u"skv.",    u"skg.",        u"akl.",       u"kel.",   u"pl.",     u"pr.",        u"al.",   u"g.",    u"a.",     u"tak."]
 allStreetEndings = wholeStreetEndings + shortStreetEndings
 
 shortCivilParishEndings = [u"sen."]
@@ -19,7 +18,7 @@ wholeCivilParishEndings = [u"seniūnija"]
 allCivilParishEndings = wholeCivilParishEndings + shortCivilParishEndings
 
 wholeMunicipalityEndings = [u"miesto savivaldybė", u"rajono savivaldybė"]
-shortMunicipalityEndings = [u"m. sav.", u"r. sav."]
+shortMunicipalityEndings = [u"m. sav.",            u"r. sav."]
 allMunicipalityEndings = wholeMunicipalityEndings + shortMunicipalityEndings
 
 
@@ -32,7 +31,7 @@ def extractStreetEndingForm(street):
         return u""
     if street == u"":
         return street
-    for prefix in allStreetEndings:
+    for prefix in shortStreetEndings + wholeStreetEndings:
         index = street.find(prefix)
         if index >= 0:
             return prefix

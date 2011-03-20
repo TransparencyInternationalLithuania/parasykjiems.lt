@@ -129,8 +129,9 @@ def cityNameGetterStandard(csvRow):
 
 class InstitutionStreetImporter(object):
 
-    def __init__(self, institutionCode):
+    def __init__(self, institutionCode, printDetailedInfo = False):
         self.missingInstitutions = {}
+        self.printDetailedInfo = printDetailedInfo
         self.unparsedInstitutionTerritories = {}
         self.importer = InstitutionStreetCash(institutionCode = institutionCode)
 
@@ -146,6 +147,11 @@ class InstitutionStreetImporter(object):
 
             processed += 1
 
+            if self.printDetailedInfo:
+                moreInfo = u""
+                if hasattr(addressYielder, "currentTerritoryInfo"):
+                    moreInfo = addressYielder.currentTerritoryInfo()
+                print "%s, %s, %s, %s, %s, %s, %s, %s, %s '%s'. More info: '%s'. Yielder: '%s'" % (institutionKey, municipality, civilParish, city, street, numberFrom, numberTo, numberOdd, rowNumber, institutionKey, moreInfo, addressYielder)
             try:
                 institution = self.importer.getInstitution(institutionKey)
             except InstitutionNotFound:
@@ -180,13 +186,13 @@ class InstitutionStreetImporter(object):
 
         self.unparsedInstitutionTerritories = dict(self.unparsedInstitutionTerritories, **addressYielder.unparsedInstitutions)
 
-def importInstitutionTerritoryYielder(addressYielder, institutionCode):
+def importInstitutionTerritoryYielder(addressYielder, institutionCode, printDetailedInfo = False):
     """ imports institution addresses.
     addressYielder is a class with method yieldTerritories, which yields tuples in this form:
     (institutionKey, municipality, civilParish, city, street, numberFrom, numberTo, numberOdd)
     """
 
-    importer = InstitutionStreetImporter(institutionCode = institutionCode)
+    importer = InstitutionStreetImporter(institutionCode = institutionCode, printDetailedInfo = printDetailedInfo)
     importer.importInstitutionTerritoryYielder(addressYielder = addressYielder)
 
     for institutionName, errorMessage in importer.missingInstitutions.iteritems():

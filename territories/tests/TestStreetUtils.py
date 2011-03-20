@@ -17,6 +17,10 @@ class TestExtractStreetEndingForm(TestCase):
         self.assertEquals(u"", extractStreetEndingForm(u""))
         self.assertEquals(u"", extractStreetEndingForm(None))
         self.assertEquals(u"pr.", extractStreetEndingForm("gedimino pr."))
+        self.assertEquals(u"g.", extractStreetEndingForm(u"Centrinės aikštės g."))
+        #self.assertEquals(u"gatvė", extractStreetEndingForm(u"Centrinės aikštės gatvė"))
+        #self.assertEquals(u"g.", extractStreetEndingForm(u"Žeimių g. 2"))
+
 
 class TestChangeDoubleWordStreetToDot(TestCase):
 
