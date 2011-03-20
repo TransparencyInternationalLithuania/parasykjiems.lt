@@ -6,7 +6,7 @@ from cdb_lt.management.commands.createMembers import ImportSources, makeSeniunai
 from contactdb.importUtils import readRow
 from territories.houseNumberUtils import removeLetterFromHouseNumber, ContainsNumbers, padHouseNumberWithZeroes, isHouseNumberOdd
 from pjutils.exc import ChainnedException
-from territories.ltPrefixes import shortCityEndings, wholeCityEndings, shortStreetEndings, wholeStreetEndings
+from territories.ltPrefixes import shortCityEndings, wholeCityEndings, shortStreetEndings, wholeStreetEndings, allStreetEndings, extractStreetEndingForm
 
 import logging
 logger = logging.getLogger(__name__)
@@ -51,8 +51,15 @@ class SeniunaitijaAddressExpander:
 
 
     def RemoveStreetParts(self, street):
-        streetTuple = None
-        if streetTuple is None:
+        ending = extractStreetEndingForm(street)
+        streetTuple = self._RemoveStreetPart(street, ending)
+
+        """for ending in allStreetEndings:
+            streetTuple = self._RemoveStreetPart(street, ending)
+            if streetTuple is not None:
+                break
+"""
+        """if streetTuple is None:
             streetTuple = self._RemoveStreetPart(street, u"skg.")
         if streetTuple is None:
             streetTuple = self._RemoveStreetPart(street, u"g.")
@@ -67,7 +74,7 @@ class SeniunaitijaAddressExpander:
         if streetTuple is None:
             streetTuple = self._RemoveStreetPart(street, u"takas")
         if streetTuple is None:
-            streetTuple = self._RemoveStreetPart(street, u"alėja")
+            streetTuple = self._RemoveStreetPart(street, u"alėja")"""
         if streetTuple is None:
             streetTuple = self._RemoveStreetPartSB(street, "SB")
         if streetTuple is None:
@@ -89,6 +96,11 @@ class SeniunaitijaAddressExpander:
         return None
 
     def _RemoveStreetPart(self, street, streetPartName):
+        #if street.endswith(streetPartName):
+        if streetPartName is None:
+            return None
+        if streetPartName == u"":
+            return None
         if street.find(streetPartName) >= 0:
             noName = street.split(streetPartName)
             noName = [s.strip() for s in noName]

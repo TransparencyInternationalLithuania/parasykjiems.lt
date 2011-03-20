@@ -29,6 +29,14 @@ class TestSeniunaitijaAddressExpander(TestCase):
         self.assertTuplesEqual(original, self.parser.ExpandStreet(None))
         self.assertTuplesEqual(original, self.parser.ExpandStreet("    "))
 
+
+
+    def test_Aikste_In_street(self):
+        original = [ExpandedStreet(city = u"Adutiškio miestelis", street = u"Centrinės aikštės gatvė")]
+        self.assertTuplesEqual(original, self.parser.ExpandStreet(u"Adutiškio mstl. Centrinės aikštės g."))
+
+
+
     def test_WithCityAndStreets(self):
         original = [ExpandedStreet(street = u"Ateities gatvė", city = u"Vandžiogalos miestelis"),
                     ExpandedStreet(street = u"Kauno gatvė", city = u"Vandžiogalos miestelis")]
@@ -62,6 +70,14 @@ class TestSeniunaitijaAddressExpander(TestCase):
                     ExpandedStreet(street = u"Žeimių gatvė", numberFrom = 6),
                     ExpandedStreet(street = u"Žeimių gatvė", numberFrom = 6),]
         self.assertTuplesEqual(original, self.parser.ExpandStreet(u"Žeimių g. 2,2a,4,6,6a"))
+
+    def test_Akligatvis(self):
+
+        original = [ExpandedStreet(city=u"Kretingos miestas", street = u"J. Jablonskio gatvė", numberFrom = 8, numberTo=18),
+                    ExpandedStreet(city=u"Kretingos miestas", street = u"Algirdo akligatvis"),
+                    ]
+        self.assertTuplesEqual(original, self.parser.ExpandStreet(u"Kretingos m. J. Jablonskio g. poriniai nuo Nr. 8 iki Nr. 18, Algirdo akl."))
+
 
     def test_HouseRangesWithWords(self):
         original = [ExpandedStreet(street = u"Vilniaus gatvė", numberFrom = 1, numberTo = 45),
