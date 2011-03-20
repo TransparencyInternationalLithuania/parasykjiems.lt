@@ -1,0 +1,54 @@
+[
+    {
+        "pk": 1,
+        "model": "contactdb.InstitutionType",
+        "fields": {
+            "code": "seniunaitija"
+        }
+    },
+
+    {
+        "pk": 1,
+        "model": "contactdb.Institution",
+        "fields": {
+            "institutionType": 1
+        }
+    },
+
+    {
+        "pk": 2,
+        "model": "contactdb.Institution",
+        "fields": {
+            "institutionType": 1
+        }
+    },
+
+    {
+        "pk": 1,
+        "model": "territories.InstitutionTerritory",
+        "fields": {
+            "city": "Jankų kaimas",
+            "numberOdd": null,
+            "municipality": "Kazlų Rūdos savivaldybė",
+            "street": "I. Šimulionio",
+            "civilParish": "",
+            "numberFrom": "",
+            "numberTo": "",
+            "institution": 1
+        }
+    },
+    {
+        "pk": 2,
+        "model": "territories.InstitutionTerritory",
+        "fields": {
+            "city": "Jankų kaimas",
+            "numberOdd": null,
+            "municipality": "Kazlų Rūdos savivaldybė",
+            "civilParish": "",
+            "street": "Some other",
+            "numberFrom": "",
+            "numberTo": "",
+            "institution": 2
+        }
+    }
+]

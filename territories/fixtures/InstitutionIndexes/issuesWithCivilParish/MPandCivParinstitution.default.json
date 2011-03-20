@@ -1,0 +1,31 @@
+[
+    {
+        "pk": 1,
+        "model": "contactdb.InstitutionType",
+        "fields": {
+            "code": "mp"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "contactdb.InstitutionType",
+        "fields": {
+            "code": "civpar"
+        }
+    },
+
+    {
+        "pk": 1,
+        "model": "contactdb.Institution",
+        "fields": {
+            "institutionType": 1
+        }
+    },
+    {
+        "pk": 2,
+        "model": "contactdb.Institution",
+        "fields": {
+            "institutionType": 2
+        }
+    }
+]
