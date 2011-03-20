@@ -31,7 +31,7 @@
     "fields": {
       "city": "Vilniaus miestas",
       "municipality": "Vilniaus miesto savivaldybė",
-      "street": "Single ended house number street",
+      "street": "Betkokia gatvė",
       "numberFrom": "00100",
       "numberOdd": 0,
       "institution": 3

@@ -1,4 +1,22 @@
 from django.db.models.query_utils import Q
+from territories.ltPrefixes import extractStreetEndingForm
+
+def changeDoubleWordStreetToDot(street):
+    if street == u"":
+        return street
+    ending = extractStreetEndingForm(street)
+    str = street
+    if ending is not None:
+        str = street.replace(ending, u"").strip()
+
+    spl = str.split(u" ")
+    if len(spl) == 1:
+        return street
+
+    final =  u" ".join(spl[1:])
+    if ending is None:
+        return final
+    return "%s %s" % (final, ending)
 
 def cityNameIsGenitive(municipality, city_genitive, street):
     """ given municipality, city name in genitive, and street

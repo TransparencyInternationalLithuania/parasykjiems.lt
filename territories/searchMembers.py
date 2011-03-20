@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import logging
 import types
 import types
@@ -6,6 +9,7 @@ from contactdb.models import PersonPosition
 from territories.houseNumberUtils import isHouseNumberOdd, ifHouseNumberContainLetter, padHouseNumberWithZeroes, removeFlatNumber
 from territories.models import InstitutionTerritory
 from cdb_lt.management.commands.createMembers import InstitutionMunicipalityCode
+from territories.streetUtils import changeDoubleWordStreetToDot
 
 logger = logging.getLogger(__name__)
 
@@ -180,11 +184,11 @@ def findInstitutionTerritoriesWithTypes(municipality = None, civilParish = None,
             return selectivelyReturnResults(cityList, municipalityList)
 
         if len(civilParishList) == 1:
-            return selectivelyReturnResults(civilParishList, municipalityList)
+            return selectivelyReturnResults(civilParishList, cityList, municipalityList)
 
-        # if we have more than one result, replace city list with our result
+        """# if we have more than one result, replace city list with our result
         if len(civilParishList) > 0:
-            cityList = civilParishList
+            cityList = civilParishList"""
 
 
 
@@ -193,10 +197,13 @@ def findInstitutionTerritoriesWithTypes(municipality = None, civilParish = None,
     if type(street) != types.UnicodeType:
         raise UnicodeError("street was not given in unicode")
     if street == u"":
-       return selectivelyReturnResults(cityList, municipalityList)
+       return selectivelyReturnResults(civilParishList, cityList, municipalityList)
 
     # search with street
-    streetQuery = Q(**{"street" : street})
+    # convert street from "Igno Šimulionio gatvė" to "Šimulionio gatvė", since in DB we have only "I. Šimulionio gatvė"
+    # also search with __contains in this case
+    street = changeDoubleWordStreetToDot(street)
+    streetQuery = Q(**{"street__contains" : street})
     streetList = searchPartialCity(queries=[municipalityQuery, cityQuery, streetQuery])
     if len(streetList) < 2:
         return selectivelyReturnResults(streetList, cityList, municipalityList)

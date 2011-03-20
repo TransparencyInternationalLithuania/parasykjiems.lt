@@ -58,7 +58,7 @@ class TestSearchInstitutionStreets_WithStreetAndHouseNumber(TestCase):
     def testSearchWhereStreetNumberHasNoRange(self):
         """ Sometimes individual houses will be listed, in that case query must be a bit different """
         house_number = 10
-        ids = findInstitutionTerritories(municipality=self.municipality, city=self.city,  street=u"Single ended house number street", house_number=house_number)
+        ids = findInstitutionTerritories(municipality=self.municipality, city=self.city,  street=u"Betkokia gatvė", house_number=house_number)
         self.assertEquals([3], ids)
 
     def testSearch_Multiple_Results_ForDStreet(self):
@@ -178,6 +178,56 @@ class TestSearchInstitutionStreets_DifferentTypesOfInstitutionsMPAndMayor(TestCa
         Ensure that both institutions are returned"""
 
         # returns only [1] for now, but should return both institution ids
-        all = list(InstitutionTerritory.objects.all())
         ids = findInstitutionTerritories(municipality=u"Vilniaus miesto savivaldybė", city=u"Vilniaus miestas",  street=u"Gedimino prospektas", house_number=9)
         self.assertEquals([1, 2], ids)
+
+class TestSearchInstitutionStreets_IssuesWithCivilParish(TestCase):
+    fixtures = ['InstitutionIndexes/issuesWithCivilParish/MPandCivParinstitution.json',
+                'InstitutionIndexes/issuesWithCivilParish/singleCivilParishAndMp.json']
+
+    def setUp(self):
+        pass
+
+    def testSearchMPAndCivilParish(self):
+        """ MP institution has territory without civilParish,  but civil parish institution has a civil parish name set.
+        Must return both in this case"""
+
+        # returns only [1] for now, but should return both institution ids
+        all = list(InstitutionTerritory.objects.all())
+        ids = findInstitutionTerritories(municipality=u"Kazlų Rūdos savivaldybė", civilParish=u"Jankų seniūnija", city=u"Jankų kaimas",  street=u"")
+        self.assertEquals([2, 1], ids)
+
+class TestSearchInstitutionStreets_IssuesWithCivilParish_MultipleCivPar(TestCase):
+    fixtures = ['InstitutionIndexes/issuesWithCivilParish/MPandCivParinstitution.json',
+                'InstitutionIndexes/issuesWithCivilParish/multipleCivilParishAndMp.json']
+
+    def setUp(self):
+        pass
+
+    def testSearchMPAndCivilParish(self):
+        """ MP institution has territory without civilParish,  but civil parish institution has a civil parish name set.
+        Also exists a third institution with civl parish - seniunaitija. Must return all 3"""
+
+        # returns only [1] for now, but should return both institution ids
+        all = list(InstitutionTerritory.objects.all())
+        ids = findInstitutionTerritories(municipality=u"Kazlų Rūdos savivaldybė", civilParish=u"Jankų seniūnija", city=u"Jankų kaimas",  street=u"")
+        self.assertEquals([2, 3, 1], ids)
+
+class TestSearchInstitutionStreets_StreetNamesWithDots(TestCase):
+    fixtures = ['InstitutionIndexes/streetNamesWithDots/streetNameWithDots.json']
+
+    def setUp(self):
+        pass
+
+    def testSearchMPAndCivilParish(self):
+        """Some streets in our address db are with dots, for example
+        I. Šimulionio gatvė.
+
+        If user queries with 'Igno Šimulionio gatvė', then we should still find this street, but not others"""
+
+        # returns only [1] for now, but should return both institution ids
+        all = list(InstitutionTerritory.objects.all())
+        ids = findInstitutionTerritories(municipality=u"Kazlų Rūdos savivaldybė", civilParish=u"Jankų seniūnija", city=u"Jankų kaimas",  street=u"Igno Šimulionio")
+        self.assertEquals([1], ids)
+
+
