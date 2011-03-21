@@ -7,7 +7,7 @@ from django.core.management.base import BaseCommand
 from django.core import management
 import os
 from django.db import transaction
-from contactdb.models import InstitutionType
+from contactdb.models import InstitutionType, PersonPosition
 from pjutils.args.Args import ExtractRange
 from pjutils.timemeasurement import TimeMeasurer
 from settings import GlobalSettings
@@ -21,6 +21,11 @@ class Command(BaseCommand):
     @transaction.commit_on_success
     def testAddresses(self, addresses):
         missingDataByStreet = {}
+
+        personPositionsAll = PersonPosition.objects.all()
+        personPositionsByInstitution = {}
+        for p in personPositionsAll:
+            personPositionsByInstitution[p.institution_id] = p
 
         institutionTypes = list(InstitutionType.objects.all())
         institutionTypes = [i.code for i in institutionTypes]
@@ -72,9 +77,11 @@ class Command(BaseCommand):
             grouped = {}
             for r in result:
                 code = r[institutionTypeColumName]
-                val = r[institutionColumName]
+                institutionId = r[institutionColumName]
                 grouped.setdefault(code, [])
-                grouped[code].append(val)
+                personPosition = personPositionsByInstitution.has_key(institutionId)
+                if personPosition == True:
+                    grouped[code].append(personPosition)
 
             for type in institutionTypes:
                 if grouped.has_key(type) == False:
