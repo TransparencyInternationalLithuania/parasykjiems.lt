@@ -44,25 +44,22 @@ class Command(BaseCommand):
         importCases()
 
         # create Country data
-        #fileNames = [f[1] for f in ltGeoDataSources_Country.LithuanianAddresses]
-        #importCountryData(csvFileNames=fileNames)
+        fileNames = [f[1] for f in ltGeoDataSources_Country.LithuanianAddresses]
+        importCountryData(csvFileNames=fileNames)
 
         # create addresses for civilParish
-        """fileNames = [f[1] for f in ltGeoDataSources_Institution.civilParishAddresses]
+        fileNames = [f[1] for f in ltGeoDataSources_Institution.civilParishAddresses]
         importInstitutionTerritoryYielder(addressYielder=civilParishStreetReader(csvFileNames=fileNames, institutionNameGetter=makeCivilParishInstitutionName, cityNameGetter = cityNameGetterGenitive), institutionCode = "civpar")
 
         importInstitutionTerritoryYielder(addressYielder=civilParishVilniusStreetReader(), institutionCode = "civpar")
 
         importInstitutionTerritoryYielder(addressYielder=civilParishKaunasStreetReader(), institutionCode = "civpar")
-"""
 
         # create addresses for seniunaitija
-        importInstitutionTerritoryYielder(addressYielder=seniunaitijaStreetReader(), institutionCode = "seniunaitija", printDetailedInfo = True)
-"""
+        importInstitutionTerritoryYielder(addressYielder=seniunaitijaStreetReader(), institutionCode = "seniunaitija", printDetailedInfo = False)
+
         # create Municipality data
         importInstitutionTerritoryYielder(addressYielder=municipalityStreetReader(), institutionCode = InstitutionMunicipalityCode)
 
         # create MP data
         importInstitutionTerritoryYielder(addressYielder=mpStreetReader(), institutionCode = "mp")
-
-   """
