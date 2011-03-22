@@ -1,4 +1,3 @@
-from django.core.management.base import BaseCommand
 from django.db import connection, transaction
 
 def ClearTablesData(listOfDjangoModels):
@@ -15,17 +14,3 @@ def ClearTablesData(listOfDjangoModels):
         transaction.commit_unless_managed()
 
         print "Now it has %d rows" % model.objects.count()
-
-class Command(BaseCommand):
-    args = '<>'
-    help = 'Clears all contact db database, and prepares for re-import'
-
-
-
-    def handle(self, *args, **options):
-
-        #ClearTablesData(models)
-        
-        #print "successfully cleared all data. ContactDB empty"
-        print "dummy function, will be removed"
-

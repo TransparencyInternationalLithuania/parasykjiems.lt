@@ -2,7 +2,6 @@ import logging
 import os
 from pjutils.exc import ChainnedException
 import csv
-from contactdb.imp import ImportSources
 from settings import GlobalSettings
 
 try:
@@ -26,14 +25,14 @@ class GoogleDocDownloader:
 
     You can use some of the helper methods defined in the same package instead of using this class directly"""
 
-    def __init__(self):
+    def __init__(self, delimiter = ","):
         self.client = SpreadSheetClient(GlobalSettings.GOOGLE_DOCS_USER, GlobalSettings.GOOGLE_DOCS_PASSWORD)
 
     def _openWriter(self, fileName, row):
         """ creates a new DictWriter object from row object. Writes header row"""
         fieldNames = [k for k in row.iterkeys()]
 
-        writer = csv.DictWriter(open(fileName, "wb"), fieldNames, delimiter = ImportSources.Delimiter)
+        writer = csv.DictWriter(open(fileName, "wb"), fieldNames)
 
         headers = dict( (n,n) for n in fieldNames )
         writer.writerow(headers)

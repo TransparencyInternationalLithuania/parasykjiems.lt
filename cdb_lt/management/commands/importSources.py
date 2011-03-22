@@ -2,6 +2,20 @@
 # -*- coding: utf-8 -*-
 import os
 
+class GoogleDocsSources:
+    """ collection of google docs documents for Lithuanian data. The data from these sources
+    are downloaded and saved on disk, for further much faster access. A relating ImportSources variable
+     is used for the file name when storing on disk"""
+
+    # parliament members
+    LithuanianMPs = "parasykjiems.lt 2"
+    # Seniūnai / Foreman
+    LithuanianCivilParishMembers = "parasykjiems.lt 3 seniunai"
+    # Municipality mayors
+    LithuanianMunicipalityMembers = "parasykjiems.lt 4 merai"
+    # Seniūnaičiai
+    LithuanianSeniunaitijaMembers = "parasykjiems.lt 5 seniunaiciai"
+
 class ltGeoDataSources_Country:
     commonStreetPath = os.path.join("cdb_lt", "files", "territory", "countryTerritory", "city")
 
