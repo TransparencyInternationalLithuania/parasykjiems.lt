@@ -148,7 +148,7 @@ def renderIndexPage(request, form = None, query_string = "", address = None):
         'found_geodata': None,
         'not_found': '',
         }
-    return render_to_response('pjweb/index.html', {
+    return render_to_response("pjweb/searchPlugins/territory/index.html", {
         'form': form,
         'LANGUAGES': GlobalSettings.LANGUAGES,
         'lang_code': lang,

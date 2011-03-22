@@ -24,6 +24,7 @@ allMunicipalityEndings = wholeMunicipalityEndings + shortMunicipalityEndings
 
 zippedStreetPrefixes = zip(shortStreetEndings, wholeStreetEndings)
 zippedCityPrefixes = zip(shortCityEndings, wholeCityEndings)
+zippedMunicipalityPrefixes = zip(shortMunicipalityEndings, wholeMunicipalityEndings)
 
 def extractStreetEndingForm(street):
     """ for example, from string "MyStreet g." will return "g." """
@@ -51,19 +52,31 @@ def changeStreetFromShortToLongForm(street):
 
 def changeCityFromShortToLongForm(city):
     """ Changes for example from "Balbieriškių k." to "Balbieriškių kaimas" """
-    if (city is None):
+    if city is None:
         return None
-    if (city == ""):
+    if city == "":
         return ""
     for shortPrefix, longPrefix in zippedCityPrefixes:
         index = city.find(shortPrefix)
-        if (index >= 0):
+        if index >= 0:
             expanded = "%s%s" % (city[0:index], longPrefix)
             return expanded
     return city
 
+def changeMunicipalityFromShortToLongForm(municipality):
+    if municipality is None:
+        return None
+    if municipality == "":
+        return ""
+    for shortPrefix, longPrefix in zippedMunicipalityPrefixes:
+        index = municipality.find(shortPrefix)
+        if index >= 0:
+            expanded = "%s%s" % (municipality[0:index], longPrefix)
+            return expanded
+    return municipality
+
 def removeGenericPartFromStreet(street):
-    if (street is None):
+    if street is None:
         return ""
     for e in allStreetEndings:
         if street.endswith(e):

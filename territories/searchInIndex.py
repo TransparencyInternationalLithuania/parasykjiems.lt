@@ -8,7 +8,7 @@ import logging
 from pjutils.deprecated import deprecated
 from pjutils.queryHelper import getAndQuery
 from territories.houseNumberUtils import isStringStreetHouseNumber
-from territories.ltPrefixes import removeGenericPartFromMunicipality, changeCityFromShortToLongForm, changeStreetFromShortToLongForm, extractStreetEndingForm, removeGenericPartFromStreet, containsCivilParishEnding, containsStreet, allCivilParishEndings, allCityEndings
+from territories.ltPrefixes import removeGenericPartFromMunicipality, changeCityFromShortToLongForm, changeStreetFromShortToLongForm, extractStreetEndingForm, removeGenericPartFromStreet, containsCivilParishEnding, containsStreet, allCivilParishEndings, allCityEndings, changeMunicipalityFromShortToLongForm
 from territories.models import CountryAddresses, LithuanianCases
 
 
@@ -247,8 +247,9 @@ def getGenericCaseMunicipality(municipalityNominative):
     "Panevėžio miesto savivaldybė".  Translate short to long"""
     mun = LithuanianCases.objects.all().filter(institutionType = LithuanianCases.Type.Municipality)\
         .filter(nominative__icontains = municipalityNominative)[0:1]
+    mun = list(mun)
     if len(mun) == 0:
-        return municipalityNominative
+        return None
     return mun[0].genitive
 
 def searchInIndex(municipality = None, city = None, street = None):
@@ -273,8 +274,13 @@ def searchInIndex(municipality = None, city = None, street = None):
             municipality = None
 
     if municipality is not None:
-        municipality = removeGenericPartFromMunicipality(municipality=municipality)
-        municipality = getGenericCaseMunicipality(municipality)
+        municipality = changeMunicipalityFromShortToLongForm(municipality)
+        municipalityGeneric = getGenericCaseMunicipality(municipality)
+        if municipalityGeneric is None:
+            municipality = removeGenericPartFromMunicipality(municipality=municipality)
+        else:
+            municipality = municipalityGeneric
+
 
     if street is not None:
         if len(street) >1:
