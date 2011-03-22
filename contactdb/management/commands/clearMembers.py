@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
-from contactdb.management.commands.clearAll import ClearTablesData
 from contactdb.models import Person, PersonPosition, InstitutionType, Institution
+from pjutils.dbUtils import ClearTablesData
 
 class Command(BaseCommand):
     args = '<>'

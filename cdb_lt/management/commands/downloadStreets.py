@@ -1,10 +1,8 @@
 from django.core.management.base import BaseCommand
-from contactdb.management.commands.downloadDocs import downloadDoc
-from cdb_lt_streets.management.commands.ltGeoDataImportCsv import ltGeoDataSources
-from contactdb.gdocs import GoogleDocsLogin
+from cdb_lt.management.commands.importSources import ltGeoDataSources_Country
+from pjutils.args.Args import ExtractRange
+from pjutils.gdocsUtils import GoogleDocsLogin, downloadDoc
 from settings import *
-from cdb_lt_streets.management.commands.ltGeoDataCrawl import ExtractRange
-
 
 class Command(BaseCommand):
     args = '<>'
@@ -18,7 +16,7 @@ class Command(BaseCommand):
         if len(args) >= 1:
             fromNumber, toNumber = ExtractRange(args[0])
         if toNumber is None:
-            toNumber = len(ltGeoDataSources.LithuanianStreetIndexes)
+            toNumber = len(ltGeoDataSources_Country.LithuanianAddresses)
 
-        for doc, file in ltGeoDataSources.LithuanianStreetIndexes[fromNumber: toNumber]:
+        for doc, file in ltGeoDataSources_Country.LithuanianAddresses[fromNumber: toNumber]:
             downloadDoc(login, doc, file)

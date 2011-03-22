@@ -1,8 +1,8 @@
 from django.core.management.base import BaseCommand
+from pjutils.args.Args import ExtractRange
 from settings import *
 from contactdb.imp import GoogleDocsSources, ImportSources
 from pjutils.timemeasurement import TimeMeasurer
-from cdb_lt_streets.management.commands.ltGeoDataCrawl import ExtractRange
 from contactdb.gdocs import GoogleDocsLogin, downloadDoc
 import logging
 
@@ -26,9 +26,9 @@ class Command(BaseCommand):
                 (GoogleDocsSources.LithuanianCivilParishes, ImportSources.LithuanianCivilParishes)
 
         ]
-        if (len(args) >= 1):
+        if len(args) >= 1:
             fromNumber, toNumber = ExtractRange(args[0])
-        if (toNumber is None):
+        if toNumber is None:
             toNumber = len(allDocs)
 
         elapsedTime = TimeMeasurer()
