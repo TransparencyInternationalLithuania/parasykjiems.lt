@@ -2,7 +2,15 @@
 # -*- coding: utf-8 -*-
 import os
 
-class GoogleDocsSources:
+class ImportSourcesMembers:
+    commonPath = os.path.join("cdb_lt", "files", "members")
+    LithuanianMPs = os.path.join(commonPath, "parliament members.csv")
+    LithuanianMunicipalityMembers = os.path.join(commonPath, "LithuanianMunicipalityMembers.csv")
+    LithuanianCivilParishMembers  = os.path.join(commonPath, "LithuanianCivilParishMembers.csv")
+    LithuanianSeniunaitijaMembers  = os.path.join(commonPath, "LithuanianSeniunaitijaMembers.csv")
+
+
+class GoogleDocsMemberSources:
     """ collection of google docs documents for Lithuanian data. The data from these sources
     are downloaded and saved on disk, for further much faster access. A relating ImportSources variable
      is used for the file name when storing on disk"""

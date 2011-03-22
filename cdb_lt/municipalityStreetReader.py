@@ -1,6 +1,6 @@
 import csv
 import os
-from cdb_lt.management.commands.createMembers import ImportSources
+from cdb_lt.management.commands.createMembers import ImportSourcesMembers
 from contactdb.importUtils import readRow, getInstitutionNameFromColumn
 import logging
 logger = logging.getLogger(__name__)
@@ -14,7 +14,7 @@ class municipalityStreetReader(object):
 
 
     def yieldTerritories(self):
-        fileName = ImportSources.LithuanianMunicipalityMembers
+        fileName = ImportSourcesMembers.LithuanianMunicipalityMembers
         logger.info(u"Import street index data from csv file %s" % fileName)
 
         dictReader = csv.DictReader(open(fileName, "rt"), delimiter = self.delimiter)
