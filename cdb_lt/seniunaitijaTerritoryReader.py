@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import csv
-from cdb_lt.management.commands.createMembers import ImportSources, makeSeniunaitijaInstitutionName
+from cdb_lt.management.commands.createMembers import ImportSourcesMembers, makeSeniunaitijaInstitutionName
 from contactdb.importUtils import readRow
 from territories.houseNumberUtils import removeLetterFromHouseNumber, ContainsNumbers, padHouseNumberWithZeroes, isHouseNumberOdd
 from pjutils.exc import ChainnedException
@@ -286,7 +286,7 @@ class SeniunaitijaAddressExpander:
         return False
 
 class seniunaitijaStreetReader(object):
-    def __init__(self, fileName = ImportSources.LithuanianSeniunaitijaMembers, institutionNameGetter= makeSeniunaitijaInstitutionName, delimieter=","):
+    def __init__(self, fileName = ImportSourcesMembers.LithuanianSeniunaitijaMembers, institutionNameGetter= makeSeniunaitijaInstitutionName, delimieter=","):
         self.fileName = fileName
         self.dictReader = csv.DictReader(open(fileName, "rt"), delimiter=delimieter)
         self.institutionNameGetter = institutionNameGetter

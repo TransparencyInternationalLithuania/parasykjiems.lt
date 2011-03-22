@@ -1,9 +1,10 @@
 from django.core.management.base import BaseCommand
+from cdb_lt.management.commands.createMembers import ImportSourcesMembers
+from cdb_lt.management.commands.importSources import GoogleDocsMemberSources
 from pjutils.args.Args import ExtractRange
+from pjutils.gdocsUtils import GoogleDocsLogin, downloadDoc
 from settings import *
-from contactdb.imp import GoogleDocsSources, ImportSources
 from pjutils.timemeasurement import TimeMeasurer
-from contactdb.gdocs import GoogleDocsLogin, downloadDoc
 import logging
 
 logger = logging.getLogger(__name__)
@@ -18,14 +19,12 @@ class Command(BaseCommand):
         fromNumber = 0
         toNumber = None
 
-        allDocs = [(GoogleDocsSources.LithuanianMPs, ImportSources.LithuanianMPs),
-                (GoogleDocsSources.LithuanianCivilParishMembers, ImportSources.LithuanianCivilParishMembers),
-                (GoogleDocsSources.LithuanianMunicipalityMembers, ImportSources.LithuanianMunicipalityMembers),
-                (GoogleDocsSources.LithuanianSeniunaitijaMembers, ImportSources.LithuanianSeniunaitijaMembers),
-                (GoogleDocsSources.LithuanianMunicipalities, ImportSources.LithuanianMunicipalities),
-                (GoogleDocsSources.LithuanianCivilParishes, ImportSources.LithuanianCivilParishes)
-
+        allDocs = [(GoogleDocsMemberSources.LithuanianMPs, ImportSourcesMembers.LithuanianMPs),
+                (GoogleDocsMemberSources.LithuanianCivilParishMembers, ImportSourcesMembers.LithuanianCivilParishMembers),
+                (GoogleDocsMemberSources.LithuanianMunicipalityMembers, ImportSourcesMembers.LithuanianMunicipalityMembers),
+                (GoogleDocsMemberSources.LithuanianSeniunaitijaMembers, ImportSourcesMembers.LithuanianSeniunaitijaMembers),
         ]
+        
         if len(args) >= 1:
             fromNumber, toNumber = ExtractRange(args[0])
         if toNumber is None:
