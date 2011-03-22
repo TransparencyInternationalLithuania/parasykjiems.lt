@@ -41,9 +41,9 @@ class HierarchicalGeoData(models.Model):
         if name_genitive is not None:
             locationInDB = locationInDB.filter(name_genitive = name_genitive)
 
-        if (parentName is not None):
+        if parentName is not None:
             locationInDB = locationInDB.filter(parent__name = parentName)
-        if (type is not None):
+        if type is not None:
             locationInDB = locationInDB.filter(type = type)
 
         try:

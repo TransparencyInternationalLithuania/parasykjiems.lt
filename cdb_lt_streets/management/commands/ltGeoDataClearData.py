@@ -1,6 +1,6 @@
-from contactdb.management.commands.clearAll import ClearTablesData
 from cdb_lt_streets.models import HierarchicalGeoData
 from django.core.management.base import BaseCommand
+from pjutils.dbUtils import ClearTablesData
 
 class Command(BaseCommand):
     args = '<>'
