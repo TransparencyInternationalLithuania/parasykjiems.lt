@@ -1,6 +1,15 @@
 [
-  {
+   {
     "pk": 1,
+    "model": "territories.LithuanianCases",
+    "fields": {
+      "nominative": "Vilniaus",
+      "genitive": "Vilniaus rajono savivaldybė",
+      "institutionType" : 1
+    }
+  },
+  {
+    "pk": 2,
     "model": "territories.LithuanianCases",
     "fields": {
       "nominative": "Vilnius",
