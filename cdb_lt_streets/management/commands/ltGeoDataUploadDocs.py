@@ -1,9 +1,8 @@
 from django.core.management.base import BaseCommand
-from cdb_lt_streets.management.commands.ltGeoDataImportCsv import ltGeoDataSources
-from contactdb.gdocs import GoogleDocsLogin, GoogleDocsUploader
+from cdb_lt.management.commands.importSources import ltGeoDataSources_Country
+from cdb_lt_streets.management.commands.ltGeoDataCrawl import RegisterCenterPageLocations
 from settings import *
 import time
-from cdb_lt_streets.management.commands.ltGeoDataCrawl import RegisterCenterPageLocations, ExtractRange
 logger = logging.getLogger(__name__)
 
 class Command(BaseCommand):
@@ -11,13 +10,13 @@ class Command(BaseCommand):
     help = ''
 
     def handle(self, *args, **options):
-        l = zip(ltGeoDataSources.LithuanianStreetIndexes, RegisterCenterPageLocations.AllData)
+        l = zip(ltGeoDataSources_Country.LithuanianAddresses, RegisterCenterPageLocations.AllData)
 
         fromNumber = 0
         toNumber = None
-        if (len(args) >= 1):
+        if len(args) >= 1:
             fromNumber, toNumber = ExtractRange(args[0])
-        if (toNumber is None):
+        if toNumber is None:
             toNumber = len(l)
 
 
@@ -36,7 +35,7 @@ class Command(BaseCommand):
         for street, regCenterPage in l[fromNumber : toNumber]:
             file = regCenterPage[1]
             file = os.path.join(os.getcwd(), file)
-            if os.path.exists(file) == False:
+            if not os.path.exists(file):
                 print "file '%s' does not exist, skip" % file
                 continue
             logger.info("uploading document from file '%s' to location '%s'" % (file, street[0]))
