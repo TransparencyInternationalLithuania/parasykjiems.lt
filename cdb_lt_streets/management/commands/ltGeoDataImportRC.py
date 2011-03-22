@@ -86,20 +86,20 @@ class Command(BaseCommand):
             text_genitive = None
             # city names must be in nominative, not in genitive
             # location.text will be in genitive, so fix that
-            if (location.type == HierarchicalGeoData.HierarchicalGeoDataType.City):
+            if location.type == HierarchicalGeoData.HierarchicalGeoDataType.City:
                 text_genitive = location.text
                 text_nominative = None
 
             parentLocationText = None
-            if (parentLocationName is not None):
+            if parentLocationName is not None:
                 parentLocationText = parentLocationName.text
             locationInDB = HierarchicalGeoData.FindByName(name = text_nominative, name_genitive = text_genitive, parentName = parentLocationText)
-            if (locationInDB is None):
+            if locationInDB is None:
                 # try searching for genitive field with nominative form. The same logic as in _InsertContentRows()
                 locationInDB = HierarchicalGeoData.FindByName(name_genitive = text_nominative, parentName = parentLocationText)
 
 
-            if (locationInDB is None):
+            if locationInDB is None:
                 # that means we have to create it
                 locationInDB = self._CreateNewLocationObject(text_nominative= location.text, type = location.type, parentLocationObject=parentLocationObject)
                 insertedRows += 1
@@ -130,30 +130,34 @@ class Command(BaseCommand):
         parentType = LTGeoDataHierarchy.Hierarchy[pageLocationLength - 1]
         parentName = page.location[len(page.location) -1].text
 
+        parentParentNameGenitive = page.location[len(page.location) -2].text
+
         # for cities names are in genitive case
         # so correct that if that is the case
         text_nominative = parentName
         text_genitive = None
-        if (parentType == HierarchicalGeoData.HierarchicalGeoDataType.City):
+        if parentType == HierarchicalGeoData.HierarchicalGeoDataType.City:
             text_genitive = text_nominative
             text_nominative = None
 
         # execute the query. Searching for parent with either text in nominative or genitive
-        parentLocationObject = HierarchicalGeoData.FindByName(name = text_nominative, name_genitive=text_genitive, type = parentType)
-        if (parentLocationObject is None):
+        parentLocationObject = HierarchicalGeoData.FindByName(name = text_nominative, name_genitive=text_genitive, type = parentType, parentNameGenitive = parentParentNameGenitive)
+        if parentLocationObject is None:
             # if could not find, try again this time with searching for city name in genitive form, but with nominative value.
             # this happens only in specific cases, for example when parsing only cities. In those cases database
             # has only city name in genitive form, not in nominative. For example this url would
             # otherwise fail to parse: http://www.registrucentras.lt/adr/p/index.php?gyv_id=82
             parentLocationObject = HierarchicalGeoData.FindByName(name_genitive = text_nominative, type = parentType)
-            if (parentLocationObject is None):
+            if parentLocationObject is None:
                 print "parentType %s" % parentType
                 print "type %s" % type
-                raise LTGeoDataImportException("Could not find parent object by name %s and type %s" % (parentName, parentType) )
+                all = list(HierarchicalGeoData.objects.all())
+                parentLocationObject = HierarchicalGeoData.FindByName(name = text_nominative, name_genitive=text_genitive, type = parentType, parentParentNameGenitive = parentParentNameGenitive)
+                raise LTGeoDataImportException("Could not find parent object by name '%s' and type '%s'" % (text_nominative, parentType) )
 
         for link in page.links:
             locationInDB = HierarchicalGeoData.FindByName(name = link.text, name_genitive=link.text_genitive, parentName = parentName)
-            if (locationInDB is not None):
+            if locationInDB is not None:
                 continue
             # create new location object
             self._CreateNewLocationObject(text_nominative = link.text, text_genitive=link.text_genitive, type = type, parentLocationObject = parentLocationObject)

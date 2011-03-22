@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
+from django.db.models.query_utils import Q
+from pjutils.uniconsole import *
 
 class HierarchicalGeoData(models.Model):
     """ A hierarchical geo data structure. Used to extract data from lithuanian street index page
@@ -33,8 +35,9 @@ class HierarchicalGeoData(models.Model):
     parent = models.ForeignKey('self', blank=True, null=True, related_name="children", help_text="Parent data, if this is a child node.")
     type = models.CharField(max_length=20, choices=HierarchicalGeoDataTypeChoices)
 
+  
     @classmethod
-    def FindByName(cls, name = None, name_genitive = None, type=None, parentName = None):
+    def FindByName(cls, name = None, name_genitive = None, type=None, parentName = None, parentNameGenitive = None):
         locationInDB = HierarchicalGeoData.objects.all()
         if name is not None:
             locationInDB = locationInDB.filter(name = name)
@@ -43,8 +46,14 @@ class HierarchicalGeoData(models.Model):
 
         if parentName is not None:
             locationInDB = locationInDB.filter(parent__name = parentName)
+        if parentNameGenitive is not None:
+            cityQuery_Nominative = Q(**{"parent__name": parentNameGenitive})
+            #cityQuery_Genitive = Q(**{"parent__parent__name": parentParentNameGenitive})
+            #cityQuery = cityQuery_Genitive | cityQuery_Nominative
+            locationInDB = locationInDB.filter(cityQuery_Nominative)
         if type is not None:
             locationInDB = locationInDB.filter(type = type)
+
 
         try:
             locationInDB = locationInDB[0:1].get()
