@@ -9,6 +9,11 @@ class ImportSourcesMembers:
     LithuanianCivilParishMembers  = os.path.join(commonPath, "LithuanianCivilParishMembers.csv")
     LithuanianSeniunaitijaMembers  = os.path.join(commonPath, "LithuanianSeniunaitijaMembers.csv")
 
+    allMembers = [LithuanianMPs,
+                  LithuanianMunicipalityMembers,
+                  LithuanianCivilParishMembers,
+                  LithuanianSeniunaitijaMembers]
+
 
 class GoogleDocsMemberSources:
     """ collection of google docs documents for Lithuanian data. The data from these sources
@@ -23,6 +28,11 @@ class GoogleDocsMemberSources:
     LithuanianMunicipalityMembers = "parasykjiems.lt 4 merai"
     # Seniūnaičiai
     LithuanianSeniunaitijaMembers = "parasykjiems.lt 5 seniunaiciai"
+
+    allMembers = [LithuanianMPs,
+                  LithuanianMunicipalityMembers,
+                  LithuanianCivilParishMembers,
+                  LithuanianSeniunaitijaMembers]
 
 class ltGeoDataSources_Country:
     commonStreetPath = os.path.join("cdb_lt", "files", "territory", "countryTerritory", "city")
