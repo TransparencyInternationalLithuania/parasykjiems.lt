@@ -101,7 +101,8 @@ class GoogleDocsUploader():
     def __init__(self, gdocsLogin, documentTitle):
         self.gdocsLogin = gdocsLogin
         self.entry = None
-        uri = '/feeds/default/private/full?title=%s&title-exact=true&max-results=5' % documentTitle
+        uri = u'/feeds/default/private/full?title=%s&title-exact=true&max-results=5' % documentTitle
+        uri = uri.encode('utf-8')
         feed = self.gdocsLogin.client.GetDocList(uri=uri)
         try:
             self.entry = feed.entry[0]

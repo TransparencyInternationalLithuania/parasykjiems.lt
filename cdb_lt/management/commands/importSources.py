@@ -21,13 +21,13 @@ class GoogleDocsMemberSources:
      is used for the file name when storing on disk"""
 
     # parliament members
-    LithuanianMPs = "parasykjiems.lt 2"
-    # Seniūnai / Foreman
-    LithuanianCivilParishMembers = "parasykjiems.lt 3 seniunai"
+    LithuanianMPs = u"Atstovai - seimo nariai"
+    # Seniūnai / CivilParish
+    LithuanianCivilParishMembers = u"Atstovai - seniūnai"
     # Municipality mayors
-    LithuanianMunicipalityMembers = "parasykjiems.lt 4 merai"
+    LithuanianMunicipalityMembers = u"Atstovai - merai"
     # Seniūnaičiai
-    LithuanianSeniunaitijaMembers = "parasykjiems.lt 5 seniunaiciai"
+    LithuanianSeniunaitijaMembers = u"Atstovai - seniūnaičiai"
 
     allMembers = [LithuanianMPs,
                   LithuanianMunicipalityMembers,
