@@ -1,138 +1,138 @@
 Id, Country, County, Municipality, CivilParish, City, City_genitive, Street
-1, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Algirdo gatvė
-2, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Alyvų gatvė
-3, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Ateities gatvė
-4, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Atgimimo gatvė
-5, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Aukštaičių gatvė
-6, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Aukštakalnio gatvė
-7, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Aušros gatvė
-8, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Ąžuolijos gatvė
-9, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Bangelės gatvė
-10, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Bangos gatvė
-11, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, A. Baranausko gatvė
-12, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, J. Basanavičiaus gatvė
-13, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Bažnyčios gatvė
-14, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, J. Biliūno gatvė
-15, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Birutės gatvė
-16, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Bočių gatvė
-17, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, M. K. Čiurlionio gatvė
-18, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, P. Cvirkos gatvė
-19, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, S. Dariaus ir S. Girėno gatvė
-20, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Daržų gatvė
-21, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, S. Daukanto gatvė
-22, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Daumanto gatvė
-23, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Dauniškio gatvė
-24, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Dobilo gatvė
-25, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, K. Donelaičio gatvė
-26, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Draugystės aikštė
-27, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Draugystės 1-oji gatvė
-28, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Draugystės 10-oji gatvė
-29, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Draugystės 11-oji gatvė
-30, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Draugystės 12-oji gatvė
-31, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Draugystės 13-oji gatvė
-32, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Draugystės 14-oji gatvė
-33, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Draugystės 15-oji gatvė
-34, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Draugystės 16-oji gatvė
-35, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Draugystės 17-oji gatvė
-36, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Draugystės 18-oji gatvė
-37, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Draugystės 2-oji gatvė
-38, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Draugystės 3-oji gatvė
-39, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Draugystės 4-oji gatvė
-40, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Draugystės 5-oji gatvė
-41, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Draugystės 6-oji gatvė
-42, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Draugystės 7-oji gatvė
-43, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Draugystės 8-oji gatvė
-44, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Draugystės 9-oji gatvė
-45, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Eglyno gatvė
-46, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, P. Eimučio gatvė
-47, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Ežero gatvė
-48, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Garažų gatvė
-49, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Gedimino gatvė
-50, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Gegužės gatvė
-51, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, L. Giros gatvė
-52, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Grybelių gatvė
-53, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Jaunystės gatvė
-54, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Joneliškio gatvė
-55, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Kalno gatvė
-56, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Kampo gatvė
-57, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Kaštonų gatvė
-58, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Kauno gatvė
-59, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Kęstučio gatvė
-60, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Kovo 11-osios gatvė
-61, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Kranto gatvė
-62, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Krašuonos gatvė
-63, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, V. Kudirkos gatvė
-64, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Kupiškio gatvė
-65, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, K. Ladygos gatvė
-66, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Lanko gatvė
-67, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Lapų gatvė
-68, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Lauko gatvė
-69, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Lauko skersgatvis
-70, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Liepų gatvė
-71, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, P. Lukšio gatvė
-72, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Maironio gatvė
-73, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Mechanizatorių gatvė
-74, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Meldų gatvė
-75, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Metalo gatvė
-76, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Mindaugo gatvė
-77, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Molėtų gatvė
-78, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Naujasodžio gatvė
-79, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Naujoji gatvė
-80, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Nemeikščių gatvė
-81, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Pakalnės gatvė
-82, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Palangos gatvė
-83, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Palijoniškio gatvė
-84, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Papievių gatvė
-85, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Parko gatvė
-86, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Paupio gatvė
-87, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Pavasario gatvė
-88, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Pelkių gatvė
-89, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Pievų gatvė
-90, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Piliakalnio gatvė
-91, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Pilies gatvė
-92, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Pramonės gatvė
-93, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Pušynėlio gatvė
-94, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Pušyno gatvė
-95, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Rašės gatvė
-96, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Rašytojų gatvė
-97, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Rasos gatvė
-98, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Rinkos aikštė
-99, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Rožių gatvė
-100, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Rūtų gatvė
-101, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Sakalų gatvė
-102, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Šaltinių gatvė
-103, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Sėlių gatvė
-104, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Šiaurės gatvė
-105, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Šiaurės skersgatvis
-106, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Šilinės gatvė
-107, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Šilo gatvė
-108, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Smėlio gatvė
-109, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Sodo gatvė
-110, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Statybininkų gatvė
-111, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Stoties gatvė
-112, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Sudeikių gatvė
-113, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Šviesos gatvė
-114, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Taikos gatvė
-115, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Tauragnų gatvė
-116, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Tulpių gatvė
-117, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Turgaus gatvė
-118, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Ugniagesių gatvė
-119, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Ukmergės gatvė
-120, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Utenio aikštė
-121, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Utenio gatvė
-122, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Užpalių gatvė
-123, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Vaižganto gatvė
-124, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Varpo gatvė
-125, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Vasaros gatvė
-126, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Vilniaus gatvė
-127, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Vytauto aikštė
-128, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Vyžuonėlių gatvė
-129, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Vyžuonų gatvė
-130, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Žalgirio gatvė
-131, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Žalioji gatvė
-132, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Žemaitės gatvė
-133, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Žemdirbių gatvė
-134, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Žydų gatvė
-135, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Žilvičių gatvė
-136, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Žirgų gatvė
-137, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Alytaus miestas, Tauragės miestas, Utena, Žvejų gatvė
+1, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Algirdo gatvė
+2, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Alyvų gatvė
+3, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Ateities gatvė
+4, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Atgimimo gatvė
+5, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Aukštaičių gatvė
+6, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Aukštakalnio gatvė
+7, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Aušros gatvė
+8, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Ąžuolijos gatvė
+9, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Bangelės gatvė
+10, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Bangos gatvė
+11, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, A. Baranausko gatvė
+12, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, J. Basanavičiaus gatvė
+13, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Bažnyčios gatvė
+14, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, J. Biliūno gatvė
+15, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Birutės gatvė
+16, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Bočių gatvė
+17, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, M. K. Čiurlionio gatvė
+18, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, P. Cvirkos gatvė
+19, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, S. Dariaus ir S. Girėno gatvė
+20, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Daržų gatvė
+21, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, S. Daukanto gatvė
+22, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Daumanto gatvė
+23, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Dauniškio gatvė
+24, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Dobilo gatvė
+25, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, K. Donelaičio gatvė
+26, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Draugystės aikštė
+27, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Draugystės 1-oji gatvė
+28, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Draugystės 10-oji gatvė
+29, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Draugystės 11-oji gatvė
+30, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Draugystės 12-oji gatvė
+31, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Draugystės 13-oji gatvė
+32, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Draugystės 14-oji gatvė
+33, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Draugystės 15-oji gatvė
+34, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Draugystės 16-oji gatvė
+35, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Draugystės 17-oji gatvė
+36, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Draugystės 18-oji gatvė
+37, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Draugystės 2-oji gatvė
+38, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Draugystės 3-oji gatvė
+39, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Draugystės 4-oji gatvė
+40, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Draugystės 5-oji gatvė
+41, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Draugystės 6-oji gatvė
+42, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Draugystės 7-oji gatvė
+43, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Draugystės 8-oji gatvė
+44, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Draugystės 9-oji gatvė
+45, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Eglyno gatvė
+46, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, P. Eimučio gatvė
+47, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Ežero gatvė
+48, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Garažų gatvė
+49, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Gedimino gatvė
+50, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Gegužės gatvė
+51, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, L. Giros gatvė
+52, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Grybelių gatvė
+53, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Jaunystės gatvė
+54, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Joneliškio gatvė
+55, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Kalno gatvė
+56, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Kampo gatvė
+57, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Kaštonų gatvė
+58, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Kauno gatvė
+59, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Kęstučio gatvė
+60, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Kovo 11-osios gatvė
+61, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Kranto gatvė
+62, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Krašuonos gatvė
+63, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, V. Kudirkos gatvė
+64, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Kupiškio gatvė
+65, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, K. Ladygos gatvė
+66, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Lanko gatvė
+67, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Lapų gatvė
+68, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Lauko gatvė
+69, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Lauko skersgatvis
+70, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Liepų gatvė
+71, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, P. Lukšio gatvė
+72, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Maironio gatvė
+73, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Mechanizatorių gatvė
+74, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Meldų gatvė
+75, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Metalo gatvė
+76, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Mindaugo gatvė
+77, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Molėtų gatvė
+78, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Naujasodžio gatvė
+79, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Naujoji gatvė
+80, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Nemeikščių gatvė
+81, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Pakalnės gatvė
+82, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Palangos gatvė
+83, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Palijoniškio gatvė
+84, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Papievių gatvė
+85, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Parko gatvė
+86, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Paupio gatvė
+87, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Pavasario gatvė
+88, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Pelkių gatvė
+89, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Pievų gatvė
+90, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Piliakalnio gatvė
+91, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Pilies gatvė
+92, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Pramonės gatvė
+93, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Pušynėlio gatvė
+94, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Pušyno gatvė
+95, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Rašės gatvė
+96, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Rašytojų gatvė
+97, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Rasos gatvė
+98, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Rinkos aikštė
+99, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Rožių gatvė
+100, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Rūtų gatvė
+101, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Sakalų gatvė
+102, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Šaltinių gatvė
+103, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Sėlių gatvė
+104, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Šiaurės gatvė
+105, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Šiaurės skersgatvis
+106, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Šilinės gatvė
+107, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Šilo gatvė
+108, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Smėlio gatvė
+109, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Sodo gatvė
+110, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Statybininkų gatvė
+111, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Stoties gatvė
+112, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Sudeikių gatvė
+113, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Šviesos gatvė
+114, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Taikos gatvė
+115, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Tauragnų gatvė
+116, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Tulpių gatvė
+117, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Turgaus gatvė
+118, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Ugniagesių gatvė
+119, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Ukmergės gatvė
+120, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Utenio aikštė
+121, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Utenio gatvė
+122, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Užpalių gatvė
+123, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Vaižganto gatvė
+124, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Varpo gatvė
+125, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Vasaros gatvė
+126, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Vilniaus gatvė
+127, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Vytauto aikštė
+128, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Vyžuonėlių gatvė
+129, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Vyžuonų gatvė
+130, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Žalgirio gatvė
+131, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Žalioji gatvė
+132, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Žemaitės gatvė
+133, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Žemdirbių gatvė
+134, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Žydų gatvė
+135, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Žilvičių gatvė
+136, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Žirgų gatvė
+137, LIETUVOS RESPUBLIKA, Utenos apskritis, Utenos rajono savivaldybė, Utenos miesto seniūnija, Utenos miestas, Utena, Žvejų gatvė
