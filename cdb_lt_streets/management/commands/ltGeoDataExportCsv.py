@@ -40,6 +40,8 @@ class RCCrawledDataExporter(object):
         for val in values:
             if val is None:
                 val = u""
+            val = u"%s" % val
+            val = val.strip()
             v.append(val)
         values = v
         valuesStr = u"%s%s%s" % (values[0], delimiter, delimiter.join(values[1:]))
