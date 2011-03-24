@@ -1,485 +1,487 @@
-city,citygenitive,country,municipality,id,county,street,civilparish
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,1,Klaipėdos apskritis,Agluonos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,2,Klaipėdos apskritis,Aguonų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,3,Klaipėdos apskritis,Ajerų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,4,Klaipėdos apskritis,Akmenų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,5,Klaipėdos apskritis,Alytaus gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,6,Klaipėdos apskritis,Alyvų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,7,Klaipėdos apskritis,Alksnynės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,8,Klaipėdos apskritis,Anykščių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,9,Klaipėdos apskritis,Antrosios Melnragės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,10,Klaipėdos apskritis,Apynių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,11,Klaipėdos apskritis,Arimų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,12,Klaipėdos apskritis,Artojo gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,13,Klaipėdos apskritis,Atgimimo aikštė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,14,Klaipėdos apskritis,Audėjų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,15,Klaipėdos apskritis,Audros gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,16,Klaipėdos apskritis,Aukštaičių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,17,Klaipėdos apskritis,Aukštoji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,18,Klaipėdos apskritis,Aušrinės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,19,Klaipėdos apskritis,Aušros gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,20,Klaipėdos apskritis,Austėjos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,21,Klaipėdos apskritis,Ąžuolų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,22,Klaipėdos apskritis,Viliaus Bajoro gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,23,Klaipėdos apskritis,Balandžių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,24,Klaipėdos apskritis,Baltijos prospektas,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,25,Klaipėdos apskritis,Baltijos 1-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,26,Klaipėdos apskritis,Baltijos 10-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,27,Klaipėdos apskritis,Baltijos 11-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,28,Klaipėdos apskritis,Baltijos 12-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,29,Klaipėdos apskritis,Baltijos 13-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,30,Klaipėdos apskritis,Baltijos 14-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,31,Klaipėdos apskritis,Baltijos 2-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,32,Klaipėdos apskritis,Baltijos 3-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,33,Klaipėdos apskritis,Baltijos 4-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,34,Klaipėdos apskritis,Baltijos 5-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,35,Klaipėdos apskritis,Baltijos 6-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,36,Klaipėdos apskritis,Baltijos 7-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,37,Klaipėdos apskritis,Baltijos 8-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,38,Klaipėdos apskritis,Baltijos 9-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,39,Klaipėdos apskritis,Baltikalnio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,40,Klaipėdos apskritis,Bandužių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,41,Klaipėdos apskritis,Bangų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,42,Klaipėdos apskritis,Barškių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,43,Klaipėdos apskritis,Bastionų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,44,Klaipėdos apskritis,Bažnyčių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,45,Klaipėdos apskritis,Beržų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,46,Klaipėdos apskritis,Bičiulių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,47,Klaipėdos apskritis,Bijūnų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,48,Klaipėdos apskritis,Birštono gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,49,Klaipėdos apskritis,Birutės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,50,Klaipėdos apskritis,Biržų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,51,Klaipėdos apskritis,Blušių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,52,Klaipėdos apskritis,Bokštų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,53,Klaipėdos apskritis,Brožynų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,54,Klaipėdos apskritis,Bružės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,55,Klaipėdos apskritis,Budelkiemio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,56,Klaipėdos apskritis,Miko Buntino gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,57,Klaipėdos apskritis,Burių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,58,Klaipėdos apskritis,Butkų Juzės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,59,Klaipėdos apskritis,Butsargių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,60,Klaipėdos apskritis,Dailės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,61,Klaipėdos apskritis,Dailidžių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,62,Klaipėdos apskritis,Danės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,63,Klaipėdos apskritis,Dariaus ir Girėno gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,64,Klaipėdos apskritis,Darželio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,65,Klaipėdos apskritis,Daržų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,66,Klaipėdos apskritis,Daugulių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,67,Klaipėdos apskritis,S. Daukanto gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,68,Klaipėdos apskritis,Davilių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,69,Klaipėdos apskritis,Debesų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,70,Klaipėdos apskritis,Debreceno gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,71,Klaipėdos apskritis,Deimės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,72,Klaipėdos apskritis,Dianos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,73,Klaipėdos apskritis,Didžioji Vandens gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,74,Klaipėdos apskritis,Dienovidžio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,75,Klaipėdos apskritis,Dituvos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,76,Klaipėdos apskritis,Dobilo 1-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,77,Klaipėdos apskritis,Dobilo 2-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,78,Klaipėdos apskritis,K. Donelaičio aikštė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,79,Klaipėdos apskritis,K. Donelaičio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,80,Klaipėdos apskritis,Dragūnų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,81,Klaipėdos apskritis,Draugystės 1-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,82,Klaipėdos apskritis,Draugystės 2-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,83,Klaipėdos apskritis,Draugystės 3-ioji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,84,Klaipėdos apskritis,Drebulių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,85,Klaipėdos apskritis,Druskininkų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,86,Klaipėdos apskritis,Dubysos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,87,Klaipėdos apskritis,Dusetų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,88,Klaipėdos apskritis,Dvaro gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,89,Klaipėdos apskritis,Dzūkų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,90,Klaipėdos apskritis,Eglių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,91,Klaipėdos apskritis,Erškėtrožių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,92,Klaipėdos apskritis,Gabijos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,93,Klaipėdos apskritis,Galinė gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,94,Klaipėdos apskritis,Galinio Pylimo gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,95,Klaipėdos apskritis,Gamyklos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,96,Klaipėdos apskritis,Garažų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,97,Klaipėdos apskritis,Gedminų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,98,Klaipėdos apskritis,Gedviliškės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,99,Klaipėdos apskritis,Gegučių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,100,Klaipėdos apskritis,Gegužės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,101,Klaipėdos apskritis,Geležinkelio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,102,Klaipėdos apskritis,Geležinkelio sodybos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,103,Klaipėdos apskritis,Gėlių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,104,Klaipėdos apskritis,Gerdaujos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,105,Klaipėdos apskritis,Gilijos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,106,Klaipėdos apskritis,Gilių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,107,Klaipėdos apskritis,Gintaro gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,108,Klaipėdos apskritis,Giraitės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,109,Klaipėdos apskritis,Girininkijos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,110,Klaipėdos apskritis,L. Giros gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,111,Klaipėdos apskritis,Gluosnių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,112,Klaipėdos apskritis,Gluosnių skersgatvis,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,113,Klaipėdos apskritis,Griaustinio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,114,Klaipėdos apskritis,Griežupės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,115,Klaipėdos apskritis,Grįžgatvio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,116,Klaipėdos apskritis,Gubojų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,117,Klaipėdos apskritis,Gudobelių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,118,Klaipėdos apskritis,Gulbių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,119,Klaipėdos apskritis,Įgulos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,120,Klaipėdos apskritis,Inkaro skersgatvis,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,121,Klaipėdos apskritis,Inkaro 1-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,122,Klaipėdos apskritis,Inkaro 2-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,123,Klaipėdos apskritis,Inkaro 3-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,124,Klaipėdos apskritis,Irklų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,125,Klaipėdos apskritis,Jachtų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,126,Klaipėdos apskritis,Martyno Jankaus gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,127,Klaipėdos apskritis,J. Janonio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,128,Klaipėdos apskritis,Jaunimo gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,129,Klaipėdos apskritis,Jaunystės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,130,Klaipėdos apskritis,Jogučių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,131,Klaipėdos apskritis,Joniškės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,132,Klaipėdos apskritis,Jono gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,133,Klaipėdos apskritis,Jotvingių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,134,Klaipėdos apskritis,Jungų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,135,Klaipėdos apskritis,Juodkrantės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,136,Klaipėdos apskritis,Jūratės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,137,Klaipėdos apskritis,Jurbarko gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,138,Klaipėdos apskritis,Jūreivių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,139,Klaipėdos apskritis,Jurginų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,140,Klaipėdos apskritis,Jūrininkų prospektas,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,141,Klaipėdos apskritis,Jūros gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,142,Klaipėdos apskritis,Kadagių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,143,Klaipėdos apskritis,Kairių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,144,Klaipėdos apskritis,Kalnupės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,145,Klaipėdos apskritis,Kalvių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,146,Klaipėdos apskritis,Kalvos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,147,Klaipėdos apskritis,I. Kanto gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,148,Klaipėdos apskritis,Kapitonų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,149,Klaipėdos apskritis,Kapsų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,150,Klaipėdos apskritis,Kareivinių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,151,Klaipėdos apskritis,Karklų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,152,Klaipėdos apskritis,Karlskronos aikštė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,153,Klaipėdos apskritis,Karlskronos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,154,Klaipėdos apskritis,J. Karoso gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,155,Klaipėdos apskritis,Kaštonų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,156,Klaipėdos apskritis,Kauno gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,157,Klaipėdos apskritis,Kėdainių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,158,Klaipėdos apskritis,Kepėjų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,159,Klaipėdos apskritis,Kybelkių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,160,Klaipėdos apskritis,Kintų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,161,Klaipėdos apskritis,Klaipėdos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,162,Klaipėdos apskritis,Klemiškės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,163,Klaipėdos apskritis,Klevų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,164,Klaipėdos apskritis,Kombinato gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,165,Klaipėdos apskritis,Kooperacijos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,166,Klaipėdos apskritis,Kopų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,167,Klaipėdos apskritis,Kranto gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,168,Klaipėdos apskritis,Kraštinė gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,169,Klaipėdos apskritis,Kražių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,170,Klaipėdos apskritis,Kretainio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,171,Klaipėdos apskritis,Kretingos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,172,Klaipėdos apskritis,Krovėjų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,173,Klaipėdos apskritis,Kūlių Vartų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,174,Klaipėdos apskritis,Kuncų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,175,Klaipėdos apskritis,Kuosų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,176,Klaipėdos apskritis,Kupiškio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,177,Klaipėdos apskritis,Kurėnų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,178,Klaipėdos apskritis,Kurpių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,179,Klaipėdos apskritis,Kuršių aikštė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,180,Klaipėdos apskritis,Labrenciškės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,181,Klaipėdos apskritis,Labrencų Dvaro gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,182,Klaipėdos apskritis,Laistų 1-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,183,Klaipėdos apskritis,Laistų 2-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,184,Klaipėdos apskritis,Laistų 3-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,185,Klaipėdos apskritis,Laivų skersgatvis,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,186,Klaipėdos apskritis,Lakštučių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,187,Klaipėdos apskritis,Lankiškių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,188,Klaipėdos apskritis,Lanko gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,189,Klaipėdos apskritis,Laukininkų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,190,Klaipėdos apskritis,Laukpačio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,191,Klaipėdos apskritis,Laukų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,192,Klaipėdos apskritis,Lazdynų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,193,Klaipėdos apskritis,Lelijų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,194,Klaipėdos apskritis,Lendrūnų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,195,Klaipėdos apskritis,Levandrų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,196,Klaipėdos apskritis,Prano Lideikio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,197,Klaipėdos apskritis,Liepojos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,198,Klaipėdos apskritis,Liepų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,199,Klaipėdos apskritis,Lietaus gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,200,Klaipėdos apskritis,Lietuvininkų aikštė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,201,Klaipėdos apskritis,Ligoninės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,202,Klaipėdos apskritis,Lypkių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,203,Klaipėdos apskritis,Liubeko gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,204,Klaipėdos apskritis,Lubinų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,205,Klaipėdos apskritis,Lūžų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,206,Klaipėdos apskritis,Mainų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,207,Klaipėdos apskritis,Malūnininkų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,208,Klaipėdos apskritis,H. Manto gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,209,Klaipėdos apskritis,Marių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,210,Klaipėdos apskritis,Markučių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,211,Klaipėdos apskritis,Maumedžių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,212,Klaipėdos apskritis,Mažoji Smilties gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,213,Klaipėdos apskritis,Mažoji Vandens gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,214,Klaipėdos apskritis,Mažojo Kaimelio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,215,Klaipėdos apskritis,M. Mažvydo alėja,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,216,Klaipėdos apskritis,Medeinos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,217,Klaipėdos apskritis,Medelyno gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,218,Klaipėdos apskritis,Medikių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,219,Klaipėdos apskritis,Medvėgalio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,220,Klaipėdos apskritis,Medžiotojų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,221,Klaipėdos apskritis,Mechanizacijos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,222,Klaipėdos apskritis,Meldų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,223,Klaipėdos apskritis,Merkio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,224,Klaipėdos apskritis,Mėsininkų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,225,Klaipėdos apskritis,Metalo gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,226,Klaipėdos apskritis,Minijos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,227,Klaipėdos apskritis,Miško gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,228,Klaipėdos apskritis,Mituvos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,229,Klaipėdos apskritis,Mogiliovo gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,230,Klaipėdos apskritis,Mokyklos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,231,Klaipėdos apskritis,Molėtų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,232,Klaipėdos apskritis,Molo gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,233,Klaipėdos apskritis,Naglio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,234,Klaipėdos apskritis,Naikupės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,235,Klaipėdos apskritis,Naktigonės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,236,Klaipėdos apskritis,Naujakiemio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,237,Klaipėdos apskritis,Naujoji Uosto gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,238,Klaipėdos apskritis,Naujojo Sodo gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,239,Klaipėdos apskritis,Nėgių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,240,Klaipėdos apskritis,Nemuno gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,241,Klaipėdos apskritis,Nendrių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,242,Klaipėdos apskritis,S. Nėries gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,243,Klaipėdos apskritis,Neringos 1-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,244,Klaipėdos apskritis,Neringos 2-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,245,Klaipėdos apskritis,Nevėžio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,246,Klaipėdos apskritis,Nidos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,247,Klaipėdos apskritis,Obelų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,248,Klaipėdos apskritis,Otų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,249,Klaipėdos apskritis,Pajūrio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,250,Klaipėdos apskritis,Pakrantės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,251,Klaipėdos apskritis,Pakruojo gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,252,Klaipėdos apskritis,Palangos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,253,Klaipėdos apskritis,Pamario gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,254,Klaipėdos apskritis,Panevėžio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,255,Klaipėdos apskritis,Paribio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,256,Klaipėdos apskritis,Paryžiaus Komunos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,257,Klaipėdos apskritis,Parko gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,258,Klaipėdos apskritis,Pasiuntinių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,259,Klaipėdos apskritis,Pasvalio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,260,Klaipėdos apskritis,Paupio alėja,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,261,Klaipėdos apskritis,Perkėlos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,262,Klaipėdos apskritis,Pervalkos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,263,Klaipėdos apskritis,Pietinė gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,264,Klaipėdos apskritis,Pievų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,265,Klaipėdos apskritis,Pievų Tako gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,266,Klaipėdos apskritis,Pilies gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,267,Klaipėdos apskritis,Pylimo gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,268,Klaipėdos apskritis,Plieno gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,269,Klaipėdos apskritis,Plytinės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,270,Klaipėdos apskritis,Plytų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,271,Klaipėdos apskritis,Jurgio Plonaičio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,272,Klaipėdos apskritis,Poilsio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,273,Klaipėdos apskritis,Pramonės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,274,Klaipėdos apskritis,Priegliaus gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,275,Klaipėdos apskritis,Prienų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,276,Klaipėdos apskritis,Priestočio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,277,Klaipėdos apskritis,Puodžių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,278,Klaipėdos apskritis,Pušyno gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,279,Klaipėdos apskritis,Pušyno skersgatvis,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,280,Klaipėdos apskritis,Putinų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,281,Klaipėdos apskritis,Radviliškio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,282,Klaipėdos apskritis,Raganių 1-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,283,Klaipėdos apskritis,Raganių 2-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,284,Klaipėdos apskritis,Raganių 3-ioji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,285,Klaipėdos apskritis,Raganių 4-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,286,Klaipėdos apskritis,Rambyno gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,287,Klaipėdos apskritis,Ramioji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,288,Klaipėdos apskritis,Ramunių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,289,Klaipėdos apskritis,Raseinių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,290,Klaipėdos apskritis,Rasytės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,291,Klaipėdos apskritis,Rasos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,292,Klaipėdos apskritis,Ratilų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,293,Klaipėdos apskritis,Raudonės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,294,Klaipėdos apskritis,Reikjaviko gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,295,Klaipėdos apskritis,Renetų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,296,Klaipėdos apskritis,Rėvos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,297,Klaipėdos apskritis,Rimkų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,298,Klaipėdos apskritis,Ringelio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,299,Klaipėdos apskritis,Ryšininkų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,300,Klaipėdos apskritis,Ryto gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,301,Klaipėdos apskritis,Riūgeno gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,302,Klaipėdos apskritis,Rokiškio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,303,Klaipėdos apskritis,Rūko gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,304,Klaipėdos apskritis,Rumpiškės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,305,Klaipėdos apskritis,Ruonių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,306,Klaipėdos apskritis,Rusnės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,307,Klaipėdos apskritis,Rūtų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,308,Klaipėdos apskritis,Salos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,309,Klaipėdos apskritis,Šaltinio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,310,Klaipėdos apskritis,Šaltkalvių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,311,Klaipėdos apskritis,Sandėlių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,312,Klaipėdos apskritis,Sankryžos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,313,Klaipėdos apskritis,Šarlotės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,314,Klaipėdos apskritis,Šatrijos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,315,Klaipėdos apskritis,Šaudyklos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,316,Klaipėdos apskritis,Saulėlydžio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,317,Klaipėdos apskritis,Saulės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,318,Klaipėdos apskritis,Saulėtekio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,319,Klaipėdos apskritis,Šaulių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,320,Klaipėdos apskritis,Sausio 15-osios gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,321,Klaipėdos apskritis,Savanorių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,322,Klaipėdos apskritis,Senoji Smiltelės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,323,Klaipėdos apskritis,Senvagės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,324,Klaipėdos apskritis,Šermukšnių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,325,Klaipėdos apskritis,M. Šerniaus gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,326,Klaipėdos apskritis,Serviso gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,327,Klaipėdos apskritis,Šešupės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,328,Klaipėdos apskritis,Šiaulių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,329,Klaipėdos apskritis,Šiaurės prospektas,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,330,Klaipėdos apskritis,Šiaurinė gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,331,Klaipėdos apskritis,Šienpjovių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,332,Klaipėdos apskritis,Šilo gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,333,Klaipėdos apskritis,Šilojų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,334,Klaipėdos apskritis,Šiltnamių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,335,Klaipėdos apskritis,Šilutės plentas,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,336,Klaipėdos apskritis,S. Šimkaus gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,337,Klaipėdos apskritis,Erdmono Simonaičio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,338,Klaipėdos apskritis,I. Simonaitytės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,339,Klaipėdos apskritis,Sinagogų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,340,Klaipėdos apskritis,Skardžio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,341,Klaipėdos apskritis,Skautų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,342,Klaipėdos apskritis,Skerdėjų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,343,Klaipėdos apskritis,Skerdyklos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,344,Klaipėdos apskritis,Skersinė gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,345,Klaipėdos apskritis,Skinijos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,346,Klaipėdos apskritis,Skirsnemunės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,347,Klaipėdos apskritis,Skirvytės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,348,Klaipėdos apskritis,Skroblų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,349,Klaipėdos apskritis,Škunų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,350,Klaipėdos apskritis,Šlaito gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,351,Klaipėdos apskritis,Šlakių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,352,Klaipėdos apskritis,Šlamučių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,353,Klaipėdos apskritis,Šlavegių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,354,Klaipėdos apskritis,Slengių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,355,Klaipėdos apskritis,Slėnio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,356,Klaipėdos apskritis,Slyvų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,357,Klaipėdos apskritis,Smalininkų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,358,Klaipėdos apskritis,Smėlio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,359,Klaipėdos apskritis,Smilčių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,360,Klaipėdos apskritis,Smilgų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,361,Klaipėdos apskritis,Smiltelės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,362,Klaipėdos apskritis,Smilties Pylimo gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,363,Klaipėdos apskritis,Smiltynės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,364,Klaipėdos apskritis,Sodų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,365,Klaipėdos apskritis,Spindulio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,366,Klaipėdos apskritis,Sportininkų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,367,Klaipėdos apskritis,Stadiono gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,368,Klaipėdos apskritis,Stalių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,369,Klaipėdos apskritis,Statybininkų prospektas,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,370,Klaipėdos apskritis,Stoklių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,371,Klaipėdos apskritis,Stoties gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,372,Klaipėdos apskritis,Stovyklos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,373,Klaipėdos apskritis,Strėvos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,374,Klaipėdos apskritis,Šturmanų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,375,Klaipėdos apskritis,Sudmantų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,376,Klaipėdos apskritis,Sukilėlių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,377,Klaipėdos apskritis,Sūkurio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,378,Klaipėdos apskritis,Sulupės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,379,Klaipėdos apskritis,Svajonės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,380,Klaipėdos apskritis,Šventosios gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,381,Klaipėdos apskritis,Švepelių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,382,Klaipėdos apskritis,Šviesos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,383,Klaipėdos apskritis,Švyturio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,384,Klaipėdos apskritis,Taikos prospektas,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,385,Klaipėdos apskritis,Takoskyros gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,386,Klaipėdos apskritis,Tauralaukio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,387,Klaipėdos apskritis,Tauro 1-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,388,Klaipėdos apskritis,Tauro 10-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,389,Klaipėdos apskritis,Tauro 11-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,390,Klaipėdos apskritis,Tauro 12-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,391,Klaipėdos apskritis,Tauro 13-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,392,Klaipėdos apskritis,Tauro 14-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,393,Klaipėdos apskritis,Tauro 15-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,394,Klaipėdos apskritis,Tauro 16-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,395,Klaipėdos apskritis,Tauro 17-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,396,Klaipėdos apskritis,Tauro 18-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,397,Klaipėdos apskritis,Tauro 2-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,398,Klaipėdos apskritis,Tauro 3-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,399,Klaipėdos apskritis,Tauro 4-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,400,Klaipėdos apskritis,Tauro 5-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,401,Klaipėdos apskritis,Tauro 6-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,402,Klaipėdos apskritis,Tauro 7-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,403,Klaipėdos apskritis,Tauro 8-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,404,Klaipėdos apskritis,Tauro 9-oji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,405,Klaipėdos apskritis,Teatro gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,406,Klaipėdos apskritis,Technikos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,407,Klaipėdos apskritis,Tekintojų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,408,Klaipėdos apskritis,Tėkmės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,409,Klaipėdos apskritis,Telšių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,410,Klaipėdos apskritis,Tiesioji gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,411,Klaipėdos apskritis,Tylos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,412,Klaipėdos apskritis,Tiltų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,413,Klaipėdos apskritis,Tilžės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,414,Klaipėdos apskritis,Tinklų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,415,Klaipėdos apskritis,Titnago gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,416,Klaipėdos apskritis,Tomo gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,417,Klaipėdos apskritis,Topolių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,418,Klaipėdos apskritis,Trilapio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,419,Klaipėdos apskritis,Trinyčių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,420,Klaipėdos apskritis,Tujų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,421,Klaipėdos apskritis,Tulpių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,422,Klaipėdos apskritis,Tuopų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,423,Klaipėdos apskritis,Turgaus aikštė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,424,Klaipėdos apskritis,Turgaus gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,425,Klaipėdos apskritis,Turistų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,426,Klaipėdos apskritis,Ukmergės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,427,Klaipėdos apskritis,Universiteto alėja,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,428,Klaipėdos apskritis,Uosių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,429,Klaipėdos apskritis,Uosto gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,430,Klaipėdos apskritis,Upelio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,431,Klaipėdos apskritis,Upės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,432,Klaipėdos apskritis,Utenos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,433,Klaipėdos apskritis,Užlaukio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,434,Klaipėdos apskritis,Užupio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,435,Klaipėdos apskritis,Vaidaugų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,436,Klaipėdos apskritis,Vaivorykštės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,437,Klaipėdos apskritis,Vaivos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,438,Klaipėdos apskritis,Valstiečių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,439,Klaipėdos apskritis,Varnėnų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,440,Klaipėdos apskritis,Varnių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,441,Klaipėdos apskritis,Varpų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,442,Klaipėdos apskritis,Vasaros gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,443,Klaipėdos apskritis,Vasarotojų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,444,Klaipėdos apskritis,Vėjo gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,445,Klaipėdos apskritis,Veliuonos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,446,Klaipėdos apskritis,Verpėjų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,447,Klaipėdos apskritis,Verslo gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,448,Klaipėdos apskritis,Versmės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,449,Klaipėdos apskritis,Veterinarijos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,450,Klaipėdos apskritis,Vėtros gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,451,Klaipėdos apskritis,Vežėjų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,452,Klaipėdos apskritis,Vienybės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,453,Klaipėdos apskritis,Vikingų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,454,Klaipėdos apskritis,Vilkijos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,455,Klaipėdos apskritis,Vilnelės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,456,Klaipėdos apskritis,Vilniaus plentas,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,457,Klaipėdos apskritis,Vilties gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,458,Klaipėdos apskritis,Vingio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,459,Klaipėdos apskritis,Virkučių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,460,Klaipėdos apskritis,Viršutinė gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,461,Klaipėdos apskritis,Vyšnių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,462,Klaipėdos apskritis,Vytauto gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,463,Klaipėdos apskritis,Vyturio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,464,Klaipėdos apskritis,Žalgirio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,465,Klaipėdos apskritis,Zanavykų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,466,Klaipėdos apskritis,Zarasų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,467,Klaipėdos apskritis,Žardininkų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,468,Klaipėdos apskritis,Žardupės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,469,Klaipėdos apskritis,J. Zauerveino gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,470,Klaipėdos apskritis,Žemaičių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,471,Klaipėdos apskritis,J. Zembrickio gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,472,Klaipėdos apskritis,Žemynos gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,473,Klaipėdos apskritis,Žiedų skersgatvis,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,474,Klaipėdos apskritis,Žilvičių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,475,Klaipėdos apskritis,Žiobrių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,476,Klaipėdos apskritis,Žolynų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,477,Klaipėdos apskritis,Žūklės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,478,Klaipėdos apskritis,Žuvėdrų Tako gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,479,Klaipėdos apskritis,Žuvinto gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,480,Klaipėdos apskritis,Žvaigždžių gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,481,Klaipėdos apskritis,Žvejonės gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,482,Klaipėdos apskritis,Žvejonės tako gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,483,Klaipėdos apskritis,Žvejų gatvė,
-Klaipėda,Klaipėdos miestas,LIETUVOS RESPUBLIKA,Klaipėdos miesto savivaldybė,484,Klaipėdos apskritis,Žvelsos gatvė,
+Id, Country, County, Municipality, CivilParish, City, City_genitive, Street
+1, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Agluonos gatvė
+2, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Aguonų gatvė
+3, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Ajerų gatvė
+4, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Akmenų gatvė
+5, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Alytaus gatvė
+6, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Alyvų gatvė
+7, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Alksnynės gatvė
+8, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Anykščių gatvė
+9, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Antrosios Melnragės gatvė
+10, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Apynių gatvė
+11, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Arimų gatvė
+12, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Artojo gatvė
+13, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Atgimimo aikštė
+14, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Audėjų gatvė
+15, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Audros gatvė
+16, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Aukštaičių gatvė
+17, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Aukštoji gatvė
+18, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Aušrinės gatvė
+19, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Aušros gatvė
+20, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Austėjos gatvė
+21, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Ąžuolų gatvė
+22, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Viliaus Bajoro gatvė
+23, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Balandžių gatvė
+24, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Baltijos prospektas
+25, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Baltijos 1-oji gatvė
+26, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Baltijos 10-oji gatvė
+27, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Baltijos 11-oji gatvė
+28, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Baltijos 12-oji gatvė
+29, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Baltijos 13-oji gatvė
+30, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Baltijos 14-oji gatvė
+31, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Baltijos 2-oji gatvė
+32, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Baltijos 3-oji gatvė
+33, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Baltijos 4-oji gatvė
+34, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Baltijos 5-oji gatvė
+35, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Baltijos 6-oji gatvė
+36, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Baltijos 7-oji gatvė
+37, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Baltijos 8-oji gatvė
+38, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Baltijos 9-oji gatvė
+39, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Baltikalnio gatvė
+40, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Bandužių gatvė
+41, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Bangų gatvė
+42, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Barškių gatvė
+43, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Bastionų gatvė
+44, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Bažnyčių gatvė
+45, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Beržų gatvė
+46, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Bičiulių gatvė
+47, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Bijūnų gatvė
+48, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Birštono gatvė
+49, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Birutės gatvė
+50, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Biržų gatvė
+51, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Blušių gatvė
+52, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Bokštų gatvė
+53, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Brožynų gatvė
+54, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Bružės gatvė
+55, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Budelkiemio gatvė
+56, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Miko Buntino gatvė
+57, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Burių gatvė
+58, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Butkų Juzės gatvė
+59, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Butsargių gatvė
+60, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Dailės gatvė
+61, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Dailidžių gatvė
+62, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Danės gatvė
+63, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Dariaus ir Girėno gatvė
+64, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Darželio gatvė
+65, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Daržų gatvė
+66, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Daugulių gatvė
+67, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, S. Daukanto gatvė
+68, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Davilių gatvė
+69, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Debesų gatvė
+70, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Debreceno gatvė
+71, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Deimės gatvė
+72, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Dianos gatvė
+73, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Didžioji Vandens gatvė
+74, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Dienovidžio gatvė
+75, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Dituvos gatvė
+76, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Dobilo 1-oji gatvė
+77, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Dobilo 2-oji gatvė
+78, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, K. Donelaičio aikštė
+79, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, K. Donelaičio gatvė
+80, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Dragūnų gatvė
+81, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Draugystės 1-oji gatvė
+82, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Draugystės 2-oji gatvė
+83, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Draugystės 3-ioji gatvė
+84, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Drebulių gatvė
+85, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Druskininkų gatvė
+86, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Dubysos gatvė
+87, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Dusetų gatvė
+88, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Dvaro gatvė
+89, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Dzūkų gatvė
+90, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Eglių gatvė
+91, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Erškėtrožių gatvė
+92, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Gabijos gatvė
+93, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Galinė gatvė
+94, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Galinio Pylimo gatvė
+95, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Gamyklos gatvė
+96, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Garažų gatvė
+97, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Gedminų gatvė
+98, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Gedviliškės gatvė
+99, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Gegučių gatvė
+100, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Gegužės gatvė
+101, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Geležinkelio gatvė
+102, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Geležinkelio sodybos gatvė
+103, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Gėlių gatvė
+104, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Gerdaujos gatvė
+105, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Gilijos gatvė
+106, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Gilių gatvė
+107, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Gintaro gatvė
+108, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Giraitės gatvė
+109, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Girininkijos gatvė
+110, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, L. Giros gatvė
+111, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Gluosnių gatvė
+112, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Gluosnių skersgatvis
+113, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Graumenės gatvė
+114, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Griaustinio gatvė
+115, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Griežupės gatvė
+116, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Grįžgatvio gatvė
+117, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Gubojų gatvė
+118, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Gudobelių gatvė
+119, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Gulbių gatvė
+120, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Įgulos gatvė
+121, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Inkaro skersgatvis
+122, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Inkaro 1-oji gatvė
+123, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Inkaro 2-oji gatvė
+124, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Inkaro 3-oji gatvė
+125, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Irklų gatvė
+126, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Jachtų gatvė
+127, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Martyno Jankaus gatvė
+128, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, J. Janonio gatvė
+129, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Jaunimo gatvė
+130, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Jaunystės gatvė
+131, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Jogučių gatvė
+132, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Joniškės gatvė
+133, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Jono gatvė
+134, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Jotvingių gatvė
+135, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Jungų gatvė
+136, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Juodkrantės gatvė
+137, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Jūratės gatvė
+138, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Jurbarko gatvė
+139, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Jūreivių gatvė
+140, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Jurginų gatvė
+141, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Jūrininkų prospektas
+142, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Jūros gatvė
+143, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Kadagių gatvė
+144, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Kairių gatvė
+145, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Kalnupės gatvė
+146, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Kalvių gatvė
+147, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Kalvos gatvė
+148, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, I. Kanto gatvė
+149, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Kapitonų gatvė
+150, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Kapsų gatvė
+151, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Kareivinių gatvė
+152, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Karklų gatvė
+153, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Karlskronos aikštė
+154, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Karlskronos gatvė
+155, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, J. Karoso gatvė
+156, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Kaštonų gatvė
+157, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Kauno gatvė
+158, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Kėdainių gatvė
+159, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Kepėjų gatvė
+160, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Kybelkių gatvė
+161, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Kintų gatvė
+162, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Klaipėdos gatvė
+163, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Klemiškės gatvė
+164, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Klevų gatvė
+165, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Kombinato gatvė
+166, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Kooperacijos gatvė
+167, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Kopų gatvė
+168, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Kranto gatvė
+169, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Kraštinė gatvė
+170, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Kražių gatvė
+171, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Kretainio gatvė
+172, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Kretingos gatvė
+173, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Krovėjų gatvė
+174, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Kūlių Vartų gatvė
+175, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Kuncų gatvė
+176, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Kuosų gatvė
+177, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Kupiškio gatvė
+178, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Kurėnų gatvė
+179, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Kurpių gatvė
+180, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Kuršių aikštė
+181, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Labrenciškės gatvė
+182, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Labrencų Dvaro gatvė
+183, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Laistų 1-oji gatvė
+184, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Laistų 2-oji gatvė
+185, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Laistų 3-oji gatvė
+186, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Laivų skersgatvis
+187, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Lakštučių gatvė
+188, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Lankiškių gatvė
+189, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Lanko gatvė
+190, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Laukininkų gatvė
+191, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Laukpačio gatvė
+192, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Laukų gatvė
+193, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Lazdynų gatvė
+194, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Lelijų gatvė
+195, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Lendrūnų gatvė
+196, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Levandrų gatvė
+197, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Prano Lideikio gatvė
+198, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Liepojos gatvė
+199, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Liepų gatvė
+200, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Lietaus gatvė
+201, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Lietuvininkų aikštė
+202, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Ligoninės gatvė
+203, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Lypkių gatvė
+204, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Liubeko gatvė
+205, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Lubinų gatvė
+206, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Lūžų gatvė
+207, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Mainų gatvė
+208, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Malūnininkų gatvė
+209, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, H. Manto gatvė
+210, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Marių gatvė
+211, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Markučių gatvė
+212, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Maumedžių gatvė
+213, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Mažoji Smilties gatvė
+214, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Mažoji Vandens gatvė
+215, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Mažojo Kaimelio gatvė
+216, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, M. Mažvydo alėja
+217, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Medeinos gatvė
+218, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Medelyno gatvė
+219, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Medikių gatvė
+220, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Medvėgalio gatvė
+221, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Medžiotojų gatvė
+222, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Mechanizacijos gatvė
+223, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Meldų gatvė
+224, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Merkio gatvė
+225, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Mėsininkų gatvė
+226, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Metalo gatvė
+227, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Minijos gatvė
+228, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Miško gatvė
+229, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Mituvos gatvė
+230, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Mogiliovo gatvė
+231, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Mokyklos gatvė
+232, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Molėtų gatvė
+233, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Molo gatvė
+234, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Naglio gatvė
+235, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Naikupės gatvė
+236, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Naktigonės gatvė
+237, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Naujakiemio gatvė
+238, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Naujoji Uosto gatvė
+239, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Naujojo Sodo gatvė
+240, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Nėgių gatvė
+241, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Nemuno gatvė
+242, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Nendrių gatvė
+243, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, S. Nėries gatvė
+244, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Neringos 1-oji gatvė
+245, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Neringos 2-oji gatvė
+246, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Nevėžio gatvė
+247, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Nidos gatvė
+248, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Obelų gatvė
+249, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Otų gatvė
+250, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Pajūrio gatvė
+251, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Pakrantės gatvė
+252, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Pakruojo gatvė
+253, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Palangos gatvė
+254, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Pamario gatvė
+255, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Panevėžio gatvė
+256, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Paribio gatvė
+257, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Paryžiaus Komunos gatvė
+258, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Parko gatvė
+259, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Pasiuntinių gatvė
+260, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Pasvalio gatvė
+261, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Paupio alėja
+262, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Perkėlos gatvė
+263, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Perkūno gatvė
+264, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Pervalkos gatvė
+265, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Pietinė gatvė
+266, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Pievų gatvė
+267, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Pievų Tako gatvė
+268, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Pilies gatvė
+269, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Pylimo gatvė
+270, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Plieno gatvė
+271, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Plytinės gatvė
+272, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Plytų gatvė
+273, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Jurgio Plonaičio gatvė
+274, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Poilsio gatvė
+275, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Pramonės gatvė
+276, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Priegliaus gatvė
+277, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Prienų gatvė
+278, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Priestočio gatvė
+279, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Puodžių gatvė
+280, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Pušyno gatvė
+281, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Pušyno skersgatvis
+282, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Putinų gatvė
+283, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Radviliškio gatvė
+284, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Raganių 1-oji gatvė
+285, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Raganių 2-oji gatvė
+286, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Raganių 3-ioji gatvė
+287, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Raganių 4-oji gatvė
+288, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Rambyno gatvė
+289, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Ramioji gatvė
+290, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Ramunių gatvė
+291, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Raseinių gatvė
+292, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Rasytės gatvė
+293, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Rasos gatvė
+294, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Ratilų gatvė
+295, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Raudonės gatvė
+296, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Reikjaviko gatvė
+297, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Renetų gatvė
+298, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Rėvos gatvė
+299, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Rimkų gatvė
+300, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Ringelio gatvė
+301, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Ryšininkų gatvė
+302, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Ryto gatvė
+303, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Riūgeno gatvė
+304, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Rokiškio gatvė
+305, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Rūko gatvė
+306, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Rumpiškės gatvė
+307, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Ruonių gatvė
+308, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Rusnės gatvė
+309, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Rūtų gatvė
+310, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Salos gatvė
+311, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Šaltinio gatvė
+312, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Šaltkalvių gatvė
+313, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Sandėlių gatvė
+314, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Sankryžos gatvė
+315, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Šarlotės gatvė
+316, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Šatrijos gatvė
+317, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Šaudyklos gatvė
+318, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Saulėlydžio gatvė
+319, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Saulės gatvė
+320, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Saulėtekio gatvė
+321, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Šaulių gatvė
+322, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Sausio 15-osios gatvė
+323, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Savanorių gatvė
+324, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Senoji Smiltelės gatvė
+325, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Senvagės gatvė
+326, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Šermukšnių gatvė
+327, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, M. Šerniaus gatvė
+328, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Serviso gatvė
+329, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Šešupės gatvė
+330, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Šiaulių gatvė
+331, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Šiaurės prospektas
+332, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Šiaurinė gatvė
+333, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Šienpjovių gatvė
+334, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Šilo gatvė
+335, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Šilojų gatvė
+336, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Šiltnamių gatvė
+337, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Šilutės plentas
+338, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, S. Šimkaus gatvė
+339, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Erdmono Simonaičio gatvė
+340, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, I. Simonaitytės gatvė
+341, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Sinagogų gatvė
+342, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Skardžio gatvė
+343, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Skautų gatvė
+344, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Skerdėjų gatvė
+345, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Skerdyklos gatvė
+346, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Skersinė gatvė
+347, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Skinijos gatvė
+348, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Skirsnemunės gatvė
+349, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Skirvytės gatvė
+350, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Skroblų gatvė
+351, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Škunų gatvė
+352, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Šlaito gatvė
+353, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Šlakių gatvė
+354, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Šlamučių gatvė
+355, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Šlavegių gatvė
+356, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Slengių gatvė
+357, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Slėnio gatvė
+358, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Slyvų gatvė
+359, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Smalininkų gatvė
+360, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Smėlio gatvė
+361, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Smilčių gatvė
+362, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Smilgų gatvė
+363, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Smiltelės gatvė
+364, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Smilties Pylimo gatvė
+365, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Smiltynės gatvė
+366, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Sodų gatvė
+367, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Spindulio gatvė
+368, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Sportininkų gatvė
+369, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Stadiono gatvė
+370, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Stalių gatvė
+371, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Statybininkų prospektas
+372, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Stoklių gatvė
+373, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Stoties gatvė
+374, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Stovyklos gatvė
+375, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Strėvos gatvė
+376, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Šturmanų gatvė
+377, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Sudmantų gatvė
+378, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Sukilėlių gatvė
+379, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Sūkurio gatvė
+380, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Sulupės gatvė
+381, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Svajonės gatvė
+382, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Šventosios gatvė
+383, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Švepelių gatvė
+384, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Šviesos gatvė
+385, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Švyturio gatvė
+386, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Taikos prospektas
+387, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Takoskyros gatvė
+388, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Tauralaukio gatvė
+389, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Tauro 1-oji gatvė
+390, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Tauro 10-oji gatvė
+391, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Tauro 11-oji gatvė
+392, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Tauro 12-oji gatvė
+393, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Tauro 13-oji gatvė
+394, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Tauro 14-oji gatvė
+395, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Tauro 15-oji gatvė
+396, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Tauro 16-oji gatvė
+397, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Tauro 17-oji gatvė
+398, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Tauro 18-oji gatvė
+399, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Tauro 2-oji gatvė
+400, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Tauro 3-oji gatvė
+401, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Tauro 4-oji gatvė
+402, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Tauro 5-oji gatvė
+403, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Tauro 6-oji gatvė
+404, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Tauro 7-oji gatvė
+405, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Tauro 8-oji gatvė
+406, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Tauro 9-oji gatvė
+407, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Teatro gatvė
+408, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Technikos gatvė
+409, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Tekintojų gatvė
+410, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Tėkmės gatvė
+411, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Telšių gatvė
+412, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Tiesioji gatvė
+413, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Tylos gatvė
+414, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Tiltų gatvė
+415, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Tilžės gatvė
+416, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Tinklų gatvė
+417, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Titnago gatvė
+418, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Tomo gatvė
+419, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Topolių gatvė
+420, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Trilapio gatvė
+421, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Trinyčių gatvė
+422, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Tujų gatvė
+423, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Tulpių gatvė
+424, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Tuopų gatvė
+425, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Turgaus aikštė
+426, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Turgaus gatvė
+427, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Turistų gatvė
+428, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Ukmergės gatvė
+429, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Universiteto alėja
+430, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Uosių gatvė
+431, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Uosto gatvė
+432, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Upelio gatvė
+433, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Upės gatvė
+434, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Utenos gatvė
+435, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Užlaukio gatvė
+436, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Užupio gatvė
+437, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Vaidaugų gatvė
+438, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Vaivorykštės gatvė
+439, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Vaivos gatvė
+440, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Valstiečių gatvė
+441, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Varnėnų gatvė
+442, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Varnių gatvė
+443, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Varpų gatvė
+444, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Vasaros gatvė
+445, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Vasarotojų gatvė
+446, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Vėjo gatvė
+447, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Veliuonos gatvė
+448, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Verpėjų gatvė
+449, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Verslo gatvė
+450, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Versmės gatvė
+451, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Veterinarijos gatvė
+452, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Vėtros gatvė
+453, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Vežėjų gatvė
+454, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Vienybės gatvė
+455, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Vikingų gatvė
+456, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Vilkijos gatvė
+457, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Vilnelės gatvė
+458, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Vilniaus plentas
+459, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Vilties gatvė
+460, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Vingio gatvė
+461, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Virkučių gatvė
+462, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Viršutinė gatvė
+463, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Vyšnių gatvė
+464, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Vytauto gatvė
+465, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Vyturio gatvė
+466, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Žalgirio gatvė
+467, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Zanavykų gatvė
+468, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Zarasų gatvė
+469, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Žardininkų gatvė
+470, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Žardupės gatvė
+471, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, J. Zauerveino gatvė
+472, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Žemaičių gatvė
+473, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, J. Zembrickio gatvė
+474, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Žemynos gatvė
+475, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Žiedų skersgatvis
+476, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Žilvičių gatvė
+477, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Žiobrių gatvė
+478, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Žolynų gatvė
+479, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Žūklės gatvė
+480, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Žuvėdrų Tako gatvė
+481, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Žuvinto gatvė
+482, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Žvaigždžių gatvė
+483, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Žvejonės gatvė
+484, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Žvejonės tako gatvė
+485, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Žvejų gatvė
+486, LIETUVOS RESPUBLIKA, Alytaus apskritis, Alytaus miesto savivaldybė, Klaipėda, Žvelsos gatvė
