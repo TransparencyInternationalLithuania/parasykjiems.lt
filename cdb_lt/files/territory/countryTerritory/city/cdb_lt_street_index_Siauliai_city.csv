@@ -1,633 +1,633 @@
-Id, Country, County, Municipality, CivilParish, City, City_genitive, Street
-1, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Jono Adomaičio gatvė
-2, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Aerouosto gatvė
-3, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Agrastų gatvė
-4, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Aido gatvė
-5, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Aido skersgatvis
-6, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Aisčių gatvė
-7, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Akmenės gatvė
-8, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Aleksandrijos gatvė
-9, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Alytaus gatvė
-10, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Alyvų gatvė
-11, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Alksnių gatvė
-12, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Anykščių gatvė
-13, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Architektų gatvė
-14, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Artojų gatvė
-15, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Ateities gatvė
-16, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Audros skersgatvis
-17, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Aukštabalio gatvė
-18, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Aukštoji gatvė
-19, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Aušrinės Sodų 1-oji gatvė
-20, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Aušrinės Sodų 10-oji gatvė
-21, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Aušrinės Sodų 11-oji gatvė
-22, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Aušrinės Sodų 12-oji gatvė
-23, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Aušrinės Sodų 13-oji gatvė
-24, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Aušrinės Sodų 14-oji gatvė
-25, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Aušrinės Sodų 15-oji gatvė
-26, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Aušrinės Sodų 16-oji gatvė
-27, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Aušrinės Sodų 2-oji gatvė
-28, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Aušrinės Sodų 3-oji gatvė
-29, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Aušrinės Sodų 4-oji gatvė
-30, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Aušrinės Sodų 5-oji gatvė
-31, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Aušrinės Sodų 6-oji gatvė
-32, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Aušrinės Sodų 7-oji gatvė
-33, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Aušrinės Sodų 8-oji gatvė
-34, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Aušrinės Sodų 9-oji gatvė
-35, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Aušros alėja
-36, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Aušros takas
-37, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Austėjos gatvė
-38, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Ąžuolyno gatvė
-39, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Ąžuolo Sodų 1-oji gatvė
-40, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Ąžuolo Sodų 2-oji gatvė
-41, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Ąžuolo Sodų 3-oji gatvė
-42, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Bačiūnų gatvė
-43, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Bačiūnų gatvės sodai 
-44, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Baisogalos gatvė
-45, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Baltarusių gatvė
-46, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Baltų gatvė
-47, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Baltupėnų gatvė
-48, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Bartų gatvė
-49, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, J. Basanavičiaus gatvė
-50, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Bertužių gatvė
-51, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Berželio Sodų 1-oji gatvė
-52, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Berželio Sodų 2-oji gatvė
-53, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Berželio Sodų 3-oji gatvė
-54, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Berželio Sodų 4-oji gatvė
-55, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Berželio Sodų 5-oji gatvė
-56, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Berželio Sodų 6-oji gatvė
-57, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Berželio Sodų 7-oji gatvė
-58, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Berželio Sodų 8-oji gatvė
-59, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Berželio Sodų 9-oji gatvė
-60, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Beržų gatvė
-61, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, V. Bielskio gatvė
-62, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Bijotės gatvė
-63, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, J. Biliūno gatvė
-64, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Birštono gatvė
-65, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Birutės gatvė
-66, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Biržų gatvė
-67, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, J. Bretkūno gatvė
-68, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Bruknių gatvė
-69, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Bubių gatvė
-70, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, M. K. Čiurlionio gatvė
-71, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, V. Čkalovo gatvė
-72, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, P. Cvirkos gatvė
-73, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Dagilių gatvė
-74, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Dailidžių gatvė
-75, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Dainavos gatvė
-76, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Dainavos takas
-77, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Dainų gatvė
-78, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Darbininkų gatvė
-79, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, S. Dariaus ir S. Girėno gatvė
-80, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Darkiemio gatvė
-81, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Darželio gatvė
-82, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Daubos gatvė
-83, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, S. Daukanto gatvė
-84, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Daumanto gatvė
-85, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Dobilo gatvė
-86, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, K. Donelaičio gatvė
-87, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Dotnuvos gatvė
-88, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Draugystės prospektas
-89, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Draugystės Sodų 1-oji gatvė
-90, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Draugystės Sodų 2-oji gatvė
-91, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Draugystės takas
-92, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Druskininkų gatvė
-93, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Dubijos gatvė
-94, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Dubysos gatvė
-95, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Dukto gatvė
-96, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Dvaro gatvė
-97, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Eglyno gatvė
-98, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Eidivilo gatvė
-99, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Elnio gatvė
-100, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Energetikų gatvė
-101, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Erškėčių gatvė
-102, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Estų gatvė
-103, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Etten-Leuro gatvė
-104, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Ežero gatvė
-105, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Gabijos gatvė
-106, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Gailių gatvė
-107, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Gaisrininkų gatvė
-108, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Gamybos gatvė
-109, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Ganyklų gatvė
-110, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Garažų gatvė
-111, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Gardino gatvė
-112, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Gegužių gatvė
-113, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Z. Gėlės gatvė
-114, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Geležinkelio gatvė
-115, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Geluvos gatvė
-116, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Genupio gatvė
-117, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Gervių gatvė
-118, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Gilijos gatvė
-119, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Ginkūnų gatvė
-120, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Gintaro Sodų 1-oji gatvė
-121, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, L. Giros gatvė
-122, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Girulių gatvė
-123, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Gytarių gatvė
-124, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Gluosnio Sodų 1-oji gatvė
-125, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Gluosnio Sodų 2-oji gatvė
-126, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Gluosnių gatvė
-127, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Grafo Zubovo gatvė
-128, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Griežlių gatvė
-129, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, V. Grinkevičiaus gatvė
-130, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Gryžuvos gatvė
-131, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Gruzdžių gatvė
-132, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Gubernijos Sodų 1-oji gatvė
-133, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Gubernijos Sodų 10-oji gatvė
-134, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Gubernijos Sodų 2-oji gatvė
-135, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Gubernijos Sodų 3-oji gatvė
-136, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Gubernijos Sodų 4-oji gatvė
-137, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Gubernijos Sodų 5-oji gatvė
-138, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Gubernijos Sodų 6-oji gatvė
-139, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Gubernijos Sodų 7-oji gatvė
-140, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Gubernijos Sodų 8-oji gatvė
-141, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Gubernijos Sodų 9-oji gatvė
-142, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Gūdžiūnų gatvė
-143, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Gumbinės gatvė
-144, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Gvazdikų takas
-145, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Ievų gatvė
-146, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Ilgoji gatvė
-147, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Išradėjų gatvė
-148, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Įsros gatvė
-149, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Jono Jablonskio gatvė
-150, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Jakštaičių gatvė
-151, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, M. Jankaus gatvė
-152, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, K. Jankausko gatvė
-153, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, J. Janonio gatvė
-154, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Javų gatvė
-155, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Joniškėlio gatvė
-156, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Jotvingių gatvė
-157, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Jovaro gatvė
-158, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Jurginų gatvė
-159, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Kadagyno gatvė
-160, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, A. Kairaičio gatvė
-161, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Kairių gatvė
-162, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, K. Kalinausko gatvė
-163, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Kalnelio gatvė
-164, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Kalniškių gatvė
-165, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Kalno gatvė
-166, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Kamanių gatvė
-167, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Kanapių gatvė
-168, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Kapų gatvė
-169, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Karaliaučiaus gatvė
-170, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Karklų gatvė
-171, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, E. Karpio gatvė
-172, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Karpiškio gatvė
-173, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Kaštonų alėja
-174, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Kauno gatvė
-175, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Kėdainių gatvė
-176, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Kelmės gatvė
-177, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Kybartų gatvė
-178, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Kikilių gatvė
-179, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Klaipėdos gatvė
-180, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Klevo Sodų 1-oji gatvė
-181, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Klevo Sodų 10-oji gatvė
-182, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Klevo Sodų 2-oji gatvė
-183, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Klevo Sodų 3-oji gatvė
-184, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Klevo Sodų 4-oji gatvė
-185, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Klevo Sodų 5-oji gatvė
-186, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Klevo Sodų 6-oji gatvė
-187, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Klevo Sodų 7-oji gatvė
-188, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Klevo Sodų 8-oji gatvė
-189, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Klevo Sodų 9-oji gatvė
-190, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Klevų gatvė
-191, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, K. Korsako gatvė
-192, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Krantinės gatvė
-193, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Kražių gatvė
-194, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Kregždutės Sodų 1-oji gatvė
-195, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Kregždutės Sodų 2-oji gatvė
-196, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Kregždutės Sodų 3-oji gatvė
-197, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Kregždutės Sodų 4-oji gatvė
-198, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Kregždutės Sodų 5-oji gatvė
-199, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Kregždutės Sodų 6-oji gatvė
-200, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Kretingos gatvė
-201, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Krymo gatvė
-202, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Kristianstado gatvė
-203, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Krivių gatvė
-204, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, V. Kudirkos gatvė
-205, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Kulpės gatvė
-206, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, A. Kulviečio gatvė
-207, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Kuosų gatvė
-208, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Kupiškio gatvė
-209, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Kuršėnų gatvė
-210, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Kuršių gatvė
-211, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Kurtinių gatvė
-212, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Kurtuvėnų gatvė
-213, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Kviečių gatvė
-214, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Lakštingalos Sodų 1-oji gatvė
-215, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Lakštingalos Sodų 10-oji gatvė
-216, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Lakštingalos Sodų 11-oji gatvė
-217, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Lakštingalos Sodų 12-oji gatvė
-218, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Lakštingalos Sodų 13-oji gatvė
-219, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Lakštingalos Sodų 14-oji gatvė
-220, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Lakštingalos Sodų 15-oji gatvė
-221, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Lakštingalos Sodų 2-oji gatvė
-222, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Lakštingalos Sodų 3-oji gatvė
-223, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Lakštingalos Sodų 4-oji gatvė
-224, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Lakštingalos Sodų 5-oji gatvė
-225, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Lakštingalos Sodų 6-oji gatvė
-226, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Lakštingalos Sodų 7-oji gatvė
-227, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Lakštingalos Sodų 8-oji gatvė
-228, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Lakštingalos Sodų 9-oji gatvė
-229, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Lakūnų gatvė
-230, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Lapišės gatvė
-231, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Latgalių gatvė
-232, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Latvių gatvė
-233, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Lauko gatvė
-234, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Lazdynų gatvė
-235, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Lelijos Sodų 1-oji gatvė
-236, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Lelijos Sodų 10-oji gatvė
-237, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Lelijos Sodų 11-oji gatvė
-238, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Lelijos Sodų 12-oji gatvė
-239, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Lelijos Sodų 13-oji gatvė
-240, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Lelijos Sodų 14-oji gatvė
-241, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Lelijos Sodų 2-oji gatvė
-242, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Lelijos Sodų 3-oji gatvė
-243, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Lelijos Sodų 4-oji gatvė
-244, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Lelijos Sodų 5-oji gatvė
-245, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Lelijos Sodų 6-oji gatvė
-246, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Lelijos Sodų 7-oji gatvė
-247, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Lelijos Sodų 8-oji gatvė
-248, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Lelijos Sodų 9-oji gatvė
-249, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Lelijų gatvė
-250, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Lenkų gatvė
-251, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Lydos gatvė
-252, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Lyduvėnų gatvė
-253, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Liejyklos gatvė
-254, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Lieporių gatvė
-255, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Liepų gatvė
-256, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Lietuvininkų gatvė
-257, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Lygumų gatvė
-258, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Lingailių gatvė
-259, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Linkuvos gatvė
-260, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Lyros gatvė
-261, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Lizdeikos gatvė
-262, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, S. Lukauskio gatvė
-263, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Luknės gatvė
-264, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Lukojaus gatvė
-265, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, P. Lukšio gatvė
-266, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Luokės gatvė
-267, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Luponės gatvė
-268, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Maironio gatvė
-269, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Malūno gatvė
-270, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, M. Margytės gatvė
-271, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Margių gatvė
-272, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Margių Sodų 1-oji gatvė
-273, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Margių Sodų 2-oji gatvė
-274, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Margių Sodų 3-oji gatvė
-275, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Margių Sodų 4-oji gatvė
-276, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Marijampolės gatvė
-277, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Mažoji gatvė
-278, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Mažosios Lietuvos gatvė
-279, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, M. Mažvydo gatvė
-280, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Medelyno gatvė
-281, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Medvėgalio gatvė
-282, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Mechanikų gatvė
-283, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Mėlynių gatvė
-284, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Merkinės gatvė
-285, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Meškerių gatvė
-286, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Metalistų gatvė
-287, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, A. Mickevičiaus gatvė
-288, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Miglės gatvė
-289, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Miglovaros gatvė
-290, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Jono Mikėno gatvė
-291, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, A. Mikševičiaus gatvė
-292, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Mirtų gatvė
-293, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Miško gatvė
-294, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Mokytojų gatvė
-295, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, V. Montvilos gatvė
-296, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Mortos gatvė
-297, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Petro Motiekaičio gatvė
-298, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Nadruvos gatvė
-299, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Narcizų gatvė
-300, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Naujo Ryto takas
-301, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Nendrių gatvė
-302, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, S. Nėries gatvė
-303, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Neringos gatvė
-304, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Nidos gatvė
-305, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Nykščio gatvė
-306, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Noreikių gatvė
-307, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Notangos gatvė
-308, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Nuklono gatvė
-309, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Numerių gatvė
-310, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Odininkų gatvė
-311, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, J. Orlausko gatvė
-312, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Pabalių gatvė
-313, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Padirsių gatvė
-314, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Pagėgių gatvė
-315, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Pailių gatvė
-316, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Paitaičių gatvė
-317, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Pakalnės gatvė
-318, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Pakapės gatvė
-319, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Pakruojo gatvė
-320, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Palangos gatvė
-321, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Pandėlio gatvė
-322, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Panevėžio gatvė
-323, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Panevėžio gatvės sodai 
-324, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Paparčio Sodų 1-oji gatvė
-325, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Paparčio Sodų 2-oji gatvė
-326, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Paparčio Sodų 3-oji gatvė
-327, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Paparčio Sodų 4-oji gatvė
-328, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Paparčio Sodų 5-oji gatvė
-329, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Paparčio Sodų 6-oji gatvė
-330, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Paparčių gatvė
-331, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Papievių gatvė
-332, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Papilės gatvė
-333, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Paprūdžio gatvė
-334, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Parko gatvė
-335, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Pasvalio gatvė
-336, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Paukščių takas
-337, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Pavasario gatvė
-338, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Pavasario Sodų 1-oji gatvė
-339, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Pavasario Sodų 2-oji gatvė
-340, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Pavasario Sodų 3-oji gatvė
-341, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Pelkių gatvė
-342, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Pempių gatvė
-343, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Perkūno gatvė
-344, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Pikeliškės gatvė
-345, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Piktmiškio gatvė
-346, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Pirties gatvė
-347, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Platelių gatvė
-348, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Plungės gatvė
-349, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Poilsio gatvė
-350, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Poilsio gatvės sodai 
-351, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Poilsio Sodų 1-oji gatvė
-352, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Poilsio Sodų 2-oji gatvė
-353, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Poilsio Sodų 3-oji gatvė
-354, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, D. Poškos gatvė
-355, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Pramonės gatvė
-356, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Preilos gatvė
-357, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Prienų gatvė
-358, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Prisikėlimo aikštė
-359, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Pročiūnų gatvė
-360, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Prūdelio gatvė
-361, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Prūsų gatvė
-362, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Pumpučių gatvė
-363, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Pumpuro Sodų 1-oji gatvė
-364, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Pumpuro Sodų 2-oji gatvė
-365, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Pumpuro Sodų 3-oji gatvė
-366, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Pumpuro Sodų 4-oji gatvė
-367, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Pumpuro Sodų 5-oji gatvė
-368, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Purienos Sodų 1-oji gatvė
-369, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Purienos Sodų 2-oji gatvė
-370, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Purienų gatvė
-371, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Pušyno gatvė
-372, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Putinų gatvė
-373, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Radviliškio gatvė
-374, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Ragainės gatvė
-375, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Raguvos takas
-376, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Raisto gatvė
-377, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Raizgių gatvė
-378, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Rambyno gatvė
-379, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Ramybės Sodų 1-oji gatvė
-380, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Ramybės Sodų 2-oji gatvė
-381, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Ramybės Sodų 3-oji gatvė
-382, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Ramybės Sodų 4-oji gatvė
-383, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Ramygalos gatvė
-384, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Ramunės Sodų 1-oji gatvė
-385, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Ramunės Sodų 2-oji gatvė
-386, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Ramunės Sodų 3-oji gatvė
-387, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Ramunės Sodų 4-oji gatvė
-388, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Ramunės Sodų 5-oji gatvė
-389, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Ramunės Sodų 6-oji gatvė
-390, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Ramunės Sodų 7-oji gatvė
-391, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Ramunės Sodų 8-oji gatvė
-392, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Ramunių gatvė
-393, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, S. Rapolionio gatvė
-394, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Raseinių gatvė
-395, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Rasos gatvė
-396, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Rasos Sodų 1-oji gatvė
-397, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Rasos Sodų 2-oji gatvė
-398, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Rasos Sodų 3-oji gatvė
-399, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Rasos Sodų 4-oji gatvė
-400, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Rasos Sodų 5-oji gatvė
-401, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Rėkyvos gatvė
-402, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Rėkyvos Sodų 1-oji gatvė
-403, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Rėkyvos Sodų 2-oji gatvė
-404, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Rėkyvos Sodų 3-oji gatvė
-405, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Rėkyvos Sodų 4-oji gatvė
-406, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Rėžių gatvė
-407, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, L. Rėzos gatvė
-408, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Rygos gatvė
-409, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Rokiškio gatvė
-410, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Romintos gatvė
-411, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Rožių gatvė
-412, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Rūdės gatvė
-413, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Rugiagėlių gatvė
-414, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Rugių gatvė
-415, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Rūko gatvė
-416, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Rusnės gatvė
-417, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Rūtos Sodų 1-oji gatvė
-418, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Rūtos Sodų 10-oji gatvė
-419, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Rūtos Sodų 11-oji gatvė
-420, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Rūtos Sodų 2-oji gatvė
-421, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Rūtos Sodų 3-oji gatvė
-422, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Rūtos Sodų 4-oji gatvė
-423, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Rūtos Sodų 5-oji gatvė
-424, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Rūtos Sodų 6-oji gatvė
-425, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Rūtos Sodų 7-oji gatvė
-426, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Rūtos Sodų 8-oji gatvė
-427, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Rūtos Sodų 9-oji gatvė
-428, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Rūtų gatvė
-429, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Sakalo gatvė
-430, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Sakalo Sodų 1-oji gatvė
-431, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Sakalo Sodų 2-oji gatvė
-432, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Sakalo Sodų 3-oji gatvė
-433, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Šakių gatvė
-434, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Salantų gatvė
-435, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Salduvės gatvė
-436, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, S. Šalkauskio gatvė
-437, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Šaltalankių gatvė
-438, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Šarūno gatvė
-439, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Šatrijos gatvė
-440, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Šaukėnų gatvė
-441, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Saulės takas
-442, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Saulutės Sodų 1-oji gatvė
-443, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Saulutės Sodų 2-oji gatvė
-444, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Saulutės Sodų 3-oji gatvė
-445, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Saulutės Sodų 4-oji gatvė
-446, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Sedos gatvė
-447, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Šeduvos gatvė
-448, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Sėlių gatvė
-449, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Sembos gatvė
-450, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Serbentų gatvė
-451, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Šermukšnių gatvė
-452, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Sevastopolio gatvė
-453, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Siauroji gatvė
-454, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Šiaušės gatvė
-455, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Šiladžio gatvė
-456, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Šilėnų gatvė
-457, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Šilubalio gatvė
-458, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Šilų gatvė
-459, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Šilutės gatvė
-460, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Šimšos gatvė
-461, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Skalvių gatvė
-462, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Skaudvilės gatvė
-463, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Skirgailos gatvė
-464, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Skroblų gatvė
-465, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Skuodo gatvė
-466, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Slėnio gatvė
-467, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, J. Šliūpo gatvė
-468, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Slyvų gatvė
-469, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Smėlio gatvė
-470, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Smilgų gatvė
-471, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Sodininkų gatvė
-472, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Sodo gatvė
-473, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, J. Sondeckio gatvė
-474, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Šonos gatvė
-475, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Spanguolių gatvė
-476, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Spyglių gatvė
-477, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Spindulio gatvė
-478, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Sprudeikos gatvė
-479, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, B. Sruogos gatvė
-480, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Stadiono gatvė
-481, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Stalupėnų gatvė
-482, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Rimanto Stankevičiaus gatvė
-483, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Statybininkų gatvė
-484, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Stoties gatvė
-485, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Strazdelio gatvė
-486, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Strazdų gatvė
-487, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Stumbro gatvė
-488, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Sūduvių gatvė
-489, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Sukilėlių gatvė
-490, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Svajonės Sodų 1-oji gatvė
-491, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Svajonės Sodų 2-oji gatvė
-492, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Svajonės Sodų 3-oji gatvė
-493, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Svajonės Sodų 4-oji gatvė
-494, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Svajonės Sodų 5-oji gatvė
-495, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Svajonės Sodų 6-oji gatvė
-496, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Švendrelio gatvė
-497, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Švendrių gatvė
-498, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Švėtės aklgatvė
-499, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Šviesos gatvė
-500, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Šviesos takas
-501, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Švitrigailos gatvė
-502, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Talšos gatvė
-503, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, P. Tamošaičio gatvė
-504, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Tauro gatvė
-505, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Tautvilo gatvė
-506, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Televizorių gatvė
-507, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Tiesioji gatvė
-508, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Tiesos gatvė
-509, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Tilvikų gatvė
-510, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Tilžės gatvė
-511, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Tinklų gatvė
-512, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Tytuvėnų gatvė
-513, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Tolminkiemio gatvė
-514, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Topolių gatvė
-515, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Traidenio gatvė
-516, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Traktoristų gatvė
-517, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Trakų gatvė
-518, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Treniotos gatvė
-519, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Troškūnų gatvė
-520, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Olego Truchano gatvė
-521, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Trumpiškių gatvė
-522, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Tulpių gatvė
-523, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Turgaus aikštė
-524, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Ukmergės gatvė
-525, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Uldukų gatvė
-526, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Uosių gatvė
-527, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Utenos gatvė
-528, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Užmiesčio gatvė
-529, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Užuovėjos Sodų 1-oji gatvė
-530, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Užuovėjos Sodų 2-oji gatvė
-531, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Užuovėjos Sodų 3-oji gatvė
-532, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Užuovėjos Sodų 4-oji gatvė
-533, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Užuovėjos Sodų 5-oji gatvė
-534, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vaidilutės gatvė
-535, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vaidoto gatvė
-536, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vairo gatvė
-537, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vaisių gatvė
-538, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vincento Vaitekūno gatvė
-539, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Felikso Vaitkaus gatvė
-540, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vaivorykštės gatvė
-541, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vaivorykštės Sodų 1-oji gatvė
-542, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vaivorykštės Sodų 2-oji gatvė
-543, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vaivorykštės Sodų 3-oji gatvė
-544, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vaivorykštės Sodų 4-oji gatvė
-545, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vaivorykštės Sodų 5-oji gatvė
-546, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vaivorykštės Sodų 6-oji gatvė
-547, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vaivorų gatvė
-548, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, M. Valančiaus gatvė
-549, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Varpo gatvė
-550, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vasario 16-osios gatvė
-551, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vasarotojų gatvė
-552, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Veiverių gatvė
-553, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vėjo skersgatvis
-554, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vėkės gatvė
-555, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, K. Venclauskio gatvė
-556, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Ventos gatvė
-557, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Verdulių gatvė
-558, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Verduliukų gatvė
-559, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vėtrungės gatvė
-560, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Viduklės gatvė
-561, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vydūno gatvė
-562, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vijolės gatvė
-563, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vykinto gatvė
-564, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vikšrių gatvė
-565, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vilijos gatvė
-566, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vilkaviškio gatvė
-567, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vilkurių gatvė
-568, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vilniaus gatvė
-569, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vilties gatvė
-570, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vingių gatvė
-571, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vinkšnėnų gatvė
-572, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vinkšnos gatvė
-573, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Viržių gatvė
-574, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, P. Višinskio gatvė
-575, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vismanto gatvė
-576, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vyšnių gatvė
-577, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vytauto gatvė
-578, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vytenio gatvė
-579, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vyturio Sodų 1-oji gatvė
-580, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vyturio Sodų 10-oji gatvė
-581, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vyturio Sodų 11-oji gatvė
-582, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vyturio Sodų 2-oji gatvė
-583, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vyturio Sodų 3-oji gatvė
-584, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vyturio Sodų 4-oji gatvė
-585, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vyturio Sodų 5-oji gatvė
-586, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vyturio Sodų 6-oji gatvė
-587, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vyturio Sodų 7-oji gatvė
-588, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vyturio Sodų 8-oji gatvė
-589, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vyturio Sodų 9-oji gatvė
-590, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vyturių gatvė
-591, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Vyturių gatvės sodai 
-592, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Voveriškių gatvė
-593, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Žagarės gatvė
-594, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Žalgirio gatvė
-595, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Žalgirio Sodų 1-oji gatvė
-596, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Žalgirio Sodų 10-oji gatvė
-597, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Žalgirio Sodų 11-oji gatvė
-598, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Žalgirio Sodų 12-oji gatvė
-599, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Žalgirio Sodų 2-oji gatvė
-600, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Žalgirio Sodų 3-oji gatvė
-601, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Žalgirio Sodų 4-oji gatvė
-602, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Žalgirio Sodų 5-oji gatvė
-603, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Žalgirio Sodų 6-oji gatvė
-604, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Žalgirio Sodų 7-oji gatvė
-605, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Žalgirio Sodų 8-oji gatvė
-606, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Žalgirio Sodų 9-oji gatvė
-607, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Žaliasodžių gatvė
-608, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Žalioji gatvė
-609, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Žaliūkių gatvė
-610, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Žalumynų gatvė
-611, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Žarėnų gatvė
-612, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Jono Žemaičio gatvė
-613, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Žemaitės gatvė
-614, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Žemdirbių gatvė
-615, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Žemynos gatvė
-616, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Žemoji gatvė
-617, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Žemuogių gatvė
-618, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Žibuoklių gatvė
-619, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Žibutės Sodų 1-oji gatvė
-620, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Žibutės Sodų 2-oji gatvė
-621, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Žiemgalių gatvė
-622, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Žilvičio Sodų 1-oji gatvė
-623, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Žilvičio Sodų 2-oji gatvė
-624, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Žilvičio Sodų 3-oji gatvė
-625, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Žilvičio Sodų 4-oji gatvė
-626, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Žilvičio Sodų 5-oji gatvė
-627, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Žilvičių gatvė
-628, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Žiogų gatvė
-629, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Žuvininkų gatvė
-630, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Žvaigždžių gatvė
-631, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Žvejų skersgatvis
-632, LIETUVOS RESPUBLIKA, Šiaulių apskritis, Šiaulių miesto savivaldybė, Šiauliai, Žvyro gatvė
+id,country,county,municipality,civilparish,city,citygenitive,street
+1,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Jono Adomaičio gatvė,,
+2,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Aerouosto gatvė,,
+3,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Agrastų gatvė,,
+4,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Aido gatvė,,
+5,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Aido skersgatvis,,
+6,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Aisčių gatvė,,
+7,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Akmenės gatvė,,
+8,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Aleksandrijos gatvė,,
+9,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Alytaus gatvė,,
+10,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Alyvų gatvė,,
+11,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Alksnių gatvė,,
+12,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Anykščių gatvė,,
+13,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Architektų gatvė,,
+14,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Artojų gatvė,,
+15,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Ateities gatvė,,
+16,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Audros skersgatvis,,
+17,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Aukštabalio gatvė,,
+18,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Aukštoji gatvė,,
+19,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Aušrinės Sodų 1-oji gatvė,,
+20,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Aušrinės Sodų 10-oji gatvė,,
+21,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Aušrinės Sodų 11-oji gatvė,,
+22,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Aušrinės Sodų 12-oji gatvė,,
+23,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Aušrinės Sodų 13-oji gatvė,,
+24,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Aušrinės Sodų 14-oji gatvė,,
+25,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Aušrinės Sodų 15-oji gatvė,,
+26,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Aušrinės Sodų 16-oji gatvė,,
+27,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Aušrinės Sodų 2-oji gatvė,,
+28,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Aušrinės Sodų 3-oji gatvė,,
+29,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Aušrinės Sodų 4-oji gatvė,,
+30,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Aušrinės Sodų 5-oji gatvė,,
+31,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Aušrinės Sodų 6-oji gatvė,,
+32,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Aušrinės Sodų 7-oji gatvė,,
+33,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Aušrinės Sodų 8-oji gatvė,,
+34,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Aušrinės Sodų 9-oji gatvė,,
+35,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Aušros alėja,,
+36,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Aušros takas,,
+37,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Austėjos gatvė,,
+38,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Ąžuolyno gatvė,,
+39,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Ąžuolo Sodų 1-oji gatvė,,
+40,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Ąžuolo Sodų 2-oji gatvė,,
+41,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Ąžuolo Sodų 3-oji gatvė,,
+42,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Bačiūnų gatvė,,
+43,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Bačiūnų gatvės sodai,,
+44,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Baisogalos gatvė,,
+45,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Baltarusių gatvė,,
+46,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Baltų gatvė,,
+47,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Baltupėnų gatvė,,
+48,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Bartų gatvė,,
+49,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,J. Basanavičiaus gatvė,,
+50,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Bertužių gatvė,,
+51,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Berželio Sodų 1-oji gatvė,,
+52,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Berželio Sodų 2-oji gatvė,,
+53,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Berželio Sodų 3-oji gatvė,,
+54,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Berželio Sodų 4-oji gatvė,,
+55,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Berželio Sodų 5-oji gatvė,,
+56,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Berželio Sodų 6-oji gatvė,,
+57,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Berželio Sodų 7-oji gatvė,,
+58,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Berželio Sodų 8-oji gatvė,,
+59,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Berželio Sodų 9-oji gatvė,,
+60,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Beržų gatvė,,
+61,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,V. Bielskio gatvė,,
+62,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Bijotės gatvė,,
+63,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,J. Biliūno gatvė,,
+64,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Birštono gatvė,,
+65,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Birutės gatvė,,
+66,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Biržų gatvė,,
+67,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,J. Bretkūno gatvė,,
+68,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Bruknių gatvė,,
+69,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Bubių gatvė,,
+70,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,M. K. Čiurlionio gatvė,,
+71,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,V. Čkalovo gatvė,,
+72,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,P. Cvirkos gatvė,,
+73,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Dagilių gatvė,,
+74,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Dailidžių gatvė,,
+75,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Dainavos gatvė,,
+76,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Dainavos takas,,
+77,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Dainų gatvė,,
+78,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Darbininkų gatvė,,
+79,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,S. Dariaus ir S. Girėno gatvė,,
+80,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Darkiemio gatvė,,
+81,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Darželio gatvė,,
+82,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Daubos gatvė,,
+83,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,S. Daukanto gatvė,,
+84,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Daumanto gatvė,,
+85,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Dobilo gatvė,,
+86,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,K. Donelaičio gatvė,,
+87,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Dotnuvos gatvė,,
+88,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Draugystės prospektas,,
+89,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Draugystės Sodų 1-oji gatvė,,
+90,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Draugystės Sodų 2-oji gatvė,,
+91,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Draugystės takas,,
+92,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Druskininkų gatvė,,
+93,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Dubijos gatvė,,
+94,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Dubysos gatvė,,
+95,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Dukto gatvė,,
+96,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Dvaro gatvė,,
+97,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Eglyno gatvė,,
+98,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Eidivilo gatvė,,
+99,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Elnio gatvė,,
+100,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Energetikų gatvė,,
+101,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Erškėčių gatvė,,
+102,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Estų gatvė,,
+103,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Etten-Leuro gatvė,,
+104,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Ežero gatvė,,
+105,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Gabijos gatvė,,
+106,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Gailių gatvė,,
+107,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Gaisrininkų gatvė,,
+108,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Gamybos gatvė,,
+109,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Ganyklų gatvė,,
+110,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Garažų gatvė,,
+111,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Gardino gatvė,,
+112,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Gegužių gatvė,,
+113,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Z. Gėlės gatvė,,
+114,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Geležinkelio gatvė,,
+115,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Geluvos gatvė,,
+116,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Genupio gatvė,,
+117,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Gervių gatvė,,
+118,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Gilijos gatvė,,
+119,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Ginkūnų gatvė,,
+120,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Gintaro Sodų 1-oji gatvė,,
+121,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,L. Giros gatvė,,
+122,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Girulių gatvė,,
+123,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Gytarių gatvė,,
+124,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Gluosnio Sodų 1-oji gatvė,,
+125,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Gluosnio Sodų 2-oji gatvė,,
+126,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Gluosnių gatvė,,
+127,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Grafo Zubovo gatvė,,
+128,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Griežlių gatvė,,
+129,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,V. Grinkevičiaus gatvė,,
+130,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Gryžuvos gatvė,,
+131,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Gruzdžių gatvė,,
+132,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Gubernijos Sodų 1-oji gatvė,,
+133,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Gubernijos Sodų 10-oji gatvė,,
+134,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Gubernijos Sodų 2-oji gatvė,,
+135,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Gubernijos Sodų 3-oji gatvė,,
+136,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Gubernijos Sodų 4-oji gatvė,,
+137,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Gubernijos Sodų 5-oji gatvė,,
+138,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Gubernijos Sodų 6-oji gatvė,,
+139,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Gubernijos Sodų 7-oji gatvė,,
+140,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Gubernijos Sodų 8-oji gatvė,,
+141,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Gubernijos Sodų 9-oji gatvė,,
+142,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Gūdžiūnų gatvė,,
+143,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Gumbinės gatvė,,
+144,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Gvazdikų takas,,
+145,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Ievų gatvė,,
+146,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Ilgoji gatvė,,
+147,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Išradėjų gatvė,,
+148,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Įsros gatvė,,
+149,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Jono Jablonskio gatvė,,
+150,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Jakštaičių gatvė,,
+151,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,M. Jankaus gatvė,,
+152,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,K. Jankausko gatvė,,
+153,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,J. Janonio gatvė,,
+154,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Javų gatvė,,
+155,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Joniškėlio gatvė,,
+156,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Jotvingių gatvė,,
+157,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Jovaro gatvė,,
+158,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Jurginų gatvė,,
+159,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Kadagyno gatvė,,
+160,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,A. Kairaičio gatvė,,
+161,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Kairių gatvė,,
+162,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,K. Kalinausko gatvė,,
+163,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Kalnelio gatvė,,
+164,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Kalniškių gatvė,,
+165,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Kalno gatvė,,
+166,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Kamanių gatvė,,
+167,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Kanapių gatvė,,
+168,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Kapų gatvė,,
+169,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Karaliaučiaus gatvė,,
+170,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Karklų gatvė,,
+171,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,E. Karpio gatvė,,
+172,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Karpiškio gatvė,,
+173,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Kaštonų alėja,,
+174,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Kauno gatvė,,
+175,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Kėdainių gatvė,,
+176,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Kelmės gatvė,,
+177,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Kybartų gatvė,,
+178,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Kikilių gatvė,,
+179,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Klaipėdos gatvė,,
+180,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Klevo Sodų 1-oji gatvė,,
+181,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Klevo Sodų 10-oji gatvė,,
+182,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Klevo Sodų 2-oji gatvė,,
+183,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Klevo Sodų 3-oji gatvė,,
+184,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Klevo Sodų 4-oji gatvė,,
+185,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Klevo Sodų 5-oji gatvė,,
+186,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Klevo Sodų 6-oji gatvė,,
+187,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Klevo Sodų 7-oji gatvė,,
+188,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Klevo Sodų 8-oji gatvė,,
+189,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Klevo Sodų 9-oji gatvė,,
+190,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Klevų gatvė,,
+191,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,K. Korsako gatvė,,
+192,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Krantinės gatvė,,
+193,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Kražių gatvė,,
+194,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Kregždutės Sodų 1-oji gatvė,,
+195,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Kregždutės Sodų 2-oji gatvė,,
+196,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Kregždutės Sodų 3-oji gatvė,,
+197,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Kregždutės Sodų 4-oji gatvė,,
+198,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Kregždutės Sodų 5-oji gatvė,,
+199,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Kregždutės Sodų 6-oji gatvė,,
+200,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Kretingos gatvė,,
+201,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Krymo gatvė,,
+202,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Kristianstado gatvė,,
+203,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Krivių gatvė,,
+204,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,V. Kudirkos gatvė,,
+205,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Kulpės gatvė,,
+206,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,A. Kulviečio gatvė,,
+207,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Kuosų gatvė,,
+208,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Kupiškio gatvė,,
+209,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Kuršėnų gatvė,,
+210,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Kuršių gatvė,,
+211,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Kurtinių gatvė,,
+212,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Kurtuvėnų gatvė,,
+213,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Kviečių gatvė,,
+214,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Lakštingalos Sodų 1-oji gatvė,,
+215,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Lakštingalos Sodų 10-oji gatvė,,
+216,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Lakštingalos Sodų 11-oji gatvė,,
+217,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Lakštingalos Sodų 12-oji gatvė,,
+218,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Lakštingalos Sodų 13-oji gatvė,,
+219,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Lakštingalos Sodų 14-oji gatvė,,
+220,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Lakštingalos Sodų 15-oji gatvė,,
+221,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Lakštingalos Sodų 2-oji gatvė,,
+222,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Lakštingalos Sodų 3-oji gatvė,,
+223,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Lakštingalos Sodų 4-oji gatvė,,
+224,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Lakštingalos Sodų 5-oji gatvė,,
+225,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Lakštingalos Sodų 6-oji gatvė,,
+226,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Lakštingalos Sodų 7-oji gatvė,,
+227,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Lakštingalos Sodų 8-oji gatvė,,
+228,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Lakštingalos Sodų 9-oji gatvė,,
+229,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Lakūnų gatvė,,
+230,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Lapišės gatvė,,
+231,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Latgalių gatvė,,
+232,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Latvių gatvė,,
+233,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Lauko gatvė,,
+234,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Lazdynų gatvė,,
+235,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Lelijos Sodų 1-oji gatvė,,
+236,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Lelijos Sodų 10-oji gatvė,,
+237,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Lelijos Sodų 11-oji gatvė,,
+238,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Lelijos Sodų 12-oji gatvė,,
+239,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Lelijos Sodų 13-oji gatvė,,
+240,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Lelijos Sodų 14-oji gatvė,,
+241,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Lelijos Sodų 2-oji gatvė,,
+242,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Lelijos Sodų 3-oji gatvė,,
+243,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Lelijos Sodų 4-oji gatvė,,
+244,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Lelijos Sodų 5-oji gatvė,,
+245,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Lelijos Sodų 6-oji gatvė,,
+246,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Lelijos Sodų 7-oji gatvė,,
+247,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Lelijos Sodų 8-oji gatvė,,
+248,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Lelijos Sodų 9-oji gatvė,,
+249,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Lelijų gatvė,,
+250,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Lenkų gatvė,,
+251,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Lydos gatvė,,
+252,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Lyduvėnų gatvė,,
+253,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Liejyklos gatvė,,
+254,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Lieporių gatvė,,
+255,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Liepų gatvė,,
+256,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Lietuvininkų gatvė,,
+257,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Lygumų gatvė,,
+258,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Lingailių gatvė,,
+259,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Linkuvos gatvė,,
+260,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Lyros gatvė,,
+261,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Lizdeikos gatvė,,
+262,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,S. Lukauskio gatvė,,
+263,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Luknės gatvė,,
+264,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Lukojaus gatvė,,
+265,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,P. Lukšio gatvė,,
+266,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Luokės gatvė,,
+267,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Luponės gatvė,,
+268,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Maironio gatvė,,
+269,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Malūno gatvė,,
+270,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,M. Margytės gatvė,,
+271,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Margių gatvė,,
+272,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Margių Sodų 1-oji gatvė,,
+273,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Margių Sodų 2-oji gatvė,,
+274,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Margių Sodų 3-oji gatvė,,
+275,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Margių Sodų 4-oji gatvė,,
+276,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Marijampolės gatvė,,
+277,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Mažoji gatvė,,
+278,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Mažosios Lietuvos gatvė,,
+279,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,M. Mažvydo gatvė,,
+280,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Medelyno gatvė,,
+281,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Medvėgalio gatvė,,
+282,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Mechanikų gatvė,,
+283,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Mėlynių gatvė,,
+284,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Merkinės gatvė,,
+285,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Meškerių gatvė,,
+286,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Metalistų gatvė,,
+287,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,A. Mickevičiaus gatvė,,
+288,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Miglės gatvė,,
+289,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Miglovaros gatvė,,
+290,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Jono Mikėno gatvė,,
+291,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,A. Mikševičiaus gatvė,,
+292,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Mirtų gatvė,,
+293,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Miško gatvė,,
+294,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Mokytojų gatvė,,
+295,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,V. Montvilos gatvė,,
+296,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Mortos gatvė,,
+297,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Petro Motiekaičio gatvė,,
+298,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Nadruvos gatvė,,
+299,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Narcizų gatvė,,
+300,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Naujo Ryto takas,,
+301,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Nendrių gatvė,,
+302,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,S. Nėries gatvė,,
+303,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Neringos gatvė,,
+304,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Nidos gatvė,,
+305,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Nykščio gatvė,,
+306,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Noreikių gatvė,,
+307,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Notangos gatvė,,
+308,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Nuklono gatvė,,
+309,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Numerių gatvė,,
+310,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Odininkų gatvė,,
+311,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,J. Orlausko gatvė,,
+312,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Pabalių gatvė,,
+313,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Padirsių gatvė,,
+314,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Pagėgių gatvė,,
+315,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Pailių gatvė,,
+316,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Paitaičių gatvė,,
+317,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Pakalnės gatvė,,
+318,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Pakapės gatvė,,
+319,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Pakruojo gatvė,,
+320,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Palangos gatvė,,
+321,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Pandėlio gatvė,,
+322,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Panevėžio gatvė,,
+323,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Panevėžio gatvės sodai,,
+324,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Paparčio Sodų 1-oji gatvė,,
+325,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Paparčio Sodų 2-oji gatvė,,
+326,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Paparčio Sodų 3-oji gatvė,,
+327,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Paparčio Sodų 4-oji gatvė,,
+328,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Paparčio Sodų 5-oji gatvė,,
+329,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Paparčio Sodų 6-oji gatvė,,
+330,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Paparčių gatvė,,
+331,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Papievių gatvė,,
+332,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Papilės gatvė,,
+333,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Paprūdžio gatvė,,
+334,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Parko gatvė,,
+335,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Pasvalio gatvė,,
+336,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Paukščių takas,,
+337,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Pavasario gatvė,,
+338,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Pavasario Sodų 1-oji gatvė,,
+339,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Pavasario Sodų 2-oji gatvė,,
+340,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Pavasario Sodų 3-oji gatvė,,
+341,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Pelkių gatvė,,
+342,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Pempių gatvė,,
+343,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Perkūno gatvė,,
+344,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Pikeliškės gatvė,,
+345,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Piktmiškio gatvė,,
+346,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Pirties gatvė,,
+347,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Platelių gatvė,,
+348,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Plungės gatvė,,
+349,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Poilsio gatvė,,
+350,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Poilsio gatvės sodai,,
+351,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Poilsio Sodų 1-oji gatvė,,
+352,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Poilsio Sodų 2-oji gatvė,,
+353,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Poilsio Sodų 3-oji gatvė,,
+354,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,D. Poškos gatvė,,
+355,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Pramonės gatvė,,
+356,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Preilos gatvė,,
+357,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Prienų gatvė,,
+358,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Prisikėlimo aikštė,,
+359,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Pročiūnų gatvė,,
+360,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Prūdelio gatvė,,
+361,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Prūsų gatvė,,
+362,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Pumpučių gatvė,,
+363,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Pumpuro Sodų 1-oji gatvė,,
+364,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Pumpuro Sodų 2-oji gatvė,,
+365,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Pumpuro Sodų 3-oji gatvė,,
+366,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Pumpuro Sodų 4-oji gatvė,,
+367,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Pumpuro Sodų 5-oji gatvė,,
+368,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Purienos Sodų 1-oji gatvė,,
+369,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Purienos Sodų 2-oji gatvė,,
+370,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Purienų gatvė,,
+371,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Pušyno gatvė,,
+372,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Putinų gatvė,,
+373,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Radviliškio gatvė,,
+374,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Ragainės gatvė,,
+375,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Raguvos takas,,
+376,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Raisto gatvė,,
+377,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Raizgių gatvė,,
+378,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Rambyno gatvė,,
+379,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Ramybės Sodų 1-oji gatvė,,
+380,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Ramybės Sodų 2-oji gatvė,,
+381,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Ramybės Sodų 3-oji gatvė,,
+382,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Ramybės Sodų 4-oji gatvė,,
+383,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Ramygalos gatvė,,
+384,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Ramunės Sodų 1-oji gatvė,,
+385,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Ramunės Sodų 2-oji gatvė,,
+386,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Ramunės Sodų 3-oji gatvė,,
+387,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Ramunės Sodų 4-oji gatvė,,
+388,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Ramunės Sodų 5-oji gatvė,,
+389,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Ramunės Sodų 6-oji gatvė,,
+390,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Ramunės Sodų 7-oji gatvė,,
+391,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Ramunės Sodų 8-oji gatvė,,
+392,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Ramunių gatvė,,
+393,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,S. Rapolionio gatvė,,
+394,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Raseinių gatvė,,
+395,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Rasos gatvė,,
+396,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Rasos Sodų 1-oji gatvė,,
+397,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Rasos Sodų 2-oji gatvė,,
+398,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Rasos Sodų 3-oji gatvė,,
+399,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Rasos Sodų 4-oji gatvė,,
+400,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Rasos Sodų 5-oji gatvė,,
+401,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Rėkyvos gatvė,,
+402,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Rėkyvos Sodų 1-oji gatvė,,
+403,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Rėkyvos Sodų 2-oji gatvė,,
+404,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Rėkyvos Sodų 3-oji gatvė,,
+405,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Rėkyvos Sodų 4-oji gatvė,,
+406,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Rėžių gatvė,,
+407,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,L. Rėzos gatvė,,
+408,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Rygos gatvė,,
+409,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Rokiškio gatvė,,
+410,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Romintos gatvė,,
+411,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Rožių gatvė,,
+412,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Rūdės gatvė,,
+413,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Rugiagėlių gatvė,,
+414,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Rugių gatvė,,
+415,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Rūko gatvė,,
+416,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Rusnės gatvė,,
+417,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Rūtos Sodų 1-oji gatvė,,
+418,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Rūtos Sodų 10-oji gatvė,,
+419,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Rūtos Sodų 11-oji gatvė,,
+420,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Rūtos Sodų 2-oji gatvė,,
+421,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Rūtos Sodų 3-oji gatvė,,
+422,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Rūtos Sodų 4-oji gatvė,,
+423,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Rūtos Sodų 5-oji gatvė,,
+424,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Rūtos Sodų 6-oji gatvė,,
+425,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Rūtos Sodų 7-oji gatvė,,
+426,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Rūtos Sodų 8-oji gatvė,,
+427,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Rūtos Sodų 9-oji gatvė,,
+428,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Rūtų gatvė,,
+429,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Sakalo gatvė,,
+430,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Sakalo Sodų 1-oji gatvė,,
+431,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Sakalo Sodų 2-oji gatvė,,
+432,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Sakalo Sodų 3-oji gatvė,,
+433,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Šakių gatvė,,
+434,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Salantų gatvė,,
+435,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Salduvės gatvė,,
+436,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,S. Šalkauskio gatvė,,
+437,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Šaltalankių gatvė,,
+438,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Šarūno gatvė,,
+439,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Šatrijos gatvė,,
+440,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Šaukėnų gatvė,,
+441,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Saulės takas,,
+442,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Saulutės Sodų 1-oji gatvė,,
+443,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Saulutės Sodų 2-oji gatvė,,
+444,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Saulutės Sodų 3-oji gatvė,,
+445,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Saulutės Sodų 4-oji gatvė,,
+446,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Sedos gatvė,,
+447,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Šeduvos gatvė,,
+448,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Sėlių gatvė,,
+449,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Sembos gatvė,,
+450,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Serbentų gatvė,,
+451,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Šermukšnių gatvė,,
+452,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Sevastopolio gatvė,,
+453,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Siauroji gatvė,,
+454,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Šiaušės gatvė,,
+455,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Šiladžio gatvė,,
+456,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Šilėnų gatvė,,
+457,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Šilubalio gatvė,,
+458,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Šilų gatvė,,
+459,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Šilutės gatvė,,
+460,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Šimšos gatvė,,
+461,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Skalvių gatvė,,
+462,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Skaudvilės gatvė,,
+463,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Skirgailos gatvė,,
+464,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Skroblų gatvė,,
+465,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Skuodo gatvė,,
+466,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Slėnio gatvė,,
+467,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,J. Šliūpo gatvė,,
+468,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Slyvų gatvė,,
+469,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Smėlio gatvė,,
+470,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Smilgų gatvė,,
+471,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Sodininkų gatvė,,
+472,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Sodo gatvė,,
+473,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,J. Sondeckio gatvė,,
+474,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Šonos gatvė,,
+475,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Spanguolių gatvė,,
+476,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Spyglių gatvė,,
+477,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Spindulio gatvė,,
+478,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Sprudeikos gatvė,,
+479,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,B. Sruogos gatvė,,
+480,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Stadiono gatvė,,
+481,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Stalupėnų gatvė,,
+482,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Rimanto Stankevičiaus gatvė,,
+483,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Statybininkų gatvė,,
+484,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Stoties gatvė,,
+485,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Strazdelio gatvė,,
+486,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Strazdų gatvė,,
+487,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Stumbro gatvė,,
+488,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Sūduvių gatvė,,
+489,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Sukilėlių gatvė,,
+490,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Svajonės Sodų 1-oji gatvė,,
+491,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Svajonės Sodų 2-oji gatvė,,
+492,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Svajonės Sodų 3-oji gatvė,,
+493,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Svajonės Sodų 4-oji gatvė,,
+494,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Svajonės Sodų 5-oji gatvė,,
+495,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Svajonės Sodų 6-oji gatvė,,
+496,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Švendrelio gatvė,,
+497,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Švendrių gatvė,,
+498,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Švėtės aklgatvė,,
+499,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Šviesos gatvė,,
+500,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Šviesos takas,,
+501,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Švitrigailos gatvė,,
+502,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Talšos gatvė,,
+503,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,P. Tamošaičio gatvė,,
+504,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Tauro gatvė,,
+505,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Tautvilo gatvė,,
+506,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Televizorių gatvė,,
+507,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Tiesioji gatvė,,
+508,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Tiesos gatvė,,
+509,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Tilvikų gatvė,,
+510,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Tilžės gatvė,,
+511,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Tinklų gatvė,,
+512,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Tytuvėnų gatvė,,
+513,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Tolminkiemio gatvė,,
+514,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Topolių gatvė,,
+515,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Traidenio gatvė,,
+516,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Traktoristų gatvė,,
+517,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Trakų gatvė,,
+518,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Treniotos gatvė,,
+519,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Troškūnų gatvė,,
+520,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Olego Truchano gatvė,,
+521,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Trumpiškių gatvė,,
+522,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Tulpių gatvė,,
+523,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Turgaus aikštė,,
+524,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Ukmergės gatvė,,
+525,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Uldukų gatvė,,
+526,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Uosių gatvė,,
+527,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Utenos gatvė,,
+528,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Užmiesčio gatvė,,
+529,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Užuovėjos Sodų 1-oji gatvė,,
+530,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Užuovėjos Sodų 2-oji gatvė,,
+531,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Užuovėjos Sodų 3-oji gatvė,,
+532,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Užuovėjos Sodų 4-oji gatvė,,
+533,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Užuovėjos Sodų 5-oji gatvė,,
+534,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vaidilutės gatvė,,
+535,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vaidoto gatvė,,
+536,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vairo gatvė,,
+537,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vaisių gatvė,,
+538,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vincento Vaitekūno gatvė,,
+539,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Felikso Vaitkaus gatvė,,
+540,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vaivorykštės gatvė,,
+541,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vaivorykštės Sodų 1-oji gatvė,,
+542,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vaivorykštės Sodų 2-oji gatvė,,
+543,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vaivorykštės Sodų 3-oji gatvė,,
+544,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vaivorykštės Sodų 4-oji gatvė,,
+545,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vaivorykštės Sodų 5-oji gatvė,,
+546,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vaivorykštės Sodų 6-oji gatvė,,
+547,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vaivorų gatvė,,
+548,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,M. Valančiaus gatvė,,
+549,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Varpo gatvė,,
+550,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vasario 16-osios gatvė,,
+551,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vasarotojų gatvė,,
+552,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Veiverių gatvė,,
+553,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vėjo skersgatvis,,
+554,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vėkės gatvė,,
+555,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,K. Venclauskio gatvė,,
+556,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Ventos gatvė,,
+557,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Verdulių gatvė,,
+558,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Verduliukų gatvė,,
+559,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vėtrungės gatvė,,
+560,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Viduklės gatvė,,
+561,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vydūno gatvė,,
+562,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vijolės gatvė,,
+563,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vykinto gatvė,,
+564,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vikšrių gatvė,,
+565,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vilijos gatvė,,
+566,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vilkaviškio gatvė,,
+567,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vilkurių gatvė,,
+568,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vilniaus gatvė,,
+569,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vilties gatvė,,
+570,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vingių gatvė,,
+571,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vinkšnėnų gatvė,,
+572,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vinkšnos gatvė,,
+573,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Viržių gatvė,,
+574,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,P. Višinskio gatvė,,
+575,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vismanto gatvė,,
+576,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vyšnių gatvė,,
+577,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vytauto gatvė,,
+578,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vytenio gatvė,,
+579,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vyturio Sodų 1-oji gatvė,,
+580,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vyturio Sodų 10-oji gatvė,,
+581,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vyturio Sodų 11-oji gatvė,,
+582,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vyturio Sodų 2-oji gatvė,,
+583,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vyturio Sodų 3-oji gatvė,,
+584,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vyturio Sodų 4-oji gatvė,,
+585,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vyturio Sodų 5-oji gatvė,,
+586,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vyturio Sodų 6-oji gatvė,,
+587,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vyturio Sodų 7-oji gatvė,,
+588,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vyturio Sodų 8-oji gatvė,,
+589,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vyturio Sodų 9-oji gatvė,,
+590,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vyturių gatvė,,
+591,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Vyturių gatvės sodai,,
+592,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Voveriškių gatvė,,
+593,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Žagarės gatvė,,
+594,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Žalgirio gatvė,,
+595,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Žalgirio Sodų 1-oji gatvė,,
+596,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Žalgirio Sodų 10-oji gatvė,,
+597,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Žalgirio Sodų 11-oji gatvė,,
+598,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Žalgirio Sodų 12-oji gatvė,,
+599,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Žalgirio Sodų 2-oji gatvė,,
+600,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Žalgirio Sodų 3-oji gatvė,,
+601,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Žalgirio Sodų 4-oji gatvė,,
+602,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Žalgirio Sodų 5-oji gatvė,,
+603,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Žalgirio Sodų 6-oji gatvė,,
+604,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Žalgirio Sodų 7-oji gatvė,,
+605,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Žalgirio Sodų 8-oji gatvė,,
+606,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Žalgirio Sodų 9-oji gatvė,,
+607,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Žaliasodžių gatvė,,
+608,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Žalioji gatvė,,
+609,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Žaliūkių gatvė,,
+610,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Žalumynų gatvė,,
+611,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Žarėnų gatvė,,
+612,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Jono Žemaičio gatvė,,
+613,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Žemaitės gatvė,,
+614,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Žemdirbių gatvė,,
+615,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Žemynos gatvė,,
+616,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Žemoji gatvė,,
+617,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Žemuogių gatvė,,
+618,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Žibuoklių gatvė,,
+619,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Žibutės Sodų 1-oji gatvė,,
+620,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Žibutės Sodų 2-oji gatvė,,
+621,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Žiemgalių gatvė,,
+622,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Žilvičio Sodų 1-oji gatvė,,
+623,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Žilvičio Sodų 2-oji gatvė,,
+624,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Žilvičio Sodų 3-oji gatvė,,
+625,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Žilvičio Sodų 4-oji gatvė,,
+626,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Žilvičio Sodų 5-oji gatvė,,
+627,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Žilvičių gatvė,,
+628,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Žiogų gatvė,,
+629,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Žuvininkų gatvė,,
+630,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Žvaigždžių gatvė,,
+631,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Žvejų skersgatvis,,
+632,LIETUVOS RESPUBLIKA,Šiaulių apskritis,Šiaulių miesto savivaldybė,Šiauliai,Žvyro gatvė,,
