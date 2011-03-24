@@ -10,11 +10,32 @@ class MQServer:
     """
     def __init__(self):
         # open connection to localhost server
+        self.reconnect()
+        self.messages = {}
+
+    def reconnect(self):
         self.Connection = amqp.Connection(host="localhost:5672", userid="guest", password="guest", virtual_host="/", insist=False)
         #raise ConnectToMessageServerFailed("Failed to connect to RabbitMQ server on localhost. Did you not forget to start it? On windows start rabbitmq-server.bat to start it as console program", e)
         self.Channel = self.Connection.channel()
         self.isInTransaction = False
 
+    def readMessage(self, queueName):
+        if self.messages.has_key(queueName):
+            lst = self.messages[queueName]
+            if len(lst) != 0:
+                msg = lst[0]
+                others = lst[1:]
+                self.messages[queueName] = others
+                return msg
+        return self.Channel.basic_get(queueName)
+
+    def isEmpty(self, queueName):
+        msg = self.readMessage(queueName)
+        if msg is None:
+            return True
+        self.messages.setdefault(queueName, [])
+        self.messages[queueName].append(msg)
+        return False
 
     def BeginTransaction(self):
         if self.isInTransaction:

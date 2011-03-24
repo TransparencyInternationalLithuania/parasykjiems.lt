@@ -11,12 +11,12 @@ class HierarchicalGeoData(models.Model):
      """
 
     class HierarchicalGeoDataType:
-        Country = u'Country'
-        County = u'County' # Apskritis
-        Municipality = u'Municipality'  # Savivaldybė
-        CivilParish = u'CivilParish'  # Seniūnija
-        City = u'City'
-        Street = u'Street'
+        Country = u'country'
+        County = u'county' # Apskritis
+        Municipality = u'municipality'  # Savivaldybė
+        CivilParish = u'civilparish'  # Seniūnija
+        City = u'city'
+        Street = u'street'
 
 
     # types of hierarchical data. Note that correctness is not enforced programitcally

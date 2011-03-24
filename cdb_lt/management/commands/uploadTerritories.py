@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand
 from cdb_lt.management.commands.importSources import ltGeoDataSources_Country
 from cdb_lt_streets.management.commands.ltGeoDataCrawl import RegisterCenterPageLocations
 from pjutils.args.Args import ExtractRange
-from pjutils.gdocsUtils import GoogleDocsLogin, GoogleDocsUploader
+from pjutils.gdocsUtils import GoogleDocsLogin, GoogleDocsUploader, GoogleDocsError
 from settings import *
 import time
 logger = logging.getLogger(__name__)
@@ -35,6 +35,8 @@ class Command(BaseCommand):
 
         login = GoogleDocsLogin(GlobalSettings.GOOGLE_DOCS_USER, GlobalSettings.GOOGLE_DOCS_PASSWORD)
 
+        failedDocuments = []
+
         for adr, regCenterPage in l[fromNumber : toNumber]:
             gdocName = adr[0]
             file = adr[1]
@@ -43,5 +45,13 @@ class Command(BaseCommand):
                 print "file '%s' does not exist, skip" % file
                 continue
             logger.info("uploading document from file '%s' to location '%s'" % (file, gdocName))
-            document = GoogleDocsUploader(login, gdocName)
-            document.replaceContents(file)
+            try:
+                document = GoogleDocsUploader(login, gdocName)
+                document.replaceContents(file)
+            except GoogleDocsError as e:
+                failedDocuments.append((adr, file, e))
+
+        if len(failedDocuments) > 0:
+            print "failed to upload:"
+            for adr, file, excpetion in failedDocuments:
+                print "'%s' '%s'" % (adr, file)

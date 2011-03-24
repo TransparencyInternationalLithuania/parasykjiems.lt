@@ -70,14 +70,10 @@ Root url is %s, but you can pass any sub url if you want to parse only sub-pages
         self.mqServer.Channel.basic_ack(msg.delivery_tag)
 
     def ReadMessage(self):
-        msg = self.mqServer.Channel.basic_get(self.queueName)
+        msg = self.mqServer.readMessage(self.queueName)
         return msg
 
-    def Clear(self):
-        """ Clear the queue of any pending messages. This is done by reading manually all messages
-        until there is none.
-        """
-
+    def _clear(self):
         count = 0
         self.MQServer.BeginTransaction()
         while True:
@@ -87,6 +83,14 @@ Root url is %s, but you can pass any sub url if you want to parse only sub-pages
             count += 1
             self.ConsumeMessage(msg)
         self.MQServer.Commit()
+
+    def Clear(self):
+        """ Clear the queue of any pending messages. This is done by reading manually all messages
+        until there is none.
+        """
+        count = self._clear()
+
+        self._clear()
         print "cleared  total %s messages " % count
 
 
@@ -94,19 +98,4 @@ Root url is %s, but you can pass any sub url if you want to parse only sub-pages
         """ Tells if RegisterQueue is empty.
         If queue is empty, then it means that either processing has finished, or has not started at all.
         Initiaiate processing by inserting new Root message"""
-        self.MQServer.BeginTransaction()
-        try:
-            msg = self.ReadMessage()
-        except AMQPChannelException as e:
-            if e.amqp_reply_code == 404:
-                return True   
-            raise e
-
-        empty = msg is None
-
-        # force to resend a message, so that we don't accidentally consume it
-        # requeue must be True, otherwise the same consumer will not receive it again
-        #self.mqServer.Channel.basic_recover(requeue = True)
-        self.MQServer.Rollback()
-        # return if queue is empty
-        return empty
+        return self.MQServer.isEmpty(self.queueName)

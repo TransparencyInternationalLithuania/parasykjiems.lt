@@ -4,6 +4,7 @@
 from optparse import make_option
 from django.core.management.base import BaseCommand
 from django.core import management
+from cdb_lt.management.commands.downloadTerritories import territoriesCsvFormat
 from pjutils.timemeasurement import TimeMeasurer
 from cdb_lt_streets.models import HierarchicalGeoData
 from distutils import dir_util
@@ -18,15 +19,15 @@ class RCCrawledDataExporter(object):
 
     def getParentValues(self, obj):
         values = []
-        while (obj.parent is not None):
+        while obj.parent is not None:
             parent = obj.parent
             parentId = parent.id
-            if (self.parentCache.has_key(parentId)):
+            if self.parentCache.has_key(parentId):
                 parent = self.parentCache[parentId]
             else:
                 self.parentCache[parentId] = parent
 
-            if (parent.type == HierarchicalGeoData.HierarchicalGeoDataType.City):
+            if parent.type == HierarchicalGeoData.HierarchicalGeoDataType.City:
                 values.append(parent.name_genitive)
             values.append(parent.name)
             obj = parent
@@ -34,7 +35,7 @@ class RCCrawledDataExporter(object):
         return values
 
     def writeToFile(self, values):
-        delimiter = u", "
+        delimiter = u","
         v = []
         for val in values:
             if val is None:
@@ -48,7 +49,8 @@ class RCCrawledDataExporter(object):
 
 
     def export(self, fileName, city = None, insertCivilParish = None):
-        cityMode = cityMode = city is not None and city.strip() != ""
+        self.parentCache = {}
+        cityMode = city is not None and city.strip() != ""
         elapsedTime = TimeMeasurer()
         logger.info("Writing contents to %s" % fileName)
         logger.info("using city mode: %s" % cityMode)
@@ -57,14 +59,7 @@ class RCCrawledDataExporter(object):
         dir_util.mkpath(os.path.dirname(fileName))
         self.file = open(fileName, 'w')
 
-        self.writeToFile([u"Id",
-                          HierarchicalGeoData.HierarchicalGeoDataType.Country,
-                          HierarchicalGeoData.HierarchicalGeoDataType.County,
-                          HierarchicalGeoData.HierarchicalGeoDataType.Municipality,
-                          HierarchicalGeoData.HierarchicalGeoDataType.CivilParish,
-                          HierarchicalGeoData.HierarchicalGeoDataType.City,
-                          u"City_genitive",
-                          HierarchicalGeoData.HierarchicalGeoDataType.Street,])
+        self.writeToFile(territoriesCsvFormat)
 
         allIds = HierarchicalGeoData.objects.values_list('id', flat = True).order_by('id')
         count = 0
@@ -99,6 +94,9 @@ class RCCrawledDataExporter(object):
             if cityMode == False:
                 if obj.type == HierarchicalGeoData.HierarchicalGeoDataType.City:
                     finalValues.append(obj.name_genitive)
+            while len(finalValues) < 8:
+                finalValues.append(u"")
+
             self.writeToFile(finalValues)
 
         self.file.close()
