@@ -53,7 +53,7 @@ class ltGeoDataSources_Country:
     commonPath = os.path.join(u"cdb_lt", "files", "territory", "countryTerritory", "municipality")
     addressesInMunicipalities = [
                     (u"Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Alytaus apskr.", os.path.join(commonPath, "cdb_lt_street_index_alytaus_apskritis.csv")),
-                    (u"Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Kauno apskr.", os.path.join(commonPath, "cdb_lt_street_index_kaunas_apskritis.csv")),
+                    (u"Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Kauno apskr. 2", os.path.join(commonPath, "cdb_lt_street_index_kaunas_apskritis.csv")),
                     (u"Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Klaipėdos apskr.", os.path.join(commonPath, "cdb_lt_street_index_klaipeda_apskritis.csv")),
                     (u"Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Marijampolės apskr.", os.path.join(commonPath, "cdb_lt_street_index_marijampole_apskritis.csv")),
                     (u"Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Panevėžio apskr.", os.path.join(commonPath, "cdb_lt_street_index_panevezys_apskritis.csv")),

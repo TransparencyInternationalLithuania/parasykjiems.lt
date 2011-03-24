@@ -17,6 +17,8 @@ import gdata.docs.client
 import gdata.spreadsheet.service
 from distutils import dir_util
 
+class GoogleDocsError(ChainnedException):
+    pass
 
 class GoogleDocDownloader:
     """ Downloads a google doc, and saves it to a file as csv file.
@@ -28,9 +30,21 @@ class GoogleDocDownloader:
     def __init__(self, delimiter = ","):
         self.client = SpreadSheetClient(GlobalSettings.GOOGLE_DOCS_USER, GlobalSettings.GOOGLE_DOCS_PASSWORD)
 
-    def _openWriter(self, fileName, row):
+    def _openWriter(self, fileName, row, defaultColumnOrder = None):
         """ creates a new DictWriter object from row object. Writes header row"""
-        fieldNames = [k for k in row.iterkeys()]
+
+        if defaultColumnOrder is None:
+            fieldNames = [k for k in row.iterkeys()]
+        else:
+            fieldNames = defaultColumnOrder
+            existing = {}
+            for f in fieldNames:
+                existing[f] = ""
+            for k in row.iterkeys():
+                if existing.has_key(k) == False:
+                    fieldNames.append(k)
+                    existing[k] = ""
+
 
         writer = csv.DictWriter(open(fileName, "wb"), fieldNames)
 
@@ -39,8 +53,9 @@ class GoogleDocDownloader:
 
         return writer
 
-    def downloadDoc(self, docName, fileName):
+    def downloadDoc(self, docName, fileName, defaultColumnOrder = None):
         print "downloading  '%s' to '%s'" % (docName, fileName)
+        docName = docName.encode("utf-8")
         self.client.SelectSpreadsheet(docName)
         self.client.SelectWorksheet(0)
 
@@ -53,18 +68,18 @@ class GoogleDocDownloader:
             # row is a custom object, so lets construct a normal dictionary from it with keys and values
             val = self.client.ToDictionaryFromRow(row)
             if (writer is None):
-                writer = self._openWriter(fileName, val)
+                writer = self._openWriter(fileName, val, defaultColumnOrder = defaultColumnOrder)
             writer.writerow(val)
         print "ok"
 
         self.client.GetAllRows()
 
 
-def downloadDoc(login, docName, fileName):
+def downloadDoc(login, docName, fileName, defaultColumnOrder = None):
     """ Creates a path if it does not exist, and uses GoogleDocDownloader to download doc to disk and
      saves it as csv file"""
     dir_util.mkpath(os.path.dirname(fileName))
-    GoogleDocDownloader().downloadDoc(docName, fileName)
+    GoogleDocDownloader().downloadDoc(docName, fileName, defaultColumnOrder = defaultColumnOrder)
 
 
 class GoogleDocsLogin():
@@ -116,7 +131,11 @@ class GoogleDocsUploader():
         ms = gdata.data.MediaSource(file_path=fileName, content_type='text/csv')
         #self.entry.title.text = 'updated document'
 
-        self.gdocsLogin.client.Update(self.entry, media_source=ms)
+        try:
+            self.gdocsLogin.client.Update(self.entry, media_source=ms)
+        except gdata.client.RequestError as e:
+            raise GoogleDocsError(message="Could not upload document '%s', error" % fileName, inner = e)
+
         msg = u"Document '%s' contents changed" % (self.entry.title.text)
         logger.info(msg)
 

@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 from django.core import management
+from pjutils.MessagingServer.MessagingServer import MQServer
 from pjutils.timemeasurement import TimeMeasurer
-from parasykjiems.FeatureBroker.configs import defaultConfig
 from cdb_lt_streets.LTRegisterCenter.mqbroker import LTRegisterQueue
 
 
@@ -14,7 +14,8 @@ class Command(BaseCommand):
 
         print "Printing contents of queue"
 
-        queue = LTRegisterQueue()
+        mqServer = MQServer()
+        queue = LTRegisterQueue(mqServer=mqServer)
 
         if queue.IsEmpty():
             print "Queue is empty"

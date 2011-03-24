@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand
 from django.core import management
+from pjutils.MessagingServer.MessagingServer import MQServer
 from pjutils.timemeasurement import TimeMeasurer
 from cdb_lt_streets.LTRegisterCenter.mqbroker import LTRegisterQueue
 
@@ -20,7 +21,8 @@ class Command(BaseCommand):
 
 
     def handle(self, *args, **options):
-        queue = LTRegisterQueue()
+        mqServer = MQServer()
+        queue = LTRegisterQueue(mqServer=mqServer)
         clearQueue(queue)
 
 
