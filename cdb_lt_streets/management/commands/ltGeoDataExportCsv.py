@@ -43,7 +43,9 @@ class RCCrawledDataExporter(object):
             v.append(val)
         values = v
         valuesStr = u"%s%s%s" % (values[0], delimiter, delimiter.join(values[1:]))
+        valuesStr = valuesStr.replace(u'"', u"")
         valuesStr = valuesStr.encode('UTF-8')
+
         self.file.write(valuesStr)
         self.file.write("\n")
 
