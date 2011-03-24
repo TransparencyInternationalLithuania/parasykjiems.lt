@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 
 from django.core.management.base import BaseCommand
+from pjutils.MessagingServer.MessagingServer import MQServer
 from pjutils.timemeasurement import TimeMeasurer
 from django.db import transaction
-from parasykjiems.FeatureBroker.configs import defaultConfig
 from urllib2 import urlopen
 from pjutils.exc import ChainnedException
 import time
@@ -16,35 +16,17 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-
 class LTGeoDataImportException(ChainnedException):
     pass
 
-class Command(BaseCommand):
-    args = '<speed>'
-    help = """Imports Geographical data for Lithuanian contact db from website http://www.registrucentras.lt/adr/p/index.php
-\nThe data is not in geographic coordinates though, it is simply a hierarchical structure of districts / counties / cities / streets/ etc"""
 
-    option_list = BaseCommand.option_list + (
-        make_option('-d', '--max-depth',
-            dest='max-depth',
-            metavar="depth-level",
-            default = "99",
-            help='Specify a maximum depth-level to parse. Counts from root location, even though current url might be deep in hierarchy'),
-        make_option('-u', '--url',
-            dest='url',
-            metavar='url',
-            default=None,
-            help='Specify a URL from http://www.registrucentras.lt/adr/p/index.php  to parse. Effectively you can make parse only a sub-tree')
-        )
-
-
+class ltGeoDataWebScraper(object):
     def _SendPageMessagesLinks(self, page):
         count = 0
         for link in page.links:
-            if (link.href is None):
+            if link.href is None:
                 continue
-            print "creating message for object '%s' " % (link)
+            print "creating message for object '%s' " % link
             self.queue.SendMessage(link.href)
             count += 1
         return count
@@ -52,12 +34,12 @@ class Command(BaseCommand):
     def _SendPageMessagesOtherPages(self, page):
         count = 0
         for link in page.otherPages:
-            if (link.href is None):
+            if link.href is None:
                 continue
-            # add links only on first page. So that we do not end up browsing through paged data forever
-            if (link.text == "1"):
+                # add links only on first page. So that we do not end up browsing through paged data forever
+            if link.text == "1":
                 break
-            print "creating message for other page \n'%s' " % (link)
+            print "creating message for other page \n'%s' " % link
             self.queue.SendMessage(link.href)
             count += 1
         return count
@@ -66,7 +48,7 @@ class Command(BaseCommand):
         count = 0
         """ Puts messages into queue for all additional links found in page"""
         l = len(page.location)
-        if (l + 1> self.options['max-depth']):
+        if l + 1 > self.max_depth:
             print "reaached max-depth level, will not send any messages for sub-urls"
         else:
             count += self._SendPageMessagesLinks(page)
@@ -74,7 +56,6 @@ class Command(BaseCommand):
         count += self._SendPageMessagesOtherPages(page)
 
         return count
-
 
 
     def _InsertLocationRows(self, page):
@@ -93,15 +74,17 @@ class Command(BaseCommand):
             parentLocationText = None
             if parentLocationName is not None:
                 parentLocationText = parentLocationName.text
-            locationInDB = HierarchicalGeoData.FindByName(name = text_nominative, name_genitive = text_genitive, parentName = parentLocationText)
+            locationInDB = HierarchicalGeoData.FindByName(name=text_nominative, name_genitive=text_genitive,
+                                                          parentName=parentLocationText)
             if locationInDB is None:
                 # try searching for genitive field with nominative form. The same logic as in _InsertContentRows()
-                locationInDB = HierarchicalGeoData.FindByName(name_genitive = text_nominative, parentName = parentLocationText)
-
+                locationInDB = HierarchicalGeoData.FindByName(name_genitive=text_nominative,
+                                                              parentName=parentLocationText)
 
             if locationInDB is None:
                 # that means we have to create it
-                locationInDB = self._CreateNewLocationObject(text_nominative= location.text, type = location.type, parentLocationObject=parentLocationObject)
+                locationInDB = self._CreateNewLocationObject(text_nominative=location.text, type=location.type,
+                                                             parentLocationObject=parentLocationObject)
                 insertedRows += 1
 
             parentLocationName = location
@@ -109,7 +92,7 @@ class Command(BaseCommand):
         return insertedRows
 
 
-    def _CreateNewLocationObject(self, type, parentLocationObject, text_nominative, text_genitive = None):
+    def _CreateNewLocationObject(self, type, parentLocationObject, text_nominative, text_genitive=None):
         locationInDB = HierarchicalGeoData()
         locationInDB.parent = parentLocationObject
         locationInDB.name = text_nominative
@@ -128,9 +111,9 @@ class Command(BaseCommand):
         pageLocationLength = len(page.location)
         type = LTGeoDataHierarchy.Hierarchy[pageLocationLength]
         parentType = LTGeoDataHierarchy.Hierarchy[pageLocationLength - 1]
-        parentName = page.location[len(page.location) -1].text
+        parentName = page.location[len(page.location) - 1].text
 
-        parentParentNameGenitive = page.location[len(page.location) -2].text
+        parentParentNameGenitive = page.location[len(page.location) - 2].text
 
         # for cities names are in genitive case
         # so correct that if that is the case
@@ -141,33 +124,39 @@ class Command(BaseCommand):
             text_nominative = None
 
         # execute the query. Searching for parent with either text in nominative or genitive
-        parentLocationObject = HierarchicalGeoData.FindByName(name = text_nominative, name_genitive=text_genitive, type = parentType, parentNameGenitive = parentParentNameGenitive)
+        parentLocationObject = HierarchicalGeoData.FindByName(name=text_nominative, name_genitive=text_genitive,
+                                                              type=parentType,
+                                                              parentNameGenitive=parentParentNameGenitive)
         if parentLocationObject is None:
             # if could not find, try again this time with searching for city name in genitive form, but with nominative value.
             # this happens only in specific cases, for example when parsing only cities. In those cases database
             # has only city name in genitive form, not in nominative. For example this url would
             # otherwise fail to parse: http://www.registrucentras.lt/adr/p/index.php?gyv_id=82
-            parentLocationObject = HierarchicalGeoData.FindByName(name_genitive = text_nominative, type = parentType)
+            parentLocationObject = HierarchicalGeoData.FindByName(name_genitive=text_nominative, type=parentType)
             if parentLocationObject is None:
                 print "parentType %s" % parentType
                 print "type %s" % type
                 all = list(HierarchicalGeoData.objects.all())
-                parentLocationObject = HierarchicalGeoData.FindByName(name = text_nominative, name_genitive=text_genitive, type = parentType, parentParentNameGenitive = parentParentNameGenitive)
-                raise LTGeoDataImportException("Could not find parent object by name '%s' and type '%s'" % (text_nominative, parentType) )
+                parentLocationObject = HierarchicalGeoData.FindByName(name=text_nominative, name_genitive=text_genitive,
+                                                                      type=parentType,
+                                                                      parentParentNameGenitive=parentParentNameGenitive)
+                raise LTGeoDataImportException(
+                    "Could not find parent object by name '%s' and type '%s'" % (text_nominative, parentType))
 
         for link in page.links:
-            locationInDB = HierarchicalGeoData.FindByName(name = link.text, name_genitive=link.text_genitive, parentName = parentName)
+            locationInDB = HierarchicalGeoData.FindByName(name=link.text, name_genitive=link.text_genitive,
+                                                          parentName=parentName)
             if locationInDB is not None:
                 continue
-            # create new location object
-            self._CreateNewLocationObject(text_nominative = link.text, text_genitive=link.text_genitive, type = type, parentLocationObject = parentLocationObject)
+                # create new location object
+            self._CreateNewLocationObject(text_nominative=link.text, text_genitive=link.text_genitive, type=type,
+                                          parentLocationObject=parentLocationObject)
             insertedRows += 1
-
 
         return insertedRows
 
 
-    @transaction.commit_on_success
+
     def CreateGeoRows(self, page):
         # create all rows in database for given page.
         # A row is a hierarchical data node.
@@ -183,35 +172,21 @@ class Command(BaseCommand):
 
         insertedRows += self._InsertLocationRows(page)
         insertedRows += self._InsertContentRows(page)
-
-
         return insertedRows
 
-    def handle(self, *args, **options):
-
-        print "Checking if MQ is empty"
-        self.options = options
-        self.options['max-depth'] = int(self.options['max-depth'])
-
-        print u"max-depth is set to %d" % self.options['max-depth']
-
-        # by default every second will be fetched 1 message.
-        # so it will be 1 url fetch per 1 second
-        # usually you will want to set it to lower values, such as 0.5 (a url fetch in every 2 seconds)
-        # or extremely slow 0.1 (in 10 seconds only 1 page fetch)
-        # or maximum 2 (2 messages per second).
-        throttleMessagesPerSecond = 2
-        if (len(args) > 0):
-            throttleMessagesPerSecond = float(args[0])
-
-
-        self.queue = LTRegisterQueue()
+    @transaction.commit_on_success
+    def importRC(self, ltRegisterQueue=None, url=None, max_depth=99, throttleMessagesPerSecond=5):
+        if ltRegisterQueue is None:
+            raise LTGeoDataImportException(message="ltRegisterQueue is None")
+        if url is None:
+            raise LTGeoDataImportException(message="url is None")
+        self.queue = ltRegisterQueue
+        self.max_depth = max_depth
         empty = self.queue.IsEmpty()
-        if (empty):
-            print "Queue is empty"
-            print "Initialising import procedure"
-            url = options['url']
+        self.queue.MQServer.BeginTransaction()
+        if empty:
             self.queue.InitialiseImport(url)
+        self.queue.MQServer.Commit()
 
         print u"starting import procedure"
 
@@ -221,11 +196,9 @@ class Command(BaseCommand):
         totalParsedMessages = 0
         totalInsertedRows = 0
 
-
-
-        while (True):
+        while True:
             msg = self.queue.ReadMessage()
-            if (msg is None):
+            if msg is None:
                 print u"no more messages, quitting"
                 break
 
@@ -234,7 +207,7 @@ class Command(BaseCommand):
             timeToProcessLastMessage = elapsedTime.ElapsedSeconds() - lastMessageTime
             throttleSpeed = 1 / throttleMessagesPerSecond
             timeDiff = timeToProcessLastMessage - throttleSpeed
-            if (timeDiff < 0):
+            if timeDiff < 0:
                 toSleep = timeDiff * -1
                 print u"will sleep for %s seconds" % toSleep
                 time.sleep(toSleep)
@@ -270,3 +243,48 @@ class Command(BaseCommand):
         print u"Took %s seconds" % elapsedTime.ElapsedSeconds()
         print u"Created total %s additional messages. Inserted %s rows into db" % (totalCreatedMessages, totalInsertedRows)
         print u"Made %s requirests. Avg %s fetches per second" % (totalParsedMessages, totalParsedMessages / elapsedTime.ElapsedSeconds())
+
+
+class Command(BaseCommand):
+    args = '<speed>'
+    help = """Imports Geographical data for Lithuanian contact db from website http://www.registrucentras.lt/adr/p/index.php
+\nThe data is not in geographic coordinates though, it is simply a hierarchical structure of districts / counties / cities / streets/ etc"""
+
+    option_list = BaseCommand.option_list + (
+    make_option('-d', '--max-depth',
+                dest='max-depth',
+                metavar="depth-level",
+                default="99",
+                help='Specify a maximum depth-level to parse. Counts from root location, even though current url might be deep in hierarchy')
+    ,
+    make_option('-u', '--url',
+                dest='url',
+                metavar='url',
+                default=None,
+                help='Specify a URL from http://www.registrucentras.lt/adr/p/index.php  to parse. Effectively you can make parse only a sub-tree')
+    )
+
+
+    def handle(self, *args, **options):
+        print "Checking if MQ is empty"
+        self.options = options
+        self.options['max-depth'] = int(self.options['max-depth'])
+
+        print u"max-depth is set to %d" % self.options['max-depth']
+
+        # by default every second will be fetched 1 message.
+        # so it will be 1 url fetch per 1 second
+        # usually you will want to set it to lower values, such as 0.5 (a url fetch in every 2 seconds)
+        # or extremely slow 0.1 (in 10 seconds only 1 page fetch)
+        # or maximum 2 (2 messages per second).
+        throttleMessagesPerSecond = 2
+        if len(args) > 0:
+            throttleMessagesPerSecond = float(args[0])
+
+        url = options['url']
+        mqServer = MQServer()
+        queue = LTRegisterQueue(mqServer=mqServer)
+
+
+        sc = ltGeoDataWebScraper()
+        sc.importRC(ltRegisterQueue=queue, max_depth=self.options['max-depth'], throttleMessagesPerSecond=throttleMessagesPerSecond, url=url)

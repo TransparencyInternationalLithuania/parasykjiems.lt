@@ -8,23 +8,30 @@ class ConnectToMessageServerFailed(ChainnedException):
 class MQServer:
     """ Helps establish a connection to RabbitMQ server, and initialise all default queu
     """
-    Connection = None
-    Channel = None
-
     def __init__(self):
         # open connection to localhost server
         self.Connection = amqp.Connection(host="localhost:5672", userid="guest", password="guest", virtual_host="/", insist=False)
         #raise ConnectToMessageServerFailed("Failed to connect to RabbitMQ server on localhost. Did you not forget to start it? On windows start rabbitmq-server.bat to start it as console program", e)
         self.Channel = self.Connection.channel()
+        self.isInTransaction = False
 
 
     def BeginTransaction(self):
+        if self.isInTransaction:
+            return
         self.Channel.tx_select()
+        self.isInTransaction = True
 
     def Commit(self):
+        if self.isInTransaction == False:
+            return
+        self.isInTransaction = False
         self.Channel.tx_commit()
 
     def Rollback(self):
+        if self.isInTransaction == False:
+            return
+        self.isInTransaction = False
         self.Channel.tx_rollback()
 
 
