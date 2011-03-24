@@ -338,14 +338,5 @@ LIETUVOS RESPUBLIKA / Tauragės apskr. / Pagėgių sav. / Natkiškių sen. / Nat
         page.otherPages = self.GetOtherPages()
 
 
-        """
-        tableRows = h1.next.next.findAll("td")
-        values = []
-        for row in tableRows:
-            if (len(row.contents) > 0):
-                values.append(row.contents[0])
-            values.append("\t")
-
-        print "".join(values)"""
         return page
 

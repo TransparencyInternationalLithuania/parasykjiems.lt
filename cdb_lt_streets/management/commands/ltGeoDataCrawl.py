@@ -3,7 +3,16 @@
 
 from django.core.management.base import BaseCommand
 from cdb_lt.management.commands.importSources import ltGeoDataSources_Country
+from cdb_lt_streets.LTRegisterCenter.mqbroker import LTRegisterQueue
+from cdb_lt_streets.management.commands.ltGeoDataClearQueue import clearQueue
+from cdb_lt_streets.management.commands.ltGeoDataExportCsv import RCCrawledDataExporter
+from cdb_lt_streets.management.commands.ltGeoDataImportRC import ltGeoDataWebScraper
+from cdb_lt_streets.management.commands.ltGeoDataClearData import clearGeoData
+
+
+from pjutils.MessagingServer.MessagingServer import MQServer
 from pjutils.args.Args import ExtractRange
+
 from pjutils.timemeasurement import TimeMeasurer
 import time
 import os
@@ -17,16 +26,16 @@ class RegisterCenterPageLocations:
     fileType = ".csv"
     commonPath = os.path.join("contactdb", "sources", "import data", "municipalities")
 
-    vilniusStreets = (u"http://www.registrucentras.lt/adr/p/index.php?gyv_id=1", {'city': "Vilnius"})
-    kaunasStreets = (u"http://www.registrucentras.lt/adr/p/index.php?gyv_id=6", {'city': "Kaunas"})
-    alytusStreets = (u"http://www.registrucentras.lt/adr/p/index.php?gyv_id=2", {'city': "Alytus"})
-    klaipedaStreets = (u"http://www.registrucentras.lt/adr/p/index.php?gyv_id=7", {'city': "Klaipėda"})
-    marijampolesStreets = (u"http://www.registrucentras.lt/adr/p/index.php?gyv_id=5",  {'city': "Marijampolė"})
-    panevezioStreets = (u"http://www.registrucentras.lt/adr/p/index.php?gyv_id=10",  {'city': "Panevėžys"})
-    siauliuStreets = (u"http://www.registrucentras.lt/adr/p/index.php?gyv_id=11", {'city': "Šiauliai"})
-    taurageStreets = (u"http://www.registrucentras.lt/adr/p/index.php?gyv_id=82", {'city': "Tauragė", 'insertCivilParish': False})
-    telsiuStreets = (u"http://www.registrucentras.lt/adr/p/index.php?gyv_id=84",  {'city': "Telšiai", 'insertCivilParish': False})
-    utenaStreets = (u"http://www.registrucentras.lt/adr/p/index.php?gyv_id=93", {'city': "Utena", 'insertCivilParish': False})
+    vilniusStreets = (u"http://www.registrucentras.lt/adr/p/index.php?gyv_id=1", {'city': u"Vilnius"})
+    kaunasStreets = (u"http://www.registrucentras.lt/adr/p/index.php?gyv_id=6", {'city': u"Kaunas"})
+    alytusStreets = (u"http://www.registrucentras.lt/adr/p/index.php?gyv_id=2", {'city': u"Alytus"})
+    klaipedaStreets = (u"http://www.registrucentras.lt/adr/p/index.php?gyv_id=7", {'city': u"Klaipėda"})
+    marijampolesStreets = (u"http://www.registrucentras.lt/adr/p/index.php?gyv_id=5",  {'city': u"Marijampolė"})
+    panevezioStreets = (u"http://www.registrucentras.lt/adr/p/index.php?gyv_id=10",  {'city': u"Panevėžys"})
+    siauliuStreets = (u"http://www.registrucentras.lt/adr/p/index.php?gyv_id=11", {'city': u"Šiauliai"})
+    taurageStreets = (u"http://www.registrucentras.lt/adr/p/index.php?gyv_id=82", {'city': u"Tauragė", 'insertCivilParish': False})
+    telsiuStreets = (u"http://www.registrucentras.lt/adr/p/index.php?gyv_id=84",  {'city': u"Telšiai", 'insertCivilParish': False})
+    utenaStreets = (u"http://www.registrucentras.lt/adr/p/index.php?gyv_id=93", {'city': u"Utena", 'insertCivilParish': False})
 
     allStreets = [
             alytusStreets,
@@ -95,24 +104,32 @@ class Command(BaseCommand):
 
         commands = []
 
+
+        mqServer = MQServer()
+        queue = LTRegisterQueue(mqServer=mqServer)
+        sc = ltGeoDataWebScraper()
+        #sc.importRC(ltRegisterQueue=queue, max_depth=self.options['max-depth'], throttleMessagesPerSecond=throttleMessagesPerSecond, url=url)
+
+        r = RCCrawledDataExporter()
+
         for location in list:
             url = location[0][0]
             name = location[1][1]
-            commands.append("ltGeoDataClearQueue")
-            commands.append("ltGeoDataClearData")
-            commands.append(("ltGeoDataImportRC", {"url": url, "max-depth": 99}))
-            exportOptions = {"file": name}
+            commands.append((clearQueue, {"queue" : queue}))
+            commands.append((clearGeoData, {}))
+            commands.append((sc.importRC, {"url": url, "max_depth": 99, 'ltRegisterQueue':queue}))
+            exportOptions = {"fileName": name}
             if len(location[0]) > 1:
                 additionalOptions = location[0][1]
                 exportOptions = dict(exportOptions, **additionalOptions)
-            commands.append(("ltGeoDataExportCsv", exportOptions))
+            commands.append((r.export, exportOptions))
 
-        print "Will issue these commands:"
-        for i in commands:
-            print i
+
 
         print "Starting crawling"
 
-        ExecManagementCommand(commands)
+        for command, options in commands:
+            command(**options)
+            #ExecManagementCommand(commands)
 
         print "finished. Took %s seconds" % timeMeasurer.ElapsedSeconds()

@@ -1,5 +1,4 @@
 from amqplib import client_0_8 as amqp
-from FeatureBroker import *
 from settings import *
 import socket
 from amqplib.client_0_8.exceptions import *
@@ -11,8 +10,8 @@ class NoRegisterCenterURLDefined(ChainnedException):
     pass
 
 
-class LTRegisterQueue(Component):
-    mqServer = RequiredFeature("MQServer", IsInstanceOf(MQServer))
+class LTRegisterQueue(object):
+    mqServer = None
     queueName = "po_box"
     exchangeName = "sorting_room"
     routingKey = "jason"
@@ -21,8 +20,9 @@ class LTRegisterQueue(Component):
     sett = False
 
 
-    def __init__(self):
+    def __init__(self, mqServer):
         # define properties
+        self.mqServer = mqServer
         self.MQServer = self.mqServer
 
         # we create the queues and exchanges everytime we create and instance of this class
@@ -37,7 +37,7 @@ class LTRegisterQueue(Component):
         later inserted as other messoges"""
 
         # send initial message with a defined URL in GlobalSettings
-        if (url is None):
+        if url is None:
             raise NoRegisterCenterURLDefined("""Please pass a --url param to specify which part of the web page to parse.
 Root url is %s, but you can pass any sub url if you want to parse only sub-pages """ % "http://www.registrucentras.lt/adr/p/")
         else:
@@ -56,7 +56,7 @@ Root url is %s, but you can pass any sub url if you want to parse only sub-pages
     def CreateQueues(self):
         """ Creates all neded queues and bindings needed to work with RegistruCentras.lt """
         # create a queue used for reading from http://www.registrucentras.lt/adr/p/index.php
-        if (LTRegisterQueue.sett == True):
+        if LTRegisterQueue.sett == True:
             return
         self.mqServer.Channel.queue_declare(queue=self.queueName, durable=True, exclusive=False, auto_delete=False)
         self.mqServer.Channel.exchange_declare(exchange = self.exchangeName, type="direct", durable=True, auto_delete=False,)
@@ -79,12 +79,14 @@ Root url is %s, but you can pass any sub url if you want to parse only sub-pages
         """
 
         count = 0
-        while (True):
+        self.MQServer.BeginTransaction()
+        while True:
             msg = self.ReadMessage()
-            if (msg is None):
-                break;
+            if msg is None:
+                break
             count += 1
             self.ConsumeMessage(msg)
+        self.MQServer.Commit()
         print "cleared  total %s messages " % count
 
 
@@ -92,10 +94,11 @@ Root url is %s, but you can pass any sub url if you want to parse only sub-pages
         """ Tells if RegisterQueue is empty.
         If queue is empty, then it means that either processing has finished, or has not started at all.
         Initiaiate processing by inserting new Root message"""
+        self.MQServer.BeginTransaction()
         try:
             msg = self.ReadMessage()
         except AMQPChannelException as e:
-            if (e.amqp_reply_code == 404):
+            if e.amqp_reply_code == 404:
                 return True   
             raise e
 
@@ -103,7 +106,7 @@ Root url is %s, but you can pass any sub url if you want to parse only sub-pages
 
         # force to resend a message, so that we don't accidentally consume it
         # requeue must be True, otherwise the same consumer will not receive it again
-        self.mqServer.Channel.basic_recover(requeue = True)
-
+        #self.mqServer.Channel.basic_recover(requeue = True)
+        self.MQServer.Rollback()
         # return if queue is empty
         return empty
