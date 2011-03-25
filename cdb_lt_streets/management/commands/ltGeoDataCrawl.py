@@ -117,11 +117,15 @@ class Command(BaseCommand):
             name = location[1][1]
             commands.append((clearQueue, {"queue" : queue}))
             commands.append((clearGeoData, {}))
-            commands.append((sc.importRC, {"url": url, "max_depth": 99, 'ltRegisterQueue':queue}))
-            exportOptions = {"fileName": name}
+            additionalOptions = {}
             if len(location[0]) > 1:
                 additionalOptions = location[0][1]
-                exportOptions = dict(exportOptions, **additionalOptions)
+            importRCOptions = {"url": url, "max_depth": 99, 'ltRegisterQueue':queue}
+            importRCOptions = dict(importRCOptions, **additionalOptions)
+            commands.append((sc.importRC, importRCOptions))
+
+            exportOptions = {"fileName": name}
+            exportOptions = dict(exportOptions, **additionalOptions)
             commands.append((r.export, exportOptions))
 
 

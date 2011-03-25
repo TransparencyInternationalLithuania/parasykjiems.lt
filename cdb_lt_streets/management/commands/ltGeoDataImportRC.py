@@ -110,7 +110,12 @@ class ltGeoDataWebScraper(object):
         # will be the deeper element in hierarchy (at least in Lithuanian hierarhchy version)
         pageLocationLength = len(page.location)
         type = LTGeoDataHierarchy.Hierarchy[pageLocationLength]
-        parentType = LTGeoDataHierarchy.Hierarchy[pageLocationLength - 1]
+
+        if self.cityMode:
+            if pageLocationLength == 4:
+                type = LTGeoDataHierarchy.Hierarchy[pageLocationLength + 1]
+
+        parentType = page.location[len(page.location) - 1].type
         parentName = page.location[len(page.location) - 1].text
 
         parentParentNameGenitive = page.location[len(page.location) - 2].text
@@ -137,9 +142,9 @@ class ltGeoDataWebScraper(object):
                 print "parentType %s" % parentType
                 print "type %s" % type
                 all = list(HierarchicalGeoData.objects.all())
-                parentLocationObject = HierarchicalGeoData.FindByName(name=text_nominative, name_genitive=text_genitive,
+                """parentLocationObject = HierarchicalGeoData.FindByName(name=text_nominative, name_genitive=text_genitive,
                                                                       type=parentType,
-                                                                      parentParentNameGenitive=parentParentNameGenitive)
+                                                                      parentNameGenitive=parentParentNameGenitive)"""
                 raise LTGeoDataImportException(
                     "Could not find parent object by name '%s' and type '%s'" % (text_nominative, parentType))
 
@@ -175,7 +180,11 @@ class ltGeoDataWebScraper(object):
         return insertedRows
 
     @transaction.commit_on_success
-    def importRC(self, ltRegisterQueue=None, url=None, max_depth=99, throttleMessagesPerSecond=5):
+    def importRC(self, ltRegisterQueue=None, url=None, max_depth=99, throttleMessagesPerSecond=5, city = None, **options):
+        self.cityMode = False
+        if city is not None and city != u"":
+            self.cityMode = True
+
         if ltRegisterQueue is None:
             raise LTGeoDataImportException(message="ltRegisterQueue is None")
         if url is None:
@@ -227,7 +236,7 @@ class ltGeoDataWebScraper(object):
             lines = "".join(response.readlines())
 
             pageParser = RegisterCenterParser(lines)
-            page = pageParser.parse()
+            page = pageParser.parse(city=city)
 
             # add external links as messages
             totalCreatedMessages += self.SendPageMessages(page)
@@ -262,6 +271,12 @@ class Command(BaseCommand):
                 metavar='url',
                 default=None,
                 help='Specify a URL from http://www.registrucentras.lt/adr/p/index.php  to parse. Effectively you can make parse only a sub-tree')
+     ,
+    make_option('-c', '--city',
+                dest='city',
+                metavar='city',
+                default=None,
+                help='Some URLS will parse cities, and cities might not have civil parish, as well as only city-genitive form. Pass city nominative city form here to parse everything correctly')
     )
 
 
@@ -287,4 +302,4 @@ class Command(BaseCommand):
 
 
         sc = ltGeoDataWebScraper()
-        sc.importRC(ltRegisterQueue=queue, max_depth=self.options['max-depth'], throttleMessagesPerSecond=throttleMessagesPerSecond, url=url)
+        sc.importRC(ltRegisterQueue=queue, max_depth=self.options['max-depth'], throttleMessagesPerSecond=throttleMessagesPerSecond, url=url, city=self.options['city'])

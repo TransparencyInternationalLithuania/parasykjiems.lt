@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import csv
 
 from optparse import make_option
+from types import IntType
 from django.core.management.base import BaseCommand
 from django.core import management
 from cdb_lt.management.commands.downloadTerritories import territoriesCsvFormat
@@ -17,24 +19,40 @@ class RCCrawledDataExporter(object):
     def __init__(self):
         self.parentCache = {}
 
-    def getParentValues(self, obj):
-        values = []
-        while obj.parent is not None:
-            parent = obj.parent
-            parentId = parent.id
-            if self.parentCache.has_key(parentId):
-                parent = self.parentCache[parentId]
-            else:
-                self.parentCache[parentId] = parent
+    def getObject(self, object):
+        if self.parentCache.has_key(object.id):
+            return self.parentCache[object.id]
 
-            if parent.type == HierarchicalGeoData.HierarchicalGeoDataType.City:
-                values.append(parent.name_genitive)
-            values.append(parent.name)
-            obj = parent
-        values.reverse()
+        self.parentCache[object.id] = object
+        return object
+
+
+    def getParentValues(self, obj):
+        values = {}
+        while obj is not None:
+            obj = self.getObject(obj)
+            values[obj.type] = obj.name
+
+            if obj.type == HierarchicalGeoData.HierarchicalGeoDataType.City:
+                values[obj.type] = obj.name
+                values["citygenitive"] = obj.name_genitive
+            obj = obj.parent
         return values
 
+
+    def toCsvDictFromDict(self, d):
+        for k in d.iterkeys():
+            if d[k] is None:
+                continue
+            if type(d[k]) is not IntType:
+                d[k] = d[k].replace("\n", " ")
+                d[k] = d[k].encode("utf-8")
+        return d
+
     def writeToFile(self, values):
+        v = self.toCsvDictFromDict(values)
+        self.file.writerow(v)
+        """
         delimiter = u","
         v = []
         for val in values:
@@ -49,7 +67,7 @@ class RCCrawledDataExporter(object):
         valuesStr = valuesStr.encode('UTF-8')
 
         self.file.write(valuesStr)
-        self.file.write("\n")
+        self.file.write("\n")"""
 
 
     def export(self, fileName, city = None, insertCivilParish = None):
@@ -61,9 +79,13 @@ class RCCrawledDataExporter(object):
 
 
         dir_util.mkpath(os.path.dirname(fileName))
-        self.file = open(fileName, 'w')
+        #self.file = open(fileName, 'w')
+        #self.writeToFile(territoriesCsvFormat)
+        self.file = csv.DictWriter(open(fileName, "wb"), territoriesCsvFormat)
+        headers = dict( (n,n) for n in territoriesCsvFormat )
+        self.file.writerow(headers)
 
-        self.writeToFile(territoriesCsvFormat)
+
 
         allIds = HierarchicalGeoData.objects.values_list('id', flat = True).order_by('id')
         count = 0
@@ -78,14 +100,13 @@ class RCCrawledDataExporter(object):
             print "id %s has %s children" % (id, childrenCount)
             obj = HierarchicalGeoData.objects.all().filter(id = id)[0]
             parent_values = self.getParentValues(obj)
+            parent_values["id"] = count
 
-            finalValues = [count]
-            for pv in parent_values:
-                finalValues.append(pv)
-            finalValues.append(obj.name)
 
             if cityMode == True:
-                if insertCivilParish == True:
+                parent_values["citygenitive"] = parent_values["city"]
+                parent_values["city"] = city
+                """if insertCivilParish == True:
                     finalValues.insert(len(finalValues) - 2, u"")
 
                     # insert nominative form for city
@@ -93,17 +114,16 @@ class RCCrawledDataExporter(object):
                 else:
                     # update city nominative form, if this is not insertCivilparishMode
                     finalValues[len(finalValues) -2] = city
+"""
 
-
-            if cityMode == False:
+            """if cityMode == False:
                 if obj.type == HierarchicalGeoData.HierarchicalGeoDataType.City:
-                    finalValues.append(obj.name_genitive)
-            while len(finalValues) < 8:
-                finalValues.append(u"")
+                    finalValues.append(obj.name_genitive)"""
+            """while len(finalValues) < 8:
+                finalValues.append(u"")"""
 
-            self.writeToFile(finalValues)
+            self.writeToFile(parent_values)
 
-        self.file.close()
         print u"Took %s seconds" % elapsedTime.ElapsedSeconds()
         print u"finished, total %s lines" % count
 
