@@ -196,6 +196,14 @@ class TestAddressDeducer(TestCase):
         self.assertEqual(u"Pagirių seniūnija", address.civilParish)
         self.assertEqual(u"Vilniaus rajono savivaldybė", address.municipality)
 
+    def test_KazluRuda(self):
+        address = deduceAddress(u"M. Valančiaus g., Kazlų Rūda, Kazlų Rūdos sav.")
+        self.assertEqual(u"", address.number)
+        self.assertEqual(u"M. Valančiaus g.", address.street)
+        self.assertEqual(u"Kazlų Rūda", address.city)
+        self.assertEqual(u"", address.civilParish)
+        self.assertEqual(u"Kazlų Rūdos sav.", address.municipality)
+
 
 
 

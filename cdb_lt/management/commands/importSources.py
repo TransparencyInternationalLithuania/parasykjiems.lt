@@ -50,6 +50,18 @@ class ltGeoDataSources_Country:
         (u"Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Vilnius City", os.path.join(commonStreetPath, "cdb_lt_street_index_Vilnius_city.csv")),
     ]
 
+
+
+    additionalCities = [
+        (u"Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Neringa City", os.path.join(commonStreetPath, "cdb_lt_street_index_Neringa_city.csv")),
+        (u"Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Palanga City", os.path.join(commonStreetPath, "cdb_lt_street_index_Palanga_city.csv")),
+        (u"Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Visaginas City", os.path.join(commonStreetPath, "cdb_lt_street_index_Visaginas_city.csv")),
+        (u"Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Druskininkai City", os.path.join(commonStreetPath, "cdb_lt_street_index_Druskininkai_city.csv")),
+        (u"Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Molėtai City", os.path.join(commonStreetPath, "cdb_lt_street_index_Moletai_city.csv")),
+        (u"Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Kazlų Rūda City", os.path.join(commonStreetPath, "cdb_lt_street_index_Kazlu_Ruda_city.csv")),
+    ]
+
+
     commonPath = os.path.join(u"cdb_lt", "files", "territory", "countryTerritory", "municipality")
     addressesInMunicipalities = [
                     (u"Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Alytaus apskr.", os.path.join(commonPath, "cdb_lt_street_index_alytaus_apskritis.csv")),
@@ -65,7 +77,7 @@ class ltGeoDataSources_Country:
     ]
 
     """ A complete Lithuanian street source: cities plus municipalities"""
-    LithuanianAddresses = addressesInMunicipalities + addressesInCities
+    LithuanianAddresses = addressesInMunicipalities + addressesInCities + additionalCities
 
 class ltGeoDataSources_Institution:
     LithuanianMPStreetData = os.path.join("cdb_lt", "files", "territory", "institutionTerritory", "mp", "apygardos.txt")
