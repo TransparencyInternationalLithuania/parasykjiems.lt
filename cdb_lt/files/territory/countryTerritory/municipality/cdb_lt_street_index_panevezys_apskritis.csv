@@ -153,7 +153,7 @@ id,country,county,municipality,civilparish,city,citygenitive,street
 152,LIETUVOS RESPUBLIKA,Panevėžio apskritis,Biržų rajono savivaldybė,Vabalninko seniūnija,Apušotas,Apušoto viensėdis,
 153,LIETUVOS RESPUBLIKA,Panevėžio apskritis,Panevėžio rajono savivaldybė,Ramygalos seniūnija,Apušotas,Apušoto viensėdis,
 154,LIETUVOS RESPUBLIKA,Panevėžio apskritis,Rokiškio rajono savivaldybė,Pandėlio seniūnija,Apušotas,Apušoto viensėdis,
-155,LIETUVOS RESPUBLIKA,Panevėžio apskritis,Rokiškio rajono savivaldybė,Rokiškio miesto seniūnija,Rokiškis,Rokiškio miestas,Apušoto priemiestas 
+155,LIETUVOS RESPUBLIKA,Panevėžio apskritis,Rokiškio rajono savivaldybė,Rokiškio miesto seniūnija,Rokiškis,Rokiškio miestas,Apušoto priemiestas
 156,LIETUVOS RESPUBLIKA,Panevėžio apskritis,Biržų rajono savivaldybė,Parovėjos seniūnija,Apušynė,Apušynės kaimas,
 157,LIETUVOS RESPUBLIKA,Panevėžio apskritis,Pasvalio rajono savivaldybė,Vaškų seniūnija,Apušynė,Apušynės kaimas,
 158,LIETUVOS RESPUBLIKA,Panevėžio apskritis,Panevėžio rajono savivaldybė,Velžio seniūnija,Apynojai,Apynojų kaimas,
@@ -1436,7 +1436,7 @@ id,country,county,municipality,civilparish,city,citygenitive,street
 1435,LIETUVOS RESPUBLIKA,Panevėžio apskritis,Rokiškio rajono savivaldybė,Jūžintų seniūnija,Joneliškės,Joneliškių kaimas,
 1436,LIETUVOS RESPUBLIKA,Panevėžio apskritis,Panevėžio rajono savivaldybė,Karsakiškio seniūnija,Naujikai,Naujikų kaimas,Joninių gatvė
 1437,LIETUVOS RESPUBLIKA,Panevėžio apskritis,Rokiškio rajono savivaldybė,Rokiškio kaimiškoji seniūnija,Sėlynė,Sėlynės kaimas,Joniškio gatvė
-1438,LIETUVOS RESPUBLIKA,Panevėžio apskritis,Rokiškio rajono savivaldybė,Rokiškio miesto seniūnija,Rokiškis,Rokiškio miestas,Joniškio viensėdis 
+1438,LIETUVOS RESPUBLIKA,Panevėžio apskritis,Rokiškio rajono savivaldybė,Rokiškio miesto seniūnija,Rokiškis,Rokiškio miestas,Joniškio viensėdis
 1439,LIETUVOS RESPUBLIKA,Panevėžio apskritis,Panevėžio rajono savivaldybė,Velžio seniūnija,Joniškis,Joniškio kaimas,
 1440,LIETUVOS RESPUBLIKA,Panevėžio apskritis,Rokiškio rajono savivaldybė,Rokiškio kaimiškoji seniūnija,Joniškis,Joniškio kaimas,
 1441,LIETUVOS RESPUBLIKA,Panevėžio apskritis,Rokiškio rajono savivaldybė,Rokiškio kaimiškoji seniūnija,Joniškis,Joniškio viensėdis,
@@ -2973,7 +2973,7 @@ id,country,county,municipality,civilparish,city,citygenitive,street
 2972,LIETUVOS RESPUBLIKA,Panevėžio apskritis,Rokiškio rajono savivaldybė,Kazliškio seniūnija,Pagojai,Pagojų kaimas,Pagojų gatvė
 2973,LIETUVOS RESPUBLIKA,Panevėžio apskritis,Pasvalio rajono savivaldybė,Pasvalio apylinkių seniūnija,Talačkoniai,Talačkonių kaimas,Pagojų gatvė
 2974,LIETUVOS RESPUBLIKA,Panevėžio apskritis,Rokiškio rajono savivaldybė,Rokiškio kaimiškoji seniūnija,Pagrandžiai,Pagrandžių kaimas,Pagrandžių gatvė
-2975,LIETUVOS RESPUBLIKA,Panevėžio apskritis,Rokiškio rajono savivaldybė,Rokiškio miesto seniūnija,Rokiškis,Rokiškio miestas,Pagrandžių priemiestas 
+2975,LIETUVOS RESPUBLIKA,Panevėžio apskritis,Rokiškio rajono savivaldybė,Rokiškio miesto seniūnija,Rokiškis,Rokiškio miestas,Pagrandžių priemiestas
 2976,LIETUVOS RESPUBLIKA,Panevėžio apskritis,Rokiškio rajono savivaldybė,Obelių seniūnija,Pagriaumelės,Pagriaumelių kaimas,
 2977,LIETUVOS RESPUBLIKA,Panevėžio apskritis,Rokiškio rajono savivaldybė,Juodupės seniūnija,Pagrūbys,Pagrūbio kaimas,
 2978,LIETUVOS RESPUBLIKA,Panevėžio apskritis,Rokiškio rajono savivaldybė,Pandėlio seniūnija,Paguriai,Pagurių kaimas,
@@ -3210,7 +3210,7 @@ id,country,county,municipality,civilparish,city,citygenitive,street
 3209,LIETUVOS RESPUBLIKA,Panevėžio apskritis,Rokiškio rajono savivaldybė,Rokiškio miesto seniūnija,Rokiškis,Rokiškio miestas,Parko gatvė
 3210,LIETUVOS RESPUBLIKA,Panevėžio apskritis,Rokiškio rajono savivaldybė,Rokiškio miesto seniūnija,Rokiškis,Rokiškio miestas,Parko skersgatvis
 3211,LIETUVOS RESPUBLIKA,Panevėžio apskritis,Biržų rajono savivaldybė,Biržų miesto seniūnija,Biržai,Biržų miestas,Parodos gatvė
-3212,LIETUVOS RESPUBLIKA,Panevėžio apskritis,Rokiškio rajono savivaldybė,Rokiškio miesto seniūnija,Rokiškis,Rokiškio miestas,Parokiškio priemiestas 
+3212,LIETUVOS RESPUBLIKA,Panevėžio apskritis,Rokiškio rajono savivaldybė,Rokiškio miesto seniūnija,Rokiškis,Rokiškio miestas,Parokiškio priemiestas
 3213,LIETUVOS RESPUBLIKA,Panevėžio apskritis,Rokiškio rajono savivaldybė,Rokiškio kaimiškoji seniūnija,Parokiškė,Parokiškės kaimas,Parokiškės gatvė
 3214,LIETUVOS RESPUBLIKA,Panevėžio apskritis,Rokiškio rajono savivaldybė,Rokiškio kaimiškoji seniūnija,Serapiniškis,Serapiniškio kaimas,Parokiškės gatvė
 3215,LIETUVOS RESPUBLIKA,Panevėžio apskritis,Biržų rajono savivaldybė,Papilio seniūnija,Parovėja,Parovėjos kaimas,
@@ -4813,7 +4813,7 @@ id,country,county,municipality,civilparish,city,citygenitive,street
 4812,LIETUVOS RESPUBLIKA,Panevėžio apskritis,Panevėžio rajono savivaldybė,Vadoklių seniūnija,Veliapolis,Veliapolio viensėdis,
 4813,LIETUVOS RESPUBLIKA,Panevėžio apskritis,Panevėžio rajono savivaldybė,Vadoklių seniūnija,Veliapolis,Veliapolio kaimas,
 4814,LIETUVOS RESPUBLIKA,Panevėžio apskritis,Rokiškio rajono savivaldybė,Rokiškio miesto seniūnija,Rokiškis,Rokiškio miestas,Velniakalnio gatvė
-4815,LIETUVOS RESPUBLIKA,Panevėžio apskritis,Rokiškio rajono savivaldybė,Rokiškio miesto seniūnija,Rokiškis,Rokiškio miestas,Velniakalnio gyv. vietovė 
+4815,LIETUVOS RESPUBLIKA,Panevėžio apskritis,Rokiškio rajono savivaldybė,Rokiškio miesto seniūnija,Rokiškis,Rokiškio miestas,Velniakalnio gyv. vietovė
 4816,LIETUVOS RESPUBLIKA,Panevėžio apskritis,Pasvalio rajono savivaldybė,Pasvalio apylinkių seniūnija,Velniakalnis,Velniakalnio viensėdis,
 4817,LIETUVOS RESPUBLIKA,Panevėžio apskritis,Rokiškio rajono savivaldybė,Rokiškio kaimiškoji seniūnija,Velniakalnis,Velniakalnio kaimas,
 4818,LIETUVOS RESPUBLIKA,Panevėžio apskritis,Panevėžio rajono savivaldybė,Karsakiškio seniūnija,Velniakiai,Velniakių kaimas,
