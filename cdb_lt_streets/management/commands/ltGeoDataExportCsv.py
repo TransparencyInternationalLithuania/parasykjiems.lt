@@ -87,7 +87,7 @@ class RCCrawledDataExporter(object):
 
 
 
-        allIds = HierarchicalGeoData.objects.values_list('id', flat = True).order_by('id')
+        allIds = HierarchicalGeoData.objects.values_list('id', flat = True).order_by('name')
         count = 0
 
         for id in allIds:
