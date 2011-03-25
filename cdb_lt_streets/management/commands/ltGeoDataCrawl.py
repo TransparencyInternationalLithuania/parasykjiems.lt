@@ -49,6 +49,15 @@ class RegisterCenterPageLocations:
             utenaStreets,
             vilniusStreets]
 
+    additionalCities = [
+        (u"http://www.registrucentras.lt/adr/p/index.php?gyv_id=8", {'city' : u"Neringa"}),
+        (u"http://www.registrucentras.lt/adr/p/index.php?gyv_id=9", {'city' : u"Palanga"}),
+        (u"http://www.registrucentras.lt/adr/p/index.php?gyv_id=33", {'city' : u"Visaginas"}),
+        (u"http://www.registrucentras.lt/adr/p/index.php?gyv_id=4", {'city' : u"Druskininkai"}),
+        (u"http://www.registrucentras.lt/adr/p/index.php?gyv_id=61", {'city' : u"Molėtai"}),
+        (u"http://www.registrucentras.lt/adr/p/index.php?gyv_id=39", {'city' : u"Kazlų Rūda"})
+    ]
+
     AllMunicipalities = [
             (u"http://www.registrucentras.lt/adr/p/index.php?aps_id=1",), #, "Alytaus apskritis%s"
             (u"http://www.registrucentras.lt/adr/p/index.php?aps_id=41",), #"Kauno apskritis%s"
@@ -62,7 +71,7 @@ class RegisterCenterPageLocations:
             (u"http://www.registrucentras.lt/adr/p/index.php?aps_id=460",), #"Vilniaus apskritis%s"
     ]
 
-    AllData = AllMunicipalities + allStreets
+    AllData = AllMunicipalities + allStreets + additionalCities
 
 
 class Command(BaseCommand):

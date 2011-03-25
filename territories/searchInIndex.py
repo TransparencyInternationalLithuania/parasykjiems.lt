@@ -3,6 +3,7 @@
 
 from pjutils.uniconsole import *
 import re
+import types
 from django.db.models.query_utils import Q
 import logging
 from pjutils.deprecated import deprecated
@@ -24,6 +25,46 @@ class ContactDbAddress:
         self.number = u""
         self.flatNumber = u""
         self.civilParish = u""
+
+def splitIntoCityAndMunicipality(string):
+    if type(string) == types.ListType:
+        # only if list contains at least two elements, treat them as city and municipality
+        if len(string) > 1:
+            city = string[0]
+            allElse = u" ".join(string[1:])
+            return (city, allElse)
+        # convert to string from List
+        string = string[0]
+
+    string = string.strip()
+    splitted = string.split(u" ")
+    splitted = [p for p in splitted if p.strip() != u""]
+    # if we have less than two words, just return what we have
+    if len(splitted) < 2:
+        return splitted
+    # first part is always city name
+
+    wasCity = -1
+    for i in range(1, len(splitted)):
+        if splitted[i] in allCityEndings:
+
+            # This is not accurate, since address Vilnius, Viniaus m. sav. will fail
+            # the first part is the city, and the second is municipality. But note that
+            # municipality part contains "m." part, which is a city ending in short form
+            # so just check if "sav." follows it, which stands for "municipality"
+            if i + 1< len(splitted):
+                next = splitted[i+1]
+                if next == u"sav.":
+                    continue
+            wasCity = i
+
+
+    if wasCity == -1:
+        wasCity = 0;
+
+    cityString = " ".join(splitted[0:wasCity + 1])
+    allElse = u" ".join(splitted[wasCity + 1:])
+    return [cityString, allElse]
 
 class AddressDeducer():
     """ Deduces which strings are city, which street, and which is municipality """
@@ -121,37 +162,6 @@ class AddressDeducer():
         secondPart = " ".join(secondPart)
         return firstPart, secondPart
 
-    def splitIntoCityAndMunicipality(self, string):
-        string = string.strip()
-        splitted = string.split(u" ")
-        splitted = [p for p in splitted if p.strip() != u""]
-        # if we have less than two words, just return what we have
-        if len(splitted) < 2:
-            return splitted
-        # first part is always city name
-
-        wasCity = -1
-        for i in range(1, len(splitted)):
-            if splitted[i] in allCityEndings:
-
-                # This is not accurate, since address Vilnius, Viniaus m. sav. will fail
-                # the first part is the city, and the second is municipality. But note that
-                # municipality part contains "m." part, which is a city ending in short form
-                # so just check if "sav." follows it, which stands for "municipality"
-                if i + 1< len(splitted):
-                    next = splitted[i+1]
-                    if next == u"sav.":
-                        continue
-                wasCity = i
-
-
-        if wasCity == -1:
-            wasCity = 0;
-
-        cityString = " ".join(splitted[0:wasCity + 1])
-        allElse = u" ".join(splitted[wasCity + 1:])
-        return [cityString, allElse]
-
 
 
 
@@ -182,9 +192,10 @@ class AddressDeducer():
                     del parts[index]
 
                 # combine everything else again into string
-                joined = u" ".join(parts[1:])
+                joined = parts[1:]
+                #joined = u" ".join(parts[1:])
                 # and then extract city and municipality
-                parts = self.splitIntoCityAndMunicipality(joined)
+                parts = splitIntoCityAndMunicipality(joined)
                 address.city = self.takePart(parts, 0)
                 address.municipality = self.takePart(parts, 1)
             else:
@@ -196,7 +207,7 @@ class AddressDeducer():
                     del parts[index]
 
                 joined = u" ".join(parts)
-                parts = self.splitIntoCityAndMunicipality(joined)
+                parts = splitIntoCityAndMunicipality(joined)
                 address.city = self.takePart(parts, 0)
                 address.municipality = self.takePart(parts, 1)
         else:
@@ -205,11 +216,11 @@ class AddressDeducer():
             
             if self.containsAnyNumber(firstPartWithNumber) or containsStreet(firstPartWithNumber):
                 address.street, address.number, address.flatNumber = self.extractStreetAndNumber(firstPartWithNumber)
-                everythingElse = self.splitIntoCityAndMunicipality(everythingElse)
+                everythingElse = splitIntoCityAndMunicipality(everythingElse)
                 address.city = self.takePart(everythingElse, 0)
                 address.municipality = self.takePart(everythingElse, 1)
             else:
-                parts = self.splitIntoCityAndMunicipality(stringList)
+                parts = splitIntoCityAndMunicipality(stringList)
                 # else this is city, and municipality only
                 address.city = self.takePart(parts, 0)
                 address.municipality = self.takePart(parts, 1)
