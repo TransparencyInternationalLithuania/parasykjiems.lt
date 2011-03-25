@@ -46,28 +46,13 @@ class RCCrawledDataExporter(object):
                 continue
             if type(d[k]) is not IntType:
                 d[k] = d[k].replace("\n", " ")
+                d[k] = d[k].strip()
                 d[k] = d[k].encode("utf-8")
         return d
 
     def writeToFile(self, values):
         v = self.toCsvDictFromDict(values)
         self.file.writerow(v)
-        """
-        delimiter = u","
-        v = []
-        for val in values:
-            if val is None:
-                val = u""
-            val = u"%s" % val
-            val = val.strip()
-            v.append(val)
-        values = v
-        valuesStr = u"%s%s%s" % (values[0], delimiter, delimiter.join(values[1:]))
-        valuesStr = valuesStr.replace(u'"', u"")
-        valuesStr = valuesStr.encode('UTF-8')
-
-        self.file.write(valuesStr)
-        self.file.write("\n")"""
 
 
     def export(self, fileName, city = None, insertCivilParish = None):
@@ -106,21 +91,7 @@ class RCCrawledDataExporter(object):
             if cityMode == True:
                 parent_values["citygenitive"] = parent_values["city"]
                 parent_values["city"] = city
-                """if insertCivilParish == True:
-                    finalValues.insert(len(finalValues) - 2, u"")
 
-                    # insert nominative form for city
-                    finalValues.insert(len(finalValues) -2, city)
-                else:
-                    # update city nominative form, if this is not insertCivilparishMode
-                    finalValues[len(finalValues) -2] = city
-"""
-
-            """if cityMode == False:
-                if obj.type == HierarchicalGeoData.HierarchicalGeoDataType.City:
-                    finalValues.append(obj.name_genitive)"""
-            """while len(finalValues) < 8:
-                finalValues.append(u"")"""
 
             self.writeToFile(parent_values)
 
