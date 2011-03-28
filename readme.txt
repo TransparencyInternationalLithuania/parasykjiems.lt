@@ -19,6 +19,11 @@ http://code.google.com/apis/documents/code.html
 http://code.google.com/apis/documents/docs/3.0/developers_guide_python.html
 
 
+
+# MySQL support for Python
+sudo apt-get install libmysqlclient-dev
+sudo pip install MySQL-python
+
 # Solr and django-haystack (http://haystacksearch.org/) are required. Solr also requires pysolr library.
 If you prefer not Solr, but some other search engine, read here: http://docs.haystacksearch.org/dev/installing_search_engines.html
 
@@ -36,13 +41,11 @@ manage.py clearAll
 
 
 3. Creating a database with mysql
-Connect as root
+# Connect as root
 	mysql -u root
-
-and create database with utf8 character set:
+ 
+# and create database with utf8 character set:
 	create database writetothem character set utf8;
-
-issue manage.py syncdb to populate database with tables
 
 4. After installation
 

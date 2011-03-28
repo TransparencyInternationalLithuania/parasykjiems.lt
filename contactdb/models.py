@@ -15,7 +15,7 @@ class InstitutionNameField(CharField):
     description = _("A person name field")
 
     def __init__(self, *args, **kwargs):
-        kwargs['max_length'] = kwargs.get('max_length', 50)
+        kwargs['max_length'] = kwargs.get('max_length', 255)
         CharField.__init__(self, *args, **kwargs)
 
 class AddressNameField(CharField):
