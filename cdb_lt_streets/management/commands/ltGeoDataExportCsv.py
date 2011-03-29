@@ -1,18 +1,103 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import csv
 
 from optparse import make_option
+from types import IntType
 from django.core.management.base import BaseCommand
 from django.core import management
+from cdb_lt.management.commands.downloadTerritories import territoriesCsvFormat
 from pjutils.timemeasurement import TimeMeasurer
-from parasykjiems.FeatureBroker.configs import defaultConfig
-from cdb_lt_streets.LTRegisterCenter.mqbroker import LTRegisterQueue
 from cdb_lt_streets.models import HierarchicalGeoData
 from distutils import dir_util
 import os
 import logging
 
 logger = logging.getLogger(__name__)
+
+class RCCrawledDataExporter(object):
+    def __init__(self):
+        self.parentCache = {}
+
+    def getObject(self, object):
+        if self.parentCache.has_key(object.id):
+            return self.parentCache[object.id]
+
+        self.parentCache[object.id] = object
+        return object
+
+
+    def getParentValues(self, obj):
+        values = {}
+        while obj is not None:
+            obj = self.getObject(obj)
+            values[obj.type] = obj.name
+
+            if obj.type == HierarchicalGeoData.HierarchicalGeoDataType.City:
+                values[obj.type] = obj.name
+                values["citygenitive"] = obj.name_genitive
+            obj = obj.parent
+        return values
+
+
+    def toCsvDictFromDict(self, d):
+        for k in d.iterkeys():
+            if d[k] is None:
+                continue
+            if type(d[k]) is not IntType:
+                d[k] = d[k].replace("\n", " ")
+                d[k] = d[k].strip()
+                d[k] = d[k].encode("utf-8")
+        return d
+
+    def writeToFile(self, values):
+        v = self.toCsvDictFromDict(values)
+        self.file.writerow(v)
+
+
+    def export(self, fileName, city = None, insertCivilParish = None):
+        self.parentCache = {}
+        cityMode = city is not None and city.strip() != ""
+        elapsedTime = TimeMeasurer()
+        logger.info("Writing contents to %s" % fileName)
+        logger.info("using city mode: %s" % cityMode)
+
+
+        dir_util.mkpath(os.path.dirname(fileName))
+        #self.file = open(fileName, 'w')
+        #self.writeToFile(territoriesCsvFormat)
+        self.file = csv.DictWriter(open(fileName, "wb"), territoriesCsvFormat)
+        headers = dict( (n,n) for n in territoriesCsvFormat )
+        self.file.writerow(headers)
+
+
+
+        allIds = HierarchicalGeoData.objects.values_list('id', flat = True).order_by('name')
+        count = 0
+
+        for id in allIds:
+
+            childrenCount = len(HierarchicalGeoData.objects.all().filter(parent__id = id))
+            if childrenCount != 0:
+                print "id %s has %s children, skipping" % (id, childrenCount)
+                continue
+            count += 1
+            print "id %s has %s children" % (id, childrenCount)
+            obj = HierarchicalGeoData.objects.all().filter(id = id)[0]
+            parent_values = self.getParentValues(obj)
+            parent_values["id"] = count
+
+
+            if cityMode == True:
+                parent_values["citygenitive"] = parent_values["city"]
+                parent_values["city"] = city
+
+
+            self.writeToFile(parent_values)
+
+        print u"Took %s seconds" % elapsedTime.ElapsedSeconds()
+        print u"finished, total %s lines" % count
+
 
 class Command(BaseCommand):
     args = '<>'
@@ -40,100 +125,11 @@ Also, the city name is only in genitive form, no nominative form. So when export
 inserterted as empty. If False, then this will not be inserted. See RegisterCenterPageLocations.allStreets variable to see which RegisterCenter page locations require this"""),
         )
 
-    def __init__(self):
-        self.parentCache = {}
-
-    def getParentValues(self, obj):
-        values = []
-        while (obj.parent is not None):
-            parent = obj.parent
-            parentId = parent.id
-            if (self.parentCache.has_key(parentId)):
-                parent = self.parentCache[parentId]
-            else:
-                self.parentCache[parentId] = parent
-
-            if (parent.type == HierarchicalGeoData.HierarchicalGeoDataType.City):
-                values.append(parent.name_genitive)
-            values.append(parent.name)
-            obj = parent
-        values.reverse()
-        return values
-
-    def writeToFile(self, values):
-        delimiter = u", "
-        v = []
-        for val in values:
-            if val is None:
-                val = u""
-            v.append(val)
-        values = v
-        valuesStr = u"%s%s%s" % (values[0], delimiter, delimiter.join(values[1:]))
-        valuesStr = valuesStr.encode('UTF-8')
-        self.file.write(valuesStr)
-        self.file.write("\n")
-
     def handle(self, *args, **options):
-
-        elapsedTime = TimeMeasurer()
         fileName = options['file']
-        self.city = options['city']
-        self.city = unicode(self.city, 'utf-8')
-        self.cityMode = self.city is not None and self.city.strip() != ""
-        self.insertCivilParish = bool(options['insertCivilParish'])
+        city = options['city']
+        city = unicode(city, 'utf-8')
+        insertCivilParish = bool(options['insertCivilParish'])
 
-        logger.info("Writing contents to %s" % fileName)
-        logger.info("using city mode: %s" % self.cityMode)
-
-
-        dir_util.mkpath(os.path.dirname(fileName))
-        self.file = open(fileName, 'w')
-
-        self.writeToFile([u"Id",
-                          HierarchicalGeoData.HierarchicalGeoDataType.Country,
-                          HierarchicalGeoData.HierarchicalGeoDataType.County,
-                          HierarchicalGeoData.HierarchicalGeoDataType.Municipality,
-                          HierarchicalGeoData.HierarchicalGeoDataType.CivilParish,
-                          HierarchicalGeoData.HierarchicalGeoDataType.City,
-                          u"City_genitive",
-                          HierarchicalGeoData.HierarchicalGeoDataType.Street,])
-
-        allIds = HierarchicalGeoData.objects.values_list('id', flat = True).order_by('id')
-        count = 0
-
-        for id in allIds:
-
-            childrenCount = len(HierarchicalGeoData.objects.all().filter(parent__id = id))
-            if (childrenCount != 0):
-                print "id %s has %s children, skipping" % (id, childrenCount)
-                continue
-            count += 1
-            print "id %s has %s children" % (id, childrenCount)
-            obj = HierarchicalGeoData.objects.all().filter(id = id)[0]
-            parent_values = self.getParentValues(obj)
-
-            finalValues = [count]
-            for pv in parent_values:
-                finalValues.append(pv)
-            finalValues.append(obj.name)
-
-            if (self.cityMode == True):
-                if (self.insertCivilParish == True):
-                    finalValues.insert(len(finalValues) - 2, u"")
-
-                    # insert nominative form for city
-                    finalValues.insert(len(finalValues) -2, self.city)
-                else:
-                    # update city nominative form, if this is not insertCivilparishMode
-                    finalValues[len(finalValues) -2] = self.city
-
-
-            if (self.cityMode == False):
-                if (obj.type == HierarchicalGeoData.HierarchicalGeoDataType.City):
-                    finalValues.append(obj.name_genitive)
-            self.writeToFile(finalValues)
-
-        self.file.close()
-        print u"Took %s seconds" % elapsedTime.ElapsedSeconds()
-        print u"finished, total %s lines" % count
-
+        r = RCCrawledDataExporter()
+        r.export(fileName = fileName, city = city, insertCivilParish = insertCivilParish)

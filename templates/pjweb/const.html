@@ -7,80 +7,28 @@
 
 
 <table id="rep_table">
-{% for parliament_member in parliament_members %}
-<tr>
-<td width="30%" >
-<p id="head-font"><b>{{ parliament_member.name }} {{ parliament_member.surname }}</b> <br>
-{% trans "Member of parliament" %} </p>
-{{ parliament_member.phone }}
-</td>
-<td width="70%">
-<p id="head-font">{% trans "Member of parliament" %} </p>
-<p>{% trans "Responsible for legislation, statutory bodies of the Lithuanian state leaders the appointment and dismissal from office, the state budget approval, the Lithuanian government surveillance activities." %}</p>
-<form action="/pjweb/contact/mp/{{ parliament_member.id }}/" method="get">
-  <button><span>{% trans "Write" %}</span></button><br>
-</form>
+    {% for personPosition in personPositions %}
+    <tr>
+        <td width="30%" >
+            <p id="head-font">
+                 <b>{{ personPosition.person.name }} {{ personPosition.person.surname }}</b> <br>
+                {{ personPosition.institutionDescription.InstitutionPosition }}
+            </p>
+            {{ personPosition.primaryPhone }} <br>
+            {{ personPosition.secondaryPhone }}
+        </td>
+        <td width="70%">
+            <p id="head-font">{{ personPosition.institution.name }} </p>
+            <p> {{ personPosition.institutionDescription.InstitutionResponsibility }}    </p>
+            <p> {{ personPosition.institution.officeEmail }} {{ personPosition.institution.officePhone }} {{ personPosition.institution.officeAddress }}</p>
+            <form action="/pjweb/contact/{{ personPosition.institution.institutionType.code }}/{{ personPosition.id }}/" method="get">
+              <button><span>{% trans "Write" %}</span></button><br>
+            </form>
 
-</td>
-</tr>
-{% endfor %}
-
-{% for municipality_member in municipality_members %}
-<tr>
-<td width="30%" >
-<p id="head-font"><b>{{ municipality_member.name }} {{ municipality_member.surname }}</b> <br>
-{{ municipality_member.municipality.name }} </p>
-{{ municipality_member.phone }}<br>
-{{ municipality_member.phone2 }}<br>
-{{ municipality_member.officeAddress }}<br>
-</td>
-<td width="70%">
-<p id="head-font">{% trans "Member of municipality" %} </p>
-<p>{% trans "Ensures that local residents have the opportunity to become involved in local affairs, that decision-making of municipal council and municipal council committees is improved." %}</p>
-<form action="/pjweb/contact/mn/{{ municipality_member.id }}/" method="get">
-  <button><span>{% trans "Write" %}</span></button><br>
-</form>
-
-</td>
-</tr>
-{% endfor %}
-
-{% for civilparish_member in civilparish_members %}
-<tr>
-<td width="30%" >
-<p id="head-font">
-<b>{{ civilparish_member.name }} {{ civilparish_member.surname }}</b> <br>
-{% trans "Member of civil parish" %} </p>
-{{ civilparish_member.officePhone }}<br>
-{{ civilparish_member.officeAddress }}<br>
-</td>
-<td width="70%">
-<p id="head-font">{% trans "Member of civil parish" %} </p>
-<p>{% trans "Carry out internal administration of the municipality, maintain a public service free of charge by certain notary functions assigned to advise the parish area residents, according to their competence to draw up protocols of administrative violations, consider cases of administrative offenses, may register the death, burial permits issued" %}</p>
-<form action="/pjweb/contact/cp/{{ civilparish_member.id }}/" method="get">
-  <button><span>{% trans "Write" %}</span></button><br>
-</form>
-
-</td>
-</tr>
-{% endfor %}
-
-{% for seniunaitija_member in seniunaitija_members %}
-<tr>
-<td width="30%" >
-<p id="head-font"><b>{{ seniunaitija_member.name }} {{ seniunaitija_member.surname }}</b> <br>
-{% trans "Member of seniunaitija" %} </p>
-{{ seniunaitija_member.phone }}<br>
-</td>
-<td width="70%">
-<p id="head-font">{% trans "Member of seniūnaitija" %} </p>
-<p>{% trans "Encourage residents of seniunaitija to monitor the territory of the residential area, to develop and organize local cultural and sports life, is entitled to receive and provide information about the functions of local government institutions, their working hours and working arrangements, may represent seniūnaitijos residents of the municipal council meeting." %}</p>
-<form action="/pjweb/contact/sn/{{ seniunaitija_member.id }}/" method="get">
-  <button><span>{% trans "Write" %}</span></button><br>
-</form>
-
-</td>
-</tr>
-{% endfor %}
+            </td>
+            </tr>
+        </td>
+    </tr>
+    {% endfor %}
 </table>
 {% endblock %}
