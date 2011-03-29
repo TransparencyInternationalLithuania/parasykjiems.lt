@@ -1,0 +1,12 @@
+[
+  {
+    "pk": 1,
+    "model": "territories.CountryAddresses",
+    "fields": {
+      "city": "Vilnius",
+      "city_genitive": "Vilniaus miestas",
+      "municipality": "Vilniaus miesto savivaldybė",
+      "street": "Gedimino prospektas"
+    }
+  }
+]

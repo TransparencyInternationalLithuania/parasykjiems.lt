@@ -17,7 +17,7 @@ from cdb_lt_civilparish.management.commands.importCivilParish import readRow
 
 class Command(BaseCommand):
     args = '<>'
-    help = """Prints contents of queue"""
+    help = """"""
     def __init__(self):
         self.streetCache = {}
         self.initializeCache()

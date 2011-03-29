@@ -181,10 +181,18 @@ LIETUVOS RESPUBLIKA / Tauragės apskr. / Pagėgių sav. / Natkiškių sen. / Nat
 
             # check if this is the last tag by searching for <br> tags
             brTag = root.next.next.next
-            if (hasattr(brTag, "name") == False):
+            if not hasattr(brTag, "name"):
                 continue
-            if (brTag.name.find('br') >= 0):
+            if brTag.name.find('br') >= 0:
                 break
+
+        # The last part of location must always be city
+        # four parts: http://www.registrucentras.lt/adr/p/index.php?gyv_id=2
+        # five parts: http://www.registrucentras.lt/adr/p/index.php?gyv_id=23
+        if self.cityMode:
+            if len(location) == 4:
+                location[3].type = HierarchicalGeoData.HierarchicalGeoDataType.City
+
         return location
 
     def _constructHyperlink(self, href):
@@ -325,7 +333,10 @@ LIETUVOS RESPUBLIKA / Tauragės apskr. / Pagėgių sav. / Natkiškių sen. / Nat
 
         
 
-    def parse(self):
+    def parse(self, city = None):
+        self.cityMode = False
+        if city is not None and city != u"":
+            self.cityMode = True
         """ Parses a RegisterCenter page and returns a RegisterCenterPage object
         containing extracted info"""
         page = RegisterCenterPage()
@@ -338,14 +349,5 @@ LIETUVOS RESPUBLIKA / Tauragės apskr. / Pagėgių sav. / Natkiškių sen. / Nat
         page.otherPages = self.GetOtherPages()
 
 
-        """
-        tableRows = h1.next.next.findAll("td")
-        values = []
-        for row in tableRows:
-            if (len(row.contents) > 0):
-                values.append(row.contents[0])
-            values.append("\t")
-
-        print "".join(values)"""
         return page
 

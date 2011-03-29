@@ -3,10 +3,8 @@
 
 import logging
 import re
+from django.contrib.auth.views import redirect_to_login
 from django.template import loader
-from cdb_lt_streets.houseNumberUtils import removeCornerFromHouseNumber
-from cdb_lt_streets.searchMembers import findMPs, findMunicipalityMembers, findCivilParishMembers, findSeniunaitijaMembers
-from cdb_lt_streets.streetUtils import getCityNominative
 from settings import *
 from django import forms
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest
@@ -15,7 +13,6 @@ from django.utils.translation import ugettext as _, ugettext_lazy, ungettext, ch
 from django.core.mail import send_mail, EmailMessage
 from pjweb.models import Email, MailHistory
 from pjweb.forms import *
-from pjutils.address_search import AddressSearch
 from pjutils.insert_response import InsertResponse
 from pjutils.declension import DeclensionLt
 from django.utils import simplejson
@@ -24,9 +21,12 @@ from django.contrib.sites.models import Site
 from pjutils.uniconsole import *
 import datetime
 from django.utils.encoding import iri_to_uri
-from cdb_lt_streets.searchInIndex import searchInIndex, deduceAddress
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from pjweb.forms import IndexForm, ContactForm
+from territories.houseNumberUtils import removeCornerFromHouseNumber
+from territories.searchInIndex import deduceAddress, searchInIndex
+from territories.searchMembers import findPersonPositions
+from cdb_lt.management.commands.createMembers import loadInstitutionDescriptions
 
 
 logger = logging.getLogger(__name__)
@@ -50,8 +50,10 @@ def searchInStreetIndex(query_string):
 
     logAddressQueryToFile(query_string)
 
+
     addressContext = deduceAddress(query_string)
     addressContext.number = removeCornerFromHouseNumber(addressContext.number)
+
 
     found_entries = searchInIndex(municipality= addressContext.municipality, city= addressContext.city,
                                   street= addressContext.street)
@@ -62,8 +64,8 @@ def searchInStreetIndex(query_string):
         f.number = addressContext.number
 
         # construct a final uri, and attach it
-        if (f.civilparish is not None) and (f.civilparish != u"") and ((f.street is None) or (f.street == u"")):
-            iri = "/pjweb/choose_rep_civilparish/%s/%s/%s/" % (f.municipality, f.civilparish, f.city_genitive)
+        if (f.civilParish is not None) and (f.civilParish != u"") and ((f.street is None) or (f.street == u"")):
+            iri = "/pjweb/choose_rep_civilparish/%s/%s/%s/" % (f.municipality, f.civilParish, f.city_genitive)
         elif (f.number is not None) and (f.number != ""):
             iri = "/pjweb/choose_rep/%s/%s/%s/%s/" % (f.municipality, f.city_genitive, f.street, f.number)
         elif (f.street is not None and f.street != u""):
@@ -109,17 +111,14 @@ def choose_representative_internal(request, municipality = None, civilParish = N
 
     #additionalKeys = {"city_genitive" : cityGenitive}
     additionalKeys = {}
-    parliament_members = findMPs(municipality=municipality, civilParish=civilParish, city=city, street=street, house_number=house_number, **additionalKeys)
-    municipality_members = findMunicipalityMembers(municipality, civilParish=civilParish, city=city, street=street, house_number=house_number, **additionalKeys)
-    civilparish_members = findCivilParishMembers(municipality, civilParish=civilParish, city=city, street=street, house_number=house_number, **additionalKeys)
-    seniunaitija_members = findSeniunaitijaMembers(municipality, civilParish=civilParish, city=city, street=street, house_number=house_number, **additionalKeys)
+    personPositions = findPersonPositions(municipality=municipality, civilParish=civilParish, city=city, street=street, house_number=house_number, **additionalKeys)
 
+    institutionDescriptions = loadInstitutionDescriptions()
+    for p in personPositions:
+        p.institutionDescription = institutionDescriptions[p.institution.institutionType.code]
 
     return render_to_response('pjweb/const.html', {
-        'parliament_members': parliament_members,
-        'municipality_members': municipality_members,
-        'civilparish_members': civilparish_members,
-        'seniunaitija_members': seniunaitija_members,
+        'personPositions': personPositions,
         'LANGUAGES': GlobalSettings.LANGUAGES,
         'step1': 'active-step',
         'step2': '',
@@ -138,6 +137,31 @@ def json_lookup(request, queryset, field, limit=5, login_required=False):
     return HttpResponse(simplejson.dumps(object), mimetype='application/javascript')
 
 
+def renderIndexPage(request, form = None, query_string = "", address = None):
+    if form is None:
+        form = IndexForm(request.POST)
+
+    lang = request.LANGUAGE_CODE
+    if address is None:
+        address = {
+        'found_entries': None,
+        'found_geodata': None,
+        'not_found': '',
+        }
+    return render_to_response("pjweb/searchPlugins/territory/index.html", {
+        'form': form,
+        'LANGUAGES': GlobalSettings.LANGUAGES,
+        'lang_code': lang,
+        'entered': query_string,
+        'found_entries': address['found_entries'],
+        'found_geodata': address['found_geodata'],
+        'not_found': address['not_found'],
+        'step1': 'active-step',
+        'step2': '',
+        'step3': '',
+    })
+
+
 def index(request):
     query_string = ' '
     address = {
@@ -145,40 +169,34 @@ def index(request):
         'found_geodata': None,
         'not_found': '',
         }
-    lang = request.LANGUAGE_CODE
-    if request.method == 'POST':
-        form = IndexForm(request.POST)
-        if form.is_valid():
-            query_string = form.cleaned_data['address_input']
-        else:
-            query_string = ''
-        address = searchInStreetIndex(query_string)
-    else:
+
+    if request.method == 'GET':
         form = IndexForm()
+        return renderIndexPage(request, form)
+
+    form = IndexForm(request.POST)
+    query_string = ""
+    if form.is_valid():
+        query_string = form.cleaned_data['address_input']
+        
+    if query_string == None or query_string == u"":
+        return renderIndexPage(request, form)
+
+    address = searchInStreetIndex(query_string)
 
     if address['found_entries'] and len(address['found_entries'])==1:
         url = address['found_entries'][0].url
         return HttpResponseRedirect(url)
     else:
-        return render_to_response('pjweb/index.html', {
-            'form': form,
-            'LANGUAGES': GlobalSettings.LANGUAGES,
-            'lang_code': lang,
-            'entered': query_string,
-            'found_entries': address['found_entries'],
-            'found_geodata': address['found_geodata'],
-            'not_found': address['not_found'],
-            'step1': 'active-step',
-            'step2': '',
-            'step3': '',
-        })
+        return renderIndexPage(request, form, address = address)
+
 
 
 def no_email(request, rtype, mp_id):
     insert = InsertResponse()
-    representative = insert.get_rep(mp_id, rtype)
+    representative = insert.get_rep(mp_id)
     NoEmailMsg = _('%(name)s %(surname)s email cannot be found in database.') % {
-        'name':representative.name, 'surname':representative.surname
+        'name':representative.person.name, 'surname':representative.person.surname
     }
     logger.debug('%s' % (NoEmailMsg))
     return render_to_response('pjweb/no_email.html', {
@@ -280,13 +298,20 @@ def smtp_error(request, rtype, mp_id, private=None):
         'step3': 'active-step',
     })
 
+
+def redirectToIndex():
+    url = "/pjweb/"
+    return HttpResponseRedirect(url)
     
 def contact(request, rtype, mp_id):
     insert = InsertResponse()
     current_site = Site.objects.get_current()
 
     # find required representative
-    receiver = insert.get_rep(mp_id, rtype)
+    receiver = insert.get_rep(mp_id)
+    if receiver == None:
+        return redirectToIndex()
+
     months = [
         _(u'January'),
         _(u'February'),
@@ -313,7 +338,6 @@ def contact(request, rtype, mp_id):
             if public=='public':
                 publ = True
             sender_name = form.cleaned_data[u'sender_name']
-            phone = form.cleaned_data[u'phone']
             message = form.cleaned_data[u'message']
             sender = form.cleaned_data[u'sender']
             response_hash = random.randrange(0, 1000000),
@@ -333,7 +357,7 @@ def contact(request, rtype, mp_id):
                     sender_mail = sender,
                     recipient_id = receiver.id,
                     recipient_type = rtype,
-                    recipient_name = '%s %s' % (receiver.name, receiver.surname),
+                    recipient_name = '%s %s' % (receiver.person.name, receiver.person.surname),
                     recipient_mail = recipients[0],
                     message = message,
                     msg_state = 'NotConfirmed',
@@ -395,7 +419,7 @@ def contact(request, rtype, mp_id):
 
     else:
         decl = DeclensionLt()
-        form = ContactForm(initial={'message': _(u'Dear. Mr. %s, \n\n\n\nHave a nice day.') % decl.sauksm(receiver.name) })
+        form = ContactForm(initial={'message': _(u'Dear. Mr. %s, \n\n\n\nHave a nice day.') % decl.sauksm(receiver.person.name) })
         
     return render_to_response('pjweb/contact.html', {
         'form': form,

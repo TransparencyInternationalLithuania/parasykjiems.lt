@@ -2,32 +2,8 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
-
-# Create your models here.
-from contactdb.models import AddressNameField
-
-class LithuanianStreetIndexes(models.Model):
-    street = AddressNameField(db_index = True)
-    city = AddressNameField(db_index = True)
-    city_genitive = AddressNameField(db_index = True)
-    municipality = AddressNameField(db_index = True)
-    # http://en.wikipedia.org/wiki/Elderships_of_Lithuania
-    # elderships are sometimes called CivilParish in the code. actually everywhere :)
-    civilparish = AddressNameField(db_index = True)
-
-
-class LithuanianCases(models.Model):
-    """ each Lithuanian object can be written in several cases. This mapping helps map from various form
-    http://en.wikipedia.org/wiki/List_of_grammatical_cases """
-
-    class Type:
-        """ possible types of institution types"""
-        Municipality = 1
-
-    nominative = AddressNameField(db_index = True)
-    genitive = AddressNameField(db_index = True)
-    institutionType = models.IntegerField(db_index = True)
-
+from django.db.models.query_utils import Q
+from pjutils.uniconsole import *
 
 class HierarchicalGeoData(models.Model):
     """ A hierarchical geo data structure. Used to extract data from lithuanian street index page
@@ -35,12 +11,12 @@ class HierarchicalGeoData(models.Model):
      """
 
     class HierarchicalGeoDataType:
-        Country = u'Country'
-        County = u'County' # Apskritis
-        Municipality = u'Municipality'  # Savivaldybė
-        CivilParish = u'CivilParish'  # Seniūnija
-        City = u'City'
-        Street = u'Street'
+        Country = u'country'
+        County = u'county' # Apskritis
+        Municipality = u'municipality'  # Savivaldybė
+        CivilParish = u'civilparish'  # Seniūnija
+        City = u'city'
+        Street = u'street'
 
 
     # types of hierarchical data. Note that correctness is not enforced programitcally
@@ -59,18 +35,25 @@ class HierarchicalGeoData(models.Model):
     parent = models.ForeignKey('self', blank=True, null=True, related_name="children", help_text="Parent data, if this is a child node.")
     type = models.CharField(max_length=20, choices=HierarchicalGeoDataTypeChoices)
 
+  
     @classmethod
-    def FindByName(cls, name = None, name_genitive = None, type=None, parentName = None):
+    def FindByName(cls, name = None, name_genitive = None, type=None, parentName = None, parentNameGenitive = None):
         locationInDB = HierarchicalGeoData.objects.all()
         if name is not None:
             locationInDB = locationInDB.filter(name = name)
         if name_genitive is not None:
             locationInDB = locationInDB.filter(name_genitive = name_genitive)
 
-        if (parentName is not None):
+        if parentName is not None:
             locationInDB = locationInDB.filter(parent__name = parentName)
-        if (type is not None):
+        if parentNameGenitive is not None:
+            cityQuery_Nominative = Q(**{"parent__name": parentNameGenitive})
+            #cityQuery_Genitive = Q(**{"parent__parent__name": parentParentNameGenitive})
+            #cityQuery = cityQuery_Genitive | cityQuery_Nominative
+            locationInDB = locationInDB.filter(cityQuery_Nominative)
+        if type is not None:
             locationInDB = locationInDB.filter(type = type)
+
 
         try:
             locationInDB = locationInDB[0:1].get()

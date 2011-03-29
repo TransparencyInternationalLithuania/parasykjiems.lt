@@ -1,0 +1,30 @@
+[
+    {
+        "pk": 1,
+        "model": "territories.InstitutionTerritory",
+        "fields": {
+            "city": "Jankų kaimas",
+            "numberOdd": null,
+            "municipality": "Kazlų Rūdos savivaldybė",
+            "street": "",
+            "civilParish": "",
+            "numberFrom": "",
+            "numberTo": "",
+            "institution": 1
+        }
+    },
+    {
+        "pk": 2,
+        "model": "territories.InstitutionTerritory",
+        "fields": {
+            "city": "Jankų kaimas",
+            "numberOdd": null,
+            "municipality": "Kazlų Rūdos savivaldybė",
+            "civilParish": "Jankų seniūnija",
+            "street": "",
+            "numberFrom": "",
+            "numberTo": "",
+            "institution": 2
+        }
+    }
+]
