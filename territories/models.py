@@ -38,7 +38,7 @@ class InstitutionTerritory(models.Model):
     civilParish = AddressNameField(db_index = True)
     city = AddressNameField(db_index = True)
     
-    street = AddressNameField(db_index = True)
+    street = models.CharField(max_length=100,db_index = True)
 
     # house numbers are held in ranges from:to
     # numberOdd tells whether range is odd (1) or even (0)

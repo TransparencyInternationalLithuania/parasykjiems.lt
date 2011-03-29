@@ -13,7 +13,7 @@ from cdb_lt.municipalityStreetReader import municipalityStreetReader
 from cdb_lt.seniunaitijaTerritoryReader import seniunaitijaStreetReader
 from territories.models import LithuanianCases
 from cdb_lt.ltData import MunicipalityCases
-from territories.territoryImportUtils import importCountryData, importInstitutionTerritoryYielder
+from territories.territoryImportUtils import importCountryData, importInstitutionTerritoryYielder, InstitutionCache, InstitutionStreetCache
 
 
 def importCases():
@@ -41,6 +41,10 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
 
+        institutionCache = InstitutionCache()
+        institutionStreetCache = InstitutionStreetCache()
+        caches = {'institutionCache' : institutionCache, 'institutionStreetCache' : institutionStreetCache}
+
         importCases()
 
         # create Country data
@@ -51,15 +55,16 @@ class Command(BaseCommand):
         fileNames = [f[1] for f in ltGeoDataSources_Institution.civilParishAddresses]
         importInstitutionTerritoryYielder(addressYielder=civilParishStreetReader(csvFileNames=fileNames, institutionNameGetter=makeCivilParishInstitutionName, cityNameGetter = cityNameGetterGenitive), institutionCode = "civpar")
 
-        importInstitutionTerritoryYielder(addressYielder=civilParishVilniusStreetReader(), institutionCode = "civpar")
 
-        importInstitutionTerritoryYielder(addressYielder=civilParishKaunasStreetReader(), institutionCode = "civpar")
+        importInstitutionTerritoryYielder(addressYielder=civilParishVilniusStreetReader(), institutionCode = "civpar", **caches)
 
+        importInstitutionTerritoryYielder(addressYielder=civilParishKaunasStreetReader(), institutionCode = "civpar", **caches)
+        
         # create addresses for seniunaitija
-        importInstitutionTerritoryYielder(addressYielder=seniunaitijaStreetReader(), institutionCode = "seniunaitija", printDetailedInfo = False)
+        importInstitutionTerritoryYielder(addressYielder=seniunaitijaStreetReader(), institutionCode = "seniunaitija", **caches)
 
         # create Municipality data
-        importInstitutionTerritoryYielder(addressYielder=municipalityStreetReader(), institutionCode = InstitutionMunicipalityCode)
+        importInstitutionTerritoryYielder(addressYielder=municipalityStreetReader(), institutionCode = InstitutionMunicipalityCode, **caches)
 
         # create MP data
-        importInstitutionTerritoryYielder(addressYielder=mpStreetReader(), institutionCode = "mp")
+        importInstitutionTerritoryYielder(addressYielder=mpStreetReader(), institutionCode = "mp", **caches)

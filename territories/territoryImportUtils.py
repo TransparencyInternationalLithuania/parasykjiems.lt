@@ -34,13 +34,33 @@ class CountryStreetCache:
         return self.streetCache.has_key(key)
 
 
-class InstitutionStreetCash:
-    def __init__(self, institutionCode):
+class InstitutionCache(object):
+    def __init__(self):
+        self.institutionCache = None
+
+    def initCache(self):
+        self.institutionCache = {}
+        for i in Institution.objects.all():
+            key = self.getKey(i.name, i.institutionType.code)
+            self.institutionCache[key] = i
+
+    def getKey(self, name, institutionCode):
+        return "%s %s" % (name, institutionCode)
+
+    def getInstitution(self, name, institutionCode):
+        if self.institutionCache is None:
+            self.initCache()
+        key = self.getKey(name, institutionCode)
+        if self.institutionCache.has_key(key):
+            return self.institutionCache[key]
+        raise InstitutionNotFound(message="Institution with name '%s' was not found. Perhaps it was not imported when members were created" % name)
+
+
+
+class InstitutionStreetCache:
+    def __init__(self):
         self.streetCache = {}
         self.initializeCache()
-
-        self.institutionCode = institutionCode
-        self.institutionCache = {}
 
     def getCacheKey(self, institutionCode, municipality, civilParish, city, street, numberFrom, numberTo, numberOdd):
         return "%s %s %s %s %s %s %s %s" % (institutionCode, municipality, civilParish, city, street, numberFrom, numberTo, numberOdd)
@@ -52,20 +72,24 @@ class InstitutionStreetCash:
     def initializeCache(self):
         all = list(InstitutionTerritory.objects.all())
 
-
         sql = """select code, municipality, civilParish, city, street, numberFrom, numberTo, numberOdd from territories_institutionterritory it
 left join contactdb_institution i on i.id = it.institution_id
 left join contactdb_institutiontype itype on itype.id = i.institutionType_id"""
 
         cursor = connection.cursor()
-        lst = list(cursor.execute(sql))
+        resultCount = cursor.execute(sql)
+        if resultCount == 0:
+            return
+        if resultCount != len(all):
+            raise ChainnedException(message="cache not correctly initialized")
+        lst = cursor.fetchall()
         transaction.commit_unless_managed()
 
-        for i in range(0, len(all)):
+        for i in range(0, resultCount):
             obj = all[i]
             keyTuple = lst[i]
             institutionCode, municipality, civilParish, city, street, numberFrom, numberTo, numberOdd = keyTuple
-            if numberOdd != None:
+            if numberOdd is not None:
                 numberOdd = bool(numberOdd)
             key = self.getCacheKey(institutionCode, municipality, civilParish, city, street, numberFrom, numberTo, numberOdd)
             self.streetCache[key] = obj
@@ -75,17 +99,6 @@ left join contactdb_institutiontype itype on itype.id = i.institutionType_id"""
     def isStreetInCache(self, institutionCode, municipality, civilParish, city, street, numberFrom, numberTo, numberOdd):
         key = self.getCacheKey(institutionCode, municipality, civilParish, city, street, numberFrom, numberTo, numberOdd)
         return self.streetCache.has_key(key)
-
-    def getInstitution(self, name):
-        if self.institutionCache.has_key(name):
-            return self.institutionCache[name]
-
-        try:
-            i = Institution.objects.all().filter(name = name).filter(institutionType__code=self.institutionCode).get()
-            self.institutionCache[name] = i
-            return i
-        except Institution.DoesNotExist:
-            raise InstitutionNotFound(message="Institution with name '%s' was not found. Perhaps it was not imported when members were created" % name)
 
 
 
@@ -129,11 +142,18 @@ def cityNameGetterStandard(csvRow):
 
 class InstitutionStreetImporter(object):
 
-    def __init__(self, institutionCode, printDetailedInfo = False):
+    def __init__(self, institutionCode, institutionStreetCache = None, institutionCache = None, printDetailedInfo = False):
         self.missingInstitutions = {}
         self.printDetailedInfo = printDetailedInfo
         self.unparsedInstitutionTerritories = {}
-        self.importer = InstitutionStreetCash(institutionCode = institutionCode)
+        self.institutionCode = institutionCode
+
+        self.institutionCache = institutionCache
+        if self.institutionCache is None:
+            self.institutionCache = InstitutionCache()
+        self.importer = institutionStreetCache
+        if institutionStreetCache is None:
+            self.importer = InstitutionStreetCache()
 
     @transaction.commit_on_success
     def importInstitutionTerritoryYielder(self, addressYielder):
@@ -153,7 +173,7 @@ class InstitutionStreetImporter(object):
                     moreInfo = addressYielder.currentTerritoryInfo()
                 print "%s, %s, %s, %s, %s, %s, %s, %s, %s '%s'. More info: '%s'. Yielder: '%s'" % (institutionKey, municipality, civilParish, city, street, numberFrom, numberTo, numberOdd, rowNumber, institutionKey, moreInfo, addressYielder)
             try:
-                institution = self.importer.getInstitution(institutionKey)
+                institution = self.institutionCache.getInstitution(institutionKey, institutionCode = self.institutionCode)
             except InstitutionNotFound:
                 moreInfo = u""
 
@@ -177,7 +197,15 @@ class InstitutionStreetImporter(object):
                 newObject.numberFrom = numberFrom
                 newObject.numberTo = numberTo
                 newObject.numberOdd = numberOdd
-                newObject.save()
+                try:
+                    newObject.save()
+                except:
+                    moreInfo = u""
+                    if hasattr(addressYielder, "currentTerritoryInfo"):
+                        moreInfo = addressYielder.currentTerritoryInfo()
+                    self.unparsedInstitutionTerritories[institutionKey]=u"%s '%s'. More info: '%s'. Yielder: '%s'" % (rowNumber, institutionKey, moreInfo, addressYielder)
+                    continue
+
                 self.importer.addToCache(newObject)
 
             if processed % 400 == 0:
@@ -186,13 +214,13 @@ class InstitutionStreetImporter(object):
 
         self.unparsedInstitutionTerritories = dict(self.unparsedInstitutionTerritories, **addressYielder.unparsedInstitutions)
 
-def importInstitutionTerritoryYielder(addressYielder, institutionCode, printDetailedInfo = False):
+def importInstitutionTerritoryYielder(addressYielder, institutionCode, printDetailedInfo = False, institutionCache = None, institutionStreetCache = None):
     """ imports institution addresses.
     addressYielder is a class with method yieldTerritories, which yields tuples in this form:
     (institutionKey, municipality, civilParish, city, street, numberFrom, numberTo, numberOdd)
     """
 
-    importer = InstitutionStreetImporter(institutionCode = institutionCode, printDetailedInfo = printDetailedInfo)
+    importer = InstitutionStreetImporter(institutionCode = institutionCode, printDetailedInfo = printDetailedInfo, institutionCache = institutionCache, institutionStreetCache = institutionStreetCache)
     importer.importInstitutionTerritoryYielder(addressYielder = addressYielder)
 
     for institutionName, errorMessage in importer.missingInstitutions.iteritems():
