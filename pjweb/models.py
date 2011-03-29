@@ -21,7 +21,7 @@ class Email(models.Model):
     sender_name = models.CharField(max_length = 128)
     recipient_name = models.CharField(max_length = 128)
     recipient_id = models.IntegerField()
-    recipient_type = models.CharField(max_length = 5)
+    recipient_type = models.CharField(max_length = 50)
     recipient_mail = models.EmailField()
 
     " a relation to previous email, to which this email is an answer"

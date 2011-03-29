@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+    #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import datetime
 import logging
@@ -194,7 +194,7 @@ class GetMail():
     def getHeaderFieldSubject(self, num):
         typ, msg_data = self.M.fetch(num, '(BODY.PEEK[HEADER.FIELDS (Subject)])')
         s = msg_data[0][1]
-        return _decodeHeader(s)
+        return self._decodeHeader(s)
 
 
 
