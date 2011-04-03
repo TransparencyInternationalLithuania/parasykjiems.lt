@@ -107,7 +107,7 @@ usermod -a -G admin username
 
 
 When server is installed, add these cronjobs to special dedicated user (for example, wtt)
-
+sudo crontab -u parasykjiems -e 
 
 MAILTO=wtterrors@gmail.com
 45 * * * * /var/www/beta.parasykjiems.lt/scripts/updateDaily.sh
