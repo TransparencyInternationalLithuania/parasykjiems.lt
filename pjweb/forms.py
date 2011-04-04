@@ -37,9 +37,10 @@ class ContactForm(forms.Form):
     public = forms.ChoiceField(choices = pub_choices,
         initial=0,
         widget=forms.RadioSelect(renderer=HorizontalRadioRenderer), required=True)
-    sender_name = forms.CharField(max_length=128, validators=[hasNoProfanities])
+    sender_name = forms.CharField(max_length=128, widget=forms.TextInput(attrs={'class':'formTextInput'}), validators=[hasNoProfanities])
+    subject = forms.CharField(max_length=255, widget=forms.TextInput(attrs={'class':'formTextInput'}))
     message = forms.CharField(widget=forms.Textarea(attrs={'class':'email-body'}), validators=[hasNoProfanities,notEmptyMsg])
-    sender = forms.EmailField()
+    sender = forms.EmailField(widget=forms.TextInput(attrs={'class':'formTextInput'}))
 
 
 class FeedbackForm(forms.Form):
