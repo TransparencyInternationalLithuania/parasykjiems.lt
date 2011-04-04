@@ -526,14 +526,15 @@ def feedback(request):
         form = FeedbackForm(data=request.POST)
         if form.is_valid():
             message = form.cleaned_data[u'message']
-            sender = 'Concerned citizen'
+            subject = form.cleaned_data[u'subject']
+            emailFrom = form.cleaned_data[u'emailFrom']
             recipients = [GlobalSettings.mail.feedbackEmail]
-            email = EmailMessage(u'Pastaba dėl parašykjiems.lt', message, settings.EMAIL_HOST_USER,
-                recipients, [])
+            email = EmailMessage(subject=subject, body=message, from_email=settings.EMAIL_HOST_USER,
+                to=recipients, bcc=[], headers={'Reply-To': emailFrom})
             email.send()
-            ThanksMessage = _('Thank you. Your message has been sent.')
+            ThanksMessage = _('Thank you for your feedback. You will be contacted shortly.')
             logger.debug('%s' % (ThanksMessage))
-            return render_to_response('pjweb/thanks.html', {
+            return render_to_response('pjweb/feedback/feedback_sent.html', {
                 'ThanksMessage': ThanksMessage,
                 'LANGUAGES': GlobalSettings.LANGUAGES,
                 'step1': '',
@@ -541,10 +542,11 @@ def feedback(request):
                 'step3': '',
             })
 
+
     else:
         form = FeedbackForm()
         
-    return render_to_response('pjweb/feedback.html', {
+    return render_to_response('pjweb/feedback/feedback.html', {
         'form': form,
         'LANGUAGES': GlobalSettings.LANGUAGES,
         'step1': '',

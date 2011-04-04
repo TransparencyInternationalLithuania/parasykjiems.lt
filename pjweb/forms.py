@@ -44,7 +44,10 @@ class ContactForm(forms.Form):
 
 
 class FeedbackForm(forms.Form):
-    message = forms.CharField(widget=forms.Textarea)
+    message = forms.CharField(widget=forms.Textarea(attrs={'class' : 'email-body'}))
+    subject = forms.CharField(widget=forms.TextInput(attrs={'class':'formTextInput'}))
+    emailFrom = forms.EmailField(widget=forms.TextInput(attrs={'class':'formTextInput'}))
+    
 
 
 #class StreetForm(forms.ModelForm):
