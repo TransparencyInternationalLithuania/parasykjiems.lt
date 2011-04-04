@@ -38,8 +38,7 @@ class ContactForm(forms.Form):
         initial=0,
         widget=forms.RadioSelect(renderer=HorizontalRadioRenderer), required=True)
     sender_name = forms.CharField(max_length=128, validators=[hasNoProfanities])
-    phone = forms.CharField(max_length=100, validators=[hasDigits], required=False)
-    message = forms.CharField(widget=forms.Textarea, validators=[hasNoProfanities,notEmptyMsg])
+    message = forms.CharField(widget=forms.Textarea(attrs={'class':'email-body'}), validators=[hasNoProfanities,notEmptyMsg])
     sender = forms.EmailField()
 
 

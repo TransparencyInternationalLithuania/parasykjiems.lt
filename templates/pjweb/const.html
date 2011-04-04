@@ -2,33 +2,36 @@
 {% load i18n %}
 {% block content %}
 
-<h2 class="c-h">{% trans "Choose a representative, You want to write." %} <br>
-{% trans "If You are not sure, read " %}<a href="#">{% trans "tips" %}</a></h2>
+    <h2 class="c-h">{% trans "Choose a representative, You want to write." %} <br>
+        {% trans "If You are not sure, read " %}<a href="#">{% trans "tips" %}</a></h2>
 
 
-<table id="rep_table">
-    {% for personPosition in personPositions %}
-    <tr>
-        <td width="30%" >
-            <p id="head-font">
-                 <b>{{ personPosition.person.name }} {{ personPosition.person.surname }}</b> <br>
-                {{ personPosition.institutionDescription.InstitutionPosition }}
-            </p>
-            {{ personPosition.primaryPhone }} <br>
-            {{ personPosition.secondaryPhone }}
-        </td>
-        <td width="70%">
-            <p id="head-font">{{ personPosition.institution.name }} </p>
-            <p> {{ personPosition.institutionDescription.InstitutionResponsibility }}    </p>
-            <p> {{ personPosition.institution.officeEmail }} {{ personPosition.institution.officePhone }} {{ personPosition.institution.officeAddress }}</p>
-            <form action="/pjweb/contact/{{ personPosition.institution.institutionType.code }}/{{ personPosition.id }}/" method="get">
-              <button><span>{% trans "Write" %}</span></button><br>
-            </form>
+    <table id="rep_table">
+        {% for personPosition in personPositions %}
+            <tr>
+                <td width="30%">
+                    <p id="head-font">
+                        <b>{{ personPosition.person.name }} {{ personPosition.person.surname }}</b> <br>
+                        {{ personPosition.institutionDescription.InstitutionPosition }}
+                    </p>
+                    {{ personPosition.primaryPhone }} <br>
+                    {{ personPosition.secondaryPhone }}
+                </td>
+                <td width="70%">
+                    <p id="head-font">{{ personPosition.institution.name }} </p>
 
-            </td>
+                    <p> {{ personPosition.institutionDescription.InstitutionResponsibility }}    </p>
+
+                    <p> {{ personPosition.institution.officeEmail }} {{ personPosition.institution.officePhone }} {{ personPosition.institution.officeAddress }}</p>
+
+                    <form action="/pjweb/contact/{{ personPosition.institution.institutionType.code }}/{{ personPosition.id }}/"
+                          method="get">
+                        <button><span>{% trans "Write" %}</span></button>
+                        <br>
+                    </form>
+
+                </td>
             </tr>
-        </td>
-    </tr>
-    {% endfor %}
-</table>
+        {% endfor %}
+    </table>
 {% endblock %}
