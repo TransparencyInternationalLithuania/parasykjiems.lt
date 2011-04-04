@@ -223,7 +223,7 @@ def public_mails(request):
             has_response = _('No')
         else:
             has_response = _('Yes')
-        mail_dict = {'id':id,'recipient_name':recipient_name, 'sender':sender, 'message':message, 'send_date':send_date,'has_response':has_response}
+        mail_dict = {'id':id,'recipient_name':recipient_name, 'subject': mail.subject, 'sender':sender, 'message':message, 'send_date':send_date,'has_response':has_response}
         mail_list.append(mail_dict)
     
     paginator = Paginator(mail_list, 10) # Show 10 contacts per page
@@ -340,6 +340,7 @@ def contact(request, rtype, mp_id):
             sender_name = form.cleaned_data[u'sender_name']
             message = form.cleaned_data[u'message']
             sender = form.cleaned_data[u'sender']
+            subject = form.cleaned_data[u'subject']
             response_hash = random.randrange(0, 1000000),
 
             response_hash = response_hash[0]
@@ -355,6 +356,7 @@ def contact(request, rtype, mp_id):
                 mail = Email(
                     sender_name = sender_name,
                     sender_mail = sender,
+                    subject = subject,
                     recipient_id = receiver.id,
                     recipient_type = rtype,
                     recipient_name = '%s %s' % (receiver.person.name, receiver.person.surname),

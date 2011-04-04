@@ -24,6 +24,8 @@ class Email(models.Model):
     recipient_type = models.CharField(max_length = 50)
     recipient_mail = models.EmailField()
 
+    subject = models.CharField(max_length=255)
+
     " a relation to previous email, to which this email is an answer"
     answer_to = models.ForeignKey('Email',null=True)
     response_hash = models.IntegerField()

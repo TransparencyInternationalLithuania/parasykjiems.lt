@@ -28,6 +28,8 @@ class EmailInfoInToField(object):
 
     def getSubject(self, mail):
         subject = self.DefaultSubjectPrefix % {'sender_name' : mail.sender_name}
+        # attach user entered subject to default generated subject
+        subject = "%s: %s" % (subject, mail.subject)
         return subject
 
     def getEmailId(self, header_to = None, header_from=None, header_subject=None, header_received=None):
@@ -70,6 +72,9 @@ class EmailInfoInSubject(object):
     def getSubject(self, mail):
         subject = self.DefaultSubjectPrefix % {"sender_name": mail.sender_name}
         reply_to = '%s%s_%s' % (self.DefaultMailPrefix, mail.id, mail.response_hash)
+
+        # attach user enetered subject to default generated subject
+        subject = "%s: %s" % (subject, mail.subject)
         subject = "%s---%s" % (subject, reply_to)
         return subject
 

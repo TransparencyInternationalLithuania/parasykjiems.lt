@@ -289,16 +289,6 @@ ul.errorlist > li {
     margin-right: 28px;
 }
 
-#id_sender_name, #id_sender, #id_phone {
-    background-color: #fffdda;
-    width: 325px;
-    height: 24px;
-    padding-left: 4px;
-    margin-right: 28px;
-    float: right;
-    border-width: 1px;
-}
-
 .email-body {
     background-color: #fffdda;
     width: 100%;
@@ -311,7 +301,10 @@ ul.errorlist > li {
 }
 
 .formTextInput{
+    background-color: #fffdda;
+    height: 24px;
     width:100%;
+    border-width: 1px;
 }
 
 
