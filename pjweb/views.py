@@ -309,7 +309,7 @@ def contact(request, rtype, mp_id):
 
     # find required representative
     receiver = insert.get_rep(mp_id)
-    if receiver == None:
+    if receiver is None:
         return redirectToIndex()
 
     months = [
