@@ -158,6 +158,17 @@ class TestSearchLtStreetIndex_SingleStreet(TestCase):
         ids = [a.id for a in addresses]
         self.assertEquals([1], ids)
 
+    def testSearch_FindAddress_With_street_Even_If_Data_does_not_contain_street(self):
+        """ Sometimes user will enter street name. however, the data might not contain any streets, only city,
+        municipality. So if queries with street fail, search without street, and return as many results as possible"""
+
+        # we will have several addresses in Vilnius city, even though some unknown street will not exist
+        # if data changes, just add all vilniaus city adressses to correct results
+        addresses = searchInIndex(municipality=u"Vilniaus miesto savivaldybė", city=u"Vilnius",  street=u"some unknown gatvė")
+        ids = [a.id for a in addresses]
+        self.assertEquals([1, 2], ids)
+
+
 
 class TestSearchLtStreetIndex_StreetsWithNumbersInName(TestCase):
     fixtures = ['ltstreetindexes/streets with numbers in name.default.json']
@@ -233,21 +244,15 @@ class TestSearchLtStreetIndex_StreetDoubleWordAndLithuanianLetter(TestCase):
     def setUp(self):
         pass
 
-    def testSearch_ExactNameAndExactStreet_ending(self):
-        """ Street is correct, data is correct. But we should not remove uppercase letters, since this is important.
-        For example, sqlite does treat lowercase lithuanian letters the same as uppercase, so this must be correct"""
+    def testSearch_Correctly_Capitalize_Street(self):
+        """ Previously, a street name was capitalized by making all other letters lowercase except the first.
+        This was definitelly not corretct"""
+
+        # search for street witch contains several capital letters in middle, so that capitalization would work fine
         addresses = searchInIndex(municipality=u"Vilniaus miesto savivaldybė", city=u"Vilnius",  street=u"J. Žemgulio gatvė")
         ids = [a.id for a in addresses]
         self.assertEquals([1], ids)
 
-    def testSearch_FindAddress_With_street_Even_If_Data_does_not_contain_street(self):
-        """ Sometimes user will enter street name. however, the data might not contain any streets, only city,
-        municipality. So if queries with street fail, search without """
-
-        # we will have one address in Vilnius city, even though some unknown street will know exist
-        addresses = searchInIndex(municipality=u"Vilniaus miesto savivaldybė", city=u"Vilnius",  street=u"some unknown gatvė")
-        ids = [a.id for a in addresses]
-        self.assertEquals([1], ids)
 
 
 class TestSearchLtStreetIndex_Village(TestCase):
