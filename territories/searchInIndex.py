@@ -343,7 +343,7 @@ def searchInIndex(municipality = None, city = None, street = None):
         # try searching with istarts with on whole street
         # just transform short street ending to long form
         street = changeStreetFromShortToLongForm(street)
-        streetStartsWithEnding = q = Q(**{"street__istartswith": street})
+        streetStartsWithEnding = Q(**{"street__istartswith": street})
         streetExactWithEndingFilter = getAndQuery(municipalityQuery, cityQuery, streetStartsWithEnding)
         streetExactWithEnding = CountryAddresses.objects.all().filter(streetExactWithEndingFilter)\
             .order_by('street')[0:50]
@@ -360,6 +360,7 @@ def searchInIndex(municipality = None, city = None, street = None):
             streetEndingQuery = Q(**{"street__icontains": streetEnding})
 
         # search for street without stripped street ending, and street ending as separate query
+        # This will return sreets "Gedimino Baravyko gatvė" for queries "Gedimino gatvė" (middle is missing)
         streetExactFilter = getAndQuery(municipalityQuery, cityQuery, streetWihoutEndingQueryStartsWith, streetEndingQuery)
         streetExact = CountryAddresses.objects.all().filter(streetExactFilter)\
             .order_by('street')[0:50]
@@ -367,34 +368,54 @@ def searchInIndex(municipality = None, city = None, street = None):
         if len(streetExact) > 0:
             return streetExact
 
-        # find with exact street
+
+        # Handle scenarios, where first part of street is shortened, for example "Vido Maciulevičiaus gatvė"
+        # Has a two words in the street, and if user queries by "V. Maciulevičiaus gatvė", this should work
+        splt = [p.strip().strip(u".") for p in streetWihoutEnding.split(u" ")]
+        if len(splt) > 1:
+            # yes, we have at least two words, try to search this way
+            queries = [Q(**{"street__icontains":s}) for s in splt]
+            queries = queries + [municipalityQuery, cityQuery, streetEndingQuery]
+            streetManyWordsFilter = getAndQuery(*queries)
+            streetManyWords = CountryAddresses.objects.all().filter(streetManyWordsFilter)\
+                .order_by('street')[0:50]
+            streetManyWords = list(streetManyWords)
+            if len(streetManyWords) > 0:
+                return streetManyWords
+
+
+
+        """ Below commented queries seem not to break any tests, so commenting right now.
+        If tests on real data will prove otherwise, queries can be removed later"""
+
+        """# find with exact street
         streetExactFilter = getAndQuery(municipalityQuery, cityQuery, streetWihoutEndingQueryStartsWith)
         streetExact = CountryAddresses.objects.all().filter(streetExactFilter)\
             .order_by('street')[0:50]
         streetExact = list(streetExact)
         if len(streetExact) > 0:
-            return streetExact
+            return streetExact"""
 
-        #search for street without using street ending and starts with
+        """#search for street without using street ending and starts with
         streetExactFilter = getAndQuery(municipalityQuery, cityQuery, streetWihoutEndingQueryStartsWith)
         streetExact = CountryAddresses.objects.all().filter(streetExactFilter)\
             .order_by('street')[0:50]
         streetExact = list(streetExact)
         if len(streetExact) > 0:
-            return streetExact
+            return streetExact"""
 
-        #search for street without using street ending   and starts icontains
+        """#search for street without using street ending   and starts icontains
         streetWihoutEndingQueryContains = Q(**{"street__icontains": streetWihoutEnding})
         streetWithoutEndingFilter = getAndQuery(municipalityQuery, cityQuery, streetWihoutEndingQueryContains)
         streetWithouEndingResult = CountryAddresses.objects.all().filter(streetWithoutEndingFilter)\
             .order_by('street')[0:50]
         if len(streetWithouEndingResult) > 0:
             return streetWithouEndingResult
-
+"""
 
         # search by street failed. Try searching wihout street
         finalQuery = getAndQuery(cityQuery, municipalityQuery)
-        if finalQuery == None:
+        if finalQuery is None:
             return []
         return CountryAddresses.objects.all().filter(finalQuery)\
             .order_by('street')[0:50]
