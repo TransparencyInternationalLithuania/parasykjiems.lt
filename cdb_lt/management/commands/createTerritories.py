@@ -59,7 +59,7 @@ class Command(BaseCommand):
         importInstitutionTerritoryYielder(addressYielder=civilParishVilniusStreetReader(), institutionCode = "civpar", **caches)
 
         importInstitutionTerritoryYielder(addressYielder=civilParishKaunasStreetReader(), institutionCode = "civpar", **caches)
-        
+
         # create addresses for seniunaitija
         importInstitutionTerritoryYielder(addressYielder=seniunaitijaStreetReader(), institutionCode = "seniunaitija", **caches)
 

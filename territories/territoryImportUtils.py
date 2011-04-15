@@ -5,6 +5,7 @@ from django.db import transaction, connection
 from pjutils import uniconsole
 from contactdb.models import Institution
 from pjutils.exc import ChainnedException
+from territories.ltPrefixes import allStreetEndings, changeStreetFromShortToLongForm
 from territories.models import CountryAddresses, InstitutionTerritory
 import logging
 logger = logging.getLogger(__name__)
@@ -77,13 +78,14 @@ left join contactdb_institution i on i.id = it.institution_id
 left join contactdb_institutiontype itype on itype.id = i.institutionType_id"""
 
         cursor = connection.cursor()
-        resultCount = cursor.execute(sql)
-        if resultCount == 0:
-            return
-        if resultCount != len(all):
-            raise ChainnedException(message="cache not correctly initialized")
+        cursor.execute(sql)
         lst = cursor.fetchall()
         transaction.commit_unless_managed()
+        if len(lst) == 0:
+            return
+        if len(lst) != len(all):
+            raise ChainnedException(message="cache not correctly initialized")
+
 
         for i in range(0, resultCount):
             obj = all[i]
@@ -122,6 +124,8 @@ def importCountryFile(fileName, delimiter=",", streetCache = None):
 
         if city.strip() == u"":
             continue
+
+        street = changeStreetFromShortToLongForm(street)
 
         processed += 1
         if not streetCache.isInCache(municipality, civilParish, city, street):

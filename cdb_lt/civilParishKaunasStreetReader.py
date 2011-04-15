@@ -55,8 +55,7 @@ class civilParishKaunasStreetReader(object):
 
             # split into street and house numbers
             street = None
-            endings = allStreetEndings + [u"krantinė"]
-            for streetEnding in endings:
+            for streetEnding in allStreetEndings:
                 if rest.find(streetEnding) >= 0:
                     street, houseNumbers = rest.split(streetEnding)
                     # attach again street ending
