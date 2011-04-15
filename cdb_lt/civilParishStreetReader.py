@@ -2,6 +2,8 @@ import csv
 import os
 from contactdb.importUtils import readRow
 import logging
+from territories.ltPrefixes import changeStreetFromShortToLongForm
+
 logger = logging.getLogger(__name__)
 
 
@@ -35,6 +37,7 @@ class civilParishStreetReader(object):
             civilParish = readRow(row, "civilparish")
             city = self.cityNameGetter(row)
             street = readRow(row, "street")
+            street = changeStreetFromShortToLongForm(street)
             institutionKey = self.institutionNameGetter(row)
             if city.strip() == u"":
                continue
