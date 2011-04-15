@@ -253,6 +253,15 @@ class TestSearchLtStreetIndex_StreetDoubleWordAndLithuanianLetter(TestCase):
         ids = [a.id for a in addresses]
         self.assertEquals([1], ids)
 
+    def testSearch_StreetWithTwoParts_FirstPartIsShort(self):
+        """ Data has street in form 'Vido Maculevičiaus', but we are searching in form 'V. Maculevičiaus'.
+        Some cutting and pasting must be done."""
+
+        # search for street witch contains several capital letters in middle, so that capitalization would work fine
+        addresses = searchInIndex(municipality=u"Vilniaus miesto savivaldybė", city=u"Vilnius",  street=u"V. Maculevičiaus gatvė")
+        ids = [a.id for a in addresses]
+        self.assertEquals([2], ids)
+
 
 
 class TestSearchLtStreetIndex_Village(TestCase):

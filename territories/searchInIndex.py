@@ -263,6 +263,38 @@ def getGenericCaseMunicipality(municipalityNominative):
         return None
     return mun[0].genitive
 
+
+def transformMunicipality(municipality):
+    """ Pass a municipality entered by end-users. Will spit out a municipality in standartized form
+    - translated to long form from short, and queried database for correct ending"""
+
+    if municipality is not None:
+        municipality = municipality.capitalize()
+        municipality = municipality.strip()
+        if municipality == u"":
+            municipality = None
+
+        if municipality is not None:
+            municipality = changeMunicipalityFromShortToLongForm(municipality)
+            municipalityGeneric = getGenericCaseMunicipality(municipality)
+            if municipalityGeneric is None:
+                municipality = removeGenericPartFromMunicipality(municipality=municipality)
+            else:
+                municipality = municipalityGeneric
+    return municipality
+
+def transformStreet(street):
+    """ pass street entered by users. Will spit out capitalized and stripped"""
+
+    if street is not None:
+        if len(street) >1:
+            # capitalise, and presereve other uppercase letters
+            street = street[0].upper() + street[1:]
+        street = street.strip()
+        if street == u"":
+            street = None
+    return street
+
 def searchInIndex(municipality = None, city = None, street = None):
     """ Search what kind of addresses exist in our street index.
      Usually you call this function when you want to be sure that the values are real, and not some
@@ -278,28 +310,10 @@ def searchInIndex(municipality = None, city = None, street = None):
     is only one exact match. If more, then user should probably narrow his search, or pick from the list.
 
     """
-    if municipality is not None:
-        municipality = municipality.capitalize()
-        municipality = municipality.strip()
-        if municipality == u"":
-            municipality = None
-
-    if municipality is not None:
-        municipality = changeMunicipalityFromShortToLongForm(municipality)
-        municipalityGeneric = getGenericCaseMunicipality(municipality)
-        if municipalityGeneric is None:
-            municipality = removeGenericPartFromMunicipality(municipality=municipality)
-        else:
-            municipality = municipalityGeneric
 
 
-    if street is not None:
-        if len(street) >1:
-            # capitalise, and presereve other uppercase letters
-            street = street[0].upper() + street[1:]
-        street = street.strip()
-        if street == u"":
-            street = None
+    municipality = transformMunicipality(municipality = municipality)
+    street = transformStreet(street = street)
 
     logger.info(u"searching in index")
     logger.info(u"addressContext.street '%s'" % street)
