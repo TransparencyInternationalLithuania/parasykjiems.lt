@@ -209,6 +209,9 @@ def no_email(request, rtype, mp_id):
 
 
 def public_mails(request):
+    # TODO we are requesting too much emails here. We should limit this query
+    # to as little as possible
+
     all_mails = Email.objects.all().filter(public__exact=True, msg_type__exact='Question').exclude(msg_state__exact='NotConfirmed').order_by('-mail_date')
     mail_list = []
     
@@ -225,7 +228,8 @@ def public_mails(request):
             has_response = _('Yes')
         mail_dict = {'id':id,'recipient_name':recipient_name, 'subject': mail.subject, 'sender':sender, 'message':message, 'send_date':send_date,'has_response':has_response}
         mail_list.append(mail_dict)
-    
+
+
     paginator = Paginator(mail_list, 10) # Show 10 contacts per page
     # Make sure page request is an int. If not, deliver first page.
     try:
