@@ -63,6 +63,8 @@ manage.py importInitial
 
 # imports other data, which can be updated quite often (even daily)
 manage.py importAll
+# after running these four commands you should have your database ready. just call manage.py runserver and use browser :)
+
 
 # update source code on server. First command will download updates from bitbucket (but wont change anything). Second will update to newest changeset and will discard any uncomitted changes
 sudo hg pull
@@ -74,10 +76,12 @@ python manage.py run_gunicorn 127.0.0.1:1234 --daemon
 sudo -u parasykjiems python manage.py run_gunicorn 127.0.0.1:1234 --daemon
 
 # to kill a running gunicorn instance
-ps ax | grep manage.py
+ps ax | grep manage.py    
+# or if "setproctitle" python egg is installed (http://pypi.python.org/pypi/setproctitle/1.1.2)
+ps ax | grep gunicorn
 sudo kill (process number)
 
-# after running thse four commands you should have your database ready. just call manage.py runserver and use browser :)
+
 
 5. Help and bug fixes
 If you have any problems setting up the project, or get unexpected exsceptions, dont hesistate to report everything at http://bitbucket.org/dariusdamalakas/parasykjiems
