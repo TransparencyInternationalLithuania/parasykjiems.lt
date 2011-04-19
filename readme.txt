@@ -82,7 +82,6 @@ ps ax | grep gunicorn
 sudo kill (process number)
 
 
-
 5. Help and bug fixes
 If you have any problems setting up the project, or get unexpected exsceptions, dont hesistate to report everything at http://bitbucket.org/dariusdamalakas/parasykjiems
 

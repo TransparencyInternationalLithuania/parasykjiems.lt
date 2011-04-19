@@ -262,6 +262,31 @@ class TestSearchLtStreetIndex_StreetDoubleWordAndLithuanianLetter(TestCase):
         ids = [a.id for a in addresses]
         self.assertEquals([2], ids)
 
+    def testSearch_StreetWithTwoParts_NoFirstPart(self):
+        """ Data has street in form 'Vido Maculevičiaus', but we are searching in form 'Maculevičiaus'.
+        Some cutting and pasting must be done."""
+
+        # search for street witch contains several capital letters in middle, so that capitalization would work fine
+        addresses = searchInIndex(municipality=u"Vilniaus miesto savivaldybė", city=u"Vilnius",  street=u"Maculevičiaus gatvė")
+        ids = [a.id for a in addresses]
+        self.assertEquals([2], ids)
+
+
+class TestSearchLtStreetIndex_StreetDoubleWord_WithDot(TestCase):
+    fixtures = ['ltstreetindexes/Double word with dot.json']
+
+    def setUp(self):
+        pass
+
+    def testSearch_Full_Street_Name_instead_of_dot(self):
+        """ DB has street "S. Stanevičiaus gatvė", but we searching for "Simono Stanevičiaus gatvė" """
+
+        # search for street witch contains several capital letters in middle, so that capitalization would work fine
+        addresses = searchInIndex(municipality=u"Vilniaus miesto savivaldybė", city=u"Vilnius",  street=u"Simono Stanevičiaus gatvė")
+        ids = [a.id for a in addresses]
+        self.assertEquals([2], ids)
+
+
 
 
 class TestSearchLtStreetIndex_Village(TestCase):
