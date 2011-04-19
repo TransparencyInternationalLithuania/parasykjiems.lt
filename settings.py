@@ -63,7 +63,7 @@ commonApps = ['django.contrib.auth',
 def applyDefaultSettings():
     GlobalSettings.mail = GlobalSettingsMail();
     # send feedback from website to this email address
-    GlobalSettings.mail.feedbackEmail = "parasykjiems@gmail.com"
+    GlobalSettings.mail.feedbackEmail = ["parasykjiems@gmail.com"]
 
     # IMAP settings
     GlobalSettings.mail.IMAP = GlobalSettingsIMAP()
