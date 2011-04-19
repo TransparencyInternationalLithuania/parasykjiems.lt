@@ -534,12 +534,14 @@ def feedback(request):
             message = form.cleaned_data[u'message']
             subject = form.cleaned_data[u'subject']
             emailFrom = form.cleaned_data[u'emailFrom']
-            recipients = [GlobalSettings.mail.feedbackEmail]
+            recipients = GlobalSettings.mail.feedbackEmail
             email = EmailMessage(subject=subject, body=message, from_email=settings.EMAIL_HOST_USER,
                 to=recipients, bcc=[], headers={'Reply-To': emailFrom})
             email.send()
+
             ThanksMessage = _('Thank you for your feedback. You will be contacted shortly.')
             logger.debug('%s' % (ThanksMessage))
+            logger.info("feedback email sent to '%s'" % recipients)
             return render_to_response('pjweb/feedback/feedback_sent.html', {
                 'ThanksMessage': ThanksMessage,
                 'LANGUAGES': GlobalSettings.LANGUAGES,
