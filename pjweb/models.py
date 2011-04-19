@@ -32,7 +32,7 @@ class Email(models.Model):
     message = models.TextField(blank=True)
     msg_state = models.CharField(max_length=12, choices=MSG_STATES, null=True)
     msg_type = models.CharField(max_length=10, choices=MSG_TYPES, null=True)
-    mail_date = models.DateTimeField(auto_now=True, editable=False)
+    mail_date = models.DateTimeField(auto_now_add=True, editable=True)
     attachment_path = models.CharField(max_length=256, null=True)
     public = models.BooleanField()
 
