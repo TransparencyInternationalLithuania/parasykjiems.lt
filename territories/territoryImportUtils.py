@@ -87,7 +87,7 @@ left join contactdb_institutiontype itype on itype.id = i.institutionType_id"""
             raise ChainnedException(message="cache not correctly initialized")
 
 
-        for i in range(0, resultCount):
+        for i in range(0, len(lst)):
             obj = all[i]
             keyTuple = lst[i]
             institutionCode, municipality, civilParish, city, street, numberFrom, numberTo, numberOdd = keyTuple
@@ -165,9 +165,21 @@ class InstitutionStreetImporter(object):
 
         processed = 0
         rowNumber = 0
-        for tuple in addressYielder.yieldTerritories():
+        for territoryAddress in addressYielder.yieldTerritories():
             rowNumber += 1
-            institutionKey, municipality, civilParish, city, street, numberFrom, numberTo, numberOdd = tuple
+            institutionKey = territoryAddress['institutionKey']
+            municipality = territoryAddress['municipality']
+            civilParish = territoryAddress['civilParish']
+            city = territoryAddress['city']
+            street = territoryAddress['street']
+            numberFrom = territoryAddress['numberFrom']
+            numberTo = territoryAddress['numberTo']
+            numberOdd = territoryAddress['numberOdd']
+            comment = u""
+            if territoryAddress.has_key("comment"):
+                comment = territoryAddress['comment']
+                if comment is None:
+                    comment = u""
 
             processed += 1
 
@@ -201,13 +213,14 @@ class InstitutionStreetImporter(object):
                 newObject.numberFrom = numberFrom
                 newObject.numberTo = numberTo
                 newObject.numberOdd = numberOdd
+                newObject.comment = comment
                 try:
                     newObject.save()
-                except:
+                except Exception as e:
                     moreInfo = u""
                     if hasattr(addressYielder, "currentTerritoryInfo"):
                         moreInfo = addressYielder.currentTerritoryInfo()
-                    self.unparsedInstitutionTerritories[institutionKey]=u"%s '%s'. More info: '%s'. Yielder: '%s'" % (rowNumber, institutionKey, moreInfo, addressYielder)
+                    self.unparsedInstitutionTerritories[institutionKey]=u"%s '%s'. More info: '%s'. Yielder: '%s', exception : 'e'" % (rowNumber, institutionKey, moreInfo, addressYielder, e)
                     continue
 
                 self.importer.addToCache(newObject)

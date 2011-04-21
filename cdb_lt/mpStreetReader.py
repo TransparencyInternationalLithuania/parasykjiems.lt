@@ -778,5 +778,9 @@ class mpStreetReader(object):
                     civilParish = u""
                     constit = pollingDistrict.Constituency
                     institutionKey = u"%s Nr. %s" % (constit.name, constit.nr)
-                    yield (institutionKey, municipality, civilParish, city, street, numberFrom, numberTo, numberOdd)
+                    yield {"institutionKey" : institutionKey, "municipality" : municipality,
+                           "civilParish" : civilParish, "city": city,
+                           "street" : street, "numberFrom" : numberFrom,
+                           "numberTo" : numberTo, "numberOdd": numberOdd,
+                           "comment" : pollingDistrict.PollingDistrict}
 

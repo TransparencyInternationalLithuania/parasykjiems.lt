@@ -41,7 +41,10 @@ class civilParishStreetReader(object):
             institutionKey = self.institutionNameGetter(row)
             if city.strip() == u"":
                continue
-            yield (institutionKey, municipality, civilParish, city, street, numberFrom, numberTo, numberOdd)
+            yield {"institutionKey" : institutionKey, "municipality" : municipality,
+                           "civilParish" : civilParish, "city": city,
+                           "street" : street, "numberFrom" : numberFrom,
+                           "numberTo" : numberTo, "numberOdd": numberOdd}
 
 
 

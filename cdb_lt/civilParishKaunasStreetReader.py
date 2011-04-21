@@ -76,5 +76,9 @@ class civilParishKaunasStreetReader(object):
             for range in yieldRanges(houseNumbers):
                 numberFrom = padHouseNumberWithZeroes(range.numberFrom)
                 numberTo = padHouseNumberWithZeroes(range.numberTo)
-                yield (institutionKey, municipality, civilParish, city_genitive, street, numberFrom, numberTo, range.numberOdd)
+                yield {"institutionKey" : institutionKey, "municipality" : municipality,
+                           "civilParish" : civilParish, "city": city_genitive,
+                           "street" : street, "numberFrom" : numberFrom,
+                           "numberTo" : numberTo, "numberOdd": range.numberOdd,
+                           "comment" : None}
 
