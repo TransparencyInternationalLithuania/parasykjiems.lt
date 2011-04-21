@@ -45,3 +45,5 @@ class InstitutionTerritory(models.Model):
     numberFrom = HouseNumberField()
     numberTo = HouseNumberField()
     numberOdd = HouseNumberOddField()
+
+    comment = models.CharField(max_length=255,db_index = False)

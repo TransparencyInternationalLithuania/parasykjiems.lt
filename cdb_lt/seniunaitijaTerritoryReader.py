@@ -338,10 +338,15 @@ class seniunaitijaStreetReader(object):
                     if street is None:
                         street = u""
                     numberFrom = padHouseNumberWithZeroes(expandedStreet.numberFrom)
+                    numberOdd = None
                     if numberFrom is not None:
                         numberOdd = isHouseNumberOdd(expandedStreet.numberFrom)
                     numberTo = padHouseNumberWithZeroes(expandedStreet.numberTo)
-                    yield (institutionKey, municipality, civilParish, city, street, numberFrom, numberTo, numberOdd)
+                    yield {"institutionKey" : institutionKey, "municipality" : municipality,
+                           "civilParish" : civilParish, "city": city,
+                           "street" : street, "numberFrom" : numberFrom,
+                           "numberTo" : numberTo, "numberOdd": numberOdd,
+                           "comment" : None}
             except SeniunaitijaAddressExpanderException as e:
                 self.unparsedInstitutions[institutionKey] = "Could not parse territory for seniunaitija '%s' uniquekey '%s'. Error message:%s " % (seniunaitijaName, uniquekey, e.message)
                 wasError += 1

@@ -84,5 +84,9 @@ class civilParishVilniusStreetReader(object):
 
                 numberFrom = padHouseNumberWithZeroes(r.numberFrom)
                 numberTo = padHouseNumberWithZeroes(r.numberTo)
-                yield (institutionKey, municipality, civilParish, city, street, numberFrom, numberTo, r.numberOdd)
+                yield {"institutionKey" : institutionKey, "municipality" : municipality,
+                           "civilParish" : civilParish, "city": city,
+                           "street" : street, "numberFrom" : numberFrom,
+                           "numberTo" : numberTo, "numberOdd": r.numberOdd,
+                           "comment" : None}
 

@@ -32,5 +32,9 @@ class municipalityStreetReader(object):
             city = u""
             street = u""
             institutionKey = self.institutionNameGetter(row)
-            yield (institutionKey, municipality, civilParish, city, street, numberFrom, numberTo, numberOdd)
+            yield {"institutionKey" : institutionKey, "municipality" : municipality,
+                           "civilParish" : civilParish, "city": city,
+                           "street" : street, "numberFrom" : numberFrom,
+                           "numberTo" : numberTo, "numberOdd": numberOdd,
+                           "comment" : None}
 
