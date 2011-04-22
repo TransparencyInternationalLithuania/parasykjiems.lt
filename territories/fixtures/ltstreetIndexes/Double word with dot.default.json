@@ -18,5 +18,15 @@
             "municipality": "Vilniaus miesto savivaldybė",
             "street": "S. Stanevičiaus gatvė"
         }
+    },
+    {
+        "pk": 3,
+        "model": "territories.CountryAddresses",
+        "fields": {
+            "city": "Vilnius",
+            "city_genitive": "Vilniaus miestas",
+            "municipality": "Vilniaus miesto savivaldybė",
+            "street": "A. J. Povilaičio gatvė"
+        }
     }
 ]
