@@ -286,6 +286,14 @@ class TestSearchLtStreetIndex_StreetDoubleWord_WithDot(TestCase):
         ids = [a.id for a in addresses]
         self.assertEquals([2], ids)
 
+    def testSearch_Full_Street_Name_instead_of_dot_three_letters(self):
+        """ DB has street "A. J. Povilaičio g.", but we searching for "Apolinaro Juozo Povilaičio gatvė" """
+
+        # search for street witch contains several capital letters in middle, so that capitalization would work fine
+        addresses = searchInIndex(municipality=u"Vilniaus miesto savivaldybė", city=u"Vilnius",  street=u"Apolinaro Juozo Povilaičio gatvė")
+        ids = [a.id for a in addresses]
+        self.assertEquals([3], ids)
+
 
 
 

@@ -391,8 +391,9 @@ def searchInIndex(municipality = None, city = None, street = None):
 
         # Handle scenarios, DB has street "S. Stanevičiaus gatvė", but we searching for "Simono Stanevičiaus gatvė"
         if len(splt) > 1:
-            # trim first word to single letter
-            splt[0] = splt[0][0]
+            # trim all words to single letter except last word
+            splt = [s[0] for s in splt[0:-1]] + [splt[-1]]
+            
             # build queries
             queries = [Q(**{"street__icontains":s}) for s in splt]
             queries = queries + [municipalityQuery, cityQuery, streetEndingQuery]
