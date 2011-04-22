@@ -204,6 +204,14 @@ class TestAddressDeducer(TestCase):
         self.assertEqual(u"", address.civilParish)
         self.assertEqual(u"Kazlų Rūdos sav.", address.municipality)
 
+    def test_KazluRuda(self):
+        address = deduceAddress(u"gedimino G., Vilnius")
+        self.assertEqual(u"", address.number)
+        self.assertEqual(u"gedimino G.", address.street)
+        self.assertEqual(u"Vilnius", address.city)
+        self.assertEqual(u"", address.civilParish)
+        self.assertEqual(u"", address.municipality)
+
 
 
 
