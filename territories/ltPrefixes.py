@@ -108,6 +108,7 @@ def containsCivilParishEnding(civilParish):
     return False
 
 def containsStreet(str):
+    str = str.lower()
     for ending in allStreetEndings:
         if str.find(ending) >= 0:
             return True
