@@ -44,19 +44,28 @@ def addHouseNumberQuery2(query, house_number):
     query = query.filter(orQuery)
     return query
 
+def getHouseNumberQueryWithLetter(house_number = None):
+    """ does an exact query      numberFrom is exact house_number """
+    if house_number is None:
+        return query
+
+    house_number = removeFlatNumber(house_number)
+    house_number = padHouseNumberWithZeroes(house_number)
+
+    houseNumberEualsFrom = Q(**{"%s" % "numberFrom": house_number}) & Q(**{"%s" % "numberTo": u""})
+
+    return houseNumberEualsFrom
+
 def getHouseNumberQuery(house_number = None):
+    """ does a range query     from < house_number < to """
     if house_number is None:
         return query
 
     house_number = removeFlatNumber(house_number)
     isOdd = isHouseNumberOdd(house_number)
-    isLetter = ifHouseNumberContainLetter(house_number)
     house_number = padHouseNumberWithZeroes(house_number)
 
     houseNumberEualsFrom = Q(**{"%s" % "numberFrom": house_number}) & Q(**{"%s" % "numberTo": u""})
-
-    if isLetter:
-        return houseNumberEualsFrom
 
     houseNumberInRange = Q(**{"%s__lte" % "numberFrom": house_number}) & \
         Q(**{"%s__gte" % "numberTo": house_number}) & \
@@ -213,9 +222,18 @@ def findInstitutionTerritoriesWithTypes(municipality = None, civilParish = None,
         return selectivelyReturnResults(municipalityList, streetList, cityList)
 
     # we have got more than two rows. So now search with house number
-    numberQuery = getHouseNumberQuery(house_number)
-    #print buildFinalQuery(modelToSearchIn= modelToSearchIn, queries=[municipalityQuery, cityQuery, numberQuery]).query
+    # There are two cases here. When house number is with letter, another when not
 
+    if ifHouseNumberContainLetter(house_number):
+        # if house number contains letter, do a query with "number is exact" query
+        numberQuery = getHouseNumberQueryWithLetter(house_number)
+        houseListNumber = searchPartialCity(queries=[municipalityQuery, cityQuery, streetQuery, numberQuery], doPrint=False)
+        if len(houseListNumber) > 0:
+            return selectivelyReturnResults(houseListNumber, streetList, cityList, municipalityList)
+
+    # house number does not contains letter, or we did not get any results
+    # do a simple range checking  from < house_number < to
+    numberQuery = getHouseNumberQuery(house_number)
     houseList = searchPartialCity(queries=[municipalityQuery, cityQuery, streetQuery, numberQuery], doPrint=False)
 
     if len(houseList) > 0:

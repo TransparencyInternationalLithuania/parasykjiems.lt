@@ -67,6 +67,13 @@ class TestSearchInstitutionStreets_WithStreetAndHouseNumber(TestCase):
         ids = findInstitutionTerritories(municipality=self.municipality, city=self.city,  street=self.street, house_number=house_number)
         self.assertEquals([1,2], ids)
 
+    def testSearchHouseWithNumber(self):
+        """ In DB we have a street with range 9 to 13, but we are searching for 11A.  This range should be included, even if it hass letter"""
+        house_number=u"11A"
+        ids = findInstitutionTerritories(municipality=self.municipality, city=self.city,  street=self.street, house_number=house_number)
+        self.assertEquals([1], ids)
+
+
 
 class TestSearchInstitutionStreets_SingleRepresentative(TestCase):
     fixtures = ['InstitutionIndexes/single representative in street.json',
