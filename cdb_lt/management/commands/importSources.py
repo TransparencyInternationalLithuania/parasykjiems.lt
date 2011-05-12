@@ -61,6 +61,11 @@ class ltGeoDataSources_Country:
         (u"Contact DB LT Street Index - LIETUVOS RESPUBLIKA / Kazlų Rūda City", os.path.join(commonStreetPath, "cdb_lt_street_index_Kazlu_Ruda_city.csv")),
     ]
 
+    commonManualPath = os.path.join(u"cdb_lt", "files", "territory", "countryTerritory", "manual")
+    manualAddresses = [
+        (u"None", os.path.join(commonManualPath, "cdb_lt_street_index_manual_grigiskes.csv")),
+    ]
+
 
     commonPath = os.path.join(u"cdb_lt", "files", "territory", "countryTerritory", "municipality")
     addressesInMunicipalities = [
@@ -77,7 +82,7 @@ class ltGeoDataSources_Country:
     ]
 
     """ A complete Lithuanian street source: cities plus municipalities"""
-    LithuanianAddresses = addressesInMunicipalities + addressesInCities + additionalCities
+    LithuanianAddresses = addressesInMunicipalities + addressesInCities + additionalCities + manualAddresses
 
 class ltGeoDataSources_Institution:
     LithuanianMPStreetData = os.path.join("cdb_lt", "files", "territory", "institutionTerritory", "mp", "apygardos.txt")
