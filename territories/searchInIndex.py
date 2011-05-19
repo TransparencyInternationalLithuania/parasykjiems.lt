@@ -315,10 +315,7 @@ def searchInIndex(municipality = None, city = None, street = None):
     municipality = transformMunicipality(municipality = municipality)
     street = transformStreet(street = street)
 
-    logger.info(u"searching in index")
-    logger.info(u"addressContext.street '%s'" % street)
-    logger.info(u"addressContext.city '%s'" % city)
-    logger.info(u"addressContext.municipality '%s'" % municipality)
+    logger.info(u"searching in index: street: %s, city %s, municipality %s" % (street, city, municipality))
 
 
     # Lithuanian cities have cities in two forms - genitive and nominative

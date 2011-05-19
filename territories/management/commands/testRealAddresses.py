@@ -48,7 +48,7 @@ class Command(BaseCommand):
 
             if count % 100 == 0:
                 sec = self.start.ElapsedSeconds()
-                print "tested %s from %s, percentage tested: %s.  Elapsed seconds %s, %s seconds per row" % (count, total, count / float(total), sec, sec / float(count))
+                print "tested %s from %s, percentage tested: %s.  Elapsed seconds %s, %s rows per second" % (count, total, count / float(total), sec, count / float(sec))
 
 
             addressContext = deduceAddress(address)
