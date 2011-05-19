@@ -166,7 +166,7 @@ def findInstitutionTerritoriesWithTypes(municipality = None, civilParish = None,
         street = u""
     street = street.strip()
 
-    #logger.info("Will search for representatives in object: %s" % modelToSearchIn.objects.model._meta.object_name)
+    logger.info(u"searching members: street: %s, number %s, civilParish %s, city %s, municipality %s" % (street, house_number, civilParish, city, municipality))
 
 
 
