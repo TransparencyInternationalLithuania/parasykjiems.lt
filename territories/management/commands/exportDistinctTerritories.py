@@ -10,7 +10,7 @@ from django.db import transaction
 from pjutils import uniconsole
 from contactdb.models import InstitutionType
 from territories.houseNumberUtils import depadHouseNumberWithZeroes
-from territories.models import InstitutionTerritory
+from territories.models import InstitutionTerritory, CountryAddresses
 
 class Command(BaseCommand):
     args = '<>'
@@ -31,23 +31,28 @@ class Command(BaseCommand):
 
         self.streets = []
 
-        for t in InstitutionTerritory.objects.all().filter(municipality__in=municipalities).order_by(u"municipality", u"city", u"street"):
+        for t in CountryAddresses.objects.all().filter(municipality__in=municipalities).order_by(u"municipality", u"city", u"street"):
             if t.city == u"":
                 continue
             if t.street != u"":
-                t.numberFrom = depadHouseNumberWithZeroes(t.numberFrom)
-                t.numberTo = depadHouseNumberWithZeroes(t.numberTo)
-                if t.numberFrom != u"":
-                    key = "%s %s, %s, %s" % (t.street, t.numberFrom, t.city, t.municipality)
-                    self.addKey(key)
+                if hasattr(t, "numberFrom"):
+                    t.numberFrom = depadHouseNumberWithZeroes(t.numberFrom)
+                    t.numberTo = depadHouseNumberWithZeroes(t.numberTo)
+                    if t.numberFrom != u"":
+                        key = "%s %s, %s, %s" % (t.street, t.numberFrom, t.city, t.municipality)
+                        self.addKey(key)
 
-                if t.numberTo != u"" and t.numberTo.find("999") < 0:
-                    key = "%s %s, %s, %s" % (t.street, t.numberTo, t.city, t.municipality)
-                    self.addKey(key)
+                    if t.numberTo != u"" and t.numberTo.find("999") < 0:
+                        key = "%s %s, %s, %s" % (t.street, t.numberTo, t.city, t.municipality)
+                        self.addKey(key)
 
-                if t.numberFrom == u"":
+                    if t.numberFrom == u"":
+                        key = "%s, %s, %s" % (t.street, t.city, t.municipality)
+                        self.addKey(key)
+                else:
                     key = "%s, %s, %s" % (t.street, t.city, t.municipality)
                     self.addKey(key)
+
             else:
                 if t.civilParish != u"":
                     key = "%s, %s, %s" % (t.city, t.civilParish, t.municipality)
