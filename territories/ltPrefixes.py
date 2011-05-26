@@ -9,8 +9,8 @@ shortCityEndings = [u"mstl.",     u"gyv.",        u"gyv",         u"vns.",      
 wholeCityEndings = [u"miestelis", u"gyvenvietė",  u"gyvenvietė",  u"viensėdis", u"viensėdis", u"viensėdis", u"viensėdis", u"miestas", u"kaimas"]
 allCityEndings = wholeCityEndings + shortCityEndings
 
-wholeStreetEndings = [u"krantinė", u"skveras", u"skersgatvis", u"akligatvis", u"kelias", u"plentas", u"prospektas", u"alėja", u"gatvė", u"aikštė", u"takas"]
-shortStreetEndings = [u"krant.", u"skv.",    u"skg.",        u"akl.",       u"kel.",   u"pl.",     u"pr.",        u"al.",   u"g.",    u"a.",     u"tak."]
+wholeStreetEndings = [u"aplinkelis", u"krantinė", u"skveras", u"skersgatvis", u"akligatvis", u"kelias", u"plentas", u"prospektas", u"alėja", u"gatvė", u"aikštė", u"takas"]
+shortStreetEndings = [u"aplinkl.", u"krant.", u"skv.",    u"skg.",        u"akl.",       u"kel.",   u"pl.",     u"pr.",        u"al.",   u"g.",    u"a.",     u"tak."]
 allStreetEndings = wholeStreetEndings + shortStreetEndings
 
 shortCivilParishEndings = [u"sen."]
