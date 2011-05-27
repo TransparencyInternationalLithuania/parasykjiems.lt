@@ -1324,7 +1324,7 @@ Vaišvydavos plentas, Kaunas, Kauno miesto savivaldybė
 Vaišvydo gatvė, Kaunas, Kauno miesto savivaldybė
 Vaižganto gatvė, Kaunas, Kauno miesto savivaldybė
 Vajakiškių gatvė, Kaunas, Kauno miesto savivaldybė
-Vakarinis aplinkl., Kaunas, Kauno miesto savivaldybė
+Vakarinis aplinkelis, Kaunas, Kauno miesto savivaldybė
 Vakarų gatvė, Kaunas, Kauno miesto savivaldybė
 Valakų gatvė, Kaunas, Kauno miesto savivaldybė
 Valdovo Žirgyno gatvė, Kaunas, Kauno miesto savivaldybė
@@ -2058,7 +2058,8 @@ Zarasų gatvė, Klaipėda, Klaipėdos miesto savivaldybė
 Žūklės gatvė, Klaipėda, Klaipėdos miesto savivaldybė
 Adutiškio gatvė, Grigiškės, Vilniaus miesto savivaldybė
 Afindevičių gatvė, Grigiškės, Vilniaus miesto savivaldybė
-Jaunimo skg, Grigiškės, Vilniaus miesto savivaldybė
+Gėlių gatvė, Grigiškės, Vilniaus miesto savivaldybė
+Jaunimo skersgatvis, Grigiškės, Vilniaus miesto savivaldybė
 Kadriškių gatvė, Grigiškės, Vilniaus miesto savivaldybė
 Kauno Vokės gatvė, Grigiškės, Vilniaus miesto savivaldybė
 Kovo 11-osios gatvė, Grigiškės, Vilniaus miesto savivaldybė
@@ -2066,7 +2067,7 @@ Kranto gatvė, Grigiškės, Vilniaus miesto savivaldybė
 Kunigiškių gatvė, Grigiškės, Vilniaus miesto savivaldybė
 Lentvario gatvė, Grigiškės, Vilniaus miesto savivaldybė
 Liepų gatvė, Grigiškės, Vilniaus miesto savivaldybė
-Mažasis skg, Grigiškės, Vilniaus miesto savivaldybė
+Mažasis skersgatvis, Grigiškės, Vilniaus miesto savivaldybė
 Miško gatvė, Grigiškės, Vilniaus miesto savivaldybė
 Mokyklos gatvė, Grigiškės, Vilniaus miesto savivaldybė
 Naujoji gatvė, Grigiškės, Vilniaus miesto savivaldybė
@@ -2091,7 +2092,6 @@ Vokės Sodų 5-oji gatvė, Grigiškės, Vilniaus miesto savivaldybė
 Vokės Sodų 6-oji gatvė, Grigiškės, Vilniaus miesto savivaldybė
 Vokės Sodų 7-oji gatvė, Grigiškės, Vilniaus miesto savivaldybė
 Vokės Sodų 8-oji gatvė, Grigiškės, Vilniaus miesto savivaldybė
-gatvėėlių gatvė, Grigiškės, Vilniaus miesto savivaldybė
 Šaltinio gatvė, Grigiškės, Vilniaus miesto savivaldybė
 Šviesos gatvė, Grigiškės, Vilniaus miesto savivaldybė
 Žalioji gatvė, Grigiškės, Vilniaus miesto savivaldybė
