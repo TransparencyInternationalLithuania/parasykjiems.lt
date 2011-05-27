@@ -3,6 +3,7 @@ from pjweb.tests.testFirstPage import TestFirstPage
 from pjweb.tests.testTerritoryPlugin.testSubmitSingleQuery import TestUserEntersAddress, TestDisplayMembersFromStreet
 from pjweb.tests.writeToRepresentative.writeToSingleRepr import TestWriteToSingleRepr, TestWriteToSingleRepr_NoEmail
 from pjweb.tests.email.testRenderMailTemplates import TestRenderAllEmailTemplates_InEveryLanguage
+from pjweb.tests.email.testViewPublicMail import TestViewMailList
 
 __test__ = {
     'TestFirstPage' : TestFirstPage,
@@ -15,5 +16,6 @@ __test__ = {
     'TestWriteToSingleRepr_NoEmail' : TestWriteToSingleRepr_NoEmail,
 
     # email
-    'TestRenderAllEmailTemplates_InEveryLanguage' : TestRenderAllEmailTemplates_InEveryLanguage
+    'TestRenderAllEmailTemplates_InEveryLanguage' : TestRenderAllEmailTemplates_InEveryLanguage,
+    'TestViewMailList' : TestViewMailList
 }

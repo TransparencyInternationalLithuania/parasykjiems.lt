@@ -8,7 +8,7 @@ from django.template import loader
 from pjweb.email.emailTemplates import renderEmailTemplate
 from settings import *
 from django import forms
-from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest, HttpResponseNotFound, Http404
 from django.shortcuts import render_to_response, redirect
 from django.utils.translation import ugettext as _, ugettext_lazy, ungettext, check_for_language
 from django.core.mail import send_mail, EmailMessage
@@ -265,7 +265,12 @@ def about(request):
 
 
 def public(request, mail_id):
-    mail = Email.objects.get(id=mail_id)
+    try:
+        mail = Email.objects.get(id=mail_id)
+    except Email.DoesNotExist:
+        raise Http404()
+
+
     responses = Email.objects.filter(answer_to__exact=mail_id)
     current_site = Site.objects.get_current()
     # attachment paths are relative in DB
