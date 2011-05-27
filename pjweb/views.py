@@ -5,6 +5,7 @@ import logging
 import re
 from django.contrib.auth.views import redirect_to_login
 from django.template import loader
+from pjweb.email.emailTemplates import renderEmailTemplate
 from settings import *
 from django import forms
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest
@@ -376,22 +377,15 @@ def contact(request, rtype, mp_id):
                     mail.save()  
                     reply_to = '%s%s_%s@%s' % (GlobalSettings.DefaultMailPrefix, mail.id, mail.response_hash, GlobalSettings.mail.IMAP.EMAIL_HOST)
                     # generate confirmation email message and send it
-                    confirm_link = ("http://%s/confirm/%s/%s") % (current_site.domain, mail.id, mail.response_hash)
-                    line1 = _(u"Hello,")
-                    line2 = _(u"in %(domain)s from Your address(%(sender)s) was written a leter to a representative.") % {'domain':current_site.domain, 'sender':sender}
-                    line3 = _(u"Please confirm, that You want to send this message. If a letter was written not by You, it won't be sent without Your confirmation.")
-                    line4 = _(u"If You suspect abuse, please write an email to abuse@parasykjiems.lt")
-                    line5 = _(u"Your message:")
-                    line6 = _(u"Receiver: %s.") % mail.recipient_name
-                    endline = _(u"Send this email by clicking on link below:\n\n %s") % confirm_link
-
-
 #                    languageId = "lt"
 #                    messsage = render_to_string("mail_body.txt")
 
                     from_email = GlobalSettings.mail.SMTP.CONFIRMATION_EMAIL_SENT_FROM
 
-                    message = line1 + "\n\n" + line2 + "\n\n" + line3 + "\n\n" + line4 + "\n\n" + line5 + "\n\n" + line6 + "\n\n" + message_disp + "\n\n" + endline
+                    confirm_link = ("http://%s/confirm/%s/%s") % (current_site.domain, mail.id, mail.response_hash)
+                    emailTemplateParams = {'current_site' : current_site, 'mail' : mail, 'confirm_link': confirm_link}
+                    message = renderEmailTemplate(u"email_confirmation.txt", emailTemplateParams)
+
 #                    _('You sent an email to ')+ mail.recipient_name + _(' with text:\n\n')+ message_disp + _('\n\nYou must confirm this message by clicking link \below:\n') + 'http://%s/confirm/%s/%s' % (current_site.domain, mail.id, mail.response_hash)
                     email = EmailMessage(subject=_(u'Confirm your message %s') % sender_name, body=message, from_email=from_email,
                         to=[sender], bcc=[], 
@@ -443,11 +437,8 @@ def confirmMessageAndSendEmailToRepresentative(mail):
 
     # compile an actual message
     mail.response_url = "http://%s/pjweb/public/%s/" % (current_site.domain, mail.id)
-    message = loader.render_to_string('pjweb/emails/email_to_representative.txt', {
-        'current_site' : current_site,
-        'mail' : mail,
-        'messageBody' :mail.message
-    })
+    emailTemplateParams =  {'current_site' : current_site, 'mail' : mail, 'messageBody' :mail.message}
+    message = renderEmailTemplate(u"email_to_representative.txt", emailTemplateParams)
 
     # checking whether emails must be forwarded to some specific address
     # or to real representative addresses
