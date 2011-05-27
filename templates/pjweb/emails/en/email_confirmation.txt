@@ -1,0 +1,14 @@
+Hello,
+
+In website {{current_site.domain}} some has written an email using your email address: {{sender}}
+
+Please confirm that you want to send this message. If the message was not sent by you, ignore this email.
+Send the email by clicking this link: {{confirm_link}}
+
+If you suspect abuse, please send email to abuse@parasykjiems.lt
+
+Your message:
+Recipient: {{mail.recipient_name}}
+
+Send your message by clicking this link
+{{confirm_link}}
