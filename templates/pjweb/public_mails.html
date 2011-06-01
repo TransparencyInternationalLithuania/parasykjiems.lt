@@ -1,10 +1,17 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block content %}
-
+<div style="float:left;text-align:center;width:97%;">
     <h2 class="c-h">{% trans "Here you can see all public emails" %}</h2>
-    <p>&nbsp</p>
+</div>
 
+<div style="float:right">
+    <a href="/public/rss/" style="">
+        <img src="/static/img/rss.png" alt="{% trans "Get feed of all public mails" %}" style="width:20px;padding-top:2px;padding-left:3px;"/>
+    </a>
+</div>
+
+<div style="clear:both;">
     <table id="public_mails">
         <tr>
             <th width="150px">{% trans "Receiver" %}</th>
@@ -16,7 +23,7 @@
         {% for mail in mails.object_list %}
             <tr>
                 <td>{{ mail.recipient_name }}</td>
-                <td><a href="/public/{{ mail.id }}/">{{ mail.subject }}</a></td>
+                <td><a href="/pjweb/public/{{ mail.id }}/">{{ mail.subject }}</a></td>
                 <td>{{ mail.sender }}</td>
                 <td>{{ mail.send_date }}</td>
                 <td>{{ mail.has_response }}</td>
@@ -39,5 +46,6 @@
             {% endif %}
         </span>
     </div>
+</div>
 
 {% endblock %}

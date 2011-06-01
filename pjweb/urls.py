@@ -5,6 +5,8 @@ from django.conf.urls.defaults import *
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
+from pjweb.rss_feed.rss_feed import PublicMailsFeed
+
 admin.autodiscover()
 
 # allowing all alphanumeric
@@ -51,4 +53,8 @@ urlpatterns = patterns('pjweb.views',
     (r'^confirm/(\d+)/(\d+)/$', 'confirm'),
     (r'^i18n/', include('django.conf.urls.i18n')),
     (r'^setlang/(?P<lang_code>.*)/$', 'set_language'),
+
+    # RSS feeds
+    (r'^public/rss/$', PublicMailsFeed()),
+    #(r'^public/(?P<mail_id>\d+)/rss/$', SingleMailFeed()),
 )
