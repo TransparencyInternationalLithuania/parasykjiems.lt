@@ -1,6 +1,6 @@
 Sveiki,
 
-Svetainėje {{current_site.domain}} iš Jūsų adreso ({{sender}}) buvo parašytas laiškas valdžios atstovui.
+Svetainėje {{current_site.domain}} iš Jūsų adreso ({{mail.sender_mail}}) buvo parašytas laiškas valdžios atstovui.
 
 Prašome patvirtinti, kad Jūs norite siųsti šią žinutę. Jei laišką siuntėte ne Jūs, jis nebus išsiųstas be Jūsų patvirtinimo.
 Išsiųskite žinutę, paspausdami šią nuorodą: {{confirm_link}}
