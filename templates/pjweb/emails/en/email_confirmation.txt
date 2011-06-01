@@ -1,6 +1,6 @@
 Hello,
 
-In website {{current_site.domain}} some has written an email using your email address: {{sender}}
+In website {{current_site.domain}} some has written an email using your email address: {{mail.sender_mail}}
 
 Please confirm that you want to send this message. If the message was not sent by you, ignore this email.
 Send the email by clicking this link: {{confirm_link}}
