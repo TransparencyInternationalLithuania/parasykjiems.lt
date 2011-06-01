@@ -21,7 +21,7 @@ class PublicMailsFeed(Feed):
         return '%s -> %s' % (item.sender_name, item.recipient_name)
 
     def item_description(self, item):
-        return item.subject
+        return "%s \n\n %s" % (item.subject, item.message)
 
 """class SingleMailFeed(Feed):
     description_template = 'feeds/single_mail.html'
