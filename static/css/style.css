@@ -24,7 +24,7 @@
 }
 
 #head {
-    padding: 20px 10px 15px;
+    padding: 10px 10px 10px;
     margin-bottom: 20px;
     background: #fff;
     height: 50px;
@@ -206,7 +206,10 @@ img.step {
 
 #address {
     clear: both;
-    padding: 73px 97px;
+    padding-top:73px;
+    padding-bottom:0px;
+    padding-left:97px;
+    padding-right:97px;
 }
 
 #id_address_input {
@@ -224,7 +227,10 @@ img.step {
 
 #address_table {
     font-size: 14px;
-    padding: 57px 97px;
+    padding-top:30px;
+    padding-bottom:57px;
+    padding-left:97px;
+    padding-right:97px;
 }
 
 #addresses_line {
