@@ -66,13 +66,13 @@ def searchInStreetIndex(query_string):
 
         # construct a final uri, and attach it
         if (f.civilParish is not None) and (f.civilParish != u"") and ((f.street is None) or (f.street == u"")):
-            iri = "/pjweb/choose_rep_civilparish/%s/%s/%s/" % (f.municipality, f.civilParish, f.city_genitive)
+            iri = "/choose_rep_civilparish/%s/%s/%s/" % (f.municipality, f.civilParish, f.city_genitive)
         elif (f.number is not None) and (f.number != ""):
-            iri = "/pjweb/choose_rep/%s/%s/%s/%s/" % (f.municipality, f.city_genitive, f.street, f.number)
+            iri = "/choose_rep/%s/%s/%s/%s/" % (f.municipality, f.city_genitive, f.street, f.number)
         elif (f.street is not None and f.street != u""):
-            iri = "/pjweb/choose_rep/%s/%s/%s/" % (f.municipality, f.city_genitive, f.street)
+            iri = "/choose_rep/%s/%s/%s/" % (f.municipality, f.city_genitive, f.street)
         else:
-            iri = "/pjweb/choose_rep/%s/%s/" % (f.municipality, f.city_genitive)
+            iri = "/choose_rep/%s/%s/" % (f.municipality, f.city_genitive)
         uri = iri_to_uri(iri)
         f.url = uri
 
@@ -310,7 +310,7 @@ def smtp_error(request, rtype, mp_id, private=None):
 
 
 def redirectToIndex():
-    url = "/pjweb/"
+    url = "/"
     return HttpResponseRedirect(url)
     
 def contact(request, rtype, mp_id):
@@ -441,7 +441,7 @@ def confirmMessageAndSendEmailToRepresentative(mail):
     current_site = Site.objects.get_current()
 
     # compile an actual message
-    mail.response_url = "http://%s/pjweb/public/%s/" % (current_site.domain, mail.id)
+    mail.response_url = "http://%s/public/%s/" % (current_site.domain, mail.id)
     emailTemplateParams =  {'current_site' : current_site, 'mail' : mail, 'messageBody' :mail.message}
     message = renderEmailTemplate(u"email_to_representative.txt", emailTemplateParams)
 

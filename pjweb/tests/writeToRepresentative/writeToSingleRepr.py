@@ -7,7 +7,7 @@ class TestWriteToSingleRepr(TestCase):
     def test_SubmitNonExistentMember(self):
         """ User enters an address, and WTT returns a normal response, no import errors"""
         c = Client()
-        resp = c.get('/pjweb/contact/mayor/9999999/')
+        resp = c.get('/contact/mayor/9999999/')
 
         # a redirect is generated
         self.assertEqual("", resp.content)
@@ -16,14 +16,14 @@ class TestWriteToSingleRepr(TestCase):
     def test_ShowExistentMember(self):
         """ User enters an address, and WTT returns a normal response, no import errors"""
         c = Client()
-        resp = c.get('/pjweb/contact/mayor/1/')
+        resp = c.get('/contact/mayor/1/')
 
         self.assertEqual(200, resp.status_code)
 
     def test_ExistentMember_SubmitForPreview(self):
         """ User enters an address, and WTT returns a normal response, no import errors"""
         c = Client()
-        resp = c.post('/pjweb/contact/mayor/1/', {'sender_name': 'my name', 'message' : 'my message to representative', 'sender':'myEmail@gmail.com', 'public' : 'public'} )
+        resp = c.post('/contact/mayor/1/', {'sender_name': 'my name', 'message' : 'my message to representative', 'sender':'myEmail@gmail.com', 'public' : 'public'} )
 
         self.assertEqual(200, resp.status_code)
 
@@ -32,7 +32,7 @@ class TestWriteToSingleRepr_NoEmail(TestCase):
 
     def test_SubmitExistentMember_NoEmail(self):
         c = Client()
-        resp = c.get('/pjweb/contact/mayor/1/')
+        resp = c.get('/contact/mayor/1/')
 
         # redirect to a page with No Email
         self.assertEqual("", resp.content)
@@ -40,7 +40,7 @@ class TestWriteToSingleRepr_NoEmail(TestCase):
 
     def test_no_email_redirect(self):
         c = Client()
-        resp = c.get('/pjweb/contact/mayor/1/no_email/')
+        resp = c.get('/contact/mayor/1/no_email/')
 
         # redirect to a page with No Email
         self.assertEqual(200, resp.status_code)
