@@ -24,7 +24,7 @@
 
                     <p> {{ personPosition.institution.officeEmail }} {{ personPosition.institution.officePhone }} {{ personPosition.institution.officeAddress }}</p>
 
-                    <form action="/pjweb/contact/{{ personPosition.institution.institutionType.code }}/{{ personPosition.id }}/"
+                    <form action="/contact/{{ personPosition.institution.institutionType.code }}/{{ personPosition.id }}/"
                           method="get">
                         <button><span>{% trans "Write" %}</span></button>
                         <br>

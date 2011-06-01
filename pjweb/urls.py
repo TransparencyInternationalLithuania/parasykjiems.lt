@@ -36,7 +36,7 @@ urlpatterns = patterns('pjweb.views',
     (r'^contact/(\w+)/(\d+)/$', 'contact'),
 
     # display a list of all public emails
-    (r'^public_mails/$', 'public_mails'),
+    (r'^public/$', 'public_mails'),
 
     # displays a single email. this email was sent via our site, and was marked as public
     (r'^public/(\d+)/$', 'public'),
