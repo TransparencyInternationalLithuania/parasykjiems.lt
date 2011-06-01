@@ -613,8 +613,6 @@ def response(request, mail_id, response_no):
         form = FeedbackForm(data=request.POST)
         if form.is_valid():
             message = form.cleaned_data[u'message']
-            sender = responder.email
-            recipients = mail.sender
 
             response = Email(
                 sender_name = mail.recipient_name,
