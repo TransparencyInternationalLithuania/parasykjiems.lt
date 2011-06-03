@@ -25,6 +25,8 @@ def extractTextAndUrl(ahrefTag):
 
 def findAhrefTag(soupForm, linkText):
     link = soupForm.find(text=re.compile(linkText))
+    if link is None:
+        return None
     if link.parent.name != u"a":
         return None
     return link.parent
@@ -35,6 +37,15 @@ class MunicipalityPageReader:
         self.url = municipalityUrl
         self.soupForm = readUrl(municipalityUrl)
         pass
+
+
+    def getCivilParishListUrl(self):
+        # usually there will be a link to list of seniūnaitijos
+        HRefTag = findAhrefTag(self.soupForm, u"Seniūnijos")
+        if HRefTag is not None:
+            return extractTextAndUrl(HRefTag)
+        return None, None
+
 
 
 
@@ -120,5 +131,34 @@ class MunicipalityListReader:
             yield extractTextAndUrl(loopTag)
 
             loopTag = loopTag.findNextSibling().findNextSibling()
+
+
+class CivilParishListReader:
+
+    def __init__(self, url):
+        self.soupForm = readUrl(url)
+        self.url = url
+
+    def getSingleCivilParish(self):
+        HRefTag = findAhrefTag(self.soupForm, u"seniūnija")
+        if HRefTag is None:
+            return None, None
+        return extractTextAndUrl(HRefTag)
+
+    def getCivilParishList(self):
+        """ reads web pages such as http://www.lrvalstybe.lt/seniunijos-6499/   and yields urls to each of the civil parish"""
+        naujienos = self.soupForm.find("div", "middle_naujienos")
+        firstUrl = naujienos.next.next.next.next
+        secondUrl = firstUrl.nextSibling.nextSibling
+        thirdUrl = secondUrl.nextSibling.nextSibling
+
+        firstParish = thirdUrl.nextSibling.nextSibling.nextSibling.nextSibling
+        
+        while firstParish is not None:
+            if firstParish.name != "a":
+                break
+            yield extractTextAndUrl(firstParish)
+
+            firstParish = firstParish.findNextSibling().findNextSibling()
 
   
