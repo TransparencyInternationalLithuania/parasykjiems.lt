@@ -3,11 +3,10 @@
 
 from django.test import TestCase
 import os
+from cdb_lt_streets.crawlers.LTRegisterCenter.webparser import RegisterCenterParser, LinkCell, LTGeoDataHierarchy
 from settings import *
 
 from urllib2 import urlopen
-import contactdb.models
-from cdb_lt_streets.LTRegisterCenter.webparser import RegisterCenterParser, LinkCell, LTGeoDataHierarchy
 
 scriptPath = os.path.dirname( os.path.realpath( __file__ ) )
 
