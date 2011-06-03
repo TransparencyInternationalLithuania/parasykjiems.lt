@@ -21,6 +21,8 @@ def readUrl(url):
 def extractTextAndUrl(ahrefTag):
     text = ahrefTag.text
     url = ahrefTag.attrs[0][1]
+    if url is not None and url != u"":
+        url = u"%s%s" % ("http://www.lrvalstybe.lt", url)
     return text, url
 
 def findAhrefTag(soupForm, linkText):
@@ -84,8 +86,14 @@ def getFieldNotEmpty(element, elementType = None, cssClass = None, textToSearch 
         return None
 
     if doubleNext is False:
-        return d.next
-    return d.next.next
+        v = d.next
+    else:
+        v = d.next.next
+
+    v = v.strip("\n")
+    v = v.strip("\r")
+
+    return v
 
 
 class MunicipalityContactReader:
@@ -135,19 +143,26 @@ class MunicipalityListReader:
 
 class CivilParishListReader:
 
-    def __init__(self, url):
-        self.soupForm = readUrl(url)
-        self.url = url
+    def __init__(self, municipalityUrl, civilParishUrl):
+        self.municipalityUrl = municipalityUrl
+        self.civilParishUrl = civilParishUrl
 
     def getSingleCivilParish(self):
-        HRefTag = findAhrefTag(self.soupForm, u"seniūnija")
+        soupForm = readUrl(self.municipalityUrl)
+        HRefTag = findAhrefTag(soupForm, u"seniūnija")
         if HRefTag is None:
             return None, None
         return extractTextAndUrl(HRefTag)
 
     def getCivilParishList(self):
         """ reads web pages such as http://www.lrvalstybe.lt/seniunijos-6499/   and yields urls to each of the civil parish"""
-        naujienos = self.soupForm.find("div", "middle_naujienos")
+        if self.civilParishUrl is None:
+            yield self.getSingleCivilParish()
+            return
+
+        soupForm = readUrl(self.civilParishUrl)
+
+        naujienos = soupForm.find("div", "middle_naujienos")
         firstUrl = naujienos.next.next.next.next
         secondUrl = firstUrl.nextSibling.nextSibling
         thirdUrl = secondUrl.nextSibling.nextSibling
