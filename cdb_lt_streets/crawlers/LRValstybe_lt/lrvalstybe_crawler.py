@@ -90,8 +90,9 @@ def getFieldNotEmpty(element, elementType = None, cssClass = None, textToSearch 
     else:
         v = d.next.next
 
-    v = v.strip("\n")
-    v = v.strip("\r")
+    if hasattr(v, "strip") and v.strip is not None:
+        v = v.strip("\n")
+        v = v.strip("\r")
 
     return v
 

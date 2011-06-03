@@ -14,42 +14,53 @@ class Command(BaseCommand):
     help = """Crawls part of Register Center page and saves data to csv files.  You can call command like
     ltGeoDataCrawl [2:5]  to start from second source and finish in fifth"""
 
+    def printCivilParish(self, municipalityName, municipalityUrl):
+        print u"%s - %s" % (municipalityName, municipalityUrl)
+
+
+        reader = MunicipalityPageReader(municipalityUrl)
+        civilParishText, civilParishUrl =  reader.getCivilParishListUrl()
+        print u"%s seniūnijų sąrašas %s - %s" % (municipalityName, civilParishText, civilParishUrl)
+
+
+
+        for parish, url in CivilParishListReader(municipalityUrl, civilParishUrl).getCivilParishList():
+            print u"Seniūnija: %s - %s" % (parish, url)
+            if url is None:
+                continue
+            print "\n"
+            reader = MunicipalityContactReader(url)
+            print u"Seniūnai šioje seniūnijoje"
+            for c in reader.getContactList():
+                print "%s: %s, %s;" % (c.name, c.title, c.email)
+        print "\n"
+
+
+    def printMayors(self, municipalityName, municipalityUrl):
+        print u"%s - %s" % (municipalityName, municipalityUrl)
+
+        reader = MunicipalityPageReader(municipalityUrl)
+        mayorText, mayorUrl = reader.getMayorUrl()
+        print u"Nuoroda į mero puslapį %s - %s" % (mayorText, mayorUrl)
+
+
+        reader = MunicipalityContactReader(mayorUrl)
+        print u"Darbuotojai"
+        for c in reader.getContactList():
+            print "%s: %s, %s;" % (c.name, c.title, c.email)
+
+        print "\n"
+
+
     def handle(self, *args, **options):
         timeMeasurer = TimeMeasurer()
 
         crawler = MunicipalityListReader(u"http://www.lrvalstybe.lt/savivaldybes-4906/")
 
-        for text, municipalityUrl in list(crawler.getMunicipalityList())[0:1]:
-            print "%s - %s" % (text, municipalityUrl)
+        for municipalityName, municipalityUrl in list(crawler.getMunicipalityList()):
+            #self.printCivilParish( municipalityName, municipalityUrl)
+            self.printMayors( municipalityName, municipalityUrl)
 
-
-            reader = MunicipalityPageReader(municipalityUrl)
-            civilParishText, civilParishUrl =  reader.getCivilParishListUrl()
-            print "url %s - %s" % (civilParishText, civilParishUrl)
-
-
-
-            for parish, url in CivilParishListReader(municipalityUrl, civilParishUrl).getCivilParishList():
-                print "CivilParish %s - %s" % (parish, url)
-                if url is None:
-                    continue
-                reader = MunicipalityContactReader(url)
-                for c in reader.getContactList():
-                    print "Civpar contact: %s %s %s" % (c.name, c.title, c.email)
-
-
-
-            """
-            mayorText, mayorUrl = reader.getMayorUrl()
-            print "Mayor %s - %s" % (mayorText, mayorUrl)
-
-
-            reader = MunicipalityContactReader(mayorUrl)
-            for c in reader.getContactList():
-                print "Contact: %s %s %s" % (c.name, c.title, c.email)
-            """
-
-            print "\n"
 
 
         print "finished. Took %s seconds" % timeMeasurer.ElapsedSeconds()
