@@ -58,8 +58,48 @@ class MunicipalityPageReader:
         if mayorHRefTag is None:
             return u"Meras", url
         return extractTextAndUrl(mayorHRefTag)
-        
 
+
+class Contact:
+    pass
+
+def getFieldNotEmpty(element, elementType = None, cssClass = None, textToSearch = None, doubleNext = False):
+    d = None
+    if cssClass is not None:
+        d = element.find(elementType, cssClass)
+    elif textToSearch is not None:
+        d = element.find(text = re.compile(textToSearch))
+    if d is None:
+        return None
+
+    if doubleNext is False:
+        return d.next
+    return d.next.next
+
+
+class MunicipalityContactReader:
+    def __init__(self, url):
+        self.soupForm = readUrl(url)
+        self.url = url
+
+    def extractContact(self, div):
+        c = Contact()
+        c.name = getFieldNotEmpty(div, elementType="div", cssClass="con_name", doubleNext = True)
+        c.title = getFieldNotEmpty(div, elementType="div", cssClass="con_title", doubleNext = False)
+        c.address = getFieldNotEmpty(div, textToSearch = u"Adresas")
+        c.room = getFieldNotEmpty(div, textToSearch = u"Kabinetas")
+        c.phone = getFieldNotEmpty(div,  textToSearch = u"Telefonas")
+        c.fax = getFieldNotEmpty(div,  textToSearch = u"Faksas")
+        c.webpage = getFieldNotEmpty(div,  textToSearch = u"Svetainė", doubleNext = True)
+        c.email = getFieldNotEmpty(div,  textToSearch = u"El.paštas", doubleNext = True)
+        return c
+        
+    def getContactList(self):
+        contactDivs = self.soupForm.findAll("div", "contact")
+        for div in contactDivs:
+            yield self.extractContact(div)
+
+        
 
 class MunicipalityListReader:
 
