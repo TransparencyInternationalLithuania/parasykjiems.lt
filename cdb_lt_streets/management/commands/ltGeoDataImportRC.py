@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 
 from django.core.management.base import BaseCommand
+from cdb_lt_streets.crawlers.LTRegisterCenter.mqbroker import LTRegisterQueue
+from cdb_lt_streets.crawlers.LTRegisterCenter.webparser import RegisterCenterParser, LTGeoDataHierarchy
 from pjutils.MessagingServer.MessagingServer import MQServer
 from pjutils.timemeasurement import TimeMeasurer
 from django.db import transaction
@@ -9,8 +11,6 @@ from urllib2 import urlopen
 from pjutils.exc import ChainnedException
 import time
 from optparse import make_option
-from cdb_lt_streets.LTRegisterCenter.webparser import RegisterCenterParser, LTGeoDataHierarchy
-from cdb_lt_streets.LTRegisterCenter.mqbroker import LTRegisterQueue
 from cdb_lt_streets.models import HierarchicalGeoData
 import logging
 

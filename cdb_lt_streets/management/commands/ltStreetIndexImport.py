@@ -4,16 +4,12 @@
 from django.core.management.base import BaseCommand
 from django.db import transaction
 from django.core import management
+from cdb_lt_streets.crawlers.LTRegisterCenter.mqbroker import LTRegisterQueue
+from contactdb.importUtils import readRow
 from pjutils.timemeasurement import TimeMeasurer
-from parasykjiems.FeatureBroker.configs import defaultConfig
-from cdb_lt_streets.LTRegisterCenter.mqbroker import LTRegisterQueue
-from cdb_lt_streets.models import LithuanianStreetIndexes
-from contactdb.imp import ImportSources
 import csv
 from pjutils.uniconsole import *
-from cdb_lt_streets.management.commands.ltGeoDataImportCsv import ltGeoDataSources
 from datetime import datetime
-from cdb_lt_civilparish.management.commands.importCivilParish import readRow
 
 class Command(BaseCommand):
     args = '<>'

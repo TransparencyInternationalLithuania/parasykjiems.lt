@@ -3,7 +3,7 @@
 
 from django.core.management.base import BaseCommand
 from cdb_lt.management.commands.importSources import ltGeoDataSources_Country
-from cdb_lt_streets.LTRegisterCenter.mqbroker import LTRegisterQueue
+from cdb_lt_streets.crawlers.LTRegisterCenter.mqbroker import LTRegisterQueue
 from cdb_lt_streets.management.commands.ltGeoDataClearQueue import clearQueue
 from cdb_lt_streets.management.commands.ltGeoDataExportCsv import RCCrawledDataExporter
 from cdb_lt_streets.management.commands.ltGeoDataImportRC import ltGeoDataWebScraper
