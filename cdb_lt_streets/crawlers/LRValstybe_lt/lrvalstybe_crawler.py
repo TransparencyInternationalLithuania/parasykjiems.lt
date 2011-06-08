@@ -20,6 +20,7 @@ def readUrl(url):
 
 def extractTextAndUrl(ahrefTag):
     text = ahrefTag.text
+    text = text.replace(u"»", u"").strip()
     url = ahrefTag.attrs[0][1]
     if url is not None and url != u"":
         url = u"%s%s" % ("http://www.lrvalstybe.lt", url)
@@ -90,9 +91,9 @@ def getFieldNotEmpty(element, elementType = None, cssClass = None, textToSearch 
     else:
         v = d.next.next
 
-    if hasattr(v, "strip") and v.strip is not None:
-        v = v.strip("\n")
-        v = v.strip("\r")
+    if hasattr(v, "replace") and v.strip is not None:
+        v = v.replace(u"\n", u"")
+        v = v.replace(u"\r", u"")
 
     return v
 
@@ -106,6 +107,11 @@ class MunicipalityContactReader:
         c = Contact()
         c.name = getFieldNotEmpty(div, elementType="div", cssClass="con_name", doubleNext = True)
         c.title = getFieldNotEmpty(div, elementType="div", cssClass="con_title", doubleNext = False)
+        # sometimes there might be a bad html formed.  For example,
+        # this page has 4 contact divs, not 3 (check with FireBug)
+        # http://www.lrvalstybe.lt/pabirzes-seniunija-5157/
+        if c.title is None:
+            return None
         c.address = getFieldNotEmpty(div, textToSearch = u"Adresas")
         c.room = getFieldNotEmpty(div, textToSearch = u"Kabinetas")
         c.phone = getFieldNotEmpty(div,  textToSearch = u"Telefonas")
@@ -117,7 +123,10 @@ class MunicipalityContactReader:
     def getContactList(self):
         contactDivs = self.soupForm.findAll("div", "contact")
         for div in contactDivs:
-            yield self.extractContact(div)
+            res = self.extractContact(div)
+            if res is None:
+                continue
+            yield res
 
         
 
