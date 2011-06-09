@@ -1,4 +1,7 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 from cdb_lt_streets.crawlers.LRValstybe_lt.lrvalstybe_crawler import MunicipalityListReader, MunicipalityPageReader, CivilParishListReader, MunicipalityContactReader
+import sys
 
 def convertToDict(c):
     """C is Contact class, and has standard contact properties
@@ -15,21 +18,28 @@ def convertToDict(c):
         data[u"officeaddress"] = u"%s. Kabinetas %s" % (c.address, c.room)
     return data
 
+def stringIsIn(str, values):
+    """ brute force IN operation.  should use regex later
+    """
+    if str is None:
+        return False
+    str = str.lower()
+    values = [v.lower() for v in values]
+    for v in values:
+        if str.find(v) >= 0:
+            return True
+    return False
+    
 
-def printMayors():
-    """ Crawls lrvalstybe.lt page and print out all mayors as csv to console out  """
 
-    headers = [u"fullname", u"email", u"municipality", u"officephone", u"officeaddress", u"title", u"comments"]
-    print u", ".join(headers)
-    formatRow = u",".join(['"%s"' for k in headers])
+def yieldCivilParishHeadMembers():
+    for c in yieldCivilParishContacts():
+        if stringIsIn(c[u"title"], [u"seniūnas", u"seniūnė"]):
+            yield c
 
-    for mayorMember in yieldMayorMember():
-        values = [mayorMember[h] if mayorMember.has_key(h) else None for h in headers]
-        row = formatRow % tuple(values)
-        print row
-
-def yieldCivilParish():
-    """ crawls lrvalstybe.lt page, and returns a dictionary populated with data for each civil parish
+def yieldCivilParishContacts():
+    """ crawls lrvalstybe.lt page, and returns a dictionary populated with data for each civil parish contact.
+    This includes all possible contact
     """
     data = {}
 
@@ -53,8 +63,40 @@ def yieldCivilParish():
                 clientDict.update(data)
                 yield clientDict
 
+class LRValstybeCsvOut:
+    """ Prints out contacts as csv lines.  Contacts are fetched from lrvalstybe.lt website """
+
+    def __init__(self, outStream = sys.stdout, headers = None):
+        self.stream = outStream
+        self.headers = headers
+        self.formatRow = u",".join(['"%s"' for k in headers])
+
+    def printSingleContact(self, contact):
+
+        # we are not usin dict writer here, as it is writing an empty new line on win32 for some reason
+        #file = csv.DictWriter(sys.stdout, headers)
+        #headersRow = dict( (n,n) for n in headers )
+        #file.writerow(headersRow)
+
+        # we are not usin dict writer here, as it is writing an empty new line on win32 for some reason
+        """# get only fields, that are supported in headers
+        d = dict( (key, civilParishMember[key] if civilParishMember.has_key(key) else u"") for key in headers)
+        # convert to utf-8
+        d = dict( (k, v.encode('utf-8') if isinstance(v, unicode) else v) for k, v in d.iteritems())
+        file.writerow(d)
+"""
+
+        values = [contact[h] if contact.has_key(h) else None for h in self.headers]
+        values = [u"" if v is None else v for v in values]
+        row = self.formatRow % tuple(values)
+        print row
+
+    def writeHeader(self):
+        print u", ".join(self.headers)
+
+
+"""
 def printCivilParish():
-    """  crawls lrvalstybe.lt page, and prints out all civil parish data as csv to standard out  """
 
     headers = [u"fullname", u"email", u"municipality", u"civilparish", u"officephone", u"officeaddress", u"title", u"comments"]
 
@@ -68,19 +110,17 @@ def printCivilParish():
 
     for civilParishMember in yieldCivilParish():
         # we are not usin dict writer here, as it is writing an empty new line on win32 for some reason
-        """# get only fields, that are supported in headers
-        d = dict( (key, civilParishMember[key] if civilParishMember.has_key(key) else u"") for key in headers)
-        # convert to utf-8
-        d = dict( (k, v.encode('utf-8') if isinstance(v, unicode) else v) for k, v in d.iteritems())
-        file.writerow(d)
-"""
         values = [civilParishMember[h] if civilParishMember.has_key(h) else None for h in headers]
         row = formatRow % tuple(values)
         print row
+"""
 
+def yieldMayorsOnly():
+    for c in yieldMayorAdministartionWorkers():
+        if stringIsIn(c[u"title"], [u"meras", u"merė"]):
+            yield c
 
-
-def yieldMayorMember():
+def yieldMayorAdministartionWorkers():
     """ crawls lrvalstybe.lt page, and returns dictionary with mayor data"""
     data = {}
     crawler = MunicipalityListReader(u"http://www.lrvalstybe.lt/savivaldybes-4906/")

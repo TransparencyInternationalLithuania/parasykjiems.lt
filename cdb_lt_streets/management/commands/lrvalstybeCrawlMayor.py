@@ -4,7 +4,7 @@ import csv
 
 from django.core.management.base import BaseCommand
 import logging
-from cdb_lt_streets.crawlers.LRValstybe_lt.lrvalstybe_csvoutput import printMayors
+from cdb_lt_streets.crawlers.LRValstybe_lt.lrvalstybe_csvoutput import LRValstybeCsvOut, yieldMayorsOnly
 from pjutils.uniconsole import *
 
 logger = logging.getLogger(__name__)
@@ -15,4 +15,9 @@ class Command(BaseCommand):
     ltGeoDataCrawl [2:5]  to start from second source and finish in fifth"""
 
     def handle(self, *args, **options):
-        printMayors()
+        headers = [u"fullname", u"email", u"municipality", u"officephone", u"officeaddress", u"title", u"comments"]
+        out = LRValstybeCsvOut(headers=headers)
+        out.writeHeader()
+
+        for member in yieldMayorsOnly():
+            out.printSingleContact(member)
