@@ -87,7 +87,13 @@ def getFieldNotEmpty(element, elementType = None, cssClass = None, textToSearch 
         return None
 
     if doubleNext is False:
-        v = d.next
+        # sometimes next element will be equal to next sibling, in case where div does not contain any text inside
+        # in this case return text element, which will be usually empty.
+        # otherwise we would get a next html element, which is not what we want
+        if d.next == d.nextSibling:
+            v = d.text
+        else:
+            v = d.next
     else:
         v = d.next.next
 
