@@ -18,6 +18,10 @@ def makeSeniunaitijaInstitutionName(csvRow):
     seniunaitija = readRow(csvRow, "seniunaitija")
     return "%s %s %s" % (municipality, civilParish, seniunaitija)
 
+def makeMunicipalityInstitutionName(csvRow):
+    municipality = readRow(csvRow, "municipality")
+    return "%s" % municipality
+
 def cityNameGetterGenitive(csvRow):
     """ Lithuanian streets can be defined in two forms. However, only genitive is used as primary key, while users
     use both interchangeably"""

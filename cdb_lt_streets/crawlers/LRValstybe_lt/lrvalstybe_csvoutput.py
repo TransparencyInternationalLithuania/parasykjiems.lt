@@ -92,7 +92,7 @@ class LRValstybeCsvOut:
         print row
 
     def writeHeader(self):
-        print u", ".join(self.headers)
+        print u",".join(self.headers)
 
 
 """

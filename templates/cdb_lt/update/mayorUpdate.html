@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+Following mayor data has changed:
+
+<table>
+    <tr>
+        {% for headerValue in headers %}
+        <th>{{ headerValue }} </th>
+        {% endfor %}
+    </tr>
+
+    {% for row in newData %}
+    <tr>
+        {% for key, val in row.items %}
+        {% if val.changed %}
+        <td style="color: #006400;background-color: #90ee90;">{{ val.previous }} <br/><br/> {{ val.changed }} </td>
+        {% else %}
+            {% if val.previous %}
+                <td style="">{{ val.previous }} </td>
+            {% else %}
+                <td style="">{{ val }} </td>
+            {% endif %}
+        {% endif %}
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
