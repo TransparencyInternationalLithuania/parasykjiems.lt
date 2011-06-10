@@ -22,37 +22,17 @@
 </head>
 
 <body>
-{% include 'pjweb/change_lang.html' %}
-    <div id="head">
-      <div class="cont">
-        <p id="lang">
-
-        <p id="logo">
-          <a href="/"><img src="/static/img/logo.png" width="359" height="50"
-              alt="{% trans "ParašykJiems - Fast method to find representatives and contact them." %}"></a>
-
-        <p id="nav">
-          <a href="/public/" id="nav-archive"><img src="/static/img/info.png" align="absmiddle">{% trans "List of all public mails" %}</a>
-          <a href="/about/" id="nav-about">{% trans "About project" %}</a>
-
-      </div>
-    </div>
+    {% include 'pjweb/headers/change_lang.html' %}
+    {% include 'pjweb/headers/header.html' %}
 
     <div id="content">
-      <div id="c-head">
-        <h1 class="step step-1 {{ step1 }}">1. {% trans "Find desired representative" %}<br>
-          <small>{% trans "Will be found by address" %}</small></h1>
+        <div id="c-head">
+        {% include 'pjweb/headers/steps.html' %}
+        </div>
+            {% block content %}{% endblock %}
 
-        <p class="step step-2 {{ step2 }}">2. {% trans "Body of the message" %}<br>
-          <small>{% trans "You can write public or private mail" %}</small>
-
-        <p class="step step-3 {{ step3 }}">3. {% trans "Preview and send" %}<br>
-          <small>{% trans "Check your spelling ;-)" %}</small>
-      </div>
-
-    {% block content %}{% endblock %}
     </div>
-<p align="center">{% trans "Have any notes, suggestions?" %} <a href="/feedback/" >{% trans "Write to us" %}</a></p>
+    <p align="center">{% trans "Have any notes, suggestions?" %} <a href="/feedback/" >{% trans "Write to us" %}</a></p>
 
 </body>
 </html>
