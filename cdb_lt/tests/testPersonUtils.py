@@ -14,6 +14,7 @@ class TestSpitFullName(TestCase):
 
     def testsplitIntoNameAndSurname(self):
         self.assertEqual((u"Vardenis", u"Pavardenis"), splitIntoNameAndSurname(u"Vardenis Pavardenis"))
+        self.assertEqual((u"Vardenis", u"Pavardenis"), splitIntoNameAndSurname(u"Vardenis Pavardenis "))
         self.assertEqual((u"V", u"Pavardenis"), splitIntoNameAndSurname(u"V. Pavardenis"))
         self.assertEqual((u"V", u"Pavardenis"), splitIntoNameAndSurname(u"V.Pavardenis"))
         self.assertEqual((u"Vardenis", u"Pavardenis Pavardauskas"), splitIntoNameAndSurname(u"Vardenis Pavardenis Pavardauskas"))
