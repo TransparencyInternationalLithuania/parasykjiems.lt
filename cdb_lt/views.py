@@ -78,7 +78,7 @@ def readCsvFile(fileName, institutionType = None, institutionNameGetter = None):
 def getOrDefault(dictionary, key, property):
     if not dictionary.has_key(key):
         return None
-    return getattr(dictionary[key], property, None)
+    return getattr(dictionary[key], property, u"")
 
 def addChangedFields(memberList):
     for row in memberList:

@@ -14,7 +14,10 @@ Following mayor data has changed:
     <tr>
         {% for key, val in row.items %}
         {% if val.changed %}
-        <td style="color: #006400;background-color: #90ee90;">{{ val.previous }} <br/><br/> {{ val.changed }} </td>
+        <td style="background-color: #fffba5;">
+            <div style="color: red;">{{ val.previous }}</div> <br/><br/>
+            <div style="color: green;">{{ val.changed }} </div>
+        </td>
         {% else %}
             {% if val.previous %}
                 <td style="">{{ val.previous }} </td>
