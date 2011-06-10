@@ -5,6 +5,7 @@ from cdb_lt.management.commands.createMembers import makeCivilParishInstitutionN
 from cdb_lt.personUtils import splitIntoNameAndSurname
 from contactdb.models import Institution, Person, PersonPosition
 from pjutils.exc import ChainnedException
+from pjutils.timemeasurement import TimeMeasurer
 from settings import GlobalSettings
 
 class FieldNotDefinedInDataFile(ChainnedException):
@@ -33,6 +34,7 @@ def joinParams(params):
     return viewParams
 
 def civilParishUpdate(request):
+    elapsedTime = TimeMeasurer()
     fileName = os.path.join(os.path.realpath(os.path.curdir), "static", "data", "update", "seniunai.csv")
     if not os.path.exists(fileName):
         params = {u"ErrorMessage" : "Civil parish file does not exist, please upload it first."}
@@ -43,6 +45,7 @@ def civilParishUpdate(request):
     headers = getHeaders(memberList)
 
     params = {u"headers" : headers, u"newData" : memberList, u"errorList" : errorList}
+    print u"generated in %s seconds" % elapsedTime.ElapsedSeconds()
     return render_to_response('cdb_lt/update/mayorUpdate.html', joinParams(params))
 
 def readCsvFile(fileName, institutionType = None, institutionNameGetter = None):
@@ -80,11 +83,62 @@ def getOrDefault(dictionary, key, property):
         return None
     return getattr(dictionary[key], property, u"")
 
+
+class InstitutionCache:
+    def __init__(self):
+        self.cache = {}
+
+    def addToCache(self, institutions):
+        for i in institutions:
+            self.cache[i.name] = i
+
+    def loadAllWithName(self, institutionNames, institutionType):
+        step = 30
+        chunks = [institutionNames[i:i+step] for i in range(0, len(institutionNames), step)]
+        for chunk in chunks:
+            institutions = list(Institution.objects.filter(institutionType__code = institutionType) \
+                .filter(name__in=chunk))
+            self.addToCache(institutions)
+
+class PersonPositionCache:
+    def __init__(self):
+        self.cache = {}
+
+    def addToCache(self, personPositions):
+        for p in personPositions:
+            self.cache[p.institution.id] = p
+
+    def loadAllWithInstitutionId(self, institutionIds):
+        step = 30
+        chunks = [institutionIds[i:i+step] for i in range(0, len(institutionIds), step)]
+        for chunk in chunks:
+            personPositions = list(PersonPosition.objects.filter(institution__id__in = chunk).select_related("person"))
+            self.addToCache(personPositions)
+
+
+
+
 def addChangedFields(memberList):
     errorList = []
+    institutionCache = InstitutionCache()
+    institutionNames = [row[u"institutionName"] for row in memberList]
+    institutionCache.loadAllWithName(institutionNames, institutionType= memberList[0][u"institutionType"])
+
+    personPositionCache = PersonPositionCache()
+    institutionIds = [i.id for i in institutionCache.cache.values()]
+    personPositionCache.loadAllWithInstitutionId(institutionIds)
+
     for row in memberList:
         institutionName = row[u"institutionName"]
-        institutionType = row[u"institutionType"]
+        if not institutionCache.cache.has_key(institutionName):
+            message = u'Institution with name "%s" not found' % institutionName
+            errorList.append(message)
+            continue
+
+        institutionObj = institutionCache.cache[institutionName]
+        #row[u"institutionObj"] = institutionId
+
+        """institutionType = row[u"institutionType"]
         try:
             institutionId = Institution.objects.filter(institutionType__code = institutionType) \
                 .filter(name=institutionName).get()
@@ -92,20 +146,26 @@ def addChangedFields(memberList):
         except Institution.DoesNotExist:
             message = u'Institution with name "%s" not found' % institutionName
             errorList.append(message)
-            continue
+            continue"""
 
-        try:
-            row[u"previousPersonPosition"] = institutionId.personposition_set.get()
+
+        if personPositionCache.cache.has_key(institutionObj.id):
+            row[u"previousPersonPosition"] = personPositionCache.cache[institutionObj.id]
+        else:
+            row[u"previousPersonPosition"] = None
+        """try:
+            row[u"previousPersonPosition"] = institutionObj.personposition_set.get()
         except PersonPosition.DoesNotExist:
             row[u"previousPersonPosition"] = None
+        row[u"previousPerson"] = getOrDefault(row, u"previousPersonPosition", u"person")"""
         row[u"previousPerson"] = getOrDefault(row, u"previousPersonPosition", u"person")
 
 
         updateIfChanged(row, u"name", row[u"name"], getOrDefault(row, u"previousPerson", u"name"))
         updateIfChanged(row, u"surname", row[u"surname"], getOrDefault(row, u"previousPerson", u"surname"))
-        updateIfChanged(row, u"institutionName", row[u"institutionName"], row[u"institutionObj"].name)
+        updateIfChanged(row, u"institutionName", row[u"institutionName"], institutionObj.name)
         updateIfChanged(row, u"officephone", row[u"officephone"], getOrDefault(row, u"previousPersonPosition", u"primaryPhone"))
-        updateIfChanged(row, u"officeaddress", row[u"officeaddress"], row[u"institutionObj"].officeAddress)
+        updateIfChanged(row, u"officeaddress", row[u"officeaddress"], institutionObj.officeAddress)
 
     return errorList
 
