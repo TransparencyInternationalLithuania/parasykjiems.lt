@@ -1,7 +1,14 @@
-{% extends "base.html" %}
+{% extends "base-largecontent.html" %}
 {% load i18n %}
 {% block content %}
-Following mayor data has changed:
+
+{% if errorList %}
+    <ul style="color: red;background-color: #fafad2;">
+    {% for error in errorList %}
+        <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+{% endif %}
 
 <table>
     <tr>
@@ -14,7 +21,7 @@ Following mayor data has changed:
     <tr>
         {% for key, val in row.items %}
         {% if val.changed %}
-        <td style="background-color: #fffba5;">
+        <td style="background-color: #fafad2;">
             <div style="color: red;">{{ val.previous }}</div> <br/><br/>
             <div style="color: green;">{{ val.changed }} </div>
         </td>

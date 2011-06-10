@@ -39,10 +39,10 @@ def civilParishUpdate(request):
         return render_to_response('pjweb/error.html', joinParams(params))
 
     memberList = readCsvFile(fileName, institutionType = u"civpar", institutionNameGetter=makeCivilParishInstitutionName)
-    addChangedFields(memberList)
+    errorList = addChangedFields(memberList)
     headers = getHeaders(memberList)
 
-    params = {u"headers" : headers, u"newData" : memberList}
+    params = {u"headers" : headers, u"newData" : memberList, u"errorList" : errorList}
     return render_to_response('cdb_lt/update/mayorUpdate.html', joinParams(params))
 
 def readCsvFile(fileName, institutionType = None, institutionNameGetter = None):
@@ -81,6 +81,7 @@ def getOrDefault(dictionary, key, property):
     return getattr(dictionary[key], property, u"")
 
 def addChangedFields(memberList):
+    errorList = []
     for row in memberList:
         institutionName = row[u"institutionName"]
         institutionType = row[u"institutionType"]
@@ -89,7 +90,8 @@ def addChangedFields(memberList):
                 .filter(name=institutionName).get()
             row[u"institutionObj"] = institutionId
         except Institution.DoesNotExist:
-            print u"Institution with name %s and code %s could not be found" % (institutionName, institutionType)
+            message = u'Institution with name "%s" not found' % institutionName
+            errorList.append(message)
             continue
 
         try:
@@ -104,6 +106,8 @@ def addChangedFields(memberList):
         updateIfChanged(row, u"institutionName", row[u"institutionName"], row[u"institutionObj"].name)
         updateIfChanged(row, u"officephone", row[u"officephone"], getOrDefault(row, u"previousPersonPosition", u"primaryPhone"))
         updateIfChanged(row, u"officeaddress", row[u"officeaddress"], row[u"institutionObj"].officeAddress)
+
+    return errorList
 
 def getHeaders(memberList):
     headers = []
@@ -120,8 +124,8 @@ def mayorUpdate(request):
         return render_to_response('pjweb/error.html', joinParams(params))
 
     newMayorList = readCsvFile(fileName, institutionType = u"mayor", institutionNameGetter=makeMunicipalityInstitutionName)
-    addChangedFields(newMayorList)
+    errorList = addChangedFields(newMayorList)
     headers = getHeaders(newMayorList)
 
-    params = {u"headers" : headers, u"newData" : newMayorList}
+    params = {u"headers" : headers, u"newData" : newMayorList, u"errorList" : errorList}
     return render_to_response('cdb_lt/update/mayorUpdate.html', joinParams(params))
