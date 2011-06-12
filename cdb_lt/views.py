@@ -106,7 +106,7 @@ class PersonPositionCache:
 
     def addToCache(self, personPositions):
         for p in personPositions:
-            self.cache[p.institution.id] = p
+            self.cache[p.institution_id] = p
 
     def loadAllWithInstitutionId(self, institutionIds):
         step = 30
