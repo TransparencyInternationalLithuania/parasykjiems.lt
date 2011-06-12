@@ -78,10 +78,8 @@ def readCsvFile(fileName, institutionType = None, institutionNameGetter = None):
         newMayorList.append(val)
     return newMayorList
 
-def getOrDefault(dictionary, key, property):
-    if not dictionary.has_key(key):
-        return None
-    return getattr(dictionary[key], property, u"")
+def getOrDefault(object, property):
+    return getattr(object, property, u"")
 
 
 class InstitutionCache:
@@ -137,17 +135,16 @@ def addChangedFields(memberList):
 
         institutionObj = institutionCache.cache[institutionName]
 
+        previousPersonPosition = None
         if personPositionCache.cache.has_key(institutionObj.id):
-            row[u"previousPersonPosition"] = personPositionCache.cache[institutionObj.id]
-        else:
-            row[u"previousPersonPosition"] = None
-        row[u"previousPerson"] = getOrDefault(row, u"previousPersonPosition", u"person")
+            previousPersonPosition = personPositionCache.cache[institutionObj.id]
+        previousPerson = getOrDefault(previousPersonPosition, u"person")
 
 
-        updateIfChanged(row, u"name", row[u"name"], getOrDefault(row, u"previousPerson", u"name"))
-        updateIfChanged(row, u"surname", row[u"surname"], getOrDefault(row, u"previousPerson", u"surname"))
+        updateIfChanged(row, u"name", row[u"name"], getOrDefault(previousPerson, u"name"))
+        updateIfChanged(row, u"surname", row[u"surname"], getOrDefault(previousPerson, u"surname"))
         updateIfChanged(row, u"institutionName", row[u"institutionName"], institutionObj.name)
-        updateIfChanged(row, u"officephone", row[u"officephone"], getOrDefault(row, u"previousPersonPosition", u"primaryPhone"))
+        updateIfChanged(row, u"officephone", row[u"officephone"], getOrDefault(previousPersonPosition, u"primaryPhone"))
         updateIfChanged(row, u"officeaddress", row[u"officeaddress"], institutionObj.officeAddress)
 
     return errorList
