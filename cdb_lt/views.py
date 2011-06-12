@@ -136,28 +136,11 @@ def addChangedFields(memberList):
             continue
 
         institutionObj = institutionCache.cache[institutionName]
-        #row[u"institutionObj"] = institutionId
-
-        """institutionType = row[u"institutionType"]
-        try:
-            institutionId = Institution.objects.filter(institutionType__code = institutionType) \
-                .filter(name=institutionName).get()
-            row[u"institutionObj"] = institutionId
-        except Institution.DoesNotExist:
-            message = u'Institution with name "%s" not found' % institutionName
-            errorList.append(message)
-            continue"""
-
 
         if personPositionCache.cache.has_key(institutionObj.id):
             row[u"previousPersonPosition"] = personPositionCache.cache[institutionObj.id]
         else:
             row[u"previousPersonPosition"] = None
-        """try:
-            row[u"previousPersonPosition"] = institutionObj.personposition_set.get()
-        except PersonPosition.DoesNotExist:
-            row[u"previousPersonPosition"] = None
-        row[u"previousPerson"] = getOrDefault(row, u"previousPersonPosition", u"person")"""
         row[u"previousPerson"] = getOrDefault(row, u"previousPersonPosition", u"person")
 
 
