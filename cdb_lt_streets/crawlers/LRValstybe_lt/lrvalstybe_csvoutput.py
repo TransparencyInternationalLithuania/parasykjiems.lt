@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import re
 from cdb_lt_streets.crawlers.LRValstybe_lt.lrvalstybe_crawler import MunicipalityListReader, MunicipalityPageReader, CivilParishListReader, MunicipalityContactReader
 import sys
+from territories.stringUtils import stringIsIn
 
 def convertToDict(c):
     """C is Contact class, and has standard contact properties
@@ -18,22 +20,8 @@ def convertToDict(c):
         data[u"officeaddress"] = u"%s. Kabinetas %s" % (c.address, c.room)
     return data
 
-def stringIsIn(str, values):
-    """ brute force IN operation.  should use regex later
-    """
-    if str is None:
-        return False
-    str = str.lower()
-    values = [v.lower() for v in values]
-    for v in values:
-        if str.find(v) >= 0:
-            return True
-    return False
-    
-
-
 def yieldCivilParishHeadMembers():
-    for c in yieldCivilParishContacts():
+    for c in yieldCivilParishContacts():    
         if stringIsIn(c[u"title"], [u"seniūnas", u"seniūnė"]):
             yield c
 
