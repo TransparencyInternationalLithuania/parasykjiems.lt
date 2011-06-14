@@ -30,7 +30,7 @@ def civilParishUpdate(request):
     differ = DataUpdateDiffer(civilParishFileName, institutionType = u"civpar", institutionNameGetter=makeCivilParishInstitutionName)
     differ.addChangedFields()
 
-    params = {u"headers" : differ.getHeaders(), u"newData" : differ.memberList, u"errorList" : differ.errorList}
+    params = {u"headers" : differ.getHeaders(), u"newData" : differ.memberList, u"errorList" : differ.errorList, u"csvUrl" : u"/data/update/civilparish/csv/"}
     response = render_to_response('cdb_lt/update/mayorUpdate.html', joinParams(params))
     print u"generated in %s seconds" % elapsedTime.ElapsedSeconds()
     return response
@@ -64,5 +64,5 @@ def mayorUpdate(request):
     differ = DataUpdateDiffer(mayorCsv, institutionType = u"mayor", institutionNameGetter=makeMunicipalityInstitutionName)
     differ.addChangedFields()
 
-    params = {u"headers" : differ.getHeaders(), u"newData" : differ.memberList, u"errorList" : differ.errorList}
+    params = {u"headers" : differ.getHeaders(), u"newData" : differ.memberList, u"errorList" : differ.errorList, u"csvUrl" : u"/data/update/mayor/csv/"}
     return render_to_response('cdb_lt/update/mayorUpdate.html', joinParams(params))
