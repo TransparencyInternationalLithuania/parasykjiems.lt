@@ -13,5 +13,6 @@ urlpatterns = patterns('cdb_lt.views',
     (r'^data/update/mayor/csv/$', "mayorUpdateAsCsv"),
     (r'^data/update/civilparish/$', "civilParishUpdate"),
     (r'^data/update/civilparish/csv/$', "civilParishUpdateAsCsv"),
+    (r'^data/update/upload/$', "uploadData"),
 
 )

@@ -514,3 +514,7 @@ a.myopacity:hover img {
 li.faq_content_item {
     margin-bottom: 5px
 }
+
+.fullwidth{
+    width : 100%;
+}
