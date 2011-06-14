@@ -101,7 +101,7 @@ class DataUpdateDiffer:
     def _buildUpChangedHeaders(self, originalHeaders, changedHeaders):
         headers = originalHeaders
         for k in changedHeaders:
-            header = "%s_new" % k
+            header = "%s_old" % k
             headers.append(header)
         return headers
 
@@ -125,9 +125,9 @@ class DataUpdateDiffer:
         for row in self.memberList:
             for key, val in row.items():
                 if type(val) is dict:
-                    keynew = u"%s_new" % key
-                    row[keynew] = val[u'changed'].encode('utf-8')
-                    row[key] = val['previous'].encode('utf-8')
+                    keyold = u"%s_old" % key
+                    row[key] = val[u'changed'].encode('utf-8')
+                    row[keyold] = val['previous'].encode('utf-8')
                 else:
                     row[key] = val.encode('utf-8')
             writer.writerow(row)

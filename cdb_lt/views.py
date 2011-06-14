@@ -1,5 +1,5 @@
-import csv
 import os
+from django.contrib.sites.models import Site
 from django.shortcuts import render_to_response
 from cdb_lt.dataUpdate.dataUpdate import DataUpdateDiffer
 from cdb_lt.management.commands.createMembers import makeCivilParishInstitutionName, makeMunicipalityInstitutionName
@@ -18,8 +18,17 @@ def joinParams(params):
     viewParams.update(params)
     return viewParams
 
-civilParishFileName = os.path.join(os.path.realpath(os.path.curdir), "static", "data", "update", "seniunai.csv")
-mayorCsv = os.path.join(os.path.realpath(os.path.curdir), "static", "data", "update", "merai.csv")
+def constructAttachmentUrl(attachmentPath):
+    current_site = Site.objects.get_current()
+    path = "%s/%s" % ("static", attachmentPath)
+    path = path.replace("\\", "/")
+    return u"http://%s/%s" % (current_site.domain, path)
+
+
+civilParishStatic = os.path.join("data", "update", "seniunai.csv")
+civilParishFileName = os.path.join(os.path.realpath(os.path.curdir), "static", civilParishStatic)
+mayorStatic = os.path.join("data", "update", "merai.csv")
+mayorCsv = os.path.join(os.path.realpath(os.path.curdir), "static", mayorStatic)
 
 def civilParishUpdate(request):
     elapsedTime = TimeMeasurer()
@@ -30,7 +39,11 @@ def civilParishUpdate(request):
     differ = DataUpdateDiffer(civilParishFileName, institutionType = u"civpar", institutionNameGetter=makeCivilParishInstitutionName)
     differ.addChangedFields()
 
-    params = {u"headers" : differ.getHeaders(), u"newData" : differ.memberList, u"errorList" : differ.errorList, u"csvUrl" : u"/data/update/civilparish/csv/"}
+    params = {u"headers" : differ.getHeaders(),
+              u"newData" : differ.memberList,
+              u"errorList" : differ.errorList,
+              u"csvUrl" : u"/data/update/civilparish/csv/",
+              u"originalCsv" : constructAttachmentUrl(civilParishStatic)}
     response = render_to_response('cdb_lt/update/mayorUpdate.html', joinParams(params))
     print u"generated in %s seconds" % elapsedTime.ElapsedSeconds()
     return response
@@ -64,5 +77,9 @@ def mayorUpdate(request):
     differ = DataUpdateDiffer(mayorCsv, institutionType = u"mayor", institutionNameGetter=makeMunicipalityInstitutionName)
     differ.addChangedFields()
 
-    params = {u"headers" : differ.getHeaders(), u"newData" : differ.memberList, u"errorList" : differ.errorList, u"csvUrl" : u"/data/update/mayor/csv/"}
+    params = {u"headers" : differ.getHeaders(),
+              u"newData" : differ.memberList,
+              u"errorList" : differ.errorList,
+              u"csvUrl" : u"/data/update/mayor/csv/",
+              u"originalCsv" : constructAttachmentUrl(mayorStatic)}
     return render_to_response('cdb_lt/update/mayorUpdate.html', joinParams(params))
