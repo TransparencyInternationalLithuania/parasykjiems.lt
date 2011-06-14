@@ -2,9 +2,16 @@
 {% load i18n %}
 {% block content %}
 
+{% if csvUrl %}
 <p>
-    You can download diff as <a href="{{ csvUrl }}">csv file</a>
+    You can download <a href="{{ csvUrl }}">diff as csv</a>
 </p>
+{% endif %}
+
+{% if originalCsv %}
+    You can download <a href="{{ originalCsv }}">original csv</a>
+{% endif %}
+
 
 {% if errorList %}
     <ul style="color: red;background-color: #fafad2;">
