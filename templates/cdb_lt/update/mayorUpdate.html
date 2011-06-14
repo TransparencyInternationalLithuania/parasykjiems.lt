@@ -2,6 +2,10 @@
 {% load i18n %}
 {% block content %}
 
+<p>
+    You can download diff as <a href="{{ csvUrl }}">csv file</a>
+</p>
+
 {% if errorList %}
     <ul style="color: red;background-color: #fafad2;">
     {% for error in errorList %}
