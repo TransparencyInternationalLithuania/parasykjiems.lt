@@ -18,4 +18,6 @@ urlpatterns = patterns('cdb_lt.views',
     (r'^data/update/upload/$', "uploadData"),
     (r'^data/update/upload/(%(sentence)s)/$' % {'sentence' : sentenceRegExp}, 'diffUploadedFile'),
     (r'^data/update/upload/(%(sentence)s)/csv/$' % {'sentence' : sentenceRegExp}, 'diffUploadedFileAsCsv'),
+    (r'^data/update/import/(%(sentence)s)/$' % {'sentence' : sentenceRegExp}, 'importUploadedFile'),
+    (r'^data/update/import/success/(%(sentence)s)/$' % {'sentence' : sentenceRegExp}, 'importUploadedFile'),
 )
