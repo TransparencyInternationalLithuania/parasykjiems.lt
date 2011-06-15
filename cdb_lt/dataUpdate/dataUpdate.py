@@ -110,6 +110,8 @@ class DataUpdateDiffer:
         return self.changedFields.keys()
 
     def updateIfChanged(self, row, key, newValue, originalValue):
+        newValue = newValue.strip()
+        originalValue = originalValue.strip()
         if originalValue == newValue:
             return
         d = {u"previous": originalValue,
@@ -157,44 +159,91 @@ class DataUpdateDiffer:
         These columns should be removed, as otherwise there will be more and more
         such new columns added """
         keys = row.keys()
+        length = len(DataUpdateDiffer.oldColumnSuffix)
         for k in keys:
             if not k.endswith(DataUpdateDiffer.oldColumnSuffix):
                 continue
-            previousKey = k.rstrip(DataUpdateDiffer.oldColumnSuffix)
+            previousKey = k[0:-length]
             if row.has_key(previousKey):
                 #remove item with new key.  
                 del row[k]
-        
 
-    def addChangedFields(self):
+    def updateAndSaveIfChanged(self, row, object, keysToProperties):
+        changed = False
+        for key, attribute in keysToProperties.iteritems():
+            v = row[key]
+            if type(v) is not dict:
+                continue
+            changed = True
+            setattr(object, attribute, v[u'changed'])
+        if changed:
+            object.save()
+
+
+    def updateDbWithNewData(self):
         errorList = []
-        institutionCache = InstitutionCache()
-        institutionNames = [row[u"institutionName"] for row in self.memberList]
-        institutionCache.loadAllWithName(institutionNames, institutionType= self.memberList[0][u"institutionType"])
-
-        personPositionCache = PersonPositionCache()
-        institutionIds = [i.id for i in institutionCache.cache.values()]
-        personPositionCache.loadAllWithInstitutionId(institutionIds)
-
         for row in self.memberList:
             institutionName = row[u"institutionName"]
-            if not institutionCache.cache.has_key(institutionName):
+            if not self.institutionCache.cache.has_key(institutionName):
                 message = u'Institution with name "%s" not found' % institutionName
                 errorList.append(message)
                 continue
 
-            institutionObj = institutionCache.cache[institutionName]
+            institutionObj = self.institutionCache.cache[institutionName]
+            previousPersonPosition = None
+            if self.personPositionCache.cache.has_key(institutionObj.id):
+                previousPersonPosition = self.personPositionCache.cache[institutionObj.id]
+            previousPerson = getOrDefault(previousPersonPosition, u"person")
+
+
+
+            self.updateAndSaveIfChanged(row, institutionObj, {u"officeaddress":u"officeAddress",
+                                                              u"officephone": u"officePhone"} )
+            
+            """self.updateIfChanged(row, u"name", row[u"name"], getOrDefault(previousPerson, u"name"))
+            self.updateIfChanged(row, u"surname", row[u"surname"], getOrDefault(previousPerson, u"surname"))
+            self.updateIfChanged(row, u"officephone", row[u"officephone"], getOrDefault(previousPersonPosition, u"primaryPhone"))
+            self.updateIfChanged(row, u"email", row[u"email"], getOrDefault(previousPersonPosition, u"email"))"""
+        return errorList
+
+        
+
+    def addChangedFields(self):
+        """ Loops over loaded csv file, and compares the data against database.
+        If field values have changed, replaces value with a dictionary containing old and new value.
+
+        Populates institutionCache and personPositionCache with data from database.  
+
+        """
+        errorList = []
+        self.institutionCache = InstitutionCache()
+        institutionNames = [row[u"institutionName"] for row in self.memberList]
+        self.institutionCache.loadAllWithName(institutionNames, institutionType= self.memberList[0][u"institutionType"])
+
+        self.personPositionCache = PersonPositionCache()
+        institutionIds = [i.id for i in self.institutionCache.cache.values()]
+        self.personPositionCache.loadAllWithInstitutionId(institutionIds)
+
+        for row in self.memberList:
+            institutionName = row[u"institutionName"]
+            if not self.institutionCache.cache.has_key(institutionName):
+                message = u'Institution with name "%s" not found' % institutionName
+                errorList.append(message)
+                continue
+
+            institutionObj = self.institutionCache.cache[institutionName]
 
             previousPersonPosition = None
-            if personPositionCache.cache.has_key(institutionObj.id):
-                previousPersonPosition = personPositionCache.cache[institutionObj.id]
+            if self.personPositionCache.cache.has_key(institutionObj.id):
+                previousPersonPosition = self.personPositionCache.cache[institutionObj.id]
             previousPerson = getOrDefault(previousPersonPosition, u"person")
 
 
             self.updateIfChanged(row, u"name", row[u"name"], getOrDefault(previousPerson, u"name"))
             self.updateIfChanged(row, u"surname", row[u"surname"], getOrDefault(previousPerson, u"surname"))
-            self.updateIfChanged(row, u"institutionName", row[u"institutionName"], institutionObj.name)
-            self.updateIfChanged(row, u"officephone", row[u"officephone"], getOrDefault(previousPersonPosition, u"primaryPhone"))
+            #self.updateIfChanged(row, u"institutionName", row[u"institutionName"], institutionObj.name)
+            self.updateIfChanged(row, u"officephone", row[u"officephone"], getOrDefault(institutionObj, u"officePhone"))
+            self.updateIfChanged(row, u"email", row[u"email"], getOrDefault(previousPersonPosition, u"email"))
             self.updateIfChanged(row, u"officeaddress", row[u"officeaddress"], institutionObj.officeAddress)
 
             self.removeOldColumns(row)
