@@ -34,25 +34,27 @@ civilParishFileName = os.path.join(os.path.realpath(os.path.curdir), "static", c
 mayorStatic = os.path.join("data", "update", "merai.csv")
 mayorCsv = os.path.join(os.path.realpath(os.path.curdir), "static", mayorStatic)
 
+relativeUploadDir = os.path.join("data", "upload")
+realUploadDir = os.path.join(STATIC_DOC_ROOT, "data", "upload")
+dir_util.mkpath(realUploadDir)
+
 def getNonExistentFileName(rootDir, originalFileName):
     name = os.path.join(rootDir, originalFileName)
-    if os.path.exists(name) == False:
+    if not os.path.exists(name):
         return name
     basename, extension = os.path.splitext(originalFileName)
     num = 1
     while True:
         name = "%s-%s%s" % (basename, num, extension)
         realName = os.path.join(rootDir, name)
-        if os.path.exists(realName) == False:
+        if not os.path.exists(realName):
             return name
         num += 1
 
 def writeUploadedFile(file):
     """ Writes uploaded file to disk, and returns file name used to store it"""
-    rootDir = os.path.join(STATIC_DOC_ROOT, "dataUpload")
-    dir_util.mkpath(rootDir)
-    fileName = getNonExistentFileName(rootDir=rootDir, originalFileName=file.name)
-    realName = os.path.join(rootDir, fileName)
+    fileName = getNonExistentFileName(rootDir=realUploadDir, originalFileName=file.name)
+    realName = os.path.join(realUploadDir, fileName)
     destination = open(realName, 'wb+')
     for chunk in file.chunks():
         destination.write(chunk)
@@ -71,7 +73,7 @@ def uploadData(request):
         return render_to_response('cdb_lt/update/upload.html', {'form': form})
 
     returnedFileName = writeUploadedFile(request.FILES['csvFile'])
-    return HttpResponseRedirect('/cdb_lt/update/upload/%s/' % returnedFileName)
+    return HttpResponseRedirect('/data/update/upload/%s/' % returnedFileName)
 
 
 def civilParishUpdate(request):
@@ -80,14 +82,14 @@ def civilParishUpdate(request):
         params = {u"ErrorMessage" : "Civil parish file does not exist, please upload it first."}
         return render_to_response('pjweb/error.html', joinParams(params))
 
-    differ = DataUpdateDiffer(civilParishFileName, institutionType = u"civpar", institutionNameGetter=makeCivilParishInstitutionName)
+    differ = DataUpdateDiffer(civilParishFileName, institutionType = u"civpar")
     differ.addChangedFields()
 
     params = {u"headers" : differ.getHeaders(),
               u"newData" : differ.memberList,
               u"errorList" : differ.errorList,
-              u"csvUrl" : u"/data/update/civilparish/csv/",
-              u"originalCsv" : constructAttachmentUrl(civilParishStatic)}
+              u"diffAsCsvUrl" : u"/data/update/civilparish/csv/",
+              u"originalCsvUrl" : constructAttachmentUrl(civilParishStatic)}
     response = render_to_response('cdb_lt/update/mayorUpdate.html', joinParams(params))
     print u"generated in %s seconds" % elapsedTime.ElapsedSeconds()
     return response
@@ -97,7 +99,7 @@ def civilParishUpdateAsCsv(request):
         params = {u"ErrorMessage" : "CivilParish file does not exist, please upload it first."}
         return render_to_response('pjweb/error.html', joinParams(params))
 
-    differ = DataUpdateDiffer(civilParishFileName, institutionType = u"civpar", institutionNameGetter=makeCivilParishInstitutionName)
+    differ = DataUpdateDiffer(civilParishFileName, institutionType = u"civpar")
     differ.addChangedFields()
 
     return differ.asCsvToResponse("civilparish.csv")
@@ -113,17 +115,49 @@ def mayorUpdateAsCsv(request):
 
     return differ.asCsvToResponse("mayor.csv")
 
-def mayorUpdate(request):
-    if not os.path.exists(mayorCsv):
-        params = {u"ErrorMessage" : "Mayor file does not exist, please upload it first."}
+def diffUploadedFileAsCsv(request, fileName, institutionType = None):
+    relativeUploadFile = os.path.join(relativeUploadDir, fileName)
+    realUploadedFile = os.path.join(os.path.realpath(os.path.curdir), "static", relativeUploadFile)
+    if not os.path.exists(realUploadedFile):
+        params = {u"ErrorMessage" : "Uploaded file '%s'  does not exist, please upload it first." % relativeUploadFile}
+        return render_to_response('pjweb/error.html', joinParams(params))
+    
+    differ = DataUpdateDiffer(realUploadedFile, institutionType = institutionType)
+    differ.addChangedFields()
+
+    return differ.asCsvToResponse(fileName)
+
+
+def diffUploadedFile(request, fileName, institutionType = None):
+    relativeUploadFile = os.path.join(relativeUploadDir, fileName)
+    realUploadedFile = os.path.join(os.path.realpath(os.path.curdir), "static", relativeUploadFile)
+
+    if not os.path.exists(realUploadedFile):
+        params = {u"ErrorMessage" : "Uploaded file '%s'  does not exist, please upload it first." % relativeUploadFile}
         return render_to_response('pjweb/error.html', joinParams(params))
 
-    differ = DataUpdateDiffer(mayorCsv, institutionType = u"mayor", institutionNameGetter=makeMunicipalityInstitutionName)
+    differ = DataUpdateDiffer(realUploadedFile, institutionType = institutionType)
     differ.addChangedFields()
 
     params = {u"headers" : differ.getHeaders(),
               u"newData" : differ.memberList,
               u"errorList" : differ.errorList,
-              u"csvUrl" : u"/data/update/mayor/csv/",
-              u"originalCsv" : constructAttachmentUrl(mayorStatic)}
+              u"diffAsCsvUrl" : u"/data/update/upload/%s/csv/" % fileName,
+              u"originalCsvUrl" : constructAttachmentUrl(relativeUploadFile)}
+    return render_to_response('cdb_lt/update/mayorUpdate.html', joinParams(params))
+
+
+def mayorUpdate(request):
+    if not os.path.exists(mayorCsv):
+        params = {u"ErrorMessage" : "Mayor file does not exist, please upload it first."}
+        return render_to_response('pjweb/error.html', joinParams(params))
+
+    differ = DataUpdateDiffer(mayorCsv, institutionType = u"mayor")
+    differ.addChangedFields()
+
+    params = {u"headers" : differ.getHeaders(),
+              u"newData" : differ.memberList,
+              u"errorList" : differ.errorList,
+              u"diffAsCsvUrl" : u"/data/update/mayor/csv/",
+              u"originalCsvUrl" : constructAttachmentUrl(mayorStatic)}
     return render_to_response('cdb_lt/update/mayorUpdate.html', joinParams(params))

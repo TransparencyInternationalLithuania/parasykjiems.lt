@@ -2,14 +2,14 @@
 {% load i18n %}
 {% block content %}
 
-{% if csvUrl %}
+{% if diffAsCsvUrl %}
 <p>
-    You can download <a href="{{ csvUrl }}">diff as csv</a>
+    You can download <a href="{{ diffAsCsvUrl }}">diff as csv</a>
 </p>
 {% endif %}
 
-{% if originalCsv %}
-    You can download <a href="{{ originalCsv }}">original csv</a>
+{% if originalCsvUrl %}
+    You can download <a href="{{ originalCsvUrl }}">original csv</a>
 {% endif %}
 
 
