@@ -15,7 +15,7 @@ class Command(BaseCommand):
     help = """"""
 
     def handle(self, *args, **options):
-        headers = [u"fullname", u"email", u"municipality", u"civilparish", u"officephone", u"officeaddress", u"title", u"comments"]
+        headers = [u"fullname", u"email", u"municipality", u"civilparish", u"officephone", u"officeaddress", u"title", u"comments", u"institutionType"]
         out = LRValstybeCsvOut(headers=headers)
         out.writeHeader()
 

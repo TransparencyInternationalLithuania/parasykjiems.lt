@@ -1,4 +1,5 @@
 import csv
+from django.db.models.query_utils import Q
 from cdb_lt.management.commands.createMembers import makeCivilParishInstitutionName, makeMunicipalityInstitutionName
 from contactdb.models import Institution, PersonPosition
 from pjutils.exc import ChainnedException
@@ -55,6 +56,34 @@ class PersonPositionCache:
         chunks = [institutionIds[i:i+step] for i in range(0, len(institutionIds), step)]
         for chunk in chunks:
             personPositions = list(PersonPosition.objects.filter(institution__id__in = chunk).select_related("person"))
+            self.addToCache(personPositions)
+
+class PersonPositionCacheByName:
+    def __init__(self):
+        self.cache = {}
+
+    def _getKey(self, name, surname):
+        return "%s - %s" % (name, surname)
+
+    def getByName(self, name, surname):
+        key = self._getKey(name, surname)
+        if not self.cache.has_key(key): return None
+        return self.cache[key]
+
+    def addToCache(self, personPositions):
+        for p in personPositions:
+            key = self._getKey(p.person.name, p.person.surname)
+            self.cache[key] = p
+
+    def loadAllWithName(self, nameAndSurnameTuples):
+        step = 30
+        chunks = [nameAndSurnameTuples[i:i+step] for i in range(0, len(nameAndSurnameTuples), step)]
+        for chunk in chunks:
+            queries = [Q(**{"person__name":name, "person__surname" : surname}) for name, surname in chunk]
+            finalQuery = queries[0]
+            for q in queries[1:]:
+                finalQuery = finalQuery | q
+            personPositions = list(PersonPosition.objects.filter(finalQuery).select_related("person"))
             self.addToCache(personPositions)
 
 class DataUpdateDiffer:
@@ -179,9 +208,23 @@ class DataUpdateDiffer:
         if changed:
             object.save()
 
+    def _getPreviousAndCurrentValues(self, row, key):
+        if not row.has_key(key): return None, None
+        val = row[key]
+        if type(val) is dict:
+            return val['previous'], val[u'changed']
+        return val, val
 
     def updateDbWithNewData(self):
         errorList = []
+
+
+        # cachce all person position objects with proposed names in csv file
+        self.newPersonPositionCache = PersonPositionCacheByName()
+        self.newPersonPositionCache.loadAllWithName(self.nameAndSurnameTuples)
+
+
+
         for row in self.memberList:
             institutionName = row[u"institutionName"]
             if not self.institutionCache.cache.has_key(institutionName):
@@ -199,10 +242,24 @@ class DataUpdateDiffer:
 
             self.updateAndSaveIfChanged(row, institutionObj, {u"officeaddress":u"officeAddress",
                                                               u"officephone": u"officePhone"} )
+
+            previousName, name = self._getPreviousAndCurrentValues(row, u"name")
+            previousSurname, surname = self._getPreviousAndCurrentValues(row, u"surname")
+
+            newPersonPosition = self.newPersonPositionCache.getByName(name, surname)
+            if newPersonPosition is None:
+                # there is no PersonPosition in the db with new Name and Surname
+                # create one
+                continue
+
+
+            self.updateAndSaveIfChanged(row, newPersonPosition, {u"officephone":u"officePhone",
+                                                              u"email": u"email"} )
+            #newPersonPosition.primaryPhone
             
             """self.updateIfChanged(row, u"name", row[u"name"], getOrDefault(previousPerson, u"name"))
             self.updateIfChanged(row, u"surname", row[u"surname"], getOrDefault(previousPerson, u"surname"))
-            self.updateIfChanged(row, u"officephone", row[u"officephone"], getOrDefault(previousPersonPosition, u"primaryPhone"))
+            self.updateIfChanged(row, u"officephone", row[u"officephone"], getOrDefault(previousPersonPosition, u"officePhone"))
             self.updateIfChanged(row, u"email", row[u"email"], getOrDefault(previousPersonPosition, u"email"))"""
         return errorList
 
@@ -216,13 +273,18 @@ class DataUpdateDiffer:
 
         """
         errorList = []
+        # cache all instituion objects with the same name, as specified in csv file
         self.institutionCache = InstitutionCache()
         institutionNames = [row[u"institutionName"] for row in self.memberList]
         self.institutionCache.loadAllWithName(institutionNames, institutionType= self.memberList[0][u"institutionType"])
 
+        # cache all person position objects existing in DB, related to self.institutionCache
         self.personPositionCache = PersonPositionCache()
         institutionIds = [i.id for i in self.institutionCache.cache.values()]
         self.personPositionCache.loadAllWithInstitutionId(institutionIds)
+
+        # hold a copy of names and tuples from csv file
+        self.nameAndSurnameTuples = [(val[u"name"], val[u"surname"]) for val in self.memberList]
 
         for row in self.memberList:
             institutionName = row[u"institutionName"]

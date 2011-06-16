@@ -98,22 +98,6 @@ def diffUploadedFile(request, fileName, institutionType = None):
 
 def civilParishUpdate(request):
     return diffUploadedFile(request, fileName="seniunai.csv")
-    """elapsedTime = TimeMeasurer()
-    if not os.path.exists(civilParishFileName):
-        params = {u"ErrorMessage" : "Civil parish file does not exist, please upload it first."}
-        return render_to_response('pjweb/error.html', joinParams(params))
-
-    differ = DataUpdateDiffer(civilParishFileName, institutionType = u"civpar")
-    differ.addChangedFields()
-
-    params = {u"headers" : differ.getHeaders(),
-              u"newData" : differ.memberList,
-              u"errorList" : differ.errorList,
-              u"diffAsCsvUrl" : u"/data/update/civilparish/csv/",
-              u"originalCsvUrl" : constructAttachmentUrl(civilParishStatic)}
-    response = render_to_response('cdb_lt/update/mayorUpdate.html', joinParams(params))
-    print u"generated in %s seconds" % elapsedTime.ElapsedSeconds()
-    return response"""
 
 def diffUploadedFileAsCsv(request, fileName, institutionType = None):
     relativeUploadFile = os.path.join(relativeUploadDir, fileName)
@@ -129,25 +113,9 @@ def diffUploadedFileAsCsv(request, fileName, institutionType = None):
 
 def civilParishUpdateAsCsv(request):
     return diffUploadedFileAsCsv(request, fileName="seniunai.csv")
-    """if not os.path.exists(civilParishFileName):
-        params = {u"ErrorMessage" : "CivilParish file does not exist, please upload it first."}
-        return render_to_response('pjweb/error.html', joinParams(params))
-
-    differ = DataUpdateDiffer(civilParishFileName, institutionType = u"civpar")
-    differ.addChangedFields()
-
-    return differ.asCsvToResponse("civilparish.csv")"""
 
 def mayorUpdateAsCsv(request):
     return diffUploadedFileAsCsv(request, fileName="merai.csv")
-    """if not os.path.exists(mayorCsv):
-        params = {u"ErrorMessage" : "Mayor file does not exist, please upload it first."}
-        return render_to_response('pjweb/error.html', joinParams(params))
-
-    differ = DataUpdateDiffer(mayorCsv, institutionType = u"mayor", institutionNameGetter=makeMunicipalityInstitutionName)
-    differ.addChangedFields()
-
-    return differ.asCsvToResponse("mayor.csv")"""
 
 def constructUploadedFileName(fileName):
     relativeUploadFile = os.path.join(relativeUploadDir, fileName)
@@ -172,17 +140,3 @@ def importUploadedFile(request, fileName, institutionType = None):
     
 def mayorUpdate(request):
     return diffUploadedFile(request, "merai.csv")
-
-    """if not os.path.exists(mayorCsv):
-        params = {u"ErrorMessage" : "Mayor file does not exist, please upload it first."}
-        return render_to_response('pjweb/error.html', joinParams(params))
-
-    differ = DataUpdateDiffer(mayorCsv, institutionType = u"mayor")
-    differ.addChangedFields()
-
-    params = {u"headers" : differ.getHeaders(),
-              u"newData" : differ.memberList,
-              u"errorList" : differ.errorList,
-              u"diffAsCsvUrl" : u"/data/update/mayor/csv/",
-              u"originalCsvUrl" : constructAttachmentUrl(mayorStatic)}
-    return render_to_response('cdb_lt/update/mayorUpdate.html', joinParams(params))"""
