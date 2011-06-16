@@ -9,9 +9,13 @@
 {% endif %}
 
 {% if originalCsvUrl %}
-    You can download <a href="{{ originalCsvUrl }}">original csv</a>
+<p> You can download <a href="{{ originalCsvUrl }}">original csv</a> </p>
 {% endif %}
 
+
+{% if importUrl %}
+<p>You can import this file by clicking  <a href="{{ importUrl }}">here</a></p>
+{% endif %}
 
 {% if errorList %}
     <ul style="color: red;background-color: #fafad2;">

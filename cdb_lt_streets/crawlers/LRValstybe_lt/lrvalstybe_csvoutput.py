@@ -40,6 +40,7 @@ def yieldCivilParishContacts():
         for parish, url in CivilParishListReader(municipalityUrl, civilParishUrl).getCivilParishList():
             data[u"civilparish"] = parish
             data[u"comments"] = url
+            data[u"institutionType"] = u"civpar"
 
             if url is None:
                 continue
@@ -119,6 +120,7 @@ def yieldMayorAdministartionWorkers():
         mayorText, mayorUrl = reader.getMayorUrl()
         reader = MunicipalityContactReader(mayorUrl)
         data[u"comments"] = mayorUrl
+        data[u"institutionType"] = u"mayor"
         for c in reader.getContactList():
             #convert contact to dictionary
             clientDict = convertToDict(c)
