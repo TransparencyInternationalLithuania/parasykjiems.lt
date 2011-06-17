@@ -22,10 +22,10 @@
         </tr>
         {% for mail in mails.object_list %}
             <tr>
-                <td>{{ mail.recipient_name }}<br/>
+                <td>  <span class="color_dark_green mail_sender_common">{{ mail.recipient_name }}</span><br/>
                 {{ mail.personPosition.institution.name }}</td>
-                <td><a href="/public/{{ mail.id }}/">{{ mail.subject }}</a></td>
-                <td>{{ mail.sender_name }}</td>
+                <td style="font-weight: bold"><a href="/public/{{ mail.id }}/">{{ mail.subject }}</a></td>
+                <td> <span class="color_dark_yellow mail_sender_common">{{ mail.sender_name }}</span></td>
                 <td>{{ mail.mail_date|date:"Y m d H:i" }}</td>
                 <td>{{ mail.has_response }}</td>
             </tr>
