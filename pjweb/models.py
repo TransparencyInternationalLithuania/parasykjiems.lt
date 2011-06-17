@@ -26,7 +26,7 @@ class Email(models.Model):
 
     subject = models.CharField(max_length=255)
 
-    " a relation to previous email, to which this email is an answer"
+    # a relation to previous email, to which this email is an answer
     answer_to = models.ForeignKey('Email',null=True)
     response_hash = models.IntegerField()
     message = models.TextField(blank=True)
