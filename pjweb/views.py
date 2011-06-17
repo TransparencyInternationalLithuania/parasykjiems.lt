@@ -291,16 +291,27 @@ def public(request, mail_id):
         raise Http404()
 
 
-    responses = Email.objects.filter(answer_to__exact=mail_id)
+    responses = list(Email.objects.filter(answer_to__exact=mail_id))
+    responses = [mail] + list(responses)
+    personPositionsIds = [r.recipient_id for r in responses]
+    personPositions = PersonPosition.objects.filter(id__in = personPositionsIds).select_related('institution')
+    personPositionDict = dict([(pp.id, pp) for pp in personPositions])
+
     current_site = Site.objects.get_current()
     # attachment paths are relative in DB
     # construct real attachment paths
-    responses = list(responses)
+
     for r in responses:
-        if (r.attachment_path is not None):
+        if r.attachment_path is not None:
             path = "%s/%s" % (GlobalSettings.ATTACHMENTS_MEDIA_PATH, r.attachment_path)
             path = path.replace("\\", "/")
             r.attachment_path = "http://%s/%s" % (current_site.domain, path)
+
+        if r.msg_type == 'Question':
+            r.recipientPersonPosition = personPositionDict.get(r.recipient_id)
+        elif r.msg_type == 'Response':
+            r.sendersPersonPosition = personPositionDict.get(r.recipient_id)
+
     return render_to_response('pjweb/public.html', {
         'mail': mail,
         'responses': responses,

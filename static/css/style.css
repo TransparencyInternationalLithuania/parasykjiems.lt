@@ -368,10 +368,13 @@ div.hr {
     color: gray;
 }
 
-/* Dark red colour
-*/
+/* Dark red colour */
 .color_dark_red {
     color: #790619
+}
+
+.color_dark_yellow {
+    color: #C88900
 }
 
 .color_dark_green {
