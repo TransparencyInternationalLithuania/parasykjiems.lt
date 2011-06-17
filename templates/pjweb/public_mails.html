@@ -12,21 +12,20 @@
 </div>
 
 <div style="clear:both;">
-    <table id="public_mails">
+    <table id="public_mails" style="width: 100%">
         <tr>
-            <th width="150px">{% trans "Receiver" %}</th>
+            <th width="200px">{% trans "Receiver" %}</th>
             <th width="250px">{% trans "Subject" %}</th>
-            <th>{% trans "Sender" %}</th>
-            <th width="200px">{% trans "Institution" %}</th>
-            <th width="100px">{% trans "Was sent on" %}</th>
+            <th style="width: 80px">{% trans "Sender" %}</th>
+            <th width="120px">{% trans "Was sent on" %}</th>
             <th width="30px">{% trans "Answered" %}</th>
         </tr>
         {% for mail in mails.object_list %}
             <tr>
-                <td>{{ mail.recipient_name }}</td>
+                <td>{{ mail.recipient_name }}<br/>
+                {{ mail.personPosition.institution.name }}</td>
                 <td><a href="/public/{{ mail.id }}/">{{ mail.subject }}</a></td>
                 <td>{{ mail.sender_name }}</td>
-                <td>{{ mail.personPosition.institution.name }}</td>
                 <td>{{ mail.mail_date|date:"Y m d H:i" }}</td>
                 <td>{{ mail.has_response }}</td>
             </tr>
