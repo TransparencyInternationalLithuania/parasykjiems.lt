@@ -12,6 +12,7 @@ from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadReque
 from django.shortcuts import render_to_response, redirect
 from django.utils.translation import ugettext as _, ugettext_lazy, ungettext, check_for_language
 from django.core.mail import send_mail, EmailMessage
+from contactdb.models import PersonPosition
 from pjweb.models import Email, MailHistory
 from pjweb.forms import *
 from pjutils.insert_response import InsertResponse
@@ -209,27 +210,48 @@ def no_email(request, rtype, mp_id):
     })
 
 
+class PublicMailListViewException(Exception):
+    pass
+
+class PublicMailListView:
+
+    def __getitem__(self, k):
+        if type(k) is not slice:
+            raise PublicMailListViewException()
+        all_mails = Email.objects.all().filter(public__exact=True, msg_type__exact='Question').exclude(msg_state__exact='NotConfirmed').order_by('-mail_date')
+        all_mails = all_mails[k.start: k.stop]
+        all_mails = list(all_mails)
+
+        # pre-load and attach personPosition objects
+        personPositionIds = [e.recipient_id for e in all_mails]
+        personPositions = PersonPosition.objects.all().filter(id__in = personPositionIds).select_related('institution')
+        personPositionsDict = dict((p.id, p) for p in list(personPositions))
+
+        for email in all_mails:
+            email.personPosition = personPositionsDict[email.recipient_id]
+
+        # pre-load whether email has answer
+        mailIds = [mail.id for mail in all_mails]
+        answers = Email.objects.filter(answer_to__in= mailIds).values('id', 'answer_to')
+        dictAnswers = dict([(a['answer_to'], a['answer_to']) for a in answers])
+
+        # attach whether we have answer
+        hasnot_response = _('No')
+        has_response = _('Yes')
+        for email in all_mails:
+            if dictAnswers.has_key(email.id):
+                email.has_response = has_response
+            else:
+                email.has_response = hasnot_response
+
+
+        return all_mails
+
+    def count(self):
+        return Email.objects.all().filter(public__exact=True, msg_type__exact='Question').exclude(msg_state__exact='NotConfirmed').count()
+
 def public_mails(request):
-    # TODO we are requesting too much emails here. We should limit this query
-    # to as little as possible
-
-    all_mails = Email.objects.all().filter(public__exact=True, msg_type__exact='Question').exclude(msg_state__exact='NotConfirmed').order_by('-mail_date')
-    mail_list = []
-    
-    for mail in all_mails:
-        id = mail.id
-        recipient_name = mail.recipient_name
-        sender = mail.sender_name
-        message = mail.message
-        send_date = mail.mail_date.strftime("%Y-%m-%d %H:%M")
-        answers = Email.objects.filter(answer_to=mail.id)
-        if not answers:
-            has_response = _('No')
-        else:
-            has_response = _('Yes')
-        mail_dict = {'id':id,'recipient_name':recipient_name, 'subject': mail.subject, 'sender':sender, 'message':message, 'send_date':send_date,'has_response':has_response}
-        mail_list.append(mail_dict)
-
+    mail_list = PublicMailListView()
 
     paginator = Paginator(mail_list, 10) # Show 10 contacts per page
     # Make sure page request is an int. If not, deliver first page.
@@ -245,9 +267,7 @@ def public_mails(request):
         mails = paginator.page(paginator.num_pages)
 
     return render_to_response('pjweb/public_mails.html', {
-        'all_mails': all_mails,
         'mails': mails,
-        'mail_list': mail_list,
         'LANGUAGES': GlobalSettings.LANGUAGES,
         'step1': '',
         'step2': '',

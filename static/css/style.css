@@ -277,13 +277,11 @@ tr {
 
 td {
     vertical-align: top;
-    padding-left: 20px;
 }
 
 th {
     background-color: #f3f7f4;
-    text-align: left;
-    padding-left: 20px;
+    text-align: center;
 }
 
 #head-font {
