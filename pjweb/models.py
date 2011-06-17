@@ -20,6 +20,9 @@ class Email(models.Model):
     sender_mail = models.EmailField()
     sender_name = models.CharField(max_length = 128)
     recipient_name = models.CharField(max_length = 128)
+
+    # this holds an Id to PersonPosition object. Always links to institution member, even when
+    # emails recipient is ordinary citizen. This column should be renamed to better match its purpose
     recipient_id = models.IntegerField()
     recipient_type = models.CharField(max_length = 50)
     recipient_mail = models.EmailField()
