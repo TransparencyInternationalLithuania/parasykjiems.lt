@@ -58,6 +58,11 @@ class PersonNameField(CharField):
 class Person(models.Model):
     name = PersonNameField()
     surname = PersonNameField()
+    # this is an additional field, which, together with name and surname form a unique key
+    # We do not enfore this at the database level, as we do not want our scripts to fail prematurely (yet)
+    # unique_together = (("name", "surname", "disambiguation"),)
+    disambiguation = PersonNameField()
+
     # used to uniquely identify persons
     # For example, if a person name or surname has changed, this will be used to locate the Person in question
     uniqueKey = models.IntegerField()
