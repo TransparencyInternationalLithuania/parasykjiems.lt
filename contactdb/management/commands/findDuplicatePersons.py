@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from contactdb.models import Person, Institution, PersonPosition
+from contactdb.models import Person, Institution, PersonPosition, InstitutionType
 from pjutils.timemeasurement import TimeMeasurer
 from pjutils.djangocommands import ExecManagementCommand
 from django.db import connection, transaction
@@ -23,11 +23,13 @@ having count(*) > 1
                "surname":surname,
                "personPosition":PersonPosition.objects.model._meta.db_table,
                "person":Person.objects.model._meta.db_table,
-               "institution":Institution.objects.model._meta.db_table
+               "institution":Institution.objects.model._meta.db_table,
+               'institutionType': InstitutionType.objects.model._meta.db_table,
                }
-        sql = """SELECT p.name, p.surname, p.disambiguation, i.name, i.institutionType_id FROM "%(personPosition)s"  pp
+        sql = """SELECT p.name, p.surname, p.disambiguation, i.name, it.code, i.id, p.id, pp.id FROM "%(personPosition)s"  pp
  INNER JOIN "%(person)s" p ON  ("p"."id" = pp."person_id")
  INNER JOIN "%(institution)s" i ON (i."id" = pp."institution_id")
+ INNER JOIN "%(institutionType)s" it ON (it."id" = i."institutionType_id")
  where p.name like '%(name)s' and p.surname like '%(surname)s'""" % formatters
 
         c = cursor.execute(sql)
@@ -46,7 +48,7 @@ having count(*) > 1
         cursor = connection.cursor()
         duplicateNames = self.getDuplicateNames(cursor)
 
-        print "name,surname,disambiguation,name,institutionType_id"
+        print "name,surname,disambiguation,name,institutionType_id, institution, personId, personPositionId"
         for name, surname in duplicateNames:
             duplicateDetails = self.getDuplicateDetails(cursor, name, surname)
             if not self.hasMissingDisambiguationColumn(duplicateDetails):
