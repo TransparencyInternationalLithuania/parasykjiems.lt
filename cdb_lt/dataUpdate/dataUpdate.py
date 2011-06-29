@@ -61,6 +61,7 @@ class PersonPositionCache:
 class PersonPositionCacheByName:
     def __init__(self):
         self.cache = {}
+        self.duplicatesCache = {}
 
     def _getKey(self, name, surname):
         return "%s - %s" % (name, surname)
@@ -69,12 +70,22 @@ class PersonPositionCacheByName:
         key = self._getKey(name, surname)
         if not self.cache.has_key(key): return None
         return self.cache[key]
+    
+    def addToDuplicateCache(self, personPosition):
+        key = self._getKey(personPosition.person.name, personPosition.person.surname)
+        if not self.duplicatesCache.has_key(key):
+            self.duplicatesCache[key] = []
+        self.duplicatesCache[key].append(personPosition)
+
 
     def addToCache(self, personPositions):
         for p in personPositions:
             key = self._getKey(p.person.name, p.person.surname)
             if self.cache.has_key(key):
-                raise Exception("duplicate key %s" % key)
+                self.addToDuplicateCache(self.cache[key])
+                del self.cache[key]
+                self.addToDuplicateCache(p)
+                continue
             self.cache[key] = p
 
     def loadAllWithName(self, nameAndSurnameTuples):
@@ -141,14 +152,17 @@ class DataUpdateDiffer:
         return self.changedFields.keys()
 
     def updateIfChanged(self, row, key, newValue, originalValue):
+        """ Replaces row value with dictionary containing old and new values, if they are different.
+        Returns true if values are different. Retuerns False if did not change anything"""
         newValue = newValue.strip()
         originalValue = originalValue.strip()
         if originalValue == newValue:
-            return
+            return False
         d = {u"previous": originalValue,
              u"changed": newValue}
         row[key] = d
         self.changedFields[key] = key
+        return True
 
     def _buildUpChangedHeaders(self, originalHeaders, changedHeaders):
         headers = originalHeaders
@@ -288,6 +302,8 @@ class DataUpdateDiffer:
         # hold a copy of names and tuples from csv file
         self.nameAndSurnameTuples = [(val[u"name"], val[u"surname"]) for val in self.memberList]
 
+        changedRows = []
+
         for row in self.memberList:
             institutionName = row[u"institutionName"]
             if not self.institutionCache.cache.has_key(institutionName):
@@ -303,13 +319,17 @@ class DataUpdateDiffer:
             previousPerson = getOrDefault(previousPersonPosition, u"person")
 
 
-            self.updateIfChanged(row, u"name", row[u"name"], getOrDefault(previousPerson, u"name"))
-            self.updateIfChanged(row, u"surname", row[u"surname"], getOrDefault(previousPerson, u"surname"))
-            #self.updateIfChanged(row, u"institutionName", row[u"institutionName"], institutionObj.name)
-            self.updateIfChanged(row, u"officephone", row[u"officephone"], getOrDefault(institutionObj, u"officePhone"))
-            self.updateIfChanged(row, u"email", row[u"email"], getOrDefault(previousPersonPosition, u"email"))
-            self.updateIfChanged(row, u"officeaddress", row[u"officeaddress"], institutionObj.officeAddress)
+            changed = False
+            changed = changed | self.updateIfChanged(row, u"name", row[u"name"], getOrDefault(previousPerson, u"name"))
+            changed = changed | self.updateIfChanged(row, u"surname", row[u"surname"], getOrDefault(previousPerson, u"surname"))
+            #changed = changed | self.updateIfChanged(row, u"institutionName", row[u"institutionName"], institutionObj.name)
+            changed = changed | self.updateIfChanged(row, u"officephone", row[u"officephone"], getOrDefault(institutionObj, u"officePhone"))
+            changed = changed | self.updateIfChanged(row, u"email", row[u"email"], getOrDefault(previousPersonPosition, u"email"))
+            changed = changed | self.updateIfChanged(row, u"officeaddress", row[u"officeaddress"], institutionObj.officeAddress)
 
+            if changed:
+                changedRows.append(row)
             self.removeOldColumns(row)
 
+        self.memberList = changedRows
         self.errorList = errorList
