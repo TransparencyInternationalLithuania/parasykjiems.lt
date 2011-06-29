@@ -98,6 +98,8 @@ def diffUploadedFile(request, fileName, institutionType = None):
               u"originalCsvUrl" : constructAttachmentUrl(relativeUploadFile)}
     return render_to_response('cdb_lt/update/mayorUpdate.html', joinParams(params))
 
+def importDocs(request):
+    return render_to_response('cdb_lt/update/importDocumentation.html')
 
 def civilParishUpdate(request):
     """ shows a visual diff of civil parish member file"""

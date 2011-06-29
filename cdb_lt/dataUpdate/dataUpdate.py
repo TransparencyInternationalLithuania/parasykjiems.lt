@@ -1,6 +1,6 @@
 import csv
 from django.db.models.query_utils import Q
-from cdb_lt.management.commands.createMembers import makeCivilParishInstitutionName, makeMunicipalityInstitutionName
+from cdb_lt.management.commands.createMembers import makeCivilParishInstitutionName, makeMunicipalityInstitutionName, InstitutionCivilparishMembers, InstitutionMunicipalityCode
 from contactdb.models import Institution, PersonPosition
 from pjutils.exc import ChainnedException
 from cdb_lt.personUtils import splitIntoNameAndSurname
@@ -17,11 +17,11 @@ def deduceInstitutionNameGetter(institutionType):
     See createTerritories.py file for defined types.
 
     Returns a function which constructs institutionName """
-    if institutionType == u"mayor":
+    if institutionType == InstitutionMunicipalityCode:
         return makeMunicipalityInstitutionName
-    elif institutionType == u"civpar":
+    elif institutionType == InstitutionCivilparishMembers:
         return makeCivilParishInstitutionName
-    return None
+    raise Exception("Unknown institution type '%s'. Check that source file contains valid institution type" % institutionType)
 
 class InstitutionCache:
     def __init__(self):
@@ -73,6 +73,8 @@ class PersonPositionCacheByName:
     def addToCache(self, personPositions):
         for p in personPositions:
             key = self._getKey(p.person.name, p.person.surname)
+            if self.cache.has_key(key):
+                raise Exception("duplicate key %s" % key)
             self.cache[key] = p
 
     def loadAllWithName(self, nameAndSurnameTuples):
