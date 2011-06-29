@@ -63,6 +63,8 @@ def writeUploadedFile(file):
     
 
 def uploadData(request):
+    """ Shows a form where user can upload csv files, and store them on the server.
+    If a file is posted, it is saved and then redirected to visual diff page"""
     if request.method != 'POST':
         form = UploadFileForm()
         return render_to_response('cdb_lt/update/upload.html', {'form': form})
@@ -78,6 +80,7 @@ def uploadData(request):
 
 
 def diffUploadedFile(request, fileName, institutionType = None):
+    """ shows a visual diff of the uploaded csv file as html. Columns with prefix *_old are removed"""
     relativeUploadFile, realUploadedFile = constructUploadedFileName(fileName)
 
     if not os.path.exists(realUploadedFile):
@@ -97,9 +100,19 @@ def diffUploadedFile(request, fileName, institutionType = None):
 
 
 def civilParishUpdate(request):
+    """ shows a visual diff of civil parish member file"""
     return diffUploadedFile(request, fileName="seniunai.csv")
 
 def diffUploadedFileAsCsv(request, fileName, institutionType = None):
+    """ Diffs any uploadded file, and returns it as csv file.
+    This csv file contains combined data from original csv file, and data from database.
+    Columns from database are prefixed with _old prefix, so user can later manually
+    tweak the csv file, and choose whether he want to copy over old data over new one. This is needed
+    in cases where new data is not correct, or not complete.
+
+    Later this tweaked csv file can be uploaded again, and *_old columns will be ignored. This will allow
+    to download diff as csv and upload it again any number of times.
+    """
     relativeUploadFile = os.path.join(relativeUploadDir, fileName)
     realUploadedFile = os.path.join(os.path.realpath(os.path.curdir), "static", relativeUploadFile)
     if not os.path.exists(realUploadedFile):
@@ -112,9 +125,12 @@ def diffUploadedFileAsCsv(request, fileName, institutionType = None):
     return differ.asCsvToResponse(fileName)
 
 def civilParishUpdateAsCsv(request):
+    """ return civil parish diff as csv file, instead of displayig it as html
+    """
     return diffUploadedFileAsCsv(request, fileName="seniunai.csv")
 
 def mayorUpdateAsCsv(request):
+    """ Return a mayor diff as csv file, instead of displaying it as html"""
     return diffUploadedFileAsCsv(request, fileName="merai.csv")
 
 def constructUploadedFileName(fileName):
@@ -124,6 +140,8 @@ def constructUploadedFileName(fileName):
 
 
 def importUploadedFile(request, fileName, institutionType = None):
+    """ Imports data from csv file into database, and renders an import success response
+    """
     relativeUploadFile, realUploadedFile = constructUploadedFileName(fileName)
     
     if not os.path.exists(realUploadedFile):
@@ -137,6 +155,7 @@ def importUploadedFile(request, fileName, institutionType = None):
     params = {"errorList" : errorList,
               u"diffUrl" : u"/data/update/upload/%s/" % fileName}
     return render_to_response('cdb_lt/update/importSuccess.html', joinParams(params))
-    
+
 def mayorUpdate(request):
+    """ Mayor file is already uploaded. Show visual diff for it """
     return diffUploadedFile(request, "merai.csv")
