@@ -1,12 +1,15 @@
 import csv
 from django.db.models.query_utils import Q
 from cdb_lt.management.commands.createMembers import makeCivilParishInstitutionName, makeMunicipalityInstitutionName, InstitutionCivilparishMembers, InstitutionMunicipalityCode
-from contactdb.models import Institution, PersonPosition
+from contactdb.models import Institution, PersonPosition, Person
 from pjutils.exc import ChainnedException
 from cdb_lt.personUtils import splitIntoNameAndSurname
 from django.http import HttpResponse
 
 class FieldNotDefinedInDataFile(ChainnedException):
+    pass
+
+class DuplicatePersonException(ChainnedException):
     pass
 
 def toUnicode(val):
@@ -54,50 +57,106 @@ class PersonPositionCache:
     def loadAllWithInstitutionId(self, institutionIds):
         step = 30
         chunks = [institutionIds[i:i+step] for i in range(0, len(institutionIds), step)]
+        activePersonsFilter = PersonPosition.getFilterActivePositions()
         for chunk in chunks:
-            personPositions = list(PersonPosition.objects.filter(institution__id__in = chunk).select_related("person"))
+            personPositions = list(PersonPosition.objects.filter(institution__id__in = chunk).filter(activePersonsFilter) \
+                .order_by('electedTo').select_related("person"))
             self.addToCache(personPositions)
 
-class PersonPositionCacheByName:
+class PersonCacheByName:
     def __init__(self):
-        self.cache = {}
-        self.duplicatesCache = {}
+        # holds person caches with disambiguation
+        self.disambiguationCache = {}
+        # holds any found duplicates with disambiguation
+        self.duplicateDisambiguationCache = {}
 
-    def _getKey(self, name, surname):
-        return "%s - %s" % (name, surname)
+        # holds name caches (i.e. withoud disambiguation columns)
+        self.nameCache = {}
+        # holds any found duplicates without disambiguation column
+        self.duplicateNamesCache = {}
 
-    def getByName(self, name, surname):
-        key = self._getKey(name, surname)
-        if not self.cache.has_key(key): return None
-        return self.cache[key]
+    def _getKey(self, name, surname, disambiguation = None):
+        if disambiguation is None or disambiguation == u"":
+            return "%s - %s" % (name, surname)
+        return "%s - %s - %s" % (name, surname, disambiguation)
+
+    def getByName(self, name, surname, disambiguation):
+        key = self._getKey(name, surname, disambiguation)
+        if not self.disambiguationCache.has_key(key): return None
+        return self.disambiguationCache[key]
     
-    def addToDuplicateCache(self, personPosition):
-        key = self._getKey(personPosition.person.name, personPosition.person.surname)
-        if not self.duplicatesCache.has_key(key):
-            self.duplicatesCache[key] = []
-        self.duplicatesCache[key].append(personPosition)
+    def addToDuplicateCache(self, cache, person):
+        key = self._getKey(person.name, person.surname, person.disambiguation)
+        if not cache.has_key(key):
+            cache[key] = []
+        cache[key].append(person)
+
+    def addToDuplicateCacheName(self, person):
+        key = self._getKey(person.name, person.surname)
+        if not self.duplicateNamesCache.has_key(key):
+            self.duplicateNamesCache[key] = []
+        self.duplicateNamesCache[key].append(person)
+
+    def getOrCreatePerson(self, name, surname, disambiguation):
+        dkey = self._getKey(name, surname, disambiguation)
+        if self.disambiguationCache.has_key(dkey):
+            return self.disambiguationCache[dkey]
+        if self.duplicateDisambiguationCache.has_key(dkey):
+            raise DuplicatePersonException("There are several persons with name %s %s %s" % (name, surname, disambiguation))
+
+        key = self._getKey(name, surname)
+        if self.duplicateNamesCache.has_key(key):
+            raise DuplicatePersonException("There are several persons with name %s %s, and without disambiguation" % (name, surname))
+        if self.nameCache.has_key(key):
+            if disambiguation is not None and disambiguation != u"":
+                raise DuplicatePersonException("""There is a person with name %s %s, but you requested to get persono
+with disambiguation %s. So please fix database, add disambiguation to this person first. This will ensure data integrity""" % (name, surname, disambiguation))
+            return self.nameCache[key]
+
+        # there is no person is namesCache, nor in DisambinguationCache. So create a new one , and return it
+        p = Person()
+        p.name = name
+        p.surname = surname
+        p.disambiguation = disambiguation
+        # just for debugging. remove this, not needed
+        p.uniqueKey = "99999999"
+        p.save()
+        return p
 
 
-    def addToCache(self, personPositions):
-        for p in personPositions:
-            key = self._getKey(p.person.name, p.person.surname)
-            if self.cache.has_key(key):
-                self.addToDuplicateCache(self.cache[key])
-                del self.cache[key]
-                self.addToDuplicateCache(p)
+
+    def addToCache(self, persons):
+        for p in persons:
+            # add to disambiguationCache
+            dupkey = self._getKey(p.name, p.surname, p.disambiguation)
+            if self.disambiguationCache.has_key(dupkey):
+                self.addToDuplicateCache(self.duplicateDisambiguationCache, self.disambiguationCache[dupkey])
+                del self.disambiguationCache[dupkey]
+                self.addToDuplicateCache(self.duplicateDisambiguationCache, p)
                 continue
-            self.cache[key] = p
+            self.disambiguationCache[dupkey] = p
+
+            key = self._getKey(p.name, p.surname)
+            if self.nameCache.has_key(dupkey):
+                self.addToDuplicateCacheName(self.nameCache[key])
+                del self.nameCache[key]
+                self.addToDuplicateCacheName(self.duplicateDisambiguationCache, p)
+                continue
+            self.nameCache[key] = p
+
+
+
 
     def loadAllWithName(self, nameAndSurnameTuples):
         step = 30
         chunks = [nameAndSurnameTuples[i:i+step] for i in range(0, len(nameAndSurnameTuples), step)]
         for chunk in chunks:
-            queries = [Q(**{"person__name":name, "person__surname" : surname}) for name, surname in chunk]
+            queries = [Q(**{"name":name, "surname" : surname}) for name, surname, disambiguation in chunk]
             finalQuery = queries[0]
             for q in queries[1:]:
                 finalQuery = finalQuery | q
-            personPositions = list(PersonPosition.objects.filter(finalQuery).select_related("person"))
-            self.addToCache(personPositions)
+            persons = list(Person.objects.filter(finalQuery))
+            self.addToCache(persons)
 
 class DataUpdateDiffer:
     oldColumnSuffix = u"_old"
@@ -124,6 +183,9 @@ class DataUpdateDiffer:
             if val.has_key(u"fullname"):
                 val[u"name"], val[u"surname"] = splitIntoNameAndSurname(val[u"fullname"])
                 del val[u"fullname"]
+
+            if not val.has_key(u"disambiguation"):
+                val[u"disambiguation"] = u""
 
             if institutionType is not None:
                 val[u"institutionType"] = institutionType
@@ -215,12 +277,23 @@ class DataUpdateDiffer:
 
     def updateAndSaveIfChanged(self, row, object, keysToProperties):
         changed = False
+        # loop through given attributes
         for key, attribute in keysToProperties.iteritems():
             v = row[key]
+            # get the new value
             if type(v) is not dict:
+                # if it is not a dict, then just take the value
+                newV = v
+            else:
+                # else take the new value from dict
+                newV = v[u'changed']
+            # get old attribute value from object, and compare to new
+            prevV = getattr(object, attribute)
+            if prevV == newV:
                 continue
+            # values has  changed, update it
+            setattr(object, attribute, newV)
             changed = True
-            setattr(object, attribute, v[u'changed'])
         if changed:
             object.save()
 
@@ -235,41 +308,64 @@ class DataUpdateDiffer:
         errorList = []
 
 
-        # cachce all person position objects with proposed names in csv file
-        self.newPersonPositionCache = PersonPositionCacheByName()
-        self.newPersonPositionCache.loadAllWithName(self.nameAndSurnameTuples)
+        # cachce all person objects with proposed names in csv file
+        self.personCacheByName = PersonCacheByName()
+        self.personCacheByName.loadAllWithName(self.nameAndSurnameTuples)
 
 
 
         for row in self.memberList:
+            # search for institution object using supplied institution name
             institutionName = row[u"institutionName"]
             if not self.institutionCache.cache.has_key(institutionName):
                 message = u'Institution with name "%s" not found' % institutionName
                 errorList.append(message)
                 continue
-
             institutionObj = self.institutionCache.cache[institutionName]
+
+            # get reference to latest active personPosition for that institution
             previousPersonPosition = None
             if self.personPositionCache.cache.has_key(institutionObj.id):
                 previousPersonPosition = self.personPositionCache.cache[institutionObj.id]
+            if previousPersonPosition is None:
+                raise Exception("Did not find previous person position for insitution '%s'. Should never happen, or programming fault" % institutionName)
             previousPerson = getOrDefault(previousPersonPosition, u"person")
 
+            # get previous and current values for name, surname and disambiguation
+            previousName, name = self._getPreviousAndCurrentValues(row, u"name")
+            previousSurname, surname = self._getPreviousAndCurrentValues(row, u"surname")
+            previousDisambiguation, disambiguation = self._getPreviousAndCurrentValues(row, u"disambiguation")
+
+
+            latestActivePersonPosition = None
+            if previousPerson is None:
+                latestActivePersonPosition = previousPersonPosition
+                latestActivePerson = self.personCacheByName.getOrCreatePerson(name, surname, disambiguation)
+                latestActivePersonPosition.person = latestActivePerson
+                latestActivePersonPosition.save()
+            elif previousName != name or previousSurname != surname or previousDisambiguation != disambiguation:
+                # if any of values for name, surname or disambiguation are different
+                # then we need to create new personPosition
+                latestActivePersonPosition = PersonPosition()
+                latestActivePersonPosition.institution = institutionObj
+                latestActivePerson = self.personCacheByName.getOrCreatePerson(name, surname, disambiguation)
+                latestActivePersonPosition.person = latestActivePerson
+                latestActivePersonPosition.save()
+            else:
+               latestActivePersonPosition = previousPersonPosition
+
+
+            latestActivePerson = getOrDefault(latestActivePersonPosition, u"person")
+            if latestActivePerson is None:
+                raise Exception("Did not find previous person for insitution '%s'. Should never happen, or programming fault" % institutionName)
 
 
             self.updateAndSaveIfChanged(row, institutionObj, {u"officeaddress":u"officeAddress",
                                                               u"officephone": u"officePhone"} )
 
-            previousName, name = self._getPreviousAndCurrentValues(row, u"name")
-            previousSurname, surname = self._getPreviousAndCurrentValues(row, u"surname")
-
-            newPersonPosition = self.newPersonPositionCache.getByName(name, surname)
-            if newPersonPosition is None:
-                # there is no PersonPosition in the db with new Name and Surname
-                # create one
-                continue
 
 
-            self.updateAndSaveIfChanged(row, newPersonPosition, {u"officephone":u"officePhone",
+            self.updateAndSaveIfChanged(row, latestActivePersonPosition, {u"officephone":u"primaryPhone",
                                                               u"email": u"email"} )
             #newPersonPosition.primaryPhone
             
@@ -277,6 +373,8 @@ class DataUpdateDiffer:
             self.updateIfChanged(row, u"surname", row[u"surname"], getOrDefault(previousPerson, u"surname"))
             self.updateIfChanged(row, u"officephone", row[u"officephone"], getOrDefault(previousPersonPosition, u"officePhone"))
             self.updateIfChanged(row, u"email", row[u"email"], getOrDefault(previousPersonPosition, u"email"))"""
+            # just update a single row for now
+            break
         return errorList
 
         
@@ -300,7 +398,7 @@ class DataUpdateDiffer:
         self.personPositionCache.loadAllWithInstitutionId(institutionIds)
 
         # hold a copy of names and tuples from csv file
-        self.nameAndSurnameTuples = [(val[u"name"], val[u"surname"]) for val in self.memberList]
+        self.nameAndSurnameTuples = [(val[u"name"], val[u"surname"], val[u"disambiguation"]) for val in self.memberList]
 
         changedRows = []
 
@@ -320,6 +418,7 @@ class DataUpdateDiffer:
 
 
             changed = False
+            changed = changed | self.updateIfChanged(row, u"disambiguation", row[u"disambiguation"], getOrDefault(previousPerson, u"disambiguation"))
             changed = changed | self.updateIfChanged(row, u"name", row[u"name"], getOrDefault(previousPerson, u"name"))
             changed = changed | self.updateIfChanged(row, u"surname", row[u"surname"], getOrDefault(previousPerson, u"surname"))
             #changed = changed | self.updateIfChanged(row, u"institutionName", row[u"institutionName"], institutionObj.name)
