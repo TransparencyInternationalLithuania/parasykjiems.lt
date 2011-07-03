@@ -263,7 +263,9 @@ def searchPartialCity(queries, doPrint = False):
 def findPersonPositions(municipality = None, civilParish = None,city = None, street = None, house_number = None,  *args, **kwargs):
     idList = findInstitutionTerritories(municipality=municipality, civilParish = civilParish, city=city,  street=street, house_number=house_number)
 
-    members = PersonPosition.objects.all().filter(institution__in = idList)
+
+    activePersonsFilter = PersonPosition.getFilterActivePositions()
+    members = PersonPosition.objects.all().filter(institution__in = idList).filter(activePersonsFilter)
     return members
 
 

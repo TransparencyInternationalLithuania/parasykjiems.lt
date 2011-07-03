@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from datetime import datetime
 from django.db import models
+from django.db.models.query_utils import Q
 from django.utils.translation import ugettext as _
 from django.db.models.fields import CharField, IntegerField, NullBooleanField
 
@@ -65,7 +67,7 @@ class Person(models.Model):
 
     # used to uniquely identify persons
     # For example, if a person name or surname has changed, this will be used to locate the Person in question
-    uniqueKey = models.IntegerField()
+    uniqueKey = models.IntegerField(null=True)
 
     @property
     def fullName(self):
@@ -100,9 +102,18 @@ class PersonPosition(models.Model):
 
     # contact information
     email = models.EmailField()
-    primaryPhone = PhoneField()
-    secondaryPhone = PhoneField()
+    primaryPhone = PhoneField(blank=True)
+    secondaryPhone = PhoneField(blank=True)
 
     # a date range when this position was occupied
-    electedFrom = models.DateField(null=True)
-    electedTo = models.DateField(null=True)
+    electedFrom = models.DateField(null=True, blank=True)
+    electedTo = models.DateField(null=True, blank=True)
+
+    @classmethod
+    def getFilterActivePositions(cls):
+        electedToNone = Q(**{"electedTo" : None})
+        electedFromNone = Q(**{"electedFrom" : None})
+        now = datetime.now()
+        electedToGreaterToday = Q(**{"electedTo__gt": now})
+        electedFromLessThanToday = Q(**{"electedFrom__lt": now})
+        return (electedToNone & electedFromNone) | ((electedFromNone | electedFromLessThanToday) & (electedToNone | electedToGreaterToday))
