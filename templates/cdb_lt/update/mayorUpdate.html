@@ -54,4 +54,11 @@
             </tr>
         {% endfor %}
     </table>
+
+    {% ifequal newData|length 0 %}
+        <div style="font-weight: bold">
+            <p>All data from this csv file is up to date in the database already</p>
+        </div>
+    {% endifequal %}
+
 {% endblock %}

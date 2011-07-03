@@ -1,4 +1,5 @@
 import csv
+from datetime import datetime, timedelta
 from django.db.models.query_utils import Q
 from cdb_lt.management.commands.createMembers import makeCivilParishInstitutionName, makeMunicipalityInstitutionName, InstitutionCivilparishMembers, InstitutionMunicipalityCode
 from contactdb.models import Institution, PersonPosition, Person
@@ -293,9 +294,11 @@ class DataUpdateDiffer:
                 continue
             # values has  changed, update it
             setattr(object, attribute, newV)
-            changed = True
-        if changed:
-            object.save()
+            #changed = True
+
+        # do not save, even if changed. will do that manually in outer loop
+        #if changed:
+        #    object.save()
 
     def _getPreviousAndCurrentValues(self, row, key):
         if not row.has_key(key): return None, None
@@ -308,10 +311,9 @@ class DataUpdateDiffer:
         errorList = []
 
 
-        # cachce all person objects with proposed names in csv file
+        # cache all person objects with proposed names in csv file
         self.personCacheByName = PersonCacheByName()
         self.personCacheByName.loadAllWithName(self.nameAndSurnameTuples)
-
 
 
         for row in self.memberList:
@@ -337,28 +339,44 @@ class DataUpdateDiffer:
             previousDisambiguation, disambiguation = self._getPreviousAndCurrentValues(row, u"disambiguation")
 
 
-            latestActivePersonPosition = None
-            if previousPerson is None:
-                latestActivePersonPosition = previousPersonPosition
-                latestActivePerson = self.personCacheByName.getOrCreatePerson(name, surname, disambiguation)
-                latestActivePersonPosition.person = latestActivePerson
-                latestActivePersonPosition.save()
-            elif previousName != name or previousSurname != surname or previousDisambiguation != disambiguation:
-                # if any of values for name, surname or disambiguation are different
-                # then we need to create new personPosition
-                latestActivePersonPosition = PersonPosition()
-                latestActivePersonPosition.institution = institutionObj
-                latestActivePerson = self.personCacheByName.getOrCreatePerson(name, surname, disambiguation)
-                latestActivePersonPosition.person = latestActivePerson
-                latestActivePersonPosition.save()
+            # either get existing personPosition, or create new one, depending on what is name and surname
+            action = row[u"action"]
+            if action != "update":
+                if previousPerson is None:
+                    # we have an existing personPosition, but it had not attached Person object.
+                    # so just create it
+                    latestActivePersonPosition = previousPersonPosition
+                    latestActivePerson = self.personCacheByName.getOrCreatePerson(name, surname, disambiguation)
+                    latestActivePersonPosition.person = latestActivePerson
+                    latestActivePersonPosition.save()
+                elif previousName != name or previousSurname != surname or previousDisambiguation != disambiguation:
+                    # if any of values for name, surname or disambiguation are different
+                    # then we need to create new personPosition
+                    latestActivePersonPosition = PersonPosition()
+                    latestActivePersonPosition.institution = institutionObj
+                    latestActivePerson = self.personCacheByName.getOrCreatePerson(name, surname, disambiguation)
+                    latestActivePersonPosition.person = latestActivePerson
+                    latestActivePersonPosition.save()
+                else:
+                    # everything is similar, just update existing person
+                    latestActivePersonPosition = previousPersonPosition
             else:
-               latestActivePersonPosition = previousPersonPosition
+                # this is an update action. This means that we will have to update even name and surname values
+                # and not create new person.
+                latestActivePersonPosition = previousPersonPosition
+
+                # update name and surname
+                latestActivePerson = latestActivePersonPosition.person
+                latestActivePerson.name = name
+                latestActivePerson.surname = surname
+                latestActivePerson.save()
 
 
             latestActivePerson = getOrDefault(latestActivePersonPosition, u"person")
             if latestActivePerson is None:
                 raise Exception("Did not find previous person for insitution '%s'. Should never happen, or programming fault" % institutionName)
 
+            # update data now as we have found everything we need
 
             self.updateAndSaveIfChanged(row, institutionObj, {u"officeaddress":u"officeAddress",
                                                               u"officephone": u"officePhone"} )
@@ -367,6 +385,18 @@ class DataUpdateDiffer:
 
             self.updateAndSaveIfChanged(row, latestActivePersonPosition, {u"officephone":u"primaryPhone",
                                                               u"email": u"email"} )
+
+            if latestActivePersonPosition.electedFrom is None:
+                latestActivePersonPosition.electedFrom = datetime.now()
+
+
+            if latestActivePersonPosition != previousPersonPosition:
+                previousPersonPosition.electedTo = datetime.now() + timedelta(days=-1)
+
+            institutionObj.save()
+            latestActivePersonPosition.save()
+            previousPersonPosition.save()
+
             #newPersonPosition.primaryPhone
             
             """self.updateIfChanged(row, u"name", row[u"name"], getOrDefault(previousPerson, u"name"))
@@ -374,7 +404,6 @@ class DataUpdateDiffer:
             self.updateIfChanged(row, u"officephone", row[u"officephone"], getOrDefault(previousPersonPosition, u"officePhone"))
             self.updateIfChanged(row, u"email", row[u"email"], getOrDefault(previousPersonPosition, u"email"))"""
             # just update a single row for now
-            break
         return errorList
 
         

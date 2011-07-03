@@ -114,6 +114,6 @@ class PersonPosition(models.Model):
         electedToNone = Q(**{"electedTo" : None})
         electedFromNone = Q(**{"electedFrom" : None})
         now = datetime.now()
-        electedToGreaterToday = Q(**{"electedTo__gt": now})
-        electedFromLessThanToday = Q(**{"electedFrom__lt": now})
+        electedToGreaterToday = Q(**{"electedTo__gte": now})
+        electedFromLessThanToday = Q(**{"electedFrom__lte": now})
         return (electedToNone & electedFromNone) | ((electedFromNone | electedFromLessThanToday) & (electedToNone | electedToGreaterToday))
