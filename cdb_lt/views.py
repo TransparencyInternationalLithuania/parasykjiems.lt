@@ -88,11 +88,11 @@ def diffUploadedFile(request, fileName, institutionType = None):
         return render_to_response('pjweb/error.html', joinParams(params))
 
     differ = DataUpdateDiffer(realUploadedFile, institutionType = institutionType)
-    differ.addChangedFields()
+    errorList = differ.addChangedFields()
 
     params = {u"headers" : differ.getHeaders(),
               u"newData" : differ.memberList,
-              u"errorList" : differ.errorList,
+              u"errorList" : errorList,
               u"diffAsCsvUrl" : u"/data/update/upload/%s/csv/" % fileName,
               u"importUrl" : u"/data/update/import/%s/" % fileName,
               u"originalCsvUrl" : constructAttachmentUrl(relativeUploadFile)}
@@ -151,10 +151,10 @@ def importUploadedFile(request, fileName, institutionType = None):
         return render_to_response('pjweb/error.html', joinParams(params))
 
     differ = DataUpdateDiffer(realUploadedFile, institutionType = institutionType)
-    differ.addChangedFields()
-    errorList = differ.updateDbWithNewData()
+    errorList = differ.addChangedFields()
+    errorList2 = differ.updateDbWithNewData()
 
-    params = {"errorList" : errorList,
+    params = {"errorList" : errorList + errorList2,
               u"diffUrl" : u"/data/update/upload/%s/" % fileName}
     return render_to_response('cdb_lt/update/importSuccess.html', joinParams(params))
 

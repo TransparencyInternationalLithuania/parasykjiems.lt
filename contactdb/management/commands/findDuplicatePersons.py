@@ -7,7 +7,7 @@ from django.db import connection, transaction
 
 class Command(BaseCommand):
     args = '<>'
-    help = 'Imports initial / automatically unchangeable data. Such data is constituencies and constituency streets for LT data'
+    help = ''
 
     def getDuplicateNames(self, cursor):
         # Data retrieval operation - no commit required

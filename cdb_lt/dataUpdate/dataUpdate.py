@@ -45,6 +45,8 @@ class InstitutionCache:
             self.addToCache(institutions)
 
 def getOrDefault(object, property):
+    if object is None:
+        return None
     return getattr(object, property, u"")
 
 
@@ -219,7 +221,8 @@ class DataUpdateDiffer:
         """ Replaces row value with dictionary containing old and new values, if they are different.
         Returns true if values are different. Retuerns False if did not change anything"""
         newValue = newValue.strip()
-        originalValue = originalValue.strip()
+        if originalValue is not None:
+            originalValue = originalValue.strip()
         if originalValue == newValue:
             return False
         d = {u"previous": originalValue,
@@ -331,8 +334,11 @@ class DataUpdateDiffer:
             previousPersonPosition = None
             if self.personPositionCache.cache.has_key(institutionObj.id):
                 previousPersonPosition = self.personPositionCache.cache[institutionObj.id]
-            if previousPersonPosition is None:
-                raise Exception("Did not find previous person position for insitution '%s'. Should never happen, or programming fault" % institutionName)
+
+            # It is perfectly normal to not have a personPosition for an institution at all.
+            # This happens when no representative exists when data is first time created
+            #if previousPersonPosition is None:
+            #    raise Exception("Did not find previous person position for insitution '%s'. Should never happen, or programming fault" % institutionName)
             previousPerson = getOrDefault(previousPersonPosition, u"person")
 
             # get previous and current values for name, surname and disambiguation
@@ -342,9 +348,17 @@ class DataUpdateDiffer:
 
 
             # either get existing personPosition, or create new one, depending on what is name and surname
-            action = row[u"action"]
+            action = None
+            if row.has_key(u"action"):
+                action = row[u"action"]
             if action != "update":
-                if previousPerson is None:
+                if previousPersonPosition is None:
+                    latestActivePersonPosition = PersonPosition()
+                    latestActivePersonPosition.institution = institutionObj
+                    latestActivePerson = self.personCacheByName.getOrCreatePerson(name, surname, disambiguation)
+                    latestActivePersonPosition.person = latestActivePerson
+                    latestActivePersonPosition.save()
+                elif previousPerson is None:
                     # we have an existing personPosition, but it had not attached Person object.
                     # so just create it
                     latestActivePersonPosition = previousPersonPosition
@@ -392,12 +406,13 @@ class DataUpdateDiffer:
                 latestActivePersonPosition.electedFrom = datetime.now()
 
 
-            if latestActivePersonPosition != previousPersonPosition:
+            if latestActivePersonPosition != previousPersonPosition and previousPersonPosition is not None:
                 previousPersonPosition.electedTo = datetime.now() + timedelta(days=-1)
 
             institutionObj.save()
             latestActivePersonPosition.save()
-            previousPersonPosition.save()
+            if previousPersonPosition is not None:
+                previousPersonPosition.save()
 
             #newPersonPosition.primaryPhone
             
@@ -406,6 +421,10 @@ class DataUpdateDiffer:
             self.updateIfChanged(row, u"officephone", row[u"officephone"], getOrDefault(previousPersonPosition, u"officePhone"))
             self.updateIfChanged(row, u"email", row[u"email"], getOrDefault(previousPersonPosition, u"email"))"""
             # just update a single row for now
+        for v in self.personCacheByName.duplicateNamesCache.itervalues():
+            s = u""
+            for i in v:
+                s = "%s\n%s" % (s, u"%s %s" % (i.person.name, i.person.surname))
         return errorList
 
         
@@ -462,4 +481,4 @@ class DataUpdateDiffer:
             self.removeOldColumns(row)
 
         self.memberList = changedRows
-        self.errorList = errorList
+        return errorList

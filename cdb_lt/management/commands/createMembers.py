@@ -30,7 +30,7 @@ def cityNameGetterGenitive(csvRow):
 InstitutionMunicipalityCode = u"Mayor"
 InstitutionParliamentMember = u"Member of parliament"
 InstitutionCivilparishMembers = u"Civil parish member"
-InstitutionSeniunaitijaMembers = u"Seniūnas"
+InstitutionSeniunaitijaMembers = u"Seniūnaitis"
 
 def loadInstitutionDescriptions():
     institutionDescriptions = {
