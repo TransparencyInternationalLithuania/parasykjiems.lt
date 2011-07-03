@@ -1,5 +1,6 @@
 import csv
 from datetime import datetime, timedelta
+from django.db import transaction
 from django.db.models.query_utils import Q
 from cdb_lt.management.commands.createMembers import makeCivilParishInstitutionName, makeMunicipalityInstitutionName, InstitutionCivilparishMembers, InstitutionMunicipalityCode
 from contactdb.models import Institution, PersonPosition, Person
@@ -307,6 +308,7 @@ class DataUpdateDiffer:
             return val['previous'], val[u'changed']
         return val, val
 
+    @transaction.commit_on_success
     def updateDbWithNewData(self):
         errorList = []
 
