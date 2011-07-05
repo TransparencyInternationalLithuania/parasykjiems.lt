@@ -15,7 +15,7 @@ class Command(BaseCommand):
     ltGeoDataCrawl [2:5]  to start from second source and finish in fifth"""
 
     def handle(self, *args, **options):
-        headers = [u"fullname", u"email", u"municipality", u"officephone", u"officeaddress", u"title", u"comments", u"institutionType"]
+        headers = [u"action", u"fullname", u"disambiguation", u"email", u"municipality", u"officephone", u"officeaddress", u"title", u"comments", u"institutionType"]
         out = LRValstybeCsvOut(headers=headers)
         out.writeHeader()
 

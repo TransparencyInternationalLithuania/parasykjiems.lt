@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import re
+from cdb_lt.management.commands.createMembers import InstitutionCivilparishMembers, InstitutionMunicipalityCode
 from cdb_lt_streets.crawlers.LRValstybe_lt.lrvalstybe_crawler import MunicipalityListReader, MunicipalityPageReader, CivilParishListReader, MunicipalityContactReader
 import sys
 from territories.stringUtils import stringIsIn
@@ -40,7 +41,7 @@ def yieldCivilParishContacts():
         for parish, url in CivilParishListReader(municipalityUrl, civilParishUrl).getCivilParishList():
             data[u"civilparish"] = parish
             data[u"comments"] = url
-            data[u"institutionType"] = u"civpar"
+            data[u"institutionType"] = InstitutionCivilparishMembers
 
             if url is None:
                 continue
@@ -120,7 +121,7 @@ def yieldMayorAdministartionWorkers():
         mayorText, mayorUrl = reader.getMayorUrl()
         reader = MunicipalityContactReader(mayorUrl)
         data[u"comments"] = mayorUrl
-        data[u"institutionType"] = u"mayor"
+        data[u"institutionType"] = InstitutionMunicipalityCode
         for c in reader.getContactList():
             #convert contact to dictionary
             clientDict = convertToDict(c)
