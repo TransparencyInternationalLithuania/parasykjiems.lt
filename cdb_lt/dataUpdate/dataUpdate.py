@@ -113,8 +113,8 @@ class PersonCacheByName:
             raise DuplicatePersonException("There are several persons with name %s %s, and without disambiguation" % (name, surname))
         if self.nameCache.has_key(key):
             if disambiguation is not None and disambiguation != u"":
-                raise DuplicatePersonException("""There is a person with name %s %s, but you requested to get persono
-with disambiguation %s. So please fix database, add disambiguation to this person first. This will ensure data integrity""" % (name, surname, disambiguation))
+                raise DuplicatePersonException("""There is a person with name %s %s, but you requested to get a person
+with disambiguation %s. Please add a disambiguation value to this person in database, add disambiguation to this person first. This will ensure data integrity""" % (name, surname, disambiguation))
             return self.nameCache[key]
 
         # there is no person is namesCache, nor in DisambinguationCache. So create a new one , and return it
@@ -161,6 +161,168 @@ with disambiguation %s. So please fix database, add disambiguation to this perso
                 finalQuery = finalQuery | q
             persons = list(Person.objects.filter(finalQuery))
             self.addToCache(persons)
+
+def _getPreviousAndCurrentValues(row, key):
+    if not row.has_key(key): return None, None
+    val = row[key]
+    if type(val) is dict:
+        return val['previous'], val[u'changed']
+    return val, val
+
+def updateAndSaveIfChanged(row, object, keysToProperties):
+    # loop through given attributes
+    for key, attribute in keysToProperties.iteritems():
+        v = row[key]
+        # get the new value
+        if type(v) is not dict:
+            # if it is not a dict, then just take the value
+            newV = v
+        else:
+            # else take the new value from dict
+            newV = v[u'changed']
+        # get old attribute value from object, and compare to new
+        prevV = getattr(object, attribute)
+        if prevV == newV:
+            continue
+        # values has  changed, update it
+        setattr(object, attribute, newV)
+
+
+class DataImporter:
+    def __init__(self, nameAndSurnameTuples, memberList, institutionCache, personPositionCache):
+        """
+        nameAndSurnameTuples - a tuple of names and surnames for each member in csv file.
+            This could be fetched from memberList, but we avoid a loop here
+        memberList - a list of diffed rows for current csv file
+        institutionCache - loaded institutions. This is loaded when diffing csv file, so no need to load institutions again here
+        personPositionCache - personPosition cached, Holds all current person positions for every institution
+        """
+        self.nameAndSurnameTuples = nameAndSurnameTuples
+        self.memberList = memberList
+        self.institutionCache = institutionCache
+        self.personPositionCache = personPositionCache
+
+
+    def getLatestActivePersonPosition(self, institutionObj,
+                                      previousPerson, previousPersonPosition, row):
+        # get previous and current values for name, surname and disambiguation
+        previousName, name = _getPreviousAndCurrentValues(row, u"name")
+        previousSurname, surname = _getPreviousAndCurrentValues(row, u"surname")
+        previousDisambiguation, disambiguation = _getPreviousAndCurrentValues(row, u"disambiguation")
+
+        action = None
+        if row.has_key(u"action"):
+            action = row[u"action"]
+            
+        if action != "update":
+            if previousPersonPosition is None:
+                newPersonPosition = PersonPosition()
+                newPersonPosition.institution = institutionObj
+                newPerson = self.personCacheByName.getOrCreatePerson(name, surname, disambiguation)
+                newPersonPosition.person = newPerson
+                newPersonPosition.save()
+            elif previousPerson is None:
+                # we have an existing personPosition, but it had not attached Person object.
+                # so just create it
+                newPersonPosition = previousPersonPosition
+                newPerson = self.personCacheByName.getOrCreatePerson(name, surname, disambiguation)
+                newPersonPosition.person = newPerson
+                newPersonPosition.save()
+            elif previousName != name or previousSurname != surname or previousDisambiguation != disambiguation:
+                # if any of values for name, surname or disambiguation are different
+                # then we need to create new personPosition
+                newPersonPosition = PersonPosition()
+                newPersonPosition.institution = institutionObj
+                newPerson = self.personCacheByName.getOrCreatePerson(name, surname, disambiguation)
+                newPersonPosition.person = newPerson
+                newPersonPosition.save()
+            else:
+                # everything is similar, just update existing person
+                newPersonPosition = previousPersonPosition
+        else:
+            # this is an update action. This means that we will have to update even name and surname values
+            # and not create new person.
+            newPersonPosition = previousPersonPosition
+
+            # update name and surname
+            existingPerson = newPersonPosition.person
+            existingPerson.name = name
+            existingPerson.surname = surname
+            existingPerson.save()
+        return newPersonPosition
+
+    @transaction.commit_on_success
+    def updateDbWithNewData(self):
+        errorList = []
+
+
+        # cache all person objects with proposed names in csv file
+        self.personCacheByName = PersonCacheByName()
+        self.personCacheByName.loadAllWithName(self.nameAndSurnameTuples)
+
+
+        for row in self.memberList:
+            # search for institution object using supplied institution name
+            institutionName = row[u"institutionName"]
+            if not self.institutionCache.cache.has_key(institutionName):
+                message = u'Institution with name "%s" not found' % institutionName
+                errorList.append(message)
+                continue
+            institutionObj = self.institutionCache.cache[institutionName]
+
+            # get reference to latest active personPosition for that institution
+            previousPersonPosition = None
+            if self.personPositionCache.cache.has_key(institutionObj.id):
+                previousPersonPosition = self.personPositionCache.cache[institutionObj.id]
+
+            # It is perfectly normal to not have a personPosition for an institution at all.
+            # This happens when no representative exists when data is first time created
+            #if previousPersonPosition is None:
+            #    raise Exception("Did not find previous person position for insitution '%s'. Should never happen, or programming fault" % institutionName)
+            previousPerson = getOrDefault(previousPersonPosition, u"person")
+
+            # either get existing personPosition, or create new one, depending on what is name and surname
+            try:
+                latestActivePersonPosition = self.getLatestActivePersonPosition(institutionObj,
+                                                                            previousPerson,
+                                                                            previousPersonPosition, row)
+            except DuplicatePersonException as e:
+                errorList.append(e.message)
+                continue
+
+
+            latestActivePerson = getOrDefault(latestActivePersonPosition, u"person")
+            if latestActivePerson is None:
+                raise Exception("Did not find previous person for insitution '%s'. Should never happen, or programming fault" % institutionName)
+
+            # update data now as we have found everything we need
+
+            updateAndSaveIfChanged(row, institutionObj, {u"officeaddress":u"officeAddress",
+                                                              u"officephone": u"officePhone"} )
+
+
+
+            updateAndSaveIfChanged(row, latestActivePersonPosition, {u"officephone":u"primaryPhone",
+                                                              u"email": u"email"} )
+
+            if latestActivePersonPosition.electedFrom is None:
+                latestActivePersonPosition.electedFrom = datetime.now()
+
+
+            if latestActivePersonPosition != previousPersonPosition and previousPersonPosition is not None:
+                previousPersonPosition.electedTo = datetime.now() + timedelta(days=-1)
+
+            institutionObj.save()
+            latestActivePersonPosition.save()
+            if previousPersonPosition is not None:
+                previousPersonPosition.save()
+
+            # just update a single row for now
+        for v in self.personCacheByName.duplicateNamesCache.itervalues():
+            s = u""
+            for i in v:
+                s = "%s\n%s" % (s, u"%s %s" % (i.person.name, i.person.surname))
+        return errorList
 
 class DataUpdateDiffer:
     oldColumnSuffix = u"_old"
@@ -279,155 +441,6 @@ class DataUpdateDiffer:
             if row.has_key(previousKey):
                 #remove item with new key.  
                 del row[k]
-
-    def updateAndSaveIfChanged(self, row, object, keysToProperties):
-        changed = False
-        # loop through given attributes
-        for key, attribute in keysToProperties.iteritems():
-            v = row[key]
-            # get the new value
-            if type(v) is not dict:
-                # if it is not a dict, then just take the value
-                newV = v
-            else:
-                # else take the new value from dict
-                newV = v[u'changed']
-            # get old attribute value from object, and compare to new
-            prevV = getattr(object, attribute)
-            if prevV == newV:
-                continue
-            # values has  changed, update it
-            setattr(object, attribute, newV)
-            #changed = True
-
-        # do not save, even if changed. will do that manually in outer loop
-        #if changed:
-        #    object.save()
-
-    def _getPreviousAndCurrentValues(self, row, key):
-        if not row.has_key(key): return None, None
-        val = row[key]
-        if type(val) is dict:
-            return val['previous'], val[u'changed']
-        return val, val
-
-    @transaction.commit_on_success
-    def updateDbWithNewData(self):
-        errorList = []
-
-
-        # cache all person objects with proposed names in csv file
-        self.personCacheByName = PersonCacheByName()
-        self.personCacheByName.loadAllWithName(self.nameAndSurnameTuples)
-
-
-        for row in self.memberList:
-            # search for institution object using supplied institution name
-            institutionName = row[u"institutionName"]
-            if not self.institutionCache.cache.has_key(institutionName):
-                message = u'Institution with name "%s" not found' % institutionName
-                errorList.append(message)
-                continue
-            institutionObj = self.institutionCache.cache[institutionName]
-
-            # get reference to latest active personPosition for that institution
-            previousPersonPosition = None
-            if self.personPositionCache.cache.has_key(institutionObj.id):
-                previousPersonPosition = self.personPositionCache.cache[institutionObj.id]
-
-            # It is perfectly normal to not have a personPosition for an institution at all.
-            # This happens when no representative exists when data is first time created
-            #if previousPersonPosition is None:
-            #    raise Exception("Did not find previous person position for insitution '%s'. Should never happen, or programming fault" % institutionName)
-            previousPerson = getOrDefault(previousPersonPosition, u"person")
-
-            # get previous and current values for name, surname and disambiguation
-            previousName, name = self._getPreviousAndCurrentValues(row, u"name")
-            previousSurname, surname = self._getPreviousAndCurrentValues(row, u"surname")
-            previousDisambiguation, disambiguation = self._getPreviousAndCurrentValues(row, u"disambiguation")
-
-
-            # either get existing personPosition, or create new one, depending on what is name and surname
-            action = None
-            if row.has_key(u"action"):
-                action = row[u"action"]
-            if action != "update":
-                if previousPersonPosition is None:
-                    latestActivePersonPosition = PersonPosition()
-                    latestActivePersonPosition.institution = institutionObj
-                    latestActivePerson = self.personCacheByName.getOrCreatePerson(name, surname, disambiguation)
-                    latestActivePersonPosition.person = latestActivePerson
-                    latestActivePersonPosition.save()
-                elif previousPerson is None:
-                    # we have an existing personPosition, but it had not attached Person object.
-                    # so just create it
-                    latestActivePersonPosition = previousPersonPosition
-                    latestActivePerson = self.personCacheByName.getOrCreatePerson(name, surname, disambiguation)
-                    latestActivePersonPosition.person = latestActivePerson
-                    latestActivePersonPosition.save()
-                elif previousName != name or previousSurname != surname or previousDisambiguation != disambiguation:
-                    # if any of values for name, surname or disambiguation are different
-                    # then we need to create new personPosition
-                    latestActivePersonPosition = PersonPosition()
-                    latestActivePersonPosition.institution = institutionObj
-                    latestActivePerson = self.personCacheByName.getOrCreatePerson(name, surname, disambiguation)
-                    latestActivePersonPosition.person = latestActivePerson
-                    latestActivePersonPosition.save()
-                else:
-                    # everything is similar, just update existing person
-                    latestActivePersonPosition = previousPersonPosition
-            else:
-                # this is an update action. This means that we will have to update even name and surname values
-                # and not create new person.
-                latestActivePersonPosition = previousPersonPosition
-
-                # update name and surname
-                latestActivePerson = latestActivePersonPosition.person
-                latestActivePerson.name = name
-                latestActivePerson.surname = surname
-                latestActivePerson.save()
-
-
-            latestActivePerson = getOrDefault(latestActivePersonPosition, u"person")
-            if latestActivePerson is None:
-                raise Exception("Did not find previous person for insitution '%s'. Should never happen, or programming fault" % institutionName)
-
-            # update data now as we have found everything we need
-
-            self.updateAndSaveIfChanged(row, institutionObj, {u"officeaddress":u"officeAddress",
-                                                              u"officephone": u"officePhone"} )
-
-
-
-            self.updateAndSaveIfChanged(row, latestActivePersonPosition, {u"officephone":u"primaryPhone",
-                                                              u"email": u"email"} )
-
-            if latestActivePersonPosition.electedFrom is None:
-                latestActivePersonPosition.electedFrom = datetime.now()
-
-
-            if latestActivePersonPosition != previousPersonPosition and previousPersonPosition is not None:
-                previousPersonPosition.electedTo = datetime.now() + timedelta(days=-1)
-
-            institutionObj.save()
-            latestActivePersonPosition.save()
-            if previousPersonPosition is not None:
-                previousPersonPosition.save()
-
-            #newPersonPosition.primaryPhone
-            
-            """self.updateIfChanged(row, u"name", row[u"name"], getOrDefault(previousPerson, u"name"))
-            self.updateIfChanged(row, u"surname", row[u"surname"], getOrDefault(previousPerson, u"surname"))
-            self.updateIfChanged(row, u"officephone", row[u"officephone"], getOrDefault(previousPersonPosition, u"officePhone"))
-            self.updateIfChanged(row, u"email", row[u"email"], getOrDefault(previousPersonPosition, u"email"))"""
-            # just update a single row for now
-        for v in self.personCacheByName.duplicateNamesCache.itervalues():
-            s = u""
-            for i in v:
-                s = "%s\n%s" % (s, u"%s %s" % (i.person.name, i.person.surname))
-        return errorList
-
-        
 
     def addChangedFields(self):
         """ Loops over loaded csv file, and compares the data against database.
