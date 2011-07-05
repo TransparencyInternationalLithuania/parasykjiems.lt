@@ -415,6 +415,8 @@ class DataUpdateDiffer:
         """ Replaces row value with dictionary containing old and new values, if they are different.
         Returns true if values are different. Retuerns False if did not change anything"""
         newValue = newValue.strip()
+        if originalValue is None:
+            originalValue = u""
         if originalValue is not None:
             originalValue = originalValue.strip()
         if originalValue == newValue:
