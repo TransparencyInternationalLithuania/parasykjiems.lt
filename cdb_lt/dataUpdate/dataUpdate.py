@@ -287,6 +287,13 @@ class DataImporter:
 
 
         for row in self.memberList:
+            # skip this member if action is 'skip'
+            action = None
+            if row.has_key(u"action"):
+                action = row[u"action"]
+            if action == u"skip":
+                continue
+
             # search for institution object using supplied institution name
             institutionName = row[u"institutionName"]
             if not self.institutionCache.cache.has_key(institutionName):
