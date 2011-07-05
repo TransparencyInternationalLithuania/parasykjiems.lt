@@ -10,7 +10,7 @@ class PhoneField(CharField):
     description = _("Phone field")
 
     def __init__(self, *args, **kwargs):
-        kwargs['max_length'] = kwargs.get('max_length', 50)
+        kwargs['max_length'] = kwargs.get('max_length', 127)
         CharField.__init__(self, *args, **kwargs)
 
 class InstitutionNameField(CharField):
