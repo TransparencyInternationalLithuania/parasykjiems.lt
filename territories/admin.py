@@ -1,21 +1,24 @@
-from contactdb import models
 from django.contrib import admin
 from django.utils.translation import ugettext as _
 from django.db import models as djangoModel
 import inspect
-from contactdb.models import PersonPosition
+from territories.models import CountryAddresses, LithuanianCases, InstitutionTerritory
 
-class PersonPositionAdmin(admin.ModelAdmin):
-    list_display = ('institution', 'person', 'email', 'electedFrom', 'electedTo')
-    search_fields = ['institution__name', 'person__name', 'email']
+
+
+class InstitutionTerritoryAdmin(admin.ModelAdmin):
+    list_display = ['municipality', 'civilParish']
+    search_fields = ['municipality', 'civilParish']
+
+models = [CountryAddresses, LithuanianCases, InstitutionTerritory]
 
 # register custom admin models, with custom views
-customModels = [(PersonPosition, PersonPositionAdmin)]
+customModels = [(InstitutionTerritory, InstitutionTerritoryAdmin),]
 for klass, adminKlas in customModels:
     admin.site.register(klass, adminKlas)
 
 # auto-register all other models
-moduleAttributes = [getattr(models, m) for m in dir(models)]
+moduleAttributes = models
 moduleClasses = [m for m in moduleAttributes if inspect.isclass(m)]
 modelsList = [m for m in moduleClasses if issubclass(m, djangoModel.Model)]
 # from model list remove already registered models

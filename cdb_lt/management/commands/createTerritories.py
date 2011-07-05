@@ -6,7 +6,7 @@ from django.core.management.base import BaseCommand
 from cdb_lt.civilParishKaunasStreetReader import civilParishKaunasStreetReader
 from cdb_lt.civilParishStreetReader import civilParishStreetReader
 from cdb_lt.civilParishVilniusStreetReader import civilParishVilniusStreetReader
-from cdb_lt.management.commands.createMembers import makeCivilParishInstitutionName, cityNameGetterGenitive, InstitutionMunicipalityCode
+from cdb_lt.management.commands.createMembers import makeCivilParishInstitutionName, cityNameGetterGenitive, InstitutionMunicipalityCode, InstitutionCivilparishMembers, InstitutionParliamentMember, InstitutionSeniunaitijaMembers
 from cdb_lt.management.commands.importSources import ltGeoDataSources_Institution, ltGeoDataSources_Country
 from cdb_lt.mpStreetReader import mpStreetReader
 from cdb_lt.municipalityStreetReader import municipalityStreetReader
@@ -56,15 +56,15 @@ class Command(BaseCommand):
         importInstitutionTerritoryYielder(addressYielder=civilParishStreetReader(csvFileNames=fileNames, institutionNameGetter=makeCivilParishInstitutionName, cityNameGetter = cityNameGetterGenitive), institutionCode = "civpar")
 
 
-        importInstitutionTerritoryYielder(addressYielder=civilParishVilniusStreetReader(), institutionCode = "civpar", **caches)
+        importInstitutionTerritoryYielder(addressYielder=civilParishVilniusStreetReader(), institutionCode = InstitutionCivilparishMembers, **caches)
 
-        importInstitutionTerritoryYielder(addressYielder=civilParishKaunasStreetReader(), institutionCode = "civpar", **caches)
+        importInstitutionTerritoryYielder(addressYielder=civilParishKaunasStreetReader(), institutionCode = InstitutionCivilparishMembers, **caches)
 
         # create addresses for seniunaitija
-        importInstitutionTerritoryYielder(addressYielder=seniunaitijaStreetReader(), institutionCode = "seniunaitija", **caches)
+        importInstitutionTerritoryYielder(addressYielder=seniunaitijaStreetReader(), institutionCode = InstitutionSeniunaitijaMembers, **caches)
 
         # create Municipality data
         importInstitutionTerritoryYielder(addressYielder=municipalityStreetReader(), institutionCode = InstitutionMunicipalityCode, **caches)
 
         # create MP data
-        importInstitutionTerritoryYielder(addressYielder=mpStreetReader(), institutionCode = "mp", **caches)
+        importInstitutionTerritoryYielder(addressYielder=mpStreetReader(), institutionCode = InstitutionParliamentMember, **caches)
