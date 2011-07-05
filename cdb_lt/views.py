@@ -3,7 +3,7 @@ import os
 from django.contrib.sites.models import Site
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
-from cdb_lt.dataUpdate.dataUpdate import DataUpdateDiffer
+from cdb_lt.dataUpdate.dataUpdate import DataUpdateDiffer, DataImporter
 from cdb_lt.dataUpdate.dataUpload import UploadFileForm
 from cdb_lt.management.commands.createMembers import makeCivilParishInstitutionName, makeMunicipalityInstitutionName
 from pjutils.timemeasurement import TimeMeasurer
@@ -152,7 +152,12 @@ def importUploadedFile(request, fileName, institutionType = None):
 
     differ = DataUpdateDiffer(realUploadedFile, institutionType = institutionType)
     errorList = differ.addChangedFields()
-    errorList2 = differ.updateDbWithNewData()
+    importer = DataImporter(nameAndSurnameTuples=differ.nameAndSurnameTuples,
+                            memberList=differ.memberList,
+                            institutionCache=differ.institutionCache,
+                            personPositionCache=differ.personPositionCache)
+
+    errorList2 = importer.updateDbWithNewData()
 
     params = {"errorList" : errorList + errorList2,
               u"diffUrl" : u"/data/update/upload/%s/" % fileName}
