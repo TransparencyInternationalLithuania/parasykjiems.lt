@@ -3,14 +3,18 @@ from django.contrib import admin
 from django.utils.translation import ugettext as _
 from django.db import models as djangoModel
 import inspect
-from contactdb.models import PersonPosition
+from contactdb.models import PersonPosition, Person
 
 class PersonPositionAdmin(admin.ModelAdmin):
     list_display = ('institution', 'person', 'email', 'electedFrom', 'electedTo')
     search_fields = ['institution__name', 'person__name', 'email']
 
+class PersonAdmin(admin.ModelAdmin):
+    search_fields = ['name', 'surname', 'disambiguation']
+
 # register custom admin models, with custom views
-customModels = [(PersonPosition, PersonPositionAdmin)]
+customModels = [(PersonPosition, PersonPositionAdmin),
+                (Person, PersonAdmin)]
 for klass, adminKlas in customModels:
     admin.site.register(klass, adminKlas)
 
