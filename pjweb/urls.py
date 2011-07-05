@@ -35,7 +35,7 @@ urlpatterns = patterns('pjweb.views',
     (u'^choose_rep/(%(sentence)s)/(%(sentence)s)/(%(sentence)s)/(%(sentence)s)/$' % {'sentence' : sentenceRegExp}, 'choose_representative'),
 
     # contact a representative: write an email
-    (r'^contact/(\w+)/(\d+)/$', 'contact'),
+    (r'^contact/(%(sentence)s)/(\d+)/$' % {'sentence' : sentenceRegExp}, 'contact'),
 
     # display a list of all public emails
     (r'^public/$', 'public_mails'),
