@@ -63,16 +63,16 @@ class Person(models.Model):
     # this is an additional field, which, together with name and surname form a unique key
     # We do not enfore this at the database level, as we do not want our scripts to fail prematurely (yet)
     # unique_together = (("name", "surname", "disambiguation"),)
-    disambiguation = PersonNameField()
+    disambiguation = PersonNameField(blank=True,null=True)
 
     # used to uniquely identify persons
     # For example, if a person name or surname has changed, this will be used to locate the Person in question
-    uniqueKey = models.IntegerField(null=True)
+    uniqueKey = models.IntegerField(null=True,blank=True)
 
     @property
     def fullName(self):
         """returns Name + surname"""
-        return self.name + self.surname
+        return u" ".join([self.name, self.surname, self.disambiguation])
 
     def __unicode__(self):
         return self.fullName

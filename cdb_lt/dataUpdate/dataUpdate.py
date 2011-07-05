@@ -103,14 +103,35 @@ class PersonCacheByName:
 
     def getOrCreatePerson(self, name, surname, disambiguation):
         dkey = self._getKey(name, surname, disambiguation)
+        key = self._getKey(name, surname)
+
+        # check if there are persons with duplicate names, and missing disambiguation
+        if self.duplicateNamesCache.has_key(key):
+            # check if all person with similar names have also set their disambiguation attriute
+            disambiguations = [p.disambiguation == u"" or p.disambiguation is None for p in self.duplicateNamesCache[key]]
+            dis = False
+            for d in disambiguations:
+                dis = dis | d
+            # someone is missing disambiguation
+            if dis:
+                raise DuplicatePersonException("There are several persons with name %s %s, and without disambiguation" % (name, surname))
+            # no one is missing dissambiguation
+            if disambiguation is None or disambiguation == u"":
+                raise DuplicatePersonException("There are several persons with name %s %s in the database, all of them have disambiguation column set. But you did not provide disambiguation column, so can not decide which person exactly you are referring to" % (name, surname))
+
+
+
+
+
         if self.disambiguationCache.has_key(dkey):
             return self.disambiguationCache[dkey]
         if self.duplicateDisambiguationCache.has_key(dkey):
-            raise DuplicatePersonException("There are several persons with name %s %s %s" % (name, surname, disambiguation))
+            raise DuplicatePersonException("There are several persons with name %s %s %s in the database. Fix that by adding disambiguation column to every person with similar name" % (name, surname, disambiguation))
 
-        key = self._getKey(name, surname)
-        if self.duplicateNamesCache.has_key(key):
-            raise DuplicatePersonException("There are several persons with name %s %s, and without disambiguation" % (name, surname))
+
+        #if self.duplicateNamesCache.has_key(key):
+        #    raise DuplicatePersonException("There are several persons with name %s %s, and without disambiguation" % (name, surname))
+            
         if self.nameCache.has_key(key):
             if disambiguation is not None and disambiguation != u"":
                 raise DuplicatePersonException("""There is a person with name %s %s, but you requested to get a person
@@ -133,20 +154,24 @@ with disambiguation %s. Please add a disambiguation value to this person in data
         for p in persons:
             # add to disambiguationCache
             dupkey = self._getKey(p.name, p.surname, p.disambiguation)
-            if self.disambiguationCache.has_key(dupkey):
+            if self.duplicateDisambiguationCache.has_key(dupkey):
+                self.addToDuplicateCache(self.duplicateDisambiguationCache, p)
+            elif self.disambiguationCache.has_key(dupkey):
                 self.addToDuplicateCache(self.duplicateDisambiguationCache, self.disambiguationCache[dupkey])
                 del self.disambiguationCache[dupkey]
                 self.addToDuplicateCache(self.duplicateDisambiguationCache, p)
-                continue
-            self.disambiguationCache[dupkey] = p
+            else:
+                self.disambiguationCache[dupkey] = p
 
             key = self._getKey(p.name, p.surname)
-            if self.nameCache.has_key(dupkey):
+            if self.duplicateNamesCache.has_key(key):
+                self.addToDuplicateCacheName(p)
+            elif self.nameCache.has_key(key):
                 self.addToDuplicateCacheName(self.nameCache[key])
                 del self.nameCache[key]
-                self.addToDuplicateCacheName(self.duplicateDisambiguationCache, p)
-                continue
-            self.nameCache[key] = p
+                self.addToDuplicateCacheName(p)
+            else:
+                self.nameCache[key] = p
 
 
 
@@ -321,7 +346,7 @@ class DataImporter:
         for v in self.personCacheByName.duplicateNamesCache.itervalues():
             s = u""
             for i in v:
-                s = "%s\n%s" % (s, u"%s %s" % (i.person.name, i.person.surname))
+                s = "%s\n%s" % (s, u"%s %s" % (i.name, i.surname))
         return errorList
 
 class DataUpdateDiffer:
