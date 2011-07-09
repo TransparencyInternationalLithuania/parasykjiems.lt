@@ -4,13 +4,13 @@ from contactdb.importUtils import readRow, getInstitutionNameFromColumn
 from django.db import transaction, connection
 from pjutils import uniconsole
 from contactdb.models import Institution
-from pjutils.exc import ChainnedException
+from pjutils.exc import ChainedException
 from territories.ltPrefixes import allStreetEndings, changeStreetFromShortToLongForm
 from territories.models import CountryAddresses, InstitutionTerritory
 import logging
 logger = logging.getLogger(__name__)
 
-class InstitutionNotFound(ChainnedException):
+class InstitutionNotFound(ChainedException):
     pass
 
 class CountryStreetCache:
@@ -84,7 +84,7 @@ left join contactdb_institutiontype itype on itype.id = i.institutionType_id"""
         if len(lst) == 0:
             return
         if len(lst) != len(all):
-            raise ChainnedException(message="cache not correctly initialized")
+            raise ChainedException(message="cache not correctly initialized")
 
 
         for i in range(0, len(lst)):

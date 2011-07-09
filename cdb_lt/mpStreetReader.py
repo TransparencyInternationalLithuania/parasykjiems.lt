@@ -8,7 +8,7 @@ import re
 from cdb_lt.management.commands.importSources import ltGeoDataSources_Institution
 from cdb_lt.seniunaitijaTerritoryReader import ExpandedStreet
 from contactdb.importUtils import getInstitutionNameFromColumn, EnsureExists
-from pjutils.exc import ChainnedException
+from pjutils.exc import ChainedException
 
 import logging
 from territories.houseNumberUtils import ifHouseNumberContainLetter, padHouseNumberWithZeroes, isHouseNumberOdd, removeLetterFromHouseNumber
@@ -453,7 +453,7 @@ class Constituency(object):
         name = u""
         nr = 0
 
-class NotFoundConstituencyNrException(ChainnedException):
+class NotFoundConstituencyNrException(ChainedException):
     pass
 
 class LithuanianConstituencyParser:

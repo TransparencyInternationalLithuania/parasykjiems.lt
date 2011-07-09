@@ -1,10 +1,10 @@
 import logging
-from pjutils.exc import ChainnedException
+from pjutils.exc import ChainedException
 import re
 import types
 logger = logging.getLogger(__name__)
 
-class StringIsNotAHouseNumberException(ChainnedException):
+class StringIsNotAHouseNumberException(ChainedException):
     pass
 
 class HouseRange:

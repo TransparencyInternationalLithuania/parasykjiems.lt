@@ -4,7 +4,7 @@
 import logging
 import os
 from contactdb.models import PersonPosition
-from pjutils.exc import ChainnedException
+from pjutils.exc import ChainedException
 from pjutils.get_mail import GetMail
 from pjweb.email.backends import MailDoesNotExistInDBException
 import settings

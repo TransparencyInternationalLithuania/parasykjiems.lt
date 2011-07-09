@@ -5,13 +5,13 @@ import csv
 from cdb_lt.management.commands.createMembers import ImportSourcesMembers, makeSeniunaitijaInstitutionName
 from contactdb.importUtils import readRow
 from territories.houseNumberUtils import removeLetterFromHouseNumber, ContainsNumbers, padHouseNumberWithZeroes, isHouseNumberOdd
-from pjutils.exc import ChainnedException
+from pjutils.exc import ChainedException
 from territories.ltPrefixes import shortCityEndings, wholeCityEndings, shortStreetEndings, wholeStreetEndings, allStreetEndings, extractStreetEndingForm
 
 import logging
 logger = logging.getLogger(__name__)
 
-class SeniunaitijaAddressExpanderException(ChainnedException):
+class SeniunaitijaAddressExpanderException(ChainedException):
     pass
 
 class ExpandedStreet(object):
