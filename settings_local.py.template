@@ -126,7 +126,7 @@ GlobalSettings.mail.IMAP.EMAIL_HOST_PASSWORD = ''
 
 _ = lambda s: s
 
-GlobalSettings.LANGUAGES = (
+LANGUAGES = GlobalSettings.LANGUAGES = (
       ('lt', _('Lithuanian')),
       ('en', _('English')),
 )
