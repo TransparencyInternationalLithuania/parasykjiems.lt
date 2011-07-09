@@ -8,7 +8,7 @@ from pjutils.MessagingServer.MessagingServer import MQServer
 from pjutils.timemeasurement import TimeMeasurer
 from django.db import transaction
 from urllib2 import urlopen
-from pjutils.exc import ChainnedException
+from pjutils.exc import ChainedException
 import time
 from optparse import make_option
 from cdb_lt_streets.models import HierarchicalGeoData
@@ -16,7 +16,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-class LTGeoDataImportException(ChainnedException):
+class LTGeoDataImportException(ChainedException):
     pass
 
 

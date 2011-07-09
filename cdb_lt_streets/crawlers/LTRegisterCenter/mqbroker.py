@@ -2,11 +2,11 @@ from amqplib import client_0_8 as amqp
 from settings import *
 import socket
 from amqplib.client_0_8.exceptions import *
-from pjutils.exc import ChainnedException
+from pjutils.exc import ChainedException
 from pjutils.MessagingServer.MessagingServer import MQServer
 
 
-class NoRegisterCenterURLDefined(ChainnedException):
+class NoRegisterCenterURLDefined(ChainedException):
     pass
 
 

@@ -1,6 +1,6 @@
 import logging
 import os
-from pjutils.exc import ChainnedException
+from pjutils.exc import ChainedException
 import csv
 from settings import GlobalSettings
 
@@ -17,7 +17,7 @@ import gdata.docs.client
 import gdata.spreadsheet.service
 from distutils import dir_util
 
-class GoogleDocsError(ChainnedException):
+class GoogleDocsError(ChainedException):
     pass
 
 class GoogleDocDownloader:
@@ -108,7 +108,7 @@ class GoogleDocsLogin():
     def UseDocsToken(self):
         self.client.auth_token = self.docs_token  # reset the DocList auth token
 
-class GoogleDocNotFound(ChainnedException):
+class GoogleDocNotFound(ChainedException):
     pass
 
 

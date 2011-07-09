@@ -1,7 +1,7 @@
 import traceback
 import sys
 
-class ChainnedException(Exception):
+class ChainedException(Exception):
     """This whole akward construct is solely for supporting nested exceptions.
     Imagine a situation where a file is being read. Then an IO exception is raised.
     However, in the routine that reads the file we catch this exception, and raise
@@ -15,11 +15,11 @@ class ChainnedException(Exception):
 
     P.s. there is one bug still:
        try:
-        raise ChainnedException("aaaaaaaaaaaaaa")
-    except ChainnedException as e:
+        raise ChainedException("aaaaaaaaaaaaaa")
+    except ChainedException as e:
         pass
 
-    raise ChainnedException("bbbbbbbbbbbb")
+    raise ChainedException("bbbbbbbbbbbb")
 
     This print both stack traces, even bbbbbbbbb exception does not contain any inner exceptions
        """
@@ -44,18 +44,18 @@ class ChainnedException(Exception):
         return repr(self.message)
 
 
-class MethodNotImplementedException(ChainnedException):
+class MethodNotImplementedException(ChainedException):
     pass
 
 
 if (__name__ == "__main__"):
 
     try:
-        raise ChainnedException("my message")
-    except ChainnedException as e:
+        raise ChainedException("my message")
+    except ChainedException as e:
     
         try:
-            raise ChainnedException("custom exception 2", e)
-        except ChainnedException as e2:
-            raise ChainnedException("custom exception 3", e)
+            raise ChainedException("custom exception 2", e)
+        except ChainedException as e2:
+            raise ChainedException("custom exception 3", e)
     
