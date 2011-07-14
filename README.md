@@ -1,13 +1,13 @@
 # ParašykJiems
 
-## Installation
+## Development setup
 
-Requirements:
+The system is developed and tested on GNU/Linux with Python 2.7. The
+required Python packages are
 
- - Python 2.7
  - Django 1.3
-
-The system is developed and tested on a GNU/Linux system.
+ - pysqlite
+ - django-debug-toolbar
 
 After cloning the repository, execute the following commands to
 initialize the database:
