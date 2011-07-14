@@ -11,7 +11,6 @@ from settings import GlobalSettings
 from settings_local import STATIC_DOC_ROOT
 
 defaultParams = {
-        'LANGUAGES': GlobalSettings.LANGUAGES,
         'step1': '',
         'step2': '',
         'step3': '',

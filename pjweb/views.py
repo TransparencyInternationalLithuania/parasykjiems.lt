@@ -121,7 +121,6 @@ def choose_representative_internal(request, municipality = None, civilParish = N
 
     return render_to_response('pjweb/const.html', {
         'personPositions': personPositions,
-        'LANGUAGES': GlobalSettings.LANGUAGES,
         'step1': 'active-step',
         'step2': '',
         'step3': '',
@@ -152,7 +151,6 @@ def renderIndexPage(request, form = None, query_string = "", address = None):
         }
     return render_to_response("pjweb/searchPlugins/territory/index.html", {
         'form': form,
-        'LANGUAGES': GlobalSettings.LANGUAGES,
         'lang_code': lang,
         'entered': query_string,
         'found_entries': address['found_entries'],
@@ -203,7 +201,6 @@ def no_email(request, rtype, mp_id):
     logger.debug('%s' % (NoEmailMsg))
     return render_to_response('pjweb/no_email.html', {
         'NoEmailMsg': NoEmailMsg,
-        'LANGUAGES': GlobalSettings.LANGUAGES,
         'step1': '',
         'step2': 'active-step',
         'step3': '',
@@ -268,7 +265,6 @@ def public_mails(request):
 
     return render_to_response('pjweb/public_mails.html', {
         'mails': mails,
-        'LANGUAGES': GlobalSettings.LANGUAGES,
         'step1': '',
         'step2': '',
         'step3': '',
@@ -277,7 +273,6 @@ def public_mails(request):
 
 def about(request):
     return render_to_response('pjweb/about.html', {
-        'LANGUAGES': GlobalSettings.LANGUAGES,
         'step1': '',
         'step2': '',
         'step3': '',
@@ -315,7 +310,6 @@ def public(request, mail_id):
     return render_to_response('pjweb/public.html', {
         'mail': mail,
         'responses': responses,
-        'LANGUAGES': GlobalSettings.LANGUAGES,
         'step1': '',
         'step2': '',
         'step3': '',
@@ -333,7 +327,6 @@ def smtp_error(request, rtype, mp_id, private=None):
     logger.debug('Error: %s' % (ErrorMessage))
     return render_to_response('pjweb/error.html', {
         'ErrorMessage': ErrorMessage,
-        'LANGUAGES': GlobalSettings.LANGUAGES,
         'step1': '',
         'step2': '',
         'step3': 'active-step',
@@ -431,7 +424,6 @@ def contact(request, rtype, mp_id):
                     logger.debug('%s' % (ThanksMessage))
                     return render_to_response('pjweb/thanks.html', {
                         'ThanksMessage': ThanksMessage,
-                        'LANGUAGES': GlobalSettings.LANGUAGES,
                         'step1': '',
                         'step2': '',
                         'step3': 'active-step',
@@ -446,7 +438,6 @@ def contact(request, rtype, mp_id):
                     'preview': mail,
                     'msg_lst': message_disp,
                     'representative': receiver,
-                    'LANGUAGES': GlobalSettings.LANGUAGES,
                     'date_words': date_words,
                     'step1': '',
                     'step2': '',
@@ -462,7 +453,6 @@ def contact(request, rtype, mp_id):
         'mp_id': mp_id,
         'rtype': rtype,
         'representative': receiver,
-        'LANGUAGES': GlobalSettings.LANGUAGES,
         'step1': '',
         'step2': 'active-step',
         'step3': '',
@@ -546,7 +536,6 @@ def confirm(request, mail_id, secret):
         'ConfirmMessage': ConfirmMessage,
         'is_email_public': mail.public,
         'public_email_id' : mail.id,
-        'LANGUAGES': GlobalSettings.LANGUAGES,
         'step1': '',
         'step2': '',
         'step3': '',
@@ -571,7 +560,6 @@ def feedback(request):
             logger.info("feedback email sent to '%s'" % recipients)
             return render_to_response('pjweb/feedback/feedback_sent.html', {
                 'ThanksMessage': ThanksMessage,
-                'LANGUAGES': GlobalSettings.LANGUAGES,
                 'step1': '',
                 'step2': '',
                 'step3': '',
@@ -583,7 +571,6 @@ def feedback(request):
         
     return render_to_response('pjweb/feedback/feedback.html', {
         'form': form,
-        'LANGUAGES': GlobalSettings.LANGUAGES,
         'step1': '',
         'step2': '',
         'step3': '',
@@ -617,7 +604,6 @@ def stats(request):
                 'period_string': period_string,
                 'stats': stats,
                 'form': form,
-                'LANGUAGES': GlobalSettings.LANGUAGES,
                 'step1': '',
                 'step2': '',
                 'step3': '',
@@ -629,7 +615,6 @@ def stats(request):
     return render_to_response('pjweb/stats.html', {
         'period_string': period_string,
         'form': form,
-        'LANGUAGES': GlobalSettings.LANGUAGES,
         'step1': '',
         'step2': '',
         'step3': '',
@@ -662,7 +647,6 @@ def response(request, mail_id, response_no):
             logger.debug('%s' % (ThanksMessage))
             return render_to_response('pjweb/thanks.html', {
                 'ThanksMessage': ThanksMessage,
-                'LANGUAGES': GlobalSettings.LANGUAGES,
                 'step1': '',
                 'step2': '',
                 'step3': 'active-step',
@@ -676,7 +660,6 @@ def response(request, mail_id, response_no):
         'mail': mail,
         'msg_lst': mail.message.split('\n'),
         'response_no': response_no,
-        'LANGUAGES': GlobalSettings.LANGUAGES,
         'step1': '',
         'step2': '',
         'step3': '',

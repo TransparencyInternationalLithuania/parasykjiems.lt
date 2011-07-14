@@ -55,7 +55,6 @@ class GlobalSettingsClass(GlobalSettingsBase):
                          'GOOGLE_DOCS_PASSWORD' : self.googleDocsUsers,
                          'EnableWWWForLTGeoTests' : self._EnableWWWForLTGeoTests,
                          'LTGeoDataParseUrl' : self._LTGeoDataParseUrl,
-                         'LANGUAGES' : self.Languages,
                          'PROFANITIES_LIST' : self.Profanities,
                          'MAIL_SERVER' : self.MailServ,
                          'MAIL_SERVER_TYPE' : self.MailServ,
@@ -74,9 +73,6 @@ class GlobalSettingsClass(GlobalSettingsBase):
 
     def _EnableWWWForLTGeoTests(self):
         print "Define EnableWWWForLTGeoTests settings. Needed to check if run geo tests against real world data. Default is False "
-
-    def Languages(self):
-        print "Define used Languages. Defaults are Lithuanian and English "
 
     def Profanities(self):
         print "Define profanities (nasty words) list in local_settings.py "
