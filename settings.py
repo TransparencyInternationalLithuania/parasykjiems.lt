@@ -56,8 +56,11 @@ commonApps = ['django.contrib.auth',
     'django.contrib.admin',
     #'gunicorn',
     'territories',
-    'cdb_lt'
+    'cdb_lt',
+    'debug_toolbar'
     ]
+
+INTERNAL_IPS = ('127.0.0.1',)
 
 #HAYSTACK_INCLUDE_SPELLING = True
 
