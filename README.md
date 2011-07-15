@@ -22,3 +22,9 @@ the last two commands import that data.
 To launch the development server, execute
 
     python manage.py runserver
+
+
+## Data update authentication
+
+Before using any pages in /data/update the user should authenticate in
+/admin. User accounts are standard Django user accounts.
