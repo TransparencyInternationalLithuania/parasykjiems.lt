@@ -4,7 +4,6 @@ import time
 from django.core.management.base import BaseCommand
 from cdb_lt_streets.management.commands.ltGeoDataCrawl import ExtractRange
 from pjutils.get_mail import GetMail
-from pjutils.insert_response import InsertResponse
 from settings import GlobalSettings
 
 class Command(BaseCommand):

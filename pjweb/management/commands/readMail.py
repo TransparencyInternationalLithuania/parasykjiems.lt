@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import time
 from django.core.management.base import BaseCommand
 from cdb_lt_streets.management.commands.ltGeoDataCrawl import ExtractRange
 from pjutils.get_mail import GetMail

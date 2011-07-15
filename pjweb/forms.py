@@ -2,13 +2,9 @@
 # -*- coding: utf-8 -*-
 
 import logging
-import re
-import settings
 from django import forms
-from django.utils.translation import ugettext as _, ugettext_lazy, ungettext
-from django.core.exceptions import ValidationError
-from pjweb.models import Email
-from pjweb.widgets import *
+from django.utils.translation import ugettext as _
+from pjweb.widgets import hasNoProfanities, notEmptyMsg
 from django.utils.safestring import mark_safe
 from django.forms.extras.widgets import SelectDateWidget
 import datetime

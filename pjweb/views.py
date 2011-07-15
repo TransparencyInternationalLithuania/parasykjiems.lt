@@ -2,33 +2,29 @@
 # -*- coding: utf-8 -*-
 
 import logging
-import re
 from django.contrib.auth.views import redirect_to_login
-from django.template import loader
 from pjweb.email.emailTemplates import renderEmailTemplate
-from settings import *
-from django import forms
-from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest, HttpResponseNotFound, Http404
-from django.shortcuts import render_to_response, redirect
-from django.utils.translation import ugettext as _, ugettext_lazy, ungettext, check_for_language
-from django.core.mail import send_mail, EmailMessage
+from settings import GlobalSettings
+from django.http import HttpResponseRedirect, HttpResponse, Http404
+from django.shortcuts import render_to_response
+from django.utils.translation import ugettext as _, check_for_language
+from django.core.mail import EmailMessage
 from contactdb.models import PersonPosition
 from pjweb.models import Email, MailHistory
-from pjweb.forms import *
+import pjweb.forms as forms
 from pjutils.insert_response import InsertResponse
 from pjutils.declension import DeclensionLt
 from django.utils import simplejson
 import random
 from django.contrib.sites.models import Site
-from pjutils.uniconsole import *
 import datetime
 from django.utils.encoding import iri_to_uri
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
-from pjweb.forms import IndexForm, ContactForm
 from territories.houseNumberUtils import removeCornerFromHouseNumber
 from territories.searchInIndex import deduceAddress, searchInIndex
 from territories.searchMembers import findPersonPositions
 from cdb_lt.management.commands.createMembers import loadInstitutionDescriptions
+import settings
 
 
 logger = logging.getLogger(__name__)
@@ -102,7 +98,6 @@ def choose_representative(request, municipality = None, city = None, street = No
 
 def choose_representative_internal(request, municipality = None, civilParish = None, city = None, street = None, house_number = None):
     # check if we have a valid referrer
-    current_site = Site.objects.get_current()
     logger.debug("choose_rep: municipality %s" % municipality)
     logger.debug("choose_rep: city %s" % city)
     logger.debug("choose_rep: street %s" % street)
@@ -140,7 +135,7 @@ def json_lookup(request, queryset, field, limit=5, login_required=False):
 
 def renderIndexPage(request, form = None, query_string = "", address = None):
     if form is None:
-        form = IndexForm(request.POST)
+        form = forms.IndexForm(request.POST)
 
     lang = request.LANGUAGE_CODE
     if address is None:
@@ -171,10 +166,10 @@ def index(request):
         }
 
     if request.method == 'GET':
-        form = IndexForm()
+        form = forms.IndexForm()
         return renderIndexPage(request, form)
 
-    form = IndexForm(request.POST)
+    form = forms.IndexForm(request.POST)
     query_string = ""
     if form.is_valid():
         query_string = form.cleaned_data['address_input']
@@ -365,7 +360,7 @@ def contact(request, rtype, mp_id):
         return HttpResponseRedirect('no_email')
     if request.method == 'POST':
         send = request.POST.has_key('send')
-        form = ContactForm(data=request.POST)
+        form = forms.ContactForm(data=request.POST)
         if form.is_valid():
             public = form.cleaned_data[u'public']
             publ = False
@@ -446,7 +441,7 @@ def contact(request, rtype, mp_id):
 
     else:
         decl = DeclensionLt()
-        form = ContactForm(initial={'message': _(u'Dear. Mr. %s, \n\n\n\nHave a nice day.') % decl.sauksm(receiver.person.name) })
+        form = forms.ContactForm(initial={'message': _(u'Dear. Mr. %s, \n\n\n\nHave a nice day.') % decl.sauksm(receiver.person.name) })
         
     return render_to_response('pjweb/contact.html', {
         'form': form,
@@ -545,7 +540,7 @@ def confirm(request, mail_id, secret):
 def feedback(request):
 
     if request.method == 'POST':
-        form = FeedbackForm(data=request.POST)
+        form = forms.FeedbackForm(data=request.POST)
         if form.is_valid():
             message = form.cleaned_data[u'message']
             subject = form.cleaned_data[u'subject']
@@ -567,7 +562,7 @@ def feedback(request):
 
 
     else:
-        form = FeedbackForm()
+        form = forms.FeedbackForm()
         
     return render_to_response('pjweb/feedback/feedback.html', {
         'form': form,
@@ -580,7 +575,7 @@ def feedback(request):
 def stats(request):
     period_string = ''
     if request.method == 'POST':
-        form = PeriodSelectForm(data=request.POST)
+        form = forms.PeriodSelectForm(data=request.POST)
         if form.is_valid():
             date_from = form.cleaned_data['date_from']
             date_to = form.cleaned_data['date_to']
@@ -610,7 +605,7 @@ def stats(request):
             })
 
     else:
-        form = PeriodSelectForm()
+        form = forms.PeriodSelectForm()
         
     return render_to_response('pjweb/stats.html', {
         'period_string': period_string,
@@ -626,7 +621,7 @@ def response(request, mail_id, response_no):
     insert = InsertResponse()
     responder = insert.get_rep(mail.recipient_id, mail.recipient_type)
     if int(mail.response_hash)==int(response_no) and request.method == 'POST':
-        form = FeedbackForm(data=request.POST)
+        form = forms.FeedbackForm(data=request.POST)
         if form.is_valid():
             message = form.cleaned_data[u'message']
 
@@ -653,7 +648,7 @@ def response(request, mail_id, response_no):
             })
 
     else:
-        form = FeedbackForm()
+        form = forms.FeedbackForm()
         
     return render_to_response('pjweb/response.html', {
         'form': form,
