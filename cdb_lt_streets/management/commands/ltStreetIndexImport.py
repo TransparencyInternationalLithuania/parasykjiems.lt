@@ -8,7 +8,6 @@ from cdb_lt_streets.crawlers.LTRegisterCenter.mqbroker import LTRegisterQueue
 from contactdb.importUtils import readRow
 from pjutils.timemeasurement import TimeMeasurer
 import csv
-from pjutils.uniconsole import *
 from datetime import datetime
 
 class Command(BaseCommand):

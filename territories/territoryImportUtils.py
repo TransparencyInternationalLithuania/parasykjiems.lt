@@ -2,7 +2,6 @@ import csv
 import os
 from contactdb.importUtils import readRow, getInstitutionNameFromColumn
 from django.db import transaction, connection
-from pjutils import uniconsole
 from contactdb.models import Institution
 from pjutils.exc import ChainedException
 from territories.ltPrefixes import allStreetEndings, changeStreetFromShortToLongForm

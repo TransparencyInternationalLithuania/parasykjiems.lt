@@ -7,7 +7,6 @@ from django.core.management.base import BaseCommand
 from django.core import management
 import os
 from django.db import transaction
-from pjutils import uniconsole
 from contactdb.models import InstitutionType
 from territories.houseNumberUtils import depadHouseNumberWithZeroes
 from territories.models import InstitutionTerritory, CountryAddresses
