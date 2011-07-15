@@ -1,4 +1,3 @@
-from django.test.client import Client
 from django.test.testcases import TestCase
 from pjweb.email.emailTemplates import renderEmailTemplate
 from settings import LANGUAGES

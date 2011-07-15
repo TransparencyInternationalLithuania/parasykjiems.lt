@@ -1,12 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from django.utils.translation import ugettext as _, ugettext_lazy, ungettext
-from django.core.exceptions import ValidationError
-from django import forms
-from settings import *
-import re
 from django.utils.translation import ugettext as _
+from django.core.exceptions import ValidationError
+import settings
+import re
 
 def convertLithuanianLettersToLatin(str):
     """ converts Lithuanian """
@@ -31,10 +29,9 @@ def hasNoProfanities(field_data):
     """ 
     field_data = field_data.lower() # normalize
     field_data = convertLithuanianLettersToLatin(field_data)
-    words_seen = [w for w in GlobalSettings.PROFANITIES_LIST if w in field_data] 
+    words_seen = [w for w in settings.GlobalSettings.PROFANITIES_LIST if w in field_data] 
     if words_seen: 
         from django.utils.text import get_text_list 
-        plural = len(words_seen) 
         raise ValidationError, _('Please be polite! Letter with %s in it will not be sent.') % get_text_list(
                 ['"%s%s%s"' % (i[0], '-'*(len(i)-2), i[-1]) for i in words_seen], _('and')
             )
