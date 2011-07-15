@@ -17,7 +17,6 @@ from pjutils.timemeasurement import TimeMeasurer
 import time
 import os
 import logging
-from pjutils.uniconsole import *
 from pjutils.djangocommands import ExecManagementCommand
 
 logger = logging.getLogger(__name__)

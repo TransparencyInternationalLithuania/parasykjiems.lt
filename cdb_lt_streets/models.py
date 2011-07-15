@@ -3,7 +3,6 @@
 
 from django.db import models
 from django.db.models.query_utils import Q
-from pjutils.uniconsole import *
 
 class HierarchicalGeoData(models.Model):
     """ A hierarchical geo data structure. Used to extract data from lithuanian street index page

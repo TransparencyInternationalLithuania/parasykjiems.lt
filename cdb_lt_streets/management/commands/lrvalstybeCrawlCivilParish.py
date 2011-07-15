@@ -5,7 +5,6 @@ import csv
 from django.core.management.base import BaseCommand
 import logging
 from cdb_lt_streets.crawlers.LRValstybe_lt.lrvalstybe_csvoutput import LRValstybeCsvOut, yieldCivilParishHeadMembers
-from pjutils.uniconsole import *
 
 logger = logging.getLogger(__name__)
 
