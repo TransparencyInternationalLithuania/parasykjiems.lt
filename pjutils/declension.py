@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os
-from GlobalSettingsClass import *
+from GlobalSettingsClass import vard_gal
 
 class DeclensionLt():
     
