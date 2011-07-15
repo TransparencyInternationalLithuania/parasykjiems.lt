@@ -1,7 +1,7 @@
 from distutils import dir_util
 import os
 from django.contrib.sites.models import Site
-from django.http import HttpResponseRedirect, HttpResponseForbidden
+from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from cdb_lt.dataUpdate.dataUpdate import DataUpdateDiffer, DataImporter
 from cdb_lt.dataUpdate.dataUpload import UploadFileForm
@@ -184,7 +184,4 @@ def importUploadedFile(request, fileName, institutionType = None):
 @check_update_auth
 def mayorUpdate(request):
     """ Mayor file is already uploaded. Show visual diff for it """
-    if request.user.is_authenticated():
-        return diffUploadedFile(request, "merai.csv")
-    else:
-        return render(request, '403.html', status=403)
+    return diffUploadedFile(request, "merai.csv")
