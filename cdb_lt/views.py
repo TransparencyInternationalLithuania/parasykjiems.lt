@@ -1,11 +1,25 @@
 from distutils import dir_util
 import os
 from django.contrib.sites.models import Site
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.shortcuts import render_to_response
 from cdb_lt.dataUpdate.dataUpdate import DataUpdateDiffer, DataImporter
 from cdb_lt.dataUpdate.dataUpload import UploadFileForm
 from settings_local import STATIC_DOC_ROOT
+from django.shortcuts import render
+
+def check_update_auth(view):
+    """A decorator that turns a view into one that checks for
+    authentication."""
+    
+    def wrapper(request, *args, **kwargs):
+        if request.user.is_authenticated():
+            return view(request, *args, **kwargs)
+        else:
+            return render(request, '403.html', status=403)
+
+    return wrapper
+        
 
 defaultParams = {
         'step1': '',
@@ -58,6 +72,7 @@ def writeUploadedFile(file):
     return fileName
     
 
+@check_update_auth
 def uploadData(request):
     """ Shows a form where user can upload csv files, and store them on the server.
     If a file is posted, it is saved and then redirected to visual diff page"""
@@ -75,6 +90,7 @@ def uploadData(request):
 
 
 
+@check_update_auth
 def diffUploadedFile(request, fileName, institutionType = None):
     """ shows a visual diff of the uploaded csv file as html. Columns with prefix *_old are removed"""
     relativeUploadFile, realUploadedFile = constructUploadedFileName(fileName)
@@ -94,13 +110,16 @@ def diffUploadedFile(request, fileName, institutionType = None):
               u"originalCsvUrl" : constructAttachmentUrl(relativeUploadFile)}
     return render_to_response('cdb_lt/update/mayorUpdate.html', joinParams(params))
 
+@check_update_auth
 def importDocs(request):
     return render_to_response('cdb_lt/update/importDocumentation.html')
 
+@check_update_auth
 def civilParishUpdate(request):
     """ shows a visual diff of civil parish member file"""
     return diffUploadedFile(request, fileName="seniunai.csv")
 
+@check_update_auth
 def diffUploadedFileAsCsv(request, fileName, institutionType = None):
     """ Diffs any uploadded file, and returns it as csv file.
     This csv file contains combined data from original csv file, and data from database.
@@ -122,11 +141,13 @@ def diffUploadedFileAsCsv(request, fileName, institutionType = None):
 
     return differ.asCsvToResponse(fileName)
 
+@check_update_auth
 def civilParishUpdateAsCsv(request):
     """ return civil parish diff as csv file, instead of displayig it as html
     """
     return diffUploadedFileAsCsv(request, fileName="seniunai.csv")
 
+@check_update_auth
 def mayorUpdateAsCsv(request):
     """ Return a mayor diff as csv file, instead of displaying it as html"""
     return diffUploadedFileAsCsv(request, fileName="merai.csv")
@@ -137,6 +158,7 @@ def constructUploadedFileName(fileName):
     return relativeUploadFile, realUploadedFile
 
 
+@check_update_auth
 def importUploadedFile(request, fileName, institutionType = None):
     """ Imports data from csv file into database, and renders an import success response
     """
@@ -159,6 +181,10 @@ def importUploadedFile(request, fileName, institutionType = None):
               u"diffUrl" : u"/data/update/upload/%s/" % fileName}
     return render_to_response('cdb_lt/update/importSuccess.html', joinParams(params))
 
+@check_update_auth
 def mayorUpdate(request):
     """ Mayor file is already uploaded. Show visual diff for it """
-    return diffUploadedFile(request, "merai.csv")
+    if request.user.is_authenticated():
+        return diffUploadedFile(request, "merai.csv")
+    else:
+        return render(request, '403.html', status=403)
