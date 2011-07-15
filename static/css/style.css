@@ -167,7 +167,7 @@ a > img {
 
 #top {
     background-color: #FFF;
-    background-image: url(img/top-bg.png);
+    background-image: url(/static/img/top-bg.png);
     background-repeat: repeat-x;
     height: 55px;
     padding: 21px;
