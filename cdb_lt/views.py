@@ -5,9 +5,6 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from cdb_lt.dataUpdate.dataUpdate import DataUpdateDiffer, DataImporter
 from cdb_lt.dataUpdate.dataUpload import UploadFileForm
-from cdb_lt.management.commands.createMembers import makeCivilParishInstitutionName, makeMunicipalityInstitutionName
-from pjutils.timemeasurement import TimeMeasurer
-from settings import GlobalSettings
 from settings_local import STATIC_DOC_ROOT
 
 defaultParams = {

@@ -4,13 +4,11 @@ import csv
 import sys
 
 from django.core.management.base import BaseCommand
-from django.core import management
 import os
 from django.db import transaction
 from contactdb.models import InstitutionType, PersonPosition
 from pjutils.args.Args import ExtractRange
 from pjutils.timemeasurement import TimeMeasurer
-from settings import GlobalSettings
 from territories.searchInIndex import deduceAddress, searchInIndex
 from territories.searchMembers import findInstitutionTerritoriesWithTypes, institutionTypeColumName, institutionColumName
 
