@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.utils.translation import ugettext as _
 from django.db import models as djangoModel
 import inspect
-from territories.models import CountryAddresses, LithuanianCases, InstitutionTerritory
+from territories.models import CountryAddress, LithuanianCase, InstitutionTerritory
 
 
 
@@ -10,7 +10,7 @@ class InstitutionTerritoryAdmin(admin.ModelAdmin):
     list_display = ['municipality', 'civilParish']
     search_fields = ['municipality', 'civilParish']
 
-models = [CountryAddresses, LithuanianCases, InstitutionTerritory]
+models = [CountryAddress, LithuanianCase, InstitutionTerritory]
 
 # register custom admin models, with custom views
 customModels = [(InstitutionTerritory, InstitutionTerritoryAdmin),]

@@ -5,7 +5,7 @@ from django.db import transaction, connection
 from contactdb.models import Institution
 from pjutils.exc import ChainedException
 from territories.ltPrefixes import allStreetEndings, changeStreetFromShortToLongForm
-from territories.models import CountryAddresses, InstitutionTerritory
+from territories.models import CountryAddress, InstitutionTerritory
 import logging
 logger = logging.getLogger(__name__)
 
@@ -26,7 +26,7 @@ class CountryStreetCache:
         self.streetCache[key] = record
 
     def initializeCache(self):
-        for r in CountryAddresses.objects.all():
+        for r in CountryAddress.objects.all():
             self.addToCache(r)
 
     def isInCache(self, municipality, civilparish, city, street):
@@ -128,7 +128,7 @@ def importCountryFile(fileName, delimiter=",", streetCache = None):
 
         processed += 1
         if not streetCache.isInCache(municipality, civilParish, city, street):
-            newObject = CountryAddresses()
+            newObject = CountryAddress()
             newObject.street = street
             newObject.municipality = municipality
             newObject.city = city

@@ -11,15 +11,15 @@ from cdb_lt.management.commands.importSources import ltGeoDataSources_Institutio
 from cdb_lt.mpStreetReader import mpStreetReader
 from cdb_lt.municipalityStreetReader import municipalityStreetReader
 from cdb_lt.seniunaitijaTerritoryReader import seniunaitijaStreetReader
-from territories.models import LithuanianCases
+from territories.models import LithuanianCase
 from cdb_lt.ltData import MunicipalityCases
 from territories.territoryImportUtils import importCountryData, importInstitutionTerritoryYielder, InstitutionCache, InstitutionStreetCache
 
 
 def importCases():
-    print "Will import LithuanianCases for municipalities"
+    print "Will import LithuanianCase for municipalities"
 
-    all = LithuanianCases.objects.all().filter(institutionType=LithuanianCases.Type.Municipality)
+    all = LithuanianCase.objects.all().filter(institutionType=LithuanianCase.Type.Municipality)
     d = {}
     for c in all:
         d[c.nominative] = c
@@ -27,10 +27,10 @@ def importCases():
     for key, data in MunicipalityCases.iteritems():
         if d.has_key(key):
             continue
-        case = LithuanianCases()
+        case = LithuanianCase()
         case.nominative = key
         case.genitive = data
-        case.institutionType = LithuanianCases.Type.Municipality
+        case.institutionType = LithuanianCase.Type.Municipality
         case.save()
     print "finished"
 
