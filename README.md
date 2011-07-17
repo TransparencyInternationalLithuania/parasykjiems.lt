@@ -13,6 +13,7 @@ After cloning the repository, execute the following commands to
 initialize the database:
 
     python manage.py syncdb
+    python manage.py compilemessages
     python manage.py importMembers
     python manage.py importTerritories
 
