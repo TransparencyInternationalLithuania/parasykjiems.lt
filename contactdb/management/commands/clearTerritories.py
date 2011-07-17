@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 from pjutils.dbUtils import ClearTablesData
-from territories.models import CountryAddresses, InstitutionTerritory
+from territories.models import CountryAddress, InstitutionTerritory
 
 class Command(BaseCommand):
     args = '<>'
@@ -9,7 +9,7 @@ class Command(BaseCommand):
 
 
     def handle(self, *args, **options):
-        models = [CountryAddresses,
+        models = [CountryAddress,
                   InstitutionTerritory]
 
         ClearTablesData(models)
