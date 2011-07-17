@@ -20,7 +20,7 @@ class InsertResponse():
 
     def get_rep(self, rep_id):
         try:
-            return PersonPosition.objects.all().filter(id__exact=rep_id).get()
+            return PersonPosition.objects.get(id=rep_id)
         except PersonPosition.DoesNotExist:
             return None
 
