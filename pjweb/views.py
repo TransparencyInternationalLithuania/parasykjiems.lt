@@ -188,8 +188,7 @@ def index(request):
 
 
 def no_email(request, rtype, mp_id):
-    insert = InsertResponse()
-    representative = insert.get_rep(mp_id)
+    representative = PersonPosition.objects.get(id=mp_id)
     NoEmailMsg = _('%(name)s %(surname)s email cannot be found in database.') % {
         'name':representative.person.name, 'surname':representative.person.surname
     }
@@ -591,8 +590,7 @@ def stats(request):
 
 def response(request, mail_id, response_no):
     mail = Email.objects.get(id=mail_id)
-    insert = InsertResponse()
-    responder = insert.get_rep(mail.recipient_id, mail.recipient_type)
+    responder = PersonPosition.objects.get(id=mail.recipient_id)
     if int(mail.response_hash)==int(response_no) and request.method == 'POST':
         form = forms.FeedbackForm(data=request.POST)
         if form.is_valid():
