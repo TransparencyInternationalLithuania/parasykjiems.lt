@@ -1,3 +1,6 @@
-glob:*.pyc
-glob:*.log
-glob:*.db
+syntax:glob
+
+*.pyc
+*.log
+*.db
+*~
