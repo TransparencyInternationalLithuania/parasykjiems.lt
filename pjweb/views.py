@@ -310,35 +310,17 @@ def public(request, mail_id):
         'step3': '',
     })
 
-
-def smtp_error(request, rtype, mp_id, private=None):
-    insert = InsertResponse()
-    representative = insert.get_rep(mp_id, rtype)
-    ErrorMessage = _(
-        'Problem occurred. Your Email to %(name)s %(surname)s has not been sent. Please try again later.'
-    ) % {
-        'name':representative.name, 'surname':representative.surname
-    }
-    logger.debug('Error: %s' % (ErrorMessage))
-    return render_to_response('pjweb/error.html', {
-        'ErrorMessage': ErrorMessage,
-        'step1': '',
-        'step2': '',
-        'step3': 'active-step',
-    })
-
-
 def redirectToIndex():
     url = "/"
     return HttpResponseRedirect(url)
     
 def contact(request, rtype, mp_id):
-    insert = InsertResponse()
     current_site = Site.objects.get_current()
 
     # find required representative
-    receiver = insert.get_rep(mp_id)
-    if receiver is None:
+    try:
+        receiver = PersonPosition.objects.get(id=mp_id)
+    except PersonPosition.DoesNotExist:
         return redirectToIndex()
 
     months = [
@@ -363,22 +345,16 @@ def contact(request, rtype, mp_id):
         form = forms.ContactForm(data=request.POST)
         if form.is_valid():
             public = form.cleaned_data[u'public']
-            publ = False
-            if public=='public':
-                publ = True
+            publ = public=='public'
             sender_name = form.cleaned_data[u'sender_name']
             message = form.cleaned_data[u'message']
             sender = form.cleaned_data[u'sender']
             subject = form.cleaned_data[u'subject']
-            response_hash = random.randrange(0, 1000000),
-
-            response_hash = response_hash[0]
-
-            recipients = [receiver.email]
+            response_hash = random.randrange(0, 1000000)
 
             # if representative has no email - show message
-            if not recipients[0]:
-                logger.debug('%s %s has no email' % (receiver.name, receiver.surname))
+            if not receiver.email:
+                logger.debug('%s has no email' % receiver)
                 return HttpResponseRedirect('no_email')
             else:
                 message_disp = message
@@ -388,8 +364,8 @@ def contact(request, rtype, mp_id):
                     subject = subject,
                     recipient_id = receiver.id,
                     recipient_type = rtype,
-                    recipient_name = '%s %s' % (receiver.person.name, receiver.person.surname),
-                    recipient_mail = recipients[0],
+                    recipient_name = receiver.person.fullName,
+                    recipient_mail = receiver.email,
                     message = message,
                     msg_state = 'NotConfirmed',
                     msg_type = 'Question',
@@ -397,26 +373,23 @@ def contact(request, rtype, mp_id):
                     public = publ,
                 )
                 if send:
-                    print mail.message
                     mail.save()  
-                    reply_to = '%s%s_%s@%s' % (GlobalSettings.DefaultMailPrefix, mail.id, mail.response_hash, GlobalSettings.mail.IMAP.EMAIL_HOST)
-                    # generate confirmation email message and send it
-#                    languageId = "lt"
-#                    messsage = render_to_string("mail_body.txt")
-
-                    from_email = GlobalSettings.mail.SMTP.CONFIRMATION_EMAIL_SENT_FROM
+                    reply_to = '%s%s-%s@%s' % (GlobalSettings.DefaultMailPrefix, mail.id, mail.response_hash, GlobalSettings.mail.IMAP.EMAIL_HOST)
 
                     confirm_link = ("http://%s/confirm/%s/%s") % (current_site.domain, mail.id, mail.response_hash)
                     emailTemplateParams = {'current_site' : current_site, 'mail' : mail, 'confirm_link': confirm_link}
                     message = renderEmailTemplate(u"email_confirmation.txt", emailTemplateParams)
 
-#                    _('You sent an email to ')+ mail.recipient_name + _(' with text:\n\n')+ message_disp + _('\n\nYou must confirm this message by clicking link \below:\n') + 'http://%s/confirm/%s/%s' % (current_site.domain, mail.id, mail.response_hash)
-                    email = EmailMessage(subject=_(u'Confirm your message %s') % sender_name, body=message, from_email=from_email,
-                        to=[sender], bcc=[], 
-                        headers = {'Reply-To': reply_to})
+                    email = EmailMessage(
+                        subject = _(u'Confirm your message, %s') % sender_name,
+                        body = message,
+                        from_email = GlobalSettings.mail.SMTP.CONFIRMATION_EMAIL_SENT_FROM,
+                        to = [sender],
+                        bcc = [], 
+                        headers = {'Reply-To': reply_to},
+                    )
                     email.send()
                     ThanksMessage = _('Thank you. This message must be confirmed. Please check your email.')
-                    logger.debug('%s' % (ThanksMessage))
                     return render_to_response('pjweb/thanks.html', {
                         'ThanksMessage': ThanksMessage,
                         'step1': '',

@@ -9,13 +9,6 @@ from pjweb.rss_feed.rss_feed import PublicMailsFeed
 
 admin.autodiscover()
 
-# allowing all alphanumeric
-# allowing all lithuanian, capital and non-capital
-# allowing hyphen '-'
-# allowing dot
-# allowing space
-sentenceRegExp = u"[a-zA-Z0-9ąčęėįšųūžĄČĘĖĮŠŲŪŽ_\- \.]+"
-
 urlpatterns = patterns('pjweb.views',
     # Example:
     # (r'^parasykjiems/', include('parasykjiems.foo.urls')),
@@ -26,16 +19,15 @@ urlpatterns = patterns('pjweb.views',
 
     # Handle start page
     (r'^$', 'index'),
-    (r'^contact/(\w+)/(\d+)/no_email/$', 'no_email'),
-    (r'^contact/(\w+)/(\w+)/(\w+)/smtp_error/$', 'smtp_error'),
 
-    (u'^choose_rep_civilparish/(%(sentence)s)/(%(sentence)s)/(%(sentence)s)/$' % {'sentence' : sentenceRegExp}, 'choose_representative_civil_parish'),
-    (u'^choose_rep/(%(sentence)s)/(%(sentence)s)/$' % {'sentence' : sentenceRegExp}, 'choose_representative'),
-    (u'^choose_rep/(%(sentence)s)/(%(sentence)s)/(%(sentence)s)/$' % {'sentence' : sentenceRegExp}, 'choose_representative'),
-    (u'^choose_rep/(%(sentence)s)/(%(sentence)s)/(%(sentence)s)/(%(sentence)s)/$' % {'sentence' : sentenceRegExp}, 'choose_representative'),
+    (u'^choose_rep_civilparish/([^/]+)/([^/]+)/([^/]+)/$', 'choose_representative_civil_parish'),
+    (u'^choose_rep/([^/]+)/([^/]+)/$', 'choose_representative'),
+    (u'^choose_rep/([^/]+)/([^/]+)/([^/]+)/$', 'choose_representative'),
+    (u'^choose_rep/([^/]+)/([^/]+)/([^/]+)/([^/]+)/$', 'choose_representative'),
 
     # contact a representative: write an email
-    (r'^contact/(%(sentence)s)/(\d+)/$' % {'sentence' : sentenceRegExp}, 'contact'),
+    (r'^contact/([^/]+)/(\d+)/$', 'contact'),
+    (r'^contact/([^/]+)/(\d+)/no_email/$', 'no_email'),
 
     # display a list of all public emails
     (r'^public/$', 'public_mails'),
