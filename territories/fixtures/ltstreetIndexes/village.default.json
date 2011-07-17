@@ -1,7 +1,7 @@
 [
   {
     "pk": 1,
-    "model": "territories.CountryAddresses",
+    "model": "territories.CountryAddress",
     "fields": {
       "city": "Miroslavas",
       "city_genitive": "Miroslavo kaimas",
