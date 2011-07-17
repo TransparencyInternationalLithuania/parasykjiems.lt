@@ -62,10 +62,9 @@ commonApps = ['django.contrib.auth',
 
 INTERNAL_IPS = ('127.0.0.1',)
 
-#HAYSTACK_INCLUDE_SPELLING = True
 
 def applyDefaultSettings():
-    GlobalSettings.mail = GlobalSettingsMail();
+    GlobalSettings.mail = GlobalSettingsMail()
     # send feedback from website to this email address
     GlobalSettings.mail.feedbackEmail = ["parasykjiems@gmail.com"]
 
@@ -80,8 +79,6 @@ def applyDefaultSettings():
     GlobalSettings.mail.IMAP.EMAIL_HOST_USER = 'vytautas'
     GlobalSettings.mail.IMAP.EMAIL_HOST_PASSWORD = 'devdev'
 
-
-
     # SMTP settings
     GlobalSettings.mail.SMTP = GlobalSettingsSMTP()
     GlobalSettings.mail.SMTP.EMAIL_HOST = ''
@@ -90,15 +87,19 @@ def applyDefaultSettings():
     GlobalSettings.mail.SMTP.EMAIL_HOST_PASSWORD = ""
     GlobalSettings.mail.SMTP.EMAIL_USE_TLS = False
 
-
-    # this controls where a info about which emails relates to which message in database is put.
-    # At the moment there are plans to support three backends:
-    # EmailInfoInToField - stores information in to field. So when representative gets an email,
-    #     a reply-to field will be semething like 'somepreifx_%s_%s@yourdomain' % (mail.id, mail.hash)
-    # EmailInfoInSubject - stores information in subject field. This allows us to use this backend with gmail boxes
-    #     where an IMAP server does not have to support catch-all (i.e. all messages go to single mail box)
-    # EmailInfoDogsAndCats - instead of saving message id in one of the field, a reply-to address is a combination
-    #     of random words, where is smaller than 3 letters. This will circumvent (probably) spam filters reliably.
+    # this controls where a info about which emails relates to which
+    # message in database is put.  At the moment there are plans to
+    # support three backends: EmailInfoInToField - stores information
+    # in to field. So when representative gets an email, a reply-to
+    # field will be semething like 'somepreifx_%s_%s@yourdomain' %
+    # (mail.id, mail.hash) EmailInfoInSubject - stores information in
+    # subject field. This allows us to use this backend with gmail
+    # boxes where an IMAP server does not have to support catch-all
+    # (i.e. all messages go to single mail box) EmailInfoDogsAndCats -
+    # instead of saving message id in one of the field, a reply-to
+    # address is a combination of random words, where is smaller than
+    # 3 letters. This will circumvent (probably) spam filters
+    # reliably.
     emailInfoInToField = EmailInfoInToField()
     emailInfoInToField.Email_public_host = GlobalSettings.mail.IMAP.EMAIL_PUBLIC_HOST
 
@@ -106,7 +107,6 @@ def applyDefaultSettings():
     EmailInfoInSubject.DefaultReplyTo = GlobalSettings.mail.IMAP.EMAIL_HOST_USER
 
     GlobalSettings.mail.composition_backends = [emailInfoInToField, emailInfoInSubject]
-
 
 
 # Create settings_local.py file from template, if does not exist

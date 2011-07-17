@@ -1,10 +1,15 @@
-    #!/usr/bin/env python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import datetime
 import logging
 
-import os, sys, imaplib, rfc822
-import string, re, StringIO
+import os
+import sys
+import imaplib
+import rfc822
+import string
+import re
+import StringIO
 import email
 from pjutils.exc import MethodNotImplementedException, ChainedException
 from pjweb.email.backends import CanNotExtractEmailIdAndHash

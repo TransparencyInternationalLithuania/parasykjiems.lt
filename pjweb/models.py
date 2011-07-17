@@ -3,10 +3,8 @@
 
 from django.db import models
 
+
 class Email(models.Model):
-    """ Table, where all emails are stored
-    """
-    
     MSG_STATES = (
         ('NotConfirmed', 'Not Confirmed'),
         ('Confirmed', 'Confirmed'),
@@ -18,19 +16,21 @@ class Email(models.Model):
     )
 
     sender_mail = models.EmailField()
-    sender_name = models.CharField(max_length = 128)
-    recipient_name = models.CharField(max_length = 128)
+    sender_name = models.CharField(max_length=128)
+    recipient_name = models.CharField(max_length=128)
 
-    # this holds an Id to PersonPosition object. Always links to institution member, even when
-    # emails recipient is ordinary citizen. This column should be renamed to better match its purpose
+    # this holds an Id to PersonPosition object. Always links to
+    # institution member, even when emails recipient is ordinary
+    # citizen. This column should be renamed to better match its
+    # purpose
     recipient_id = models.IntegerField()
-    recipient_type = models.CharField(max_length = 50)
+    recipient_type = models.CharField(max_length=50)
     recipient_mail = models.EmailField()
 
     subject = models.CharField(max_length=255)
 
     # a relation to previous email, to which this email is an answer
-    answer_to = models.ForeignKey('Email',null=True)
+    answer_to = models.ForeignKey('Email', null=True)
     response_hash = models.IntegerField()
     message = models.TextField(blank=True)
     msg_state = models.CharField(max_length=12, choices=MSG_STATES, null=True)
@@ -42,10 +42,8 @@ class Email(models.Model):
     def __unicode__(self):
         return self.recipient_name
 
-class MailHistory(models.Model):
-    """ It will show, what was done with an email
-    """
 
+class MailHistory(models.Model):
     EMAIL_STATES = (
         ('Sent', 'Sent'),
         ('FailedPermanently', 'Failed Permanently'),
@@ -53,9 +51,11 @@ class MailHistory(models.Model):
     )
 
     sender = models.EmailField()
-    recipient = models.CharField(max_length = 128)
+    recipient = models.CharField(max_length=128)
     mail = models.ForeignKey('Email')
-    mail_state = models.CharField(max_length=17, choices=EMAIL_STATES, blank=True)
+    mail_state = models.CharField(max_length=17,
+                                  choices=EMAIL_STATES,
+                                  blank=True)
     request_date = models.DateTimeField(auto_now=True, editable=False)
 
     def __unicode__(self):
