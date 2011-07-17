@@ -1,20 +1,38 @@
-from pjweb.models import Email, MailHistory
 from django.contrib import admin
 from django.utils.translation import ugettext as _
+
+from pjweb.models import Email, MailHistory
+
 
 class MsgAdmin(admin.ModelAdmin):
     fieldsets = [
         (_('Recipient'), {'fields': ['recipient_name']}),
         (_('Sender Information'), {'fields': ['sender_name', 'sender_mail']}),
-        (_('Message'),            {'fields': ['subject', 'message', 'msg_state', 'mail_date', 'public']}),
-    ]
+        (_('Message'), {'fields': ['subject',
+                                   'message',
+                                   'msg_state',
+                                   'mail_date',
+                                   'public']}),
+        ]
+
     readonly_fields = ("mail_date",)
-    list_display = ('sender_name', 'subject', 'msg_state', 'mail_date', 'public')
-    list_filter = ['mail_date', 'sender_mail', 'recipient_mail', 'msg_state']
-    search_fields = ['recipient_name', 'sender_name', 'recipient_mail', 'sender_mail']
+    list_display = ('sender_name',
+                    'subject',
+                    'msg_state',
+                    'mail_date',
+                    'public')
+    list_filter = ['mail_date',
+                   'sender_mail',
+                   'recipient_mail',
+                   'msg_state']
+    search_fields = ['recipient_name',
+                     'sender_name',
+                     'recipient_mail',
+                     'sender_mail']
     date_hierarchy = 'mail_date'
-    
+
 admin.site.register(Email, MsgAdmin)
+
 
 class MsgHistAdmin(admin.ModelAdmin):
     fieldsets = [

@@ -2,61 +2,62 @@
 # -*- coding: utf-8 -*-
 
 import logging
+import random
+import datetime
+
 from django.contrib.auth.views import redirect_to_login
-from pjweb.email.emailTemplates import renderEmailTemplate
-from settings import GlobalSettings
+from django.contrib.sites.models import Site
+from django.core.mail import EmailMessage
+from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.shortcuts import render_to_response
-from django.utils.translation import ugettext as _, check_for_language
-from django.core.mail import EmailMessage
-from contactdb.models import PersonPosition
-from pjweb.models import Email, MailHistory
-import pjweb.forms as forms
-from pjutils.insert_response import InsertResponse
-from pjutils.declension import DeclensionLt
 from django.utils import simplejson
-import random
-from django.contrib.sites.models import Site
-import datetime
 from django.utils.encoding import iri_to_uri
-from django.core.paginator import Paginator, InvalidPage, EmptyPage
+from django.utils.translation import ugettext as _, check_for_language
+
+from cdb_lt.management.commands.createMembers import loadInstitutionDescriptions
+from contactdb.models import PersonPosition
+from pjutils.declension import DeclensionLt
+from pjweb.email.emailTemplates import renderEmailTemplate
+from pjweb.models import Email, MailHistory
 from territories.houseNumberUtils import removeCornerFromHouseNumber
 from territories.searchInIndex import deduceAddress, searchInIndex
 from territories.searchMembers import findPersonPositions
-from cdb_lt.management.commands.createMembers import loadInstitutionDescriptions
+import pjweb.forms as forms
 import settings
 
 
 logger = logging.getLogger(__name__)
 
+
 def logAddressQueryToFile(queryString):
-    if GlobalSettings.logAddressesToFile is None:
+    if settings.GlobalSettings.logAddressesToFile is None:
         return
-    with open(GlobalSettings.logAddressesToFile, "a") as f:
+    with open(settings.GlobalSettings.logAddressesToFile, "a") as f:
         s = u"%s\n" % queryString
         f.write(s.encode('utf-8'))
 
-
 def searchInStreetIndex(query_string):
-    """ Searches throught street index and returns municipality / city / street/ house number
-    Additionally returns more data for rendering in template"""
+    """Searches throught street index and returns municipality / city
+    / street/ house number. Additionally returns more data for
+    rendering in template.
+    """
 
     logger.debug("query_string %s" % query_string)
     found_geodata = None
     not_found = ''
 
-
     logAddressQueryToFile(query_string)
-
 
     addressContext = deduceAddress(query_string)
     addressContext.number = removeCornerFromHouseNumber(addressContext.number)
 
+    found_entries = searchInIndex(
+        municipality=addressContext.municipality,
+        city=addressContext.city,
+        street=addressContext.street)
 
-    found_entries = searchInIndex(municipality= addressContext.municipality, city= addressContext.city,
-                                  street= addressContext.street)
-
-    # construct final uriss
+    # construct final uris
     for f in found_entries:
         # attach house numbers
         f.number = addressContext.number
@@ -292,7 +293,7 @@ def public(request, mail_id):
 
     for r in responses:
         if r.attachment_path is not None:
-            path = "%s/%s" % (GlobalSettings.ATTACHMENTS_MEDIA_PATH, r.attachment_path)
+            path = "%s/%s" % (settings.GlobalSettings.ATTACHMENTS_MEDIA_PATH, r.attachment_path)
             path = path.replace("\\", "/")
             r.attachment_path = "http://%s/%s" % (current_site.domain, path)
 
@@ -373,7 +374,7 @@ def contact(request, rtype, mp_id):
                 )
                 if send:
                     mail.save()  
-                    reply_to = '%s%s-%s@%s' % (GlobalSettings.DefaultMailPrefix, mail.id, mail.response_hash, GlobalSettings.mail.IMAP.EMAIL_HOST)
+                    reply_to = '%s%s-%s@%s' % (settings.GlobalSettings.DefaultMailPrefix, mail.id, mail.response_hash, settings.GlobalSettings.mail.IMAP.EMAIL_HOST)
 
                     confirm_link = ("http://%s/confirm/%s/%s") % (current_site.domain, mail.id, mail.response_hash)
                     emailTemplateParams = {'current_site' : current_site, 'mail' : mail, 'confirm_link': confirm_link}
@@ -382,7 +383,7 @@ def contact(request, rtype, mp_id):
                     email = EmailMessage(
                         subject = _(u'Confirm your message, %s') % sender_name,
                         body = message,
-                        from_email = GlobalSettings.mail.SMTP.CONFIRMATION_EMAIL_SENT_FROM,
+                        from_email = settings.GlobalSettings.mail.SMTP.CONFIRMATION_EMAIL_SENT_FROM,
                         to = [sender],
                         bcc = [], 
                         headers = {'Reply-To': reply_to},
@@ -435,17 +436,17 @@ def confirmMessageAndSendEmailToRepresentative(mail):
 
     # checking whether emails must be forwarded to some specific address
     # or to real representative addresses
-    recipients = GlobalSettings.mail.sendEmailToRepresentatives
-    if GlobalSettings.mail.sendEmailToRepresentatives == "sendToRepresentatives":
+    recipients = settings.GlobalSettings.mail.sendEmailToRepresentatives
+    if settings.GlobalSettings.mail.sendEmailToRepresentatives == "sendToRepresentatives":
         recipients = [mail.recipient_mail]
     logger.info("sending email to these recipients: %s" % recipients)
 
 
-    composition = GlobalSettings.mail.composition_backends[0]
+    composition = settings.GlobalSettings.mail.composition_backends[0]
     # determine reply address
     reply_to = composition.getReplyTo(mail)
 
-    from_email=GlobalSettings.mail.SMTP.REPRESENTATIVE_EMAIL_SENT_FROM
+    from_email=settings.GlobalSettings.mail.SMTP.REPRESENTATIVE_EMAIL_SENT_FROM
     subject = composition.getSubject(mail)
 
     # send an actual email message to government representative
@@ -517,7 +518,7 @@ def feedback(request):
             message = form.cleaned_data[u'message']
             subject = form.cleaned_data[u'subject']
             emailFrom = form.cleaned_data[u'emailFrom']
-            recipients = GlobalSettings.mail.feedbackEmail
+            recipients = settings.GlobalSettings.mail.feedbackEmail
             email = EmailMessage(subject=subject, body=message, from_email=settings.EMAIL_HOST_USER,
                 to=recipients, bcc=[], headers={'Reply-To': emailFrom})
             email.send()

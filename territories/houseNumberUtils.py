@@ -197,7 +197,7 @@ def depadHouseNumberWithZeroes(number):
     if number == u"":
         return u""
     if number[-1] == u"0":
-        number = number [:-1]
+        number = number[:-1]
     return number
 
 
