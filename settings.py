@@ -1,5 +1,10 @@
 import os
 
+PROJECT_ROOT = os.path.dirname(os.path.realpath(__file__))
+
+def project_relative(path):
+    return os.path.join(PROJECT_ROOT, path)
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -38,6 +43,7 @@ STATIC_URL = '/static/'
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 STATICFILES_DIRS = (
+    project_relative('static'),
 )
 
 STATICFILES_FINDERS = (
@@ -48,10 +54,8 @@ STATICFILES_FINDERS = (
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'ww7h#q+rru)mz=$e=gbyb(6n7cm0eb2!2bh+y5ahad)4iq-1vg'
 
-PROJECT_ROOT = os.path.dirname(os.path.realpath(__file__))
-
 TEMPLATE_DIRS = (
-    os.path.join(PROJECT_ROOT, 'templates'),
+    project_relative('templates'),
 )
 
 # List of callables that know how to import templates from various sources.
