@@ -27,7 +27,17 @@ DATABASES = {
 
 TIME_ZONE = 'Europe/Vilnius'
 
+_ = lambda x: x
+
 LANGUAGE_CODE = 'lt'
+LANGUAGES = (
+    ('en', _('English')),
+    ('lt', _('Lithuanian')),
+)
+
+LOCALE_PATHS = (
+    project_relative('locale'),
+)
 
 SITE_ID = 1
 
