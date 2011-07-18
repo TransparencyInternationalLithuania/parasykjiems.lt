@@ -3,7 +3,7 @@
 
 from django.test import TestCase
 from settings import *
-from territories.models import LithuanianCase
+from territories.models import LithuanianCases
 from territories.searchInIndex import searchInIndex
 
 scriptPath = os.path.dirname( os.path.realpath( __file__ ) )

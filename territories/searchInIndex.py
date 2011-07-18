@@ -9,7 +9,7 @@ from pjutils.deprecated import deprecated
 from pjutils.queryHelper import getAndQuery
 from territories.houseNumberUtils import isStringStreetHouseNumber
 from territories.ltPrefixes import removeGenericPartFromMunicipality, changeCityFromShortToLongForm, changeStreetFromShortToLongForm, extractStreetEndingForm, removeGenericPartFromStreet, containsCivilParishEnding, containsStreet, allCivilParishEndings, allCityEndings, changeMunicipalityFromShortToLongForm
-from territories.models import CountryAddress, LithuanianCase
+from territories.models import CountryAddresses, LithuanianCases
 
 
 logger = logging.getLogger(__name__)
@@ -255,7 +255,7 @@ def deduceAddress(query_string):
 def getGenericCaseMunicipality(municipalityNominative):
     """ Municipalities in Lithuania can be in short form, such as "Panevėžys", or in long, such as
     "Panevėžio miesto savivaldybė".  Translate short to long"""
-    mun = LithuanianCase.objects.all().filter(institutionType = LithuanianCase.Type.Municipality)\
+    mun = LithuanianCases.objects.all().filter(institutionType = LithuanianCases.Type.Municipality)\
         .filter(nominative__icontains = municipalityNominative)[0:1]
     mun = list(mun)
     if len(mun) == 0:
@@ -333,7 +333,7 @@ def searchInIndex(municipality = None, city = None, street = None):
 
     if street is None:
         finalQuery = getAndQuery(cityQuery, municipalityQuery)
-        return CountryAddress.objects.all().filter(finalQuery)\
+        return CountryAddresses.objects.all().filter(finalQuery)\
         .order_by('street')[0:50]
     else:
         # try searching with istarts with on whole street
@@ -341,7 +341,7 @@ def searchInIndex(municipality = None, city = None, street = None):
         street = changeStreetFromShortToLongForm(street)
         streetStartsWithEnding = Q(**{"street__istartswith": street})
         streetExactWithEndingFilter = getAndQuery(municipalityQuery, cityQuery, streetStartsWithEnding)
-        streetExactWithEnding = CountryAddress.objects.all().filter(streetExactWithEndingFilter)\
+        streetExactWithEnding = CountryAddresses.objects.all().filter(streetExactWithEndingFilter)\
             .order_by('street')[0:50]
         streetExactWithEnding = list(streetExactWithEnding)
         if len(streetExactWithEnding) > 0:
@@ -358,7 +358,7 @@ def searchInIndex(municipality = None, city = None, street = None):
         # search for street without stripped street ending, and street ending as separate query
         # This will return sreets "Gedimino Baravyko gatvė" for queries "Gedimino gatvė" (middle is missing)
         streetExactFilter = getAndQuery(municipalityQuery, cityQuery, streetWihoutEndingQueryStartsWith, streetEndingQuery)
-        streetExact = CountryAddress.objects.all().filter(streetExactFilter)\
+        streetExact = CountryAddresses.objects.all().filter(streetExactFilter)\
             .order_by('street')[0:50]
         streetExact = list(streetExact)
         if len(streetExact) > 0:
@@ -378,7 +378,7 @@ def searchInIndex(municipality = None, city = None, street = None):
             streetManyWordsFilter = getAndQuery(*queries)
 
             # send a query, get results
-            streetManyWords = CountryAddress.objects.all().filter(streetManyWordsFilter)\
+            streetManyWords = CountryAddresses.objects.all().filter(streetManyWordsFilter)\
                 .order_by('street')[0:50]
             streetManyWords = list(streetManyWords)
             if len(streetManyWords) > 0:
@@ -395,7 +395,7 @@ def searchInIndex(municipality = None, city = None, street = None):
             queries = queries + [municipalityQuery, cityQuery, streetEndingQuery]
             streetManyWordsFilter = getAndQuery(*queries)
             # send a query, get results
-            streetManyWords = CountryAddress.objects.all().filter(streetManyWordsFilter)\
+            streetManyWords = CountryAddresses.objects.all().filter(streetManyWordsFilter)\
                 .order_by('street')[0:50]
             streetManyWords = list(streetManyWords)
             if len(streetManyWords) > 0:
@@ -408,7 +408,7 @@ def searchInIndex(municipality = None, city = None, street = None):
 
         """# find with exact street
         streetExactFilter = getAndQuery(municipalityQuery, cityQuery, streetWihoutEndingQueryStartsWith)
-        streetExact = CountryAddress.objects.all().filter(streetExactFilter)\
+        streetExact = CountryAddresses.objects.all().filter(streetExactFilter)\
             .order_by('street')[0:50]
         streetExact = list(streetExact)
         if len(streetExact) > 0:
@@ -416,7 +416,7 @@ def searchInIndex(municipality = None, city = None, street = None):
 
         """#search for street without using street ending and starts with
         streetExactFilter = getAndQuery(municipalityQuery, cityQuery, streetWihoutEndingQueryStartsWith)
-        streetExact = CountryAddress.objects.all().filter(streetExactFilter)\
+        streetExact = CountryAddresses.objects.all().filter(streetExactFilter)\
             .order_by('street')[0:50]
         streetExact = list(streetExact)
         if len(streetExact) > 0:
@@ -425,7 +425,7 @@ def searchInIndex(municipality = None, city = None, street = None):
         #search for street without using street ending   and starts icontains
         streetWihoutEndingQueryContains = Q(**{"street__icontains": streetWihoutEnding})
         streetWithoutEndingFilter = getAndQuery(municipalityQuery, cityQuery, streetWihoutEndingQueryContains)
-        streetWithouEndingResult = CountryAddress.objects.all().filter(streetWithoutEndingFilter)\
+        streetWithouEndingResult = CountryAddresses.objects.all().filter(streetWithoutEndingFilter)\
             .order_by('street')[0:50]
         if len(streetWithouEndingResult) > 0:
             return streetWithouEndingResult
@@ -435,5 +435,5 @@ def searchInIndex(municipality = None, city = None, street = None):
         finalQuery = getAndQuery(cityQuery, municipalityQuery)
         if finalQuery is None:
             return []
-        return CountryAddress.objects.all().filter(finalQuery)\
+        return CountryAddresses.objects.all().filter(finalQuery)\
             .order_by('street')[0:50]
