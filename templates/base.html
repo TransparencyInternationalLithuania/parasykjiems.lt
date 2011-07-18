@@ -1,0 +1,11 @@
+{% extends "base-base.html" %}
+
+{% block body %}
+<div id="content">
+  <div id="c-head">
+    {% include 'pjweb/headers/steps.html' %}
+  </div>
+  
+  {% block content %}{% endblock %}
+</div>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "base-largecontent.html" %}
+{% load i18n %}
+{% block content %}
+
+    {% if diffAsCsvUrl %}
+        <p>
+            You can download <a href="{{ diffAsCsvUrl }}">diff as csv</a>
+        </p>
+    {% endif %}
+
+    {% if originalCsvUrl %}
+        <p> You can download <a href="{{ originalCsvUrl }}">original csv</a> </p>
+    {% endif %}
+
+
+    {% if importUrl %}
+        <p>You can import this file by clicking  <a href="{{ importUrl }}">here</a></p>
+    {% endif %}
+
+    {% if errorList %}
+        <ul style="color: red;background-color: #fafad2;">
+            {% for error in errorList %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <a href="/data/update/import/docs/">Import documentation</a>
+
+
+    <table>
+        <tr>
+            {% for headerValue in headers %}
+                <th>{{ headerValue }} </th>
+            {% endfor %}
+        </tr>
+
+        {% for row in newData %}
+            <tr>
+                {% for key, val in row.items %}
+                    {% if val.changed %}
+                        <td style="background-color: #fafad2;">
+                            <div style="color: red;">{{ val.previous }}</div> <br/><br/>
+                            <div style="color: green;">{{ val.changed }} </div>
+                        </td>
+                        {% else %}
+                        {% if val.previous %}
+                            <td style="">{{ val.previous }} </td>
+                        {% else %}
+                            <td style="">{{ val }} </td>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+
+    {% ifequal newData|length 0 %}
+        <div style="font-weight: bold">
+            <p>All data from this csv file is up to date in the database already</p>
+        </div>
+    {% endifequal %}
+
+{% endblock %}

@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+
+<p><a href="/contact/{{ mtype }}/{{ mp_id }}/private/">{% trans "Click here, if you want to send private email" %}</a></p>
+<p><a href="/contact/{{ mtype }}/{{ mp_id }}/public/">{% trans "Click here, if you want to send public email" %}</a></p>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+    {% for response in responses %}
+        <div class="mail_canvas_common {% cycle '' 'mail_canvas_response' %}">
+            <table class="mail_heading">
+                <tbody>
+                <tr>
+                    {% if response.msg_type == 'Response' %}
+                        <td class="mail_heading_column_1">
+                            <span class="color_dark_yellow mail_sender_common">{{ response.sender_name }}</span>
+                            {% trans "sent to" %} <span class="color_dark_red mail_sender_common">{{ response.recipient_name }} </span>
+                             <br/>
+                            <span style="font-weight:bold">Tema: </span>{{ response.subject}}
+                        </td>
+                    {% endif %}
+                    {% if response.msg_type == 'Question' %}
+                        <td class="mail_heading_column_1">
+                            <span class="color_dark_green mail_sender_common">{{ mail.sender_name }}</span>
+                            {% trans "sent to" %}
+                            <span class="color_dark_yellow mail_sender_common">{{ mail.recipient_name }} </span>,
+                            {{ mail.recipientPersonPosition.institution.name }} <br/>
+                            <span style="font-weight:bold">Tema: </span>{{ response.subject}}
+
+                        </td>
+                    {% endif %}
+                    <td class="mail_heading_column_2">
+                        {{ response.mail_date|date:"Y-m-d" }}, {{ response.mail_date|time:"H:i" }}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="hr"></div>
+            {{ response.message|linebreaks|urlizetrunc:32 }}
+            {% if response.attachment_path %}
+                <a href="{{ response.attachment_path }}">{% trans "Attached file" %}</a>
+            {% endif %}
+        </div>
+    {% endfor %}
+{% endblock %}

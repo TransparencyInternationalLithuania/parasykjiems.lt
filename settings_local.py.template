@@ -1,0 +1,149 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import os
+from GlobalSettingsClass import *
+from distutils import dir_util
+import logging
+import cdb_lt_streets.lt_profanities_list
+from settings import *
+
+
+DEBUG = True
+TEMPLATE_DEBUG = DEBUG
+
+scriptPath = os.path.dirname( os.path.realpath( __file__ ) )
+
+SERVER_EMAIL = 'parasykjiems@gmail.com'
+
+ADMINS = (
+    ('Error Group', 'parasykjiems-errors@googlegroups.com'),
+)
+
+MANAGERS = ADMINS
+
+# Local time zone for this installation. Choices can be found here:
+# http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
+# although not all choices may be available on all operating systems.
+# If running in a Windows environment this must be set to the same as your
+# system time zone.
+TIME_ZONE = 'Europe/Vilnius'
+
+# Language code for this installation. All choices can be found here:
+# http://www.i18nguy.com/unicode/language-identifiers.html
+LANGUAGE_CODE = 'lt-LT'
+
+TEMPLATE_DIRS = (
+ # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+ # Always use forward slashes, even on Windows.
+ # Don't forget to use absolute paths, not relative paths.
+ os.path.join(scriptPath, "templates")
+)
+
+dbPath = os.path.join(scriptPath, "db")
+dbFileName = "parasykjiems.db3"
+dir_util.mkpath(dbPath)
+
+DATABASE_ENGINE = 'sqlite3'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+DATABASE_NAME = os.path.join(dbPath, dbFileName)             # Or path to database file if using sqlite3.
+DATABASE_USER = ''             # Not used with sqlite3.
+DATABASE_PASSWORD = ''         # Not used with sqlite3.
+DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
+DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
+
+indexPath = os.path.join(scriptPath, "parasyk_index")
+dir_util.mkpath(indexPath)
+
+#HAYSTACK_SITECONF = 'parasykjiems.search_sites'
+#HAYSTACK_SEARCH_ENGINE = 'whoosh'
+#HAYSTACK_WHOOSH_PATH = os.path.join(dbPath, 'parasyk_index')
+#HAYSTACK_XAPIAN_PATH = os.path.join(scriptPath, 'parasyk_index')
+
+# variables for email sending
+GlobalSettings.mail.SMTP.EMAIL_HOST = 'smtp.gmail.com'
+GlobalSettings.mail.SMTP.EMAIL_PORT = 587
+GlobalSettings.mail.SMTP.EMAIL_HOST_USER = "parasykjiemsimap@gmail.com"
+GlobalSettings.mail.SMTP.EMAIL_HOST_PASSWORD = ""
+GlobalSettings.mail.SMTP.EMAIL_USE_TLS = True
+# a value in the "from" field when a confirmation email is sent. Usually something like "wtt@wtt.com"
+GlobalSettings.mail.SMTP.CONFIRMATION_EMAIL_SENT_FROM = "darius localhost web server"
+
+# a value in the "from" field when a representative receives an email. Can bei either an email address (usually
+# it is GlobalSettings.mail.SMTP.EMAIL_HOST_USER, since SMTP might allow only specific email addres)
+# or a string literal "name@imaphost", in which case name will be senders first name, and IMAP public host name in the end
+#GlobalSettings.mail.SMTP.REPRESENTATIVE_EMAIL_SENT_FROM = GlobalSettings.mail.SMTP.EMAIL_HOST_USER
+GlobalSettings.mail.SMTP.REPRESENTATIVE_EMAIL_SENT_FROM = "name@imaphost"
+
+# a "from" field when a representative email is forwarded back to respondent
+GlobalSettings.mail.SMTP.REPRESENTATIVE_REPLY_EMAIl_SENT_FROM = "parasykjiems@parasykjiems.lt"
+
+
+
+# email sending backend - works only from django 1.2
+# to console
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# real one
+#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+# where the static media files are
+STATIC_DOC_ROOT = os.path.join(scriptPath, "static")
+
+# this prefix will be attached to every email sent to representatives
+# Final reply_to field will be calculated more or less like this:
+# reply_to = '%s%s_%s@%s' % (GlobalSettings.DefaultMailPrefix, mail.id, mail.response_hash, GlobalSettings.MAIL_SERVER)
+GlobalSettings.DefaultMailPrefix = "reply"
+
+# path, where attachments are stored - should be publicly accessible, if you ar planning tu include them on site
+GlobalSettings.ATTACHMENTS_PATH = os.path.join(scriptPath, "static", "files")
+
+# path, from where attachments are taken, when display on site (without trailing "/")
+GlobalSettings.ATTACHMENTS_MEDIA_PATH = os.path.join("static", "files")
+dir_util.mkpath(GlobalSettings.ATTACHMENTS_PATH)
+dir_util.mkpath(GlobalSettings.ATTACHMENTS_MEDIA_PATH)
+
+# enable logging
+logPath = os.path.join(scriptPath, "logs")
+dir_util.mkpath(logPath)
+LOG_FILENAME = os.path.join(logPath, 'pjweb.log')
+logging.basicConfig(filename=LOG_FILENAME,level=logging.DEBUG)
+
+
+# Setttings repository for ParasykJiems.LT
+#variables for getting email
+GlobalSettings.mail.IMAP.EMAIL_PUBLIC_HOST = 'gmail.com'
+# IMAP or IMAP4_SSL
+GlobalSettings.mail.IMAP.EMAIL_HOST_TYPE = 'IMAP4_SSL'
+# PLAIN or CRAM_MD5
+GlobalSettings.mail.IMAP.EMAIL_LOGIN_TYPE = 'PLAIN'
+GlobalSettings.mail.IMAP.EMAIL_HOST = 'imap.gmail.com'
+GlobalSettings.mail.IMAP.EMAIL_PORT = '993'
+GlobalSettings.mail.IMAP.EMAIL_HOST_USER = 'parasykjiemsimap@gmail.com'
+GlobalSettings.mail.IMAP.EMAIL_HOST_PASSWORD = ''
+
+# variables for accessing Lithuanian contact db documents on google docs
+#GlobalSettings.GOOGLE_DOCS_USER = 'parasykjiems@gmail.com'
+#GlobalSettings.GOOGLE_DOCS_PASSWORD = 'enter password here'
+
+_ = lambda s: s
+
+LANGUAGES = (
+      ('lt', _('Lithuanian')),
+      ('en', _('English')),
+)
+
+#list of "nasty" words
+GlobalSettings.PROFANITIES_LIST = cdb_lt_streets.lt_profanities_list.profanities_list
+
+# set this to True if you want to run geo tests for Lithuanian data against real world data / real www servers
+GlobalSettings.EnableWWWForLTGeoTests = False
+
+# list additional apps, which are needed at live server, such as gunicorn, or similar
+#GlobalSettings.LiveServerApps = ['gunicorn']
+GlobalSettings.LiveServerApps = []
+
+# Whether to send emails to real representatives, or only to specific addresses
+# Possible values - list of emails, single email, literal string "sendToRepresentatives", which will send email to representatives
+GlobalSettings.mail.sendEmailToRepresentatives = ["parasykjiems@gmail.com"]
+
+# Logs all user eneters address queries into specified file. Set to None to disable this
+GlobalSettings.logAddressesToFile = "logs/addresses.log"

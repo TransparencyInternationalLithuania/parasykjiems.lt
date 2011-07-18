@@ -1,0 +1,16 @@
+{% load i18n %}
+{{ messageBody }}
+
+---------------------------------
+
+This email was sent from website {{current_site.domain}}. Email sender is: {{mail.sender_name}}.
+
+
+{{current_site.domain}} website is a civic website, allowing citicens to contact his own government representatives.
+
+{% if mail.public %}
+This mail is public. Your reply will be sent to sender, and will be made available on the internet on this address: {{mail.response_url}}
+{% else %}
+The sender wanted that the email would be kept only between you and the sender. This email and all replies to it will be sent directly to sender.
+{% endif %}
+Please reply to this email by pressing "reply" button in your email client.
