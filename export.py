@@ -70,7 +70,7 @@ with open('export/personpositions.csv', 'wb') as f:
                     'contact_info': e(contact_info)})
 print
 
-print 'Exporting %d InstitutionTerritories.' % \
+print 'Exporting %d InstitutionTerritory.' % \
       len(InstitutionTerritory.objects.all()),
 with open('export/institutionterritories.csv', 'wb') as f:
     sys.stdout.flush()
@@ -88,7 +88,7 @@ with open('export/institutionterritories.csv', 'wb') as f:
     c = 0
     for t in InstitutionTerritory.objects.all():
         c += 1
-jhn        if c % 1000 == 0:
+        if c % 1000 == 0:
             print ' ... %d' % c,
             sys.stdout.flush()
         if t.numberOdd is None:

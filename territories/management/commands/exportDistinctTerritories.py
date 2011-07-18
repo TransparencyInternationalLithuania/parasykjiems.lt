@@ -9,7 +9,7 @@ import os
 from django.db import transaction
 from contactdb.models import InstitutionType
 from territories.houseNumberUtils import depadHouseNumberWithZeroes
-from territories.models import InstitutionTerritory, CountryAddress
+from territories.models import InstitutionTerritory, CountryAddresses
 
 class Command(BaseCommand):
     args = '<>'
@@ -30,7 +30,7 @@ class Command(BaseCommand):
 
         self.streets = []
 
-        for t in CountryAddress.objects.all().filter(municipality__in=municipalities).order_by(u"municipality", u"city", u"street"):
+        for t in CountryAddresses.objects.all().filter(municipality__in=municipalities).order_by(u"municipality", u"city", u"street"):
             if t.city == u"":
                 continue
             if t.street != u"":

@@ -3,7 +3,7 @@
 from django.db import models
 from contactdb.models import AddressNameField, Institution, HouseNumberField, HouseNumberOddField
 
-class CountryAddress(models.Model):
+class CountryAddresses(models.Model):
     """ Contains a list of all streets in the country. Used to validate user input, when
     searching representatives with address"""
 
@@ -17,7 +17,7 @@ class CountryAddress(models.Model):
     street = AddressNameField(db_index = True)
 
 
-class LithuanianCase(models.Model):
+class LithuanianCases(models.Model):
     """ each Lithuanian object can be written in several cases. This mapping helps map from various form
     http://en.wikipedia.org/wiki/List_of_grammatical_cases """
 
