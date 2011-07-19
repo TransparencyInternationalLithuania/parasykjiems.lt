@@ -1,0 +1,25 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="/static/style.css" />
+    <title>{% block title %}ParašykJiems{% endblock %}</title>
+  </head>
+  <body>
+    <div id="head">
+      <div class="cont">
+        <p id="lang">
+        <p id="logo">
+          <a href="/"><img src="/static/img/logo.png" width="359" height="50"
+                           alt="{% trans "ParašykJiems - Fast method to find representatives and contact them." %}"></a>
+        <p id="nav">
+          <a href="/about" id="nav-about">{% trans "About project" %}</a>
+      </div>
+    </div>
+    <div id="content">
+      {% block content %}{% endblock %}
+    </div>    
+    <p align="center">{% trans "Have any notes, suggestions?" %} <a href="/feedback/" >{% trans "Write to us" %}</a></p>
+  </body>
+</html>
