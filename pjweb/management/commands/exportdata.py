@@ -36,7 +36,7 @@ Puts results in CSV files into the export directory.
 
         institutions_with_persons = set()
         
-        print 'Exporting {} PersonPositions'.format(
+        print 'Exporting {} PersonPositions.'.format(
             len(PersonPosition.objects.all()))
         with open('export/personpositions.csv', 'wb') as f:
             w = csv.DictWriter(f,
@@ -66,8 +66,8 @@ Puts results in CSV files into the export directory.
 
                 institutions_with_persons.add(p.institution.id)
 
-        print 'Exporting at most {} Institutions without persons'.format(
-            len(Institution.objects.all()))
+        print 'Exporting {} Institutions without persons.'.format(
+            len(Institution.objects.all()) - len(PersonPosition.objects.all()))
         with open('export/institutions.csv', 'wb') as f:
             w = csv.DictWriter(f,
                                ['full_name',
@@ -94,13 +94,13 @@ Puts results in CSV files into the export directory.
                                 'email': e(i.officeEmail),
                                 'contact_info': e(contact_info)})
 
-        print 'Exporting {} InstitutionTerritories'.format(
+        print 'Exporting {} InstitutionTerritories.'.format(
             len(InstitutionTerritory.objects.all()))
         with open('export/institutionterritories.csv', 'wb') as f:
             w = csv.DictWriter(f,
                                ['institution_id',
                                 'municipality',
-                                'eldership',
+                                'elderate',
                                 'city',
                                 'street',
                                 'number_from',
@@ -117,7 +117,7 @@ Puts results in CSV files into the export directory.
                     number_filter = 'even'
                 w.writerow({'institution_id': str(t.institution.id),
                             'municipality': e(t.municipality),
-                            'eldership': e(t.civilParish),
+                            'elderate': e(t.civilParish),
                             'city': e(t.city),
                             'street': e(t.street),
                             'number_from': e(t.numberFrom),
