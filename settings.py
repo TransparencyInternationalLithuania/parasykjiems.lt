@@ -6,24 +6,9 @@ def project_relative(path):
     return os.path.join(PROJECT_ROOT, path)
 
 DEBUG = True
-TEMPLATE_DEBUG = DEBUG
 
-ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
-)
+ADMINS = ()
 
-MANAGERS = ADMINS
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'parasykjiems.db',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',
-        'PORT': '',
-    }
-}
 
 TIME_ZONE = 'Europe/Vilnius'
 
@@ -118,3 +103,13 @@ LOGGING = {
         },
     }
 }
+
+if os.path.exists('settings_local.py'):
+    from settings_local import *
+else:
+    from shutil import copy
+    print 'Initializing local settings.'
+    copy('settings_local_default.py', 'settings_local.py')
+
+MANAGERS = ADMINS
+TEMPLATE_DEBUG = DEBUG
