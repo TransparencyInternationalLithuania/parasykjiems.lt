@@ -12,6 +12,7 @@ class InstitutionType(models.Model):
 
     name = models.CharField(
         max_length=_NAME_LEN,
+        db_index=True,
         help_text=_('Generic name for this kind of institution.'))
     
     representative_title = models.CharField(
@@ -20,9 +21,6 @@ class InstitutionType(models.Model):
 
     def __unicode__(self):
         return self.name
-
-    class Meta:
-        verbose_name_plural = 'institution types'
 
 
 class Representative(models.Model):
@@ -35,21 +33,25 @@ class Representative(models.Model):
 
     institution_name = models.CharField(
         max_length=_NAME_LEN,
+        db_index=True,
         help_text=_('Specific name of the institution.'))
     
-    institution_type = models.ForeignKey(InstitutionType)
+    institution_type = models.ForeignKey(InstitutionType, db_index=True)
 
     email = models.EmailField(help_text=_('Primary email.'), blank=True)
-    contact_info = models.TextField(
-        blank=True,
-        help_text=_('Other contact information, like address.'))
+    phone = models.CharField(max_length=50, blank=True)
+    address = models.TextField(blank=True)
     
     def __unicode__(self):
-        return u'%s %s' % (self.institution_type.representative_title,
-                           self.full_name)
+        if self.full_name == '':
+            return u'{} {}'.format(self.institution_type.name,
+                                   self.institution_name)
+        else:
+            return u'{} {}'.format(self.institution_type.representative_title,
+                                   self.full_name)
 
     def get_absolute_url(self):
-        return '/person/%d' % self.id
+        return '/person/{}'.format(self.id)
 
 
 class Territory(models.Model):
@@ -66,22 +68,20 @@ class Territory(models.Model):
     )
 
     municipality = models.CharField(max_length=_NAME_LEN)
-    elderate = models.CharField(max_length=_NAME_LEN)
-    city = models.CharField(max_length=_NAME_LEN)
-    street = models.CharField(max_length=_NAME_LEN)
+    elderate = models.CharField(max_length=_NAME_LEN, blank=True)
+    city = models.CharField(max_length=_NAME_LEN, blank=True)
+    street = models.CharField(max_length=_NAME_LEN, blank=True)
 
-    number_from = models.IntegerField(null=True)
+    number_from = models.IntegerField(blank=True)
     number_from_letters = models.CharField(
         max_length=5,
         blank=True,
-        null=True,
         help_text=_('Letters after the number_from house number.'))
     
-    number_to = models.IntegerField(null=True)
+    number_to = models.IntegerField(blank=True)
     number_to_letters = models.CharField(
         max_length=5,
         blank=True,
-        null=True,
         help_text=_('Letters after the number_to house number.'))
     
     number_filter = models.CharField(max_length=4,
@@ -90,13 +90,14 @@ class Territory(models.Model):
     representative = models.ForeignKey(Representative)
 
     def __unicode__(self):
-        return u', '.join(unicode(x) for x in [self.municipality,
-                                               self.elderate,
-                                               self.city,
-                                               self.street,
-                                               self.number_from,
-                                               self.number_to,
-                                               self.number_filter])
+        return u'{}, {}, {}, {} {}{}-{}{} ({})'.format(
+            self.municipality,
+            self.elderate,
+            self.city,
+            self.street,
+            self.number_from,
+            self.number_to,
+            self.number_filter)
 
     class Meta:
         verbose_name_plural = _("territories")

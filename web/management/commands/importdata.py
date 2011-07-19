@@ -62,7 +62,8 @@ class Command(BaseCommand):
                 institution_name=d(row['institution_name']),
                 institution_type=institution_type,
                 email=d(row['email']),
-                contact_info=d(row['contact_info']))
+                phone=d(row['phone']),
+                address=d(row['address']))
             representative.save()
             institution_to_representative_id \
                 [int(row['institution_id'])] = representative.id
