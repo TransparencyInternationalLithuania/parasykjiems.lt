@@ -7,7 +7,7 @@ from django.core.management.base import BaseCommand, CommandError
 from progressbar import ProgressBar
 
 from contactdb.models import InstitutionType, PersonPosition, Institution
-from territories.models import InstitutionTerritory
+from territories.models import InstitutionTerritory, LithuanianCases
 
 class Command(BaseCommand):
     args = '<>'
@@ -45,24 +45,17 @@ Puts results in CSV files into the export directory.
                                 'institution_id',
                                 'institution_type',
                                 'email',
-                                'contact_info'])
+                                'phone',
+                                'address'])
             w.writeheader()
             for p in ProgressBar()(PersonPosition.objects.all()):
-                contact_fields = [p.primaryPhone,
-                                  p.secondaryPhone,
-                                  p.institution.officeAddress]
-        
-                contact_info = u'\n'.join(y
-                                          for x in contact_fields
-                                          for y in [unicode(x).strip()]
-                                          if y != '' and y != '-')
-                
                 w.writerow({'full_name': e(p.person.fullName),
                             'institution_name': e(p.institution.name),
                             'institution_id': str(p.institution.id),
                             'institution_type': str(p.institution.institutionType.id),
                             'email': e(p.email),
-                            'contact_info': e(contact_info)})
+                            'phone': e(p.primaryPhone or p.secondaryPhone),
+                            'address': e(p.institution.officeAddress)})
 
                 institutions_with_persons.add(p.institution.id)
 
@@ -75,24 +68,18 @@ Puts results in CSV files into the export directory.
                                 'institution_id',
                                 'institution_type',
                                 'email',
-                                'contact_info'])
+                                'phone',
+                                'address'])
             w.writeheader()
             for i in ProgressBar()(Institution.objects.all()):
                 if i.id not in institutions_with_persons:
-                    contact_fields = [i.officePhone,
-                                      i.officeAddress]
-        
-                    contact_info = u'\n'.join(y
-                                              for x in contact_fields
-                                              for y in [unicode(x).strip()]
-                                              if y != '' and y != '-')
-                
                     w.writerow({'full_name': '',
                                 'institution_name': e(i.name),
                                 'institution_id': str(i.id),
                                 'institution_type': str(i.institutionType.id),
                                 'email': e(i.officeEmail),
-                                'contact_info': e(contact_info)})
+                                'phone': e(i.officePhone),
+                                'address': e(i.officeAddress)})
 
         print 'Exporting {} InstitutionTerritories.'.format(
             len(InstitutionTerritory.objects.all()))
