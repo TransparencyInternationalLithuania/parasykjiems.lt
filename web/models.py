@@ -72,16 +72,18 @@ class Territory(models.Model):
     city = models.CharField(max_length=_NAME_LEN, blank=True)
     street = models.CharField(max_length=_NAME_LEN, blank=True)
 
-    number_from = models.IntegerField(blank=True)
+    number_from = models.IntegerField(blank=True, null=True)
     number_from_letters = models.CharField(
         max_length=5,
         blank=True,
+        null=True,
         help_text=_('Letters after the number_from house number.'))
     
-    number_to = models.IntegerField(blank=True)
+    number_to = models.IntegerField(blank=True, null=True)
     number_to_letters = models.CharField(
         max_length=5,
         blank=True,
+        null=True,
         help_text=_('Letters after the number_to house number.'))
     
     number_filter = models.CharField(max_length=4,
