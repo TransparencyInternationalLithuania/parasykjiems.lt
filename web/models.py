@@ -4,20 +4,30 @@ from django.utils.translation import ugettext_lazy as _
 _NAME_LEN = 200
 
 
-class InstitutionType(models.Model):
-    """A kind of institution for categorization.
+class InstitutionKind(models.Model):
+    name = models.CharField(max_length=_NAME_LEN)
+    description = models.TextField()
 
-    Allows easier abstraction of various kinds of institutions.
-    """
+    def __unicode__(self):
+        return self.name
 
-    name = models.CharField(
-        max_length=_NAME_LEN,
-        db_index=True,
-        help_text=_('Generic name for this kind of institution.'))
-    
-    representative_title = models.CharField(
-        max_length=_NAME_LEN,
-        help_text=_('Title of a corresponding representative.'))
+
+class Institution(models.Model):
+    name = models.CharField(max_length=_NAME_LEN)
+    kind = models.ForeignKey(InstitutionKind)
+
+    email = models.CharField(max_length=_NAME_LEN, blank=True)
+    phone = models.CharField(max_length=_NAME_LEN, blank=True)
+    address = models.TextField(blank=True)
+
+    def __unicode__(self):
+        return self.name
+
+
+class RepresentativeKind(models.Model):
+    """Kind of position of representative in institution."""
+    name = models.CharField(max_length=_NAME_LEN)
+    description = models.TextField()
 
     def __unicode__(self):
         return self.name
@@ -29,31 +39,22 @@ class Representative(models.Model):
     Contains all the related contact information.
     """
 
-    full_name = models.CharField(max_length=_NAME_LEN)
+    name = models.CharField(max_length=_NAME_LEN)
+    kind = models.ForeignKey(RepresentativeKind)
 
-    institution_name = models.CharField(
-        max_length=_NAME_LEN,
-        db_index=True,
-        help_text=_('Specific name of the institution.'))
-    
-    institution_type = models.ForeignKey(InstitutionType, db_index=True)
+    institution = models.ForeignKey(Institution)
 
-    email = models.EmailField(help_text=_('Primary email.'), blank=True)
-    phone = models.CharField(max_length=50, blank=True)
+    email = models.CharField(max_length=_NAME_LEN, blank=True)
+    phone = models.CharField(max_length=_NAME_LEN, blank=True)
     address = models.TextField(blank=True)
-    
+
     def __unicode__(self):
-        if self.full_name == '':
-            return u'{} {}'.format(self.institution_type.name,
-                                   self.institution_name)
-        else:
-            return u'{} {}'.format(self.institution_type.representative_title,
-                                   self.full_name)
+        return u'{}, {} in {}'.format(
+            self.name,
+            self.kind,
+            self.institution)
 
-    def get_absolute_url(self):
-        return '/person/{}'.format(self.id)
-
-
+    
 class Territory(models.Model):
     """A street with relevant house numbers and the corresponding
     representative.
@@ -61,47 +62,21 @@ class Territory(models.Model):
     Used to find representative by address.
     """
 
-    NUMBER_FILTER_CHOICES = (
-        ('all', _('all')),
-        ('odd', _('odd')),
-        ('even', _('even')),
-    )
+    institution = models.ForeignKey(Institution)
 
     municipality = models.CharField(max_length=_NAME_LEN)
-    elderate = models.CharField(max_length=_NAME_LEN, blank=True)
-    city = models.CharField(max_length=_NAME_LEN, blank=True)
+    city = models.CharField(max_length=_NAME_LEN,
+                            help_text=_("Name of city, town or village."))
     street = models.CharField(max_length=_NAME_LEN, blank=True)
 
-    number_from = models.IntegerField(blank=True, null=True)
-    number_from_letters = models.CharField(
-        max_length=5,
-        blank=True,
-        null=True,
-        help_text=_('Letters after the number_from house number.'))
-    
-    number_to = models.IntegerField(blank=True, null=True)
-    number_to_letters = models.CharField(
-        max_length=5,
-        blank=True,
-        null=True,
-        help_text=_('Letters after the number_to house number.'))
-    
-    number_filter = models.CharField(max_length=4,
-                                     choices=NUMBER_FILTER_CHOICES)
-
-    representative = models.ForeignKey(Representative)
+    numbers = models.TextField()
 
     def __unicode__(self):
-        return u'{}, {}, {}, {} {}{}-{}{} ({})'.format(
-            self.municipality,
-            self.elderate,
-            self.city,
-            self.street,
-            self.number_from,
-            self.number_from_letters,
-            self.number_to,
-            self.number_to_letters,
-            self.number_filter)
+        s = u'{}, {}'.format(self.municipality, self.city)
+        if street != '':
+            s += u', {}'.format(self.street)
+        s += ': {}'.format(self.numbers)
+        return s
 
     class Meta:
         verbose_name_plural = _("territories")
