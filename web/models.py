@@ -98,7 +98,9 @@ class Territory(models.Model):
             self.city,
             self.street,
             self.number_from,
+            self.number_from_letters,
             self.number_to,
+            self.number_to_letters,
             self.number_filter)
 
     class Meta:
