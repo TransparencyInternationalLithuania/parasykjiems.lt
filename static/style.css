@@ -20,7 +20,7 @@ body {
 #main-block {
     width: 44em;
     margin: 2em auto 2em auto;
-    padding: 1em 0 1em 0;
+    padding: 0em 0 1em 0;
     border: solid 1px #888;
     background: white;
     -webkit-border-radius: 5px;
@@ -38,7 +38,13 @@ a:hover {
 }
 
 #logo {
-    margin: 0 2em 0 2em;
+    width: 100%;
+    /* margin: 0 2em 0 2em; */
+    background: #efefef;
+}
+
+#logo img {
+    margin: 1em 2em 1em 2em;
 }
 
 #footer {
