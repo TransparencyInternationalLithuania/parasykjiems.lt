@@ -1,3 +1,19 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% block content %}
+<p>
+  {% blocktrans %}
+  Search by entering:
+  <ul>
+    <li>your full address,
+    <li>part of your address,
+    <li>a representative's name,
+    <li>an institution's name.
+  </ul>
+  {% endblocktrans %}
+</p>
+<form action="/">
+  <input name="q" value="{{ search_query }}"></input>
+  <input value="{% trans "Search" %}" type="submit"></input>
+</form>
 {% endblock %}
