@@ -14,7 +14,7 @@
       </div>
       <ul id="menu">
         {% for item in MENU %}
-        <a href="{{ item.href }}" class="{{ item.classes }}"><li>{{ item.name }}</li></a>
+        <a href="{{ item.href }}" class="{% if item.name == active_menu %}selected{% endif %}"><li>{{ item.name }}</li></a>
         {% endfor %}
       </ul>
       <div id="content">
