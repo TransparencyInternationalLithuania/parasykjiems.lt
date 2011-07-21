@@ -10,8 +10,8 @@ body {
 #main-block {
     width: 44em;
     margin: 2em auto 2em auto;
-    padding: 1em 1em 1em 1em;
-    border: solid 1px #ccc;
+    padding: 1em 0 1em 0;
+    border: solid 1px #888;
     background: white;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
@@ -27,15 +27,63 @@ a:hover {
     color: #0053FA;
 }
 
+#logo {
+    margin: 0 2em 0 2em;
+}
+
 #footer {
     width: 44em;
     margin: 2em auto 2em auto;
     text-align: center;
     font-size: 80%;
     color: #ffffff;
-    text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    text-shadow: 0px 0px 6px rgba(0, 0, 0, 0.6);
 }
 
 #footer a {
     color: #DFE1FF;
+}
+
+#menu {
+    background: #555;
+    background-image: url(/static/img/menu-bg.png);
+    background-repeat: repeat-x;
+    text-align: center;
+    height: 40px;
+    margin: 0 0 0 0;
+}
+
+#menu li {
+    display: inline;
+}    
+
+#menu a {
+    text-decoration: none;
+    font-size: 90%;
+
+    background: white;
+    color: black;
+    opacity: 0.5;
+
+    display: inline-block;
+    padding-top: 1px;
+    width: 200px;
+    margin-top: 9px;
+    height: 30px;
+    line-height: 30px;
+
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+#menu a:hover {
+    opacity: 0.7;
+}
+
+#menu a.selected {
+    opacity: 1;
 }
