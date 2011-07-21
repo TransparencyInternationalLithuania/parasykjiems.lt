@@ -7,19 +7,22 @@
     <title>{% block title %}ParašykJiems{% endblock %}</title>
   </head>
   <body>
-    <div id="head">
-      <div class="cont">
-        <p id="lang">
-        <p id="logo">
-          <a href="/"><img src="/static/img/logo.png" width="359" height="50"
-                           alt="{% trans "ParašykJiems - Fast method to find representatives and contact them." %}"></a>
-        <p id="nav">
-          <a href="/about" id="nav-about">{% trans "About project" %}</a>
+    <div id="main-block">
+      <div id="logo">
+        <a href="/"><img src="/static/img/logo.png"
+                         alt="{% trans "ParašykJiems - Fast method to find representatives and contact them." %}"></a>
       </div>
+      <ul id="menu">
+        <li><a href="/">{% trans "Representative search" %}</a></li>
+        <li><a href="/about">{% trans "About project" %}</a></li>
+        <li><a href="/mail">{% trans "Public letters" %}</a></li>
+      </ul>
+      <div id="content">
+        {% block content %}{% endblock %}
+      </div>    
     </div>
-    <div id="content">
-      {% block content %}{% endblock %}
-    </div>    
-    <p align="center">{% trans "Have any notes, suggestions?" %} <a href="/feedback/" >{% trans "Write to us" %}</a></p>
+    <div id="footer">
+      {% trans "Have any notes, suggestions?" %} <a href="/feedback/" >{% trans "Write to us." %}</a>
+    </div>
   </body>
 </html>
