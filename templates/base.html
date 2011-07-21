@@ -13,9 +13,9 @@
                          alt="{% trans "ParašykJiems - Fast method to find representatives and contact them." %}"></a>
       </div>
       <ul id="menu">
-        <a href="/" class="selected"><li>{% trans "Representative search" %}</li></a>
-        <a href="/mail"><li>{% trans "Public letters" %}</li></a>
-        <a href="/about"><li>{% trans "About project" %}</li></a>
+        {% for item in MENU %}
+        <a href="{{ item.href }}" class="{{ item.classes }}"><li>{{ item.name }}</li></a>
+        {% endfor %}
       </ul>
       <div id="content">
         {% block content %}{% endblock %}
