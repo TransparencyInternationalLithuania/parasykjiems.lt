@@ -1,0 +1,7 @@
+body text: #222
+heading text: #555
+link: #0036A3
+link hover: #0053FA
+detail: #faa500 (complementary to link hover)
+background top: #363D4C
+background bottom: #7281A1
