@@ -65,8 +65,8 @@ msgid "Search"
 msgstr "Paieška"
 
 #: web/menu.py:14 web/views.py:8
-msgid "Find representative"
-msgstr "Ieškoti atstovo"
+msgid "Representative search"
+msgstr "Atstovo paieška"
 
 #: web/menu.py:15 web/views.py:13
 msgid "Public letters"

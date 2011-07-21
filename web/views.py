@@ -5,7 +5,7 @@ import django.http
 def index(request):
     return render(request, 'index.html', {
         'search_query': request.GET.get('q', ''),
-        'active_menu': _('Find representative'),
+        'active_menu': _('Representative search'),
     })
 
 def mail(request):
