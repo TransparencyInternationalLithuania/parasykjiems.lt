@@ -103,6 +103,7 @@ a:hover {
 
 #menu a.selected {
     opacity: 1;
+    font-weight: bold;
 }
 
 #content {
