@@ -8,25 +8,78 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-18 09:11+0300\n"
-"PO-Revision-Date: 2011-07-18 09:16+0300\n"
+"POT-Creation-Date: 2011-07-21 13:47+0300\n"
+"PO-Revision-Date: 2011-07-21 13:49+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%"
-"100<10 || n%100>=20) ? 1 : 2)\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n"
+"%100<10 || n%100>=20) ? 1 : 2)\n"
 
-#: settings.py:34
+#: settings.py:19
 msgid "English"
 msgstr "Anglų"
 
-#: settings.py:35
+#: settings.py:20
 msgid "Lithuanian"
 msgstr "Lietuvių"
 
-#: templates/index.html:9
-msgid "A simple way to contact your representatives."
-msgstr "Paprastas būdas susisiekti su jūsų valdžios atstovais."
+#: templates/base.html:12
+msgid "ParašykJiems"
+msgstr ""
+
+#: templates/base.html:24
+msgid "Have any notes, suggestions?"
+msgstr "Turite pastabų, pasiūlymų?"
+
+#: templates/base.html:24
+msgid "Write to us."
+msgstr "Parašykite mums."
+
+#: templates/index.html:5
+msgid ""
+"\n"
+"  You can search by entering:\n"
+"  <ul>\n"
+"    <li>your full address,\n"
+"    <li>part of your address,\n"
+"    <li>a representative's name,\n"
+"    <li>an institution's name.\n"
+"  </ul>\n"
+"  "
+msgstr "\n"
+"  Galite ieškoti įvesdami:\n"
+"  <ul>\n"
+"    <li>savo pilną adresą,\n"
+"    <li>dalį savo adreso,\n"
+"    <li>atstovo vardą,\n"
+"    <li>institucijos pavadinimą.\n"
+"  </ul>\n"
+"  "
+
+#: templates/index.html:17
+msgid "Search"
+msgstr "Paieška"
+
+#: web/menu.py:14 web/views.py:8
+msgid "Find representative"
+msgstr "Ieškoti atstovo"
+
+#: web/menu.py:15 web/views.py:13
+msgid "Public letters"
+msgstr "Atviri laiškai"
+
+#: web/menu.py:16 web/views.py:18
+msgid "About project"
+msgstr "Apie projektą"
+
+#: web/models.py:69
+msgid "Name of city, town or village."
+msgstr ""
+
+#: web/models.py:82
+msgid "territories"
+msgstr ""
