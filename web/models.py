@@ -73,9 +73,9 @@ class Territory(models.Model):
 
     def __unicode__(self):
         s = u'{}, {}'.format(self.municipality, self.city)
-        if street != '':
+        if self.street != u'':
             s += u', {}'.format(self.street)
-        s += ': {}'.format(self.numbers)
+        s += u' [{}] -> {}'.format(self.numbers, self.institution)
         return s
 
     class Meta:
