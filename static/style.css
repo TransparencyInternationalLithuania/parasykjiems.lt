@@ -4,9 +4,10 @@ html {
 
 body {
     color: #222;
+    font-family: sans;
+    font-size: 12pt;
+
     background: #7281A1;
-    background-repeat: no-repeat;
-    
     background: #363d4c; /* Old browsers */
     background: -moz-linear-gradient(top, #363d4c 0%, #7281a1 100%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#363d4c), color-stop(100%,#7281a1)); /* Chrome,Safari4+ */
@@ -15,6 +16,9 @@ body {
     background: -ms-linear-gradient(top, #363d4c 0%,#7281a1 100%); /* IE10+ */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#363d4c', endColorstr='#7281a1',GradientType=0 ); /* IE6-9 */
     background: linear-gradient(top, #363d4c 0%,#7281a1 100%); /* W3C */
+
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 #main-block {
