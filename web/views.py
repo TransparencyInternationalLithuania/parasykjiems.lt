@@ -8,8 +8,8 @@ def index(request):
         'active_menu': _('Representative search'),
     })
 
-def mail(request):
-    return render(request, 'mail.html', {
+def letters(request):
+    return render(request, 'letters.html', {
         'active_menu': _('Public letters'),
     })
 
