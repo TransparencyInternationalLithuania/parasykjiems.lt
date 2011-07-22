@@ -4,10 +4,19 @@ from django.core.exceptions import ObjectDoesNotExist
 import django.http
 
 from web.models import Representative, Institution
+from web.search import find_anything
 
 def index(request):
+    if 'q' in request.GET:
+        q = request.GET['q']
+        results = find_anything(q)
+    else:
+        q = ''
+        results = []
+
     return render(request, 'index.html', {
-        'search_query': request.GET.get('q', ''),
+        'search_query': q,
+        'results': results,
         'active_menu': _('Representative search'),
     })
 

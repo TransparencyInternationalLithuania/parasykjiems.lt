@@ -16,4 +16,11 @@
   <input name="q" value="{{ search_query }}"></input>
   <input value="{% trans "Search" %}" type="submit"></input>
 </form>
+
+<ul id="results">
+  {% for result in results %}
+  <li><a href="{{ result.get_absolute_url }}">{{ result.name }}</a></li>
+  {% endfor %}
+</ul>
+
 {% endblock %}

@@ -23,6 +23,9 @@ class Institution(models.Model):
     def __unicode__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return '/institution/{}'.format(self.id)
+
 
 class RepresentativeKind(models.Model):
     """Kind of position of representative in institution."""
@@ -53,6 +56,9 @@ class Representative(models.Model):
             self.name,
             self.kind,
             self.institution)
+
+    def get_absolute_url(self):
+        return '/representative/{}'.format(self.id)
 
     
 class Territory(models.Model):
