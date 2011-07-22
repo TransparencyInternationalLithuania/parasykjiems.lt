@@ -1,6 +1,25 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block content %}
+<form name="search" action="/">
+  <input name="q" value="{{ search_query }}"></input>
+  <input value="{% trans "Search" %}" type="submit"></input>
+</form>
+
+{% if search_query %}
+
+{% if results %}
+<ul id="results">
+  {% for result in results %}
+  <a href="{{ result.get_absolute_url }}"><li>{{ result.name }}</li></a>
+  {% endfor %}
+</ul>
+{% else %}
+<p>{% trans "Nothing found." %}</p>
+{% endif %}
+
+{% else %}
+
 <p>
   {% blocktrans %}
   You can search by entering:
@@ -12,15 +31,7 @@
   </ul>
   {% endblocktrans %}
 </p>
-<form name="search" action="/">
-  <input name="q" value="{{ search_query }}"></input>
-  <input value="{% trans "Search" %}" type="submit"></input>
-</form>
 
-<ul id="results">
-  {% for result in results %}
-  <li><a href="{{ result.get_absolute_url }}">{{ result.name }}</a></li>
-  {% endfor %}
-</ul>
+{% endif %}
 
 {% endblock %}

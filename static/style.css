@@ -166,6 +166,23 @@ form input[type=submit]:hover {
     background: linear-gradient(top, #f9f9f9 0%,#eaeaea 100%); /* W3C */
 }
 
-ul, p {
-    margin: 0 0 0.5em 0;
+#results {
+    list-style-type: none;
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+}
+
+#results a {
+    text-decoration: none;
+}
+
+#results li {
+    padding: 0.5em 0.5em 0.5em 0.5em;
+    margin: 0.5em 0.5em 0.5em 0.5em;
+    border: solid 1px white;
+}
+
+#results li:hover {
+    border: solid 1px #eee;
+    background: #fafafa;
 }

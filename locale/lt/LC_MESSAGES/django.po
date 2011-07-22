@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-21 13:47+0300\n"
+"POT-Creation-Date: 2011-07-22 15:49+0300\n"
 "PO-Revision-Date: 2011-07-21 13:49+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,19 +27,27 @@ msgstr "Anglų"
 msgid "Lithuanian"
 msgstr "Lietuvių"
 
-#: templates/base.html:12
+#: templates/base.html:14
 msgid "ParašykJiems"
 msgstr ""
 
-#: templates/base.html:24
+#: templates/base.html:26
 msgid "Have any notes, suggestions?"
 msgstr "Turite pastabų, pasiūlymų?"
 
-#: templates/base.html:24
+#: templates/base.html:26
 msgid "Write to us."
 msgstr "Parašykite mums."
 
-#: templates/index.html:5
+#: templates/index.html:6
+msgid "Search"
+msgstr "Paieška"
+
+#: templates/index.html:18
+msgid "Nothing found."
+msgstr "Nieko nerasta."
+
+#: templates/index.html:24
 msgid ""
 "\n"
 "  You can search by entering:\n"
@@ -50,7 +58,8 @@ msgid ""
 "    <li>an institution's name.\n"
 "  </ul>\n"
 "  "
-msgstr "\n"
+msgstr ""
+"\n"
 "  Galite ieškoti įvesdami:\n"
 "  <ul>\n"
 "    <li>savo pilną adresą,\n"
@@ -60,26 +69,31 @@ msgstr "\n"
 "  </ul>\n"
 "  "
 
-#: templates/index.html:17
-msgid "Search"
-msgstr "Paieška"
-
-#: web/menu.py:14 web/views.py:8
+#: web/menu.py:14 web/views.py:20 web/views.py:38 web/views.py:50
 msgid "Representative search"
 msgstr "Atstovo paieška"
 
-#: web/menu.py:15 web/views.py:13
+#: web/menu.py:15 web/views.py:25
 msgid "Public letters"
 msgstr "Atviri laiškai"
 
-#: web/menu.py:16 web/views.py:18
+#: web/menu.py:16 web/views.py:30
 msgid "About project"
 msgstr "Apie projektą"
 
-#: web/models.py:69
+#: web/models.py:75
 msgid "Name of city, town or village."
 msgstr ""
 
-#: web/models.py:82
+#: web/models.py:88
 msgid "territories"
+msgstr ""
+
+#: web/views.py:41
+#, fuzzy
+msgid "Representative not found"
+msgstr "Atstovo paieška"
+
+#: web/views.py:53
+msgid "Institution not found"
 msgstr ""
