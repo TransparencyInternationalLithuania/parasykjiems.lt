@@ -114,6 +114,7 @@ a:hover {
 #menu a.selected {
     opacity: 1;
     font-weight: bold;
+    color: #333;
 }
 
 #content {
@@ -185,4 +186,26 @@ form input[type=submit]:hover {
 #results li:hover {
     border: solid 1px #eee;
     background: #fafafa;
+}
+
+h1, h2, h3, h4 {
+    color: #444;
+}
+
+.institution h1, h2, h3, h4 {
+    margin-bottom: 0;
+}    
+
+.representative h1, h2, h3, h4 {
+    margin-bottom: 0;
+}    
+
+.institution .representative {
+    margin-left: 1em;
+}
+
+.subtitle {
+    color: #666;
+    font-size: 60%;
+    margin-top: 0;
 }
