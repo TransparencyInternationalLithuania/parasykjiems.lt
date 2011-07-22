@@ -7,7 +7,7 @@ from web.models import Representative, Institution
 from web.search import find_anything
 
 def index(request):
-    if 'q' in request.GET:
+    if 'q' in request.GET and request.GET['q'] != '':
         q = request.GET['q']
         results = find_anything(q)
     else:
