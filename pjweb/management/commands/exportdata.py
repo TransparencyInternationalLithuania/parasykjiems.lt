@@ -40,46 +40,41 @@ Puts results in CSV files into the export directory.
             len(PersonPosition.objects.all()))
         with open('export/personpositions.csv', 'wb') as f:
             w = csv.DictWriter(f,
-                               ['full_name',
-                                'institution_name',
+                               ['id',
+                                'name',
                                 'institution_id',
-                                'institution_type',
                                 'email',
                                 'phone',
-                                'address'])
+                                'other_contacts'])
             w.writeheader()
             for p in ProgressBar()(PersonPosition.objects.all()):
-                w.writerow({'full_name': e(p.person.fullName),
-                            'institution_name': e(p.institution.name),
+                w.writerow({'id': str(p.person.id),
+                            'name': e(p.person.fullName),
                             'institution_id': str(p.institution.id),
-                            'institution_type': str(p.institution.institutionType.id),
                             'email': e(p.email),
-                            'phone': e(p.primaryPhone or p.secondaryPhone),
-                            'address': e(p.institution.officeAddress)})
+                            'phone': e(p.primaryPhone if p.primaryPhone and p.primaryPhone != u'' else p.secondaryPhone),
+                            'other_contacts': ''})
 
                 institutions_with_persons.add(p.institution.id)
 
-        print 'Exporting {} Institutions without persons.'.format(
-            len(Institution.objects.all()) - len(PersonPosition.objects.all()))
+        print 'Exporting {} Institutions.'.format(
+            len(Institution.objects.all()))
         with open('export/institutions.csv', 'wb') as f:
             w = csv.DictWriter(f,
-                               ['full_name',
-                                'institution_name',
-                                'institution_id',
-                                'institution_type',
+                               ['id',
+                                'name',
+                                'type_id',
                                 'email',
                                 'phone',
                                 'address'])
             w.writeheader()
             for i in ProgressBar()(Institution.objects.all()):
-                if i.id not in institutions_with_persons:
-                    w.writerow({'full_name': '',
-                                'institution_name': e(i.name),
-                                'institution_id': str(i.id),
-                                'institution_type': str(i.institutionType.id),
-                                'email': e(i.officeEmail),
-                                'phone': e(i.officePhone),
-                                'address': e(i.officeAddress)})
+                w.writerow({'id': str(i.id),
+                            'name': e(i.name),
+                            'type_id': str(i.institutionType.id),
+                            'email': e(i.officeEmail),
+                            'phone': e(i.officePhone),
+                            'address': e(i.officeAddress)})
 
         print 'Exporting {} InstitutionTerritories.'.format(
             len(InstitutionTerritory.objects.all()))
