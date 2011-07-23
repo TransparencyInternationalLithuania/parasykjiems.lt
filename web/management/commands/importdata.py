@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import csv
 import re
 
@@ -11,20 +13,47 @@ from web.models import \
      Street, Territory
 
 
+_INSTITUTION_TYPE_CONVERSIONS = (
+    { 'old_name': u"Civil parish member",
+      'institution': u"seniūnija",
+      'representative': u"seniūnas",
+      'active': True },
+    { 'old_name': u"Mayor",
+      'institution': u"savivaldybė",
+      'representative': u"meras",
+      'active': True },
+    { 'old_name': u"Member of parliament",
+      'institution': u"Seimas",
+      'representative': u"Seimo narys",
+      'active': True },
+    { 'old_name': u"Seniūnaitis",
+      'institution': u"seniūnaitija",
+      'representative': u"seniūnaitis",
+      'active': False },
+)
+
+
 class Command(BaseCommand):
     args = '<>'
     help = "Imports data from CSV's created by export.py into database."
 
-
     def handle(self, *args, **options):
         def d(s):
-            return s.decode('utf-8')
+            return s.decode('utf-8').strip()
 
         def dphone(p):
-            if p == '':
-                return ''
+            dp = d(p)
+            if dp == u'-':
+                return u''
             else:
-                return d(p).replace(';', ',')
+                # Normalise phone number
+                return dp\
+                       .replace(u';', u',')\
+                       .replace(u'~', u'-')\
+                       .replace(u'( ', u'(')\
+                       .replace(u' )', u')')\
+                       .replace(u' ,', u', ')\
+                       .replace(u' /', u',')
 
         def countlines(filename):
             with open(filename) as f:
@@ -43,16 +72,16 @@ class Command(BaseCommand):
         old_name_to_new_inst = {}
         inst_to_rep = {}
         
-        for row in progressreader('data/new_institutiontypes.csv'):
+        for c in _INSTITUTION_TYPE_CONVERSIONS:
             inst = InstitutionKind(
-                name=d(row['new_name']),
-                active=bool(int(row['active'])),
+                name=c['institution'],
+                active=c['active'],
                 description=u'')
             inst.save()
-            old_name_to_new_inst[d(row['old_name'])] = inst
+            old_name_to_new_inst[c['old_name']] = inst
             rep = RepresentativeKind(
-                name=d(row['title']),
-                active=bool(int(row['active'])),
+                name=c['representative'],
+                active=c['active'],
                 description=u'')
             rep.save()
             inst_to_rep[inst] = rep
@@ -180,7 +209,8 @@ class Command(BaseCommand):
                 if maybe_territory.exists():
                     territory = maybe_territory[0]
                     if territory.numbers == '':
-                        print u'Range inversion required for {}'.format(row)
+                        print u'Warning: not replacing empty numbers with more specific numbers [{}] in {}'\
+                              .format(numbers, territory)
                     else:
                         territory.numbers = ', '.join([territory.numbers] + numbers)
                     territory.save()
