@@ -8,7 +8,7 @@ from progressbar import ProgressBar, Bar, ETA
 from web.models import \
      InstitutionKind, Institution, \
      RepresentativeKind, Representative, \
-     Territory
+     Street, Territory
 
 
 class Command(BaseCommand):
@@ -19,6 +19,12 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         def d(s):
             return s.decode('utf-8')
+
+        def dphone(p):
+            if p == '':
+                return ''
+            else:
+                return d(p).replace(';', ',')
 
         def countlines(filename):
             with open(filename) as f:
@@ -40,11 +46,13 @@ class Command(BaseCommand):
         for row in progressreader('data/new_institutiontypes.csv'):
             inst = InstitutionKind(
                 name=d(row['new_name']),
+                active=bool(int(row['active'])),
                 description=u'')
             inst.save()
             old_name_to_new_inst[d(row['old_name'])] = inst
             rep = RepresentativeKind(
                 name=d(row['title']),
+                active=bool(int(row['active'])),
                 description=u'')
             rep.save()
             inst_to_rep[inst] = rep
@@ -56,6 +64,8 @@ class Command(BaseCommand):
             old_name = d(row['name'])
             if old_name in old_name_to_new_inst:
                 old_id_to_new_inst[old_id] = old_name_to_new_inst[old_name]
+            else:
+                print u'Not importing {} institutions.'.format(old_name)
 
         skips = 0
         imports = 0
@@ -67,7 +77,7 @@ class Command(BaseCommand):
                     name=d(row['name']),
                     kind=old_id_to_new_inst[type_id],
                     email=d(row['email']),
-                    phone=d(row['phone']),
+                    phone=dphone(row['phone']),
                     address=d(row['address']))
                 inst.save()
                 imports += 1
@@ -86,7 +96,7 @@ class Command(BaseCommand):
                     institution=inst,
                     kind=inst_to_rep[inst.kind],
                     email=d(row['email']),
-                    phone=d(row['phone']),
+                    phone=dphone(row['phone']),
                     other_contacts=d(row['other_contacts']))
                 representative.save()
                 imports += 1
@@ -99,6 +109,8 @@ class Command(BaseCommand):
             match = re.match(r'^(\d+)(.)$', number_str)
             if match:
                 n, l = match.group(1), match.group(2)
+                if l == '0':
+                    l = ''
                 return int(n), l.upper()
             else:
                 return None, None
@@ -106,6 +118,8 @@ class Command(BaseCommand):
         skips = 0
         imports = 0
         merges = 0
+        streets = 0
+        large_numbers = set()
         for row in progressreader('data/institutionterritories.csv'):
             num_from, num_from_letter = \
                 separate_number(d(row['number_from']))
@@ -123,6 +137,7 @@ class Command(BaseCommand):
 
                 if num_to > 900:
                     numbers.append(u'{}-{}'.format(num_from, suffix))
+                    large_numbers.add(num_to)
                 else:
                     numbers.append(u'{}-{}{}'.format(num_from, num_to, suffix))
 
@@ -133,7 +148,8 @@ class Command(BaseCommand):
             elif num_from:
                 numbers.append(u'{}{}'.format(num_from, num_from_letter))
             elif num_to:
-                print 'Strange number range: {}'.format(row)
+                print 'Strange number range in {}'.format(row)
+                continue
 
             try:
                 institution = \
@@ -141,26 +157,43 @@ class Command(BaseCommand):
                 municipality=d(row['municipality'])
                 city=d(row['city'])
                 street=d(row['street'])
-            
-                maybe_territory = list(Territory.objects.filter(
-                    institution=institution,
+
+                maybe_street_obj = Street.objects.filter(
                     municipality=municipality,
                     city=city,
-                    street=street))
+                    street=street)
 
-                if maybe_territory == []:
-                    territory = Territory(
-                        institution=institution,
+                if maybe_street_obj.exists():
+                    street_obj = maybe_street_obj[0]
+                else:
+                    street_obj = Street(
                         municipality=municipality,
                         city=city,
-                        street=street,
+                        street=street)
+                    street_obj.save()
+                    streets += 1
+            
+                maybe_territory = Territory.objects.filter(
+                    institution=institution,
+                    street=street_obj)
+
+                if maybe_territory.exists():
+                    territory = maybe_territory[0]
+                    if territory.numbers == '':
+                        print u'Range inversion required for {}'.format(row)
+                    else:
+                        territory.numbers = ', '.join([territory.numbers] + numbers)
+                    territory.save()
+                    merges += 1
+                else:
+                    territory = Territory(
+                        institution=institution,
+                        street=street_obj,
                         numbers=', '.join(numbers))
                     territory.save()
                     imports += 1
-                else:
-                    territory = maybe_territory[0]
-                    territory.numbers = ', '.join([territory.numbers] + numbers)
-                    merges += 1
             except ObjectDoesNotExist:
                 skips += 1
-        print 'Imported {} territories, with {} merges. Skipped {}.'.format(imports, merges, skips)
+        print 'Imported {} territories, {} streets, with {} merges. Skipped {}.'.\
+              format(imports, streets, merges, skips)
+        print 'Numbers turned into infinities: {}'.format(large_numbers)

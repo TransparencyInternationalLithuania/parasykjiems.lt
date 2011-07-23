@@ -7,6 +7,7 @@ _NAME_LEN = 200
 class InstitutionKind(models.Model):
     name = models.CharField(max_length=_NAME_LEN)
     description = models.TextField()
+    active = models.BooleanField()
 
     def __unicode__(self):
         return self.name
@@ -31,6 +32,7 @@ class RepresentativeKind(models.Model):
     """Kind of position of representative in institution."""
     name = models.CharField(max_length=_NAME_LEN)
     description = models.TextField()
+    active = models.BooleanField()
 
     def __unicode__(self):
         return self.name
@@ -60,29 +62,38 @@ class Representative(models.Model):
     def get_absolute_url(self):
         return '/representative/{}'.format(self.id)
 
-    
-class Territory(models.Model):
-    """A street with relevant house numbers and the corresponding
-    representative.
 
-    Used to find representative by address.
+class Street(models.Model):
+    """Represents an adress without a house number. Not necessarily a
+    street - if the street field is empty, it encompasses all streets
+    in the given city, town or village.
     """
-
-    institution = models.ForeignKey(Institution)
 
     municipality = models.CharField(max_length=_NAME_LEN)
     city = models.CharField(max_length=_NAME_LEN,
                             help_text=_("Name of city, town or village."))
     street = models.CharField(max_length=_NAME_LEN, blank=True)
 
-    numbers = models.TextField()
-
     def __unicode__(self):
         s = u'{}, {}'.format(self.municipality, self.city)
         if self.street != u'':
             s += u', {}'.format(self.street)
-        s += u' [{}] -> {}'.format(self.numbers, self.institution)
         return s
+
+    
+class Territory(models.Model):
+    """A street with relevant house numbers and the corresponding
+    representative.
+
+    Used to find institutions by address.
+    """
+
+    institution = models.ForeignKey(Institution)
+    street = models.ForeignKey(Street)
+    numbers = models.TextField()
+
+    def __unicode__(self):
+        return u'{} [{}] -> {}'.format(self.street, self.numbers, self.institution)
 
     class Meta:
         verbose_name_plural = _("territories")
