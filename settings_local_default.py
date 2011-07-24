@@ -1,5 +1,6 @@
 DEBUG = True
 
+
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
@@ -15,3 +16,7 @@ DATABASES = {
         'PORT': '',
     }
 }
+
+
+HAYSTACK_SEARCH_ENGINE = 'whoosh'
+HAYSTACK_WHOOSH_PATH = 'parasykjiems.index'
