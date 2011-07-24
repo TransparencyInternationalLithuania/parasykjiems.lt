@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="institution">
+  <h2>{{ institution.name }}</h2>
+  <p class="subtitle">{{ institution.kind.name }}</p>
+  
+  {% if institution.email %}
+  <p>
+    Elektroninis paštas: {{ institution.email }} &mdash;
+    <a href="/write_to/institution/{{ institution.id }}">Rašyti laišką</a>
+  </p>
+  {% endif %}
+  
+  {% if institution.phone %}
+  <p>Tel. nr.: {{ institution.phone }}</p>
+  {% endif %}
+
+  {% if institution.address != '' %}
+  <p>Adresas: {{ institution.address }}</p>
+  {% endif %}
+
+  <h3>Atstovai</h3>
+  {% for representative in representatives %}
+  <div class="representative">
+    <h4>{{ representative.name }}</h4>
+    <p class="subtitle">{{ representative.kind.name }}</p>
+    {% if representative.email %}
+    <p>
+      Elektroninis paštas: {{ representative.email }} &mdash;
+      <a href="/write_to/representative/{{ representative.id }}">Rašyti laišką</a>
+    </p>
+    {% endif %}
+    
+    {% if representative.phone %}
+    <p>Telefono numeris: {{ representative.phone }}</p>
+    {% endif %}
+
+    {% if representative.other_contacts %}
+    <p>{{ representative.other_contacts }}</p>
+    {% endif %}
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
