@@ -4,7 +4,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <script type="text/javascript" src="/static/script.js"></script>
-    <link rel="icon" type="image/png" href="/static/img/favicon.png" />    
+    <link rel="icon" type="image/png" href="/static/img/favicon.png" />
     <link rel="stylesheet" href="/static/style.css" />
     <title>{% block title %}ParašykJiems{% endblock %}</title>
   </head>
@@ -15,12 +15,12 @@
       </div>
       <ul id="menu">
         {% for item in MENU %}
-        <a href="{{ item.href }}" class="{% if item.name == active_menu %}selected{% endif %}"><li>{{ item.name }}</li></a>
+        <li><a href="{{ item.href }}" class="{% if item.name == active_menu %}selected{% endif %}">{{ item.name }}</a></li>
         {% endfor %}
       </ul>
       <div id="content">
         {% block content %}{% endblock %}
-      </div>    
+      </div>
     </div>
     <div id="footer">
       {% trans "Have any notes, suggestions?" %} <a href="/feedback/" >{% trans "Write to us." %}</a>
