@@ -1,0 +1,26 @@
+[
+  {
+    "pk": 1,
+    "model": "territories.InstitutionTerritory",
+    "fields": {
+      "city": "Vilniaus miestas",
+      "municipality": "Vilniaus miesto savivaldybė",
+      "street": "Gedimino prospektas",
+      "numberFrom": "00090",
+      "numberOdd": 1,
+      "institution": 1
+    }
+  },
+  {
+    "pk": 2,
+    "model": "territories.InstitutionTerritory",
+    "fields": {
+      "city": "Vilniaus miestas",
+      "municipality": "Vilniaus miesto savivaldybė",
+      "street": "Gedimino prospektas",
+      "numberFrom": "00100",
+      "numberOdd": 0,
+      "institution": 2
+    }
+  }
+]

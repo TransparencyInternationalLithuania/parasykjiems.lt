@@ -1,0 +1,55 @@
+[
+   {
+    "pk": 1,
+    "model": "contactdb.InstitutionType",
+    "fields": {
+      "code": "mp"
+    }
+  },
+    {
+        "pk": 2,
+        "model": "contactdb.InstitutionType",
+        "fields": {
+          "code": "civpar"
+        }
+      },
+
+  {
+    "pk": 1,
+    "model": "contactdb.Institution",
+    "fields": {
+      "institutionType": 1
+    }
+  },
+  {
+    "pk": 2,
+    "model": "contactdb.Institution",
+    "fields": {
+      "institutionType": 2
+    }
+  },
+
+  { 
+    "pk": 1,
+    "model": "territories.InstitutionTerritory",
+    "fields": {
+      "municipality": "Vilniaus miesto savivaldybė",
+      "city": "Vilniaus miestas",
+      "street": "Gedimino prospektas",
+      "numberFrom": "00090",
+      "numberTo": "00130",
+      "numberOdd": 1,
+      "institution": 1
+    }
+  },
+  {
+    "pk": 2,
+    "model": "territories.InstitutionTerritory",
+    "fields": {
+      "municipality": "Vilniaus miesto savivaldybė",
+      "city": "Vilniaus miestas",
+      "street": "Gedimino prospektas",
+      "institution": 2
+    }
+  }
+]

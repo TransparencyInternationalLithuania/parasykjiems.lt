@@ -1,0 +1,42 @@
+[
+  {
+    "pk": 1,
+    "model": "territories.CountryAddresses",
+    "fields": {
+      "city": "Vilnius",
+      "city_genitive": "Vilniaus miestas",
+      "municipality": "Vilniaus miesto savivaldybė",
+      "street": "Gedimino prospektas"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "territories.CountryAddresses",
+    "fields": {
+      "city": "Vilnius",
+      "city_genitive": "Vilniaus miestas",
+      "municipality": "Vilniaus miesto savivaldybė",
+      "street": "Some other street"
+    }
+  },
+  {
+    "pk": 3,
+    "model": "territories.CountryAddresses",
+    "fields": {
+      "city": "Kaunas",
+      "city_genitive": "Kauno miestas",
+      "municipality": "Kauno miesto savivaldybė",
+      "street": "palemono gatvė"
+    }
+  },
+  {
+    "pk": 4,
+    "model": "territories.CountryAddresses",
+    "fields": {
+      "city": "Žiežmariai",
+      "city_genitive": "Žiežmarių miestas",
+      "municipality": "Žiežmarių miesto savivaldybė",
+      "street": "Žygio gatvė"
+    }
+  }
+]

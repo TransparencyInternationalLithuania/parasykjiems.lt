@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+
+<form action="/stats/" method="post" id="address">
+  {% trans "From" %} {{ form.date_from }} {% trans "to" %} {{ form.date_to }}
+  <button><span>{% trans "Filter" %}</span></button>
+</form>
+{% if stats %}
+  <div id="address_list">
+      <p><strong>{{ period_string }}<strong></p>
+      <ul>
+      {% for stat in stats %}
+          <li>{{ stat }}</li>
+      {% endfor %}
+      </ul>
+  </div>
+{% endif %}
+{% endblock %}
