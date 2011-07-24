@@ -80,6 +80,9 @@ class Street(models.Model):
             s += u', {}'.format(self.street)
         return s
 
+    def get_absolute_url(self):
+        return '/street/{}'.format(self.id)
+
 
 class Territory(models.Model):
     """A street with relevant house numbers and the corresponding
