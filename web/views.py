@@ -6,6 +6,7 @@ import django.http
 from web.models import Representative, Institution
 from web.search import find_anything
 
+
 def index(request):
     if 'q' in request.GET and request.GET['q'] != '':
         q = request.GET['q']
@@ -20,15 +21,18 @@ def index(request):
         'active_menu': _('Representative search'),
     })
 
+
 def letters(request):
     return render(request, 'letters.html', {
         'active_menu': _('Public letters'),
     })
 
+
 def about(request):
     return render(request, 'about.html', {
         'active_menu': _('About project'),
     })
+
 
 def representative(request, id):
     try:
@@ -39,6 +43,7 @@ def representative(request, id):
         })
     except ObjectDoesNotExist:
         return django.http.HttpResponseNotFound(_('Representative not found'))
+
 
 def institution(request, id):
     try:
@@ -51,6 +56,7 @@ def institution(request, id):
         })
     except ObjectDoesNotExist:
         return django.http.HttpResponseNotFound(_('Institution not found'))
+
 
 def setlang(request):
     language = request.GET.get('lang', 'lt')

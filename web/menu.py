@@ -4,10 +4,12 @@ template's context.
 
 from django.utils.translation import ugettext as _
 
+
 class MenuItem:
     def __init__(self, name, href):
         self.name = name
         self.href = href
+
 
 def create_menu(location):
     return (
@@ -18,4 +20,4 @@ def create_menu(location):
 
 
 def context_processor(request):
-    return { 'MENU': create_menu(request.path) }
+    return {'MENU': create_menu(request.path)}

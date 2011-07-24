@@ -6,7 +6,7 @@ urlpatterns = patterns('web.views',
     url(r'^about$', 'about'),
 
     url(r'^institution/(?P<id>\d+)$', 'institution'),
-    url(r'^representative/(?P<id>\d+)$', 'representative'),                       
+    url(r'^representative/(?P<id>\d+)$', 'representative'),
 
     url(r'^write_to/(?P<type>\w+)/(?P<id>\d+)$', 'write_to'),
 

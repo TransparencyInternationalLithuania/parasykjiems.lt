@@ -1,6 +1,8 @@
 import os
 
+
 PROJECT_ROOT = os.path.dirname(os.path.realpath(__file__))
+
 
 def project_relative(path):
     return os.path.join(PROJECT_ROOT, path)
@@ -100,9 +102,9 @@ LOGGING = {
         },
     },
     'handlers': {
-        'console':{
-            'level':'DEBUG',
-            'class':'logging.StreamHandler',
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
             'formatter': 'verbose'
         }
     },
