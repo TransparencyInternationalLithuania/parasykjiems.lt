@@ -82,11 +82,12 @@ a:hover {
 
 #menu li {
     display: inline;
-}    
+}
 
 #menu a {
     text-decoration: none;
     font-size: 90%;
+    display: block;
 
     background: white;
     color: black;
@@ -175,17 +176,21 @@ form input[type=submit]:hover {
 
 #results a {
     text-decoration: none;
-}
-
-#results li {
+    display: block;
     padding: 0.5em 0.5em 0.5em 0.5em;
     margin: 0.5em 0.5em 0.5em 0.5em;
     border: solid 1px white;
 }
 
-#results li:hover {
+#results a:hover {
     border: solid 1px #eee;
     background: #fafafa;
+}
+
+#results .kind {
+    float: right;
+    color: #888 !important;
+    size: 50%;
 }
 
 h1, h2, h3, h4 {
@@ -194,11 +199,11 @@ h1, h2, h3, h4 {
 
 .institution h1, h2, h3, h4 {
     margin-bottom: 0;
-}    
+}
 
 .representative h1, h2, h3, h4 {
     margin-bottom: 0;
-}    
+}
 
 .institution .representative {
     margin-left: 1em;
