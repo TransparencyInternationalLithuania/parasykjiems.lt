@@ -14,22 +14,22 @@ from web.models import \
 
 
 _INSTITUTION_TYPE_CONVERSIONS = (
-    { 'old_name': u"Civil parish member",
+    {'old_name': u"Civil parish member",
       'institution': u"seniūnija",
       'representative': u"seniūnas",
-      'active': True },
-    { 'old_name': u"Mayor",
+      'active': True},
+    {'old_name': u"Mayor",
       'institution': u"savivaldybė",
       'representative': u"meras",
-      'active': True },
-    { 'old_name': u"Member of parliament",
+      'active': True},
+    {'old_name': u"Member of parliament",
       'institution': u"Seimas",
       'representative': u"Seimo narys",
-      'active': True },
-    { 'old_name': u"Seniūnaitis",
+      'active': True},
+    {'old_name': u"Seniūnaitis",
       'institution': u"seniūnaitija",
       'representative': u"seniūnaitis",
-      'active': False },
+      'active': False},
 )
 
 
@@ -71,7 +71,7 @@ class Command(BaseCommand):
 
         old_name_to_new_inst = {}
         inst_to_rep = {}
-        
+
         for c in _INSTITUTION_TYPE_CONVERSIONS:
             inst = InstitutionKind(
                 name=c['institution'],
@@ -85,9 +85,9 @@ class Command(BaseCommand):
                 description=u'')
             rep.save()
             inst_to_rep[inst] = rep
-        
+
         old_id_to_new_inst = {}
-        
+
         for row in progressreader('data/institutiontypes.csv'):
             old_id = int(row['id'])
             old_name = d(row['name'])
@@ -183,9 +183,9 @@ class Command(BaseCommand):
             try:
                 institution = \
                     Institution.objects.get(id=int(row['institution_id']))
-                municipality=d(row['municipality'])
-                city=d(row['city'])
-                street=d(row['street'])
+                municipality = d(row['municipality'])
+                city = d(row['city'])
+                street = d(row['street'])
 
                 maybe_street_obj = Street.objects.filter(
                     municipality=municipality,
@@ -201,7 +201,7 @@ class Command(BaseCommand):
                         street=street)
                     street_obj.save()
                     streets += 1
-            
+
                 maybe_territory = Territory.objects.filter(
                     institution=institution,
                     street=street_obj)
@@ -209,10 +209,11 @@ class Command(BaseCommand):
                 if maybe_territory.exists():
                     territory = maybe_territory[0]
                     if territory.numbers == '':
-                        print u'Warning: not replacing empty numbers with more specific numbers [{}] in {}'\
+                        print u'Warning: not replacing empty numbers with more specific numbers [{}] in {}' \
                               .format(numbers, territory)
                     else:
-                        territory.numbers = ', '.join([territory.numbers] + numbers)
+                        territory.numbers = ', '.join(
+                            [territory.numbers] + numbers)
                     territory.save()
                     merges += 1
                 else:
