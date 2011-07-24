@@ -7,3 +7,6 @@ settings_local.py
 *.db
 *~
 *.mo
+*.orig
+data/*
+parasykjiems.index/*

@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.utils.translation import ugettext as _
 from django.core.exceptions import ObjectDoesNotExist
 import django.http
+from haystack.query import SearchQuerySet
 
 from web.models import Representative, Institution
 from web.search import find_anything
@@ -10,7 +11,7 @@ from web.search import find_anything
 def index(request):
     if 'q' in request.GET and request.GET['q'] != '':
         q = request.GET['q']
-        results = find_anything(q)
+        results = SearchQuerySet().auto_query(q)
     else:
         q = ''
         results = []

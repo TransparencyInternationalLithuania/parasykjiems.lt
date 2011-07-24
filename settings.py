@@ -91,7 +91,10 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'parasykjiems.web',
+    'haystack',
 )
+
+HAYSTACK_SITECONF = 'parasykjiems.search_sites'
 
 LOGGING = {
     'version': 1,
