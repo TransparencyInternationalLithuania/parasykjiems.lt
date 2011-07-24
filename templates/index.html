@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+<form name="search" action="/">
+  <input name="q" value="{{ search_query }}"></input>
+  <input value="{% trans "Search" %}" type="submit"></input>
+</form>
+
+{% if search_query %}
+
+{% if results %}
+<ul id="results">
+  {% for result in results %}
+  <li>
+    <a href="{{ result.url }}">
+      {{ result.title }}
+      <div class="kind">
+        {% if result.content_type == 'web.institution' %}
+        {% trans "Institution" %}
+        {% endif %}
+        {% if result.content_type == 'web.representative' %}
+        {% trans "Representative" %}
+        {% endif %}
+      </div>
+    </a>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>{% trans "Nothing found." %}</p>
+{% endif %}
+
+{% else %}
+
+<p>
+  {% blocktrans %}
+  You can search by entering:
+  <ul>
+    <li>your full address,
+    <li>part of your address,
+    <li>a representative's name,
+    <li>an institution's name.
+  </ul>
+  {% endblocktrans %}
+</p>
+
+{% endif %}
+
+{% endblock %}

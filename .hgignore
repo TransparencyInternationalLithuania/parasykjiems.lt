@@ -1,0 +1,12 @@
+syntax:glob
+
+settings_local.py
+
+*.pyc
+*.log
+*.db
+*~
+*.mo
+*.orig
+data/*
+parasykjiems.index/*
