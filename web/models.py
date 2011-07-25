@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
+import house_numbers
+
 _NAME_LEN = 200
 
 
@@ -80,7 +82,7 @@ class Location(models.Model):
         return s
 
     def get_absolute_url(self):
-        return '/loc/{}'.format(self.id)
+        return '/location/{}'.format(self.id)
 
 
 class Territory(models.Model):

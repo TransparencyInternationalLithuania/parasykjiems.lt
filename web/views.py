@@ -1,10 +1,12 @@
+import logging
+
 from django.shortcuts import render
 from django.utils.translation import ugettext as _
 from django.core.exceptions import ObjectDoesNotExist
 import django.http
 from haystack.query import SearchQuerySet
 
-from web.models import Representative, Institution
+from web.models import Representative, Institution, Location, Territory
 
 
 def index(request):
@@ -56,6 +58,17 @@ def institution(request, id):
         })
     except ObjectDoesNotExist:
         return django.http.HttpResponseNotFound(_('Institution not found'))
+
+
+def location(request, id, house_number=None):
+    try:
+        loc = Location.objects.get(id=id)
+        # territories = Territory.objects.filter(
+        # if house_number:
+        # else:
+        #     pass
+    except ObjectDoesNotExist:
+        return django.http.HttpResponseNotFound(_('Location not found'))
 
 
 def setlang(request):
