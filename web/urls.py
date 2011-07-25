@@ -1,16 +1,15 @@
-from django.conf.urls.defaults import patterns, include, url
+from django.conf.urls.defaults import patterns, url
 
 urlpatterns = patterns('web.views',
     url(r'^$', 'index'),
     url(r'^letters$', 'letters'),
     url(r'^about$', 'about'),
 
-    url(r'^institution/(?P<id>\d+)$', 'institution'),
-    url(r'^representative/(?P<id>\d+)$', 'representative'),
-    url(r'^location/(?P<id>\d+)$', 'location'),
-    url(r'^location/(?P<id>\d+)/(?P<house_number>\d+\w?)$', 'location'),
+    url(r'^institution/(?P<inst_id>\d+)$', 'institution'),
+    url(r'^representative/(?P<rep_id>\d+)$', 'representative'),
 
-    url(r'^write_to/(?P<type>\w+)/(?P<id>\d+)$', 'write_to'),
+    url(r'^location/(?P<loc_id>\d+)$', 'location'),
+    url(r'^location/(?P<loc_id>\d+)/(?P<house_number>\d+\w?)$', 'location'),
 
     url(r'^setlang$', 'setlang'),
 )
