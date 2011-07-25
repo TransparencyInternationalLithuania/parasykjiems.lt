@@ -10,7 +10,7 @@ from progressbar import ProgressBar, Bar, ETA
 from web.models import \
      InstitutionKind, Institution, \
      RepresentativeKind, Representative, \
-     Street, Territory
+     Location, Territory
 
 
 _INSTITUTION_TYPE_CONVERSIONS = (
@@ -147,7 +147,7 @@ class Command(BaseCommand):
         skips = 0
         imports = 0
         merges = 0
-        streets = 0
+        locations = 0
         large_numbers = set()
         for row in progressreader('data/institutionterritories.csv'):
             num_from, num_from_letter = \
@@ -187,24 +187,24 @@ class Command(BaseCommand):
                 city = d(row['city'])
                 street = d(row['street'])
 
-                maybe_street_obj = Street.objects.filter(
+                maybe_location = Location.objects.filter(
                     municipality=municipality,
                     city=city,
                     street=street)
 
-                if maybe_street_obj.exists():
-                    street_obj = maybe_street_obj[0]
+                if maybe_location.exists():
+                    location = maybe_location[0]
                 else:
-                    street_obj = Street(
+                    location = Location(
                         municipality=municipality,
                         city=city,
                         street=street)
-                    street_obj.save()
-                    streets += 1
+                    location.save()
+                    locations += 1
 
                 maybe_territory = Territory.objects.filter(
                     institution=institution,
-                    street=street_obj)
+                    location=location)
 
                 if maybe_territory.exists():
                     territory = maybe_territory[0]
@@ -219,12 +219,12 @@ class Command(BaseCommand):
                 else:
                     territory = Territory(
                         institution=institution,
-                        street=street_obj,
+                        location=location,
                         numbers=', '.join(numbers))
                     territory.save()
                     imports += 1
             except ObjectDoesNotExist:
                 skips += 1
-        print 'Imported {} territories, {} streets, with {} merges. Skipped {}.'.\
-              format(imports, streets, merges, skips)
+        print 'Imported {} territories, {} locations, with {} merges. Skipped {}.'.\
+              format(imports, locations, merges, skips)
         print 'Numbers turned into infinities: {}'.format(large_numbers)

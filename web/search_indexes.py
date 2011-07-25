@@ -4,7 +4,7 @@ import haystack.indexes as indexes
 from haystack import site
 from unidecode import unidecode
 
-from parasykjiems.web.models import Institution, Representative, Street
+from parasykjiems.web.models import Institution, Representative, Location
 import parasykjiems.lang as lang
 
 
@@ -46,7 +46,7 @@ class RepresentativeIndex(indexes.SearchIndex):
 site.register(Representative, RepresentativeIndex)
 
 
-class StreetIndex(indexes.SearchIndex):
+class LocationIndex(indexes.SearchIndex):
     text = indexes.CharField(document=True)
     title = indexes.CharField(indexed=False)
     url = indexes.CharField(model_attr='get_absolute_url', indexed=False)
@@ -67,4 +67,4 @@ class StreetIndex(indexes.SearchIndex):
         else:
             return u'{}, {}, {}'.format(obj.street, obj.city, obj.municipality)
 
-site.register(Street, StreetIndex)
+site.register(Location, LocationIndex)
