@@ -126,15 +126,18 @@ a:hover {
     margin: 2em 3em 2em 3em;
 }
 
-form input[name=q] {
-    width: 70%;
-    border: solid 1px #ddd;
+form input {
     font-size: 120%;
-    padding: 0.2em 0.2em 0.2em 0.2em;
+    border: solid 1px #ddd;
     box-shadow:inset 1px 1px 3px rgba(0, 0, 0, 0.3);
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 2px;
+}
+
+form input[name=q] {
+    width: 70%;
+    padding: 0.2em 0.2em 0.2em 0.2em;
 }
 
 form {
@@ -150,6 +153,7 @@ form input[type=submit] {
     border-radius: 7px;
     color: #333;
     border: solid 1px #eee;
+    box-shadow: none;
 
     background: #f2f2f2; /* Old browsers */
     background: -moz-linear-gradient(top, #f2f2f2 0%, #cecece 100%); /* FF3.6+ */
