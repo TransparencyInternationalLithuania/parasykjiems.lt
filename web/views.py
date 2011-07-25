@@ -5,7 +5,6 @@ import django.http
 from haystack.query import SearchQuerySet
 
 from web.models import Representative, Institution
-from web.search import find_anything
 
 
 def index(request):

@@ -39,7 +39,7 @@ class RepresentativeKind(models.Model):
 
 
 class Representative(models.Model):
-    """A person together with an institution.
+    """A person working in an institution.
 
     Contains all the related contact information.
     """
@@ -63,10 +63,9 @@ class Representative(models.Model):
         return '/representative/{}'.format(self.id)
 
 
-class Street(models.Model):
-    """Represents an adress without a house number. Not necessarily a
-    street - if the street field is empty, it encompasses all streets
-    in the given city, town or village.
+class Location(models.Model):
+    """Represents either a street or a whole town/village (if the
+    street field is empty).
     """
 
     municipality = models.CharField(max_length=_NAME_LEN)
@@ -81,22 +80,25 @@ class Street(models.Model):
         return s
 
     def get_absolute_url(self):
-        return '/street/{}'.format(self.id)
+        return '/loc/{}'.format(self.id)
 
 
 class Territory(models.Model):
-    """A street with relevant house numbers and the corresponding
+    """A location with relevant house numbers and the corresponding
     representative.
 
     Used to find institutions by address.
     """
 
     institution = models.ForeignKey(Institution)
-    street = models.ForeignKey(Street)
+    location = models.ForeignKey(Location)
     numbers = models.TextField()
 
     def __unicode__(self):
-        return u'{} [{}] -> {}'.format(self.street, self.numbers, self.institution)
+        return u'{} [{}] -> {}'.format(
+            self.location,
+            self.numbers,
+            self.institution)
 
     class Meta:
         verbose_name_plural = _("territories")
