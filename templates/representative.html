@@ -1,24 +1,4 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="representative">
-  <h2>{{ representative.name }}</h2>
-  <p class="subtitle">{{ representative.kind.name }}</p>
-
-  <h3><a href="/institution/{{ representative.institution.id }}">{{ representative.institution.name }}</a></h3>
-
-  {% if representative.email %}
-  <p>
-    Elektroninis paštas: {{ representative.email }} &mdash;
-    <a href="/write_to/representative/{{ representative.id }}">Rašyti laišką</a>
-  </p>
-  {% endif %}
-  
-  {% if representative.phone %}
-  <p>Telefono numeris: {{ representative.phone }}</p>
-  {% endif %}
-
-  {% if representative.other_contacts %}
-  <p>{{ representative.other_contacts }}</p>
-  {% endif %}
-</div>
+{% include "items/representative.html" %}
 {% endblock %}

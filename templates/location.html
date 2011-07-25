@@ -2,7 +2,7 @@
 {% block content %}
 
 {% for institution in institutions %}
-<h2>{{ institution.name }}</h2>
+{% include "items/institution.html" %}
 {% endfor %}
 
 {% endblock %}
