@@ -1,10 +1,28 @@
 import re
 
+
+def _const_True(x):
+    return True
+
+
+def _is_even(x):
+    return x % 2 == 0
+
+
+def _is_odd(x):
+    return x % 2 == 1
+
+
+_RANGE_CHECKS = {
+    'all': _const_True,
+    'even': _is_even,
+    'odd': _is_odd,
+}
+
+
 _INTERVAL_RE = re.compile(r'(\d+)-(\d+) (all|even|odd)')
 _LEFT_INTERVAL_RE = re.compile(r'(\d+)- (all|even|odd)')
 _SINGLE_RE = re.compile(r'(\d+\w?)')
-
-_ALL, _EVEN, _ODD = range(3)
 
 
 class HouseNumberSet:
@@ -15,8 +33,11 @@ class HouseNumberSet:
     """
     def __init__(self, string):
         self.numbers = set()
-        self.intervals = []
         self.string = string
+
+        # Intervals are stored as predicate functions.
+        self.intervals = []
+
         for item in string.split(','):
             item = item.strip()
 
@@ -55,32 +76,22 @@ class HouseNumberSet:
     def add_interval(self, left, right, kind):
         left = int(left)
         right = int(right)
-        if kind == 'all':
-            def allin(x):
-                return left <= x <= right
-            self.intervals.append(allin)
-        elif kind == 'even':
-            def evenin(x):
-                return (x % 2 == 0) and (left <= x <= right)
-            self.intervals.append(evenin)
-        else:
-            def oddin(x):
-                return (x % 2 == 1) and (left <= x <= right)
-            self.intervals.append(oddin)
+        check = _RANGE_CHECKS[kind]
 
-    def add_left_interval(self, left, kind):
-        if kind == 'all':
-            def allin(x):
-                return left <= x
-            self.intervals.append(allin)
-        elif kind == 'even':
-            def evenin(x):
-                return (x % 2 == 0) and (left <= x)
-            self.intervals.append(evenin)
-        else:
-            def oddin(x):
-                return (x % 2 == 1) and (left <= x)
-            self.intervals.append(oddin)
+        def interval(x):
+            return check(x) and left <= x <= right
+
+        self.intervals.append(interval)
+
+    def add_left_interval(self, left, right, kind):
+        left = int(left)
+        right = int(right)
+        check = _RANGE_CHECKS[kind]
+
+        def left_interval(x):
+            return check(x) and left <= x
+
+        self.intervals.append(left_interval)
 
     def add_single(self, number):
         self.numbers.add(number)
