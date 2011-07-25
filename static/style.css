@@ -79,10 +79,13 @@ a:hover {
     text-align: center;
     height: 40px;
     margin: 0 0 0 0;
+    padding: 0 0 0 0;
 }
 
 #menu li {
     display: inline;
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
 }
 
 #menu a {
@@ -96,7 +99,7 @@ a:hover {
 
     display: inline-block;
     padding-top: 1px;
-    width: 200px;
+    width: 210px;
     margin-top: 9px;
     height: 30px;
     line-height: 30px;
@@ -198,8 +201,16 @@ h1, h2, h3, h4 {
     color: #444;
 }
 
+.institution {
+    margin-bottom: 5em;
+}
+
 .institution h1, h2, h3, h4 {
     margin-bottom: 0;
+}
+
+.representative {
+    margin-bottom: 2em;
 }
 
 .representative h1, h2, h3, h4 {

@@ -17,8 +17,14 @@
   <p>Adresas: {{ institution.address }}</p>
   {% endif %}
 
+  {% if institution.representatives %}
   <h3>Atstovai</h3>
-  {% for representative in institution.representatives %}
-  {% include "items/representative.html" %}
-  {% endfor %}
+  <ul>
+    {% for representative in institution.representatives %}
+    <li>
+      {% include "items/representative.html" %}
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
 </div>
