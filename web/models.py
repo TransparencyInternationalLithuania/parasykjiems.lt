@@ -21,6 +21,9 @@ class Institution(models.Model):
     phone = models.CharField(max_length=_NAME_LEN, blank=True)
     address = models.TextField(blank=True)
 
+    def representatives(self):
+        return Representative.objects.filter(institution=self)
+
     def __unicode__(self):
         return self.name
 
