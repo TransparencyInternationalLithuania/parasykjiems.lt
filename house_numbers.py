@@ -83,9 +83,8 @@ class HouseNumberSet:
 
         self.intervals.append(interval)
 
-    def add_left_interval(self, left, right, kind):
+    def add_left_interval(self, left, kind):
         left = int(left)
-        right = int(right)
         check = _RANGE_CHECKS[kind]
 
         def left_interval(x):
