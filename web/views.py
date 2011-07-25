@@ -1,12 +1,11 @@
-import logging
-
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.utils.translation import ugettext as _
 from django.core.exceptions import ObjectDoesNotExist
 import django.http
 from haystack.query import SearchQuerySet
 
 from web.models import Representative, Institution, Location, Territory
+import house_numbers
 
 
 def index(request):
@@ -61,12 +60,29 @@ def institution(request, inst_id):
 
 
 def location(request, loc_id, house_number=None):
+    if 'house_number' in request.GET:
+        return redirect('/location/{}/{}'.format(loc_id,
+                                                 request.GET['house_number']))
     try:
         loc = Location.objects.get(id=loc_id)
-        # territories = Territory.objects.filter(
-        # if house_number:
-        # else:
-        #     pass
+        all_territories = Territory.objects.filter(location=loc)
+        territories = list(all_territories.filter(numbers=''))
+        restricted_territories = all_territories.exclude(numbers='')
+        if restricted_territories.exists():
+            if house_number:
+                for rt in restricted_territories:
+                    if house_numbers.territory_contains(rt, house_number):
+                        territories.append(rt)
+            else:
+                return render(request, 'house_number.html', {
+                    'active_menu': _('Representative search'),
+                })
+        institutions = [t.institution for t in territories]
+        return render(request, 'location.html', {
+            'institutions': institutions,
+            'active_menu': _('Representative search'),
+        })
+
     except ObjectDoesNotExist:
         return django.http.HttpResponseNotFound(_('Location not found'))
 
