@@ -105,12 +105,12 @@ def get_house_number_set(territory):
     """Returns the HouseNumberSet of this Territory. Caches them in
     _COMPILED_HOUSE_NUMBERS.
     """
-    id = territory.id
-    if id in _COMPILED_HOUSE_NUMBERS:
-        return _COMPILED_HOUSE_NUMBERS[id]
+    territory_id = territory.id
+    if territory_id in _COMPILED_HOUSE_NUMBERS:
+        return _COMPILED_HOUSE_NUMBERS[territory_id]
     else:
         hnset = HouseNumberSet(territory.numbers)
-        _COMPILED_HOUSE_NUMBERS[id] = hnset
+        _COMPILED_HOUSE_NUMBERS[territory_id] = hnset
         return hnset
 
 

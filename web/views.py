@@ -36,9 +36,9 @@ def about(request):
     })
 
 
-def representative(request, id):
+def representative(request, rep_id):
     try:
-        rep = Representative.objects.get(id=id)
+        rep = Representative.objects.get(id=rep_id)
         return render(request, 'representative.html', {
             'representative': rep,
             'active_menu': _('Representative search'),
@@ -47,9 +47,9 @@ def representative(request, id):
         return django.http.HttpResponseNotFound(_('Representative not found'))
 
 
-def institution(request, id):
+def institution(request, inst_id):
     try:
-        inst = Institution.objects.get(id=id)
+        inst = Institution.objects.get(id=inst_id)
         reps = Representative.objects.filter(institution=inst)
         return render(request, 'institution.html', {
             'institution': inst,
@@ -60,9 +60,9 @@ def institution(request, id):
         return django.http.HttpResponseNotFound(_('Institution not found'))
 
 
-def location(request, id, house_number=None):
+def location(request, loc_id, house_number=None):
     try:
-        loc = Location.objects.get(id=id)
+        loc = Location.objects.get(id=loc_id)
         # territories = Territory.objects.filter(
         # if house_number:
         # else:
