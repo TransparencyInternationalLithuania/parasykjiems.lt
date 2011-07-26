@@ -5,7 +5,8 @@ import django.http
 from haystack.query import SearchQuerySet
 
 from web.models import Representative, Institution, Location, Territory
-import house_numbers
+from web.forms import FeedbackForm
+import web.house_numbers
 
 
 def index(request):
@@ -71,7 +72,7 @@ def location(request, loc_id, house_number=None):
         if restricted_territories.exists():
             if house_number:
                 for rt in restricted_territories:
-                    if house_numbers.territory_contains(rt, house_number):
+                    if web.house_numbers.territory_contains(rt, house_number):
                         territories.append(rt)
             else:
                 return render(request, 'house_number.html', {
@@ -85,6 +86,23 @@ def location(request, loc_id, house_number=None):
 
     except ObjectDoesNotExist:
         return django.http.HttpResponseNotFound(_('Location not found'))
+
+
+def feedback(request):
+    if request.method == 'POST':
+        form = FeedbackForm(request.POST)
+        if form.is_valid():
+            # TODO: Actually send email.
+            return render(request, 'feedback.html', {
+                'active_menu': _('Feedback'),
+            })
+    else:
+        form = FeedbackForm()
+
+    return render(request, 'feedback.html', {
+        'form': form,
+        'active_menu': _('Feedback'),
+    })
 
 
 def setlang(request):

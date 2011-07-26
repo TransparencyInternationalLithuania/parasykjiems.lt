@@ -11,5 +11,7 @@ urlpatterns = patterns('web.views',
     url(r'^location/(?P<loc_id>\d+)$', 'location'),
     url(r'^location/(?P<loc_id>\d+)/(?P<house_number>\d+\w?)$', 'location'),
 
+    url(r'^feedback$', 'feedback'),
+
     url(r'^setlang$', 'setlang'),
 )

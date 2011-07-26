@@ -126,8 +126,7 @@ a:hover {
     margin: 2em 3em 2em 3em;
 }
 
-form input {
-    font-size: 120%;
+form input, textarea {
     border: solid 1px #ddd;
     box-shadow:inset 1px 1px 3px rgba(0, 0, 0, 0.3);
     -webkit-border-radius: 2px;
@@ -136,6 +135,7 @@ form input {
 }
 
 form input[name=q] {
+    font-size: 120%;
     width: 70%;
     padding: 0.2em 0.2em 0.2em 0.2em;
 }

@@ -129,6 +129,7 @@ else:
     print 'Initializing local settings.'
     copy('settings_local_default.py', 'settings_local.py')
 
+
 MANAGERS = ADMINS
 TEMPLATE_DEBUG = DEBUG
 
