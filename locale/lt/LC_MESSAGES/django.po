@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-24 15:12+0300\n"
-"PO-Revision-Date: 2011-07-21 13:49+0300\n"
+"POT-Creation-Date: 2011-07-26 15:30+0300\n"
+"PO-Revision-Date: 2011-07-26 15:32+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -19,11 +19,11 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n"
 "%100<10 || n%100>=20) ? 1 : 2)\n"
 
-#: settings.py:21
+#: settings.py:22
 msgid "English"
 msgstr "Anglų"
 
-#: settings.py:22
+#: settings.py:23
 msgid "Lithuanian"
 msgstr "Lietuvių"
 
@@ -39,23 +39,35 @@ msgstr "Turite pastabų, pasiūlymų?"
 msgid "Write to us."
 msgstr "Parašykite mums."
 
-#: templates/index.html:6
+#: templates/feedback.html:18
+msgid "Send"
+msgstr "Siųsti"
+
+#: templates/feedback.html:21
+msgid "Thank you for your feedback."
+msgstr "Ačiū už Jūsų atsiliepimus."
+
+#: templates/house_number.html:12
+msgid "Enter your house number:"
+msgstr "Įveskite pastato numerį:"
+
+#: templates/index.html:13 templates/menu.html:4
 msgid "Search"
 msgstr "Paieška"
 
-#: templates/index.html:19
+#: templates/index.html:26
 msgid "Institution"
 msgstr "Institucija"
 
-#: templates/index.html:22
+#: templates/index.html:29
 msgid "Representative"
 msgstr "Atstovas"
 
-#: templates/index.html:30
+#: templates/index.html:37
 msgid "Nothing found."
 msgstr "Nieko nerasta."
 
-#: templates/index.html:36
+#: templates/index.html:43
 msgid ""
 "\n"
 "  You can search by entering:\n"
@@ -77,30 +89,50 @@ msgstr ""
 "  </ul>\n"
 "  "
 
-#: web/menu.py:16 web/views.py:22 web/views.py:43 web/views.py:56
-msgid "Representative search"
-msgstr "Atstovo paieška"
-
-#: web/menu.py:17 web/views.py:28
-msgid "Public letters"
+#: templates/menu.html:9
+msgid "Open letters"
 msgstr "Atviri laiškai"
 
-#: web/menu.py:18 web/views.py:34
+#: templates/menu.html:14
 msgid "About project"
 msgstr "Apie projektą"
 
-#: web/models.py:74
+#: templates/menu.html:19
+msgid "Feedback"
+msgstr "Atsiliepimai"
+
+#: web/forms.py:6
+msgid "Your e-mail address"
+msgstr "Jūsų el. pašto adresas"
+
+#: web/forms.py:8
+msgid "Subject"
+msgstr "Tema"
+
+#: web/forms.py:10
+msgid "Message"
+msgstr "Atsiliepimai"
+
+#: web/models.py:76
 msgid "Name of city, town or village."
 msgstr ""
 
-#: web/models.py:102
+#: web/models.py:107
 msgid "territories"
 msgstr ""
 
-#: web/views.py:46
+#: web/views.py:41
 msgid "Representative not found"
 msgstr "Atstovas nerastas"
 
-#: web/views.py:59
+#: web/views.py:53
 msgid "Institution not found"
 msgstr "Institucija nerasta"
+
+#: web/views.py:78
+#, fuzzy
+msgid "Location not found"
+msgstr "Institucija nerasta"
+
+#~ msgid "Representative search"
+#~ msgstr "Atstovo paieška"
