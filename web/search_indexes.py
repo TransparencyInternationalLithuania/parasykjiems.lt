@@ -29,11 +29,8 @@ class InstitutionIndex(indexes.SearchIndex):
         return obj.kind.name
 
     def prepare_text(self, obj):
-        return join_text([
-            obj.name,
-            lithuanian.nominative_names(obj.name),
-            unidecode(obj.name),
-        ])
+        return join_text([obj.name] +
+                         lithuanian.nominative_names(obj.name))
 
 site.register(Institution, InstitutionIndex)
 
@@ -67,8 +64,8 @@ class LocationIndex(indexes.SearchIndex):
     def prepare_text(self, obj):
         return join_text(
             [obj.municipality,
-             obj.city,
-             lithuanian.nominative_names(obj.city)] +
+             obj.city] +
+            lithuanian.nominative_names(obj.city) +
             lithuanian.street_abbreviations(obj.street)
         )
 
