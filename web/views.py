@@ -9,7 +9,7 @@ from web.forms import FeedbackForm
 import web.house_numbers
 
 
-def index(request):
+def search(request):
     if 'q' in request.GET and request.GET['q'] != '':
         q = request.GET['q']
         results = SearchQuerySet().auto_query(q)
@@ -17,7 +17,7 @@ def index(request):
         q = ''
         results = []
 
-    return render(request, 'index.html', {
+    return render(request, 'search.html', {
         'search_query': q,
         'results': results,
     })
