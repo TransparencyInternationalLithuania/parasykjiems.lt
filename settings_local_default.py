@@ -6,6 +6,10 @@ ADMINS = (
 )
 
 
+# Print emails to console.
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
 # This email receives user feedback messages.
 FEEDBACK_EMAIL = 'parasykjiems@localhost'
 
