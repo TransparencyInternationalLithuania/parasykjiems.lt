@@ -196,10 +196,9 @@ form input[type=submit]:hover {
     background: #fafafa;
 }
 
-#results .kind {
-    float: right;
-    color: #888 !important;
-    size: 50%;
+#results img {
+    float: left;
+    padding: 5px 10px 5px 5px;
 }
 
 h1, h2, h3, h4 {
