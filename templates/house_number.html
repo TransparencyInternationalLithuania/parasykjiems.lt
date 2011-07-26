@@ -1,11 +1,16 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block content %}
 
+{% block menu %}
+{% with ACTIVE_MENU_ITEM="search" %}
+{% include "menu.html" %}
+{% endwith %}
+{% endblock %}
+
+{% block content %}
 <form>
   <label for="house_number">{% trans "Enter your house number:" %}</label>
   <input name="house_number"></input>
   <input type="submit"></input>
 </form>
-
 {% endblock %}
