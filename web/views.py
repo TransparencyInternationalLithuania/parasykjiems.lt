@@ -9,7 +9,7 @@ from django.core.urlresolvers import reverse
 
 import settings
 from web.models import Representative, Institution, Location, Territory
-from web.forms import FeedbackForm
+from web.forms import FeedbackForm, HouseNumberForm
 import web.house_numbers
 
 
@@ -58,9 +58,6 @@ def institution(request, inst_id):
 
 
 def location(request, loc_id, house_number=None):
-    if 'house_number' in request.GET:
-        return redirect('/location/{}/{}'.format(loc_id,
-                                                 request.GET['house_number']))
     try:
         loc = Location.objects.get(id=loc_id)
         all_territories = Territory.objects.filter(location=loc)
@@ -72,14 +69,28 @@ def location(request, loc_id, house_number=None):
                     if web.house_numbers.territory_contains(rt, house_number):
                         territories.append(rt)
             else:
-                return render(request, 'house_number.html')
+                return redirect(reverse(location_ask, args=[loc_id]))
         institutions = [t.institution for t in territories]
         return render(request, 'location.html', {
             'institutions': institutions,
         })
-
     except ObjectDoesNotExist:
         return django.http.HttpResponseNotFound(_('Location not found'))
+
+
+def location_ask(request, loc_id):
+    if request.method == 'POST':
+        form = HouseNumberForm(request.POST)
+        if form.is_valid():
+            return redirect(reverse(location,
+                                    args=[loc_id,
+                                          form.cleaned_data['house_number']]))
+    else:
+        form = HouseNumberForm()
+
+    return render(request, 'house_number.html', {
+        'form': form,
+    })
 
 
 def feedback(request):
@@ -98,7 +109,7 @@ def feedback(request):
                 message=message,
                 recipient_list=[settings.FEEDBACK_EMAIL],
             )
-            return redirect('/feedback/thanks')
+            return redirect(reverse(feedback_thanks))
     else:
         form = FeedbackForm()
 
