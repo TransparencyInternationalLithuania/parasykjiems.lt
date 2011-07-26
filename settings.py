@@ -1,4 +1,5 @@
 import os
+import sys
 
 
 PROJECT_ROOT = os.path.dirname(os.path.realpath(__file__))
@@ -75,9 +76,9 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
 )
 
 ROOT_URLCONF = 'parasykjiems.urls'
@@ -120,6 +121,7 @@ LOGGING = {
     }
 }
 
+
 if os.path.exists('settings_local.py'):
     from settings_local import *
 else:
@@ -129,3 +131,15 @@ else:
 
 MANAGERS = ADMINS
 TEMPLATE_DEBUG = DEBUG
+
+
+# Use an SQLite database for testing to avoid having to grant
+# privileges when using PostgreSQL. Also, database
+# creation/destruction is faster this way.
+#
+# The actual implementation of this is a bit hacky.
+if sys.argv[1] == 'test':
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'test',
+    }
