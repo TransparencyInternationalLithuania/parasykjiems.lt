@@ -5,7 +5,7 @@ from haystack import site
 from unidecode import unidecode
 
 from web.models import Institution, Representative, Location
-import web.lang as lang
+import web.lang as lithuanian
 
 
 def join_text(xs):
@@ -31,7 +31,7 @@ class InstitutionIndex(indexes.SearchIndex):
     def prepare_text(self, obj):
         return join_text([
             obj.name,
-            lang.nominative_names(obj.name),
+            lithuanian.nominative_names(obj.name),
             unidecode(obj.name),
         ])
 
@@ -49,7 +49,7 @@ class RepresentativeIndex(indexes.SearchIndex):
         return u'{}, {}'.format(obj.kind.name, obj.institution.name)
 
     def prepare_text(self, obj):
-        name_variants = lang.name_abbreviations(obj.name)
+        name_variants = lithuanian.name_abbreviations(obj.name)
         return join_text([obj.kind.name,
                           obj.institution.name] +
                          name_variants)
@@ -68,8 +68,8 @@ class LocationIndex(indexes.SearchIndex):
         return join_text(
             [obj.municipality,
              obj.city,
-             lang.nominative_names(obj.city)] +
-            lang.street_abbreviations(obj.street)
+             lithuanian.nominative_names(obj.city)] +
+            lithuanian.street_abbreviations(obj.street)
         )
 
     def prepare_title(self, obj):
