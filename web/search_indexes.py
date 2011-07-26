@@ -4,8 +4,8 @@ import haystack.indexes as indexes
 from haystack import site
 from unidecode import unidecode
 
-from parasykjiems.web.models import Institution, Representative, Location
-import parasykjiems.lang as lang
+from web.models import Institution, Representative, Location
+import web.lang as lang
 
 
 def join_text(xs):
@@ -20,8 +20,13 @@ def join_text(xs):
 
 class InstitutionIndex(indexes.SearchIndex):
     text = indexes.CharField(document=True)
+
     title = indexes.CharField(model_attr='name', indexed=False)
+    subtitle = indexes.CharField(indexed=False)
     url = indexes.CharField(model_attr='get_absolute_url', indexed=False)
+
+    def prepare_subtitle(self, obj):
+        return obj.kind.name
 
     def prepare_text(self, obj):
         return join_text([
@@ -35,20 +40,28 @@ site.register(Institution, InstitutionIndex)
 
 class RepresentativeIndex(indexes.SearchIndex):
     text = indexes.CharField(document=True)
+
     title = indexes.CharField(model_attr='name', indexed=False)
+    subtitle = indexes.CharField(indexed=False)
     url = indexes.CharField(model_attr='get_absolute_url', indexed=False)
+
+    def prepare_subtitle(self, obj):
+        return u'{}, {}'.format(obj.kind.name, obj.institution.name)
 
     def prepare_text(self, obj):
         name_variants = lang.name_abbreviations(obj.name)
-        kind = obj.kind.name
-        return join_text([kind] + name_variants)
+        return join_text([obj.kind.name,
+                          obj.institution.name] +
+                         name_variants)
 
 site.register(Representative, RepresentativeIndex)
 
 
 class LocationIndex(indexes.SearchIndex):
     text = indexes.CharField(document=True)
+
     title = indexes.CharField(indexed=False)
+    subtitle = indexes.CharField(indexed=False)
     url = indexes.CharField(model_attr='get_absolute_url', indexed=False)
 
     def prepare_text(self, obj):
