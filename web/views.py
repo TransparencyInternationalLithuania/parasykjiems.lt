@@ -20,20 +20,15 @@ def index(request):
     return render(request, 'index.html', {
         'search_query': q,
         'results': results,
-        'active_menu': _('Representative search'),
     })
 
 
 def letters(request):
-    return render(request, 'letters.html', {
-        'active_menu': _('Public letters'),
-    })
+    return render(request, 'letters.html')
 
 
 def about(request):
-    return render(request, 'about.html', {
-        'active_menu': _('About project'),
-    })
+    return render(request, 'about.html')
 
 
 def representative(request, rep_id):
@@ -41,7 +36,6 @@ def representative(request, rep_id):
         rep = Representative.objects.get(id=rep_id)
         return render(request, 'representative.html', {
             'representative': rep,
-            'active_menu': _('Representative search'),
         })
     except ObjectDoesNotExist:
         return django.http.HttpResponseNotFound(_('Representative not found'))
@@ -54,7 +48,6 @@ def institution(request, inst_id):
         return render(request, 'institution.html', {
             'institution': inst,
             'representatives': reps,
-            'active_menu': _('Representative search'),
         })
     except ObjectDoesNotExist:
         return django.http.HttpResponseNotFound(_('Institution not found'))
@@ -75,13 +68,10 @@ def location(request, loc_id, house_number=None):
                     if web.house_numbers.territory_contains(rt, house_number):
                         territories.append(rt)
             else:
-                return render(request, 'house_number.html', {
-                    'active_menu': _('Representative search'),
-                })
+                return render(request, 'house_number.html')
         institutions = [t.institution for t in territories]
         return render(request, 'location.html', {
             'institutions': institutions,
-            'active_menu': _('Representative search'),
         })
 
     except ObjectDoesNotExist:
@@ -93,15 +83,12 @@ def feedback(request):
         form = FeedbackForm(request.POST)
         if form.is_valid():
             # TODO: Actually send email.
-            return render(request, 'feedback.html', {
-                'active_menu': _('Feedback'),
-            })
+            return render(request, 'thank_you.html')
     else:
         form = FeedbackForm()
 
     return render(request, 'feedback.html', {
         'form': form,
-        'active_menu': _('Feedback'),
     })
 
 
