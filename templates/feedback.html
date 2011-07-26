@@ -1,12 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block menu %}
-{% with ACTIVE_MENU_ITEM="feedback" %}
-{% include "menu.html" %}
-{% endwith %}
-{% endblock %}
-
 {% block content %}
 
 {% if form %}
