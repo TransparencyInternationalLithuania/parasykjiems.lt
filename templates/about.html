@@ -1,3 +1,10 @@
 {% extends "base.html" %}
+
+{% block menu %}
+{% with ACTIVE_MENU_ITEM="about" %}
+{% include "menu.html" %}
+{% endwith %}
+{% endblock %}
+
 {% block content %}
 {% endblock %}

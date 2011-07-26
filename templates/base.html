@@ -14,9 +14,9 @@
         <a href="/"><img src="/static/img/logo.png" alt="{% trans "ParašykJiems" %}"></a>
       </div>
       <ul id="menu">
-        {% for item in MENU %}
-        <li><a href="{{ item.href }}" class="{% if item.name == active_menu %}selected{% endif %}">{{ item.name }}</a></li>
-        {% endfor %}
+        {% block menu %}
+        {% include "menu.html" %}
+        {% endblock %}
       </ul>
       <div id="content">
         {% block content %}{% endblock %}

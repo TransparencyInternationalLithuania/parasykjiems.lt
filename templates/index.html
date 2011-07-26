@@ -1,5 +1,12 @@
 {% extends "base.html" %}
 {% load i18n %}
+
+{% block menu %}
+{% with ACTIVE_MENU_ITEM="search" %}
+{% include "menu.html" %}
+{% endwith %}
+{% endblock %}
+
 {% block content %}
 <form name="search" action="/">
   <input name="q" value="{{ search_query }}"></input>
