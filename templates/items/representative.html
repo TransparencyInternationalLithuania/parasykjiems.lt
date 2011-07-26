@@ -3,7 +3,7 @@
   <p class="subtitle">{{ representative.kind.name }}</p>
 
   {% if not institution %}
-  <h3><a href="/institution/{{ representative.institution.id }}">{{ representative.institution.name }}</a></h3>
+  <h3><a href="{% url web.views.institution representative.institution.id %}">{{ representative.institution.name }}</a></h3>
   {% endif %}
 
   {% if representative.email %}
