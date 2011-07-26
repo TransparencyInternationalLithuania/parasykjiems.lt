@@ -90,7 +90,6 @@ a:hover {
 
 #menu a {
     text-decoration: none;
-    font-size: 90%;
     display: block;
 
     background: white;
@@ -98,13 +97,13 @@ a:hover {
     opacity: 0.5;
 
     display: inline-block;
-    width: 130px;
+    width: 180px;
     line-height: 30px;
     padding-top: 1px;
 
     text-align: center;
 
-    margin-top: 9px;
+    margin: 9px 5px 0px 5px;
     height: 30px;
 
     -webkit-border-top-left-radius: 5px;
@@ -121,7 +120,6 @@ a:hover {
 
 #menu a.selected {
     opacity: 1;
-    font-weight: bold;
     color: #333;
 }
 
