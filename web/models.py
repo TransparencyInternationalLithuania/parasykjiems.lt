@@ -27,8 +27,9 @@ class Institution(models.Model):
     def __unicode__(self):
         return self.name
 
+    @models.permalink
     def get_absolute_url(self):
-        return '/institution/{}'.format(self.id)
+        return ('web.views.institution', [self.id])
 
 
 class RepresentativeKind(models.Model):
@@ -62,8 +63,9 @@ class Representative(models.Model):
             self.kind,
             self.institution)
 
+    @models.permalink
     def get_absolute_url(self):
-        return '/representative/{}'.format(self.id)
+        return ('web.views.representative', [self.id])
 
 
 class Location(models.Model):
@@ -82,8 +84,9 @@ class Location(models.Model):
             s += u', {}'.format(self.street)
         return s
 
+    @models.permalink
     def get_absolute_url(self):
-        return '/location/{}'.format(self.id)
+        return ('web.views.location', [self.id])
 
 
 class Territory(models.Model):

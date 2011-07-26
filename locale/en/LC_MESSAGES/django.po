@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-26 15:30+0300\n"
+"POT-Creation-Date: 2011-07-26 22:09+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,47 +25,43 @@ msgstr ""
 msgid "Lithuanian"
 msgstr ""
 
-#: templates/base.html:14
+#: templates/base.html:15
 msgid "ParašykJiems"
 msgstr ""
 
-#: templates/base.html:26
+#: templates/base.html:27
 msgid "Have any notes, suggestions?"
 msgstr ""
 
-#: templates/base.html:26
+#: templates/base.html:27
 msgid "Write to us."
 msgstr ""
 
-#: templates/feedback.html:18
+#: templates/feedback.html:11
 msgid "Send"
 msgstr ""
 
-#: templates/feedback.html:21
-msgid "Thank you for your feedback."
+#: templates/house_number.html:14
+msgid "Continue"
 msgstr ""
 
-#: templates/house_number.html:12
-msgid "Enter your house number:"
-msgstr ""
-
-#: templates/index.html:13 templates/menu.html:4
+#: templates/menu.html:4 templates/search.html:13
 msgid "Search"
 msgstr ""
 
-#: templates/index.html:26
-msgid "Institution"
+#: templates/menu.html:9
+msgid "Open letters"
 msgstr ""
 
-#: templates/index.html:29
-msgid "Representative"
+#: templates/menu.html:14
+msgid "About project"
 msgstr ""
 
-#: templates/index.html:37
+#: templates/search.html:27
 msgid "Nothing found."
 msgstr ""
 
-#: templates/index.html:43
+#: templates/search.html:33
 msgid ""
 "\n"
 "  You can search by entering:\n"
@@ -78,43 +74,47 @@ msgid ""
 "  "
 msgstr ""
 
-#: templates/menu.html:9
-msgid "Open letters"
+#: templates/thanks.html:6
+msgid "Thank you for your feedback."
 msgstr ""
 
-#: templates/menu.html:14
-msgid "About project"
+#: web/forms.py:14
+msgid "A house number must be numeric and can contain at most one letter."
 msgstr ""
 
-#: templates/menu.html:19
-msgid "Feedback"
+#: web/forms.py:18
+msgid "Your house number"
 msgstr ""
 
-#: web/forms.py:6
+#: web/forms.py:23
+msgid "Your name"
+msgstr ""
+
+#: web/forms.py:25
 msgid "Your e-mail address"
 msgstr ""
 
-#: web/forms.py:8
+#: web/forms.py:27
 msgid "Subject"
 msgstr ""
 
-#: web/forms.py:10
+#: web/forms.py:29
 msgid "Message"
 msgstr ""
 
-#: web/models.py:76
+#: web/models.py:78
 msgid "Name of city, town or village."
 msgstr ""
 
-#: web/models.py:107
+#: web/models.py:110
 msgid "territories"
 msgstr ""
 
-#: web/views.py:41
+#: web/views.py:45
 msgid "Representative not found"
 msgstr ""
 
-#: web/views.py:53
+#: web/views.py:57
 msgid "Institution not found"
 msgstr ""
 
