@@ -1,3 +1,11 @@
+"""Tests for 'parasykjiems.web'.
+
+By default, Django only looks for tests in an app's models and tests
+modules. We want to put doctests in all modules, so we override the
+suite() function here and list the modules we want to test in
+TEST_MODULES.
+"""
+
 import unittest
 import doctest
 
@@ -6,16 +14,23 @@ import doctest
 TEST_MODULES = (
     'web.multisub',
     'web.lang',
+    'settings',
 )
 
 
 def suite():
     suite = unittest.TestSuite()
     for t in TEST_MODULES:
-        suite.addTest(doctest.DocTestSuite(
-            __import__(t, globals(), locals(), fromlist=["*"])
-        ))
+        try:
+            suite.addTest(doctest.DocTestSuite(
+                __import__(t, globals(), locals(), fromlist=["*"])
+            ))
+        except ValueError:
+            # If a module doesn't contain any doctests, we simply ignore it.
+            pass
+
         suite.addTest(unittest.TestLoader().loadTestsFromModule(
             __import__(t, globals(), locals(), fromlist=["*"])
         ))
+
     return suite
