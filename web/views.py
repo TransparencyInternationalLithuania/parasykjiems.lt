@@ -1,9 +1,13 @@
 from django.shortcuts import render, redirect
 from django.utils.translation import ugettext as _
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.mail import send_mail
 import django.http
 from haystack.query import SearchQuerySet
+from django.template import Context, loader
+from django.core.urlresolvers import reverse
 
+import settings
 from web.models import Representative, Institution, Location, Territory
 from web.forms import FeedbackForm
 import web.house_numbers
@@ -82,8 +86,19 @@ def feedback(request):
     if request.method == 'POST':
         form = FeedbackForm(request.POST)
         if form.is_valid():
-            # TODO: Actually send email.
-            return render(request, 'thank_you.html')
+            t = loader.get_template('mail/feedback.txt')
+            message = t.render(Context({
+                'form_data': form.cleaned_data,
+                'ip': request.META['REMOTE_ADDR'],
+            }))
+
+            send_mail(
+                from_email=u'{name} <{email}>'.format(**form.cleaned_data),
+                subject=form.cleaned_data['subject'],
+                message=message,
+                recipient_list=[settings.FEEDBACK_EMAIL],
+            )
+            return redirect('/feedback/thanks')
     else:
         form = FeedbackForm()
 
@@ -92,9 +107,10 @@ def feedback(request):
     })
 
 
-def setlang(request):
-    language = request.GET.get('lang', 'lt')
-    back = request.META.get('HTTP_REFERER', '/')
-    response = django.http.HttpResponseRedirect(back)
+def feedback_thanks(request):
+    return render(request, 'thanks.html')
+
+
+def setlang(request, language):
     request.session['django_language'] = language
-    return response
+    return redirect(request.META.get('HTTP_REFERER', '/'))

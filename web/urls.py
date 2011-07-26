@@ -12,6 +12,7 @@ urlpatterns = patterns('web.views',
     url(r'^location/(?P<loc_id>\d+)/(?P<house_number>\d+\w?)$', 'location'),
 
     url(r'^feedback$', 'feedback'),
+    url(r'^feedback/thanks$', 'feedback_thanks'),
 
-    url(r'^setlang$', 'setlang'),
+    url(r'^setlang/(\w+)$', 'setlang'),
 )
