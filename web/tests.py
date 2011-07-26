@@ -14,7 +14,7 @@ import doctest
 TEST_MODULES = (
     'web.multisub',
     'web.lang',
-    'settings',
+    'web.house_numbers',
 )
 
 
