@@ -19,17 +19,7 @@
 <ul id="results">
   {% for result in results %}
   <li>
-    <a href="{{ result.url }}">
-      {{ result.title }}
-      <div class="kind">
-        {% if result.content_type == 'web.institution' %}
-        {% trans "Institution" %}
-        {% endif %}
-        {% if result.content_type == 'web.representative' %}
-        {% trans "Representative" %}
-        {% endif %}
-      </div>
-    </a>
+    {% include "items/result.html" %}
   </li>
   {% endfor %}
 </ul>
