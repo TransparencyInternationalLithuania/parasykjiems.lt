@@ -2,8 +2,12 @@ DEBUG = True
 
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    ('Local', 'parasykjiems@localhost'),
 )
+
+
+# This email receives user feedback messages.
+FEEDBACK_EMAIL = 'parasykjiems@localhost'
 
 
 DATABASES = {
