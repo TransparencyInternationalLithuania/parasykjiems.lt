@@ -7,10 +7,7 @@ from django.core.management.base import BaseCommand
 from django.core.exceptions import ObjectDoesNotExist
 from progressbar import ProgressBar, Bar, ETA
 
-from web.models import \
-     InstitutionKind, Institution, \
-     RepresentativeKind, Representative, \
-     Location, Territory
+from search import models
 
 
 _INSTITUTION_TYPE_CONVERSIONS = (
@@ -73,13 +70,13 @@ class Command(BaseCommand):
         inst_to_rep = {}
 
         for c in _INSTITUTION_TYPE_CONVERSIONS:
-            inst = InstitutionKind(
+            inst = models.InstitutionKind(
                 name=c['institution'],
                 active=c['active'],
                 description=u'')
             inst.save()
             old_name_to_new_inst[c['old_name']] = inst
-            rep = RepresentativeKind(
+            rep = models.RepresentativeKind(
                 name=c['representative'],
                 active=c['active'],
                 description=u'')
@@ -101,7 +98,7 @@ class Command(BaseCommand):
         for row in progressreader('data/institutions.csv'):
             type_id = int(row['type_id'])
             if type_id in old_id_to_new_inst:
-                inst = Institution(
+                inst = models.Institution(
                     id=int(row['id']),
                     name=d(row['name']),
                     kind=old_id_to_new_inst[type_id],
@@ -119,8 +116,9 @@ class Command(BaseCommand):
         imports = 0
         for row in progressreader('data/personpositions.csv'):
             try:
-                inst = Institution.objects.get(id=int(row['institution_id']))
-                representative = Representative(
+                inst = models.Institution.objects.get(
+                    id=int(row['institution_id']))
+                representative = models.Representative(
                     name=d(row['name']),
                     institution=inst,
                     kind=inst_to_rep[inst.kind],
@@ -181,28 +179,31 @@ class Command(BaseCommand):
                 continue
 
             try:
-                institution = \
-                    Institution.objects.get(id=int(row['institution_id']))
+                institution = models.Institution.objects.get(
+                    id=int(row['institution_id']))
                 municipality = d(row['municipality'])
+                elderate = d(row['elderate'])
                 city = d(row['city'])
                 street = d(row['street'])
 
-                maybe_location = Location.objects.filter(
+                maybe_location = models.Location.objects.filter(
                     municipality=municipality,
+                    elderate=elderate,
                     city=city,
                     street=street)
 
                 if maybe_location.exists():
                     location = maybe_location[0]
                 else:
-                    location = Location(
+                    location = models.Location(
                         municipality=municipality,
+                        elderate=elderate,
                         city=city,
                         street=street)
                     location.save()
                     locations += 1
 
-                maybe_territory = Territory.objects.filter(
+                maybe_territory = models.Territory.objects.filter(
                     institution=institution,
                     location=location)
 
@@ -217,7 +218,7 @@ class Command(BaseCommand):
                     territory.save()
                     merges += 1
                 else:
-                    territory = Territory(
+                    territory = models.Territory(
                         institution=institution,
                         location=location,
                         numbers=', '.join(numbers))

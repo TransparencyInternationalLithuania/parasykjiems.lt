@@ -1,0 +1,4 @@
+{{ form_data.message|safe }}
+
+--
+This message was sent through the feedback form from IP {{ ip }}.
