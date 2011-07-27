@@ -29,7 +29,7 @@ class Institution(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('web.views.institution', [self.id])
+        return ('institution', [self.id])
 
 
 class RepresentativeKind(models.Model):
@@ -65,7 +65,7 @@ class Representative(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('web.views.representative', [self.id])
+        return ('representative', [self.id])
 
 
 class Location(models.Model):
@@ -73,10 +73,14 @@ class Location(models.Model):
     street field is empty).
     """
 
-    municipality = models.CharField(max_length=_NAME_LEN)
+    municipality = models.CharField(max_length=_NAME_LEN, db_index=True)
+    elderate = models.CharField(max_length=_NAME_LEN,
+                                blank=True,
+                                db_index=True)
     city = models.CharField(max_length=_NAME_LEN,
+                            db_index=True,
                             help_text=_("Name of city, town or village."))
-    street = models.CharField(max_length=_NAME_LEN, blank=True)
+    street = models.CharField(max_length=_NAME_LEN, blank=True, db_index=True)
 
     def __unicode__(self):
         s = u'{}, {}'.format(self.municipality, self.city)
@@ -86,7 +90,7 @@ class Location(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('web.views.location', [self.id])
+        return ('location', [self.id])
 
 
 class Territory(models.Model):

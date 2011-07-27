@@ -2,7 +2,7 @@
 """Language related functions.
 """
 
-import web.multisub as multisub
+from search import multisub
 import itertools
 
 
