@@ -10,6 +10,9 @@ ADMINS = (
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
+SERVER_EMAIL = 'parasykjiems@localhost'
+
+
 # This email receives user feedback messages.
 FEEDBACK_EMAIL = 'parasykjiems@localhost'
 
