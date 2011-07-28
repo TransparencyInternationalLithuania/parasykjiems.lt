@@ -92,6 +92,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'web',
     'search',
+    'mail',
     'haystack',
 )
 
@@ -139,7 +140,7 @@ TEMPLATE_DEBUG = DEBUG
 # creation/destruction is faster this way.
 #
 # The actual implementation of this is a bit hacky.
-if sys.argv[1] == 'test':
+if len(sys.argv) > 1 and sys.argv[1] == 'test':
     DATABASES['default'] = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': 'test',
