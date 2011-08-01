@@ -71,6 +71,9 @@ class Representative(models.Model):
 class Location(models.Model):
     """Represents either a street or a whole town/village (if the
     street field is empty).
+
+    Is generated automatically from Territories with the
+    update_locations command.
     """
 
     municipality = models.CharField(max_length=_NAME_LEN, db_index=True)
@@ -100,13 +103,25 @@ class Territory(models.Model):
     Used to find institutions by address.
     """
 
+    municipality = models.CharField(max_length=_NAME_LEN, db_index=True)
+    elderate = models.CharField(max_length=_NAME_LEN,
+                                blank=True,
+                                db_index=True)
+    city = models.CharField(max_length=_NAME_LEN,
+                            db_index=True,
+                            help_text=_("Name of city, town or village."))
+    street = models.CharField(max_length=_NAME_LEN, blank=True, db_index=True)
+
     institution = models.ForeignKey(Institution)
-    location = models.ForeignKey(Location)
     numbers = models.TextField()
 
     def __unicode__(self):
+        loc = u'{}, {}'.format(self.municipality, self.city)
+        if self.street != u'':
+            loc += u', {}'.format(self.street)
+
         return u'{} [{}] -> {}'.format(
-            self.location,
+            loc,
             self.numbers,
             self.institution)
 

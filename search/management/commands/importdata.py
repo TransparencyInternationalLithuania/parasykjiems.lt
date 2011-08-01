@@ -145,7 +145,6 @@ class Command(BaseCommand):
         skips = 0
         imports = 0
         merges = 0
-        locations = 0
         large_numbers = set()
         for row in progressreader('data/institutionterritories.csv'):
             num_from, num_from_letter = \
@@ -186,31 +185,23 @@ class Command(BaseCommand):
                 city = d(row['city'])
                 street = d(row['street'])
 
-                maybe_location = models.Location.objects.filter(
+                any_elderate = models.Territory.objects.filter(
+                    institution=institution,
                     municipality=municipality,
-                    elderate=elderate,
                     city=city,
                     street=street)
 
-                if maybe_location.exists():
-                    location = maybe_location[0]
+                if elderate == '':
+                    maybe_territory = any_elderate
                 else:
-                    location = models.Location(
-                        municipality=municipality,
-                        elderate=elderate,
-                        city=city,
-                        street=street)
-                    location.save()
-                    locations += 1
-
-                maybe_territory = models.Territory.objects.filter(
-                    institution=institution,
-                    location=location)
+                    maybe_territory = any_elderate.filter(elderate=elderate)
+                    if not maybe_territory.exists():
+                        maybe_territory = any_elderate.filter(elderate='')
 
                 if maybe_territory.exists():
                     territory = maybe_territory[0]
                     if territory.numbers == '':
-                        print u'Warning: not replacing empty numbers with more specific numbers [{}] in {}' \
+                        print u'Warning: not replacing empty numbers with more specific numbers {} in {}' \
                               .format(numbers, territory)
                     else:
                         territory.numbers = ', '.join(
@@ -220,12 +211,15 @@ class Command(BaseCommand):
                 else:
                     territory = models.Territory(
                         institution=institution,
-                        location=location,
+                        municipality=municipality,
+                        elderate=elderate,
+                        city=city,
+                        street=street,
                         numbers=', '.join(numbers))
                     territory.save()
                     imports += 1
             except ObjectDoesNotExist:
                 skips += 1
-        print 'Imported {} territories, {} locations, with {} merges. Skipped {}.'.\
-              format(imports, locations, merges, skips)
+        print 'Imported {} territories, , with {} merges. Skipped {}.'.\
+              format(imports, merges, skips)
         print 'Numbers turned into infinities: {}'.format(large_numbers)
