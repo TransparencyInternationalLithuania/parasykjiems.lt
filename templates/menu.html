@@ -5,6 +5,11 @@
   </a>
 </li>
 <li>
+  <a href="{% url letters %}" {% if ACTIVE_MENU_ITEM == "letters" %}class="selected"{% endif %}>
+    {% trans "Open letters" %}
+  </a>
+</li>
+<li>
   <a href="{% url about %}" {% if ACTIVE_MENU_ITEM == "about" %}class="selected"{% endif %}>
     {% trans "About project" %}
   </a>

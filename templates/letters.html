@@ -1,10 +1,22 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block menu %}
-{% with ACTIVE_MENU_ITEM="letters" %}
+{% with ACTIVE_MENU_ITEM="search" %}
 {% include "menu.html" %}
 {% endwith %}
 {% endblock %}
 
 {% block content %}
+
+<ul>
+  {% for letter in letters %}
+  <li>
+    {% blocktrans with sender=letter.sender_name recipient_kind=letter.recipient.kind.name recipient=letter.recipient.name subject=letter.subject url=letter.get_absolute_url %}
+    From {{ sender }} to {{ recipient_kind }} {{ recipient }}: <a href="{{ url }}">"{{ subject }}"</a>
+    {% endblocktrans %}
+  </li>
+  {% endfor %}
+</ul>
+
 {% endblock %}
