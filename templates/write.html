@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block menu %}
+{% with ACTIVE_MENU_ITEM="search" %}
+{% include "menu.html" %}
+{% endwith %}
+{% endblock %}
+
+{% block content %}
+
+<form method="POST">
+  {% csrf_token %}
+  <table>
+    {{ form.as_table }}
+  </table>
+  <input value="{% trans "Send" %}" type="submit"></input>
+</form>
+
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block menu %}
+{% with ACTIVE_MENU_ITEM="search" %}
+{% include "menu.html" %}
+{% endwith %}
+{% endblock %}
+
+{% block content %}
+<p>
+  {% blocktrans %}
+  Check your email. You should receive a confirmation link from
+  us. You must confirm your letter before it will be sent.
+  {% endblocktrans %}
+</p>
+{% endblock %}

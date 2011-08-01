@@ -5,7 +5,7 @@
   {% if institution.email %}
   <p>
     Elektroninis paštas: {{ institution.email }} &mdash;
-    <a href="/write_to/institution/{{ institution.id }}">Rašyti laišką</a>
+    <a href="{% url write-institution institution.id %}">Rašyti laišką</a>
   </p>
   {% endif %}
 

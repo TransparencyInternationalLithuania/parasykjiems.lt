@@ -3,13 +3,13 @@
   <p class="subtitle">{{ representative.kind.name }}</p>
 
   {% if not institution %}
-  <h3><a href="{% url web.views.institution representative.institution.id %}">{{ representative.institution.name }}</a></h3>
+  <h3><a href="{% url institution representative.institution.id %}">{{ representative.institution.name }}</a></h3>
   {% endif %}
 
   {% if representative.email %}
   <p>
     Elektroninis paštas: {{ representative.email }} &mdash;
-    <a href="/write_to/representative/{{ representative.id }}">Rašyti laišką</a>
+    <a href="{% url write-representative representative.id %}">Rašyti laišką</a>
   </p>
   {% endif %}
 

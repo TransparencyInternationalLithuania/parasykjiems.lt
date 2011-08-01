@@ -22,7 +22,7 @@ def search(request):
 
 
 def representative(request, rep_id):
-    rep = get_object_or_404(Representative.objects.get, id=rep_id)
+    rep = get_object_or_404(Representative, id=rep_id)
     return render(request, 'representative.html', {
         'representative': rep,
     })

@@ -5,8 +5,8 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 
 import settings
-import mail.models
-import search.models
+from parasykjiems.mail.models import Enquiry
+from parasykjiems.search.models import Representative
 
 
 def submit_enquiry(sender_name,
@@ -14,21 +14,21 @@ def submit_enquiry(sender_name,
                    recipient,
                    subject,
                    body,
-                   is_open=False,
+                   is_open,
                    parent=None):
     """Creates an enquiry with given parameters, but doesn't send
     it. Instead, sends the user a confirmation email.
     """
 
-    enquiry = mail.models.Enquiry(
-        from_name=sender_name,
-        from_email=sender_email,
+    enquiry = Enquiry(
+        sender_name=sender_name,
+        sender_email=sender_email,
         subject=subject,
         body=body,
         is_open=is_open,
         parent=parent,
     )
-    if isinstance(recipient, search.models.Representative):
+    if isinstance(recipient, Representative):
         enquiry.representative = recipient
     else:
         enquiry.institution = recipient
@@ -36,10 +36,7 @@ def submit_enquiry(sender_name,
 
     # Send confirmation email.
     confirm_msg = render_to_string('mail/confirm.txt', {
-        'confirm_url': reverse('confirm', [enquiry.unique_hash]),
-        'sender_name': sender_name,
-        'recipient': recipient,
-        'subject': subject,
+        'enquiry': enquiry,
     })
     send_mail(
         from_email=settings.SERVER_EMAIL,
