@@ -1,21 +1,19 @@
 DEBUG = True
 
-
 ADMINS = (
     ('Local', 'parasykjiems@localhost'),
 )
 
-
 # Print emails to console.
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-
 SERVER_EMAIL = 'parasykjiems@localhost'
 
+# Should contain {unique_hash} somewhere.
+ENQUIRY_EMAIL_FORMAT = 'parasykjiems+{unique_hash}@localhost'
 
 # This email receives user feedback messages.
 FEEDBACK_EMAIL = 'parasykjiems@localhost'
-
 
 DATABASES = {
     'default': {
@@ -27,7 +25,6 @@ DATABASES = {
         'PORT': '',
     }
 }
-
 
 HAYSTACK_SEARCH_ENGINE = 'whoosh'
 HAYSTACK_WHOOSH_PATH = 'parasykjiems.index'

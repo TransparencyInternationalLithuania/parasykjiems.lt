@@ -1,0 +1,11 @@
+{{ enquiry }}
+
+--
+Šis laiškas išsiųstas naudojant ParašykJiems.lt sistemą.
+
+{% if public_url %}
+Laiškas yra viešas ir jį taip pat galite peržiūrėti adresu:
+{{ public_url }}
+
+Jums parašius atsakymą, jį irgi galima bus matyti tuo adresu.
+{% endif %}
