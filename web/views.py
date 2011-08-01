@@ -36,7 +36,7 @@ def feedback(request):
 
 
 def feedback_thanks(request):
-    return render(request, 'thanks.html')
+    return render(request, 'feedback_thanks.html')
 
 
 def setlang(request, language):
