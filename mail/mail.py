@@ -64,11 +64,12 @@ def confirm_enquiry(enquiry):
     message = EmailMessage(
         from_email=settings.SERVER_EMAIL,
         subject=enquiry.subject,
-        message=render_to_string('mail/enquiry.txt', {'enquiry': enquiry}),
-        recipient_list=recipients,
+        body=render_to_string('mail/enquiry.txt', {'enquiry': enquiry}),
+        to=recipients,
         headers={'Reply-To': reply_to},
     )
     enquiry.message_id = message.message()['Message-Id']
     message.send()
     enquiry.is_sent = True
     enquiry.sent_at = datetime.datetime.now()
+    enquiry.save()

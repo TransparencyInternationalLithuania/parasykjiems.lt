@@ -50,6 +50,13 @@ class Enquiry(models.Model):
                 if tries > Enquiry._hash_tries:
                     raise Exception("Probably out of unique hashes for Enquiry.")
 
+    def recipient(self):
+        return self.representative or self.institution
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('letter', (), {'id': self.id})
+
 
 class Response(models.Model):
     # A null parent means that it's unresolved. All responses should
