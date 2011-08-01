@@ -9,7 +9,7 @@ Laiško tema: {{ enquiry.subject }}
 Jeigu norite peržiūrėti laišką ir patvirtinti jo siuntimą, naršyklėje
 nueikite šiuo adresu:
 
-{% url confirm enquiry.unique_hash %}
+{{ site_address }}{% url confirm enquiry.unique_hash %}
 
 Jeigu ne Jūs parašėte šį laišką, o kažkas apsimetantis Jumis, prašome
 pranešti apie piktnaudžiavimą mūsų svetaine adresu abuse@parašykjiems.lt

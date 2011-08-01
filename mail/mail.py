@@ -36,6 +36,7 @@ def submit_enquiry(sender_name,
 
     # Send confirmation email.
     confirm_msg = render_to_string('mail/confirm.txt', {
+        'site_address': settings.SITE_ADDRESS,
         'enquiry': enquiry,
     })
     send_mail(
