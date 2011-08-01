@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from django.core.management.base import BaseCommand
-from django.core.exceptions import ObjectDoesNotExist
-from progressbar import ProgressBar, Bar, ETA
-
 from django.db import connection, transaction
 
 
