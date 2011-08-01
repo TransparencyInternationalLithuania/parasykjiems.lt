@@ -69,6 +69,6 @@ def location_ask(request, loc_id):
     else:
         form = HouseNumberForm()
 
-    return render(request, 'house_number.html', {
+    return render(request, 'location_ask.html', {
         'form': form,
     })
