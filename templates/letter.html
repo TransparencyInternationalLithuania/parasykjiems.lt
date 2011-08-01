@@ -8,6 +8,7 @@
 {% endblock %}
 
 {% block content %}
+
 <p>
   {% trans "Recipient of the letter:" %}
   <em>{{ enquiry.recipient.kind.name }} {{ enquiry.recipient.name }}</em>.
@@ -18,8 +19,4 @@
   {{ enquiry.body }}
 </blockquote>
 
-<form method="POST">
-  {% csrf_token %}
-  <input value="{% trans "Confirm" %}" type="Submit">
-</form>
 {% endblock %}

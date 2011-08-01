@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
+from django.http import Http404
 
 from forms import WriteLetterForm
 from parasykjiems.search.models import Representative, Institution
@@ -45,6 +46,26 @@ def write_confirm(request):
 
 def confirm(request, unique_hash):
     enquiry = get_object_or_404(Enquiry, unique_hash=unique_hash)
-    return render(request, 'confirm.html', {
-        'enquiry': enquiry,
-    })
+    if enquiry.is_sent:
+        raise Http404()
+
+    if request.method == 'POST':
+        mail.confirm_enquiry(enquiry)
+        return redirect(reverse(sent, kwargs={'id': enquiry.id}))
+    else:
+        return render(request, 'confirm.html', {
+            'enquiry': enquiry,
+        })
+
+
+def sent(request, id):
+    enquiry = get_object_or_404(Enquiry, id=id)
+    return render(request, 'sent.html', {'enquiry': enquiry})
+
+
+def letter(request, id):
+    enquiry = get_object_or_404(Enquiry, id=id)
+    if not enquiry.is_open or not enquiry.is_sent:
+        raise Http404()
+
+    return render(request, 'letter.html', {'enquiry': enquiry})
