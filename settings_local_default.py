@@ -15,6 +15,10 @@ ENQUIRY_EMAIL_FORMAT = 'parasykjiems+{unique_hash}@localhost'
 # This email receives user feedback messages.
 FEEDBACK_EMAIL = 'parasykjiems@localhost'
 
+# Used for absolute URLs. Shouldn't include trailing slash, but should
+# include URL scheme.
+SITE_ADDRESS = 'http://localhost:8000'
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',

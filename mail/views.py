@@ -40,7 +40,7 @@ def write(request, recipient):
 
 
 def write_confirm(request):
-    return render(request, 'confirm.html')
+    return render(request, 'write-confirm.html')
 
 
 def confirm(request, unique_hash):
