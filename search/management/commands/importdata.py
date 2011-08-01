@@ -32,7 +32,7 @@ _INSTITUTION_TYPE_CONVERSIONS = (
 
 class Command(BaseCommand):
     args = '<>'
-    help = "Imports data from CSV's created by export.py into database."
+    help = "Imports data from CSV's created by exportdata."
 
     def handle(self, *args, **options):
         def d(s):
