@@ -16,6 +16,9 @@ def submit_enquiry(sender_name,
                    body,
                    is_open=False,
                    parent=None):
+    """Creates an enquiry with given parameters, but doesn't send
+    it. Instead, sends the user a confirmation email.
+    """
 
     enquiry = mail.models.Enquiry(
         from_name=sender_name,
@@ -48,8 +51,9 @@ def submit_enquiry(sender_name,
     return enquiry
 
 
-def confirm_enquiry(unique_hash):
-    enquiry = mail.models.Enquiry.get(unique_hash=unique_hash)
+def confirm_enquiry(enquiry):
+    """Sends the given enquiry to the representative.
+    """
 
     if settings.DEBUG:
         recipients = [email for name, email in settings.ADMINS]
