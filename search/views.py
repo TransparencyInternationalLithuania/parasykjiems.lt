@@ -39,7 +39,11 @@ def institution(request, inst_id):
 
 def location(request, loc_id, house_number=None):
     loc = get_object_or_404(Location, id=loc_id)
-    all_territories = Territory.objects.filter(location=loc)
+    all_territories = Territory.objects.filter(
+        municipality=loc.municipality,
+        elderate=loc.elderate,
+        city=loc.city,
+        street=loc.street)
     territories = list(all_territories.filter(numbers=''))
     restricted_territories = all_territories.exclude(numbers='')
     if restricted_territories.exists():
