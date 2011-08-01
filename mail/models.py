@@ -9,7 +9,7 @@ _NAME_LEN = 200
 
 
 class Enquiry(models.Model):
-    unique_hash = models.IntegerField(primary_key=True, unique=True)
+    unique_hash = models.IntegerField(db_index=True, unique=True)
 
     # These link to the institution or representative that this
     # enquiry was sent to. Exactly one of them should be non-null.
@@ -18,14 +18,16 @@ class Enquiry(models.Model):
     representative = models.ForeignKey(search.models.Representative,
                                        null=True)
 
-    from_name = models.CharField(max_length=_NAME_LEN)
-    from_email = models.EmailField(max_length=_NAME_LEN)
+    sender_name = models.CharField(max_length=_NAME_LEN)
+    sender_email = models.EmailField(max_length=_NAME_LEN)
     subject = models.CharField(max_length=400)
     body = models.TextField()
 
+    is_open = models.BooleanField()
+
     submitted_at = models.DateTimeField(auto_now_add=True)
 
-    sent = models.BooleanField()
+    is_sent = models.BooleanField()
     sent_at = models.DateTimeField(null=True)
 
     # This can be used for threading. Should be set after sending.
