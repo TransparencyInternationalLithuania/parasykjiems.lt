@@ -11,4 +11,6 @@ urlpatterns = patterns('mail.views',
     url(r'^sent/(?P<id>\d+)$', 'sent'),
 
     url(r'^letter/(?P<id>\d+)$', 'letter', name='letter'),
+
+    url(r'^letters$', 'letters', name='letters'),
 )

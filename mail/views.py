@@ -69,3 +69,7 @@ def letter(request, id):
         raise Http404()
 
     return render(request, 'letter.html', {'enquiry': enquiry})
+
+def letters(request):
+    letters = Enquiry.objects.filter(is_open=True, is_sent=True)
+    return render(request, 'letters.html', {'letters': letters})
