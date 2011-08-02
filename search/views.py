@@ -8,16 +8,14 @@ from search import house_numbers
 
 
 def search(request):
+    request.session['search_path'] = request.path
     if 'q' in request.GET and request.GET['q'] != '':
         q = request.GET['q']
         results = SearchQuerySet().auto_query(q)
+        request.session['search_path'] += u'?' + request.META['QUERY_STRING']
     else:
         q = ''
         results = []
-
-    request.session['search_path'] = u'{path}?{query}'.format(
-        path=request.path,
-        query=request.META['QUERY_STRING'])
 
     return render(request, 'search.html', {
         'search_query': q,
