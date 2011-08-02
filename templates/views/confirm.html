@@ -2,9 +2,7 @@
 {% load i18n %}
 
 {% block menu %}
-{% with ACTIVE_MENU_ITEM="search" %}
 {% include "menu.html" %}
-{% endwith %}
 {% endblock %}
 
 {% block breadcrumbs %}
@@ -14,7 +12,9 @@
 {% include "breadcrumbs/separator.html" %}
 {% include "breadcrumbs/write.html" %}
 {% include "breadcrumbs/separator.html" %}
+{% with breadcrumb_active=True %}
 {% include "breadcrumbs/confirm.html" %}
+{% endwith %}
 {% endblock %}
 
 {% block content %}

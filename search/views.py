@@ -8,11 +8,11 @@ from search import house_numbers
 
 
 def search(request):
-    request.session['search_path'] = request.path
+    request.session['breadcrumb_search'] = request.path
     if 'q' in request.GET and request.GET['q'] != '':
         q = request.GET['q']
         results = SearchQuerySet().auto_query(q)
-        request.session['search_path'] += u'?' + request.META['QUERY_STRING']
+        request.session['breadcrumb_search'] += u'?q=' + q
     else:
         q = ''
         results = []
@@ -25,7 +25,7 @@ def search(request):
 
 def representative(request, rep_id):
     rep = get_object_or_404(Representative, id=rep_id)
-    request.session['choose_path'] = request.path
+    request.session['breadcrumb_choose'] = request.path
     return render(request, 'views/representative.html', {
         'representative': rep,
     })
@@ -33,7 +33,7 @@ def representative(request, rep_id):
 
 def institution(request, inst_id):
     inst = get_object_or_404(Institution, id=inst_id)
-    request.session['choose_path'] = request.path
+    request.session['breadcrumb_choose'] = request.path
     return render(request, 'views/institution.html', {
         'institution': inst,
     })
@@ -56,7 +56,7 @@ def location(request, loc_id, house_number=None):
         else:
             return redirect(reverse(location_ask, args=[loc_id]))
     institutions = [t.institution for t in territories]
-    request.session['choose_path'] = request.path
+    request.session['breadcrumb_choose'] = request.path
     return render(request, 'views/location.html', {
         'institutions': institutions,
     })
@@ -71,7 +71,7 @@ def location_ask(request, loc_id):
                                           form.cleaned_data['house_number']]))
     else:
         form = HouseNumberForm()
-        request.session['choose_path'] = request.path
+        request.session['breadcrumb_choose'] = request.path
 
     return render(request, 'views/location_ask.html', {
         'form': form,

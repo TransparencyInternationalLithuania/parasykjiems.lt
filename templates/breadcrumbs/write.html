@@ -1,2 +1,14 @@
 {% load i18n %}
-<li><a href="{{ request.session.write_path }}">{% trans "Write letter" %}</a></li>
+<li>
+
+  {% if not active %}
+  <a href="{{ request.session.breadcrumb_write }}">
+  {% endif %}
+
+    {% trans "Write a letter" %}
+
+  {% if not active %}
+  </a>
+  {% endif %}
+
+</li>
