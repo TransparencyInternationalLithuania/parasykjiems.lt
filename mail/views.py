@@ -34,6 +34,7 @@ def write(request, recipient):
     else:
         form = WriteLetterForm()
 
+    request.session['breadcrumb_write'] = request.path
     return render(request, 'views/write.html', {
         'recipient': recipient,
         'form': form,
