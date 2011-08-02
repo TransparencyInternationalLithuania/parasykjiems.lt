@@ -7,6 +7,16 @@
 {% endwith %}
 {% endblock %}
 
+{% block breadcrumbs %}
+{% include "breadcrumbs/search.html" %}
+{% include "breadcrumbs/separator.html" %}
+{% include "breadcrumbs/choose.html" %}
+{% include "breadcrumbs/separator.html" %}
+{% include "breadcrumbs/write.html" %}
+{% include "breadcrumbs/separator.html" %}
+{% include "breadcrumbs/confirm.html" %}
+{% endblock %}
+
 {% block content %}
 <p>
   {% trans "Recipient of the letter:" %}
@@ -20,6 +30,6 @@
 
 <form method="POST">
   {% csrf_token %}
-  <input value="{% trans "Confirm" %}" type="Submit">
+  <input value="{% trans "Send" %}" type="Submit">
 </form>
 {% endblock %}

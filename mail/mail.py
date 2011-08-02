@@ -42,7 +42,7 @@ def submit_enquiry(sender_name,
     send_mail(
         from_email=settings.SERVER_EMAIL,
         recipient_list=[u'{} <{}>'.format(sender_name, sender_email)],
-        subject=_('Confirm your enquiry'),
+        subject=_('Confirm your letter'),
         message=confirm_msg,
     )
 

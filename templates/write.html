@@ -7,6 +7,14 @@
 {% endwith %}
 {% endblock %}
 
+{% block breadcrumbs %}
+{% include "breadcrumbs/search.html" %}
+{% include "breadcrumbs/separator.html" %}
+{% include "breadcrumbs/choose.html" %}
+{% include "breadcrumbs/separator.html" %}
+{% include "breadcrumbs/write.html" %}
+{% endblock %}
+
 {% block content %}
 
 <form method="POST">

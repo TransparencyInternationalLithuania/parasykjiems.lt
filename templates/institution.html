@@ -6,6 +6,12 @@
 {% endwith %}
 {% endblock %}
 
+{% block breadcrumbs %}
+{% include "breadcrumbs/search.html" %}
+{% include "breadcrumbs/separator.html" %}
+{% include "breadcrumbs/choose.html" %}
+{% endblock %}
+
 {% block content %}
 {% include "items/institution.html" %}
 {% endblock %}

@@ -1,16 +1,19 @@
 {% load i18n %}
+
 <li>
-  <a href="{% url search %}" {% if ACTIVE_MENU_ITEM == "search" %}class="selected"{% endif %}>
-    {% trans "Search" %}
+  <a href="#" {% if ACTIVE_MENU_ITEM == "help" %}class="selected"{% endif %}>
+    {% trans "Help" %}
   </a>
 </li>
+
 <li>
   <a href="{% url letters %}" {% if ACTIVE_MENU_ITEM == "letters" %}class="selected"{% endif %}>
     {% trans "Open letters" %}
   </a>
 </li>
+
 <li>
-  <a href="{% url about %}" {% if ACTIVE_MENU_ITEM == "about" %}class="selected"{% endif %}>
-    {% trans "About project" %}
+  <a href="{% url search %}" {% if ACTIVE_MENU_ITEM == "search" %}class="selected"{% endif %}>
+    {% trans "Representative search" %}
   </a>
 </li>
