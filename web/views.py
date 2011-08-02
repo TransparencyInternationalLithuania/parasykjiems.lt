@@ -8,7 +8,7 @@ import settings
 
 
 def about(request):
-    return render(request, 'about.html')
+    return render(request, 'views/about.html')
 
 
 def feedback(request):
@@ -30,13 +30,13 @@ def feedback(request):
     else:
         form = FeedbackForm()
 
-    return render(request, 'feedback.html', {
+    return render(request, 'views/feedback.html', {
         'form': form,
     })
 
 
 def feedback_thanks(request):
-    return render(request, 'feedback_thanks.html')
+    return render(request, 'views/feedback_thanks.html')
 
 
 def setlang(request, language):

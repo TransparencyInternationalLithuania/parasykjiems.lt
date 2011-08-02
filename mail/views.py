@@ -34,14 +34,14 @@ def write(request, recipient):
     else:
         form = WriteLetterForm()
 
-    return render(request, 'write.html', {
+    return render(request, 'views/write.html', {
         'recipient': recipient,
         'form': form,
     })
 
 
 def write_confirm(request):
-    return render(request, 'write-confirm.html')
+    return render(request, 'views/write_confirm.html')
 
 
 def confirm(request, unique_hash):
@@ -53,14 +53,14 @@ def confirm(request, unique_hash):
         mail.confirm_enquiry(enquiry)
         return redirect(reverse(sent, kwargs={'id': enquiry.id}))
     else:
-        return render(request, 'confirm.html', {
+        return render(request, 'views/confirm.html', {
             'enquiry': enquiry,
         })
 
 
 def sent(request, id):
     enquiry = get_object_or_404(Enquiry, id=id)
-    return render(request, 'sent.html', {'enquiry': enquiry})
+    return render(request, 'views/sent.html', {'enquiry': enquiry})
 
 
 def letter(request, id):
@@ -68,8 +68,9 @@ def letter(request, id):
     if not enquiry.is_open or not enquiry.is_sent:
         raise Http404()
 
-    return render(request, 'letter.html', {'enquiry': enquiry})
+    return render(request, 'views/letter.html', {'enquiry': enquiry})
+
 
 def letters(request):
     letters = Enquiry.objects.filter(is_open=True, is_sent=True)
-    return render(request, 'letters.html', {'letters': letters})
+    return render(request, 'views/letters.html', {'letters': letters})
