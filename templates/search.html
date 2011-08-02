@@ -7,6 +7,10 @@
 {% endwith %}
 {% endblock %}
 
+{% block breadcrumbs %}
+{% include "breadcrumbs/search.html" %}
+{% endblock %}
+
 {% block content %}
 <form name="search">
   <input name="q" value="{{ search_query }}"></input>
@@ -33,8 +37,8 @@
   {% blocktrans %}
   You can search by entering:
   <ul>
-    <li>your full address,
-    <li>part of your address,
+    <li>part of an address,
+    <li>a full address (including the house number),
     <li>a representative's name,
     <li>an institution's name.
   </ul>

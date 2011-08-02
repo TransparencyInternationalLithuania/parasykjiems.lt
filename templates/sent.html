@@ -9,12 +9,12 @@
 
 {% block content %}
 
-<p>Jūsų laiškas išsiųstas sėkmingai.</p>
+<p>{% trans "Your letter has been sent successfully." %}</p>
 
 {% if enquiry.is_open %}
 <p>
   {% blocktrans with url=enquiry.get_absolute_url %}
-  Galite jį peržiūrėti <a href="{{ url }}">čia</a>.
+  You can view it <a href="{{ url }}">here</a>.
   {% endblocktrans %}
 </p>
 {% endif %}

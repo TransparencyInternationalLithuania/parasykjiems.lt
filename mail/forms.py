@@ -13,5 +13,5 @@ class WriteLetterForm(forms.Form):
     body = forms.CharField(label=_("Message"),
                            widget=forms.widgets.Textarea(),
                            required=True)
-    is_open = forms.BooleanField(label=_("Write an open letter"),
+    is_open = forms.BooleanField(label=_("Open letter"),
                                  required=False)

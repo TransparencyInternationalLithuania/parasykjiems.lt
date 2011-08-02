@@ -15,6 +15,10 @@ def search(request):
         q = ''
         results = []
 
+    request.session['search_path'] = u'{path}?{query}'.format(
+        path=request.path,
+        query=request.META['QUERY_STRING'])
+
     return render(request, 'search.html', {
         'search_query': q,
         'results': results,
@@ -23,6 +27,7 @@ def search(request):
 
 def representative(request, rep_id):
     rep = get_object_or_404(Representative, id=rep_id)
+    request.session['choose_path'] = request.path
     return render(request, 'representative.html', {
         'representative': rep,
     })
@@ -30,10 +35,9 @@ def representative(request, rep_id):
 
 def institution(request, inst_id):
     inst = get_object_or_404(Institution, id=inst_id)
-    reps = Representative.objects.filter(institution=inst)
+    request.session['choose_path'] = request.path
     return render(request, 'institution.html', {
         'institution': inst,
-        'representatives': reps,
     })
 
 
@@ -54,6 +58,7 @@ def location(request, loc_id, house_number=None):
         else:
             return redirect(reverse(location_ask, args=[loc_id]))
     institutions = [t.institution for t in territories]
+    request.session['choose_path'] = request.path
     return render(request, 'location.html', {
         'institutions': institutions,
     })
@@ -68,6 +73,7 @@ def location_ask(request, loc_id):
                                           form.cleaned_data['house_number']]))
     else:
         form = HouseNumberForm()
+        request.session['choose_path'] = request.path
 
     return render(request, 'location_ask.html', {
         'form': form,

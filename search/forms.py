@@ -14,5 +14,5 @@ def validate_house_number(string):
 
 
 class HouseNumberForm(forms.Form):
-    house_number = forms.CharField(label=_("Your house number"),
+    house_number = forms.CharField(label=_("House number"),
                                    validators=[validate_house_number])

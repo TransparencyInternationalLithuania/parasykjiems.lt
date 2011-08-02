@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-26 22:09+0300\n"
-"PO-Revision-Date: 2011-07-26 22:11+0300\n"
+"POT-Creation-Date: 2011-08-02 12:44+0300\n"
+"PO-Revision-Date: 2011-08-02 12:44+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -27,49 +27,119 @@ msgstr "Anglų"
 msgid "Lithuanian"
 msgstr "Lietuvių"
 
-#: templates/base.html:15
+#: mail/forms.py:6 web/forms.py:6
+msgid "Your name"
+msgstr ""
+
+#: mail/forms.py:8 web/forms.py:8
+msgid "Your e-mail address"
+msgstr "Jūsų el. pašto adresas"
+
+#: mail/forms.py:10 web/forms.py:10
+msgid "Subject"
+msgstr "Tema"
+
+#: mail/forms.py:13 web/forms.py:12
+msgid "Message"
+msgstr "Turinys"
+
+#: mail/forms.py:16
+msgid "Open letter"
+msgstr "Atviras laiškas"
+
+#: mail/mail.py:45
+#, fuzzy
+msgid "Confirm your letter"
+msgstr "Patvirtinkite savo laišką"
+
+#: mail/models.py:68
+msgid "The unprocessed e-mail message."
+msgstr ""
+
+#: search/forms.py:13
+msgid "A house number must be numeric and can contain at most one letter."
+msgstr "Pastato numeris turi būti skačius ir gali turėti vieną raidę gale."
+
+#: search/forms.py:17
+msgid "House number"
+msgstr "Pastato numeris"
+
+#: search/models.py:85 search/models.py:112
+msgid "Name of city, town or village."
+msgstr "Miesto, miestelio arba kaimo pavadinimas"
+
+#: search/models.py:129
+msgid "territories"
+msgstr ""
+
+#: templates/base.html:14
 msgid "ParašykJiems"
 msgstr ""
 
-#: templates/base.html:27
+#: templates/base.html:30
 msgid "Have any notes, suggestions?"
 msgstr "Turite pastabų, pasiūlymų?"
 
-#: templates/base.html:27
+#: templates/base.html:30
 msgid "Write to us."
 msgstr "Parašykite mums."
 
-#: templates/feedback.html:11
+#: templates/confirm.html:22 templates/letter.html:13
+msgid "Recipient of the letter:"
+msgstr "Laiško gavėjas:"
+
+#: templates/confirm.html:26 templates/letter.html:17
+msgid "Content of the letter"
+msgstr "Laiško turinys"
+
+#: templates/confirm.html:33 templates/feedback.html:11
 msgid "Send"
 msgstr "Siųsti"
 
-#: templates/house_number.html:14
+#: templates/feedback_thanks.html:6
+msgid "Thank you for your feedback."
+msgstr "Ačiū už Jūsų atsiliepimus."
+
+#: templates/letters.html:15
+#, python-format
+msgid ""
+"\n"
+"    From %(sender)s to %(recipient_kind)s %(recipient)s: <a href=\"%(url)s\">"
+"\"%(subject)s\"</a>\n"
+"    "
+msgstr ""
+
+#: templates/location_ask.html:14
 msgid "Continue"
 msgstr "Tęsti"
 
-#: templates/menu.html:4 templates/search.html:13
-msgid "Search"
-msgstr "Paieška"
+#: templates/menu.html:5
+msgid "Help"
+msgstr "Pagalba"
 
-#: templates/menu.html:9
+#: templates/menu.html:11
 msgid "Open letters"
 msgstr "Atviri laiškai"
 
-#: templates/menu.html:14
-msgid "About project"
-msgstr "Apie projektą"
+#: templates/menu.html:17
+msgid "Representative search"
+msgstr "Atstovo paieška"
 
-#: templates/search.html:27
+#: templates/search.html:17
+msgid "Search"
+msgstr "Paieška"
+
+#: templates/search.html:31
 msgid "Nothing found."
 msgstr "Nieko nerasta."
 
-#: templates/search.html:33
+#: templates/search.html:37
 msgid ""
 "\n"
 "  You can search by entering:\n"
 "  <ul>\n"
-"    <li>your full address,\n"
-"    <li>part of your address,\n"
+"    <li>part of an address,\n"
+"    <li>a full address (including the house number),\n"
 "    <li>a representative's name,\n"
 "    <li>an institution's name.\n"
 "  </ul>\n"
@@ -78,57 +148,68 @@ msgstr ""
 "\n"
 "  Galite ieškoti įvesdami:\n"
 "  <ul>\n"
-"    <li>savo pilną adresą,\n"
-"    <li>dalį savo adreso,\n"
+"    <li>dalį adreso,\n"
+"    <li>pilną adresą,\n"
 "    <li>atstovo vardą,\n"
 "    <li>institucijos pavadinimą.\n"
 "  </ul>\n"
 "  "
 
-#: templates/thanks.html:6
-msgid "Thank you for your feedback."
-msgstr "Ačiū už Jūsų atsiliepimus."
-
-#: web/forms.py:14
-msgid "A house number must be numeric and can contain at most one letter."
-msgstr "Pastato numeris turi būti skačius ir gali turėti vieną raidę gale."
-
-#: web/forms.py:18
-msgid "Your house number"
-msgstr "Pastato numeris"
-
-#: web/forms.py:23
-msgid "Your name"
+#: templates/sent.html:12
+msgid "Your letter has been sent successfully."
 msgstr ""
 
-#: web/forms.py:25
-msgid "Your e-mail address"
-msgstr "Jūsų el. pašto adresas"
-
-#: web/forms.py:27
-msgid "Subject"
-msgstr "Tema"
-
-#: web/forms.py:29
-msgid "Message"
-msgstr "Atsiliepimai"
-
-#: web/models.py:78
-msgid "Name of city, town or village."
+#: templates/sent.html:16
+#, python-format
+msgid ""
+"\n"
+"  You can view it <a href=\"%(url)s\">here</a>.\n"
+"  "
 msgstr ""
+"\n"
+"Galite jį peržiūrėti <a href=\"%(url)s\">čia</a>."
 
-#: web/models.py:110
-msgid "territories"
+#: templates/write-confirm.html:12
+msgid ""
+"\n"
+"  Check your email. You should receive a confirmation link from\n"
+"  us. You must confirm your letter before it will be sent.\n"
+"  "
 msgstr ""
+"\n"
+"Pasitikrinkite savo elektroninį paštą. Mes Jums išsiuntėme patvirtinimo "
+"nuorodą. Jūs turite patvirtinti savo laišką prieš tai, kaip jis bus "
+"išsiųstas."
 
-#: web/views.py:45
-msgid "Representative not found"
-msgstr "Atstovas nerastas"
+#: templates/write.html:25
+msgid "Submit"
+msgstr "Pateikti"
 
-#: web/views.py:57
-msgid "Institution not found"
-msgstr "Institucija nerasta"
+#: templates/breadcrumbs/choose.html:2
+msgid "Choose a representative"
+msgstr "Pasirinkite atstovą"
 
-#: web/views.py:78
-msgid "Location not found"
-msgstr "Vieta nerasta"
+#: templates/breadcrumbs/confirm.html:2
+msgid "Confirm letter"
+msgstr "Patvirtinkite laišką"
+
+#: templates/breadcrumbs/search.html:2
+msgid "Find a representative"
+msgstr "Raskite atstovą"
+
+#: templates/breadcrumbs/write.html:2
+msgid "Write letter"
+msgstr "Parašykite laišką"
+
+#, fuzzy
+#~ msgid "Write an open letter"
+#~ msgstr "Atviri laiškai"
+
+#~ msgid "About project"
+#~ msgstr "Apie projektą"
+
+#~ msgid "Institution not found"
+#~ msgstr "Institucija nerasta"
+
+#~ msgid "Location not found"
+#~ msgstr "Vieta nerasta"

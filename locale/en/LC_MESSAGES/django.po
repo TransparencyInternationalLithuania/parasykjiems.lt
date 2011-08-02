@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-26 22:09+0300\n"
+"POT-Creation-Date: 2011-08-02 12:44+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,99 +25,160 @@ msgstr ""
 msgid "Lithuanian"
 msgstr ""
 
-#: templates/base.html:15
+#: mail/forms.py:6 web/forms.py:6
+msgid "Your name"
+msgstr ""
+
+#: mail/forms.py:8 web/forms.py:8
+msgid "Your e-mail address"
+msgstr ""
+
+#: mail/forms.py:10 web/forms.py:10
+msgid "Subject"
+msgstr ""
+
+#: mail/forms.py:13 web/forms.py:12
+msgid "Message"
+msgstr ""
+
+#: mail/forms.py:16
+msgid "Open letter"
+msgstr ""
+
+#: mail/mail.py:45
+msgid "Confirm your letter"
+msgstr ""
+
+#: mail/models.py:68
+msgid "The unprocessed e-mail message."
+msgstr ""
+
+#: search/forms.py:13
+msgid "A house number must be numeric and can contain at most one letter."
+msgstr ""
+
+#: search/forms.py:17
+msgid "House number"
+msgstr ""
+
+#: search/models.py:85 search/models.py:112
+msgid "Name of city, town or village."
+msgstr ""
+
+#: search/models.py:129
+msgid "territories"
+msgstr ""
+
+#: templates/base.html:14
 msgid "ParašykJiems"
 msgstr ""
 
-#: templates/base.html:27
+#: templates/base.html:30
 msgid "Have any notes, suggestions?"
 msgstr ""
 
-#: templates/base.html:27
+#: templates/base.html:30
 msgid "Write to us."
 msgstr ""
 
-#: templates/feedback.html:11
+#: templates/confirm.html:22 templates/letter.html:13
+msgid "Recipient of the letter:"
+msgstr ""
+
+#: templates/confirm.html:26 templates/letter.html:17
+msgid "Content of the letter"
+msgstr ""
+
+#: templates/confirm.html:33 templates/feedback.html:11
 msgid "Send"
 msgstr ""
 
-#: templates/house_number.html:14
+#: templates/feedback_thanks.html:6
+msgid "Thank you for your feedback."
+msgstr ""
+
+#: templates/letters.html:15
+#, python-format
+msgid ""
+"\n"
+"    From %(sender)s to %(recipient_kind)s %(recipient)s: <a href=\"%(url)s\">"
+"\"%(subject)s\"</a>\n"
+"    "
+msgstr ""
+
+#: templates/location_ask.html:14
 msgid "Continue"
 msgstr ""
 
-#: templates/menu.html:4 templates/search.html:13
-msgid "Search"
+#: templates/menu.html:5
+msgid "Help"
 msgstr ""
 
-#: templates/menu.html:9
+#: templates/menu.html:11
 msgid "Open letters"
 msgstr ""
 
-#: templates/menu.html:14
-msgid "About project"
+#: templates/menu.html:17
+msgid "Representative search"
 msgstr ""
 
-#: templates/search.html:27
+#: templates/search.html:17
+msgid "Search"
+msgstr ""
+
+#: templates/search.html:31
 msgid "Nothing found."
 msgstr ""
 
-#: templates/search.html:33
+#: templates/search.html:37
 msgid ""
 "\n"
 "  You can search by entering:\n"
 "  <ul>\n"
-"    <li>your full address,\n"
-"    <li>part of your address,\n"
+"    <li>part of an address,\n"
+"    <li>a full address (including the house number),\n"
 "    <li>a representative's name,\n"
 "    <li>an institution's name.\n"
 "  </ul>\n"
 "  "
 msgstr ""
 
-#: templates/thanks.html:6
-msgid "Thank you for your feedback."
+#: templates/sent.html:12
+msgid "Your letter has been sent successfully."
 msgstr ""
 
-#: web/forms.py:14
-msgid "A house number must be numeric and can contain at most one letter."
+#: templates/sent.html:16
+#, python-format
+msgid ""
+"\n"
+"  You can view it <a href=\"%(url)s\">here</a>.\n"
+"  "
 msgstr ""
 
-#: web/forms.py:18
-msgid "Your house number"
+#: templates/write-confirm.html:12
+msgid ""
+"\n"
+"  Check your email. You should receive a confirmation link from\n"
+"  us. You must confirm your letter before it will be sent.\n"
+"  "
 msgstr ""
 
-#: web/forms.py:23
-msgid "Your name"
+#: templates/write.html:25
+msgid "Submit"
 msgstr ""
 
-#: web/forms.py:25
-msgid "Your e-mail address"
+#: templates/breadcrumbs/choose.html:2
+msgid "Choose a representative"
 msgstr ""
 
-#: web/forms.py:27
-msgid "Subject"
+#: templates/breadcrumbs/confirm.html:2
+msgid "Confirm letter"
 msgstr ""
 
-#: web/forms.py:29
-msgid "Message"
+#: templates/breadcrumbs/search.html:2
+msgid "Find a representative"
 msgstr ""
 
-#: web/models.py:78
-msgid "Name of city, town or village."
-msgstr ""
-
-#: web/models.py:110
-msgid "territories"
-msgstr ""
-
-#: web/views.py:45
-msgid "Representative not found"
-msgstr ""
-
-#: web/views.py:57
-msgid "Institution not found"
-msgstr ""
-
-#: web/views.py:78
-msgid "Location not found"
+#: templates/breadcrumbs/write.html:2
+msgid "Write letter"
 msgstr ""
