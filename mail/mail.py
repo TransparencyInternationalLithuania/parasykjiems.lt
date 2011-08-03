@@ -62,7 +62,7 @@ def confirm_enquiry(enquiry):
         recipients = [u'{} <{}>'.format(recipient.name, recipient.email)]
 
     reply_to = settings.ENQUIRY_EMAIL_FORMAT.format(
-        unique_hash=enquiry.unique_hash)
+        reply_hash=enquiry.reply_hash)
     message = EmailMessage(
         from_email=settings.SERVER_EMAIL,
         subject=enquiry.subject,

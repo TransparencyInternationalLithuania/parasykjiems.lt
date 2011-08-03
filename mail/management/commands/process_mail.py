@@ -26,12 +26,12 @@ class Command(BaseCommand):
             # escape pluses.
             r = (settings.ENQUIRY_EMAIL_FORMAT
                  .replace('+', r'\+')
-                 .format(unique_hash='(\d+)'))
+                 .format(reply_hash='(\d+)'))
             m = re.match(r, msg['to'])
 
             if m:
-                uh = int(m.group(1))
-                maybe_enquiry = Enquiry.objects.filter(unique_hash=uh)
+                h = int(m.group(1))
+                maybe_enquiry = Enquiry.objects.filter(reply_hash=h)
                 if maybe_enquiry.exists():
                     parent = maybe_enquiry.get()
 

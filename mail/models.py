@@ -10,7 +10,10 @@ _NAME_LEN = 200
 
 
 class Enquiry(models.Model):
-    unique_hash = models.IntegerField(db_index=True, unique=True)
+    # Secret hashes are separate for confirmation and replies, so that
+    # a sender can't reply to himself.
+    confirm_hash = models.IntegerField(db_index=True, unique=True)
+    reply_hash = models.IntegerField(db_index=True, unique=True)
 
     # These link to the institution or representative that this
     # enquiry was sent to. Exactly one of them should be non-null.
@@ -42,14 +45,25 @@ class Enquiry(models.Model):
 
     def __init__(self, *args, **kwargs):
         super(Enquiry, self).__init__(*args, **kwargs)
-        if not self.unique_hash:
-            self.unique_hash = random.randint(1, Enquiry._hash_max)
+
+        # Ensure unique confirm and reply hashes.
+
+        if not self.confirm_hash:
+            self.confirm_hash = random.randint(1, Enquiry._hash_max)
             tries = 0
-            while Enquiry.objects.filter(unique_hash=self.unique_hash).exists():
-                self.unique_hash = random.randint(1, Enquiry._hash_max)
+            while Enquiry.objects.filter(confirm_hash=self.confirm_hash).exists():
+                self.confirm_hash = random.randint(1, Enquiry._hash_max)
                 tries += 1
                 if tries > Enquiry._hash_tries:
-                    raise Exception("Probably out of unique hashes for Enquiry.")
+                    raise Exception("Probably out of confirm hashes for Enquiry.")
+        if not self.reply_hash:
+            self.reply_hash = random.randint(1, Enquiry._hash_max)
+            tries = 0
+            while Enquiry.objects.filter(reply_hash=self.reply_hash).exists():
+                self.reply_hash = random.randint(1, Enquiry._hash_max)
+                tries += 1
+                if tries > Enquiry._hash_tries:
+                    raise Exception("Probably out of reply hashes for Enquiry.")
 
     def recipient(self):
         return self.representative or self.institution
