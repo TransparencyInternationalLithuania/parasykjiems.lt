@@ -1,20 +1,26 @@
+{% load i18n %}
 <div class="representative">
-  <h2>{{ representative.name }}</h2>
+  <h4>{{ representative.name }}</h4>
   <p class="subtitle">{{ representative.kind.name }}</p>
 
   {% if not institution %}
-  <h3><a href="{{ representative.institution.get_absolute_url }}">{{ representative.institution.name }}</a></h3>
+  <p>
+    {% trans "Institution: " %}
+    <a href="{{ representative.institution.get_absolute_url }}">
+      {{ representative.institution.name }}
+    </a>
+  </p>
   {% endif %}
 
   {% if representative.email %}
   <p>
-    Elektroninis paštas: {{ representative.email }} &mdash;
+    {% trans "Email: " %} {{ representative.email }} &mdash;
     <a href="{% url write-representative representative.id %}">Rašyti laišką</a>
   </p>
   {% endif %}
 
   {% if representative.phone %}
-  <p>Telefono numeris: {{ representative.phone }}</p>
+  <p>{% trans "Phone number: " %} {{ representative.phone }}</p>
   {% endif %}
 
   {% if representative.other_contacts %}

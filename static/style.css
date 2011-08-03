@@ -237,7 +237,8 @@ h1, h2, h3, h4 {
     margin-bottom: 5em;
 }
 
-.institution h1, h2, h3, h4 {
+.institution h2 {
+    font-size: 14pt;
     margin-bottom: 0;
 }
 
@@ -245,8 +246,14 @@ h1, h2, h3, h4 {
     margin-bottom: 2em;
 }
 
-.representative h1, h2, h3, h4 {
+.representative h4 {
     margin-bottom: 0;
+    font-size: 14pt;
+}
+
+.institution .representative h4 {
+    margin-bottom: 0;
+    font-size: 12pt;
 }
 
 .institution .representative {
@@ -254,7 +261,7 @@ h1, h2, h3, h4 {
 }
 
 .subtitle {
-    color: #666;
-    font-size: 60%;
+    color: #555;
+    font-size: 12pt;
     margin-top: 0;
 }
