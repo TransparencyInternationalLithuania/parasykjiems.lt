@@ -41,26 +41,28 @@ class Enquiry(models.Model):
     parent = models.ForeignKey('Response', null=True)
 
     _hash_tries = 10
-    _hash_max = 999999
+    _hash_max = 9999999
 
     def __init__(self, *args, **kwargs):
         super(Enquiry, self).__init__(*args, **kwargs)
 
         # Ensure unique confirm and reply hashes.
 
+        rand = random.SystemRandom()
+
         if not self.confirm_hash:
-            self.confirm_hash = random.randint(1, Enquiry._hash_max)
+            self.confirm_hash = rand.randint(1, Enquiry._hash_max)
             tries = 0
             while Enquiry.objects.filter(confirm_hash=self.confirm_hash).exists():
-                self.confirm_hash = random.randint(1, Enquiry._hash_max)
+                self.confirm_hash = rand.randint(1, Enquiry._hash_max)
                 tries += 1
                 if tries > Enquiry._hash_tries:
                     raise Exception("Probably out of confirm hashes for Enquiry.")
         if not self.reply_hash:
-            self.reply_hash = random.randint(1, Enquiry._hash_max)
+            self.reply_hash = rand.randint(1, Enquiry._hash_max)
             tries = 0
             while Enquiry.objects.filter(reply_hash=self.reply_hash).exists():
-                self.reply_hash = random.randint(1, Enquiry._hash_max)
+                self.reply_hash = rand.randint(1, Enquiry._hash_max)
                 tries += 1
                 if tries > Enquiry._hash_tries:
                     raise Exception("Probably out of reply hashes for Enquiry.")
