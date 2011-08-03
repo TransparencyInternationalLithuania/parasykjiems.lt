@@ -5,6 +5,12 @@
 {% include "menu.html" %}
 {% endblock %}
 
+{% block breadcrumbs %}
+{% include "breadcrumbs/letters.html" %}
+{% include "breadcrumbs/separator.html" %}
+{% include "breadcrumbs/letter.html" with active=1 %}
+{% endblock %}
+
 {% block content %}
 
 <p>

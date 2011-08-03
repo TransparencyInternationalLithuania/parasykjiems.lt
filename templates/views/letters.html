@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block breadcrumbs %}
-<li>{% trans "Open letters" %}</li>
+{% include "breadcrumbs/letters.html" with active=1 %}
 {% endblock %}
 
 {% block content %}
