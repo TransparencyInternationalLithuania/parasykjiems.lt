@@ -1,24 +1,26 @@
+{% load i18n %}
+
 <div class="institution">
   <h2>{{ institution.name }}</h2>
   <p class="subtitle">{{ institution.kind.name }}</p>
 
   {% if institution.email %}
   <p>
-    Elektroninis paštas: {{ institution.email }} &mdash;
+    {% trans "Email: " %} {{ institution.email }} &mdash;
     <a href="{% url write-institution institution.id %}">Rašyti laišką</a>
   </p>
   {% endif %}
 
   {% if institution.phone %}
-  <p>Tel. nr.: {{ institution.phone }}</p>
+  <p>{% trans "Telephone number: " %} {{ institution.phone }}</p>
   {% endif %}
 
   {% if institution.address != '' %}
-  <p>Adresas: {{ institution.address }}</p>
+  <p>{% trans "Address: " %} {{ institution.address }}</p>
   {% endif %}
 
   {% if institution.representatives %}
-  <h3>Atstovai</h3>
+  <h3>{% trans "Representatives" %}</h3>
   <ul>
     {% for representative in institution.representatives %}
     <li>
