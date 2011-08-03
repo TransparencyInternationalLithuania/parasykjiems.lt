@@ -68,10 +68,17 @@ def confirm_enquiry(enquiry):
         subject=enquiry.subject,
         body=render_to_string('mail/enquiry.txt', {'enquiry': enquiry}),
         to=recipients,
-        headers={'Reply-To': reply_to},
     )
+
     enquiry.message_id = message.message()['Message-Id']
+    message.extra_headers = {
+        # If we don't set Message-Id here, it changes when sending.
+        'Message-Id': enquiry.message_id,
+        'Reply-To': reply_to,
+    }
+
     message.send()
+
     enquiry.is_sent = True
     enquiry.sent_at = datetime.datetime.now()
     enquiry.save()

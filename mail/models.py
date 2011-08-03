@@ -32,7 +32,7 @@ class Enquiry(models.Model):
     sent_at = models.DateTimeField(null=True)
 
     # This can be used for threading. Should be set after sending.
-    message_id = models.CharField(max_length=100, null=True)
+    message_id = models.CharField(max_length=100, null=True, db_index=True)
 
     # Should be set if this message is a continuation of a discussion.
     parent = models.ForeignKey('Response', null=True)
@@ -76,15 +76,15 @@ class Response(models.Model):
     parent = models.ForeignKey(Enquiry, null=True)
 
     received_time = models.DateTimeField(auto_now_add=True)
-    message = models.TextField(
+    raw_message = models.TextField(
         help_text=_("The unprocessed e-mail message."))
 
-    def email_message(self):
+    def message(self):
         """Returns this Response as an email.message.Message object.
         """
-        return email.message_from_string(self.message.encode('utf-8'))
+        return email.message_from_string(self.raw_message.encode('utf-8'))
 
     def __unicode__(self):
         return u'{sender} ({received_time})'.format(
-            sender=self.email_message()['from'],
+            sender=self.message()['from'],
             received_time=self.received_time)
