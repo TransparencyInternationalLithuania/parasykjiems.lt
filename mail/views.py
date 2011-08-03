@@ -45,8 +45,8 @@ def write_confirm(request):
     return render(request, 'views/write_confirm.html')
 
 
-def confirm(request, unique_hash):
-    enquiry = get_object_or_404(Enquiry, unique_hash=unique_hash)
+def confirm(request, confirm_hash):
+    enquiry = get_object_or_404(Enquiry, confirm_hash=confirm_hash)
     if enquiry.is_sent:
         raise Http404()
 

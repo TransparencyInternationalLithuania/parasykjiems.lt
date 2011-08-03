@@ -18,8 +18,8 @@ SERVER_EMAIL = 'parasykjiems@localhost'
 # DEBUG is True.
 DEBUG_EMAIL_RECIPIENT = 'parasykjiems@localhost'
 
-# Should contain {unique_hash} somewhere.
-ENQUIRY_EMAIL_FORMAT = 'parasykjiems+{unique_hash}@localhost'
+# Should contain {reply_hash} somewhere.
+ENQUIRY_EMAIL_FORMAT = 'parasykjiems+{reply_hash}@localhost'
 
 # This email receives user feedback messages.
 FEEDBACK_EMAIL = 'parasykjiems@localhost'
