@@ -11,6 +11,10 @@ def about(request):
     return render(request, 'views/about.html')
 
 
+def help_view(request):
+    return render(request, 'views/help.html')
+
+
 def feedback(request):
     if request.method == 'POST':
         form = FeedbackForm(request.POST)
