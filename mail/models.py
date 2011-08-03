@@ -1,4 +1,5 @@
 import random
+import email
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -57,6 +58,17 @@ class Enquiry(models.Model):
     def get_absolute_url(self):
         return ('letter', (), {'id': self.id})
 
+    def __unicode__(self):
+        if self.is_sent:
+            sent_msg = u'sent at {}'.format(self.sent_at)
+        else:
+            sent_msg = u'unconfirmed'
+        return u'{name} <{email}> to {to} ({sent})'.format(
+            name=self.sender_name,
+            email=self.sender_email,
+            to=self.recipient(),
+            sent=sent_msg)
+
 
 class Response(models.Model):
     # A null parent means that it's unresolved. All responses should
@@ -66,3 +78,13 @@ class Response(models.Model):
     received_time = models.DateTimeField(auto_now_add=True)
     message = models.TextField(
         help_text=_("The unprocessed e-mail message."))
+
+    def email_message(self):
+        """Returns this Response as an email.message.Message object.
+        """
+        return email.message_from_string(self.message.encode('utf-8'))
+
+    def __unicode__(self):
+        return u'{sender} ({received_time})'.format(
+            sender=self.email_message()['from'],
+            received_time=self.received_time)
