@@ -1,6 +1,6 @@
 import email
 import sys
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 from parasykjiems.mail.models import Response
 
 
@@ -13,5 +13,5 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         msg = email.message_from_file(sys.stdin)
         response = Response(
-            message=unicode(msg))
+            message=str(msg).decode('utf-8'))
         response.save()
