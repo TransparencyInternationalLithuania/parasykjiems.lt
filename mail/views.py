@@ -68,10 +68,11 @@ def letter(request, id):
     enquiry = get_object_or_404(Enquiry, id=id)
     if not enquiry.is_open or not enquiry.is_sent:
         raise Http404()
-
+    request.session['breadcrumb_letter'] = request.path
     return render(request, 'views/letter.html', {'enquiry': enquiry})
 
 
 def letters(request):
     letters = Enquiry.objects.filter(is_open=True, is_sent=True)
+    request.session['breadcrumb_letters'] = request.path
     return render(request, 'views/letters.html', {'letters': letters})
