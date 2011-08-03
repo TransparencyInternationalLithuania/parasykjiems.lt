@@ -4,10 +4,19 @@ ADMINS = (
     ('Local', 'parasykjiems@localhost'),
 )
 
+
+# MANAGERS receive all enquiries when DEBUG is True
+MANAGERS = ADMINS
+
+
 # Print emails to console.
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 SERVER_EMAIL = 'parasykjiems@localhost'
+
+# Send all enquiries and confirmation requests to this address if
+# DEBUG is True.
+DEBUG_EMAIL_RECIPIENT = 'parasykjiems@localhost'
 
 # Should contain {unique_hash} somewhere.
 ENQUIRY_EMAIL_FORMAT = 'parasykjiems+{unique_hash}@localhost'

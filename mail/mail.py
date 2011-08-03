@@ -39,6 +39,7 @@ def submit_enquiry(sender_name,
         'site_address': settings.SITE_ADDRESS,
         'enquiry': enquiry,
     })
+
     send_mail(
         from_email=settings.SERVER_EMAIL,
         recipient_list=[u'{} <{}>'.format(sender_name, sender_email)],
@@ -54,7 +55,8 @@ def confirm_enquiry(enquiry):
     """
 
     if settings.DEBUG:
-        recipients = [email for name, email in settings.ADMINS]
+        recipients = [u'{0[0]} <{0[1]}>'.format(manager)
+                      for manager in settings.MANAGERS]
     else:
         recipient = enquiry.institution or enquiry.representative
         recipients = [u'{} <{}>'.format(recipient.name, recipient.email)]

@@ -1,4 +1,4 @@
-{{ enquiry }}
+{{ enquiry.body }}
 
 --
 Šis laiškas išsiųstas naudojant ParašykJiems.lt sistemą.
