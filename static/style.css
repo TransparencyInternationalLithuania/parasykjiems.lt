@@ -110,6 +110,7 @@ background: linear-gradient(top, rgba(247,247,247,1) 0%,rgba(216,216,216,1) 100%
     clear: both;
     padding: 10px 10px 10px 35px;
     margin: 0 0 0 0;
+    height: 24px;
 
     background: #afafaf; /* Old browsers */
     background: -moz-linear-gradient(top, #d8d8d8 0%, #afafaf 7%, #efefef 93%, #ffffff 100%); /* FF3.6+ */
