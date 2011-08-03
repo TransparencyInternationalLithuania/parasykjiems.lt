@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-02 12:44+0300\n"
-"PO-Revision-Date: 2011-08-02 12:44+0300\n"
+"POT-Creation-Date: 2011-08-03 17:55+0300\n"
+"PO-Revision-Date: 2011-08-03 17:57+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -27,32 +27,31 @@ msgstr "Anglų"
 msgid "Lithuanian"
 msgstr "Lietuvių"
 
-#: mail/forms.py:6 web/forms.py:6
+#: mail/forms.py:7 web/forms.py:6
 msgid "Your name"
-msgstr ""
+msgstr "Jūsų vardas"
 
-#: mail/forms.py:8 web/forms.py:8
+#: mail/forms.py:10 web/forms.py:8
 msgid "Your e-mail address"
 msgstr "Jūsų el. pašto adresas"
 
-#: mail/forms.py:10 web/forms.py:10
+#: mail/forms.py:16 web/forms.py:10
 msgid "Subject"
 msgstr "Tema"
 
-#: mail/forms.py:13 web/forms.py:12
+#: mail/forms.py:19 web/forms.py:12
 msgid "Message"
 msgstr "Turinys"
 
-#: mail/forms.py:16
+#: mail/forms.py:22
 msgid "Open letter"
 msgstr "Atviras laiškas"
 
 #: mail/mail.py:45
-#, fuzzy
 msgid "Confirm your letter"
 msgstr "Patvirtinkite savo laišką"
 
-#: mail/models.py:68
+#: mail/models.py:96
 msgid "The unprocessed e-mail message."
 msgstr ""
 
@@ -84,23 +83,82 @@ msgstr "Turite pastabų, pasiūlymų?"
 msgid "Write to us."
 msgstr "Parašykite mums."
 
-#: templates/confirm.html:22 templates/letter.html:13
+#: templates/menu.html:5 templates/views/help.html:9
+msgid "Help"
+msgstr "Pagalba"
+
+#: templates/menu.html:11 templates/breadcrumbs/letters.html:7
+msgid "Open letters"
+msgstr "Atviri laiškai"
+
+#: templates/menu.html:17
+msgid "Representative search"
+msgstr "Atstovo paieška"
+
+#: templates/breadcrumbs/choose.html:7
+msgid "Choose a representative"
+msgstr "Pasirinkite atstovą"
+
+#: templates/breadcrumbs/confirm.html:2
+msgid "Confirm letter"
+msgstr "Patvirtinkite laišką"
+
+#: templates/breadcrumbs/letter.html:7
+msgid "View letter"
+msgstr "Laiško peržiūra"
+
+#: templates/breadcrumbs/search.html:8
+msgid "Find a representative"
+msgstr "Raskite atstovą"
+
+#: templates/breadcrumbs/write.html:8
+msgid "Write a letter"
+msgstr "Parašykite laišką"
+
+#: templates/items/institution.html:9 templates/items/representative.html:17
+msgid "Email: "
+msgstr ""
+
+#: templates/items/institution.html:15
+#, fuzzy
+msgid "Telephone number: "
+msgstr "Telefono numeris: "
+
+#: templates/items/institution.html:19
+msgid "Address: "
+msgstr "Adresas: "
+
+#: templates/items/institution.html:23
+msgid "Representatives"
+msgstr "Atstovai"
+
+#: templates/items/representative.html:8
+#, fuzzy
+msgid "Institution: "
+msgstr "Institucija: "
+
+#: templates/items/representative.html:23
+#, fuzzy
+msgid "Phone number: "
+msgstr "Telefono numeris: "
+
+#: templates/views/confirm.html:22 templates/views/letter.html:17
 msgid "Recipient of the letter:"
 msgstr "Laiško gavėjas:"
 
-#: templates/confirm.html:26 templates/letter.html:17
+#: templates/views/confirm.html:26 templates/views/letter.html:21
 msgid "Content of the letter"
 msgstr "Laiško turinys"
 
-#: templates/confirm.html:33 templates/feedback.html:11
+#: templates/views/confirm.html:33 templates/views/feedback.html:11
 msgid "Send"
 msgstr "Siųsti"
 
-#: templates/feedback_thanks.html:6
+#: templates/views/feedback_thanks.html:6
 msgid "Thank you for your feedback."
 msgstr "Ačiū už Jūsų atsiliepimus."
 
-#: templates/letters.html:15
+#: templates/views/letters.html:17
 #, python-format
 msgid ""
 "\n"
@@ -109,31 +167,19 @@ msgid ""
 "    "
 msgstr ""
 
-#: templates/location_ask.html:14
+#: templates/views/location_ask.html:18
 msgid "Continue"
 msgstr "Tęsti"
 
-#: templates/menu.html:5
-msgid "Help"
-msgstr "Pagalba"
-
-#: templates/menu.html:11
-msgid "Open letters"
-msgstr "Atviri laiškai"
-
-#: templates/menu.html:17
-msgid "Representative search"
-msgstr "Atstovo paieška"
-
-#: templates/search.html:17
+#: templates/views/search.html:15
 msgid "Search"
 msgstr "Paieška"
 
-#: templates/search.html:31
+#: templates/views/search.html:29
 msgid "Nothing found."
 msgstr "Nieko nerasta."
 
-#: templates/search.html:37
+#: templates/views/search.html:35
 msgid ""
 "\n"
 "  You can search by entering:\n"
@@ -155,11 +201,11 @@ msgstr ""
 "  </ul>\n"
 "  "
 
-#: templates/sent.html:12
+#: templates/views/sent.html:10
 msgid "Your letter has been sent successfully."
 msgstr ""
 
-#: templates/sent.html:16
+#: templates/views/sent.html:14
 #, python-format
 msgid ""
 "\n"
@@ -169,7 +215,11 @@ msgstr ""
 "\n"
 "Galite jį peržiūrėti <a href=\"%(url)s\">čia</a>."
 
-#: templates/write-confirm.html:12
+#: templates/views/write.html:25
+msgid "Submit"
+msgstr "Pateikti"
+
+#: templates/views/write_confirm.html:10
 msgid ""
 "\n"
 "  Check your email. You should receive a confirmation link from\n"
@@ -181,35 +231,12 @@ msgstr ""
 "nuorodą. Jūs turite patvirtinti savo laišką prieš tai, kaip jis bus "
 "išsiųstas."
 
-#: templates/write.html:25
-msgid "Submit"
-msgstr "Pateikti"
-
-#: templates/breadcrumbs/choose.html:2
-msgid "Choose a representative"
-msgstr "Pasirinkite atstovą"
-
-#: templates/breadcrumbs/confirm.html:2
-msgid "Confirm letter"
-msgstr "Patvirtinkite laišką"
-
-#: templates/breadcrumbs/search.html:2
-msgid "Find a representative"
-msgstr "Raskite atstovą"
-
-#: templates/breadcrumbs/write.html:2
-msgid "Write letter"
-msgstr "Parašykite laišką"
-
 #, fuzzy
 #~ msgid "Write an open letter"
 #~ msgstr "Atviri laiškai"
 
 #~ msgid "About project"
 #~ msgstr "Apie projektą"
-
-#~ msgid "Institution not found"
-#~ msgstr "Institucija nerasta"
 
 #~ msgid "Location not found"
 #~ msgstr "Vieta nerasta"

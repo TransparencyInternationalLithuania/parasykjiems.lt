@@ -1,7 +1,6 @@
 import datetime
 from django.template.loader import render_to_string
 from django.core.mail import send_mail, EmailMessage
-from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 
 import settings
