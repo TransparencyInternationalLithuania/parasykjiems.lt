@@ -1,11 +1,11 @@
 <a href="{{ result.url }}">
-  {% if result.content_type == 'web.representative' %}
+  {% if result.content_type == 'search.representative' %}
   <img src="/static/img/icons/representative.png">
   {% endif %}
-  {% if result.content_type == 'web.institution' %}
+  {% if result.content_type == 'search.institution' %}
   <img src="/static/img/icons/institution.png">
   {% endif %}
-  {% if result.content_type == 'web.location' %}
+  {% if result.content_type == 'search.location' %}
   <img src="/static/img/icons/location.png">
   {% endif %}
   <div>{{ result.title }}</div>
