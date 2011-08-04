@@ -274,7 +274,7 @@ tr {
     margin: 0;
 }
 
-th {
+.letters th {
     background: #eee;
     padding: 12px;
     margin: 0;
@@ -286,9 +286,15 @@ td {
     margin: 0;
 }
 
-.letter table tr td:first-child {
+.letter th {
     font-weight: bold;
     text-align: right;
+}
+
+form th {
+    font-weight: light;
+    text-align: right;
+    vertical-align: middle;
 }
 
 .letter blockquote {
