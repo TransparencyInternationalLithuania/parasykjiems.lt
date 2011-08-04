@@ -5,6 +5,13 @@
 {% include "menu.html" %}
 {% endblock %}
 
+{% block breadcrumbs %}
+{% include "breadcrumbs/search.html" %}
+{% include "breadcrumbs/choose.html" %}
+{% include "breadcrumbs/write.html" %}
+{% include "breadcrumbs/confirm.html" with active=1 %}
+{% endblock %}
+
 {% block content %}
 <p>
   {% blocktrans %}

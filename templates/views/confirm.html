@@ -13,18 +13,12 @@
 {% endblock %}
 
 {% block content %}
-<p>
-  {% trans "Recipient of the letter:" %}
-  <em>{{ enquiry.recipient.kind.name }} {{ enquiry.recipient.name }}</em>.
-</p>
 
-<p>{% trans "Content of the letter" %}</p>
-<blockquote>
-  {{ enquiry.body }}
-</blockquote>
+{% include "items/letter.html" with letter=enquiry %}
 
 <form method="POST">
   {% csrf_token %}
   <input value="{% trans "Send" %}" type="Submit">
 </form>
+
 {% endblock %}
