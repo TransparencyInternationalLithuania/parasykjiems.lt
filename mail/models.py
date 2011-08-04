@@ -142,8 +142,13 @@ class Response(models.Model):
     @property
     def message(self):
         """Returns this Response as an email.message.Message object.
+
+        Caches the parsed object for subsequent requests.
         """
-        return email.message_from_string(self.raw_message.encode('utf-8'))
+        if not self._message:
+            self._message = email.message_from_string(
+                self.raw_message.encode('utf-8'))
+        return self._message
 
     @property
     def sender_name(self):
@@ -160,6 +165,10 @@ class Response(models.Model):
     @property
     def body(self):
         return self.message.get_payload(decode=True)
+
+    def __init__(self, *args, **kwargs):
+        super(Response, self).__init__(*args, **kwargs)
+        self._message = None
 
     def __unicode__(self):
         return u'{sender} ({received_time})'.format(
