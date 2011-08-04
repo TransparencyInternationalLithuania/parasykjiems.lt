@@ -67,11 +67,18 @@ class Enquiry(models.Model):
                 if tries > Enquiry._hash_tries:
                     raise Exception("Probably out of reply hashes for Enquiry.")
 
+    @property
     def recipient(self):
         return self.representative or self.institution
 
+    @property
     def has_answer(self):
         return Response.objects.filter(parent=self.id).exists()
+
+    @property
+    def recipient_name(self):
+        return u'{} {}'.format(self.recipient.kind.name,
+                               self.recipient.name)
 
     @models.permalink
     def get_absolute_url(self):
