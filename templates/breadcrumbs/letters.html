@@ -1,0 +1,12 @@
+{% load i18n %}
+<li>
+  {% if not active %}
+  <a href="{{ request.session.breadcrumb_letters }}">
+  {% endif %}
+
+    {% trans "Open letters" %}
+
+  {% if not active %}
+  </a>
+  {% endif %}
+</li>
