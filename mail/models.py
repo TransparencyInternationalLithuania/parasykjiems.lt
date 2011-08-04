@@ -1,10 +1,23 @@
+"""This module contains mail-related models.
+
+Both Enquiry and Response can be duck-typed as a letter. They both
+have the properties sender_name, recipient_name, subject and body,
+which allows them to be used with the items/letter.html template
+passing the specific instance as the letter parameter.
+"""
+
 import random
 import email
+import re
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 import search.models
+
+import logging
+logger = logging.getLogger(__name__)
+
 
 _NAME_LEN = 200
 
@@ -96,6 +109,27 @@ class Enquiry(models.Model):
             sent=sent_msg)
 
 
+def _extract_name(email_string):
+    """Take an email address string and try to extract a name (but not
+    the actual address) out of it.
+    """
+
+    m = re.match(r'(.+)\s+<.+@.+>', email_string)
+    if m:
+        return m.group(1)
+
+    m = re.match(r'.+@.+\s+\((.+)\)', email_string)
+    if m:
+        return m.group(1)
+
+    m = re.match(r'(.+)@.+', email_string)
+    if m:
+        return m.group(1)
+
+    logger.warning("Can't extract name from email '{}'.".format(email_string))
+    return ''
+
+
 class Response(models.Model):
     # A null parent means that it's unresolved. All responses should
     # have parents, but we might fail to find one.
@@ -105,12 +139,29 @@ class Response(models.Model):
     raw_message = models.TextField(
         help_text=_("The unprocessed e-mail message."))
 
+    @property
     def message(self):
         """Returns this Response as an email.message.Message object.
         """
         return email.message_from_string(self.raw_message.encode('utf-8'))
 
+    @property
+    def sender_name(self):
+        return _extract_name(self.message['from'])
+
+    @property
+    def recipient_name(self):
+        return self.parent.sender_name
+
+    @property
+    def subject(self):
+        return self.message['subject']
+
+    @property
+    def body(self):
+        return self.message.get_payload(decode=True)
+
     def __unicode__(self):
         return u'{sender} ({received_time})'.format(
-            sender=self.message()['from'],
+            sender=self.message['from'],
             received_time=self.received_time)
