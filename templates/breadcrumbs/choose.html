@@ -1,7 +1,7 @@
 {% load i18n %}
 <li>
   {% if not active %}
-  <a href="{{ request.session.breadcrumb_choose }}">
+  <a href="{{ request.session.breadcrumb_choose|default:'#' }}">
   {% endif %}
 
     {% trans "Choose a representative" %}
