@@ -1,10 +1,10 @@
 {% load i18n %}
 <li>
   {% if not active %}
-  <a href="{{ request.session.breadcrumb_choose|default:'#' }}">
+  <a href="{% url feedback %}">
   {% endif %}
 
-    {% trans "Choose a representative" %}
+    {% trans "Feedback" %}
 
   {% if not active %}
   </a>

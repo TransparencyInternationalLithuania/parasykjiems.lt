@@ -7,14 +7,9 @@
 
 {% block breadcrumbs %}
 {% include "breadcrumbs/search.html" %}
-{% include "breadcrumbs/separator.html" %}
 {% include "breadcrumbs/choose.html" %}
-{% include "breadcrumbs/separator.html" %}
 {% include "breadcrumbs/write.html" %}
-{% include "breadcrumbs/separator.html" %}
-{% with breadcrumb_active=True %}
-{% include "breadcrumbs/confirm.html" %}
-{% endwith %}
+{% include "breadcrumbs/confirm.html" with active=1 %}
 {% endblock %}
 
 {% block content %}
