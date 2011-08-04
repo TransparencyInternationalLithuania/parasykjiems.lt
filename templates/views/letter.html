@@ -13,14 +13,26 @@
 
 {% block content %}
 
-<p>
-  {% trans "Recipient of the letter:" %}
-  <em>{{ enquiry.recipient.kind.name }} {{ enquiry.recipient.name }}</em>.
-</p>
+<div class="letter">
+  <table>
+    <tr>
+      <td>{% trans "From" %}:</td>
+      <td>{{ enquiry.sender_name }}</td>
+    <tr>
 
-<p>{% trans "Content of the letter" %}</p>
-<blockquote>
-  {{ enquiry.body }}
-</blockquote>
+    <tr>
+      <td>{% trans "To" %}:</td>
+      <td>{{ enquiry.recipient.kind.name }} {{ enquiry.recipient.name }}</td>
+    </tr>
+
+    <tr>
+      <td>{% trans "Subject" %}:</td>
+      <td>{{ enquiry.subject }}</td>
+  </table>
+
+  <blockquote>
+    {{ enquiry.body|linebreaks }}
+  </blockquote>
+</div>
 
 {% endblock %}

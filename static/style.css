@@ -285,3 +285,13 @@ td {
     padding: 10px;
     margin: 0;
 }
+
+.letter table tr td:first-child {
+    font-weight: bold;
+    text-align: right;
+}
+
+.letter blockquote {
+    background: #eee;
+    padding: 30px;
+}
