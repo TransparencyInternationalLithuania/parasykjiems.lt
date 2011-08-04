@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-03 17:55+0300\n"
+"POT-Creation-Date: 2011-08-04 12:39+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -49,7 +49,7 @@ msgstr ""
 msgid "Confirm your letter"
 msgstr ""
 
-#: mail/models.py:96
+#: mail/models.py:106
 msgid "The unprocessed e-mail message."
 msgstr ""
 
@@ -89,7 +89,7 @@ msgstr ""
 msgid "Open letters"
 msgstr ""
 
-#: templates/menu.html:17
+#: templates/menu.html:17 templates/breadcrumbs/search.html:8
 msgid "Representative search"
 msgstr ""
 
@@ -101,12 +101,12 @@ msgstr ""
 msgid "Confirm letter"
 msgstr ""
 
-#: templates/breadcrumbs/letter.html:7
-msgid "View letter"
+#: templates/breadcrumbs/feedback.html:7
+msgid "Leave feedback"
 msgstr ""
 
-#: templates/breadcrumbs/search.html:8
-msgid "Find a representative"
+#: templates/breadcrumbs/letter.html:7
+msgid "View letter"
 msgstr ""
 
 #: templates/breadcrumbs/write.html:8
@@ -117,8 +117,8 @@ msgstr ""
 msgid "Email: "
 msgstr ""
 
-#: templates/items/institution.html:15
-msgid "Telephone number: "
+#: templates/items/institution.html:15 templates/items/representative.html:23
+msgid "Phone number: "
 msgstr ""
 
 #: templates/items/institution.html:19
@@ -129,40 +129,35 @@ msgstr ""
 msgid "Representatives"
 msgstr ""
 
+#: templates/items/letter.html:6
+msgid "From:"
+msgstr ""
+
+#: templates/items/letter.html:11
+msgid "To:"
+msgstr ""
+
+#: templates/items/letter.html:16
+msgid "Subject:"
+msgstr ""
+
 #: templates/items/representative.html:8
 msgid "Institution: "
 msgstr ""
 
-#: templates/items/representative.html:23
-msgid "Phone number: "
-msgstr ""
-
-#: templates/views/confirm.html:22 templates/views/letter.html:17
-msgid "Recipient of the letter:"
-msgstr ""
-
-#: templates/views/confirm.html:26 templates/views/letter.html:21
-msgid "Content of the letter"
-msgstr ""
-
-#: templates/views/confirm.html:33 templates/views/feedback.html:11
+#: templates/views/confirm.html:21 templates/views/feedback.html:15
 msgid "Send"
 msgstr ""
 
 #: templates/views/feedback_thanks.html:6
+msgid "Thank you"
+msgstr ""
+
+#: templates/views/feedback_thanks.html:11
 msgid "Thank you for your feedback."
 msgstr ""
 
-#: templates/views/letters.html:17
-#, python-format
-msgid ""
-"\n"
-"    From %(sender)s to %(recipient_kind)s %(recipient)s: <a href=\"%(url)s\">"
-"\"%(subject)s\"</a>\n"
-"    "
-msgstr ""
-
-#: templates/views/location_ask.html:18
+#: templates/views/location_ask.html:16
 msgid "Continue"
 msgstr ""
 
@@ -187,11 +182,15 @@ msgid ""
 "  "
 msgstr ""
 
-#: templates/views/sent.html:10
-msgid "Your letter has been sent successfully."
+#: templates/views/sent.html:9
+msgid "Letter sent"
 msgstr ""
 
 #: templates/views/sent.html:14
+msgid "Your letter has been sent successfully."
+msgstr ""
+
+#: templates/views/sent.html:18
 #, python-format
 msgid ""
 "\n"
@@ -199,11 +198,11 @@ msgid ""
 "  "
 msgstr ""
 
-#: templates/views/write.html:25
+#: templates/views/write.html:23
 msgid "Submit"
 msgstr ""
 
-#: templates/views/write_confirm.html:10
+#: templates/views/write_confirm.html:17
 msgid ""
 "\n"
 "  Check your email. You should receive a confirmation link from\n"
