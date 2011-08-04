@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-03 17:55+0300\n"
-"PO-Revision-Date: 2011-08-03 17:57+0300\n"
+"POT-Creation-Date: 2011-08-04 12:39+0300\n"
+"PO-Revision-Date: 2011-08-04 12:40+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -51,7 +51,7 @@ msgstr "Atviras laiškas"
 msgid "Confirm your letter"
 msgstr "Patvirtinkite savo laišką"
 
-#: mail/models.py:96
+#: mail/models.py:106
 msgid "The unprocessed e-mail message."
 msgstr ""
 
@@ -91,7 +91,7 @@ msgstr "Pagalba"
 msgid "Open letters"
 msgstr "Atviri laiškai"
 
-#: templates/menu.html:17
+#: templates/menu.html:17 templates/breadcrumbs/search.html:8
 msgid "Representative search"
 msgstr "Atstovo paieška"
 
@@ -103,13 +103,13 @@ msgstr "Pasirinkite atstovą"
 msgid "Confirm letter"
 msgstr "Patvirtinkite laišką"
 
+#: templates/breadcrumbs/feedback.html:7
+msgid "Leave feedback"
+msgstr ""
+
 #: templates/breadcrumbs/letter.html:7
 msgid "View letter"
 msgstr "Laiško peržiūra"
-
-#: templates/breadcrumbs/search.html:8
-msgid "Find a representative"
-msgstr "Raskite atstovą"
 
 #: templates/breadcrumbs/write.html:8
 msgid "Write a letter"
@@ -119,9 +119,8 @@ msgstr "Parašykite laišką"
 msgid "Email: "
 msgstr ""
 
-#: templates/items/institution.html:15
-#, fuzzy
-msgid "Telephone number: "
+#: templates/items/institution.html:15 templates/items/representative.html:23
+msgid "Phone number: "
 msgstr "Telefono numeris: "
 
 #: templates/items/institution.html:19
@@ -132,42 +131,35 @@ msgstr "Adresas: "
 msgid "Representatives"
 msgstr "Atstovai"
 
+#: templates/items/letter.html:6
+msgid "From:"
+msgstr "Siuntėjas:"
+
+#: templates/items/letter.html:11
+msgid "To:"
+msgstr "Gavėjas:"
+
+#: templates/items/letter.html:16
+msgid "Subject:"
+msgstr "Tema:"
+
 #: templates/items/representative.html:8
-#, fuzzy
 msgid "Institution: "
 msgstr "Institucija: "
 
-#: templates/items/representative.html:23
-#, fuzzy
-msgid "Phone number: "
-msgstr "Telefono numeris: "
-
-#: templates/views/confirm.html:22 templates/views/letter.html:17
-msgid "Recipient of the letter:"
-msgstr "Laiško gavėjas:"
-
-#: templates/views/confirm.html:26 templates/views/letter.html:21
-msgid "Content of the letter"
-msgstr "Laiško turinys"
-
-#: templates/views/confirm.html:33 templates/views/feedback.html:11
+#: templates/views/confirm.html:21 templates/views/feedback.html:15
 msgid "Send"
 msgstr "Siųsti"
 
 #: templates/views/feedback_thanks.html:6
+msgid "Thank you"
+msgstr "Ačiū"
+
+#: templates/views/feedback_thanks.html:11
 msgid "Thank you for your feedback."
 msgstr "Ačiū už Jūsų atsiliepimus."
 
-#: templates/views/letters.html:17
-#, python-format
-msgid ""
-"\n"
-"    From %(sender)s to %(recipient_kind)s %(recipient)s: <a href=\"%(url)s\">"
-"\"%(subject)s\"</a>\n"
-"    "
-msgstr ""
-
-#: templates/views/location_ask.html:18
+#: templates/views/location_ask.html:16
 msgid "Continue"
 msgstr "Tęsti"
 
@@ -201,11 +193,15 @@ msgstr ""
 "  </ul>\n"
 "  "
 
-#: templates/views/sent.html:10
-msgid "Your letter has been sent successfully."
-msgstr ""
+#: templates/views/sent.html:9
+msgid "Letter sent"
+msgstr "Laiškas išsiųstas"
 
 #: templates/views/sent.html:14
+msgid "Your letter has been sent successfully."
+msgstr "Jūsų laiškas išsiųstas sėkmingai."
+
+#: templates/views/sent.html:18
 #, python-format
 msgid ""
 "\n"
@@ -215,11 +211,11 @@ msgstr ""
 "\n"
 "Galite jį peržiūrėti <a href=\"%(url)s\">čia</a>."
 
-#: templates/views/write.html:25
+#: templates/views/write.html:23
 msgid "Submit"
 msgstr "Pateikti"
 
-#: templates/views/write_confirm.html:10
+#: templates/views/write_confirm.html:17
 msgid ""
 "\n"
 "  Check your email. You should receive a confirmation link from\n"
@@ -230,6 +226,19 @@ msgstr ""
 "Pasitikrinkite savo elektroninį paštą. Mes Jums išsiuntėme patvirtinimo "
 "nuorodą. Jūs turite patvirtinti savo laišką prieš tai, kaip jis bus "
 "išsiųstas."
+
+#~ msgid "Find a representative"
+#~ msgstr "Raskite atstovą"
+
+#, fuzzy
+#~ msgid "Telephone number: "
+#~ msgstr "Telefono numeris: "
+
+#~ msgid "Recipient of the letter:"
+#~ msgstr "Laiško gavėjas:"
+
+#~ msgid "Content of the letter"
+#~ msgstr "Laiško turinys"
 
 #, fuzzy
 #~ msgid "Write an open letter"
