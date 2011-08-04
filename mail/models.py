@@ -70,6 +70,9 @@ class Enquiry(models.Model):
     def recipient(self):
         return self.representative or self.institution
 
+    def has_answer(self):
+        return Response.objects.filter(parent=self.id).exists()
+
     @models.permalink
     def get_absolute_url(self):
         return ('letter', (), {'id': self.id})
