@@ -4,7 +4,7 @@ from django.http import Http404
 
 from forms import WriteLetterForm
 from parasykjiems.search.models import Representative, Institution
-from parasykjiems.mail.models import Enquiry
+from parasykjiems.mail.models import Enquiry, Response
 import parasykjiems.mail.mail as mail
 
 
@@ -68,8 +68,18 @@ def letter(request, id):
     enquiry = get_object_or_404(Enquiry, id=id)
     if not enquiry.is_open or not enquiry.is_sent:
         raise Http404()
+
+    maybe_response = Response.objects.filter(parent=enquiry)
+    if maybe_response.exists():
+        response = maybe_response.get()
+    else:
+        response = None
+
     request.session['breadcrumb_letter'] = request.path
-    return render(request, 'views/letter.html', {'enquiry': enquiry})
+    return render(request, 'views/letter.html', {
+        'enquiry': enquiry,
+        'response': response,
+    })
 
 
 def letters(request):
