@@ -1,7 +1,7 @@
 {% load i18n %}
 <li>
   {% if not active %}
-  <a href="{{ request.session.breadcrumb_letters }}">
+  <a href="{{ request.session.breadcrumb_letters|default:'/letters' }}">
   {% endif %}
 
     {% trans "Open letters" %}

@@ -2,7 +2,7 @@
 <li>
 
   {% if not active %}
-  <a href="{{ request.session.breadcrumb_write }}">
+  <a href="{{ request.session.breadcrumb_write|default:'#' }}">
   {% endif %}
 
     {% trans "Write a letter" %}
