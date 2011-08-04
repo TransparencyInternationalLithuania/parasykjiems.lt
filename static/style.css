@@ -291,13 +291,19 @@ td {
     text-align: right;
 }
 
+.letter td {
+    padding: 7px;
+}
+
 form th {
     font-weight: light;
     text-align: right;
     vertical-align: middle;
 }
 
-.letter blockquote {
+.letter .body {
     background: #eee;
-    padding: 30px;
+    border-radius: 15px;
+    margin: 10px 30px 30px 30px;
+    padding: 10px 30px 10px 30px;
 }
