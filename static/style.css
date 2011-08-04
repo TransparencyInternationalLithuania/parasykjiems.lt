@@ -43,7 +43,6 @@ a:hover {
 }
 
 #header {
-    background: #dddddd;
     margin: 0 0 0 0;
     padding: 10px 0 5px 0;
     height: 120px;
@@ -265,4 +264,24 @@ h1, h2, h3, h4 {
     color: #555;
     font-size: 12pt;
     margin-top: 0;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+tr {
+    margin: 0;
+}
+
+th {
+    background: #eee;
+    padding: 12px;
+    margin: 0;
+    border:
+}
+
+td {
+    padding: 10px;
+    margin: 0;
 }
