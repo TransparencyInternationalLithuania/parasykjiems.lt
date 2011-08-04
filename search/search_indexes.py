@@ -84,11 +84,13 @@ class LocationIndex(indexes.SearchIndex):
         return join_text([obj.municipality, obj.city, obj.street])
 
     def prepare_title(self, obj):
-        if obj.street == '':
-            return u'{}, {}'.format(obj.city, obj.municipality)
-        elif u'miestas' in obj.city:
-            return u'{}, {}'.format(obj.street, obj.city)
-        else:
-            return u'{}, {}, {}'.format(obj.street, obj.city, obj.municipality)
+        return ', '.join(x
+                         for x in [obj.street, obj.city]
+                         if x)
+
+    def prepare_subtitle(self, obj):
+        return ', '.join(x
+                         for x in [obj.elderate, obj.municipality]
+                         if x)
 
 site.register(Location, LocationIndex)
