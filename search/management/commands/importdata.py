@@ -185,18 +185,12 @@ class Command(BaseCommand):
                 city = d(row['city'])
                 street = d(row['street'])
 
-                any_elderate = models.Territory.objects.filter(
+                maybe_territory = models.Territory.objects.filter(
                     institution=institution,
                     municipality=municipality,
+                    elderate=elderate,
                     city=city,
                     street=street)
-
-                if elderate == '':
-                    maybe_territory = any_elderate
-                else:
-                    maybe_territory = any_elderate.filter(elderate=elderate)
-                    if not maybe_territory.exists():
-                        maybe_territory = any_elderate.filter(elderate='')
 
                 if maybe_territory.exists():
                     territory = maybe_territory[0]
