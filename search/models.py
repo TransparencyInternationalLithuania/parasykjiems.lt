@@ -25,6 +25,10 @@ class Institution(models.Model):
     phone = models.CharField(max_length=_NAME_LEN, blank=True)
     address = models.TextField(blank=True)
 
+    slug = models.CharField(max_length=40,
+                            blank=True,
+                            db_index=True)
+
     def representatives(self):
         return Representative.objects.filter(institution=self)
 
@@ -61,6 +65,10 @@ class Representative(models.Model):
     phone = models.CharField(max_length=_NAME_LEN, blank=True)
     other_contacts = models.TextField(blank=True)
 
+    slug = models.CharField(max_length=40,
+                            blank=True,
+                            db_index=True)
+
     def __unicode__(self):
         return u'{}, {} in {}'.format(
             self.name,
@@ -89,6 +97,10 @@ class Location(models.Model):
                             help_text=_("Name of city, town or village."))
     street = models.CharField(max_length=_NAME_LEN, blank=True, db_index=True)
 
+    slug = models.CharField(max_length=40,
+                            blank=True,
+                            db_index=True)
+
     @property
     def territories(self):
         return Territory.objects.filter(
@@ -105,7 +117,7 @@ class Location(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('location', [self.id])
+        return ('location', [self.slug if self.slug != '' else self.id])
 
 
 class Territory(models.Model):
