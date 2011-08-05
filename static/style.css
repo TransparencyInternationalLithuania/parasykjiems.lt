@@ -238,17 +238,23 @@ h1, h2, h3, h4 {
 }
 
 .institution h2 {
+    font-size: 16pt;
+    margin-bottom: 0;
+}
+
+.institution h3 {
     font-size: 14pt;
     margin-bottom: 0;
 }
 
-.representative {
-    margin-bottom: 2em;
+.institution ul {
+    margin: 0 0 0 1em;
+    padding: 0;
 }
 
 .representative h4 {
     margin-bottom: 0;
-    font-size: 14pt;
+    font-size: 16pt;
 }
 
 .institution .representative h4 {
