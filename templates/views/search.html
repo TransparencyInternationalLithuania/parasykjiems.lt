@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% load i18n %}
 
+{% block head %}
+<script type="text/javascript" src="/static/js/search.js"></script>
+{% endblock %}
+
 {% block menu %}
 {% include "menu.html" with active="search" %}
 {% endblock %}
