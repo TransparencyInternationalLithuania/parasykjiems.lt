@@ -1,7 +1,7 @@
 {{ enquiry.body }}
 
 --
-Šis laišką per ParašykJiems.lt sistemą jums išsiuntė
+Šį laišką per ParašykJiems.lt sistemą jums išsiuntė
 {{ enquiry.sender_name }}.
 {% if enquiry.is_open %}
 Šis laiškas yra atviras ir jį taip pat galite peržiūrėti adresu:
