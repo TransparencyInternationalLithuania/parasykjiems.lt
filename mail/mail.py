@@ -1,11 +1,15 @@
 import datetime
+import re
 from django.template.loader import render_to_string
 from django.core.mail import send_mail, EmailMessage
 from django.utils.translation import ugettext as _
 
 import settings
-from parasykjiems.mail.models import Enquiry
+from parasykjiems.mail.models import Enquiry, Response
 from parasykjiems.search.models import Representative
+
+import logging
+logger = logging.getLogger(__name__)
 
 
 def submit_enquiry(sender_name,
@@ -81,3 +85,58 @@ def confirm_enquiry(enquiry):
     enquiry.is_sent = True
     enquiry.sent_at = datetime.datetime.now()
     enquiry.save()
+
+
+def process_response(message):
+    """Takes an email.message.Message instance and turns it into a
+    Response.
+    """
+
+    response = Response(
+        raw_message=str(message).decode('utf-8'))
+
+    parent = None
+    try:
+        # First, try matching by 'To'.
+        # By using some not-very-general hackery, we turn
+        # ENQUIRY_EMAIL_FORMAT into a regexp. To be specific, we
+        # escape pluses.
+        r = (settings.ENQUIRY_EMAIL_FORMAT
+             .replace('+', r'\+')
+             .format(reply_hash='(\d+)'))
+        m = re.match(r, message['to'])
+        if m:
+            h = int(m.group(1))
+            maybe_enquiry = Enquiry.objects.filter(reply_hash=h)
+            if maybe_enquiry.exists():
+                logger.info('Determined parent of response {} from To.')
+                parent = maybe_enquiry.get()
+
+        # If matching by 'To' fails, try threading, though it's
+        # quite unlikely that a message has an unsuitable 'To',
+        # but suitable references.
+        if not parent:
+            refs = message['references'] or ''
+            in_reply_to = message['in-reply-to'] or ''
+            references = set(refs.split(' ') +
+                             in_reply_to.split(' ')[0:1])
+            for ref in references:
+                print repr(ref.decode('utf-8').strip())
+                maybe_enquiry = Enquiry.objects.filter(
+                    message_id=ref.decode('utf-8').strip())
+                if maybe_enquiry.exists():
+                    logger.info('Determined parent of response {} from references.')
+                    parent = maybe_enquiry.get()
+                    break
+    except Exception as e:
+        logger.error(
+            'Exception {} while trying to determine parent of response {}.'
+            .format(e, response.id))
+
+    if not parent:
+        logger.warning('Failed to determine parent of response {}.'
+                       .format(response.id))
+    else:
+        response.parent = parent
+
+    response.save()
