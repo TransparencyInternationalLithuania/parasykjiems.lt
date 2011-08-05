@@ -11,5 +11,7 @@
 
 {% block content %}
 {% include "items/letter.html" with letter=enquiry %}
+{% if response %}
 {% include "items/letter.html" with letter=response %}
+{% endif %}
 {% endblock %}
