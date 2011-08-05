@@ -33,7 +33,7 @@ To launch the development server on localhost:8000, execute
 
 ## Mail setup
 
-There is a 'process_mail' command, which takes an email message from
+There is a 'process_message' command, which takes an email message from
 stdin and processes it as if it was a response to an enquiry.
 
 Our system is tested with Postfix, but other mail systems which can
@@ -51,6 +51,6 @@ And master.cf should contain something like
     parasykjiems unix - n n - - pipe
       user=parasykjiems:parasykjiems
       directory=/home/parasykjiems/parasykjiems
-      argv=../bin/python manage.py process_mail
+      argv=../bin/python manage.py process_message
 
 Adjust directories and user names in accordance to your system.
