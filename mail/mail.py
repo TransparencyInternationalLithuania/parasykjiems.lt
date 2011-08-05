@@ -5,9 +5,9 @@ import re
 from django.template.loader import render_to_string
 from django.core.mail import send_mail, EmailMessage
 from django.utils.translation import ugettext as _
-from email.header import decode_header
 
 import settings
+from parasykjiems.mail.decode_header_unicode import decode_header_unicode
 from parasykjiems.mail.models import Enquiry, Response
 from parasykjiems.search.models import Representative
 
@@ -55,17 +55,6 @@ def submit_enquiry(sender_name,
 
     return enquiry
 
-
-def decode_header_unicode(h):
-    """Turns a possibly encoded email header string into a unicode
-    string.
-    """
-    ret = u''
-    for s, enc in decode_header(h):
-        if not enc:
-            enc = 'ascii'
-        ret += s.decode(enc)
-    return ret
 
 def confirm_enquiry(enquiry):
     """Sends the given enquiry to the representative.

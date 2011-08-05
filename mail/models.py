@@ -8,15 +8,12 @@ passing the specific instance as the letter parameter.
 
 import random
 import email
-import re
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 import search.models
-
-import logging
-logger = logging.getLogger(__name__)
+import utils
 
 
 _NAME_LEN = 200
@@ -66,11 +63,13 @@ class Enquiry(models.Model):
         if not self.confirm_hash:
             self.confirm_hash = rand.randint(1, Enquiry._hash_max)
             tries = 0
-            while Enquiry.objects.filter(confirm_hash=self.confirm_hash).exists():
+            while Enquiry.objects.filter(
+                confirm_hash=self.confirm_hash).exists():
                 self.confirm_hash = rand.randint(1, Enquiry._hash_max)
                 tries += 1
                 if tries > Enquiry._hash_tries:
-                    raise Exception("Probably out of confirm hashes for Enquiry.")
+                    raise Exception(
+                        "Probably out of confirm hashes for Enquiry.")
         if not self.reply_hash:
             self.reply_hash = rand.randint(1, Enquiry._hash_max)
             tries = 0
@@ -78,7 +77,8 @@ class Enquiry(models.Model):
                 self.reply_hash = rand.randint(1, Enquiry._hash_max)
                 tries += 1
                 if tries > Enquiry._hash_tries:
-                    raise Exception("Probably out of reply hashes for Enquiry.")
+                    raise Exception(
+                        "Probably out of reply hashes for Enquiry.")
 
     @property
     def recipient(self):
@@ -109,27 +109,6 @@ class Enquiry(models.Model):
             sent=sent_msg)
 
 
-def _extract_name(email_string):
-    """Take an email address string and try to extract a name (but not
-    the actual address) out of it.
-    """
-
-    m = re.match(r'(.+)\s+<.+@.+>', email_string)
-    if m:
-        return m.group(1)
-
-    m = re.match(r'.+@.+\s+\((.+)\)', email_string)
-    if m:
-        return m.group(1)
-
-    m = re.match(r'(.+)@.+', email_string)
-    if m:
-        return m.group(1)
-
-    logger.warning("Can't extract name from email '{}'.".format(email_string))
-    return ''
-
-
 class Response(models.Model):
     # A null parent means that it's unresolved. All responses should
     # have parents, but we might fail to find one.
@@ -152,7 +131,8 @@ class Response(models.Model):
 
     @property
     def sender_name(self):
-        return _extract_name(self.message['from'])
+        return utils.extract_name(
+            utils.decode_header_unicode(self.message['from']))
 
     @property
     def recipient_name(self):
@@ -160,7 +140,7 @@ class Response(models.Model):
 
     @property
     def subject(self):
-        return self.message['subject']
+        return utils.decode_header_unicode(self.message['subject'])
 
     @property
     def body(self):
