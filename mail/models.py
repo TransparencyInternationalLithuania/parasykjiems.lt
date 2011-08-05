@@ -105,7 +105,7 @@ class Enquiry(models.Model):
         return u'{name} <{email}> to {to} ({sent})'.format(
             name=self.sender_name,
             email=self.sender_email,
-            to=self.recipient(),
+            to=self.recipient,
             sent=sent_msg)
 
 
