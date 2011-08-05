@@ -6,8 +6,12 @@ _NAME_LEN = 200
 
 class InstitutionKind(models.Model):
     name = models.CharField(max_length=_NAME_LEN)
-    description = models.TextField()
+    description = models.TextField(blank=True)
     active = models.BooleanField()
+
+    ordinal = models.IntegerField(
+        help_text=_("This number is used for sorting institutions "
+                    "in the location view."))
 
     def __unicode__(self):
         return self.name
@@ -35,7 +39,7 @@ class Institution(models.Model):
 class RepresentativeKind(models.Model):
     """Kind of position of representative in institution."""
     name = models.CharField(max_length=_NAME_LEN)
-    description = models.TextField()
+    description = models.TextField(blank=True)
     active = models.BooleanField()
 
     def __unicode__(self):
