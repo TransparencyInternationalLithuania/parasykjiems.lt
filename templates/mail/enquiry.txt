@@ -1,11 +1,13 @@
 {{ enquiry.body }}
 
 --
-Šis laiškas išsiųstas naudojant ParašykJiems.lt sistemą.
+Šis laišką per ParašykJiems.lt sistemą jums išsiuntė
+{{ enquiry.sender_name }}.
+{% if enquiry.is_open %}
+Šis laiškas yra atviras ir jį taip pat galite peržiūrėti adresu:
+{{ site_address }}{{ enquiry.get_absolute_url }}
 
-{% if public_url %}
-Laiškas yra viešas ir jį taip pat galite peržiūrėti adresu:
-{{ public_url }}
-
-Jums parašius atsakymą, jį irgi galima bus matyti tuo adresu.
+Kai parašysite atsakymą, jį irgi galima bus matyti tuo adresu. Jeigu
+atsakėte į laišką, bet jūsų atsakymas neatsiranda tinklalapyje, tai
+praneškite mums el. paštu feedback@parasykjiems.lt
 {% endif %}
