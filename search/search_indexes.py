@@ -36,6 +36,9 @@ class InstitutionIndex(indexes.SearchIndex):
     def prepare_subtitle(self, obj):
         return obj.kind.name
 
+    def index_queryset(self):
+        return Representative.objects.filter(kind__active=True)
+
 
 site.register(Institution, InstitutionIndex)
 
@@ -59,6 +62,9 @@ class RepresentativeIndex(indexes.SearchIndex):
 
     def prepare_subtitle(self, obj):
         return u'{}, {}'.format(obj.kind.name, obj.institution.name)
+
+    def index_queryset(self):
+        return Representative.objects.filter(kind__active=True)
 
 
 site.register(Representative, RepresentativeIndex)

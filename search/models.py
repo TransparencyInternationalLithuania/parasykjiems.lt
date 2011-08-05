@@ -85,6 +85,14 @@ class Location(models.Model):
                             help_text=_("Name of city, town or village."))
     street = models.CharField(max_length=_NAME_LEN, blank=True, db_index=True)
 
+    @property
+    def territories(self):
+        return Territory.objects.filter(
+            municipality=self.municipality,
+            elderate=self.elderate,
+            city=self.city,
+            street=self.street)
+
     def __unicode__(self):
         s = u'{}, {}'.format(self.municipality, self.city)
         if self.street != u'':
@@ -114,6 +122,14 @@ class Territory(models.Model):
 
     institution = models.ForeignKey(Institution)
     numbers = models.TextField()
+
+    @property
+    def location(self):
+        return Location.objects.get(
+            municipality=self.municipality,
+            elderate=self.elderate,
+            city=self.city,
+            street=self.street)
 
     def __unicode__(self):
         loc = u'{}, {}'.format(self.municipality, self.city)

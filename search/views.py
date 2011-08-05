@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from haystack.query import SearchQuerySet
 from django.core.urlresolvers import reverse
+from django.http import Http404
+from haystack.query import SearchQuerySet
 
 from search.models import Representative, Institution, Location, Territory
 from search.forms import HouseNumberForm
@@ -25,6 +26,8 @@ def search(request):
 
 def representative(request, rep_id):
     rep = get_object_or_404(Representative, id=rep_id)
+    if not rep.kind.active:
+        raise Http404()
     request.session['breadcrumb_choose'] = request.path
     return render(request, 'views/representative.html', {
         'representative': rep,
@@ -33,6 +36,8 @@ def representative(request, rep_id):
 
 def institution(request, inst_id):
     inst = get_object_or_404(Institution, id=inst_id)
+    if not inst.kind.active:
+        raise Http404()
     request.session['breadcrumb_choose'] = request.path
     return render(request, 'views/institution.html', {
         'institution': inst,
@@ -55,7 +60,9 @@ def location(request, loc_id, house_number=None):
                     territories.append(rt)
         else:
             return redirect(reverse(location_ask, args=[loc_id]))
-    institutions = [t.institution for t in territories]
+    institutions = [t.institution
+                    for t in territories
+                    if t.institution.kind.active]
     request.session['breadcrumb_choose'] = request.path
     return render(request, 'views/location.html', {
         'institutions': institutions,
