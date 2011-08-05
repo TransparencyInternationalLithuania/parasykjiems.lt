@@ -8,19 +8,25 @@ from search.forms import HouseNumberForm
 from search import house_numbers
 
 
+_RESULT_LIMIT = 10
+
 def search(request):
     request.session['breadcrumb_search'] = request.path
     if 'q' in request.GET and request.GET['q'] != '':
         q = request.GET['q']
-        results = SearchQuerySet().auto_query(q)
+        all_results = SearchQuerySet().auto_query(q)
+        more_results = all_results.count() > _RESULT_LIMIT
+        results = all_results[:_RESULT_LIMIT]
         request.session['breadcrumb_search'] += u'?q=' + q
     else:
         q = ''
         results = []
+        more_results = False
 
     return render(request, 'views/search.html', {
         'search_query': q,
         'results': results,
+        'more_results': more_results,
     })
 
 
