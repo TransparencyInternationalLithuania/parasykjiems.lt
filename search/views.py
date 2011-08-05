@@ -50,8 +50,11 @@ def institution(request, inst_id):
     })
 
 
-def location(request, loc_id, house_number=None):
-    loc = get_object_or_404(Location, id=loc_id)
+def location(request, id, house_number=None):
+    try:
+        loc = get_object_or_404(Location, id=int(id))
+    except ValueError:
+        loc = get_object_or_404(Location, slug=id)
     all_territories = Territory.objects.filter(
         municipality=loc.municipality,
         elderate=loc.elderate,
@@ -65,7 +68,7 @@ def location(request, loc_id, house_number=None):
                 if house_numbers.territory_contains(rt, house_number):
                     territories.append(rt)
         else:
-            return redirect(reverse(location_ask, args=[loc_id]))
+            return redirect(reverse(location_ask, args=[id]))
     institutions = [t.institution
                     for t in territories
                     if t.institution.kind.active]
@@ -76,12 +79,12 @@ def location(request, loc_id, house_number=None):
     })
 
 
-def location_ask(request, loc_id):
+def location_ask(request, id):
     if request.method == 'POST':
         form = HouseNumberForm(request.POST)
         if form.is_valid():
             return redirect(reverse(location,
-                                    args=[loc_id,
+                                    args=[id,
                                           form.cleaned_data['house_number']]))
     else:
         form = HouseNumberForm()
