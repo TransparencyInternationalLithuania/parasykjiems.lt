@@ -1,8 +1,11 @@
+# -*- coding: utf-8 -*-
+
 import datetime
 import re
 from django.template.loader import render_to_string
 from django.core.mail import send_mail, EmailMessage
 from django.utils.translation import ugettext as _
+from email.header import decode_header
 
 import settings
 from parasykjiems.mail.models import Enquiry, Response
@@ -53,6 +56,17 @@ def submit_enquiry(sender_name,
     return enquiry
 
 
+def decode_header_unicode(h):
+    """Turns a possibly encoded email header string into a unicode
+    string.
+    """
+    ret = u''
+    for s, enc in decode_header(h):
+        if not enc:
+            enc = 'ascii'
+        ret += s.decode(enc)
+    return ret
+
 def confirm_enquiry(enquiry):
     """Sends the given enquiry to the representative.
     """
@@ -68,14 +82,20 @@ def confirm_enquiry(enquiry):
         reply_hash=enquiry.reply_hash)
     message = EmailMessage(
         from_email=settings.SERVER_EMAIL,
-        subject=enquiry.subject,
-        body=render_to_string('mail/enquiry.txt', {'enquiry': enquiry}),
+        subject=u'[ParašykJiems] {}'.format(enquiry.subject),
+        body=render_to_string('mail/enquiry.txt', {
+            'site_address': settings.SITE_ADDRESS,
+            'enquiry': enquiry,
+        }),
         to=recipients,
     )
 
+    # The message.message()['Message-Id'] returns a new id every time
+    # we ask for one. Here we actually set the message id in the
+    # EmailMessage object, so that it is the same as the one in the
+    # database when the message is sent.
     enquiry.message_id = message.message()['Message-Id']
     message.extra_headers = {
-        # If we don't set Message-Id here, it changes when sending.
         'Message-Id': enquiry.message_id,
         'Reply-To': reply_to,
     }
@@ -85,6 +105,20 @@ def confirm_enquiry(enquiry):
     enquiry.is_sent = True
     enquiry.sent_at = datetime.datetime.now()
     enquiry.save()
+
+    msg = message.message()
+    user_copy = EmailMessage(
+        from_email=settings.SERVER_EMAIL,
+        subject=_("Copy of the letter you sent."),
+        body=render_to_string('mail/copy.txt', {
+            'from': decode_header_unicode(msg['from']),
+            'to': decode_header_unicode(msg['to']),
+            'date': decode_header_unicode(msg['date']),
+            'subject': decode_header_unicode(msg['subject']),
+            'body': message.message().get_payload(decode=True),
+        }),
+        to=[u'{} <{}>'.format(enquiry.sender_name, enquiry.sender_email)])
+    user_copy.send()
 
 
 def process_incoming(message):
