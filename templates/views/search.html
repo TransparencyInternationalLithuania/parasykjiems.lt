@@ -22,6 +22,7 @@
 {% if search_query %}
 
 {% if results %}
+
 <ul id="results">
   {% for result in results %}
   <li>
@@ -29,6 +30,10 @@
   </li>
   {% endfor %}
 </ul>
+{% if more_results %}
+<p>{% trans "There are more results matching your query. Try narrowing your search." %}</p>
+{% endif %}
+
 {% else %}
 <p>{% trans "Nothing found." %}</p>
 {% endif %}
