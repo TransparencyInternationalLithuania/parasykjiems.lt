@@ -91,10 +91,13 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
+
+    'haystack',
+    'south',
+
     'web',
     'search',
     'mail',
-    'haystack',
 )
 
 HAYSTACK_SITECONF = 'parasykjiems.search_sites'
