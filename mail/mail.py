@@ -87,7 +87,7 @@ def confirm_enquiry(enquiry):
     enquiry.save()
 
 
-def process_response(message):
+def process_incoming(message):
     """Takes an email.message.Message instance and turns it into a
     Response.
     """

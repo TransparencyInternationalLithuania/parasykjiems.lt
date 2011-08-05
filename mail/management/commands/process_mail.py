@@ -1,7 +1,7 @@
 import email
 import sys
 from django.core.management.base import BaseCommand
-from parasykjiems.mail import process_response
+from parasykjiems.mail import process_incoming
 
 
 class Command(BaseCommand):
@@ -12,4 +12,4 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         msg = email.message_from_file(sys.stdin)
-        process_response(msg)
+        process_incoming(msg)
