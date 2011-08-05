@@ -69,6 +69,7 @@ def location(request, loc_id, house_number=None):
     institutions = [t.institution
                     for t in territories
                     if t.institution.kind.active]
+    institutions.sort(key=lambda i: i.kind.ordinal)
     request.session['breadcrumb_choose'] = request.path
     return render(request, 'views/location.html', {
         'institutions': institutions,
