@@ -8,11 +8,12 @@ required Python packages are
  - Django 1.3
  - pysqlite or some other database
  - django-haystack
+ - South
  - unidecode — used for transliteration in search
- - progressbar — only for data migration from older version
+ - progressbar — only for importdata and tidy_locations commands
 
 After cloning the repository, execute the following commands to
-initialize the database:
+initialize the installation:
 
     python manage.py syncdb
     python manage.py compilemessages
@@ -21,8 +22,9 @@ Export data from production and put the CSV files into the 'data'
 folder, then run:
 
     python manage.py importdata
+    python manage.py tidy_locations
     python manage.py update_locations
-    python manage.py update_index
+    python manage.py rebuild_index
 
 To launch the development server on localhost:8000, execute
 
