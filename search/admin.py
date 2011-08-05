@@ -1,7 +1,14 @@
 from django.contrib import admin
 from search import models
 
-admin.site.register(models.InstitutionKind)
+
+class InstitutionKindAdmin(admin.ModelAdmin):
+    list_display = ('name', 'ordinal')
+    list_editable = ('ordinal',)
+
+admin.site.register(models.InstitutionKind, InstitutionKindAdmin)
+
+
 admin.site.register(models.Institution)
 admin.site.register(models.RepresentativeKind)
 admin.site.register(models.Representative)
