@@ -3,6 +3,8 @@ from django.utils.translation import ugettext_lazy as _
 
 _NAME_LEN = 200
 
+SLUG_LEN = 40
+
 
 class InstitutionKind(models.Model):
     name = models.CharField(max_length=_NAME_LEN)
@@ -25,7 +27,7 @@ class Institution(models.Model):
     phone = models.CharField(max_length=_NAME_LEN, blank=True)
     address = models.TextField(blank=True)
 
-    slug = models.CharField(max_length=40,
+    slug = models.CharField(max_length=SLUG_LEN,
                             blank=True,
                             db_index=True)
 
@@ -65,7 +67,7 @@ class Representative(models.Model):
     phone = models.CharField(max_length=_NAME_LEN, blank=True)
     other_contacts = models.TextField(blank=True)
 
-    slug = models.CharField(max_length=40,
+    slug = models.CharField(max_length=SLUG_LEN,
                             blank=True,
                             db_index=True)
 
@@ -97,7 +99,7 @@ class Location(models.Model):
                             help_text=_("Name of city, town or village."))
     street = models.CharField(max_length=_NAME_LEN, blank=True, db_index=True)
 
-    slug = models.CharField(max_length=40,
+    slug = models.CharField(max_length=SLUG_LEN,
                             blank=True,
                             db_index=True)
 
