@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.http import Http404
 from haystack.query import SearchQuerySet
@@ -6,7 +6,6 @@ from haystack.query import SearchQuerySet
 from search.models import Representative, Institution, Location, Territory
 from search.forms import HouseNumberForm
 from search import house_numbers
-from slug import slug_get_or_404
 
 
 _RESULT_LIMIT = 10
@@ -31,8 +30,8 @@ def search(request):
     })
 
 
-def representative(request, id):
-    rep = slug_get_or_404(Representative, id)
+def representative(request, slug):
+    rep = get_object_or_404(Representative, slug=slug)
     if not rep.kind.active:
         raise Http404()
     request.session['breadcrumb_choose'] = request.path
@@ -41,8 +40,8 @@ def representative(request, id):
     })
 
 
-def institution(request, id):
-    inst = slug_get_or_404(Institution, id)
+def institution(request, slug):
+    inst = get_object_or_404(Institution, slug=slug)
     if not inst.kind.active:
         raise Http404()
     request.session['breadcrumb_choose'] = request.path
@@ -51,8 +50,8 @@ def institution(request, id):
     })
 
 
-def location(request, id, house_number=None):
-    loc = slug_get_or_404(Location, id)
+def location(request, slug, house_number=None):
+    loc = get_object_or_404(Location, slug=slug)
     all_territories = Territory.objects.filter(
         municipality=loc.municipality,
         elderate=loc.elderate,
@@ -66,7 +65,7 @@ def location(request, id, house_number=None):
                 if house_numbers.territory_contains(rt, house_number):
                     territories.append(rt)
         else:
-            return redirect(reverse(location_ask, args=[id]))
+            return redirect(reverse(location_ask, args=[slug]))
     institutions = [t.institution
                     for t in territories
                     if t.institution.kind.active]
@@ -77,12 +76,12 @@ def location(request, id, house_number=None):
     })
 
 
-def location_ask(request, id):
+def location_ask(request, slug):
     if request.method == 'POST':
         form = HouseNumberForm(request.POST)
         if form.is_valid():
             return redirect(reverse(location,
-                                    args=[id,
+                                    args=[slug,
                                           form.cleaned_data['house_number']]))
     else:
         form = HouseNumberForm()

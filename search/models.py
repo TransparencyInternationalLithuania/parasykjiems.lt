@@ -18,12 +18,6 @@ class InstitutionKind(models.Model):
         return self.name
 
 
-def _string_or(a, b):
-    """Like 'or', but treats empty strings as false.
-    """
-    return a if a != '' else b
-
-
 class Institution(models.Model):
     name = models.CharField(max_length=_NAME_LEN)
     kind = models.ForeignKey(InstitutionKind)
@@ -44,7 +38,7 @@ class Institution(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('institution', [_string_or(self.slug, self.id)])
+        return ('institution', [self.slug])
 
 
 class RepresentativeKind(models.Model):
@@ -84,7 +78,7 @@ class Representative(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('representative', [_string_or(self.slug, self.id)])
+        return ('representative', [self.slug])
 
 
 class Location(models.Model):
@@ -124,7 +118,7 @@ class Location(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('location', [_string_or(self.slug, self.id)])
+        return ('location', [self.slug])
 
 
 class Territory(models.Model):
