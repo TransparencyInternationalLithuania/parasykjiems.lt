@@ -1,6 +1,7 @@
 syntax:glob
 
 settings_local.py
+reply_fail.mbox
 
 *.pyc
 *.log
