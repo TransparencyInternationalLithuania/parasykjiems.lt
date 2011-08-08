@@ -1,9 +1,8 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from parasykjiems.slug import SLUG_LEN
 
 _NAME_LEN = 200
-
-SLUG_LEN = 40
 
 
 class InstitutionKind(models.Model):
@@ -17,6 +16,12 @@ class InstitutionKind(models.Model):
 
     def __unicode__(self):
         return self.name
+
+
+def _string_or(a, b):
+    """Like 'or', but treats empty strings as false.
+    """
+    return a if a != '' else b
 
 
 class Institution(models.Model):
@@ -39,7 +44,7 @@ class Institution(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('institution', [self.id])
+        return ('institution', [_string_or(self.slug, self.id)])
 
 
 class RepresentativeKind(models.Model):
@@ -79,7 +84,7 @@ class Representative(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('representative', [self.id])
+        return ('representative', [_string_or(self.slug, self.id)])
 
 
 class Location(models.Model):
@@ -119,7 +124,7 @@ class Location(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('location', [self.slug if self.slug != '' else self.id])
+        return ('location', [_string_or(self.slug, self.id)])
 
 
 class Territory(models.Model):

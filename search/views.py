@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 from django.http import Http404
 from haystack.query import SearchQuerySet
@@ -6,6 +6,7 @@ from haystack.query import SearchQuerySet
 from search.models import Representative, Institution, Location, Territory
 from search.forms import HouseNumberForm
 from search import house_numbers
+from slug import slug_get_or_404
 
 
 _RESULT_LIMIT = 10
@@ -30,8 +31,8 @@ def search(request):
     })
 
 
-def representative(request, rep_id):
-    rep = get_object_or_404(Representative, id=rep_id)
+def representative(request, id):
+    rep = slug_get_or_404(Representative, id)
     if not rep.kind.active:
         raise Http404()
     request.session['breadcrumb_choose'] = request.path
@@ -40,8 +41,8 @@ def representative(request, rep_id):
     })
 
 
-def institution(request, inst_id):
-    inst = get_object_or_404(Institution, id=inst_id)
+def institution(request, id):
+    inst = slug_get_or_404(Institution, id)
     if not inst.kind.active:
         raise Http404()
     request.session['breadcrumb_choose'] = request.path
@@ -51,10 +52,7 @@ def institution(request, inst_id):
 
 
 def location(request, id, house_number=None):
-    try:
-        loc = get_object_or_404(Location, id=int(id))
-    except ValueError:
-        loc = get_object_or_404(Location, slug=id)
+    loc = slug_get_or_404(Location, id)
     all_territories = Territory.objects.filter(
         municipality=loc.municipality,
         elderate=loc.elderate,
