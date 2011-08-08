@@ -38,6 +38,8 @@ class Institution(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
+        if self.slug == '':
+            raise Exception('Tried to get address of object missing a slug.')
         return ('institution', [self.slug])
 
 
@@ -78,6 +80,8 @@ class Representative(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
+        if self.slug == '':
+            raise Exception('Tried to get address of object missing a slug.')
         return ('representative', [self.slug])
 
 
@@ -118,6 +122,8 @@ class Location(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
+        if self.slug == '':
+            raise Exception('Tried to get address of object missing a slug.')
         return ('location', [self.slug])
 
 

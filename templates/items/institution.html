@@ -7,7 +7,7 @@
   {% if institution.email %}
   <p>
     {% trans "Email: " %} {{ institution.email }} &mdash;
-    <a href="{% url write-institution institution.id %}">Rašyti laišką</a>
+    <a href="{% url write-institution institution.slug %}">Rašyti laišką</a>
   </p>
   {% endif %}
 

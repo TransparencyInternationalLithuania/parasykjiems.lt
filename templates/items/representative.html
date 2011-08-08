@@ -15,7 +15,7 @@
   {% if representative.email %}
   <p>
     {% trans "Email: " %} {{ representative.email }} &mdash;
-    <a href="{% url write-representative representative.id %}">Rašyti laišką</a>
+    <a href="{% url write-representative representative.slug %}">Rašyti laišką</a>
   </p>
   {% endif %}
 
