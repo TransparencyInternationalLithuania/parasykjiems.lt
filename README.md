@@ -22,8 +22,9 @@ Export data from production and put the CSV files into the 'data'
 folder, then run:
 
     python manage.py importdata
-    python manage.py tidy_locations
+    python manage.py tidy_elderates
     python manage.py update_locations
+    python manage.py generate_slugs
     python manage.py rebuild_index
 
 To launch the development server on localhost:8000, execute
