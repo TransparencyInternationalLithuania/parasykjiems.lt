@@ -37,21 +37,24 @@ To launch the development server on localhost:8000, execute
 There is a 'process_message' command, which takes an email message from
 stdin and processes it as if it was a response to an enquiry.
 
-Our system is tested with Postfix, but other mail systems which can
-pipe messages to other processes could theoretically be used. To setup
-Postfix to deliver messages to parasykjiems, main.cf should contain
+To deliver mail to our system with Postfix and Maildrop, create an
+alias which delivers all messages with parts like reply+123 to some
+user, for example parasykjiems. Add
 
-    transport_maps = regexp:/etc/postfix/transport
+    reply: parasykjiems
 
-/etc/postfix/transport should contain
+to /etc/postfix/aliases, run newaliases and set recipient_delimiter to
++ in /etc/postfix/main.cf. Then in the parasykjiems user's home
+directory create a .forward file which contains
 
-    /^parasykjiems+.*@/ parasykjiems:
+    "|/usr/bin/maildrop"
 
-And master.cf should contain something like
+Then copy the mailfilter.example file from the repository to
+~/.mailfilter and edit it in accordance to your configuration. The
+file should be chmodded to 600. Specifically, set the PARASYKJIEMS
+variable to the repository path.
 
-    parasykjiems unix - n n - - pipe
-      user=parasykjiems:parasykjiems
-      directory=/home/parasykjiems/parasykjiems
-      argv=../bin/python manage.py process_message
+Should a message's delivery fail, it will be put into the
+reply_fail.mbox file.
 
-Adjust directories and user names in accordance to your system.
+Some other aliases that should be defined are 'abuse' and 'feedback'.

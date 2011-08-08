@@ -19,10 +19,10 @@ SERVER_EMAIL = 'parasykjiems@localhost'
 DEBUG_EMAIL_RECIPIENT = 'parasykjiems@localhost'
 
 # Should contain {reply_hash} somewhere.
-ENQUIRY_EMAIL_FORMAT = 'parasykjiems+{reply_hash}@localhost'
+ENQUIRY_EMAIL_FORMAT = 'reply+{reply_hash}@localhost'
 
 # This email receives user feedback messages.
-FEEDBACK_EMAIL = 'parasykjiems@localhost'
+FEEDBACK_EMAIL = 'feedback@localhost'
 
 # Used for absolute URLs. Shouldn't include trailing slash, but should
 # include URL scheme.

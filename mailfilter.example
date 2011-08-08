@@ -1,0 +1,11 @@
+logfile mail.log
+
+PARASYKJIEMS=$HOME/parasykjiems
+
+if (/^To:.*reply\+/)
+{
+   exception {
+       to "| ( cd $PARASYKJIEMS && ../bin/python manage.py process_message )"
+   }
+   to "$PARASYKJIEMS/reply_fail.mbox"
+}
