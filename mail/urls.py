@@ -1,9 +1,9 @@
 from django.conf.urls.defaults import patterns, url
 
 urlpatterns = patterns('mail.views',
-    url(r'^write/representative/(?P<id>\d+)$', 'write_representative',
+    url(r'^write/representative/(?P<slug>[\w-]+)$', 'write_representative',
         name='write-representative'),
-    url(r'^write/institution/(?P<id>\d+)$', 'write_institution',
+    url(r'^write/institution/(?P<slug>[\w-]+)$', 'write_institution',
         name='write-institution'),
     url(r'^write/confirm$', 'write_confirm'),
 

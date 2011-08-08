@@ -8,13 +8,13 @@ from parasykjiems.mail.models import Enquiry, Response
 import parasykjiems.mail.mail as mail
 
 
-def write_representative(request, id):
-    rep = get_object_or_404(Representative, id=id)
+def write_representative(request, slug):
+    rep = get_object_or_404(Representative, slug=slug)
     return write(request, rep)
 
 
-def write_institution(request, id):
-    inst = get_object_or_404(Institution, id=id)
+def write_institution(request, slug):
+    inst = get_object_or_404(Institution, slug=slug)
     return write(request, inst)
 
 
