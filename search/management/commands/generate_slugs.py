@@ -3,6 +3,7 @@ from progressbar import ProgressBar, Bar, ETA
 
 from parasykjiems.slug import generate_slug
 from search.models import Institution, Representative, Location
+from mail.models import Enquiry
 
 
 def generate_slugs(query, part_getter):
@@ -36,3 +37,6 @@ class Command(BaseCommand):
                                     loc.city,
                                     loc.elderate,
                                     loc.municipality])
+
+        generate_slugs(Enquiry.objects.filter(is_open=True),
+                       lambda e: [e.subject])
