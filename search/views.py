@@ -10,14 +10,14 @@ from search import house_numbers
 
 _RESULT_LIMIT = 10
 
+
 def search(request):
-    request.session['breadcrumb_search'] = request.path
+    request.session['breadcrumb_search'] = request.get_full_path()
     if 'q' in request.GET and request.GET['q'] != '':
         q = request.GET['q']
         all_results = SearchQuerySet().auto_query(q)
         more_results = all_results.count() > _RESULT_LIMIT
         results = all_results[:_RESULT_LIMIT]
-        request.session['breadcrumb_search'] += u'?q=' + q
     else:
         q = ''
         results = []
@@ -34,7 +34,7 @@ def representative(request, slug):
     rep = get_object_or_404(Representative, slug=slug)
     if not rep.kind.active:
         raise Http404()
-    request.session['breadcrumb_choose'] = request.path
+    request.session['breadcrumb_choose'] = request.get_full_path()
     return render(request, 'views/representative.html', {
         'representative': rep,
     })
@@ -44,7 +44,7 @@ def institution(request, slug):
     inst = get_object_or_404(Institution, slug=slug)
     if not inst.kind.active:
         raise Http404()
-    request.session['breadcrumb_choose'] = request.path
+    request.session['breadcrumb_choose'] = request.get_full_path()
     return render(request, 'views/institution.html', {
         'institution': inst,
     })
@@ -70,7 +70,7 @@ def location(request, slug, house_number=None):
                     for t in territories
                     if t.institution.kind.active]
     institutions.sort(key=lambda i: i.kind.ordinal)
-    request.session['breadcrumb_choose'] = request.path
+    request.session['breadcrumb_choose'] = request.get_full_path()
     return render(request, 'views/location.html', {
         'institutions': institutions,
     })
@@ -85,7 +85,7 @@ def location_ask(request, slug):
                                           form.cleaned_data['house_number']]))
     else:
         form = HouseNumberForm()
-        request.session['breadcrumb_choose'] = request.path
+        request.session['breadcrumb_choose'] = request.get_full_path()
 
     return render(request, 'views/location_ask.html', {
         'form': form,

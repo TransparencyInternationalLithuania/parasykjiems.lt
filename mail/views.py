@@ -35,7 +35,7 @@ def write(request, recipient):
     else:
         form = WriteLetterForm()
 
-    request.session['breadcrumb_write'] = request.path
+    request.session['breadcrumb_write'] = request.get_full_path()
     return render(request, 'views/write.html', {
         'recipient': recipient,
         'form': form,
@@ -72,7 +72,7 @@ def letter(request, slug):
 
     responses = Response.objects.filter(parent=enquiry)
 
-    request.session['breadcrumb_letter'] = request.path
+    request.session['breadcrumb_letter'] = request.get_full_path()
     return render(request, 'views/letter.html', {
         'enquiry': enquiry,
         'responses': responses,
@@ -96,7 +96,7 @@ def letters(request):
     page = pages.page(page_num)
     letters = page.object_list
 
-    request.session['breadcrumb_letters'] = request.path
+    request.session['breadcrumb_letters'] = request.get_full_path()
     return render(request, 'views/letters.html', {
         'page': page,
         'letters': letters,
