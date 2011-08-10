@@ -1,5 +1,5 @@
 {% autoescape off %}Į jūsų laišką „{{ enquiry.subject }}“ buvo atsakyta.
-{% if enquiry.public %}
+{% if enquiry.is_open %}
 Laišką ir atsakymą galite peržiūrėti adresu
 {{ site_address }}{{ enquiry.get_absolute_url }}
 {% endif %}
