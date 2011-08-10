@@ -266,6 +266,11 @@ h1, h2, h3, h4 {
     margin-left: 1em;
 }
 
+.institution img {
+    float: left;
+    margin: 8px;
+}
+
 .subtitle {
     color: #555;
     font-size: 12pt;
