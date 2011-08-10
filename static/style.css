@@ -233,8 +233,12 @@ h1, h2, h3, h4 {
     color: #444;
 }
 
+h1 {
+    margin-bottom: 1em;
+}
+
 .institution {
-    margin-bottom: 5em;
+    margin-bottom: 3em;
 }
 
 .institution h2 {
@@ -271,6 +275,18 @@ h1, h2, h3, h4 {
     margin: 8px;
 }
 
+.institution .letters {
+    border: 1px solid #eee;
+    border-radius: 3px;
+    background: #fafafa;
+}
+
+.representative .letters {
+    border: 1px solid #eee;
+    border-radius: 3px;
+    background: #fafafa;
+}
+
 .subtitle {
     color: #555;
     font-size: 12pt;
@@ -283,13 +299,6 @@ table {
 
 tr {
     margin: 0;
-}
-
-.letters th {
-    background: #eee;
-    padding: 12px;
-    margin: 0;
-    border:
 }
 
 td {
@@ -334,7 +343,8 @@ form th {
 }
 
 .letters li {
-    padding-bottom: 1em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
     margin: 0 1em 1em 1em;
 }
 
@@ -373,3 +383,4 @@ form th {
 .paging a:hover {
     padding: 0.5em;
 }
+
