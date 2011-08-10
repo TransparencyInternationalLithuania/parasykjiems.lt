@@ -27,10 +27,8 @@
   <h3>{% trans "Representatives" %}</h3>
   <ul>
     {% for representative in institution.representatives %}
-    <table><tr>
-        <td><img src="/static/img/icons/representative.png"></td>
-        <td>{% include "items/representative.html" %}</td>
-    </tr></table>
+    <img src="/static/img/icons/representative.png"></td>
+    {% include "items/representative.html" %}
     {% endfor %}
   </ul>
   {% endif %}
