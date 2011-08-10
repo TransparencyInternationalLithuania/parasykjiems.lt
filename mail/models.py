@@ -15,7 +15,8 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 import search.models
-import utils
+from parasykjiems.slug import SLUG_LEN
+from parasykjiems.mail import utils
 
 
 _NAME_LEN = 200
@@ -26,6 +27,10 @@ class Enquiry(models.Model):
     # a sender can't reply to himself.
     confirm_hash = models.IntegerField(db_index=True, unique=True)
     reply_hash = models.IntegerField(db_index=True, unique=True)
+
+    slug = models.CharField(max_length=SLUG_LEN,
+                            blank=True,
+                            db_index=True)
 
     # These link to the institution or representative that this
     # enquiry was sent to. Exactly one of them should be non-null.
