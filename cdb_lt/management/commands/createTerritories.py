@@ -53,7 +53,7 @@ class Command(BaseCommand):
 
         # create addresses for civilParish
         fileNames = [f[1] for f in ltGeoDataSources_Institution.civilParishAddresses]
-        importInstitutionTerritoryYielder(addressYielder=civilParishStreetReader(csvFileNames=fileNames, institutionNameGetter=makeCivilParishInstitutionName, cityNameGetter = cityNameGetterGenitive), institutionCode = "civpar")
+        importInstitutionTerritoryYielder(addressYielder=civilParishStreetReader(csvFileNames=fileNames, institutionNameGetter=makeCivilParishInstitutionName, cityNameGetter = cityNameGetterGenitive), institutionCode = InstitutionCivilparishMembers)
 
 
         importInstitutionTerritoryYielder(addressYielder=civilParishVilniusStreetReader(), institutionCode = InstitutionCivilparishMembers, **caches)
