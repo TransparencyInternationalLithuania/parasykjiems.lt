@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% load nobreaks %}
 
 {% block menu %}
 {% include "menu.html" with active="letters" %}
@@ -12,23 +11,6 @@
 
 {% block content %}
 
-<table class="letters">
-  <tr>
-    <th>Siuntėjas</th>
-    <th>Gavėjas</th>
-    <th>Tema</th>
-    <th>Siuntimo data</th>
-    <th>Atsakyta</th>
-  </tr>
-  {% for letter in letters %}
-  <tr>
-    <td>{{ letter.sender_name|nobreaks }}</td>
-    <td>{{ letter.recipient.kind }} {{ letter.recipient.name|nobreaks }}</td>
-    <td><a href="{{ letter.get_absolute_url }}">{{ letter.subject }}</a></td>
-    <td>{{ letter.sent_at.date|date:'Y-m-d' }}</td>
-    <td>{{ letter.has_answer|yesno|title }}</td>
-  </tr>
-  {% endfor %}
-</table>
+{% include "items/letters.html" with letters=letters %}
 
 {% endblock %}

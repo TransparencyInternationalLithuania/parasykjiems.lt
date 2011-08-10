@@ -19,6 +19,10 @@
   <p>{% trans "Address: " %} {{ institution.address }}</p>
   {% endif %}
 
+  {% if institution.enquiry_set.exists %}
+  {% include "items/letters.html" with letters=institution.enquiry_set.all %}
+  {% endif %}
+
   {% if institution.representatives %}
   <h3>{% trans "Representatives" %}</h3>
   <ul>

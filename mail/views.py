@@ -69,16 +69,12 @@ def letter(request, id):
     if not enquiry.is_open or not enquiry.is_sent:
         raise Http404()
 
-    maybe_response = Response.objects.filter(parent=enquiry)
-    if maybe_response.exists():
-        response = maybe_response.get()
-    else:
-        response = None
+    responses = Response.objects.filter(parent=enquiry)
 
     request.session['breadcrumb_letter'] = request.path
     return render(request, 'views/letter.html', {
         'enquiry': enquiry,
-        'response': response,
+        'responses': responses,
     })
 
 
