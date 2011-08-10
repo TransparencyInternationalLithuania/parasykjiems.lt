@@ -62,6 +62,10 @@ def confirm_enquiry(enquiry):
     """Sends the given enquiry to the representative.
     """
 
+    generate_slug(enquiry,
+                  Enquiry.objects.filter(is_open=True, is_sent=True),
+                  lambda e: [e.subject])
+
     if settings.REDIRECT_ENQUIRIES:
         recipients = [u'{} <{}>'.format(enquiry.recipient.name,
                                         settings.REDIRECT_ENQUIRIES_TO)]
@@ -95,10 +99,6 @@ def confirm_enquiry(enquiry):
 
     enquiry.is_sent = True
     enquiry.sent_at = datetime.datetime.now()
-
-    generate_slug(enquiry,
-                  Enquiry.objects.filter(is_open=True, is_sent=True),
-                  lambda e: [e.subject])
 
     enquiry.save()
 
