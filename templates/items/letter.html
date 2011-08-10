@@ -17,10 +17,12 @@
       <td>{{ letter.subject }}</td>
     </tr>
 
+    {% if letter.date %}
     <tr>
       <th>{% trans "Date:" %}</th>
       <td>{{ letter.date|date:'Y-m-d' }}</td>
     </tr>
+    {% endif %}
   </table>
 
   <div class="body">
