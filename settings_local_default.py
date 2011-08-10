@@ -4,9 +4,12 @@ ADMINS = (
     ('Local', 'parasykjiems@localhost'),
 )
 
-
-# MANAGERS receive all enquiries when DEBUG is True
 MANAGERS = ADMINS
+
+
+# Redirect all enquiries to this address. Useful for testing.
+REDIRECT_ENQUIRIES = True
+REDIRECT_ENQUIRIES_EMAIL = 'representative@localhost'
 
 
 # Print emails to console.

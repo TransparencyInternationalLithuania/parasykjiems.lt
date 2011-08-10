@@ -60,12 +60,12 @@ def confirm_enquiry(enquiry):
     """Sends the given enquiry to the representative.
     """
 
-    if settings.DEBUG:
-        recipients = [u'{0[0]} <{0[1]}>'.format(manager)
-                      for manager in settings.MANAGERS]
+    if settings.REDIRECT_ENQUIRIES:
+        recipients = [u'{} <{}>'.format(enquiry.recipient.name,
+                                        settings.REDIRECT_ENQUIRIES_TO)]
     else:
-        recipient = enquiry.institution or enquiry.representative
-        recipients = [u'{} <{}>'.format(recipient.name, recipient.email)]
+        recipients = [u'{} <{}>'.format(enquiry.recipient.name,
+                                        enquiry.recipient.email)]
 
     reply_to = settings.ENQUIRY_EMAIL_FORMAT.format(
         reply_hash=enquiry.reply_hash)
