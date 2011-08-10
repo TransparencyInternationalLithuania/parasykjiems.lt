@@ -95,6 +95,10 @@ class Enquiry(models.Model):
         return u'{} {}'.format(self.recipient.kind.name,
                                self.recipient.name)
 
+    @property
+    def date(self):
+        return self.sent_at
+
     @models.permalink
     def get_absolute_url(self):
         return ('letter', (), {'id': self.id})
@@ -149,7 +153,7 @@ class Response(models.Model):
         return self.message.get_payload(decode=True)
 
     @property
-    def sent_at(self):
+    def date(self):
         return datetime.datetime.fromtimestamp(
             time.mktime(
                 email.utils.parsedate(

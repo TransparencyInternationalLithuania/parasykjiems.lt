@@ -9,7 +9,7 @@ Atsakymas:
 Siuntėjas: {{ response.sender_name }}
 Gavėjas: {{ response.recipient_name }}
 Tema: {{ response.subject }}
-Siuntimo data: {{ reponse.sent_at.date|date:'Y-m-d' }}
+Siuntimo data: {{ reponse.date|date:'Y-m-d' }}
 
 {{ response.body }}
 {% endautoescape %}
