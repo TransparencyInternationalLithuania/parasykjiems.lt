@@ -2,7 +2,10 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from parasykjiems.slug import SLUG_LEN
 
+
 _NAME_LEN = 200
+
+RECENT_LETTERS = 3
 
 
 class InstitutionKind(models.Model):
@@ -41,6 +44,13 @@ class Institution(models.Model):
         if self.slug == '':
             raise Exception('Tried to get address of object missing a slug.')
         return ('institution', [self.slug])
+
+    @property
+    def recent_letters(self):
+        return (self.enquiry_set
+                .filter(is_open=True, is_sent=True)
+                .order_by('-sent_at')
+                [:RECENT_LETTERS])
 
 
 class RepresentativeKind(models.Model):
@@ -83,6 +93,13 @@ class Representative(models.Model):
         if self.slug == '':
             raise Exception('Tried to get address of object missing a slug.')
         return ('representative', [self.slug])
+
+    @property
+    def recent_letters(self):
+        return (self.enquiry_set
+                .filter(is_open=True, is_sent=True)
+                .order_by('-sent_at')
+                [:RECENT_LETTERS])
 
 
 class Location(models.Model):
