@@ -1,0 +1,23 @@
+{% load i18n %}
+{% load nobreaks %}
+
+<table class="letters">
+  <tr>
+    <th>{% trans "Sender" %}</th>
+    <th>{% trans "Recipient" %}</th>
+    <th>{% trans "Subject" %}</th>
+    <th>{% trans "Sent at" %}</th>
+    <th>{% trans "Answered" %}</th>
+  </tr>
+  {% for letter in letters %}
+  {% if letter.is_sent %}
+  <tr>
+    <td>{{ letter.sender_name|nobreaks }}</td>
+    <td>{{ letter.recipient.kind }} {{ letter.recipient.name|nobreaks }}</td>
+    <td><a href="{{ letter.get_absolute_url }}">{{ letter.subject }}</a></td>
+    <td>{{ letter.sent_at.date|date:'Y-m-d' }}</td>
+    <td>{{ letter.has_answer|yesno|title }}</td>
+  </tr>
+  {% endif %}
+  {% endfor %}
+</table>
