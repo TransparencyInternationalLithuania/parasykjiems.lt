@@ -1,0 +1,12 @@
+[
+  {
+    "pk": 1,
+    "model": "territories.CountryAddresses",
+    "fields": {
+      "city": "Miroslavas",
+      "city_genitive": "Miroslavo kaimas",
+      "municipality": "Alytaus rajono savivaldybė",
+      "street": ""
+    }
+  }
+]

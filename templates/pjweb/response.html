@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+
+<div id="head-message">
+<p id="header-font">{% trans "You are writing an answer to " %} {{ mail.sender_name }}</p>
+</div>
+
+      {% for line in msg_lst %}
+      <p id="message">{{ line }}</p>
+      {% endfor %}
+
+<br>
+<form action="/response/{{ mail.id }}/{{ response_no }}/" method="post">
+<table id="letter">
+  <tr>
+    <td>
+        {{ form.message }}
+        {{ form.message.errors }}
+    </td>
+  </tr>
+  <tr>
+    <td style="text-align: center; vertical-align: middle;">
+        <br>
+        <button><span>{% trans "Send" %}</span></button><br>
+        <br>
+    </td>
+  </tr>
+</table>
+</form>
+
+{% endblock %}
+

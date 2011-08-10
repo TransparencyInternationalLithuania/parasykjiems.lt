@@ -1,0 +1,35 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <title>{% block title %}ParašykJiems{% endblock %}</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body>
+{% include 'pjweb/headers/change_lang.html' %}
+    <div id="head">
+      <div class="cont">
+        <p id="lang">
+
+        <p id="logo">
+          <a href="/"><img src="/static/img/logo.png" width="359" height="50"
+              alt="{% trans "ParašykJiems - Fast method to find representatives and contact them." %}"></a>
+
+        <p id="nav">
+          <a href="/public/" id="nav-archive"><img src="/static/img/info.png" align="absmiddle">{% trans "List of all public mails" %}</a>
+          <a href="/about/" id="nav-about">{% trans "About project" %}</a>
+
+      </div>
+    </div>
+<div id="content">
+  <div id="sendok">
+    <p id="sendok-large">Error 500: internal server error.</p>
+    <p id="sendok-large">{% trans "Error was sent to developers." %}</p>
+  </div>
+</div>
+
+</body>
+</html>
+
