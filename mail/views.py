@@ -52,20 +52,20 @@ def confirm(request, confirm_hash):
 
     if request.method == 'POST':
         mail.confirm_enquiry(enquiry)
-        return redirect(reverse(sent, kwargs={'id': enquiry.id}))
+        return redirect(reverse(sent, kwargs={'slug': enquiry.slug}))
     else:
         return render(request, 'views/confirm.html', {
             'enquiry': enquiry,
         })
 
 
-def sent(request, id):
-    enquiry = get_object_or_404(Enquiry, id=id)
+def sent(request, slug):
+    enquiry = get_object_or_404(Enquiry, slug=slug)
     return render(request, 'views/sent.html', {'enquiry': enquiry})
 
 
-def letter(request, id):
-    enquiry = get_object_or_404(Enquiry, id=id)
+def letter(request, slug):
+    enquiry = get_object_or_404(Enquiry, slug=slug)
     if not enquiry.is_open or not enquiry.is_sent:
         raise Http404()
 

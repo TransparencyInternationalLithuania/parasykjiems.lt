@@ -106,7 +106,7 @@ class Enquiry(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('letter', (), {'id': self.id})
+        return ('letter', (), {'slug': self.slug})
 
     def __unicode__(self):
         if self.is_sent:

@@ -9,6 +9,7 @@ from django.utils.translation import ugettext as _
 import settings
 from parasykjiems.mail.decode_header_unicode import decode_header_unicode
 from parasykjiems.mail.models import Enquiry, Response
+from parasykjiems.slug import generate_slug
 from parasykjiems.search.models import Representative
 
 import logging
@@ -34,6 +35,7 @@ def submit_enquiry(sender_name,
         is_open=is_open,
         parent=parent,
     )
+
     if isinstance(recipient, Representative):
         enquiry.representative = recipient
     else:
@@ -93,6 +95,11 @@ def confirm_enquiry(enquiry):
 
     enquiry.is_sent = True
     enquiry.sent_at = datetime.datetime.now()
+
+    generate_slug(enquiry,
+                  Enquiry.objects.filter(is_open=True, is_sent=True),
+                  lambda e: [e.subject])
+
     enquiry.save()
 
     msg = message.message()

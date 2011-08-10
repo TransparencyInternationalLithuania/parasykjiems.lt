@@ -38,5 +38,5 @@ class Command(BaseCommand):
                                     loc.elderate,
                                     loc.municipality])
 
-        generate_slugs(Enquiry.objects.filter(is_open=True),
+        generate_slugs(Enquiry.objects.filter(is_open=True, is_sent=True),
                        lambda e: [e.subject])
