@@ -161,5 +161,16 @@ def process_incoming(message):
                        .format(response.id))
     else:
         response.parent = parent
+        send_mail(
+            from_email=settings.SERVER_EMAIL,
+            recipient_list=[u'{} <{}>'.format(parent.sender_name,
+                                              parent.sender_email)],
+            subject=_('Your enquiry has been responded to'),
+            message=render_to_string('mail/responded.txt', {
+                'site_address': settings.SITE_ADDRESS,
+                'response': response,
+                'enquiry': parent,
+            })
+        )
 
     response.save()

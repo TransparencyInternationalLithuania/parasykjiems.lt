@@ -15,7 +15,13 @@
     <tr>
       <th>{% trans "Subject:" %}</th>
       <td>{{ letter.subject }}</td>
-  </table>
+    </tr>
+
+    <tr>
+      <th>{% trans "Sent at:" %}</th>
+      <td>{{ letter.sent_at.date|date:'Y-m-d' }}</td>
+    </tr>
+</table>
 
   <div class="body">
     {{ letter.body|linebreaks }}
