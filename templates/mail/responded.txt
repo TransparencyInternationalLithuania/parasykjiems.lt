@@ -1,0 +1,15 @@
+{% autoescape off %}Į jūsų laišką „{{ enquiry.subject }}“ buvo atsakyta.
+{% if enquiry.public %}
+Laišką ir atsakymą galite peržiūrėti adresu
+{{ site_address }}{{ enquiry.get_absolute_url }}
+{% endif %}
+
+Atsakymas:
+
+Siuntėjas: {{ response.sender_name }}
+Gavėjas: {{ response.recipient_name }}
+Tema: {{ response.subject }}
+Siuntimo data: {{ reponse.sent_at.date|date:'Y-m-d' }}
+
+{{ response.body }}
+{% endautoescape %}
