@@ -11,7 +11,10 @@
 
 {% block content %}
 {% include "items/letter.html" with letter=enquiry %}
+
+{% if responses %}
 {% for response in responses %}
-{% include "items/letter.html" with letter=response %}
+{% include "items/letter.html" with letter=response class="response" %}
 {% endfor %}
+{% endif %}
 {% endblock %}

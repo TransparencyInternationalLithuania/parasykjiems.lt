@@ -22,7 +22,7 @@ body {
 }
 
 #main-block {
-    width: 760px;
+    max-width: 840px;
     margin: 2em auto 2em auto;
     padding: 0em 0 1em 0;
     border: solid 1px #888;
@@ -292,13 +292,18 @@ td {
     margin: 0;
 }
 
+.letter {
+    font-size: 10pt;
+    margin-bottom: 3em;
+}
+
 .letter th {
     font-weight: bold;
     text-align: right;
 }
 
 .letter td {
-    padding: 7px;
+    padding: 3px;
 }
 
 form th {
@@ -308,8 +313,12 @@ form th {
 }
 
 .letter .body {
-    background: #eee;
-    border-radius: 15px;
-    margin: 10px 30px 30px 30px;
-    padding: 10px 30px 10px 30px;
+    background: #fafafa;
+    border-radius: 5px;
+    margin: 3px 10px 3px 10px;
+    padding: 3px 10px 3px 10px;
+}
+
+.response .body {
+    background: #efefff;
 }
