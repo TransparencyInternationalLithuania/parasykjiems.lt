@@ -1,22 +1,20 @@
 {% load i18n %}
 {% load nobreaks %}
 
-<table class="letters">
-  <tr>
-    <th>{% trans "Sender" %}</th>
-    <th>{% trans "Recipient" %}</th>
-    <th>{% trans "Subject" %}</th>
-    <th>{% trans "Sent at" %}</th>
-    <th>{% trans "Answered" %}</th>
-  </tr>
+<ul class="letters">
   {% for letter in letters %}
-  {% if letter.is_sent %}
-  <tr>
-    <td>{{ letter.sender_name|nobreaks }}</td>
-    <td>{{ letter.recipient.kind }} {{ letter.recipient.name|nobreaks }}</td>
-    <td><a href="{{ letter.get_absolute_url }}">{{ letter.subject }}</a></td>
-    <td>{{ letter.date|date:'Y-m-d' }}</td>
-    <td>{{ letter.has_answer|yesno|title }}</td>
+  {% if letter.is_open and letter.is_sent %}
+  <li>
+      {% if letter.has_answer %}<div class="answered">{% trans "Answered" %}</div>{% endif %}
+    <p class="subject"><a href="{{ letter.get_absolute_url }}">{{ letter.subject }}</a></p>
+    <p>
+      {% trans "Sender: " %}
+      {{ letter.sender_name|nobreaks }}{% trans ", recipient: " %}
+      <a href="{{ letter.recipient.get_absolute_url }}">
+        {{ letter.recipient.kind }} {{ letter.recipient.name|nobreaks }}</a>.
+      {% trans "Sent at" %}
+      {{ letter.date|date:'Y-m-d' }}.
+    </p>
   </tr>
   {% endif %}
   {% endfor %}

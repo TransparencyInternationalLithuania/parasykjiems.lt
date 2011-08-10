@@ -327,3 +327,32 @@ form th {
 .response .body {
     background: #efefff;
 }
+
+.letters {
+    list-style-type: none;
+    padding: 0;
+}
+
+.letters li {
+    padding-bottom: 1em;
+    margin: 0 1em 1em 1em;
+}
+
+.letters p {
+    font-size: 10pt;
+    margin-top: 0.5em;
+    margin-bottom: 0;
+}
+
+.letters .subject {
+    font-size: 14pt;
+}
+
+.answered {
+    float: right;
+    font-size: 10pt;
+    background: #bfb;
+    color: #363;
+    border-radius: 30px;
+    padding: 7px;
+}
