@@ -26,4 +26,8 @@
   {% if representative.other_contacts %}
   <p>{{ representative.other_contacts }}</p>
   {% endif %}
+
+  {% if representative.enquiry_set.exists %}
+  {% include "items/letters.html" with letters=representative.enquiry_set.all %}
+  {% endif %}
 </div>
