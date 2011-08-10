@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
+from django.core.paginator import Paginator
 from django.http import Http404
 
 from forms import WriteLetterForm
@@ -79,6 +80,24 @@ def letter(request, slug):
 
 
 def letters(request):
-    letters = Enquiry.objects.filter(is_open=True, is_sent=True)
+    MAX_LETTERS = 5
+    all_letters = (Enquiry.objects
+                   .filter(is_open=True, is_sent=True)
+                   .order_by('-sent_at'))
+    pages = Paginator(all_letters, MAX_LETTERS)
+    try:
+        page_num = int(request.GET.get('p', '1'))
+    except ValueError:
+        page_num = 1
+    if page_num < 1:
+        page_num = 1
+    if page_num > pages.num_pages:
+        page_num = pages.num_pages
+    page = pages.page(page_num)
+    letters = page.object_list
+
     request.session['breadcrumb_letters'] = request.path
-    return render(request, 'views/letters.html', {'letters': letters})
+    return render(request, 'views/letters.html', {
+        'page': page,
+        'letters': letters,
+    })
