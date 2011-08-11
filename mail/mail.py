@@ -7,7 +7,7 @@ from django.core.mail import send_mail, EmailMessage
 from django.utils.translation import ugettext as _
 
 import settings
-from parasykjiems.mail.decode_header_unicode import decode_header_unicode
+from parasykjiems.mail.utils import decode_header_unicode
 from parasykjiems.mail.models import Enquiry, Response
 from parasykjiems.slug import generate_slug
 from parasykjiems.search.models import Representative
