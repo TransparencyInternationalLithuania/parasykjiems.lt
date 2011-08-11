@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block menu %}
+{% include "menu.html" %}
+{% endblock %}
+
+{% block breadcrumbs %}
+{% include "breadcrumbs/search.html" %}
+{% include "breadcrumbs/choose.html" %}
+{% include "breadcrumbs/write.html" %}
+{% include "breadcrumbs/confirm.html" with active=1 %}
+{% endblock %}
+
+{% block content %}
+
+{% include "items/letter.html" with letter=enquiry %}
+
+<form method="POST">
+  {% csrf_token %}
+  <input value="{% trans "Send" %}" type="Submit">
+</form>
+
+{% endblock %}

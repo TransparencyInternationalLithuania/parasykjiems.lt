@@ -1,0 +1,211 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-08-04 12:39+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: settings.py:22
+msgid "English"
+msgstr ""
+
+#: settings.py:23
+msgid "Lithuanian"
+msgstr ""
+
+#: mail/forms.py:7 web/forms.py:6
+msgid "Your name"
+msgstr ""
+
+#: mail/forms.py:10 web/forms.py:8
+msgid "Your e-mail address"
+msgstr ""
+
+#: mail/forms.py:16 web/forms.py:10
+msgid "Subject"
+msgstr ""
+
+#: mail/forms.py:19 web/forms.py:12
+msgid "Message"
+msgstr ""
+
+#: mail/forms.py:22
+msgid "Open letter"
+msgstr ""
+
+#: mail/mail.py:45
+msgid "Confirm your letter"
+msgstr ""
+
+#: mail/models.py:106
+msgid "The unprocessed e-mail message."
+msgstr ""
+
+#: search/forms.py:13
+msgid "A house number must be numeric and can contain at most one letter."
+msgstr ""
+
+#: search/forms.py:17
+msgid "House number"
+msgstr ""
+
+#: search/models.py:85 search/models.py:112
+msgid "Name of city, town or village."
+msgstr ""
+
+#: search/models.py:129
+msgid "territories"
+msgstr ""
+
+#: templates/base.html:14
+msgid "ParašykJiems"
+msgstr ""
+
+#: templates/base.html:30
+msgid "Have any notes, suggestions?"
+msgstr ""
+
+#: templates/base.html:30
+msgid "Write to us."
+msgstr ""
+
+#: templates/menu.html:5 templates/views/help.html:9
+msgid "Help"
+msgstr ""
+
+#: templates/menu.html:11 templates/breadcrumbs/letters.html:7
+msgid "Open letters"
+msgstr ""
+
+#: templates/menu.html:17 templates/breadcrumbs/search.html:8
+msgid "Representative search"
+msgstr ""
+
+#: templates/breadcrumbs/choose.html:7
+msgid "Choose a representative"
+msgstr ""
+
+#: templates/breadcrumbs/confirm.html:2
+msgid "Confirm letter"
+msgstr ""
+
+#: templates/breadcrumbs/feedback.html:7
+msgid "Leave feedback"
+msgstr ""
+
+#: templates/breadcrumbs/letter.html:7
+msgid "View letter"
+msgstr ""
+
+#: templates/breadcrumbs/write.html:8
+msgid "Write a letter"
+msgstr ""
+
+#: templates/items/institution.html:9 templates/items/representative.html:17
+msgid "Email: "
+msgstr ""
+
+#: templates/items/institution.html:15 templates/items/representative.html:23
+msgid "Phone number: "
+msgstr ""
+
+#: templates/items/institution.html:19
+msgid "Address: "
+msgstr ""
+
+#: templates/items/institution.html:23
+msgid "Representatives"
+msgstr ""
+
+#: templates/items/letter.html:6
+msgid "From:"
+msgstr ""
+
+#: templates/items/letter.html:11
+msgid "To:"
+msgstr ""
+
+#: templates/items/letter.html:16
+msgid "Subject:"
+msgstr ""
+
+#: templates/items/representative.html:8
+msgid "Institution: "
+msgstr ""
+
+#: templates/views/confirm.html:21 templates/views/feedback.html:15
+msgid "Send"
+msgstr ""
+
+#: templates/views/feedback_thanks.html:6
+msgid "Thank you"
+msgstr ""
+
+#: templates/views/feedback_thanks.html:11
+msgid "Thank you for your feedback."
+msgstr ""
+
+#: templates/views/location_ask.html:16
+msgid "Continue"
+msgstr ""
+
+#: templates/views/search.html:15
+msgid "Search"
+msgstr ""
+
+#: templates/views/search.html:29
+msgid "Nothing found."
+msgstr ""
+
+#: templates/views/search.html:35
+msgid ""
+"\n"
+"  You can search by entering:\n"
+"  <ul>\n"
+"    <li>part of an address,\n"
+"    <li>a full address (including the house number),\n"
+"    <li>a representative's name,\n"
+"    <li>an institution's name.\n"
+"  </ul>\n"
+"  "
+msgstr ""
+
+#: templates/views/sent.html:9
+msgid "Letter sent"
+msgstr ""
+
+#: templates/views/sent.html:14
+msgid "Your letter has been sent successfully."
+msgstr ""
+
+#: templates/views/sent.html:18
+#, python-format
+msgid ""
+"\n"
+"  You can view it <a href=\"%(url)s\">here</a>.\n"
+"  "
+msgstr ""
+
+#: templates/views/write.html:23
+msgid "Submit"
+msgstr ""
+
+#: templates/views/write_confirm.html:17
+msgid ""
+"\n"
+"  Check your email. You should receive a confirmation link from\n"
+"  us. You must confirm your letter before it will be sent.\n"
+"  "
+msgstr ""

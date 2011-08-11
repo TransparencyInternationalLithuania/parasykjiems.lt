@@ -1,0 +1,21 @@
+{% load i18n %}
+{% load nobreaks %}
+
+<ul class="letters">
+  {% for letter in letters %}
+  {% if letter.is_open and letter.is_sent %}
+  <li>
+      {% if letter.has_answer %}<div class="answered">{% trans "Answered" %}</div>{% endif %}
+    <p class="subject"><a href="{{ letter.get_absolute_url }}">{{ letter.subject }}</a></p>
+    <p>
+      {% trans "Sender: " %}
+      {{ letter.sender_name|nobreaks }}{% trans ", recipient: " %}
+      <a href="{{ letter.recipient.get_absolute_url }}">
+        {{ letter.recipient.kind }} {{ letter.recipient.name|nobreaks }}</a>.
+      {% trans "Sent at" %}
+      {{ letter.date|date:'Y-m-d' }}.
+    </p>
+  </tr>
+  {% endif %}
+  {% endfor %}
+</table>

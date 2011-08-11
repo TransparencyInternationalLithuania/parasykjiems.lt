@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block menu %}
+{% include "menu.html" %}
+{% endblock %}
+
+{% block breadcrumbs %}
+{% include "breadcrumbs/letters.html" %}
+{% include "breadcrumbs/letter.html" with active=1 %}
+{% endblock %}
+
+{% block content %}
+{% include "items/letter.html" with letter=enquiry %}
+
+{% if responses %}
+{% for response in responses %}
+{% include "items/letter.html" with letter=response class="response" %}
+{% endfor %}
+{% endif %}
+{% endblock %}

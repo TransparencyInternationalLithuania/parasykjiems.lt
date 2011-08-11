@@ -1,0 +1,34 @@
+{% load i18n %}
+<div class="representative">
+  <h4>{{ representative.name }}</h4>
+  <p class="subtitle">{{ representative.kind.name }}</p>
+
+  {% if not institution %}
+  <p>
+    {% trans "Institution: " %}
+    <a href="{{ representative.institution.get_absolute_url }}">
+      {{ representative.institution.name }}
+    </a>
+  </p>
+  {% endif %}
+
+  {% if representative.email %}
+  <p>
+    {% trans "Email: " %} {{ representative.email }} &mdash;
+    <a href="{% url write-representative representative.slug %}">Rašyti laišką</a>
+  </p>
+  {% endif %}
+
+  {% if representative.phone %}
+  <p>{% trans "Phone number: " %} {{ representative.phone }}</p>
+  {% endif %}
+
+  {% if representative.other_contacts %}
+  <p>{{ representative.other_contacts }}</p>
+  {% endif %}
+
+  {% if representative.recent_letters %}
+  <h3>{% trans "Recent letters" %}</h3>
+  {% include "items/letters.html" with letters=representative.recent_letters %}
+  {% endif %}
+</div>

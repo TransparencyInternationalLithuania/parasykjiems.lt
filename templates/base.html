@@ -1,0 +1,35 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <link rel="icon" type="image/png" href="/static/img/favicon.png" />
+    <link rel="stylesheet" href="/static/style.css" />
+    <title>{% block title %}ParašykJiems{% endblock %}</title>
+    <script type="text/javascript" src="/static/js/jquery.min.js"></script>
+    {% block head %}
+    {% endblock %}
+  </head>
+  <body>
+    <div id="main-block">
+      <div id="header">
+        <a href="/"><img id="logo" src="/static/img/logo.png" alt="{% trans "ParašykJiems" %}"></a>
+        <ul id="menu">
+          {% block menu %}
+          {% include "menu.html" %}
+          {% endblock %}
+        </ul>
+      </div>
+      <ul id="breadcrumbs">
+        {% block breadcrumbs %}
+        {% endblock %}
+      </ul>
+      <div id="content">
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+    <div id="footer">
+      {% trans "Have any notes, suggestions?" %} <a href="{% url feedback %}" >{% trans "Write to us." %}</a>
+    </div>
+  </body>
+</html>

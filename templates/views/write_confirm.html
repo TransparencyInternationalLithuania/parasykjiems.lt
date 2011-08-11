@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block menu %}
+{% include "menu.html" %}
+{% endblock %}
+
+{% block breadcrumbs %}
+{% include "breadcrumbs/search.html" %}
+{% include "breadcrumbs/choose.html" %}
+{% include "breadcrumbs/write.html" %}
+{% include "breadcrumbs/confirm.html" with active=1 %}
+{% endblock %}
+
+{% block content %}
+<p>
+  {% blocktrans %}
+  Check your email. You should receive a confirmation link from
+  us. You must confirm your letter before it will be sent.
+  {% endblocktrans %}
+</p>
+{% endblock %}

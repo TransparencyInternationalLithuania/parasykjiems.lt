@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block menu %}
+{% include "menu.html" %}
+{% endblock %}
+
+{% block breadcrumbs %}
+<li>{% trans "Letter sent" %}</li>
+{% endblock %}
+
+{% block content %}
+
+<p>{% trans "Your letter has been sent successfully." %}</p>
+
+{% if enquiry.is_open %}
+<p>
+  {% blocktrans with url=enquiry.get_absolute_url %}
+  You can view it <a href="{{ url }}">here</a>.
+  {% endblocktrans %}
+</p>
+{% endif %}
+
+{% endblock %}

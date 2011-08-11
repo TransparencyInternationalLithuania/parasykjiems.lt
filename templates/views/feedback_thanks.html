@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block breadcrumbs %}
+{% include "breadcrumbs/feedback.html" %}
+<li>{% trans "Thank you" %}</li>
+{% endblock %}
+
+{% block content %}
+
+{% trans "Thank you for your feedback." %}
+
+{% endblock %}
