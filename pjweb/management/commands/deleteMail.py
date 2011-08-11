@@ -53,7 +53,7 @@ class Command(BaseCommand):
 
         for num in mailNumbers:
             fr = getmail.getHeaderFieldFrom(num)
-            print "email from: %s" %fr
+            print "%s email from: '%s'" % (num, fr)
             if fr.find(fromEmail) >= 0:
                 print "deleting mail %s" % num
                 getmail.markMessageForDeletion(num)
