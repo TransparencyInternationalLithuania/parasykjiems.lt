@@ -59,6 +59,10 @@ class RepresentativeKind(models.Model):
     description = models.TextField(blank=True)
     active = models.BooleanField()
 
+    ordinal = models.IntegerField(
+        help_text=_("This number is used for sorting representatives "
+                    "in the institution view."))
+
     def __unicode__(self):
         return self.name
 
