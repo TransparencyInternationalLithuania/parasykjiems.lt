@@ -96,6 +96,7 @@ def letters(request):
     page = pages.page(page_num)
     letters = page.object_list
 
+    request.session['breadcrumb_search'] = None
     request.session['breadcrumb_letters'] = request.get_full_path()
     return render(request, 'views/letters.html', {
         'page': page,

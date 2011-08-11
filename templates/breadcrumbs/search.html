@@ -1,4 +1,6 @@
 {% load i18n %}
+
+{% if active or request.session.breadcrumb_search %}
 <li>
 
   {% if not active %}
@@ -14,3 +16,4 @@
 </li>
 
 {% include "breadcrumbs/separator.html" with active=active %}
+{% endif %}
