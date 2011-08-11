@@ -73,13 +73,15 @@ class Command(BaseCommand):
             inst = models.InstitutionKind(
                 name=c['institution'],
                 active=c['active'],
-                description=u'')
+                description=u'',
+                ordinal=0)
             inst.save()
             old_name_to_new_inst[c['old_name']] = inst
             rep = models.RepresentativeKind(
                 name=c['representative'],
                 active=c['active'],
-                description=u'')
+                description=u'',
+                ordinal=0)
             rep.save()
             inst_to_rep[inst] = rep
 
