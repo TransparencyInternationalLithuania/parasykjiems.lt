@@ -128,13 +128,20 @@ LOGGING = {
 }
 
 
-if os.path.exists('settings_local.py'):
-    from settings_local import *
-else:
+if not os.path.exists('settings_local.py'):
     from shutil import copy
     print 'Initializing local settings.'
     copy('settings_local_default.py', 'settings_local.py')
 
+from settings_local import *
+
+from settings_local_default import \
+     LOCAL_SETTINGS_VERSION as SETTINGS_VERSION
+if LOCAL_SETTINGS_VERSION < SETTINGS_VERSION:
+    raise Exception(
+        'Local settings are version {} but should be updated to {}.'.format(
+            LOCAL_SETTINGS_VERSION,
+            SETTINGS_VERSION))
 
 TEMPLATE_DEBUG = DEBUG
 
