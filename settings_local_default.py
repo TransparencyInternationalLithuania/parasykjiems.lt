@@ -1,3 +1,5 @@
+LOCAL_SETTINGS_VERSION = 1
+
 DEBUG = True
 
 ADMINS = (
