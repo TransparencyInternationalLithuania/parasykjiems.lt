@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-14 10:55+0300\n"
-"PO-Revision-Date: 2011-08-14 11:01+0300\n"
+"POT-Creation-Date: 2011-08-14 14:25+0300\n"
+"PO-Revision-Date: 2011-08-14 14:27+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -89,14 +89,25 @@ msgid "territories"
 msgstr ""
 
 #: templates/base.html:16
+msgid ""
+"\n"
+"      <strong>Note:</strong> this is the testing version of ParašykJiems.\n"
+"      Letters aren't actually sent to representatives.\n"
+"      "
+msgstr ""
+"\n"
+"<strong>Pastaba:</strong> čia yra ParašykJiems versija, skirta testavimui.\n"
+"Laiškai atstovams nėra siunčiami, nors yra rodomi tinklalapyje."
+
+#: templates/base.html:25
 msgid "ParašykJiems"
 msgstr ""
 
-#: templates/base.html:32
+#: templates/base.html:41
 msgid "Have any notes, suggestions?"
 msgstr "Turite pastabų, pasiūlymų?"
 
-#: templates/base.html:32
+#: templates/base.html:41
 msgid "Write to us."
 msgstr "Parašykite mums."
 
@@ -105,7 +116,6 @@ msgid "Help"
 msgstr "Pagalba"
 
 #: templates/menu.html:11 templates/breadcrumbs/letters.html:7
-#: templates/views/letters.html:28
 msgid "Open letters"
 msgstr "Atviri laiškai"
 
@@ -209,11 +219,11 @@ msgstr "Ačiū"
 msgid "Thank you for your feedback."
 msgstr "Ačiū už Jūsų atsiliepimus."
 
-#: templates/views/letters.html:16
+#: templates/views/letters.html:18
 msgid "Previous page"
 msgstr ""
 
-#: templates/views/letters.html:19
+#: templates/views/letters.html:21
 #, python-format
 msgid ""
 "\n"
@@ -224,7 +234,7 @@ msgstr ""
 "Puslapis %(page)s iš %(pages)s\n"
 "  "
 
-#: templates/views/letters.html:24
+#: templates/views/letters.html:26
 msgid "Next page"
 msgstr "Kitas puslapis"
 
@@ -238,7 +248,9 @@ msgstr "Paieška"
 
 #: templates/views/search.html:34
 msgid "There are more results matching your query. Try narrowing your search."
-msgstr "Yra daugiau rezultatų atitinkančių jūsų užklausą. Pabandykite susiaurinti savo paiešką panaudodami daugiau žodžių."
+msgstr ""
+"Yra daugiau rezultatų atitinkančių jūsų užklausą. Pabandykite susiaurinti "
+"savo paiešką panaudodami daugiau žodžių."
 
 #: templates/views/search.html:38
 msgid "Nothing found."
