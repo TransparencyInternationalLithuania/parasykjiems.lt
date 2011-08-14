@@ -367,20 +367,21 @@ form th {
     padding: 7px;
 }
 
-.paging {
-    float: right;
+.pager {
     font-size: 10pt;
     border-radius: 3px;
     line-height: 300%;
+    margin: 2em 0 0 0;
+    text-align: center;
 }
 
-.paging a {
+.pager a {
     color: #888;
     border-radius: 3px;
     padding: 0.5em;
 }
 
-.paging a:hover {
+.pager a:hover {
+    color: #111;
     padding: 0.5em;
 }
-
