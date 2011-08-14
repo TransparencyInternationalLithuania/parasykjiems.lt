@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-04 12:39+0300\n"
+"POT-Creation-Date: 2011-08-14 10:55+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,11 +45,19 @@ msgstr ""
 msgid "Open letter"
 msgstr ""
 
-#: mail/mail.py:45
+#: mail/mail.py:54
 msgid "Confirm your letter"
 msgstr ""
 
-#: mail/models.py:106
+#: mail/mail.py:108
+msgid "Copy of the letter you sent."
+msgstr ""
+
+#: mail/mail.py:175
+msgid "Your enquiry has been responded to"
+msgstr ""
+
+#: mail/models.py:130
 msgid "The unprocessed e-mail message."
 msgstr ""
 
@@ -61,23 +69,32 @@ msgstr ""
 msgid "House number"
 msgstr ""
 
-#: search/models.py:85 search/models.py:112
+#: search/models.py:17
+msgid "This number is used for sorting institutions in the location view."
+msgstr ""
+
+#: search/models.py:63
+msgid ""
+"This number is used for sorting representatives in the institution view."
+msgstr ""
+
+#: search/models.py:124 search/models.py:166
 msgid "Name of city, town or village."
 msgstr ""
 
-#: search/models.py:129
+#: search/models.py:191
 msgid "territories"
 msgstr ""
 
-#: templates/base.html:14
+#: templates/base.html:16
 msgid "ParašykJiems"
 msgstr ""
 
-#: templates/base.html:30
+#: templates/base.html:32
 msgid "Have any notes, suggestions?"
 msgstr ""
 
-#: templates/base.html:30
+#: templates/base.html:32
 msgid "Write to us."
 msgstr ""
 
@@ -86,15 +103,24 @@ msgid "Help"
 msgstr ""
 
 #: templates/menu.html:11 templates/breadcrumbs/letters.html:7
+#: templates/views/letters.html:28
 msgid "Open letters"
 msgstr ""
 
-#: templates/menu.html:17 templates/breadcrumbs/search.html:8
+#: templates/menu.html:17 templates/breadcrumbs/search.html:10
 msgid "Representative search"
 msgstr ""
 
-#: templates/breadcrumbs/choose.html:7
+#: templates/breadcrumbs/choose.html:10
 msgid "Choose a representative"
+msgstr ""
+
+#: templates/breadcrumbs/choose.html:14
+msgid "Representative"
+msgstr ""
+
+#: templates/breadcrumbs/choose.html:18
+msgid "Institution"
 msgstr ""
 
 #: templates/breadcrumbs/confirm.html:2
@@ -125,7 +151,11 @@ msgstr ""
 msgid "Address: "
 msgstr ""
 
-#: templates/items/institution.html:23
+#: templates/items/institution.html:23 templates/items/representative.html:31
+msgid "Recent letters"
+msgstr ""
+
+#: templates/items/institution.html:28
 msgid "Representatives"
 msgstr ""
 
@@ -137,8 +167,28 @@ msgstr ""
 msgid "To:"
 msgstr ""
 
-#: templates/items/letter.html:16
+#: templates/items/letter.html:24
 msgid "Subject:"
+msgstr ""
+
+#: templates/items/letter.html:30
+msgid "Date:"
+msgstr ""
+
+#: templates/items/letters.html:8
+msgid "Answered"
+msgstr ""
+
+#: templates/items/letters.html:11
+msgid "Sender: "
+msgstr ""
+
+#: templates/items/letters.html:12
+msgid ", recipient: "
+msgstr ""
+
+#: templates/items/letters.html:15
+msgid "Sent at"
 msgstr ""
 
 #: templates/items/representative.html:8
@@ -157,19 +207,39 @@ msgstr ""
 msgid "Thank you for your feedback."
 msgstr ""
 
-#: templates/views/location_ask.html:16
+#: templates/views/letters.html:16
+msgid "Previous page"
+msgstr ""
+
+#: templates/views/letters.html:19
+#, python-format
+msgid ""
+"\n"
+"  Page %(page)s out of %(pages)s\n"
+"  "
+msgstr ""
+
+#: templates/views/letters.html:24
+msgid "Next page"
+msgstr ""
+
+#: templates/views/location_ask.html:20
 msgid "Continue"
 msgstr ""
 
-#: templates/views/search.html:15
+#: templates/views/search.html:19
 msgid "Search"
 msgstr ""
 
-#: templates/views/search.html:29
+#: templates/views/search.html:34
+msgid "There are more results matching your query. Try narrowing your search."
+msgstr ""
+
+#: templates/views/search.html:38
 msgid "Nothing found."
 msgstr ""
 
-#: templates/views/search.html:35
+#: templates/views/search.html:44
 msgid ""
 "\n"
 "  You can search by entering:\n"
