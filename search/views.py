@@ -12,12 +12,15 @@ _RESULT_LIMIT = 10
 
 
 def search(request):
-    request.session['breadcrumb_search'] = request.get_full_path()
     if 'q' in request.GET and request.GET['q'] != '':
         q = request.GET['q']
         all_results = SearchQuerySet().auto_query(q)
         more_results = all_results.count() > _RESULT_LIMIT
         results = all_results[:_RESULT_LIMIT]
+
+        # Only set session variable if actually searching. This way
+        # the front page can be cached.
+        request.session['breadcrumb_search'] = request.get_full_path()
     else:
         q = ''
         results = []
