@@ -11,6 +11,15 @@
     {% endblock %}
   </head>
   <body>
+    {% if SETTINGS.TESTING_VERSION %}
+    <div id="testing-version"><p>
+      {% blocktrans %}
+      <strong>Note:</strong> this is the testing version of ParašykJiems.
+      Letters aren't actually sent to representatives.
+      {% endblocktrans %}
+    </p></div>
+    {% endif %}
+
     <div id="main-block">
       <div id="header">
         <a href="/"><img id="logo" src="/static/img/logo.png" alt="{% trans "ParašykJiems" %}"></a>

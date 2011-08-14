@@ -1,4 +1,5 @@
-LOCAL_SETTINGS_VERSION = 1
+LOCAL_SETTINGS_VERSION = 2
+
 
 DEBUG = True
 
@@ -9,12 +10,14 @@ ADMINS = (
 MANAGERS = ADMINS
 
 
-# Redirect all enquiries to this address. Useful for testing.
-REDIRECT_ENQUIRIES = True
+# Show a warning on top of every page that this is a development version.
+TESTING_VERSION = True
+
+# If this is the testing version, redirect all enquiries to this
+# address.
 REDIRECT_ENQUIRIES_EMAIL = 'representative@localhost'
 
 
-# Print emails to console.
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 SERVER_EMAIL = 'parasykjiems@localhost'

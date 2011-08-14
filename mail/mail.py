@@ -66,7 +66,7 @@ def confirm_enquiry(enquiry):
                   Enquiry.objects.filter(is_open=True, is_sent=True),
                   lambda e: [e.subject])
 
-    if settings.REDIRECT_ENQUIRIES:
+    if settings.TESTING_VERSION:
         recipients = [u'{} <{}>'.format(enquiry.recipient.name,
                                         settings.REDIRECT_ENQUIRIES_TO)]
     else:
