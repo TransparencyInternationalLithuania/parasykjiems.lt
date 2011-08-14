@@ -15,8 +15,8 @@
 
 {% block content %}
 <form name="search">
-  <input name="q" value="{{ search_query }}"></input>
-  <input value="{% trans "Search" %}" type="submit"></input>
+  <input name="q" value="{{ search_query }}">
+  <input value="{% trans "Search" %}" type="submit">
 </form>
 
 {% if search_query %}
@@ -40,17 +40,13 @@
 
 {% else %}
 
-<p>
-  {% blocktrans %}
-  You can search by entering:
-  <ul>
-    <li>part of an address,
-    <li>a full address (including the house number),
-    <li>a representative's name,
-    <li>an institution's name.
-  </ul>
-  {% endblocktrans %}
-</p>
+<p>{% trans "You can search by entering:" %}</p>
+<ul>
+    <li>{% trans "part of an address," %}
+    <li>{% trans "a full address (including the house number)," %}
+    <li>{% trans "a representative's name," %}
+    <li>{% trans "an institution's name." %}
+</ul>
 
 {% endif %}
 
