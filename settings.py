@@ -94,6 +94,7 @@ INSTALLED_APPS = (
 
     'haystack',
     'south',
+    'gunicorn',
 
     'web',
     'search',
