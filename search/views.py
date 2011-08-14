@@ -12,15 +12,16 @@ from search import house_numbers
 
 _RESULT_LIMIT = 10
 
-_NORMALISE_RE = re.compile(r'[^\w\s"-]')
-_FIND_HOUSE_NUMBER_RE = re.compile(r'(.*)\s(\d+\w?)(:?()$|\s(.*))')
+# Remove unnecessary punctuation
+_NORMALISE_RE = re.compile(r'[,.]')
+
+_FIND_HOUSE_NUMBER_RE = re.compile(r'(.*)\s(\d+\w?)(?:/\d+\w?)?(:?()$|\s(.*))')
 
 
 def search(request):
     if 'q' in request.GET and request.GET['q'] != '':
         q = request.GET['q']
 
-        # Remove commas, periods.
         q = _NORMALISE_RE.sub(' ', q)
 
         m = _FIND_HOUSE_NUMBER_RE.match(q)
