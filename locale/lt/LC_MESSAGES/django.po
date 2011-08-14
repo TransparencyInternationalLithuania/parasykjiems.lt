@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-14 14:25+0300\n"
-"PO-Revision-Date: 2011-08-14 14:27+0300\n"
+"POT-Creation-Date: 2011-08-14 14:43+0300\n"
+"PO-Revision-Date: 2011-08-14 14:45+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -221,7 +221,7 @@ msgstr "Ačiū už Jūsų atsiliepimus."
 
 #: templates/views/letters.html:18
 msgid "Previous page"
-msgstr ""
+msgstr "Ankstesnis puslapis"
 
 #: templates/views/letters.html:21
 #, python-format
@@ -256,27 +256,25 @@ msgstr ""
 msgid "Nothing found."
 msgstr "Nieko nerasta."
 
-#: templates/views/search.html:44
-msgid ""
-"\n"
-"  You can search by entering:\n"
-"  <ul>\n"
-"    <li>part of an address,\n"
-"    <li>a full address (including the house number),\n"
-"    <li>a representative's name,\n"
-"    <li>an institution's name.\n"
-"  </ul>\n"
-"  "
-msgstr ""
-"\n"
-"  Galite ieškoti įvesdami:\n"
-"  <ul>\n"
-"    <li>dalį adreso,\n"
-"    <li>pilną adresą,\n"
-"    <li>atstovo vardą,\n"
-"    <li>institucijos pavadinimą.\n"
-"  </ul>\n"
-"  "
+#: templates/views/search.html:43
+msgid "You can search by entering:"
+msgstr "Galite ieškoti įvesdami:"
+
+#: templates/views/search.html:45
+msgid "part of an address,"
+msgstr "adreso dalį"
+
+#: templates/views/search.html:46
+msgid "a full address (including the house number),"
+msgstr "pilną adresą (įskaitant namo numerį)"
+
+#: templates/views/search.html:47
+msgid "a representative's name,"
+msgstr "atstovo vardą,"
+
+#: templates/views/search.html:48
+msgid "an institution's name."
+msgstr "institucijos pavadinimą,"
 
 #: templates/views/sent.html:9
 msgid "Letter sent"
@@ -311,23 +309,3 @@ msgstr ""
 "Pasitikrinkite savo elektroninį paštą. Mes Jums išsiuntėme patvirtinimo "
 "nuorodą. Jūs turite patvirtinti savo laišką prieš tai, kaip jis bus "
 "išsiųstas."
-
-#~ msgid "Find a representative"
-#~ msgstr "Raskite atstovą"
-
-#, fuzzy
-#~ msgid "Telephone number: "
-#~ msgstr "Telefono numeris: "
-
-#~ msgid "Recipient of the letter:"
-#~ msgstr "Laiško gavėjas:"
-
-#, fuzzy
-#~ msgid "Write an open letter"
-#~ msgstr "Atviri laiškai"
-
-#~ msgid "About project"
-#~ msgstr "Apie projektą"
-
-#~ msgid "Location not found"
-#~ msgstr "Vieta nerasta"

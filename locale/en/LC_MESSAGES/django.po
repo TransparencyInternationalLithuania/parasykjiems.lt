@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-14 14:25+0300\n"
+"POT-Creation-Date: 2011-08-14 14:43+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -246,17 +246,24 @@ msgstr ""
 msgid "Nothing found."
 msgstr ""
 
-#: templates/views/search.html:44
-msgid ""
-"\n"
-"  You can search by entering:\n"
-"  <ul>\n"
-"    <li>part of an address,\n"
-"    <li>a full address (including the house number),\n"
-"    <li>a representative's name,\n"
-"    <li>an institution's name.\n"
-"  </ul>\n"
-"  "
+#: templates/views/search.html:43
+msgid "You can search by entering:"
+msgstr ""
+
+#: templates/views/search.html:45
+msgid "part of an address,"
+msgstr ""
+
+#: templates/views/search.html:46
+msgid "a full address (including the house number),"
+msgstr ""
+
+#: templates/views/search.html:47
+msgid "a representative's name,"
+msgstr ""
+
+#: templates/views/search.html:48
+msgid "an institution's name."
 msgstr ""
 
 #: templates/views/sent.html:9
