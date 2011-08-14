@@ -1,3 +1,5 @@
+import re
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.http import Http404
@@ -10,10 +12,24 @@ from search import house_numbers
 
 _RESULT_LIMIT = 10
 
+_NORMALISE_RE = re.compile(r'[^\w\s"-]')
+_FIND_HOUSE_NUMBER_RE = re.compile(r'(.*)\s(\d+\w?)(:?()$|\s(.*))')
+
 
 def search(request):
     if 'q' in request.GET and request.GET['q'] != '':
         q = request.GET['q']
+
+        # Remove commas, periods.
+        q = _NORMALISE_RE.sub(' ', q)
+
+        m = _FIND_HOUSE_NUMBER_RE.match(q)
+        if m:
+            pre, num, post = m.group(1, 2, 3)
+            q = pre + ' ' + post
+        else:
+            num = ''
+
         all_results = SearchQuerySet().auto_query(q)
         more_results = all_results.count() > _RESULT_LIMIT
         results = all_results[:_RESULT_LIMIT]
@@ -23,11 +39,13 @@ def search(request):
         request.session['breadcrumb_search'] = request.get_full_path()
     else:
         q = ''
+        num = ''
         results = []
         more_results = False
 
     return render(request, 'views/search.html', {
-        'search_query': q,
+        'search_query': request.GET.get('q', ''),
+        'house_number': num,
         'results': results,
         'more_results': more_results,
     })
