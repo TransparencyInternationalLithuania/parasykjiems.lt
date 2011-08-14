@@ -37,8 +37,6 @@ class Command(BaseCommand):
             if same_location.exists():
                 filled += 1
                 u = same_location[0]
-                print u'Setting elderate of {} to {}'.format(
-                    t, u.elderate)
                 t.elderate = u.elderate
                 t.save()
         print 'Filled {} elderates of {} territories missing an elderate.' \
