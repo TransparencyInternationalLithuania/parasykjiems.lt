@@ -1,4 +1,4 @@
-LOCAL_SETTINGS_VERSION = 2
+LOCAL_SETTINGS_VERSION = 3
 
 
 DEBUG = True
@@ -21,10 +21,6 @@ REDIRECT_ENQUIRIES_EMAIL = 'representative@localhost'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 SERVER_EMAIL = 'parasykjiems@localhost'
-
-# Send all enquiries and confirmation requests to this address if
-# DEBUG is True.
-DEBUG_EMAIL_RECIPIENT = 'parasykjiems@localhost'
 
 # Should contain {reply_hash} somewhere.
 ENQUIRY_EMAIL_FORMAT = 'reply+{reply_hash}@localhost'
