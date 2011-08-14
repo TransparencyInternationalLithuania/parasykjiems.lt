@@ -120,6 +120,7 @@ class Location(models.Model):
                                 db_index=True)
     city = models.CharField(max_length=_NAME_LEN,
                             db_index=True,
+                            blank=True,
                             help_text=_("Name of city, town or village."))
     street = models.CharField(max_length=_NAME_LEN, blank=True, db_index=True)
 
@@ -161,6 +162,7 @@ class Territory(models.Model):
                                 db_index=True)
     city = models.CharField(max_length=_NAME_LEN,
                             db_index=True,
+                            blank=True,
                             help_text=_("Name of city, town or village."))
     street = models.CharField(max_length=_NAME_LEN, blank=True, db_index=True)
 
