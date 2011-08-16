@@ -1,4 +1,4 @@
-LOCAL_SETTINGS_VERSION = 3
+LOCAL_SETTINGS_VERSION = 4
 
 
 DEBUG = True
@@ -17,16 +17,15 @@ TESTING_VERSION = True
 # address.
 REDIRECT_ENQUIRIES_TO = 'representative@localhost'
 
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
+# Various email addresses used by the system:
 SERVER_EMAIL = 'parasykjiems@localhost'
+FEEDBACK_EMAIL = 'feedback@localhost'
+ABUSE_EMAIL = 'abuse@localhost'
 
 # Should contain {reply_hash} somewhere.
 ENQUIRY_EMAIL_FORMAT = 'reply+{reply_hash}@localhost'
-
-# This email receives user feedback messages.
-FEEDBACK_EMAIL = 'feedback@localhost'
 
 # Used for absolute URLs. Shouldn't include trailing slash, but should
 # include URL scheme.

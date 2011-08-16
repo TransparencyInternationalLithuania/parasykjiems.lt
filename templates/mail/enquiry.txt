@@ -5,7 +5,7 @@
 {{ enquiry.sender_name }}.
 {% if enquiry.is_open %}
 Šis laiškas yra atviras ir jį taip pat galite peržiūrėti adresu:
-{{ site_address }}{{ enquiry.get_absolute_url }}
+{{ SETTINGS.SITE_ADDRESS }}{{ enquiry.get_absolute_url }}
 
 Kai parašysite atsakymą, jį irgi galima bus matyti tuo adresu. Jeigu
 atsakėte į laišką, bet jūsų atsakymas neatsiranda tinklalapyje, tai
