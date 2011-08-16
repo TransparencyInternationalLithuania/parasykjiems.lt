@@ -5,11 +5,12 @@ Laišką ir atsakymą galite peržiūrėti adresu
 {% endif %}
 
 Atsakymas:
-
+------------------------------------------------------------------------
 Siuntėjas: {{ response.sender_name }}
 Gavėjas: {{ response.recipient_name }}
 Tema: {{ response.subject }}
 Siuntimo data: {{ reponse.date|date:'Y-m-d' }}
 
 {{ response.body }}
+------------------------------------------------------------------------
 {% endautoescape %}
