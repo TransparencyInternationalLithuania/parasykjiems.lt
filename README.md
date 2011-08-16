@@ -8,9 +8,11 @@ required Python packages are
  - Django 1.3
  - pysqlite or some other database
  - django-haystack
+ - django-htmlmin
  - South
- - unidecode — used for transliteration in search
- - progressbar — only for importdata and tidy_locations commands
+ - unidecode (used for transliteration in search)
+ - progressbar — for importdata and tidy_locations commands
+ - gunicorn — for launching a production server
 
 After cloning the repository, execute the following commands to
 initialize the installation:
