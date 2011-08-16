@@ -85,6 +85,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
 )
 
+APPEND_SLASH = True
+
 ROOT_URLCONF = 'parasykjiems.urls'
 
 INSTALLED_APPS = (
