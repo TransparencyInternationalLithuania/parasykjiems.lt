@@ -8,7 +8,6 @@ required Python packages are
  - Django 1.3
  - pysqlite or some other database
  - django-haystack
- - django-htmlmin
  - South
  - unidecode (used for transliteration in search)
  - progressbar — for importdata and tidy_locations commands
