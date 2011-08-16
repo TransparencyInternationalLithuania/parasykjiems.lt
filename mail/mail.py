@@ -44,6 +44,7 @@ def submit_enquiry(sender_name,
 
     # Send confirmation email.
     confirm_msg = render_to_string('mail/confirm.txt', {
+        'SETTINGS': settings,
         'enquiry': enquiry,
     })
 
@@ -78,6 +79,7 @@ def confirm_enquiry(enquiry):
         from_email=settings.SERVER_EMAIL,
         subject=u'[ParašykJiems] {}'.format(enquiry.subject),
         body=render_to_string('mail/enquiry.txt', {
+            'SETTINGS': settings,
             'enquiry': enquiry,
         }),
         to=recipients,
@@ -172,6 +174,7 @@ def process_incoming(message):
                                               parent.sender_email)],
             subject=_('Your enquiry has been responded to'),
             message=render_to_string('mail/responded.txt', {
+                'SETTINGS': settings,
                 'response': response,
                 'enquiry': parent,
             })
