@@ -15,7 +15,7 @@ TESTING_VERSION = True
 
 # If this is the testing version, redirect all enquiries to this
 # address.
-REDIRECT_ENQUIRIES_EMAIL = 'representative@localhost'
+REDIRECT_ENQUIRIES_TO = 'representative@localhost'
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
