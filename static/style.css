@@ -221,13 +221,13 @@ form input[type=submit]:hover {
     background: linear-gradient(top, #f9f9f9 0%,#eaeaea 100%); /* W3C */
 }
 
-#results {
+#result-list {
     list-style-type: none;
     margin: 0 0 0 0;
     padding: 0 0 0 0;
 }
 
-#results a {
+#result-list a {
     text-decoration: none;
     display: block;
     padding: 0.5em 0.5em 0.5em 0.5em;
@@ -235,12 +235,12 @@ form input[type=submit]:hover {
     border: solid 1px white;
 }
 
-#results a:hover {
+#result-list a:hover {
     border: solid 1px #eee;
     background: #fafafa;
 }
 
-#results img {
+#result-list img {
     float: left;
     padding: 5px 10px 5px 5px;
 }

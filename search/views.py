@@ -1,6 +1,8 @@
 import simplejson as json
 
 from django.shortcuts import render, redirect, get_object_or_404
+from django.template import RequestContext
+from django.template.loader import render_to_string
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, Http404
 from haystack.query import SearchQuerySet
@@ -18,7 +20,7 @@ logger = logging.getLogger(__name__)
 _RESULT_LIMIT = 10
 
 
-def search(request):
+def _render_results(request):
     if 'q' in request.GET and request.GET['q'] != '':
         q = request.GET['q']
 
@@ -30,48 +32,37 @@ def search(request):
         if result_count == 1:
             result = all_results[0]
             url = result.url
-            logger.debug('%s', result.content_type())
             if num != '' and result.content_type() == 'search.location':
                 url += num + '/'
-            return redirect(url)
 
         more_results = result_count > _RESULT_LIMIT
         results = all_results[:_RESULT_LIMIT]
-
-        # Only set session variable if actually searching. This way
-        # the front page can be cached.
-        request.session['breadcrumb_search'] = request.get_full_path()
     else:
         q = ''
         num = ''
         results = []
         more_results = False
 
-    logger.debug('QUERY: %s', q)
-    logger.debug('NUMBER: %s', num)
-
-    return render(request, 'views/search.html', {
+    context = RequestContext(request, {
         'search_query': request.GET.get('q', ''),
         'house_number': num,
         'results': results,
         'more_results': more_results,
     })
 
+    return render_to_string('results.html', context)
 
-def autocomplete(request):
-    term = request.GET.get('term', u'')
-    limit = int(request.GET.get('limit', 6))
 
-    term, num = utils.remove_house_number(term)
+def search(request):
+    request.session['breadcrumb_search'] = request.get_full_path()
+    return render(request, 'views/search.html', {
+        'search_query': request.GET.get('q', ''),
+        'results_html': _render_results(request),
+    })
 
-    results = SearchQuerySet().autocomplete(
-        auto=utils.normalize_auto(term))
 
-    return HttpResponse(
-        json.dumps([(num + ' ' + r.title.lower()).strip()
-                    for r in set(results[:limit])]),
-        content_type='text/plain',
-    )
+def results(request):
+    return HttpResponse(_render_results(request))
 
 
 def representative(request, slug):
