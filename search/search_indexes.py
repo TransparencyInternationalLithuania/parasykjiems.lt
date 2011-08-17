@@ -15,7 +15,11 @@ def join_text(xs):
 
     Useful for preparing context for indexing.
     """
-    return u'\n'.join(set(xs + [unidecode(x) for x in xs]))
+    return u' '.join(set(xs + [unidecode(x) for x in xs]))
+
+
+def join_auto(xs):
+    return unidecode(u' '.join(xs)).strip()
 
 
 class InstitutionIndex(indexes.SearchIndex):
@@ -31,7 +35,7 @@ class InstitutionIndex(indexes.SearchIndex):
                          lithuanian.nominative_names(obj.name))
 
     def prepare_auto(self, obj):
-        return join_text([obj.name, obj.kind.name])
+        return join_auto([obj.name, obj.kind.name])
 
     def prepare_subtitle(self, obj):
         return obj.kind.name
@@ -58,7 +62,7 @@ class RepresentativeIndex(indexes.SearchIndex):
                          name_variants)
 
     def prepare_auto(self, obj):
-        return join_text([obj.name, obj.kind.name])
+        return join_auto([obj.name, obj.kind.name])
 
     def prepare_subtitle(self, obj):
         return u'{}, {}'.format(obj.kind.name, obj.institution.name)
@@ -81,13 +85,16 @@ class LocationIndex(indexes.SearchIndex):
     def prepare_text(self, obj):
         return join_text(
             [obj.municipality,
+             obj.elderate,
              obj.city] +
             lithuanian.nominative_names(obj.city) +
+            lithuanian.nominative_names(obj.elderate) +
+            lithuanian.nominative_names(obj.municipality) +
             lithuanian.street_abbreviations(obj.street)
         )
 
     def prepare_auto(self, obj):
-        return join_text([obj.municipality, obj.city, obj.street])
+        return join_auto([obj.street, obj.city, obj.elderate])
 
     def prepare_title(self, obj):
         return ', '.join(x
