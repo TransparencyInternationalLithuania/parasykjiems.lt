@@ -118,19 +118,17 @@ LOGGING = {
         },
     },
     'handlers': {
-        'console': {
+        'debug': {
+            'class': 'logging.FileHandler',
             'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-            'formatter': 'verbose'
+            'formatter': 'verbose',
+            'filename': 'logs/debug.log',
         }
     },
-    'loggers': {
-        'django.request': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-            'propagate': True,
-        },
-    }
+    'root': {
+        'level': 'DEBUG',
+        'handlers': ['debug'],
+    },
 }
 
 
