@@ -1,19 +1,15 @@
 {% load i18n %}
 
-{% if active or request.session.breadcrumb_search %}
 <li>
-
   {% if not active %}
-  <a href="{{ request.session.breadcrumb_search|default:'/' }}">
+  <a href="/">
   {% endif %}
 
-    {% trans "Representative search" %}
+  {% trans "Find a representative" %}
 
   {% if not active %}
   </a>
   {% endif %}
-
 </li>
 
 {% include "breadcrumbs/separator.html" with active=active %}
-{% endif %}

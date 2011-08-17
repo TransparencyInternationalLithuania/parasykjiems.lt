@@ -1,27 +1,13 @@
 {% load i18n %}
-
-{% if active or request.session.breadcrumb_choose %}
 <li>
   {% if not active %}
-  <a href="{{ request.session.breadcrumb_choose|default:'#' }}">
+  <a href="{{ choose_url }}">
   {% endif %}
 
-  {% if not request.session.breadcrumb_choose or "location" in request.session.breadcrumb_choose %}
   {% trans "Choose a representative" %}
-  {% endif %}
-
-  {% if "representative" in request.session.breadcrumb_choose %}
-  {% trans "Representative" %}
-  {% endif %}
-
-  {% if "institution" in request.session.breadcrumb_choose %}
-  {% trans "Institution" %}
-  {% endif %}
 
   {% if not active %}
   </a>
   {% endif %}
 </li>
-
 {% include "breadcrumbs/separator.html" with active=active %}
-{% endif %}

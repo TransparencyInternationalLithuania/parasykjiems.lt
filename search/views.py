@@ -1,5 +1,3 @@
-import simplejson as json
-
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template import RequestContext
 from django.template.loader import render_to_string
@@ -54,7 +52,6 @@ def _render_results(request):
 
 
 def search(request):
-    request.session['breadcrumb_search'] = request.get_full_path()
     return render(request, 'views/search.html', {
         'search_query': request.GET.get('q', ''),
         'results_html': _render_results(request),
@@ -69,7 +66,6 @@ def representative(request, slug):
     rep = get_object_or_404(Representative, slug=slug)
     if not rep.kind.active:
         raise Http404()
-    request.session['breadcrumb_choose'] = request.get_full_path()
     return render(request, 'views/representative.html', {
         'representative': rep,
     })
@@ -79,8 +75,8 @@ def institution(request, slug):
     inst = get_object_or_404(Institution, slug=slug)
     if not inst.kind.active:
         raise Http404()
-    request.session['breadcrumb_choose'] = request.get_full_path()
     return render(request, 'views/institution.html', {
+        'choose_query': '?inst={}'.format(inst.id),
         'institution': inst,
     })
 
@@ -105,8 +101,9 @@ def location(request, slug, house_number=None):
                     for t in territories
                     if t.institution.kind.active]
     institutions.sort(key=lambda i: i.kind.ordinal)
-    request.session['breadcrumb_choose'] = request.get_full_path()
+    num_q = '&n={}'.format(house_number) if house_number else ''
     return render(request, 'views/location.html', {
+        'choose_query': '?loc={}{}'.format(loc.id, num_q),
         'institutions': institutions,
     })
 
@@ -120,7 +117,6 @@ def location_ask(request, slug):
                                           form.cleaned_data['house_number']]))
     else:
         form = HouseNumberForm()
-        request.session['breadcrumb_choose'] = request.get_full_path()
 
     return render(request, 'views/location_ask.html', {
         'form': form,
