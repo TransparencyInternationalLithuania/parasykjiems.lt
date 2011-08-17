@@ -3,7 +3,6 @@
 
 {% block head %}
 <script type="text/javascript" src="/static/js/jquery-1.6.2.min.js"></script>
-<script type="text/javascript" src="/static/js/jquery-ui-1.8.15.custom.min.js"></script>
 <script type="text/javascript" src="/static/js/search.js"></script>
 {% endblock %}
 
@@ -18,38 +17,9 @@
 {% block content %}
 <form name="search">
   <input name="q" value="{{ search_query }}">
-  <input value="{% trans "Search" %}" type="submit">
+  <noscript>
+    <input name="submit" value="{% trans "Search" %}" type="submit">
+  </noscript>
 </form>
-
-{% if search_query %}
-
-{% if results %}
-
-<ul id="results">
-  {% for result in results %}
-  <li>
-    {% include "items/result.html" %}
-  </li>
-  {% endfor %}
-</ul>
-{% if more_results %}
-<p>{% trans "There are more results matching your query. Try narrowing your search." %}</p>
-{% endif %}
-
-{% else %}
-<p>{% trans "Nothing found." %}</p>
-{% endif %}
-
-{% else %}
-
-<p>{% trans "You can search by entering:" %}</p>
-<ul>
-    <li>{% trans "part of an address," %}
-    <li>{% trans "a full address (including the house number)," %}
-    <li>{% trans "a representative's name," %}
-    <li>{% trans "an institution's name." %}
-</ul>
-
-{% endif %}
-
+<div id="results">{{ results_html|safe }}</div>
 {% endblock %}
