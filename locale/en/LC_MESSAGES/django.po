@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-14 14:43+0300\n"
+"POT-Creation-Date: 2011-08-17 16:47+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -114,20 +114,40 @@ msgstr ""
 msgid "Open letters"
 msgstr ""
 
-#: templates/menu.html:17 templates/breadcrumbs/search.html:10
+#: templates/menu.html:17
 msgid "Representative search"
 msgstr ""
 
-#: templates/breadcrumbs/choose.html:10
+#: templates/results.html:15
+msgid "There are more results matching your query. Try narrowing your search."
+msgstr ""
+
+#: templates/results.html:20
+msgid "Nothing found."
+msgstr ""
+
+#: templates/results.html:26
+msgid "You can search by entering:"
+msgstr ""
+
+#: templates/results.html:28
+msgid "part of an address,"
+msgstr ""
+
+#: templates/results.html:29
+msgid "a full address (including the house number),"
+msgstr ""
+
+#: templates/results.html:30
+msgid "a representative's name,"
+msgstr ""
+
+#: templates/results.html:31
+msgid "an institution's name."
+msgstr ""
+
+#: templates/breadcrumbs/choose.html:7
 msgid "Choose a representative"
-msgstr ""
-
-#: templates/breadcrumbs/choose.html:14
-msgid "Representative"
-msgstr ""
-
-#: templates/breadcrumbs/choose.html:18
-msgid "Institution"
 msgstr ""
 
 #: templates/breadcrumbs/confirm.html:2
@@ -138,16 +158,24 @@ msgstr ""
 msgid "Leave feedback"
 msgstr ""
 
-#: templates/breadcrumbs/letter.html:7
+#: templates/breadcrumbs/letter.html:2
 msgid "View letter"
 msgstr ""
 
-#: templates/breadcrumbs/write.html:8
+#: templates/breadcrumbs/search.html:8
+msgid "Find a representative"
+msgstr ""
+
+#: templates/breadcrumbs/write.html:2
 msgid "Write a letter"
 msgstr ""
 
 #: templates/items/institution.html:9 templates/items/representative.html:17
 msgid "Email: "
+msgstr ""
+
+#: templates/items/institution.html:10 templates/items/representative.html:18
+msgid "Write letter"
 msgstr ""
 
 #: templates/items/institution.html:15 templates/items/representative.html:23
@@ -234,36 +262,8 @@ msgstr ""
 msgid "Continue"
 msgstr ""
 
-#: templates/views/search.html:19
+#: templates/views/search.html:21
 msgid "Search"
-msgstr ""
-
-#: templates/views/search.html:34
-msgid "There are more results matching your query. Try narrowing your search."
-msgstr ""
-
-#: templates/views/search.html:38
-msgid "Nothing found."
-msgstr ""
-
-#: templates/views/search.html:43
-msgid "You can search by entering:"
-msgstr ""
-
-#: templates/views/search.html:45
-msgid "part of an address,"
-msgstr ""
-
-#: templates/views/search.html:46
-msgid "a full address (including the house number),"
-msgstr ""
-
-#: templates/views/search.html:47
-msgid "a representative's name,"
-msgstr ""
-
-#: templates/views/search.html:48
-msgid "an institution's name."
 msgstr ""
 
 #: templates/views/sent.html:9
