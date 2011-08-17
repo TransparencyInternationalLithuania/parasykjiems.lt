@@ -1,15 +1,14 @@
-import re
 import simplejson as json
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, Http404
 from haystack.query import SearchQuerySet
-from unidecode import unidecode
 
 from search.models import Representative, Institution, Location, Territory
 from search.forms import HouseNumberForm
 from search import house_numbers
+from search import utils
 
 
 import logging
@@ -18,48 +17,25 @@ logger = logging.getLogger(__name__)
 
 _RESULT_LIMIT = 10
 
-_REMOVE_PUNCTUATION_RE = re.compile(ur'[^\w/ ]', flags=re.UNICODE)
-_NORMALISE_SPACES_RE = re.compile(ur'(\s)\s+')
-
-_FIND_HOUSE_NUMBER_RE = re.compile(
-    ur'''
-    (.*\s|)
-    ( \d+\w? ) (?: / \d+\w? )?
-    (\s.*|)
-    $
-    ''',
-    flags=re.UNICODE | re.VERBOSE)
-
-
-def _remove_house_number(q):
-    """Removes house number from search query string.
-
-    Returns duple of new search query string and extracted house
-    number (as a string). If the string doesn't contain a house
-    number, returns '' instead.
-    """
-    q = _REMOVE_PUNCTUATION_RE.sub(u' ', q)
-
-    m = _FIND_HOUSE_NUMBER_RE.match(q)
-    if m:
-        pre, num, post = m.group(1, 2, 3)
-        q = pre + post
-    else:
-        num = u''
-
-    q = _NORMALISE_SPACES_RE.sub(u' ', q)
-
-    return q.strip(), num
-
 
 def search(request):
     if 'q' in request.GET and request.GET['q'] != '':
         q = request.GET['q']
 
-        q, num = _remove_house_number(q)
+        q, num = utils.remove_house_number(q)
 
         all_results = SearchQuerySet().auto_query(q)
-        more_results = all_results.count() > _RESULT_LIMIT
+        result_count = all_results.count()
+
+        if result_count == 1:
+            result = all_results[0]
+            url = result.url
+            logger.debug('%s', result.content_type())
+            if num != '' and result.content_type() == 'search.location':
+                url += num + '/'
+            return redirect(url)
+
+        more_results = result_count > _RESULT_LIMIT
         results = all_results[:_RESULT_LIMIT]
 
         # Only set session variable if actually searching. This way
@@ -86,10 +62,10 @@ def autocomplete(request):
     term = request.GET.get('term', u'')
     limit = int(request.GET.get('limit', 6))
 
-    term, num = _remove_house_number(term)
+    term, num = utils.remove_house_number(term)
 
     results = SearchQuerySet().autocomplete(
-        auto=unidecode(term))
+        auto=utils.normalize_auto(term))
 
     return HttpResponse(
         json.dumps([(num + ' ' + r.title.lower()).strip()
