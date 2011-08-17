@@ -4,7 +4,7 @@ from django.core.paginator import Paginator
 from django.http import Http404
 
 from forms import WriteLetterForm
-from parasykjiems.search.models import Representative, Institution
+from parasykjiems.search.models import Representative, Institution, Location
 from parasykjiems.mail.models import Enquiry, Response
 import parasykjiems.mail.mail as mail
 
@@ -20,6 +20,7 @@ def write_institution(request, slug):
 
 
 def write(request, recipient):
+    choose_url = ''
     if request.method == 'POST':
         form = WriteLetterForm(request.POST)
         if form.is_valid():
@@ -33,11 +34,22 @@ def write(request, recipient):
 
             return redirect(reverse(write_confirm))
     else:
+        if 'inst' in request.GET:
+            choose_url = Institution.objects.get(
+                id=int(request.GET['inst'])).get_absolute_url()
+        elif 'loc' in request.GET:
+            choose_url = Location.objects.get(
+                id=int(request.GET['loc'])).get_absolute_url()
+            if 'n' in request.GET:
+                choose_url += request.GET['n'] + '/'
+        else:
+            choose_url = recipient.get_absolute_url()
+
         form = WriteLetterForm()
 
-    request.session['breadcrumb_write'] = request.get_full_path()
     return render(request, 'views/write.html', {
         'recipient': recipient,
+        'choose_url': choose_url,
         'form': form,
     })
 
@@ -72,8 +84,8 @@ def letter(request, slug):
 
     responses = Response.objects.filter(parent=enquiry)
 
-    request.session['breadcrumb_letter'] = request.get_full_path()
     return render(request, 'views/letter.html', {
+        'page': request.GET.get('p', ''),
         'enquiry': enquiry,
         'responses': responses,
     })
@@ -96,8 +108,6 @@ def letters(request):
     page = pages.page(page_num)
     letters = page.object_list
 
-    request.session['breadcrumb_search'] = None
-    request.session['breadcrumb_letters'] = request.get_full_path()
     return render(request, 'views/letters.html', {
         'page': page,
         'letters': letters,

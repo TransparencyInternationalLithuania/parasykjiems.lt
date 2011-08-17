@@ -1,16 +1,2 @@
 {% load i18n %}
-<li>
-
-  {% if not active %}
-  <a href="{{ request.session.breadcrumb_write|default:'#' }}">
-  {% endif %}
-
-    {% trans "Write a letter" %}
-
-  {% if not active %}
-  </a>
-  {% endif %}
-
-</li>
-
-{% include "breadcrumbs/separator.html" with active=active %}
+<li>{% trans "Write a letter" %}</li>

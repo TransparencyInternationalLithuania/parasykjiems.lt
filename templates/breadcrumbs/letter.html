@@ -1,14 +1,3 @@
 {% load i18n %}
-<li>
-  {% if not active %}
-  <a href="{{ request.session.breadcrumb_letter|default:'#' }}">
-  {% endif %}
-
-    {% trans "View letter" %}
-
-  {% if not active %}
-  </a>
-  {% endif %}
-</li>
-
+<li>{% trans "View letter" %}</li>
 {% include "breadcrumbs/separator.html" with active=active %}
