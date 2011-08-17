@@ -18,18 +18,29 @@ _NORMALISE_RE = re.compile(r'[,.]')
 _FIND_HOUSE_NUMBER_RE = re.compile(r'(.*)\s(\d+\w?)(?:/\d+\w?)?(:?()$|\s(.*))')
 
 
+def _remove_house_number(q):
+    """Removes house number from search query string.
+
+    Returns duple of new search query string and extracted house
+    number (as a string). If the string doesn't contain a house
+    number, returns '' instead.
+    """
+    q = _NORMALISE_RE.sub(' ', q)
+
+    m = _FIND_HOUSE_NUMBER_RE.match(q)
+    if m:
+        pre, num, post = m.group(1, 2, 3)
+        q = pre + ' ' + post
+    else:
+        num = ''
+
+    return q, num
+
 def search(request):
     if 'q' in request.GET and request.GET['q'] != '':
         q = request.GET['q']
 
-        q = _NORMALISE_RE.sub(' ', q)
-
-        m = _FIND_HOUSE_NUMBER_RE.match(q)
-        if m:
-            pre, num, post = m.group(1, 2, 3)
-            q = pre + ' ' + post
-        else:
-            num = ''
+        q, num = _remove_house_number(q)
 
         all_results = SearchQuerySet().auto_query(q)
         more_results = all_results.count() > _RESULT_LIMIT
@@ -56,14 +67,7 @@ def autocomplete(request):
     q = request.GET.get('q', u'')
     limit = int(request.GET.get('limit', 6))
 
-    q = _NORMALISE_RE.sub(' ', q)
-
-    m = _FIND_HOUSE_NUMBER_RE.match(q)
-    if m:
-        pre, num, post = m.group(1, 2, 3)
-        q = pre + ' ' + post
-    else:
-        num = ''
+    q, num = _remove_house_number(q)
 
     results = SearchQuerySet().autocomplete(auto=q)
 
