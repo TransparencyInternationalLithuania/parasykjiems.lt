@@ -1,21 +1,34 @@
 import re
+import simplejson as json
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, Http404
 from haystack.query import SearchQuerySet
+from unidecode import unidecode
 
 from search.models import Representative, Institution, Location, Territory
 from search.forms import HouseNumberForm
 from search import house_numbers
 
 
+import logging
+logger = logging.getLogger(__name__)
+
+
 _RESULT_LIMIT = 10
 
-# Remove unnecessary punctuation
-_NORMALISE_RE = re.compile(r'[,.]')
+_REMOVE_PUNCTUATION_RE = re.compile(ur'[^\w/ ]', flags=re.UNICODE)
+_NORMALISE_SPACES_RE = re.compile(ur'(\s)\s+')
 
-_FIND_HOUSE_NUMBER_RE = re.compile(r'(.*)\s(\d+\w?)(?:/\d+\w?)?(:?()$|\s(.*))')
+_FIND_HOUSE_NUMBER_RE = re.compile(
+    ur'''
+    (.*\s|)
+    ( \d+\w? ) (?: / \d+\w? )?
+    (\s.*|)
+    $
+    ''',
+    flags=re.UNICODE | re.VERBOSE)
 
 
 def _remove_house_number(q):
@@ -25,16 +38,19 @@ def _remove_house_number(q):
     number (as a string). If the string doesn't contain a house
     number, returns '' instead.
     """
-    q = _NORMALISE_RE.sub(' ', q)
+    q = _REMOVE_PUNCTUATION_RE.sub(u' ', q)
 
     m = _FIND_HOUSE_NUMBER_RE.match(q)
     if m:
         pre, num, post = m.group(1, 2, 3)
-        q = pre + ' ' + post
+        q = pre + post
     else:
-        num = ''
+        num = u''
 
-    return q, num
+    q = _NORMALISE_SPACES_RE.sub(u' ', q)
+
+    return q.strip(), num
+
 
 def search(request):
     if 'q' in request.GET and request.GET['q'] != '':
@@ -55,6 +71,9 @@ def search(request):
         results = []
         more_results = False
 
+    logger.debug('QUERY: %s', q)
+    logger.debug('NUMBER: %s', num)
+
     return render(request, 'views/search.html', {
         'search_query': request.GET.get('q', ''),
         'house_number': num,
@@ -64,16 +83,17 @@ def search(request):
 
 
 def autocomplete(request):
-    q = request.GET.get('q', u'')
+    term = request.GET.get('term', u'')
     limit = int(request.GET.get('limit', 6))
 
-    q, num = _remove_house_number(q)
+    term, num = _remove_house_number(term)
 
-    results = SearchQuerySet().autocomplete(auto=q)
+    results = SearchQuerySet().autocomplete(
+        auto=unidecode(term))
 
     return HttpResponse(
-        u'\n'.join(r.auto.lower()
-                   for r in results[:limit]),
+        json.dumps([(num + ' ' + r.title.lower()).strip()
+                    for r in set(results[:limit])]),
         content_type='text/plain',
     )
 
