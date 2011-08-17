@@ -2,6 +2,7 @@ from django.conf.urls.defaults import patterns, url
 
 urlpatterns = patterns('search.views',
     url(r'^$', 'search', name='search'),
+    url(r'^autocomplete/$', 'autocomplete', name='autocomplete'),
 
     url(r'^institution/(?P<slug>[\w-]+)/$', 'institution',
         name='institution'),

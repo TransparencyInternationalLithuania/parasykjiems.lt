@@ -2,7 +2,7 @@ import re
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
-from django.http import Http404
+from django.http import HttpResponse, Http404
 from haystack.query import SearchQuerySet
 
 from search.models import Representative, Institution, Location, Territory
@@ -50,6 +50,28 @@ def search(request):
         'results': results,
         'more_results': more_results,
     })
+
+
+def autocomplete(request):
+    q = request.GET.get('q', u'')
+    limit = int(request.GET.get('limit', 6))
+
+    q = _NORMALISE_RE.sub(' ', q)
+
+    m = _FIND_HOUSE_NUMBER_RE.match(q)
+    if m:
+        pre, num, post = m.group(1, 2, 3)
+        q = pre + ' ' + post
+    else:
+        num = ''
+
+    results = SearchQuerySet().autocomplete(auto=q)
+
+    return HttpResponse(
+        u'\n'.join(r.auto.lower()
+                   for r in results[:limit]),
+        content_type='text/plain',
+    )
 
 
 def representative(request, slug):
