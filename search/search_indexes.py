@@ -6,6 +6,7 @@ from unidecode import unidecode
 
 from search.models import Institution, Representative, Location
 from search import lithuanian
+from search import utils
 
 
 def join_text(xs):
@@ -19,7 +20,7 @@ def join_text(xs):
 
 
 def join_auto(xs):
-    return unidecode(u' '.join(xs)).strip()
+    return utils.normalize_auto(u' '.join(xs)).strip()
 
 
 class InstitutionIndex(indexes.SearchIndex):
