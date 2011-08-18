@@ -62,10 +62,14 @@ def confirm_enquiry(enquiry):
     """Sends the given enquiry to the representative.
     """
 
-    if not enquiry.parent:
-        # We only want to generate slugs for toplevel enquiries.
+    if not enquiry.parent and enquiry.is_open:
+        # We only want to generate slugs for open toplevel enquiries,
+        # so that only they are accessible as threads from the letters
+        # view.
         generate_slug(enquiry,
-                      Enquiry.objects.filter(is_open=True, is_sent=True),
+                      Enquiry.objects.filter(parent=None,
+                                             is_open=True,
+                                             is_sent=True),
                       lambda e: [e.subject])
 
     if settings.TESTING_VERSION:
