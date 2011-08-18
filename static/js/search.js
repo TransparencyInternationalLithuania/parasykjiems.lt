@@ -62,7 +62,7 @@ $(function() {
                   // Enter key pressed. If there is exactly one search
                   // result, follow it.
                   var resultItems = $('#result-list li');
-                  if (resultItems.size() == 1) {
+                  if (resultsTimeout == null && resultItems.size() == 1) {
                       var href = resultItems.children('a').attr('href');
                       window.location.href = href;
                   } else {
