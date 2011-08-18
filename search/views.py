@@ -110,9 +110,10 @@ def location(request, slug, house_number=None):
                     territories.append(rt)
         else:
             return redirect(reverse(location_ask, args=[slug]))
-    institutions = [t.institution
-                    for t in territories
-                    if t.institution.kind.active]
+    institutions = ([t.institution
+                     for t in territories
+                     if t.institution.kind.active]
+                    + list(Institution.objects.filter(name=loc.municipality)))
     institutions.sort(key=lambda i: i.kind.ordinal)
     num_q = '&n={}'.format(house_number) if house_number else ''
     return render(request, 'views/location.html', {
