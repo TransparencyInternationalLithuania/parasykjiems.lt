@@ -6,7 +6,6 @@ from unidecode import unidecode
 
 from search.models import Institution, Representative, Location
 from search import lithuanian
-from search import utils
 
 
 def join_text(xs):
@@ -20,7 +19,7 @@ def join_text(xs):
 
 
 def join_auto(xs):
-    return utils.normalize_auto(u' '.join(xs)).strip()
+    return unidecode(u' '.join(xs)).strip()
 
 
 class InstitutionIndex(indexes.SearchIndex):
@@ -93,15 +92,21 @@ class LocationIndex(indexes.SearchIndex):
     url = indexes.CharField(model_attr='get_absolute_url', indexed=False)
 
     def prepare_text(self, obj):
-        return join_text(
-            [obj.municipality,
-             obj.elderate,
-             obj.city] +
-            lithuanian.nominative_names(obj.city) +
-            lithuanian.nominative_names(obj.elderate) +
-            lithuanian.nominative_names(obj.municipality) +
-            lithuanian.street_abbreviations(obj.street)
-        )
+        items = ([obj.elderate,
+                  obj.city] +
+                 lithuanian.nominative_names(obj.city) +
+                 lithuanian.nominative_names(obj.elderate) +
+                 lithuanian.street_abbreviations(obj.street))
+
+        if obj.street == '':
+            # Only use municipality for searching if street is
+            # empty. This improves search accuracy with the assumption
+            # that there aren't cases of locations with same street
+            # and city names but different municipalities.
+            items += ([obj.municipality] +
+                      lithuanian.nominative_names(obj.municipality))
+
+        return join_text(items)
 
     def prepare_auto(self, obj):
         return join_auto([obj.street, obj.city, obj.elderate])
