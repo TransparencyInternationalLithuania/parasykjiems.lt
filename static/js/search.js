@@ -27,27 +27,55 @@ function fetchResults(terms) {
 var resultsTimeout = null;
 var resultsTerms = '';
 
+function startUpdate(delay, terms) {
+    if (resultsTimeout != null) {
+        clearTimeout(resultsTimeout);
+    }
+    resultsTimeout = setTimeout(
+        function() {
+            fetchResults(terms);
+            clearTimeout(resultsTimeout);
+        },
+        600
+    );
+    $('#results').addClass('updating');
+}
+
 $(function() {
       var q = $(document.search.q);
       q.focus();
       q.css({width: '100%'});
 
-      var results = $('#results');
+      q.keyup(
+          function(e) {
+              // Key pressed, so maybe we should update the
+              // search results.
+              var terms = q.val();
+              if (terms != resultsTerms) {
+                  startUpdate(600, terms);
+              }
+          });
 
-      q.keyup(function() {
-                  var terms = q.val();
-                  if (terms != resultsTerms) {
-                      if (resultsTimeout != null) {
-                          clearTimeout(resultsTimeout);
-                      }
-                      resultsTimeout = setTimeout(
-                          function() {
-                              fetchResults(q.val());
-                              clearTimeout(resultsTimeout);
-                          },
-                          600
-                      );
-                      results.addClass('updating');
+      $('body').keypress(
+          function(e) {
+              if (e.which == 13) {
+                  // Enter key pressed. If there is exactly one search
+                  // result, follow it.
+                  var resultItems = $('#result-list li');
+                  if (resultItems.size() == 1) {
+                      var href = resultItems.children('a').attr('href');
+                      window.location.href = href;
+                  } else {
+                      // Otherwise, start AJAX update immediately to
+                      // imitate submittin the search form.
+                      startUpdate(1, q.val());
                   }
-              });
-  });
+                  return false;
+              } else {
+                  return true;
+              }
+          }
+      );
+
+  }
+ );
