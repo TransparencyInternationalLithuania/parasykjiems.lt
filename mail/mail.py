@@ -62,9 +62,11 @@ def confirm_enquiry(enquiry):
     """Sends the given enquiry to the representative.
     """
 
-    generate_slug(enquiry,
-                  Enquiry.objects.filter(is_open=True, is_sent=True),
-                  lambda e: [e.subject])
+    if not enquiry.parent:
+        # We only want to generate slugs for toplevel enquiries.
+        generate_slug(enquiry,
+                      Enquiry.objects.filter(is_open=True, is_sent=True),
+                      lambda e: [e.subject])
 
     if settings.TESTING_VERSION:
         recipients = [u'{} <{}>'.format(enquiry.recipient.name,

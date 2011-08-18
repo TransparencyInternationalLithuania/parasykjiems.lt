@@ -58,10 +58,11 @@ def write_confirm(request):
     return render(request, 'views/write_confirm.html')
 
 
-def confirm(request, confirm_hash):
-    enquiry = get_object_or_404(Enquiry, confirm_hash=confirm_hash)
-    if enquiry.is_sent:
-        raise Http404()
+def confirm(request, slug, confirm_hash):
+    enquiry = get_object_or_404(Enquiry,
+                                slug=slug,
+                                confirm_hash=confirm_hash,
+                                is_sent=False)
 
     if request.method == 'POST':
         mail.confirm_enquiry(enquiry)
