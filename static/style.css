@@ -401,3 +401,7 @@ form th {
     color: #111;
     padding: 0.5em;
 }
+
+.updating {
+    opacity: 0.5;
+}

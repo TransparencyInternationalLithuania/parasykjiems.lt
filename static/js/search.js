@@ -17,6 +17,9 @@ function fetchResults(terms) {
                        url = '/?q=' + encodeQuery(terms);
                    }
                    history.replaceState(null, '', url);
+                   results.removeClass('updating');
+                   resultsTerms = terms;
+                   resultsTimeout = null;
                }
            });
 }
@@ -29,16 +32,22 @@ $(function() {
       q.focus();
       q.css({width: '100%'});
 
+      var results = $('#results');
+
       q.keyup(function() {
                   var terms = q.val();
                   if (terms != resultsTerms) {
-                      if (resultsTimeout) {
+                      if (resultsTimeout != null) {
                           clearTimeout(resultsTimeout);
                       }
-                      resultsTimeout = setTimeout(function() {
-                                                      fetchResults(q.val());
-                                                      clearTimeout(resultsTimeout);
-                                                  }, 600);
+                      resultsTimeout = setTimeout(
+                          function() {
+                              fetchResults(q.val());
+                              clearTimeout(resultsTimeout);
+                          },
+                          600
+                      );
+                      results.addClass('updating');
                   }
               });
   });
