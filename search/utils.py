@@ -1,7 +1,7 @@
 import re
 from unidecode import unidecode
 
-_REMOVE_PUNCTUATION_RE = re.compile(ur'[^\w/ ]', flags=re.UNICODE)
+_REMOVE_PUNCTUATION_RE = re.compile(ur'[^\w/ -]', flags=re.UNICODE)
 _NORMALISE_SPACES_RE = re.compile(ur'(\s)\s+')
 
 _FIND_HOUSE_NUMBER_RE = re.compile(
@@ -36,8 +36,3 @@ def remove_house_number(q):
 
 
 _REMOVE_DASHES_RE = re.compile(ur'-')
-
-
-def normalize_auto(term):
-    """Normalises search term for autocompletion search."""
-    return _REMOVE_DASHES_RE.sub(u'', unidecode(term))
