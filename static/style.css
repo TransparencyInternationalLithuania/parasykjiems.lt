@@ -178,7 +178,7 @@ a:hover {
 }
 
 form input, textarea {
-    border: solid 1px #ddd;
+    border: solid 1px #aaa;
     box-shadow:inset 1px 1px 3px rgba(0, 0, 0, 0.3);
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
@@ -189,6 +189,10 @@ form input[name=q] {
     font-size: 120%;
     width: 70%;
     padding: 0.2em 0.2em 0.2em 0.2em;
+}
+
+form input:focus {
+    border: solid 1px #fa9;
 }
 
 form {
