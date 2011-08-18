@@ -4,6 +4,7 @@ from django.template.loader import render_to_string
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, Http404
 from haystack.query import SearchQuerySet
+from unidecode import unidecode
 
 from search.models import Representative, Institution, Location, Territory
 from search.forms import HouseNumberForm
@@ -25,15 +26,24 @@ def _render_results(request):
         q, num = utils.remove_house_number(q)
 
         all_results = SearchQuerySet().auto_query(q)
-        result_count = all_results.count()
+        more_results = all_results.count() > _RESULT_LIMIT
 
-        if result_count == 1:
-            result = all_results[0]
-            url = result.url
-            if num != '' and result.content_type() == 'search.location':
-                url += num + '/'
+        # If there aren't too many results and the last word isn't
+        # finished with a space, try finding more results by partial
+        # matching.
+        if not more_results and q[-1] != u' ':
+            last_q_word = q.split(u' ')[-1]
+            partial_results = SearchQuerySet().autocomplete(
+                auto=unidecode(last_q_word))
 
-        more_results = result_count > _RESULT_LIMIT
+            all_results = list(all_results)
+            result_pk_set = set(r.pk for r in all_results)
+            for pr in partial_results[:_RESULT_LIMIT]:
+                if pr.pk not in result_pk_set:
+                    all_results.append(pr)
+
+            more_results = len(all_results) > _RESULT_LIMIT
+
         results = all_results[:_RESULT_LIMIT]
     else:
         q = ''
