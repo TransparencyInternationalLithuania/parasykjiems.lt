@@ -26,6 +26,7 @@ def join_auto(xs):
 class InstitutionIndex(indexes.SearchIndex):
     text = indexes.CharField(document=True)
     auto = indexes.EdgeNgramField(model_attr='name')
+    numbered = indexes.BooleanField(indexed=True)
 
     title = indexes.CharField(model_attr='name', indexed=False)
     subtitle = indexes.CharField(indexed=False)
@@ -37,6 +38,9 @@ class InstitutionIndex(indexes.SearchIndex):
 
     def prepare_auto(self, obj):
         return join_auto([obj.name, obj.kind.name])
+
+    def prepare_numbered(self, obj):
+        return False
 
     def prepare_subtitle(self, obj):
         return obj.kind.name
@@ -51,6 +55,7 @@ site.register(Institution, InstitutionIndex)
 class RepresentativeIndex(indexes.SearchIndex):
     text = indexes.CharField(document=True)
     auto = indexes.EdgeNgramField(model_attr='name')
+    numbered = indexes.BooleanField(indexed=True)
 
     title = indexes.CharField(model_attr='name', indexed=False)
     subtitle = indexes.CharField(indexed=False)
@@ -65,6 +70,9 @@ class RepresentativeIndex(indexes.SearchIndex):
     def prepare_auto(self, obj):
         return join_auto([obj.name, obj.kind.name])
 
+    def prepare_numbered(self, obj):
+        return False
+
     def prepare_subtitle(self, obj):
         return u'{}, {}'.format(obj.kind.name, obj.institution.name)
 
@@ -78,6 +86,7 @@ site.register(Representative, RepresentativeIndex)
 class LocationIndex(indexes.SearchIndex):
     text = indexes.CharField(document=True)
     auto = indexes.EdgeNgramField()
+    numbered = indexes.BooleanField(indexed=True)
 
     title = indexes.CharField(indexed=False)
     subtitle = indexes.CharField(indexed=False)
@@ -96,6 +105,9 @@ class LocationIndex(indexes.SearchIndex):
 
     def prepare_auto(self, obj):
         return join_auto([obj.street, obj.city, obj.elderate])
+
+    def prepare_numbered(self, obj):
+        return obj.street != ''
 
     def prepare_title(self, obj):
         return ', '.join(x
