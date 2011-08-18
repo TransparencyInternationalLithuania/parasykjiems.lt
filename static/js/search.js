@@ -22,6 +22,7 @@ function fetchResults(terms) {
 }
 
 var resultsTimeout = null;
+var resultsTerms = '';
 
 $(function() {
       var q = $(document.search.q);
@@ -29,12 +30,15 @@ $(function() {
       q.css({width: '100%'});
 
       q.keyup(function() {
-                  if (resultsTimeout) {
-                      clearTimeout(resultsTimeout);
+                  var terms = q.val();
+                  if (terms != resultsTerms) {
+                      if (resultsTimeout) {
+                          clearTimeout(resultsTimeout);
+                      }
+                      resultsTimeout = setTimeout(function() {
+                                                      fetchResults(q.val());
+                                                      clearTimeout(resultsTimeout);
+                                                  }, 600);
                   }
-                  resultsTimeout = setTimeout(function() {
-                                                  fetchResults(q.val());
-                                                  clearTimeout(resultsTimeout);
-                                              }, 600);
               });
   });
