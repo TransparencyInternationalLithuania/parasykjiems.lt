@@ -1,4 +1,4 @@
-<a href="{{ result.url }}{% if result.content_type == 'search.location' and house_number %}{{ house_number }}/{% endif %}">
+<a href="{{ result.url }}{% if result.numbered and house_number %}{{ house_number }}/{% endif %}">
   {% if result.content_type == 'search.representative' %}
   <img src="/static/img/icons/representative.png">
   {% endif %}

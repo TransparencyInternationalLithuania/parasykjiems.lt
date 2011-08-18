@@ -3,7 +3,7 @@ from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, Http404
-from haystack.query import SearchQuerySet
+from haystack.query import SearchQuerySet, SQ
 from unidecode import unidecode
 
 from search.models import Representative, Institution, Location, Territory
@@ -25,24 +25,27 @@ def _render_results(request):
 
         q, num = utils.remove_house_number(q)
 
-        all_results = SearchQuerySet().auto_query(q)
+        sqs = SearchQuerySet()
+        clean_q = sqs.query.clean(q)
+        q_words = clean_q.split(u' ')
+        q_butlast = q_words[:-1]
+        q_last = q_words[-1]
+
+        # Match the last word from the auto field, so that it can be
+        # matched partially.
+        sq = SQ(auto=q_last) | SQ(text=q_last)
+
+        # AND the rest of the words.
+        for w in q_butlast:
+            sq = sq & SQ(text=w)
+
+        # If a house number is given, only show results, where a
+        # number is relevant.
+        if num != '':
+            sq = sq & SQ(numbered=True)
+
+        all_results = sqs.filter(sq)
         more_results = all_results.count() > _RESULT_LIMIT
-
-        # If there aren't too many results and the last word isn't
-        # finished with a space, try finding more results by partial
-        # matching.
-        if not more_results and q[-1] != u' ':
-            last_q_word = q.split(u' ')[-1]
-            partial_results = SearchQuerySet().autocomplete(
-                auto=unidecode(last_q_word))
-
-            all_results = list(all_results)
-            result_pk_set = set(r.pk for r in all_results)
-            for pr in partial_results[:_RESULT_LIMIT]:
-                if pr.pk not in result_pk_set:
-                    all_results.append(pr)
-
-            more_results = len(all_results) > _RESULT_LIMIT
 
         results = all_results[:_RESULT_LIMIT]
     else:
