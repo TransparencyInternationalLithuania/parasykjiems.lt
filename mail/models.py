@@ -1,9 +1,9 @@
 """This module contains mail-related models.
 
 Both Enquiry and Response can be duck-typed as a letter. They both
-have the properties sender_name, recipient_name, subject and body,
-which allows them to be used with the items/letter.html template
-passing the specific instance as the letter parameter.
+have the properties sender_name, recipient_name, subject, date, body
+and kind, which allows them to be used with the items/letter.html
+template passing the specific instance as the letter parameter.
 """
 
 import random
@@ -23,10 +23,16 @@ _NAME_LEN = 200
 
 
 class Enquiry(models.Model):
+    # Should be set if this message is a continuation of a discussion.
+    parent = models.ForeignKey('Response', null=True)
+
     # Secret hashes are separate for confirmation and replies, so that
     # a sender can't reply to himself.
-    confirm_hash = models.IntegerField(db_index=True, unique=True)
     reply_hash = models.IntegerField(db_index=True, unique=True)
+
+    # The confirm hash needn't be unique, because it's passed together
+    # with the slug.
+    confirm_hash = models.IntegerField(db_index=True)
 
     slug = models.CharField(max_length=SLUG_LEN,
                             blank=True,
@@ -54,10 +60,7 @@ class Enquiry(models.Model):
     # This can be used for threading. Should be set after sending.
     message_id = models.CharField(max_length=100, null=True, db_index=True)
 
-    # Should be set if this message is a continuation of a discussion.
-    parent = models.ForeignKey('Response', null=True)
-
-    _hash_tries = 10
+    _hash_tries = 30
     _hash_max = 9999999
 
     def __init__(self, *args, **kwargs):
@@ -67,16 +70,8 @@ class Enquiry(models.Model):
 
         rand = random.SystemRandom()
 
-        if not self.confirm_hash:
-            self.confirm_hash = rand.randint(1, Enquiry._hash_max)
-            tries = 0
-            while Enquiry.objects.filter(
-                confirm_hash=self.confirm_hash).exists():
-                self.confirm_hash = rand.randint(1, Enquiry._hash_max)
-                tries += 1
-                if tries > Enquiry._hash_tries:
-                    raise Exception(
-                        "Probably out of confirm hashes for Enquiry.")
+        self.confirm_hash = rand.randint(1, Enquiry._hash_max)
+
         if not self.reply_hash:
             self.reply_hash = rand.randint(1, Enquiry._hash_max)
             tries = 0
@@ -103,6 +98,10 @@ class Enquiry(models.Model):
     @property
     def date(self):
         return self.sent_at
+
+    @property
+    def kind(self):
+        return 'enquiry'
 
     @models.permalink
     def get_absolute_url(self):
@@ -154,15 +153,19 @@ class Response(models.Model):
         return utils.decode_header_unicode(self.message['subject'])
 
     @property
-    def body(self):
-        return self.message.get_payload(decode=True)
-
-    @property
     def date(self):
         return datetime.datetime.fromtimestamp(
             time.mktime(
                 email.utils.parsedate(
                     self.message['date'])))
+
+    @property
+    def body(self):
+        return self.message.get_payload(decode=True)
+
+    @property
+    def kind(self):
+        return 'response'
 
     def __init__(self, *args, **kwargs):
         super(Response, self).__init__(*args, **kwargs)
