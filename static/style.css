@@ -2,12 +2,16 @@
 
 html {
     height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 body {
     color: #222;
     font-family: 'Droid Sans', sans-serif;
     font-size: 12pt;
+    margin: 0;
+    padding: 0;
 
     background: #7281A1;
     background: -moz-linear-gradient(top, #363d4c 0%, #7281a1 100%); /* FF3.6+ */
@@ -109,6 +113,8 @@ a:hover {
     text-align: left;
 
     border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
 }
 
 #menu a:hover {
@@ -294,12 +300,16 @@ h1 {
 .institution .letters {
     border: 1px solid #eee;
     border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
     background: #fafafa;
 }
 
 .representative .letters {
     border: 1px solid #eee;
     border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
     background: #fafafa;
 }
 
@@ -345,6 +355,8 @@ form th {
 .letter .body {
     background: #fafafa;
     border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
     margin: 3px 10px 3px 10px;
     padding: 3px 10px 3px 10px;
 }
@@ -380,12 +392,16 @@ form th {
     background: #bfb;
     color: #363;
     border-radius: 30px;
+    -moz-border-radius: 30px;
+    -webkit-border-radius: 30px;
     padding: 7px;
 }
 
 .pager {
     font-size: 10pt;
     border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
     line-height: 300%;
     margin: 2em 0 0 0;
     text-align: center;
@@ -394,6 +410,8 @@ form th {
 .pager a {
     color: #888;
     border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
     padding: 0.5em;
 }
 
