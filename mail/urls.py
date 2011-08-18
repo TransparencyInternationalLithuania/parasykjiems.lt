@@ -7,9 +7,9 @@ urlpatterns = patterns('mail.views',
         name='write-institution'),
     url(r'^write/confirm/$', 'write_confirm'),
 
-    url(r'^confirm/(?P<slug>[\w-]+)/(?P<confirm_hash>\d+)/$', 'confirm',
+    url(r'^confirm/(?P<id>\d+)/(?P<confirm_hash>\d+)/$', 'confirm',
         name='confirm'),
-    url(r'^sent/(?P<slug>[\w-]+)/$', 'sent'),
+    url(r'^sent/(:?(?P<id>\d+)/)?$', 'sent'),
 
     url(r'^letter/(?P<slug>[\w-]+)/$', 'letter', name='letter'),
 

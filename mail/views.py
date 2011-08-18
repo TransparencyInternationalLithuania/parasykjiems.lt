@@ -58,23 +58,23 @@ def write_confirm(request):
     return render(request, 'views/write_confirm.html')
 
 
-def confirm(request, slug, confirm_hash):
+def confirm(request, id, confirm_hash):
     enquiry = get_object_or_404(Enquiry,
-                                slug=slug,
+                                id=id,
                                 confirm_hash=confirm_hash,
                                 is_sent=False)
 
     if request.method == 'POST':
         mail.confirm_enquiry(enquiry)
-        return redirect(reverse(sent, kwargs={'slug': enquiry.slug}))
+        return redirect(reverse(sent, kwargs={'id': enquiry.id}))
     else:
         return render(request, 'views/confirm.html', {
             'enquiry': enquiry,
         })
 
 
-def sent(request, slug):
-    enquiry = get_object_or_404(Enquiry, slug=slug)
+def sent(request, id):
+    enquiry = get_object_or_404(Enquiry, id=id)
     return render(request, 'views/sent.html', {'enquiry': enquiry})
 
 
