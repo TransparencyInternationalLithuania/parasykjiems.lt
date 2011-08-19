@@ -10,7 +10,9 @@ RECENT_LETTERS = 3
 
 class InstitutionKind(models.Model):
     name = models.CharField(max_length=_NAME_LEN)
-    description = models.TextField(blank=True)
+    description = models.TextField(
+        blank=True,
+        help_text=_("In Markdown format."))
     active = models.BooleanField()
 
     ordinal = models.IntegerField(
@@ -56,7 +58,9 @@ class Institution(models.Model):
 class RepresentativeKind(models.Model):
     """Kind of position of representative in institution."""
     name = models.CharField(max_length=_NAME_LEN)
-    description = models.TextField(blank=True)
+    description = models.TextField(
+        blank=True,
+        help_text=_("In Markdown format."))
     active = models.BooleanField()
 
     ordinal = models.IntegerField(
