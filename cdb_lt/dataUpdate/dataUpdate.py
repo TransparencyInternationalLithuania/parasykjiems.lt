@@ -4,14 +4,14 @@ from django.db import transaction
 from django.db.models.query_utils import Q
 from cdb_lt.management.commands.createMembers import makeCivilParishInstitutionName, makeMunicipalityInstitutionName, InstitutionCivilparishMembers, InstitutionMunicipalityCode
 from contactdb.models import Institution, PersonPosition, Person
-from pjutils.exc import ChainnedException
+from pjutils.exc import ChainedException
 from cdb_lt.personUtils import splitIntoNameAndSurname
 from django.http import HttpResponse
 
-class FieldNotDefinedInDataFile(ChainnedException):
+class FieldNotDefinedInDataFile(ChainedException):
     pass
 
-class DuplicatePersonException(ChainnedException):
+class DuplicatePersonException(ChainedException):
     pass
 
 def toUnicode(val):

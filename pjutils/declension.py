@@ -1,16 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os
-from GlobalSettingsClass import *
-
 class DeclensionLt():
     
     def kilm(self, vard):
         vard_no_end = vard[:-2]
         vard_end = [u'as', u'ai', u'is', u'us', u'ės', u'ė', u'a', u'ys']
         kilm_end = [u'o', u'ų', u'io', u'aus', u'ių', u'ės', u'os', u'ių']
-        for gal in range(len(vard_gal)):
+        for gal in range(len(vard_end)):
             if vard[-2:]==vard_end[gal]:
                 result = vard_no_end + kilm_end[gal]
         return result

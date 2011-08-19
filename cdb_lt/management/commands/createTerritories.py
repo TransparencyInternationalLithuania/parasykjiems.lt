@@ -23,7 +23,7 @@ def importCases():
     d = {}
     for c in all:
         d[c.nominative] = c
-    
+
     for key, data in MunicipalityCases.iteritems():
         if d.has_key(key):
             continue

@@ -1,13 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import logging
 from cdb_lt_streets.management.commands.ltGeoDataCrawl import ExtractRange
 from pjutils.get_mail import GetMail
 from pjutils.insert_response import InsertResponse
-from pjweb.email.backends import CanNotExtractEmailIdAndHash, MailHashIsNotCorrect, MailDoesNotExistInDBException
+from pjweb.email.backends import MailHashIsNotCorrect, MailDoesNotExistInDBException
 from settings import GlobalSettings
-import sys
 from django.core.management.base import BaseCommand
 
 class Command(BaseCommand):

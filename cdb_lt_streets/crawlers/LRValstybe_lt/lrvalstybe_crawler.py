@@ -5,9 +5,9 @@ from ClientForm import ParseResponse
 from BeautifulSoup import BeautifulSoup, NavigableString
 import re
 from urllib2 import urlopen
-from pjutils.exc import ChainnedException
+from pjutils.exc import ChainedException
 
-class LrValstybeCrawlerException(ChainnedException):
+class LrValstybeCrawlerException(ChainedException):
     pass
 
 

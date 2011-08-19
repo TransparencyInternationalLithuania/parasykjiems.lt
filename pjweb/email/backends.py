@@ -1,15 +1,15 @@
-from pjutils.exc import ChainnedException
+from pjutils.exc import ChainedException
 
 _ = lambda s: s
 
 
-class MailDoesNotExistInDBException(ChainnedException):
+class MailDoesNotExistInDBException(ChainedException):
     pass
 
-class MailHashIsNotCorrect(ChainnedException):
+class MailHashIsNotCorrect(ChainedException):
     pass
 
-class CanNotExtractEmailIdAndHash(ChainnedException):
+class CanNotExtractEmailIdAndHash(ChainedException):
     pass
 
 class EmailInfoInToField(object):

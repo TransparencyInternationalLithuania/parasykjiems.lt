@@ -2,65 +2,62 @@
 # -*- coding: utf-8 -*-
 
 import logging
-import re
-from django.contrib.auth.views import redirect_to_login
-from django.template import loader
-from pjweb.email.emailTemplates import renderEmailTemplate
-from settings import *
-from django import forms
-from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest, HttpResponseNotFound, Http404
-from django.shortcuts import render_to_response, redirect
-from django.utils.translation import ugettext as _, ugettext_lazy, ungettext, check_for_language
-from django.core.mail import send_mail, EmailMessage
-from contactdb.models import PersonPosition
-from pjweb.models import Email, MailHistory
-from pjweb.forms import *
-from pjutils.insert_response import InsertResponse
-from pjutils.declension import DeclensionLt
-from django.utils import simplejson
 import random
-from django.contrib.sites.models import Site
-from pjutils.uniconsole import *
 import datetime
-from django.utils.encoding import iri_to_uri
+
+from django.contrib.auth.views import redirect_to_login
+from django.contrib.sites.models import Site
+from django.core.mail import EmailMessage
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
-from pjweb.forms import IndexForm, ContactForm
+from django.http import HttpResponseRedirect, HttpResponse, Http404
+from django.shortcuts import render_to_response
+from django.utils import simplejson
+from django.utils.encoding import iri_to_uri
+from django.utils.translation import ugettext as _, check_for_language
+
+from cdb_lt.management.commands.createMembers import loadInstitutionDescriptions
+from contactdb.models import PersonPosition
+from pjutils.declension import DeclensionLt
+from pjweb.email.emailTemplates import renderEmailTemplate
+from pjweb.models import Email, MailHistory
 from territories.houseNumberUtils import removeCornerFromHouseNumber
 from territories.searchInIndex import deduceAddress, searchInIndex
 from territories.searchMembers import findPersonPositions
-from cdb_lt.management.commands.createMembers import loadInstitutionDescriptions
+import pjweb.forms as forms
+import settings
 
 
 logger = logging.getLogger(__name__)
 
+
 def logAddressQueryToFile(queryString):
-    if GlobalSettings.logAddressesToFile is None:
+    if settings.GlobalSettings.logAddressesToFile is None:
         return
-    with open(GlobalSettings.logAddressesToFile, "a") as f:
+    with open(settings.GlobalSettings.logAddressesToFile, "a") as f:
         s = u"%s\n" % queryString
         f.write(s.encode('utf-8'))
 
-
 def searchInStreetIndex(query_string):
-    """ Searches throught street index and returns municipality / city / street/ house number
-    Additionally returns more data for rendering in template"""
+    """Searches throught street index and returns municipality / city
+    / street/ house number. Additionally returns more data for
+    rendering in template.
+    """
 
     logger.debug("query_string %s" % query_string)
     found_geodata = None
     not_found = ''
 
-
     logAddressQueryToFile(query_string)
-
 
     addressContext = deduceAddress(query_string)
     addressContext.number = removeCornerFromHouseNumber(addressContext.number)
 
+    found_entries = searchInIndex(
+        municipality=addressContext.municipality,
+        city=addressContext.city,
+        street=addressContext.street)
 
-    found_entries = searchInIndex(municipality= addressContext.municipality, city= addressContext.city,
-                                  street= addressContext.street)
-
-    # construct final uriss
+    # construct final uris
     for f in found_entries:
         # attach house numbers
         f.number = addressContext.number
@@ -102,7 +99,6 @@ def choose_representative(request, municipality = None, city = None, street = No
 
 def choose_representative_internal(request, municipality = None, civilParish = None, city = None, street = None, house_number = None):
     # check if we have a valid referrer
-    current_site = Site.objects.get_current()
     logger.debug("choose_rep: municipality %s" % municipality)
     logger.debug("choose_rep: city %s" % city)
     logger.debug("choose_rep: street %s" % street)
@@ -121,7 +117,6 @@ def choose_representative_internal(request, municipality = None, civilParish = N
 
     return render_to_response('pjweb/const.html', {
         'personPositions': personPositions,
-        'LANGUAGES': GlobalSettings.LANGUAGES,
         'step1': 'active-step',
         'step2': '',
         'step3': '',
@@ -141,7 +136,7 @@ def json_lookup(request, queryset, field, limit=5, login_required=False):
 
 def renderIndexPage(request, form = None, query_string = "", address = None):
     if form is None:
-        form = IndexForm(request.POST)
+        form = forms.IndexForm(request.POST)
 
     lang = request.LANGUAGE_CODE
     if address is None:
@@ -152,7 +147,6 @@ def renderIndexPage(request, form = None, query_string = "", address = None):
         }
     return render_to_response("pjweb/searchPlugins/territory/index.html", {
         'form': form,
-        'LANGUAGES': GlobalSettings.LANGUAGES,
         'lang_code': lang,
         'entered': query_string,
         'found_entries': address['found_entries'],
@@ -173,10 +167,10 @@ def index(request):
         }
 
     if request.method == 'GET':
-        form = IndexForm()
+        form = forms.IndexForm()
         return renderIndexPage(request, form)
 
-    form = IndexForm(request.POST)
+    form = forms.IndexForm(request.POST)
     query_string = ""
     if form.is_valid():
         query_string = form.cleaned_data['address_input']
@@ -195,15 +189,13 @@ def index(request):
 
 
 def no_email(request, rtype, mp_id):
-    insert = InsertResponse()
-    representative = insert.get_rep(mp_id)
+    representative = PersonPosition.objects.get(id=mp_id)
     NoEmailMsg = _('%(name)s %(surname)s email cannot be found in database.') % {
         'name':representative.person.name, 'surname':representative.person.surname
     }
     logger.debug('%s' % (NoEmailMsg))
     return render_to_response('pjweb/no_email.html', {
         'NoEmailMsg': NoEmailMsg,
-        'LANGUAGES': GlobalSettings.LANGUAGES,
         'step1': '',
         'step2': 'active-step',
         'step3': '',
@@ -268,7 +260,6 @@ def public_mails(request):
 
     return render_to_response('pjweb/public_mails.html', {
         'mails': mails,
-        'LANGUAGES': GlobalSettings.LANGUAGES,
         'step1': '',
         'step2': '',
         'step3': '',
@@ -277,7 +268,6 @@ def public_mails(request):
 
 def about(request):
     return render_to_response('pjweb/about.html', {
-        'LANGUAGES': GlobalSettings.LANGUAGES,
         'step1': '',
         'step2': '',
         'step3': '',
@@ -303,7 +293,7 @@ def public(request, mail_id):
 
     for r in responses:
         if r.attachment_path is not None:
-            path = "%s/%s" % (GlobalSettings.ATTACHMENTS_MEDIA_PATH, r.attachment_path)
+            path = "%s/%s" % (settings.GlobalSettings.ATTACHMENTS_MEDIA_PATH, r.attachment_path)
             path = path.replace("\\", "/")
             r.attachment_path = "http://%s/%s" % (current_site.domain, path)
 
@@ -315,42 +305,22 @@ def public(request, mail_id):
     return render_to_response('pjweb/public.html', {
         'mail': mail,
         'responses': responses,
-        'LANGUAGES': GlobalSettings.LANGUAGES,
         'step1': '',
         'step2': '',
         'step3': '',
     })
-
-
-def smtp_error(request, rtype, mp_id, private=None):
-    insert = InsertResponse()
-    representative = insert.get_rep(mp_id, rtype)
-    ErrorMessage = _(
-        'Problem occurred. Your Email to %(name)s %(surname)s has not been sent. Please try again later.'
-    ) % {
-        'name':representative.name, 'surname':representative.surname
-    }
-    logger.debug('Error: %s' % (ErrorMessage))
-    return render_to_response('pjweb/error.html', {
-        'ErrorMessage': ErrorMessage,
-        'LANGUAGES': GlobalSettings.LANGUAGES,
-        'step1': '',
-        'step2': '',
-        'step3': 'active-step',
-    })
-
 
 def redirectToIndex():
     url = "/"
     return HttpResponseRedirect(url)
     
 def contact(request, rtype, mp_id):
-    insert = InsertResponse()
     current_site = Site.objects.get_current()
 
     # find required representative
-    receiver = insert.get_rep(mp_id)
-    if receiver is None:
+    try:
+        receiver = PersonPosition.objects.get(id=mp_id)
+    except PersonPosition.DoesNotExist:
         return redirectToIndex()
 
     months = [
@@ -372,25 +342,19 @@ def contact(request, rtype, mp_id):
         return HttpResponseRedirect('no_email')
     if request.method == 'POST':
         send = request.POST.has_key('send')
-        form = ContactForm(data=request.POST)
+        form = forms.ContactForm(data=request.POST)
         if form.is_valid():
             public = form.cleaned_data[u'public']
-            publ = False
-            if public=='public':
-                publ = True
+            publ = public=='public'
             sender_name = form.cleaned_data[u'sender_name']
             message = form.cleaned_data[u'message']
             sender = form.cleaned_data[u'sender']
             subject = form.cleaned_data[u'subject']
-            response_hash = random.randrange(0, 1000000),
-
-            response_hash = response_hash[0]
-
-            recipients = [receiver.email]
+            response_hash = random.randrange(0, 1000000)
 
             # if representative has no email - show message
-            if not recipients[0]:
-                logger.debug('%s %s has no email' % (receiver.name, receiver.surname))
+            if not receiver.email:
+                logger.debug('%s has no email' % receiver)
                 return HttpResponseRedirect('no_email')
             else:
                 message_disp = message
@@ -400,8 +364,8 @@ def contact(request, rtype, mp_id):
                     subject = subject,
                     recipient_id = receiver.id,
                     recipient_type = rtype,
-                    recipient_name = '%s %s' % (receiver.person.name, receiver.person.surname),
-                    recipient_mail = recipients[0],
+                    recipient_name = receiver.person.fullName,
+                    recipient_mail = receiver.email,
                     message = message,
                     msg_state = 'NotConfirmed',
                     msg_type = 'Question',
@@ -409,29 +373,25 @@ def contact(request, rtype, mp_id):
                     public = publ,
                 )
                 if send:
-                    print mail.message
                     mail.save()  
-                    reply_to = '%s%s_%s@%s' % (GlobalSettings.DefaultMailPrefix, mail.id, mail.response_hash, GlobalSettings.mail.IMAP.EMAIL_HOST)
-                    # generate confirmation email message and send it
-#                    languageId = "lt"
-#                    messsage = render_to_string("mail_body.txt")
-
-                    from_email = GlobalSettings.mail.SMTP.CONFIRMATION_EMAIL_SENT_FROM
+                    reply_to = '%s%s-%s@%s' % (settings.GlobalSettings.DefaultMailPrefix, mail.id, mail.response_hash, settings.GlobalSettings.mail.IMAP.EMAIL_HOST)
 
                     confirm_link = ("http://%s/confirm/%s/%s") % (current_site.domain, mail.id, mail.response_hash)
                     emailTemplateParams = {'current_site' : current_site, 'mail' : mail, 'confirm_link': confirm_link}
                     message = renderEmailTemplate(u"email_confirmation.txt", emailTemplateParams)
 
-#                    _('You sent an email to ')+ mail.recipient_name + _(' with text:\n\n')+ message_disp + _('\n\nYou must confirm this message by clicking link \below:\n') + 'http://%s/confirm/%s/%s' % (current_site.domain, mail.id, mail.response_hash)
-                    email = EmailMessage(subject=_(u'Confirm your message %s') % sender_name, body=message, from_email=from_email,
-                        to=[sender], bcc=[], 
-                        headers = {'Reply-To': reply_to})
+                    email = EmailMessage(
+                        subject = _(u'Confirm your message, %s') % sender_name,
+                        body = message,
+                        from_email = settings.GlobalSettings.mail.SMTP.CONFIRMATION_EMAIL_SENT_FROM,
+                        to = [sender],
+                        bcc = [], 
+                        headers = {'Reply-To': reply_to},
+                    )
                     email.send()
                     ThanksMessage = _('Thank you. This message must be confirmed. Please check your email.')
-                    logger.debug('%s' % (ThanksMessage))
                     return render_to_response('pjweb/thanks.html', {
                         'ThanksMessage': ThanksMessage,
-                        'LANGUAGES': GlobalSettings.LANGUAGES,
                         'step1': '',
                         'step2': '',
                         'step3': 'active-step',
@@ -446,7 +406,6 @@ def contact(request, rtype, mp_id):
                     'preview': mail,
                     'msg_lst': message_disp,
                     'representative': receiver,
-                    'LANGUAGES': GlobalSettings.LANGUAGES,
                     'date_words': date_words,
                     'step1': '',
                     'step2': '',
@@ -455,14 +414,13 @@ def contact(request, rtype, mp_id):
 
     else:
         decl = DeclensionLt()
-        form = ContactForm(initial={'message': _(u'Dear. Mr. %s, \n\n\n\nHave a nice day.') % decl.sauksm(receiver.person.name) })
+        form = forms.ContactForm(initial={'message': _(u'Dear. Mr. %s, \n\n\n\nHave a nice day.') % decl.sauksm(receiver.person.name) })
         
     return render_to_response('pjweb/contact.html', {
         'form': form,
         'mp_id': mp_id,
         'rtype': rtype,
         'representative': receiver,
-        'LANGUAGES': GlobalSettings.LANGUAGES,
         'step1': '',
         'step2': 'active-step',
         'step3': '',
@@ -478,17 +436,17 @@ def confirmMessageAndSendEmailToRepresentative(mail):
 
     # checking whether emails must be forwarded to some specific address
     # or to real representative addresses
-    recipients = GlobalSettings.mail.sendEmailToRepresentatives
-    if GlobalSettings.mail.sendEmailToRepresentatives == "sendToRepresentatives":
+    recipients = settings.GlobalSettings.mail.sendEmailToRepresentatives
+    if settings.GlobalSettings.mail.sendEmailToRepresentatives == "sendToRepresentatives":
         recipients = [mail.recipient_mail]
     logger.info("sending email to these recipients: %s" % recipients)
 
 
-    composition = GlobalSettings.mail.composition_backends[0]
+    composition = settings.GlobalSettings.mail.composition_backends[0]
     # determine reply address
     reply_to = composition.getReplyTo(mail)
 
-    from_email=GlobalSettings.mail.SMTP.REPRESENTATIVE_EMAIL_SENT_FROM
+    from_email=settings.GlobalSettings.mail.SMTP.REPRESENTATIVE_EMAIL_SENT_FROM
     subject = composition.getSubject(mail)
 
     # send an actual email message to government representative
@@ -546,7 +504,6 @@ def confirm(request, mail_id, secret):
         'ConfirmMessage': ConfirmMessage,
         'is_email_public': mail.public,
         'public_email_id' : mail.id,
-        'LANGUAGES': GlobalSettings.LANGUAGES,
         'step1': '',
         'step2': '',
         'step3': '',
@@ -556,12 +513,12 @@ def confirm(request, mail_id, secret):
 def feedback(request):
 
     if request.method == 'POST':
-        form = FeedbackForm(data=request.POST)
+        form = forms.FeedbackForm(data=request.POST)
         if form.is_valid():
             message = form.cleaned_data[u'message']
             subject = form.cleaned_data[u'subject']
             emailFrom = form.cleaned_data[u'emailFrom']
-            recipients = GlobalSettings.mail.feedbackEmail
+            recipients = settings.GlobalSettings.mail.feedbackEmail
             email = EmailMessage(subject=subject, body=message, from_email=settings.EMAIL_HOST_USER,
                 to=recipients, bcc=[], headers={'Reply-To': emailFrom})
             email.send()
@@ -571,7 +528,6 @@ def feedback(request):
             logger.info("feedback email sent to '%s'" % recipients)
             return render_to_response('pjweb/feedback/feedback_sent.html', {
                 'ThanksMessage': ThanksMessage,
-                'LANGUAGES': GlobalSettings.LANGUAGES,
                 'step1': '',
                 'step2': '',
                 'step3': '',
@@ -579,11 +535,10 @@ def feedback(request):
 
 
     else:
-        form = FeedbackForm()
+        form = forms.FeedbackForm()
         
     return render_to_response('pjweb/feedback/feedback.html', {
         'form': form,
-        'LANGUAGES': GlobalSettings.LANGUAGES,
         'step1': '',
         'step2': '',
         'step3': '',
@@ -593,7 +548,7 @@ def feedback(request):
 def stats(request):
     period_string = ''
     if request.method == 'POST':
-        form = PeriodSelectForm(data=request.POST)
+        form = forms.PeriodSelectForm(data=request.POST)
         if form.is_valid():
             date_from = form.cleaned_data['date_from']
             date_to = form.cleaned_data['date_to']
@@ -617,19 +572,17 @@ def stats(request):
                 'period_string': period_string,
                 'stats': stats,
                 'form': form,
-                'LANGUAGES': GlobalSettings.LANGUAGES,
                 'step1': '',
                 'step2': '',
                 'step3': '',
             })
 
     else:
-        form = PeriodSelectForm()
+        form = forms.PeriodSelectForm()
         
     return render_to_response('pjweb/stats.html', {
         'period_string': period_string,
         'form': form,
-        'LANGUAGES': GlobalSettings.LANGUAGES,
         'step1': '',
         'step2': '',
         'step3': '',
@@ -638,10 +591,9 @@ def stats(request):
 
 def response(request, mail_id, response_no):
     mail = Email.objects.get(id=mail_id)
-    insert = InsertResponse()
-    responder = insert.get_rep(mail.recipient_id, mail.recipient_type)
+    responder = PersonPosition.objects.get(id=mail.recipient_id)
     if int(mail.response_hash)==int(response_no) and request.method == 'POST':
-        form = FeedbackForm(data=request.POST)
+        form = forms.FeedbackForm(data=request.POST)
         if form.is_valid():
             message = form.cleaned_data[u'message']
 
@@ -662,21 +614,19 @@ def response(request, mail_id, response_no):
             logger.debug('%s' % (ThanksMessage))
             return render_to_response('pjweb/thanks.html', {
                 'ThanksMessage': ThanksMessage,
-                'LANGUAGES': GlobalSettings.LANGUAGES,
                 'step1': '',
                 'step2': '',
                 'step3': 'active-step',
             })
 
     else:
-        form = FeedbackForm()
+        form = forms.FeedbackForm()
         
     return render_to_response('pjweb/response.html', {
         'form': form,
         'mail': mail,
         'msg_lst': mail.message.split('\n'),
         'response_no': response_no,
-        'LANGUAGES': GlobalSettings.LANGUAGES,
         'step1': '',
         'step2': '',
         'step3': '',

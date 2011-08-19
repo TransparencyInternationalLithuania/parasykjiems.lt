@@ -1,10 +1,10 @@
 import logging
-from pjutils.exc import ChainnedException
+from pjutils.exc import ChainedException
 import re
 import types
 logger = logging.getLogger(__name__)
 
-class StringIsNotAHouseNumberException(ChainnedException):
+class StringIsNotAHouseNumberException(ChainedException):
     pass
 
 class HouseRange:
@@ -197,7 +197,7 @@ def depadHouseNumberWithZeroes(number):
     if number == u"":
         return u""
     if number[-1] == u"0":
-        number = number [:-1]
+        number = number[:-1]
     return number
 
 

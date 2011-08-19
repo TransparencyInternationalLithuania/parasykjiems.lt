@@ -4,7 +4,7 @@
 import logging
 import os
 from contactdb.models import PersonPosition
-from pjutils.exc import ChainnedException
+from pjutils.exc import ChainedException
 from pjutils.get_mail import GetMail
 from pjweb.email.backends import MailDoesNotExistInDBException
 import settings
@@ -17,13 +17,6 @@ from django.core.mail import send_mail, EmailMessage
 logger = logging.getLogger(__name__)
 
 class InsertResponse():
-
-    def get_rep(self, rep_id):
-        try:
-            return PersonPosition.objects.all().filter(id__exact=rep_id).get()
-        except PersonPosition.DoesNotExist:
-            return None
-
     def insert_resp(self, email_id, msg_text, msg_attachments):
         mail = None
         try:

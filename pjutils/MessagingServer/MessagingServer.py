@@ -1,8 +1,8 @@
-from pjutils.exc import ChainnedException
+from pjutils.exc import ChainedException
 from _socket import socket
 from amqplib import client_0_8 as amqp
 
-class ConnectToMessageServerFailed(ChainnedException):
+class ConnectToMessageServerFailed(ChainedException):
     pass
 
 class MQServer:

@@ -71,16 +71,18 @@ class Person(models.Model):
 
     @property
     def fullName(self):
-        """returns Name + surname"""
-        return u" ".join([self.name, self.surname, self.disambiguation])
+        return u"%s %s" % (self.name, self.surname)
 
     def __unicode__(self):
-        return self.fullName
+        return u" ".join(x for x in [self.name, self.surname, self.disambiguation] if x)
 
 class InstitutionType(models.Model):
     # a code which identifies what kind of institution is this (parliament, mayor, etc)
     # This is user generated value, when inital value is inserted
     code = models.CharField(max_length = 255)
+
+    def __unicode__(self):
+        return self.code
 
 class Institution(models.Model):
     """ A local institution. Contains institution name, and institution type"""
@@ -117,3 +119,6 @@ class PersonPosition(models.Model):
         electedToGreaterToday = Q(**{"electedTo__gte": now})
         electedFromLessThanToday = Q(**{"electedFrom__lte": now})
         return (electedToNone & electedFromNone) | ((electedFromNone | electedFromLessThanToday) & (electedToNone | electedToGreaterToday))
+
+    def __unicode__(self):
+        return u'(%d) %s in %s' % (self.id, self.person, self.institution)
