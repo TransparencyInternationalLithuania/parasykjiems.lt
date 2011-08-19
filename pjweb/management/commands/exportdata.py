@@ -1,13 +1,12 @@
 import csv
 import os
-import sys
-import re
 
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 from progressbar import ProgressBar
 
 from contactdb.models import InstitutionType, PersonPosition, Institution
-from territories.models import InstitutionTerritory, LithuanianCases
+from territories.models import InstitutionTerritory
+
 
 class Command(BaseCommand):
     args = '<>'
@@ -19,10 +18,10 @@ Puts results in CSV files into the export directory.
     def handle(self, *args, **options):
         if not os.path.exists('export'):
             os.mkdir('export')
-        
+
         def e(s):
             return s.encode('utf-8')
-        
+
         print 'Exporting {} InstitutionTypes.'.format(
             len(InstitutionType.objects.all()))
         with open('export/institutiontypes.csv', 'wb') as f:
@@ -35,9 +34,11 @@ Puts results in CSV files into the export directory.
                             'name': e(it.code)})
 
         institutions_with_persons = set()
-        
+
+        activePersonsFilter = PersonPosition.getFilterActivePositions()
+        persons = PersonPosition.objects.filter(activePersonsFilter)
         print 'Exporting {} PersonPositions.'.format(
-            len(PersonPosition.objects.all()))
+            len(persons))
         with open('export/personpositions.csv', 'wb') as f:
             w = csv.DictWriter(f,
                                ['id',
@@ -47,12 +48,15 @@ Puts results in CSV files into the export directory.
                                 'phone',
                                 'other_contacts'])
             w.writeheader()
-            for p in ProgressBar()(PersonPosition.objects.all()):
+            for p in ProgressBar()(persons):
                 w.writerow({'id': str(p.person.id),
                             'name': e(p.person.fullName),
                             'institution_id': str(p.institution.id),
                             'email': e(p.email),
-                            'phone': e(p.primaryPhone if p.primaryPhone and p.primaryPhone != u'' else p.secondaryPhone),
+                            'phone': e(p.primaryPhone
+                                       if (p.primaryPhone and
+                                           p.primaryPhone != u'')
+                                       else p.secondaryPhone),
                             'other_contacts': ''})
 
                 institutions_with_persons.add(p.institution.id)
