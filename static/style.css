@@ -412,12 +412,13 @@ form th {
 }
 
 .description {
-    background: #ffa;
-    padding: 1em;
+    background: #ffc;
+    padding: 0 1em 1em 1em;
     border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
-    border: 1px solid #ee9;
+    border: 1px solid #eec;
+    overflow: hidden;
 }
 
 .answered {
