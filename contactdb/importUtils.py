@@ -1,7 +1,7 @@
 import csv
 import os
 from contactdb.models import Person, InstitutionType, Institution, PersonPosition
-from pjutils.exc import ChainnedException
+from pjutils.exc import ChainedException
 from django.db import transaction
 
 
@@ -9,10 +9,10 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class ImportSourceNotExistsException(ChainnedException):
+class ImportSourceNotExistsException(ChainedException):
     pass
 
-class InstitutionTypeDoesNotExist(ChainnedException):
+class InstitutionTypeDoesNotExist(ChainedException):
     pass
 
 class PersonPositionCache(object):

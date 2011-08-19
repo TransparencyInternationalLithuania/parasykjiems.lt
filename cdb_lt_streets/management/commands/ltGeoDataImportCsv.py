@@ -8,7 +8,6 @@ from cdb_lt_streets.crawlers.LTRegisterCenter.mqbroker import LTRegisterQueue
 from pjutils.timemeasurement import TimeMeasurer
 from cdb_lt_streets.models import HierarchicalGeoData
 import csv
-from pjutils.uniconsole import *
 
 class Command(BaseCommand):
     args = '<>'

@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from pjutils.uniconsole import *
 import re
 import types
 from django.db.models.query_utils import Q

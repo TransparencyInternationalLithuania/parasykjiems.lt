@@ -1,28 +1,33 @@
-    #!/usr/bin/env python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import datetime
 import logging
 
-import os, sys, imaplib, rfc822
-import string, re, StringIO
+import os
+import sys
+import imaplib
+import rfc822
+import string
+import re
+import StringIO
 import email
-from pjutils.exc import MethodNotImplementedException, ChainnedException
+from pjutils.exc import MethodNotImplementedException, ChainedException
 from pjweb.email.backends import CanNotExtractEmailIdAndHash
 from settings import *
 from django.utils.encoding import smart_unicode
 
 logger = logging.getLogger(__name__)
 
-class EmailPlainTextPartNotFound(ChainnedException):
+class EmailPlainTextPartNotFound(ChainedException):
     pass
 
-class MailPartException(ChainnedException):
+class MailPartException(ChainedException):
     pass
 
-class AttachmentAlreadyExistsException(ChainnedException):
+class AttachmentAlreadyExistsException(ChainedException):
     pass
 
-class IMAPException(ChainnedException):
+class IMAPException(ChainedException):
     pass
 
 class GetMail():

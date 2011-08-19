@@ -18,7 +18,7 @@ class Command(BaseCommand):
             default = "",
             help='Specify what from address should look like. Will do a contains query'),
         )
-    
+
 
     def handle(self, *args, **options):
         """ Sometimes IMAP will get invalid emails.  use this to delete those unwanted emails.

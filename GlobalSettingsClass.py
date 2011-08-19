@@ -1,5 +1,6 @@
 import sys
 
+
 class GlobalSettingsBase(object):
     def __init__(self):
         # a list of variable names to functions which print a description
@@ -12,10 +13,10 @@ class GlobalSettingsBase(object):
         if (name in self.variablesToFunction):
             self.variablesToFunction[name]()
 
-
     def __getattr__(self, name):
-        # intercept attribute usage. if attribute does not exist (since we are in this method),
-        # print a help string describing what that variables is used for
+        # intercept attribute usage. if attribute does not exist
+        # (since we are in this method), print a help string
+        # describing what that variables is used for
 
         self.printHelpForSetting(name)
 
@@ -27,20 +28,21 @@ class GlobalSettingsBase(object):
 
         raise Exception("Please define %s  setting" % name)
 
+
 class GlobalSettingsSMTP(GlobalSettingsBase):
     pass
+
 
 class GlobalSettingsIMAP(GlobalSettingsBase):
     pass
 
-class GlobalSettingsMail(GlobalSettingsBase):
 
+class GlobalSettingsMail(GlobalSettingsBase):
     def _feedbackEmail(self):
         print "Send a feedback email, written by website end user, to this email address. Usually parasykjiems@gmail.com"
 
     def __init__(self):
-        super(GlobalSettingsMail, self).__init__();
-
+        super(GlobalSettingsMail, self).__init__()
         self.mailVariables = {'feedbackEmail': self._feedbackEmail}
         self.variablesToFunction = dict(self.variablesToFunction, **self.mailVariables)
 
@@ -49,19 +51,20 @@ class GlobalSettingsClass(GlobalSettingsBase):
     # a root class from which all environment variables will be taken
     # will print help if given variable will not be defined
     def __init__(self):
-        super(GlobalSettingsClass, self).__init__();
+        super(GlobalSettingsClass, self).__init__()
 
-        globalSettingsObjectVariables = {'GOOGLE_DOCS_USER' : self.googleDocsUsers,
-                         'GOOGLE_DOCS_PASSWORD' : self.googleDocsUsers,
-                         'EnableWWWForLTGeoTests' : self._EnableWWWForLTGeoTests,
-                         'LTGeoDataParseUrl' : self._LTGeoDataParseUrl,
-                         'LANGUAGES' : self.Languages,
-                         'PROFANITIES_LIST' : self.Profanities,
-                         'MAIL_SERVER' : self.MailServ,
-                         'MAIL_SERVER_TYPE' : self.MailServ,
-                         'MAIL_USERNAME' : self.MailServ,
-                         'MAIL_PASSWORD' : self.MailServ,
-                         'MAIL_PORT' : self.MailServ,}
+        globalSettingsObjectVariables = {
+            'GOOGLE_DOCS_USER': self.googleDocsUsers,
+            'GOOGLE_DOCS_PASSWORD': self.googleDocsUsers,
+            'EnableWWWForLTGeoTests': self._EnableWWWForLTGeoTests,
+            'LTGeoDataParseUrl': self._LTGeoDataParseUrl,
+            'PROFANITIES_LIST': self.Profanities,
+            'MAIL_SERVER': self.MailServ,
+            'MAIL_SERVER_TYPE': self.MailServ,
+            'MAIL_USERNAME': self.MailServ,
+            'MAIL_PASSWORD': self.MailServ,
+            'MAIL_PORT': self.MailServ,
+            }
 
         self.variablesToFunction = dict(self.variablesToFunction, **globalSettingsObjectVariables)
 
@@ -74,9 +77,6 @@ class GlobalSettingsClass(GlobalSettingsBase):
 
     def _EnableWWWForLTGeoTests(self):
         print "Define EnableWWWForLTGeoTests settings. Needed to check if run geo tests against real world data. Default is False "
-
-    def Languages(self):
-        print "Define used Languages. Defaults are Lithuanian and English "
 
     def Profanities(self):
         print "Define profanities (nasty words) list in local_settings.py "
