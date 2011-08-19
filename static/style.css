@@ -265,6 +265,7 @@ h1 {
 
 .institution {
     margin-bottom: 3em;
+    clear: both;
 }
 
 .institution h2 {
@@ -293,28 +294,15 @@ h1 {
 }
 
 .institution .representative {
-    margin-left: 1em;
+    background: #fafafa;
+    border: 1px solid #efefef;
+    margin: 1em;
+    border-radius: 5px;
 }
 
 .institution img {
     float: left;
     margin: 8px;
-}
-
-.institution .letters {
-    border: 1px solid #eee;
-    border-radius: 3px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    background: #fafafa;
-}
-
-.representative .letters {
-    border: 1px solid #eee;
-    border-radius: 3px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    background: #fafafa;
 }
 
 .subtitle {
@@ -390,6 +378,48 @@ form th {
     font-size: 14pt;
 }
 
+.recent-letters li {
+    padding: 0;
+}
+
+.recent-letters .answered {
+    font-size: 6pt;
+    margin: 0;
+    padding: 1px 7px 1px 7px;
+}
+
+.recent-letters .subject {
+    font-size: 10pt;
+}
+
+.recent-letters .subject {
+    font-size: 10pt;
+}
+
+.recent-letters {
+    width: 40%;
+    padding-left: 1em;
+    border-left: 1px solid #efefef;
+}
+
+.representative {
+    width: 100%;
+}
+
+.representative td {
+    vertical-align: top;
+    padding: 0 1em 0 1em;
+}
+
+.description {
+    background: #ffa;
+    padding: 1em;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border: 1px solid #ee9;
+}
+
 .answered {
     float: right;
     font-size: 10pt;
@@ -398,6 +428,7 @@ form th {
     border-radius: 30px;
     -moz-border-radius: 30px;
     -webkit-border-radius: 30px;
+    margin-top: 0.5em;
     padding: 7px;
 }
 

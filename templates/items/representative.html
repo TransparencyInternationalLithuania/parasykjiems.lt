@@ -1,38 +1,43 @@
 {% load i18n markup %}
-<div class="representative">
-  <h4>{{ representative.name }}</h4>
-  <p class="subtitle">{{ representative.kind.name }}</p>
+<table class="representative">
+  <tr><td>
+      <h4>{{ representative.name }}</h4>
+      <p class="subtitle">{{ representative.kind.name }}</p>
 
-  {% if representative.kind.description %}
-  <div id="description">{{ representative.kind.description|markdown }}</div>
-  {% endif %}
+      {% if representative.kind.description %}
+      <div class="description">{{ representative.kind.description|markdown }}</div>
+      {% endif %}
 
-  {% if not institution %}
-  <p>
-    {% trans "Institution: " %}
-    <a href="{{ representative.institution.get_absolute_url }}">
-      {{ representative.institution.name }}
-    </a>
-  </p>
-  {% endif %}
+      {% if not institution %}
+      <p>
+        {% trans "Institution: " %}
+        <a href="{{ representative.institution.get_absolute_url }}">
+          {{ representative.institution.name }}
+        </a>
+      </p>
+      {% endif %}
 
-  {% if representative.email %}
-  <p>
-    {% trans "Email: " %} {{ representative.email }} &mdash;
-    <a href="{% url write-representative representative.slug %}{{ choose_query }}">{% trans "Write letter" %}</a>
-  </p>
-  {% endif %}
+      {% if representative.email %}
+      <p>
+        {% trans "Email: " %} {{ representative.email }} &mdash;
+        <a href="{% url write-representative representative.slug %}{{ choose_query }}">{% trans "Write letter" %}</a>
+      </p>
+      {% endif %}
 
-  {% if representative.phone %}
-  <p>{% trans "Phone number: " %} {{ representative.phone }}</p>
-  {% endif %}
+      {% if representative.phone %}
+      <p>{% trans "Phone number: " %} {{ representative.phone }}</p>
+      {% endif %}
 
-  {% if representative.other_contacts %}
-  <p>{{ representative.other_contacts }}</p>
-  {% endif %}
-
+      {% if representative.other_contacts %}
+      <p>{{ representative.other_contacts }}</p>
+      {% endif %}
+    </td>
   {% if representative.recent_letters %}
-  <h3>{% trans "Recent letters" %}</h3>
-  {% include "items/letters.html" with letters=representative.recent_letters %}
+    <td class="recent-letters">
+    <h4>{% trans "Recent letters" %}</h4>
+    {% include "items/letters.html" with letters=representative.recent_letters %}
+    </td>
   {% endif %}
-</div>
+  </tr>
+</table>
+

@@ -6,7 +6,15 @@
   {% if letter.is_open and letter.is_sent %}
   <li>
       {% if letter.has_answer %}<div class="answered">{% trans "Answered" %}</div>{% endif %}
-    <p class="subject"><a href="{{ letter.get_absolute_url }}{% if page.number != 1 %}?p={{ page.number }}{% endif %}">{{ letter.subject }}</a></p>
+    <p class="subject">
+      <a href="{{ letter.get_absolute_url }}{% if page.number != 1 %}?p={{ page.number }}{% endif %}">
+        {{ letter.subject }}
+      </a>
+      {% if representative or institution %}
+      ({{ letter.date|date:'Y-m-d' }})
+      {% endif %}
+    </p>
+    {% if not representative and not institution %}
     <p>
       {% trans "Sender: " %}
       {{ letter.sender_name|nobreaks }}{% trans ", recipient: " %}
@@ -15,7 +23,8 @@
       {% trans "Sent at" %}
       {{ letter.date|date:'Y-m-d' }}.
     </p>
-  </tr>
+    {% endif %}
+  </li>
   {% endif %}
   {% endfor %}
-</table>
+</ul>
