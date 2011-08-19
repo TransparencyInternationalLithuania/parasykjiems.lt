@@ -9,6 +9,7 @@ required Python packages are
  - pysqlite or some other database
  - django-haystack
  - South
+ - markdown
  - unidecode (used for transliteration in search)
  - progressbar — for importdata and tidy_locations commands
  - gunicorn — for launching a production server
