@@ -97,10 +97,10 @@ def institution(request, slug):
 def location(request, slug, house_number=None):
     loc = get_object_or_404(Location, slug=slug)
     all_territories = Territory.objects.filter(
-        municipality=loc.municipality,
-        elderate=loc.elderate,
-        city=loc.city,
-        street=loc.street)
+        municipality__iexact=loc.municipality,
+        elderate__iexact=loc.elderate,
+        city__iexact=loc.city,
+        street__iexact=loc.street)
     territories = list(all_territories.filter(numbers=''))
     restricted_territories = all_territories.exclude(numbers='')
     if restricted_territories.exists():
@@ -113,7 +113,8 @@ def location(request, slug, house_number=None):
     institutions = ([t.institution
                      for t in territories
                      if t.institution.kind.active]
-                    + list(Institution.objects.filter(name=loc.municipality)))
+                    + list(Institution.objects.filter(
+                        name__iexact=loc.municipality)))
     institutions.sort(key=lambda i: i.kind.ordinal)
     num_q = '&n={}'.format(house_number) if house_number else ''
     return render(request, 'views/location.html', {
