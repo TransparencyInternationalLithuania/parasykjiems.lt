@@ -23,7 +23,8 @@ class Command(BaseCommand):
         print 'Inserting new ones.'
         cursor.execute('''
         INSERT INTO search_location (municipality, elderate, city, street, slug)
-          SELECT DISTINCT municipality, elderate, city, street, ''
+          SELECT DISTINCT ON (upper(municipality), upper(elderate), upper(city), upper(street))
+            municipality, elderate, city, street, ''
           FROM
             search_territory
             INNER JOIN search_institution
@@ -34,10 +35,10 @@ class Command(BaseCommand):
           AND NOT EXISTS
             (SELECT *
              FROM search_location
-             WHERE search_location.municipality = search_territory.municipality
-               AND search_location.elderate = search_territory.elderate
-               AND search_location.city = search_territory.city
-               AND search_location.street = search_territory.street);
+             WHERE upper(search_location.municipality) = upper(search_territory.municipality)
+               AND upper(search_location.elderate) = upper(search_territory.elderate)
+               AND upper(search_location.city) = upper(search_territory.city)
+               AND upper(search_location.street) = upper(search_territory.street));
         ''')
 
         print 'Deleting old ones.'
@@ -46,10 +47,10 @@ class Command(BaseCommand):
         WHERE NOT EXISTS
           (SELECT *
            FROM search_territory
-           WHERE search_location.municipality = search_territory.municipality
-             AND search_location.elderate = search_territory.elderate
-             AND search_location.city = search_territory.city
-             AND search_location.street = search_territory.street);
+           WHERE upper(search_location.municipality) = upper(search_territory.municipality)
+             AND upper(search_location.elderate) = upper(search_territory.elderate)
+             AND upper(search_location.city) = upper(search_territory.city)
+             AND upper(search_location.street) = upper(search_territory.street));
         ''')
 
         transaction.commit_unless_managed()
