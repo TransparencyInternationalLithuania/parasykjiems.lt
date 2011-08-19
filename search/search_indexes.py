@@ -45,7 +45,7 @@ class InstitutionIndex(indexes.SearchIndex):
         return obj.kind.name
 
     def index_queryset(self):
-        return Representative.objects.filter(kind__active=True)
+        return Representative.objects.exclude(slug='')
 
 
 site.register(Institution, InstitutionIndex)
@@ -76,7 +76,7 @@ class RepresentativeIndex(indexes.SearchIndex):
         return u'{}, {}'.format(obj.kind.name, obj.institution.name)
 
     def index_queryset(self):
-        return Representative.objects.filter(kind__active=True)
+        return Representative.objects.exclude(slug='')
 
 
 site.register(Representative, RepresentativeIndex)
@@ -123,5 +123,8 @@ class LocationIndex(indexes.SearchIndex):
         return ', '.join(x
                          for x in [obj.elderate, obj.municipality]
                          if x)
+
+    def index_queryset(self):
+        return Location.objects.exclude(slug='')
 
 site.register(Location, LocationIndex)
