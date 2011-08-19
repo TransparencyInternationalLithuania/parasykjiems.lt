@@ -1,8 +1,12 @@
-{% load i18n %}
+{% load i18n markup %}
 
 <div class="institution">
   <h2>{{ institution.name }}</h2>
   <p class="subtitle">{{ institution.kind.name }}</p>
+
+  {% if institution.kind.description %}
+  <div id="description">{{ institution.kind.description|markdown }}</div>
+  {% endif %}
 
   {% if institution.email %}
   <p>

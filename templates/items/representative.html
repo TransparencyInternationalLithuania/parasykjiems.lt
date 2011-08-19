@@ -3,6 +3,10 @@
   <h4>{{ representative.name }}</h4>
   <p class="subtitle">{{ representative.kind.name }}</p>
 
+  {% if representative.kind.description %}
+  <div id="description">{{ representative.kind.description|markdown }}</div>
+  {% endif %}
+
   {% if not institution %}
   <p>
     {% trans "Institution: " %}
