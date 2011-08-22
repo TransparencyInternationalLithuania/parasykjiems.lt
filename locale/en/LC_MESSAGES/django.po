@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-22 16:22+0300\n"
+"POT-Creation-Date: 2011-08-22 16:41+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -95,7 +95,15 @@ msgstr ""
 msgid "territories"
 msgstr ""
 
-#: templates/base.html:17
+#: templates/404.html:9
+msgid "Page not found"
+msgstr ""
+
+#: templates/500.html:10
+msgid "Internal server error"
+msgstr ""
+
+#: templates/base.html:18
 msgid ""
 "\n"
 "      <strong>Note:</strong> this is the testing version of ParašykJiems.\n"
@@ -103,15 +111,15 @@ msgid ""
 "      "
 msgstr ""
 
-#: templates/base.html:26
+#: templates/base.html:27
 msgid "ParašykJiems"
 msgstr ""
 
-#: templates/base.html:42
+#: templates/base.html:43
 msgid "Have any notes, suggestions?"
 msgstr ""
 
-#: templates/base.html:42
+#: templates/base.html:43
 msgid "Write to us."
 msgstr ""
 
