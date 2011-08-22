@@ -80,17 +80,18 @@ def sent(request, id):
     return render(request, 'views/sent.html', {'enquiry': enquiry})
 
 
-def letter(request, slug):
+def thread(request, slug):
     enquiry = get_object_or_404(Enquiry, slug=slug)
     if not enquiry.is_open or not enquiry.is_sent:
         raise Http404()
 
     responses = Response.objects.filter(parent=enquiry)
 
-    return render(request, 'views/letter.html', {
+    letters = [enquiry] + list(responses)
+
+    return render(request, 'views/thread.html', {
         'page': request.GET.get('p', ''),
-        'enquiry': enquiry,
-        'responses': responses,
+        'letters': letters,
     })
 
 
