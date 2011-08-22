@@ -27,7 +27,12 @@ function fetchResults(terms) {
 var resultsTimeout = null;
 var resultsTerms = '';
 
+function trim(str) {
+    return str.replace(/^\s+|\s+$/g, '');
+}
+
 function startUpdate(delay, terms) {
+    terms = trim(terms);
     if (terms == resultsTerms) return;
     if (resultsTimeout != null) {
         clearTimeout(resultsTimeout);
@@ -46,7 +51,7 @@ $(function() {
       var q = $(document.search.q);
       q.css({width: '100%'});
       q.focus();
-      resultsTerms = q.val();
+      resultsTerms = trim(q.val());
 
       q.keyup(
           function(e) {
