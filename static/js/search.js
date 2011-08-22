@@ -28,6 +28,7 @@ var resultsTimeout = null;
 var resultsTerms = '';
 
 function startUpdate(delay, terms) {
+    if (terms == resultsTerms) return;
     if (resultsTimeout != null) {
         clearTimeout(resultsTimeout);
     }
@@ -43,17 +44,16 @@ function startUpdate(delay, terms) {
 
 $(function() {
       var q = $(document.search.q);
-      q.focus();
       q.css({width: '100%'});
+      q.focus();
+      resultsTerms = q.val();
 
       q.keyup(
           function(e) {
               // Key pressed, so maybe we should update the
               // search results.
               var terms = q.val();
-              if (terms != resultsTerms) {
-                  startUpdate(600, terms);
-              }
+              startUpdate(600, terms);
           });
 
       $('body').keypress(
@@ -67,7 +67,7 @@ $(function() {
                       window.location.href = href;
                   } else {
                       // Otherwise, start AJAX update immediately to
-                      // imitate submittin the search form.
+                      // imitate submitting the search form.
                       startUpdate(1, q.val());
                   }
                   return false;
