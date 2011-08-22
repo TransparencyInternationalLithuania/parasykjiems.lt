@@ -465,6 +465,7 @@ hr {
 }
 
 a.write {
+    float: right;
     background: #0036A3;
     color: white;
     border-radius: 1em;
