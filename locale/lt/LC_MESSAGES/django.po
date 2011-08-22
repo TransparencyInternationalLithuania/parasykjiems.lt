@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-22 13:56+0300\n"
-"PO-Revision-Date: 2011-08-22 13:58+0300\n"
+"POT-Creation-Date: 2011-08-22 16:22+0300\n"
+"PO-Revision-Date: 2011-08-22 16:23+0300\n"
 "Last-Translator: Kiprianas Spiridonovas <k.spiridonovas@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -40,28 +40,32 @@ msgstr "Jūsų el. pašto adresas"
 msgid "Subject"
 msgstr "Tema"
 
-#: mail/forms.py:19
+#: mail/forms.py:21
+msgid "Open letter"
+msgstr "Atviras laiškas"
+
+#: mail/forms.py:23
+msgid "An open letter is visible to everyone in the letter list in the website."
+msgstr "Atvirus laiškus ir atsakymus į juos gali matyti visi svetainės lankytojai."
+
+#: mail/forms.py:26
 #: web/forms.py:12
 msgid "Message"
 msgstr "Turinys"
-
-#: mail/forms.py:22
-msgid "Open letter"
-msgstr "Atviras laiškas"
 
 #: mail/mail.py:54
 msgid "Confirm your letter"
 msgstr "Patvirtinkite savo laišką"
 
-#: mail/mail.py:114
+#: mail/mail.py:123
 msgid "Copy of the letter you sent."
 msgstr "Laiško, kurį išsiuntėte, kopija"
 
-#: mail/mail.py:181
+#: mail/mail.py:190
 msgid "Your enquiry has been responded to"
 msgstr "Į jūsų laišką buvo atsakyta"
 
-#: mail/models.py:129
+#: mail/models.py:134
 msgid "The unprocessed e-mail message."
 msgstr ""
 
@@ -302,7 +306,7 @@ msgstr ""
 "\n"
 "Galite jį peržiūrėti <a href=\"%(url)s\">čia</a>."
 
-#: templates/views/write.html:23
+#: templates/views/write.html:60
 msgid "Submit"
 msgstr "Pateikti"
 

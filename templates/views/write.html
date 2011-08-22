@@ -18,7 +18,44 @@
 <form method="POST">
   {% csrf_token %}
   <table>
-    {{ form.as_table }}
+    <tr>
+      <th>Gavėjas:</th>
+      <td>
+        <a href="{{ recipient.get_absolute_url }}">
+        {{ recipient.kind }} {{ recipient.name }}
+        </a>
+      </td>
+    </tr>
+    {% for field in form %}
+    <tr>
+      {% if field.html_name == 'is_open' %}
+      <td colspan="2">
+        {{ field }} {{ field.label_tag }}
+      </td>
+      {% else %}
+      {% if field.html_name == 'body' %}
+      <td colspan="2">
+        {{ field }}
+        {{ field.errors }}
+      </td>
+      {% else %}
+      <th>
+        {{ field.label_tag }}:
+      </th>
+      <td>
+        {{ field }}
+        {{ field.errors }}
+      </td>
+      {% endif %}
+      {% endif %}
+
+      {% if field.help_text %}
+      <tr><td colspan="2" class="helptext">
+          {{ field.help_text }}
+      </td></tr>
+      {% endif %}
+    </tr>
+    {% endfor %}
   </table>
   <input value="{% trans "Submit" %}" type="submit"></input>
 </form>
