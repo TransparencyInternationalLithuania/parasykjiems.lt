@@ -16,8 +16,13 @@ class WriteLetterForm(forms.Form):
     subject = forms.CharField(label=_("Subject"),
                               max_length=100,
                               required=True)
+
+    is_open = forms.BooleanField(
+        label=_("Open letter"),
+        required=False,
+        help_text=_("An open letter is visible to everyone in the "
+                    "letter list in the website."))
+
     body = forms.CharField(label=_("Message"),
                            widget=forms.widgets.Textarea(),
                            required=True)
-    is_open = forms.BooleanField(label=_("Open letter"),
-                                 required=False)

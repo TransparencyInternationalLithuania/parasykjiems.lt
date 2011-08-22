@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-22 13:56+0300\n"
+"POT-Creation-Date: 2011-08-22 16:22+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,27 +37,32 @@ msgstr ""
 msgid "Subject"
 msgstr ""
 
-#: mail/forms.py:19 web/forms.py:12
-msgid "Message"
+#: mail/forms.py:21
+msgid "Open letter"
 msgstr ""
 
-#: mail/forms.py:22
-msgid "Open letter"
+#: mail/forms.py:23
+msgid ""
+"An open letter is visible to everyone in the letter list in the website."
+msgstr ""
+
+#: mail/forms.py:26 web/forms.py:12
+msgid "Message"
 msgstr ""
 
 #: mail/mail.py:54
 msgid "Confirm your letter"
 msgstr ""
 
-#: mail/mail.py:114
+#: mail/mail.py:123
 msgid "Copy of the letter you sent."
 msgstr ""
 
-#: mail/mail.py:181
+#: mail/mail.py:190
 msgid "Your enquiry has been responded to"
 msgstr ""
 
-#: mail/models.py:129
+#: mail/models.py:134
 msgid "The unprocessed e-mail message."
 msgstr ""
 
@@ -282,7 +287,7 @@ msgid ""
 "  "
 msgstr ""
 
-#: templates/views/write.html:23
+#: templates/views/write.html:60
 msgid "Submit"
 msgstr ""
 
