@@ -45,7 +45,7 @@ class InstitutionIndex(indexes.SearchIndex):
         return obj.kind.name
 
     def index_queryset(self):
-        return Representative.objects.exclude(slug='')
+        return Institution.objects.exclude(slug='')
 
 
 site.register(Institution, InstitutionIndex)
