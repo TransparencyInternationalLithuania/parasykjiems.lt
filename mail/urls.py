@@ -11,7 +11,7 @@ urlpatterns = patterns('mail.views',
         name='confirm'),
     url(r'^sent/(?P<id>\d+)/$', 'sent'),
 
-    url(r'^letter/(?P<slug>[\w-]+)/$', 'letter', name='letter'),
+    url(r'^thread/(?P<slug>[\w-]+)/$', 'thread', name='thread'),
 
     url(r'^letters/$', 'letters', name='letters'),
 )
