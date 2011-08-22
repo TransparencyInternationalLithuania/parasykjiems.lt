@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-17 16:47+0300\n"
-"PO-Revision-Date: 2011-08-17 16:50+0300\n"
+"POT-Creation-Date: 2011-08-22 13:56+0300\n"
+"PO-Revision-Date: 2011-08-22 13:58+0300\n"
 "Last-Translator: Kiprianas Spiridonovas <k.spiridonovas@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -53,15 +53,15 @@ msgstr "Atviras laiškas"
 msgid "Confirm your letter"
 msgstr "Patvirtinkite savo laišką"
 
-#: mail/mail.py:108
+#: mail/mail.py:114
 msgid "Copy of the letter you sent."
 msgstr "Laiško, kurį išsiuntėte, kopija"
 
-#: mail/mail.py:175
+#: mail/mail.py:181
 msgid "Your enquiry has been responded to"
 msgstr "Į jūsų laišką buvo atsakyta"
 
-#: mail/models.py:130
+#: mail/models.py:129
 msgid "The unprocessed e-mail message."
 msgstr ""
 
@@ -73,24 +73,29 @@ msgstr "Pastato numeris turi būti skačius ir gali turėti vieną raidę gale."
 msgid "House number"
 msgstr "Pastato numeris"
 
-#: search/models.py:17
+#: search/models.py:15
+#: search/models.py:63
+msgid "In Markdown format."
+msgstr "Markdown formatu."
+
+#: search/models.py:19
 msgid "This number is used for sorting institutions in the location view."
 msgstr ""
 
-#: search/models.py:63
+#: search/models.py:67
 msgid "This number is used for sorting representatives in the institution view."
 msgstr ""
 
-#: search/models.py:124
-#: search/models.py:166
+#: search/models.py:128
+#: search/models.py:170
 msgid "Name of city, town or village."
 msgstr "Miesto, miestelio arba kaimo pavadinimas"
 
-#: search/models.py:191
+#: search/models.py:195
 msgid "territories"
 msgstr ""
 
-#: templates/base.html:16
+#: templates/base.html:17
 msgid ""
 "\n"
 "      <strong>Note:</strong> this is the testing version of ParašykJiems.\n"
@@ -101,15 +106,15 @@ msgstr ""
 "<strong>Pastaba:</strong> čia yra ParašykJiems versija, skirta testavimui.\n"
 "Laiškai atstovams nėra siunčiami, nors yra rodomi tinklalapyje."
 
-#: templates/base.html:25
+#: templates/base.html:26
 msgid "ParašykJiems"
 msgstr ""
 
-#: templates/base.html:41
+#: templates/base.html:42
 msgid "Have any notes, suggestions?"
 msgstr "Turite pastabų, pasiūlymų?"
 
-#: templates/base.html:41
+#: templates/base.html:42
 msgid "Write to us."
 msgstr "Parašykite mums."
 
@@ -179,33 +184,29 @@ msgstr "Raskite atstovą"
 msgid "Write a letter"
 msgstr "Parašykite laišką"
 
-#: templates/items/institution.html:9
-#: templates/items/representative.html:17
+#: templates/items/institution.html:11
+#: templates/items/representative.html:27
 msgid "Email: "
 msgstr "El. paštas:"
 
-#: templates/items/institution.html:10
-#: templates/items/representative.html:18
-msgid "Write letter"
-msgstr "Parašykite laišką"
+#: templates/items/institution.html:13
+#: templates/items/representative.html:29
+msgid "Write&nbsp;letter"
+msgstr "Rašyti laišką"
 
-#: templates/items/institution.html:15
-#: templates/items/representative.html:23
+#: templates/items/institution.html:19
+#: templates/items/representative.html:35
 msgid "Phone number: "
 msgstr "Telefono numeris: "
 
-#: templates/items/institution.html:19
+#: templates/items/institution.html:23
 msgid "Address: "
 msgstr "Adresas: "
 
-#: templates/items/institution.html:23
-#: templates/items/representative.html:31
+#: templates/items/institution.html:33
+#: templates/items/representative.html:44
 msgid "Recent letters"
 msgstr "Naujausi laiškai"
-
-#: templates/items/institution.html:28
-msgid "Representatives"
-msgstr "Atstovai"
 
 #: templates/items/letter.html:6
 msgid "From:"
@@ -227,19 +228,19 @@ msgstr "Data: "
 msgid "Answered"
 msgstr "Yra atsakymas"
 
-#: templates/items/letters.html:11
+#: templates/items/letters.html:19
 msgid "Sender: "
 msgstr "Siuntėjas: "
 
-#: templates/items/letters.html:12
+#: templates/items/letters.html:20
 msgid ", recipient: "
 msgstr ", gavėjas: "
 
-#: templates/items/letters.html:15
+#: templates/items/letters.html:23
 msgid "Sent at"
 msgstr "Išsiųsta"
 
-#: templates/items/representative.html:8
+#: templates/items/representative.html:18
 msgid "Institution: "
 msgstr "Institucija: "
 
@@ -279,7 +280,7 @@ msgstr "Kitas puslapis"
 msgid "Continue"
 msgstr "Tęsti"
 
-#: templates/views/search.html:21
+#: templates/views/search.html:20
 msgid "Search"
 msgstr "Paieška"
 
@@ -314,6 +315,9 @@ msgid ""
 msgstr ""
 "\n"
 "Pasitikrinkite savo elektroninį paštą. Mes Jums išsiuntėme patvirtinimo nuorodą. Jūs turite patvirtinti savo laišką prieš tai, kaip jis bus išsiųstas."
+
+#~ msgid "Representatives"
+#~ msgstr "Atstovai"
 
 #~ msgid "Representative"
 #~ msgstr "Atstovas"
