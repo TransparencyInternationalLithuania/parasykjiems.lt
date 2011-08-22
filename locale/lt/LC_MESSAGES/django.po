@@ -7,15 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-22 16:22+0300\n"
-"PO-Revision-Date: 2011-08-22 16:23+0300\n"
+"POT-Creation-Date: 2011-08-22 16:40+0300\n"
+"PO-Revision-Date: 2011-08-22 16:39+0300\n"
 "Last-Translator: Kiprianas Spiridonovas <k.spiridonovas@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n"
+"%100<10 || n%100>=20) ? 1 : 2)\n"
 
 #: settings.py:22
 msgid "English"
@@ -25,18 +26,15 @@ msgstr "Anglų"
 msgid "Lithuanian"
 msgstr "Lietuvių"
 
-#: mail/forms.py:7
-#: web/forms.py:6
+#: mail/forms.py:7 web/forms.py:6
 msgid "Your name"
 msgstr "Jūsų vardas"
 
-#: mail/forms.py:10
-#: web/forms.py:8
+#: mail/forms.py:10 web/forms.py:8
 msgid "Your e-mail address"
 msgstr "Jūsų el. pašto adresas"
 
-#: mail/forms.py:16
-#: web/forms.py:10
+#: mail/forms.py:16 web/forms.py:10
 msgid "Subject"
 msgstr "Tema"
 
@@ -45,11 +43,12 @@ msgid "Open letter"
 msgstr "Atviras laiškas"
 
 #: mail/forms.py:23
-msgid "An open letter is visible to everyone in the letter list in the website."
-msgstr "Atvirus laiškus ir atsakymus į juos gali matyti visi svetainės lankytojai."
+msgid ""
+"An open letter is visible to everyone in the letter list in the website."
+msgstr ""
+"Atvirus laiškus ir atsakymus į juos gali matyti visi svetainės lankytojai."
 
-#: mail/forms.py:26
-#: web/forms.py:12
+#: mail/forms.py:26 web/forms.py:12
 msgid "Message"
 msgstr "Turinys"
 
@@ -77,8 +76,7 @@ msgstr "Pastato numeris turi būti skačius ir gali turėti vieną raidę gale."
 msgid "House number"
 msgstr "Pastato numeris"
 
-#: search/models.py:15
-#: search/models.py:63
+#: search/models.py:15 search/models.py:63
 msgid "In Markdown format."
 msgstr "Markdown formatu."
 
@@ -87,11 +85,11 @@ msgid "This number is used for sorting institutions in the location view."
 msgstr ""
 
 #: search/models.py:67
-msgid "This number is used for sorting representatives in the institution view."
+msgid ""
+"This number is used for sorting representatives in the institution view."
 msgstr ""
 
-#: search/models.py:128
-#: search/models.py:170
+#: search/models.py:128 search/models.py:170
 msgid "Name of city, town or village."
 msgstr "Miesto, miestelio arba kaimo pavadinimas"
 
@@ -99,7 +97,17 @@ msgstr "Miesto, miestelio arba kaimo pavadinimas"
 msgid "territories"
 msgstr ""
 
-#: templates/base.html:17
+#: templates/404.html:9
+#, fuzzy
+msgid "Page not found"
+msgstr "Klaida: puslapis nerastas."
+
+#: templates/500.html:10
+#, fuzzy
+msgid "Internal server error"
+msgstr "Klaida: vidinė programinė klaida."
+
+#: templates/base.html:18
 msgid ""
 "\n"
 "      <strong>Note:</strong> this is the testing version of ParašykJiems.\n"
@@ -110,25 +118,23 @@ msgstr ""
 "<strong>Pastaba:</strong> čia yra ParašykJiems versija, skirta testavimui.\n"
 "Laiškai atstovams nėra siunčiami, nors yra rodomi tinklalapyje."
 
-#: templates/base.html:26
+#: templates/base.html:27
 msgid "ParašykJiems"
 msgstr ""
 
-#: templates/base.html:42
+#: templates/base.html:43
 msgid "Have any notes, suggestions?"
 msgstr "Turite pastabų, pasiūlymų?"
 
-#: templates/base.html:42
+#: templates/base.html:43
 msgid "Write to us."
 msgstr "Parašykite mums."
 
-#: templates/menu.html:5
-#: templates/views/help.html:9
+#: templates/menu.html:5 templates/views/help.html:9
 msgid "Help"
 msgstr "Pagalba"
 
-#: templates/menu.html:11
-#: templates/breadcrumbs/letters.html:7
+#: templates/menu.html:11 templates/breadcrumbs/letters.html:7
 msgid "Open letters"
 msgstr "Atviri laiškai"
 
@@ -138,7 +144,9 @@ msgstr "Atstovo paieška"
 
 #: templates/results.html:15
 msgid "There are more results matching your query. Try narrowing your search."
-msgstr "Yra daugiau rezultatų atitinkančių jūsų užklausą. Pabandykite susiaurinti savo paiešką panaudodami daugiau žodžių."
+msgstr ""
+"Yra daugiau rezultatų atitinkančių jūsų užklausą. Pabandykite susiaurinti "
+"savo paiešką panaudodami daugiau žodžių."
 
 #: templates/results.html:20
 msgid "Nothing found."
@@ -188,18 +196,15 @@ msgstr "Raskite atstovą"
 msgid "Write a letter"
 msgstr "Parašykite laišką"
 
-#: templates/items/institution.html:11
-#: templates/items/representative.html:27
+#: templates/items/institution.html:11 templates/items/representative.html:27
 msgid "Email: "
 msgstr "El. paštas:"
 
-#: templates/items/institution.html:13
-#: templates/items/representative.html:29
+#: templates/items/institution.html:13 templates/items/representative.html:29
 msgid "Write&nbsp;letter"
 msgstr "Rašyti laišką"
 
-#: templates/items/institution.html:19
-#: templates/items/representative.html:35
+#: templates/items/institution.html:19 templates/items/representative.html:35
 msgid "Phone number: "
 msgstr "Telefono numeris: "
 
@@ -207,8 +212,7 @@ msgstr "Telefono numeris: "
 msgid "Address: "
 msgstr "Adresas: "
 
-#: templates/items/institution.html:33
-#: templates/items/representative.html:44
+#: templates/items/institution.html:33 templates/items/representative.html:44
 msgid "Recent letters"
 msgstr "Naujausi laiškai"
 
@@ -248,8 +252,7 @@ msgstr "Išsiųsta"
 msgid "Institution: "
 msgstr "Institucija: "
 
-#: templates/views/confirm.html:21
-#: templates/views/feedback.html:15
+#: templates/views/confirm.html:21 templates/views/feedback.html:15
 msgid "Send"
 msgstr "Siųsti"
 
@@ -318,7 +321,9 @@ msgid ""
 "  "
 msgstr ""
 "\n"
-"Pasitikrinkite savo elektroninį paštą. Mes Jums išsiuntėme patvirtinimo nuorodą. Jūs turite patvirtinti savo laišką prieš tai, kaip jis bus išsiųstas."
+"Pasitikrinkite savo elektroninį paštą. Mes Jums išsiuntėme patvirtinimo "
+"nuorodą. Jūs turite patvirtinti savo laišką prieš tai, kaip jis bus "
+"išsiųstas."
 
 #~ msgid "Representatives"
 #~ msgstr "Atstovai"
