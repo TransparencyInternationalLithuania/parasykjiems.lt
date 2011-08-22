@@ -207,6 +207,10 @@ form {
     margin: 3em auto 3em auto;
 }
 
+form[name="search"] {
+    width: 100%;
+}
+
 form table {
     width: 100%;
     margin: 0 auto 0 auto;
