@@ -16,5 +16,8 @@
 {% block content %}
 {% for institution in institutions %}
 {% include "items/institution.html" %}
+{% if not forloop.last %}
+<hr>
+{% endif %}
 {% endfor %}
 {% endblock %}
