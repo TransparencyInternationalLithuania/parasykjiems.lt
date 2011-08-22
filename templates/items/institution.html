@@ -1,41 +1,42 @@
 {% load i18n markup %}
 
-<div class="institution">
-  <h2>{{ institution.name }}</h2>
-  <p class="subtitle">{{ institution.kind.name }}</p>
+<table class="container">
+  <tr class="institution">
+    <td>
+      <h2>{{ institution.name }}</h2>
+      <p class="subtitle">{{ institution.kind.name }}</p>
 
-  {% if institution.recent_letters %}
-  <div class="recent-letters">
-  <h3>{% trans "Recent letters" %}</h3>
-  {% include "items/letters.html" with letters=institution.recent_letters %}
-  </div>
-  {% endif %}
+      {% if institution.email %}
+      <p>
+        {% trans "Email: " %} {{ institution.email }}
+        <a class="write" href="{% url write-institution institution.slug %}{{ choose_query }}">
+          {% trans "Write&nbsp;letter" %}
+        </a>
+      </p>
+      {% endif %}
 
-  {% if institution.kind.description %}
-  <div class="description">{{ institution.kind.description|markdown }}</div>
-  {% endif %}
+      {% if institution.phone %}
+      <p>{% trans "Phone number: " %} {{ institution.phone }}</p>
+      {% endif %}
 
-  {% if institution.email %}
-  <p>
-    {% trans "Email: " %} {{ institution.email }} &mdash;
-    <a href="{% url write-institution institution.slug %}{{ choose_query }}">{% trans "Write letter" %}</a>
-  </p>
-  {% endif %}
+      {% if institution.address %}
+      <p>{% trans "Address: " %} {{ institution.address }}</p>
+      {% endif %}
+    </td>
+    <td class="right">
+      {% if institution.kind.description %}
+      {{ institution.kind.description|markdown }}
+      {% endif %}
 
-  {% if institution.phone %}
-  <p>{% trans "Phone number: " %} {{ institution.phone }}</p>
-  {% endif %}
-
-  {% if institution.address != '' %}
-  <p>{% trans "Address: " %} {{ institution.address }}</p>
-  {% endif %}
-
-  {% if institution.representatives %}
-  <h3>{% trans "Representatives" %}</h3>
-  <ul>
-    {% for representative in institution.representatives %}
-    {% include "items/representative.html" %}
-    {% endfor %}
-  </ul>
-  {% endif %}
-</div>
+      {% if institution.recent_letters %}
+      <div class="recent-letters">
+        <h5>{% trans "Recent letters" %}</h5>
+        {% include "items/letters.html" with letters=institution.recent_letters %}
+      </div>
+      {% endif %}
+    </td>
+  </tr>
+  {% for representative in institution.representatives %}
+  {% include "items/representative.html" %}
+  {% endfor %}
+</table>

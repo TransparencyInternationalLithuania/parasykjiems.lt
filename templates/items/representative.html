@@ -1,6 +1,11 @@
 {% load i18n markup %}
-<table class="representative">
-  <tr><td>
+
+{% if not institution %}
+<table class="container">
+{% endif %}
+
+  <tr class="representative{% if institution %} institution-representative{% endif %}">
+    <td>
       <h4>{{ representative.name }}</h4>
       <p class="subtitle">{{ representative.kind.name }}</p>
 
@@ -17,14 +22,16 @@
       </p>
       {% endif %}
 
-      {% if representative.email %}
+      {% if representative.email and representative.email != institution.email %}
       <p>
-        {% trans "Email: " %} {{ representative.email }} &mdash;
-        <a href="{% url write-representative representative.slug %}{{ choose_query }}">{% trans "Write letter" %}</a>
+        {% trans "Email: " %} {{ representative.email }}
+        <a class="write" href="{% url write-representative representative.slug %}{{ choose_query }}">
+          {% trans "Write&nbsp;letter" %}
+        </a>
       </p>
       {% endif %}
 
-      {% if representative.phone %}
+      {% if representative.phone and representative.phone != institution.phone %}
       <p>{% trans "Phone number: " %} {{ representative.phone }}</p>
       {% endif %}
 
@@ -32,12 +39,14 @@
       <p>{{ representative.other_contacts }}</p>
       {% endif %}
     </td>
-  {% if representative.recent_letters %}
-    <td class="recent-letters">
-    <h4>{% trans "Recent letters" %}</h4>
-    {% include "items/letters.html" with letters=representative.recent_letters %}
+    {% if representative.recent_letters %}
+    <td class="right">
+      <h5>{% trans "Recent letters" %}</h5>
+      {% include "items/letters.html" with letters=representative.recent_letters %}
     </td>
-  {% endif %}
+    {% endif %}
   </tr>
-</table>
 
+{% if not institution %}
+</table>
+{% endif %}

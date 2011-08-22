@@ -27,7 +27,7 @@ body {
 }
 
 #testing-version {
-    width: 840px;
+    width: 900px;
     margin: 2em auto 2em auto;
     border: solid 1px #888;
     background: #ffc;
@@ -42,7 +42,7 @@ body {
 }
 
 #main-block {
-    width: 840px;
+    width: 900px;
     margin: 2em auto 2em auto;
     padding: 0em 0 1em 0;
     border: solid 1px #888;
@@ -160,7 +160,7 @@ a:hover {
 }
 
 #content {
-    margin: 2em 3em 2em 3em;
+    margin: 2em 3em 4em 3em;
 }
 
 #footer {
@@ -255,7 +255,7 @@ form input[type=submit]:hover {
     padding: 5px 10px 5px 5px;
 }
 
-h1, h2, h3, h4 {
+h1, h2, h3, h4, h5 {
     color: #444;
 }
 
@@ -288,16 +288,14 @@ h1 {
     font-size: 16pt;
 }
 
-.institution .representative h4 {
+.institution-representative h4 {
     margin-bottom: 0;
     font-size: 12pt;
 }
 
-.institution .representative {
-    background: #fafafa;
-    border: 1px solid #efefef;
-    margin: 1em;
-    border-radius: 5px;
+h5 {
+    font-size: 12pt;
+    font-weight: bold;
 }
 
 .institution img {
@@ -378,35 +376,41 @@ form th {
     font-size: 14pt;
 }
 
-.recent-letters li {
+.right li {
     padding: 0;
 }
 
-.recent-letters .answered {
-    font-size: 6pt;
+.right .answered {
+    font-size: 10pt;
     margin: 0;
     padding: 1px 7px 1px 7px;
 }
 
-.recent-letters .subject {
-    font-size: 10pt;
+.right .subject {
+    font-size: 11pt;
 }
 
-.recent-letters .subject {
-    font-size: 10pt;
+.right .subject {
+    font-size: 11pt;
 }
 
-.recent-letters {
-    width: 40%;
+.right {
+    width: 50%;
     padding-left: 1em;
-    border-left: 1px solid #efefef;
 }
 
-.representative {
+.container {
     width: 100%;
+    font-size: 11pt;
 }
 
-.representative td {
+hr {
+    margin: 2em 0 2em 0;
+    border: none;
+    border-bottom: 1px dotted #aaa;
+}
+
+.container td {
     vertical-align: top;
     padding: 0 1em 0 1em;
 }
@@ -458,4 +462,15 @@ form th {
 
 .updating {
     opacity: 0.5;
+}
+
+a.write {
+    background: #0036A3;
+    color: white;
+    border-radius: 1em;
+    padding: 0 0.5em 0 0.5em;
+}
+
+a.write:hover {
+    background: #2056D3;
 }
