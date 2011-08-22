@@ -54,6 +54,8 @@ class Enquiry(models.Model):
 
     submitted_at = models.DateTimeField(auto_now_add=True)
 
+    is_confirmed = models.BooleanField()
+
     is_sent = models.BooleanField()
     sent_at = models.DateTimeField(null=True)
 
@@ -70,7 +72,8 @@ class Enquiry(models.Model):
 
         rand = random.SystemRandom()
 
-        self.confirm_hash = rand.randint(1, Enquiry._hash_max)
+        if not self.confirm_hash:
+            self.confirm_hash = rand.randint(1, Enquiry._hash_max)
 
         if not self.reply_hash:
             self.reply_hash = rand.randint(1, Enquiry._hash_max)
@@ -110,6 +113,8 @@ class Enquiry(models.Model):
     def __unicode__(self):
         if self.is_sent:
             sent_msg = u'sent at {}'.format(self.sent_at)
+        elif self.is_confirmed:
+            sent_msg = u'confirmed'
         else:
             sent_msg = u'unconfirmed'
         return u'{name} <{email}> to {to} ({sent})'.format(

@@ -59,8 +59,17 @@ def submit_enquiry(sender_name,
 
 
 def confirm_enquiry(enquiry):
+    enquiry.is_confirmed = True
+    enquiry.save()
+
+
+def send_enquiry(enquiry):
     """Sends the given enquiry to the representative.
     """
+
+    if not enquiry.is_confirmed:
+        raise Exception("Tried to send unconfirmed enquiry {}."
+                        .format(enquiry.id))
 
     if not enquiry.parent and enquiry.is_open:
         # We only want to generate slugs for open toplevel enquiries,

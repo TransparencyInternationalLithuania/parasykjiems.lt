@@ -60,12 +60,14 @@ def write_confirm(request):
 
 def confirm(request, id, confirm_hash):
     enquiry = get_object_or_404(Enquiry,
-                                id=id,
-                                confirm_hash=confirm_hash,
+                                id=int(id),
+                                confirm_hash=int(confirm_hash),
                                 is_sent=False)
 
+    mail.confirm_enquiry(enquiry)
+
     if request.method == 'POST':
-        mail.confirm_enquiry(enquiry)
+        mail.send_enquiry(enquiry)
         return redirect(reverse(sent, kwargs={'id': enquiry.id}))
     else:
         return render(request, 'views/confirm.html', {
