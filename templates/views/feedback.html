@@ -10,7 +10,30 @@
 <form method="POST">
   {% csrf_token %}
   <table>
-    {{ form.as_table }}
+    {% for field in form %}
+    <tr>
+      {% if field.html_name == 'message' %}
+      <td colspan="2">
+        {{ field }}
+        {{ field.errors }}
+      </td>
+      {% else %}
+      <th>
+        {{ field.label_tag }}:
+      </th>
+      <td>
+        {{ field }}
+        {{ field.errors }}
+      </td>
+      {% endif %}
+
+      {% if field.help_text %}
+      <tr><td colspan="2" class="helptext">
+          {{ field.help_text }}
+      </td></tr>
+      {% endif %}
+    </tr>
+    {% endfor %}
   </table>
   <input value="{% trans "Send" %}" type="submit"></input>
 </form>

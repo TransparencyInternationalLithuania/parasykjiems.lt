@@ -1,4 +1,4 @@
-LOCAL_SETTINGS_VERSION = 4
+LOCAL_SETTINGS_VERSION = 5
 
 
 DEBUG = True
@@ -13,23 +13,23 @@ MANAGERS = ADMINS
 # Show a warning on top of every page that this is a development version.
 TESTING_VERSION = True
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 # If this is the testing version, redirect all enquiries to this
 # address.
-REDIRECT_ENQUIRIES_TO = 'representative@localhost'
-
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+REDIRECT_ENQUIRIES_TO = 'feedback@localhost'
 
 MAIL_DOMAIN = 'localhost'
-def email(user):
-    return '{}@{}'.format(user, MAIL_DOMAIN)
+
+# Feedback is sent here
+FEEDBACK_EMAIL = 'feedback@' + MAIL_DOMAIN
 
 # Various email addresses used by the system:
-SERVER_EMAIL = email('parasykjiems')
-FEEDBACK_EMAIL = email('feedback')
-ABUSE_EMAIL = email('abuse')
+SERVER_EMAIL = 'parasykjiems@' + MAIL_DOMAIN
+ABUSE_EMAIL = 'abuse@' + MAIL_DOMAIN
 
 # Should contain {reply_hash} somewhere.
-ENQUIRY_EMAIL_FORMAT = email('reply+{reply_hash}')
+ENQUIRY_EMAIL_FORMAT = 'reply+{reply_hash}@' + MAIL_DOMAIN
 
 # Used for absolute URLs. Shouldn't include trailing slash, but should
 # include URL scheme.
