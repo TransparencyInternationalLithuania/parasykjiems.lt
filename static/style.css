@@ -521,10 +521,9 @@ a.write:hover {
 }
 
 ul.errorlist {
-    background: #fcc;
-    border: 1px solid #fee;
-    padding: 0.5em;
-    list-style-type: none;
+    margin: 0 0 10px 0;
+    color: #c33;
+    padding: 5px;
 }
 
 .helptext {
