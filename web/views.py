@@ -1,7 +1,10 @@
+# -*- coding: utf-8 -*-
+
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext as _
 
 from forms import FeedbackForm
 import settings
@@ -25,8 +28,10 @@ def feedback(request):
             })
 
             send_mail(
-                from_email=u'{name} <{email}>'.format(**form.cleaned_data),
-                subject=form.cleaned_data['subject'],
+                from_email=settings.SERVER_EMAIL,
+                subject=('[ParašykJiems]' +
+                         _(u'Feedback from {name} <{email}>'
+                           .format(**form.cleaned_data))),
                 message=message,
                 recipient_list=[settings.FEEDBACK_EMAIL],
             )
