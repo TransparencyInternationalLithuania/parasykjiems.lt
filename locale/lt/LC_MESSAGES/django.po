@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-23 18:16+0300\n"
-"PO-Revision-Date: 2011-08-23 18:17+0300\n"
+"POT-Creation-Date: 2011-08-23 18:26+0300\n"
+"PO-Revision-Date: 2011-08-23 18:26+0300\n"
 "Last-Translator: Kiprianas Spiridonovas <k.spiridonovas@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -30,31 +30,31 @@ msgid "You shouldn't abbreviate your name."
 msgstr "Nenaudokite sutrumpinimų."
 
 #: mail/forms.py:15
-msgid "You should enter both your first name and your surname."
-msgstr "Įveskite savo vardą ir pavardę."
+msgid "You should enter both your first name and your surname, separated by spaces."
+msgstr "Įveskite savo vardą ir pavardę, atskirtus tarpais."
 
-#: mail/forms.py:19
+#: mail/forms.py:20
 msgid "Your full name"
 msgstr "Jūsų vardas ir pavardė"
 
-#: mail/forms.py:23
+#: mail/forms.py:24
 #: web/forms.py:8
 msgid "Your e-mail address"
 msgstr "Jūsų el. pašto adresas"
 
-#: mail/forms.py:29
+#: mail/forms.py:30
 msgid "Subject"
 msgstr "Tema"
 
-#: mail/forms.py:34
+#: mail/forms.py:35
 msgid "Open letter"
 msgstr "Atviras laiškas"
 
-#: mail/forms.py:36
+#: mail/forms.py:37
 msgid "An open letter is visible to everyone in the letter list in the website."
 msgstr "Atvirus laiškus ir atsakymus į juos gali matyti visi svetainės lankytojai."
 
-#: mail/forms.py:39
+#: mail/forms.py:40
 #: web/forms.py:10
 msgid "Message"
 msgstr "Turinys"
@@ -263,7 +263,7 @@ msgid "Institution: "
 msgstr "Institucija: "
 
 #: templates/views/confirm.html:21
-#: templates/views/feedback.html:38
+#: templates/views/feedback.html:40
 msgid "Send"
 msgstr "Siųsti"
 
@@ -320,7 +320,7 @@ msgstr ""
 "\n"
 "Galite jį peržiūrėti <a href=\"%(url)s\">čia</a>."
 
-#: templates/views/write.html:60
+#: templates/views/write.html:64
 msgid "Submit"
 msgstr "Pateikti"
 

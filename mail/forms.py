@@ -12,7 +12,8 @@ def validate_full_name(string):
 
     if ' ' not in string:
         raise forms.ValidationError(
-            _("You should enter both your first name and your surname."))
+            _("You should enter both your first name and your surname, "
+              "separated by spaces."))
 
 
 class WriteLetterForm(forms.Form):
