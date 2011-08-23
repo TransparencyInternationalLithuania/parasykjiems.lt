@@ -21,7 +21,7 @@ function fetchResults(terms) {
                        url = '/?q=' + encodeQuery(terms);
                    }
                    history.replaceState(null, '', url);
-                   results.fadeTo(600, 1);
+                   results.fadeTo(0, 1);
                    resultsTerms = terms;
                    resultsTimeout = null;
                }
@@ -49,10 +49,7 @@ function startUpdate(delay, terms) {
         600
     );
 
-    var results = $('#results');
-    if (results.css('opacity') == '1') {
-        results.fadeTo(600, 0.5);
-    }
+    $('#results').fadeTo(0, 0.5);
 }
 
 $(function() {
