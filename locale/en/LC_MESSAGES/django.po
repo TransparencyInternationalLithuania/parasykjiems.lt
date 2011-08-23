@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-23 18:10+0300\n"
+"POT-Creation-Date: 2011-08-23 18:16+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,28 +25,36 @@ msgstr ""
 msgid "Lithuanian"
 msgstr ""
 
-#: mail/forms.py:7 web/forms.py:6
-msgid "Your name"
+#: mail/forms.py:11
+msgid "You shouldn't abbreviate your name."
 msgstr ""
 
-#: mail/forms.py:10 web/forms.py:8
+#: mail/forms.py:15
+msgid "You should enter both your first name and your surname."
+msgstr ""
+
+#: mail/forms.py:19
+msgid "Your full name"
+msgstr ""
+
+#: mail/forms.py:23 web/forms.py:8
 msgid "Your e-mail address"
 msgstr ""
 
-#: mail/forms.py:16
+#: mail/forms.py:29
 msgid "Subject"
 msgstr ""
 
-#: mail/forms.py:21
+#: mail/forms.py:34
 msgid "Open letter"
 msgstr ""
 
-#: mail/forms.py:23
+#: mail/forms.py:36
 msgid ""
 "An open letter is visible to everyone in the letter list in the website."
 msgstr ""
 
-#: mail/forms.py:26 web/forms.py:10
+#: mail/forms.py:39 web/forms.py:10
 msgid "Message"
 msgstr ""
 
@@ -305,6 +313,10 @@ msgid ""
 "  Check your email. You should receive a confirmation link from\n"
 "  us. You must confirm your letter before it will be sent.\n"
 "  "
+msgstr ""
+
+#: web/forms.py:6
+msgid "Your name"
 msgstr ""
 
 #: web/views.py:36
