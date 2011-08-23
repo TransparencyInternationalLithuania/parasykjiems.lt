@@ -271,6 +271,17 @@ form input[type=submit]:hover {
     background: linear-gradient(top, #f9f9f9 0%,#eaeaea 100%); /* W3C */
 }
 
+form[name=search] input {
+    margin: 5px;
+    display: inline;
+}
+
+#id_house_number {
+    margin-left: 1em;
+    width: 3em;
+    font-size: 120%;
+}
+
 #result-list {
     list-style-type: none;
     margin: 0 0 0 0;
