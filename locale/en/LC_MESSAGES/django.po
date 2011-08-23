@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-22 16:41+0300\n"
+"POT-Creation-Date: 2011-08-23 18:10+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,7 +33,7 @@ msgstr ""
 msgid "Your e-mail address"
 msgstr ""
 
-#: mail/forms.py:16 web/forms.py:10
+#: mail/forms.py:16
 msgid "Subject"
 msgstr ""
 
@@ -46,7 +46,7 @@ msgid ""
 "An open letter is visible to everyone in the letter list in the website."
 msgstr ""
 
-#: mail/forms.py:26 web/forms.py:12
+#: mail/forms.py:26 web/forms.py:10
 msgid "Message"
 msgstr ""
 
@@ -103,7 +103,7 @@ msgstr ""
 msgid "Internal server error"
 msgstr ""
 
-#: templates/base.html:18
+#: templates/base.html:19
 msgid ""
 "\n"
 "      <strong>Note:</strong> this is the testing version of ParašykJiems.\n"
@@ -111,15 +111,15 @@ msgid ""
 "      "
 msgstr ""
 
-#: templates/base.html:27
+#: templates/base.html:28
 msgid "ParašykJiems"
 msgstr ""
 
-#: templates/base.html:43
+#: templates/base.html:44
 msgid "Have any notes, suggestions?"
 msgstr ""
 
-#: templates/base.html:43
+#: templates/base.html:44
 msgid "Write to us."
 msgstr ""
 
@@ -243,7 +243,7 @@ msgstr ""
 msgid "Institution: "
 msgstr ""
 
-#: templates/views/confirm.html:21 templates/views/feedback.html:15
+#: templates/views/confirm.html:21 templates/views/feedback.html:38
 msgid "Send"
 msgstr ""
 
@@ -305,4 +305,8 @@ msgid ""
 "  Check your email. You should receive a confirmation link from\n"
 "  us. You must confirm your letter before it will be sent.\n"
 "  "
+msgstr ""
+
+#: web/views.py:36
+msgid "Feedback from {}"
 msgstr ""
