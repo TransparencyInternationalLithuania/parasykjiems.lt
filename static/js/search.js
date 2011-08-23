@@ -48,7 +48,11 @@ function startUpdate(delay, terms) {
         },
         600
     );
-    $('#results').fadeTo(600, 0.5);
+
+    var results = $('#results');
+    if (results.css('opacity') == '1') {
+        results.fadeTo(600, 0.5);
+    }
 }
 
 $(function() {
