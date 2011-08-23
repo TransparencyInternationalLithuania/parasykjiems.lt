@@ -10,7 +10,7 @@ function fetchResults(terms) {
     var results = $('#results');
     $.ajax({
                dataType: 'text',
-               url: 'results/',
+               url: '/?results',
                data: { q: terms },
                success: function(newResults) {
                    results.html(newResults);
@@ -21,7 +21,7 @@ function fetchResults(terms) {
                        url = '/?q=' + encodeQuery(terms);
                    }
                    history.replaceState(null, '', url);
-                   results.removeClass('updating');
+                   results.fadeTo(600, 1);
                    resultsTerms = terms;
                    resultsTimeout = null;
                }
@@ -48,7 +48,7 @@ function startUpdate(delay, terms) {
         },
         600
     );
-    $('#results').addClass('updating');
+    $('#results').fadeTo(600, 0.5);
 }
 
 $(function() {
@@ -57,7 +57,7 @@ $(function() {
 
       if (browserSupportsHistory()) {
           // Hide search button
-          $("form submit").hide();
+          $("form input[type=submit]").hide();
           q.css({width: '100%'});
 
           resultsTerms = trim(q.val());
