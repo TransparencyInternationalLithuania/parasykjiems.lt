@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 _RESULT_LIMIT = 10
 
 
-def _render_results(request):
+def search(request):
     if 'q' in request.GET and request.GET['q'] != '':
         q = request.GET['q']
 
@@ -54,25 +54,33 @@ def _render_results(request):
         results = []
         more_results = False
 
-    context = RequestContext(request, {
+    results_context = RequestContext(request, {
         'search_query': request.GET.get('q', ''),
         'house_number': num,
         'results': results,
         'more_results': more_results,
     })
 
-    return render_to_string('results.html', context)
+    results_html = render_to_string('results.html',
+                                    results_context)
 
-
-def search(request):
-    return render(request, 'views/search.html', {
-        'search_query': request.GET.get('q', ''),
-        'results_html': _render_results(request),
-    })
-
-
-def results(request):
-    return HttpResponse(_render_results(request))
+    if 'results' in request.GET:
+        return HttpResponse(results_html)
+    elif ('nohist' in request.GET) and (len(results) == 1):
+        # 'nohist' is the name of a hidden field in the search
+        # form. If the user searches using the form, it means that his
+        # browser doesn't support the HTML5 history API, so he's not
+        # using incremental search. In that case, if there is only one
+        # search result, we redirect to it.
+        url = results[0].url
+        if num != '':
+            url += num + '/'
+        return redirect(url)
+    else:
+        return render(request, 'views/search.html', {
+            'search_query': request.GET.get('q', ''),
+            'results_html': results_html,
+        })
 
 
 def representative(request, slug):

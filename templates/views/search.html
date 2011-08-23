@@ -16,6 +16,7 @@
 {% block content %}
 <form name="search">
   <input name="q" value="{{ search_query }}">
+  <input type="hidden" name="nohist">
   <input name="submit" value="{% trans "Search" %}" type="submit">
 </form>
 <div id="results">{{ results_html|safe }}</div>
