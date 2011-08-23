@@ -15,7 +15,6 @@
       {% if field.html_name == 'message' %}
       <td colspan="2">
         {{ field }}
-        {{ field.errors }}
       </td>
       {% else %}
       <th>
@@ -23,16 +22,19 @@
       </th>
       <td>
         {{ field }}
-        {{ field.errors }}
       </td>
       {% endif %}
-
-      {% if field.help_text %}
-      <tr><td colspan="2" class="helptext">
-          {{ field.help_text }}
-      </td></tr>
-      {% endif %}
     </tr>
+
+    {% if field.errors %}
+    <tr><td></td><td>{{ field.errors }}</td></tr>
+    {% endif %}
+
+    {% if field.help_text %}
+    <tr><td colspan="2" class="helptext">
+        {{ field.help_text }}
+    </td></tr>
+    {% endif %}
     {% endfor %}
   </table>
   <input value="{% trans "Send" %}" type="submit"></input>
