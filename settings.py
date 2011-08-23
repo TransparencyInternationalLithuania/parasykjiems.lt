@@ -75,10 +75,11 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'parasykjiems.middleware.SetRemoteAddrMiddleware',
     'django.middleware.gzip.GZipMiddleware',
     'django.middleware.http.ConditionalGetMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'parasykjiems.force_default_language.ForceDefaultLanguageMiddleware',
+    'parasykjiems.middleware.ForceDefaultLanguageMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
