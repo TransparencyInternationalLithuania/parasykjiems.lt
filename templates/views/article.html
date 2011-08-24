@@ -1,8 +1,14 @@
 {% extends "base.html" %}
+{% load markup %}
 
 {% block menu %}
 {% include "menu.html" with active="about" %}
 {% endblock %}
 
+{% block breadcrumbs %}
+<li>{{ article.title }}</li>
+{% endblock %}
+
 {% block content %}
+{{ article.body|markdown }}
 {% endblock %}
