@@ -1,21 +1,14 @@
 # -*- coding: utf-8 -*-
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 
 from forms import FeedbackForm
+from models import Article
 import settings
-
-
-def about(request):
-    return render(request, 'views/about.html')
-
-
-def help_view(request):
-    return render(request, 'views/help.html')
 
 
 def feedback(request):
@@ -53,3 +46,10 @@ def feedback_thanks(request):
 def setlang(request, language):
     request.session['django_language'] = language
     return redirect(request.META.get('HTTP_REFERER', '/'))
+
+
+def article(request, location):
+    art = get_object_or_404(Article, location=location)
+    return render(request, 'views/article.html', {
+        'article': art,
+    })
