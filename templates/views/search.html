@@ -14,6 +14,8 @@
 {% endblock %}
 
 {% block content %}
+<p>{% blocktrans %}Use the search box to find a representative. You can read more about the project <a href="/about">here</a>.{% endblocktrans %}</p>
+
 <form name="search">
   <input name="q" value="{{ search_query }}">
   <input type="hidden" name="nohist">
