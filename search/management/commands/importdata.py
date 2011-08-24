@@ -20,7 +20,7 @@ _INSTITUTION_TYPE_CONVERSIONS = (
       'representative': u"meras",
       'active': True},
     {'old_name': u"Member of parliament",
-      'institution': u"Seimas",
+      'institution': u"rinkimų apygarda",
       'representative': u"Seimo narys",
       'active': True},
     {'old_name': u"Seniūnaitis",
