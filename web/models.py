@@ -10,3 +10,6 @@ class Article(models.Model):
     location = models.CharField(max_length=_NAME_LEN, blank=True)
     body = models.TextField(
         help_text=_('In Markdown format.'))
+
+    def __unicode__(self):
+        return u'{}: {}'.format(self.location, self.title)
