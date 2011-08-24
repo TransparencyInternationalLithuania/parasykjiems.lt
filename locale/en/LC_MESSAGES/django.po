@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-23 18:26+0300\n"
+"POT-Creation-Date: 2011-08-24 13:09+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -83,7 +83,7 @@ msgstr ""
 msgid "House number"
 msgstr ""
 
-#: search/models.py:15 search/models.py:63
+#: search/models.py:15 search/models.py:63 web/models.py:12
 msgid "In Markdown format."
 msgstr ""
 
@@ -132,7 +132,7 @@ msgstr ""
 msgid "Write to us."
 msgstr ""
 
-#: templates/menu.html:5 templates/views/help.html:9
+#: templates/menu.html:5
 msgid "Help"
 msgstr ""
 
@@ -284,7 +284,13 @@ msgstr ""
 msgid "Continue"
 msgstr ""
 
-#: templates/views/search.html:20
+#: templates/views/search.html:17
+msgid ""
+"Use the search box to find a representative. You can read more about the "
+"project <a href=\"/about\">here</a>."
+msgstr ""
+
+#: templates/views/search.html:22
 msgid "Search"
 msgstr ""
 
@@ -320,6 +326,6 @@ msgstr ""
 msgid "Your name"
 msgstr ""
 
-#: web/views.py:36
+#: web/views.py:29
 msgid "Feedback from {}"
 msgstr ""

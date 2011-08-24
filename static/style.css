@@ -208,7 +208,7 @@ form input[name=q] {
 form {
     display: block;
     width: 80%;
-    margin: 3em auto 3em auto;
+    margin: 0 auto 3em auto;
 }
 
 form[name=search] {
