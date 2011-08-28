@@ -1,4 +1,5 @@
 from django import forms
+from django.forms import widgets
 from django.utils.translation import ugettext as _
 import settings
 
@@ -40,3 +41,5 @@ class WriteLetterForm(forms.Form):
     body = forms.CharField(label=_("Message"),
                            widget=forms.widgets.Textarea(),
                            required=True)
+
+    choice_state = forms.CharField(widget=widgets.HiddenInput())

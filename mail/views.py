@@ -4,7 +4,8 @@ from django.core.paginator import Paginator
 from django.http import Http404
 
 from forms import WriteLetterForm
-from parasykjiems.search.models import Representative, Institution, Location
+from parasykjiems.search.models import Representative, Institution
+from parasykjiems.search.utils import ChoiceState
 from parasykjiems.mail.models import Enquiry, Response
 import parasykjiems.mail.mail as mail
 
@@ -20,9 +21,9 @@ def write_institution(request, slug):
 
 
 def write(request, recipient):
-    choose_url = ''
     if request.method == 'POST':
         form = WriteLetterForm(request.POST)
+        choice_state = ChoiceState(form['choice_state'].value())
         if form.is_valid():
             mail.submit_enquiry(
                 sender_name=form.cleaned_data['name'],
@@ -31,31 +32,29 @@ def write(request, recipient):
                 subject=form.cleaned_data['subject'],
                 body=form.cleaned_data['body'],
                 is_open=form.cleaned_data['is_open'])
+            # TODO: detect errors in mail sending
 
-            return redirect(reverse(write_confirm))
+            return redirect(reverse(write_confirm) +
+                            '?' + choice_state.query_string())
     else:
-        if 'inst' in request.GET:
-            choose_url = Institution.objects.get(
-                id=int(request.GET['inst'])).get_absolute_url()
-        elif 'loc' in request.GET:
-            choose_url = Location.objects.get(
-                id=int(request.GET['loc'])).get_absolute_url()
-            if 'n' in request.GET:
-                choose_url += request.GET['n'] + '/'
-        else:
-            choose_url = recipient.get_absolute_url()
-
-        form = WriteLetterForm()
+        choice_state = ChoiceState(request.GET)
+        choice_state.add_recipient(recipient)
+        form = WriteLetterForm({'choice_state': choice_state.query_string()})
+        # TODO: add letter template
 
     return render(request, 'views/write.html', {
         'recipient': recipient,
-        'choose_url': choose_url,
+        'choose_url': choice_state.choose_url(),
         'form': form,
     })
 
 
 def write_confirm(request):
-    return render(request, 'views/write_confirm.html')
+    choice_state = ChoiceState(request.GET)
+    return render(request, 'views/write_confirm.html', {
+        'choose_url': choice_state.choose_url(),
+        'write_url': choice_state.write_url(),
+    })
 
 
 def confirm(request, id, confirm_hash):

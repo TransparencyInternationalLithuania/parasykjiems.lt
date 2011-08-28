@@ -88,6 +88,7 @@ def representative(request, slug):
     if not rep.kind.active:
         raise Http404()
     return render(request, 'views/representative.html', {
+        'choose_query': '?rep={}'.format(rep.id),
         'representative': rep,
     })
 
