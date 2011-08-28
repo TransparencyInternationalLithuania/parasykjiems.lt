@@ -25,7 +25,9 @@
 
     <div id="main-block">
       <div id="header">
-        <a href="/"><img id="logo" src="/static/img/logo.png" alt="{% trans "ParašykJiems" %}"></a>
+        <div id="logo-holder">
+          <a href="/"><img id="logo" src="/static/img/logo.png" alt="{% trans "ParašykJiems" %}"></a>
+        </div>
         <ul id="menu">
           {% block menu %}
           {% include "menu.html" %}
