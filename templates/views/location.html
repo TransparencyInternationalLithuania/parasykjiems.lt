@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block head %}
 <script type="text/javascript" src="/static/js/choose.js"></script>
@@ -14,6 +15,15 @@
 {% endblock %}
 
 {% block content %}
+
+{% if repeated_kinds %}
+<div class="repeated-kinds">
+  {% blocktrans with kinds=repeated_kinds|join:"," feedback_url="/feedback/" %}
+  <strong>Note:</strong> more than one {{ kinds }} was found.
+  {% endblocktrans %}
+</div>
+{% endif %}
+
 {% for institution in institutions %}
 {% include "items/institution.html" %}
 {% if not forloop.last %}

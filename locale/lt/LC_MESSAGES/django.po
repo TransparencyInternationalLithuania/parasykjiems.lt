@@ -7,16 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-28 16:48+0300\n"
-"PO-Revision-Date: 2011-08-28 16:29+0300\n"
+"POT-Creation-Date: 2011-08-28 18:56+0300\n"
+"PO-Revision-Date: 2011-08-28 18:56+0300\n"
 "Last-Translator: Kiprianas Spiridonovas <k.spiridonovas@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n"
-"%100<10 || n%100>=20) ? 1 : 2)\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
 
 #: settings.py:22
 msgid "English"
@@ -31,15 +30,15 @@ msgid "You shouldn't abbreviate your name."
 msgstr "Nenaudokite sutrumpinimų."
 
 #: mail/forms.py:16
-msgid ""
-"You should enter both your first name and your surname, separated by spaces."
+msgid "You should enter both your first name and your surname, separated by spaces."
 msgstr "Įveskite savo vardą ir pavardę, atskirtus tarpais."
 
 #: mail/forms.py:21
 msgid "Your full name"
 msgstr "Jūsų vardas ir pavardė"
 
-#: mail/forms.py:26 web/forms.py:8
+#: mail/forms.py:26
+#: web/forms.py:8
 msgid "Your e-mail address"
 msgstr "Jūsų el. pašto adresas"
 
@@ -60,12 +59,11 @@ msgid "Open letter"
 msgstr "Atviras laiškas"
 
 #: mail/forms.py:43
-msgid ""
-"An open letter is visible to everyone in the letter list in the website."
-msgstr ""
-"Atvirus laiškus ir atsakymus į juos gali matyti visi svetainės lankytojai."
+msgid "An open letter is visible to everyone in the letter list in the website."
+msgstr "Atvirus laiškus ir atsakymus į juos gali matyti visi svetainės lankytojai."
 
-#: mail/forms.py:46 web/forms.py:10
+#: mail/forms.py:46
+#: web/forms.py:10
 msgid "Message"
 msgstr "Turinys"
 
@@ -93,7 +91,9 @@ msgstr "Pastato numeris turi būti skačius ir gali turėti vieną raidę gale."
 msgid "House number"
 msgstr "Pastato numeris"
 
-#: search/models.py:15 search/models.py:63 web/models.py:12
+#: search/models.py:15
+#: search/models.py:63
+#: web/models.py:12
 msgid "In Markdown format."
 msgstr "Markdown formatu."
 
@@ -102,11 +102,11 @@ msgid "This number is used for sorting institutions in the location view."
 msgstr "Skaičius, naudojamas institucijų tvarkai nustatyti."
 
 #: search/models.py:67
-msgid ""
-"This number is used for sorting representatives in the institution view."
+msgid "This number is used for sorting representatives in the institution view."
 msgstr "Skaičius, naudojamas atstovų tvarkai institucijoje nustatyti."
 
-#: search/models.py:128 search/models.py:170
+#: search/models.py:128
+#: search/models.py:170
 msgid "Name of city, town or village."
 msgstr "Miesto, miestelio arba kaimo pavadinimas"
 
@@ -149,7 +149,8 @@ msgstr "Parašykite mums."
 msgid "Help"
 msgstr "Pagalba"
 
-#: templates/menu.html:11 templates/breadcrumbs/letters.html:7
+#: templates/menu.html:11
+#: templates/breadcrumbs/letters.html:7
 msgid "Open letters"
 msgstr "Atviri laiškai"
 
@@ -159,9 +160,7 @@ msgstr "Atstovo paieška"
 
 #: templates/results.html:15
 msgid "There are more results matching your query. Try narrowing your search."
-msgstr ""
-"Yra daugiau rezultatų atitinkančių jūsų užklausą. Pabandykite susiaurinti "
-"savo paiešką panaudodami daugiau žodžių."
+msgstr "Yra daugiau rezultatų atitinkančių jūsų užklausą. Pabandykite susiaurinti savo paiešką panaudodami daugiau žodžių."
 
 #: templates/results.html:20
 msgid "Nothing found."
@@ -211,15 +210,18 @@ msgstr "Raskite atstovą"
 msgid "Write a letter"
 msgstr "Parašykite laišką"
 
-#: templates/items/institution.html:11 templates/items/representative.html:27
+#: templates/items/institution.html:11
+#: templates/items/representative.html:27
 msgid "Email: "
 msgstr "El. paštas:"
 
-#: templates/items/institution.html:13 templates/items/representative.html:29
+#: templates/items/institution.html:13
+#: templates/items/representative.html:29
 msgid "Write&nbsp;letter"
 msgstr "Rašyti laišką"
 
-#: templates/items/institution.html:19 templates/items/representative.html:35
+#: templates/items/institution.html:19
+#: templates/items/representative.html:35
 msgid "Phone number: "
 msgstr "Telefono numeris: "
 
@@ -227,7 +229,8 @@ msgstr "Telefono numeris: "
 msgid "Address: "
 msgstr "Adresas: "
 
-#: templates/items/institution.html:33 templates/items/representative.html:44
+#: templates/items/institution.html:33
+#: templates/items/representative.html:44
 msgid "Recent letters"
 msgstr "Naujausi laiškai"
 
@@ -267,7 +270,8 @@ msgstr "Išsiųsta"
 msgid "Institution: "
 msgstr "Institucija: "
 
-#: templates/views/confirm.html:21 templates/views/feedback.html:40
+#: templates/views/confirm.html:21
+#: templates/views/feedback.html:40
 msgid "Send"
 msgstr "Siųsti"
 
@@ -298,17 +302,23 @@ msgstr ""
 msgid "Next page"
 msgstr "Kitas puslapis"
 
+#: templates/views/location.html:21
+#, python-format
+msgid ""
+"\n"
+"  <strong>Note:</strong> more than one %(kinds)s was found.\n"
+"  "
+msgstr ""
+"\n"
+"<strong>Pastaba:</strong> rasta daugiau nei viena %(kinds)s."
+
 #: templates/views/location_ask.html:20
 msgid "Continue"
 msgstr "Tęsti"
 
 #: templates/views/search.html:17
-msgid ""
-"Use the search box to find a representative. You can read more about the "
-"project <a href=\"/about\">here</a>."
-msgstr ""
-"Raskite atstovą naudodami paieškos laukelį. Plačiau apie projektą galite "
-"paskaityti <a href=\"/about\">čia</a>."
+msgid "Use the search box to find a representative. You can read more about the project <a href=\"/about\">here</a>."
+msgstr "Raskite atstovą naudodami paieškos laukelį. Plačiau apie projektą galite paskaityti <a href=\"/about\">čia</a>."
 
 #: templates/views/search.html:22
 msgid "Search"
@@ -341,9 +351,7 @@ msgid ""
 "Check your email. You should receive a confirmation\n"
 "  link from us. You must confirm your letter before it will be sent.\n"
 "  "
-msgstr ""
-"Pasitikrinkite savo elektroninį paštą. Mes Jums išsiuntėme patvirtinimo "
-"nuorodą. Jūs turite patvirtinti savo laišką prieš tai, kai jis bus išsiųstas."
+msgstr "Pasitikrinkite savo elektroninį paštą. Mes Jums išsiuntėme patvirtinimo nuorodą. Jūs turite patvirtinti savo laišką prieš tai, kai jis bus išsiųstas."
 
 #: templates/views/write_confirm.html:23
 #, python-format
@@ -352,9 +360,7 @@ msgid ""
 "  a letter, check your spam folder. If it doesn't arrive at all, send us a\n"
 "  note using the <a href=\"%(feedback_url)s\">feedback page</a>.\n"
 "  "
-msgstr ""
-"Jeigu negaunate laiško, pasitikrinkite brukalo (spam) katalogą. Jei ir ten "
-"jo nėra, <a href=\"%(feedback_url)s\">palikite mums atsiliepimą</a> apie tai."
+msgstr "Jeigu negaunate laiško, pasitikrinkite brukalo (spam) katalogą. Jei ir ten jo nėra, <a href=\"%(feedback_url)s\">palikite mums atsiliepimą</a> apie tai."
 
 #: web/forms.py:6
 msgid "Your name"

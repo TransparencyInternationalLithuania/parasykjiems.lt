@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-28 16:48+0300\n"
+"POT-Creation-Date: 2011-08-28 18:56+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -286,6 +286,14 @@ msgstr ""
 
 #: templates/views/letters.html:26
 msgid "Next page"
+msgstr ""
+
+#: templates/views/location.html:21
+#, python-format
+msgid ""
+"\n"
+"  <strong>Note:</strong> more than one %(kinds)s was found.\n"
+"  "
 msgstr ""
 
 #: templates/views/location_ask.html:20
