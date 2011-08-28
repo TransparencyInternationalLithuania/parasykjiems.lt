@@ -1,12 +1,13 @@
+from collections import Counter
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, Http404
 from haystack.query import SearchQuerySet, SQ
-from unidecode import unidecode
 
-from search.models import Representative, Institution, Location, Territory
+from search.models import \
+     Representative, Institution, Location, Territory, InstitutionKind
 from search.forms import HouseNumberForm
 from search import house_numbers
 from search import utils
@@ -125,10 +126,22 @@ def location(request, slug, house_number=None):
                     + list(Institution.objects.filter(
                         name__iexact=loc.municipality)))
     institutions.sort(key=lambda i: i.kind.ordinal)
+
+    kind_id_counts = Counter(i.kind.id
+                             for i in institutions).iteritems()
+    repeated_kinds = [InstitutionKind.objects.get(id=kid)
+                      for kid, count in kind_id_counts
+                      if count > 1]
+    if len(repeated_kinds) != []:
+        logger.warning('More than one institution of same kind at {}, '
+                       'house number {}.'
+                       .format(loc, house_number))
+
     num_q = '&n={}'.format(house_number) if house_number else ''
     return render(request, 'views/location.html', {
         'choose_query': '?loc={}{}'.format(loc.id, num_q),
         'institutions': institutions,
+        'repeated_kinds': repeated_kinds,
     })
 
 
