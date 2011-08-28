@@ -3,6 +3,7 @@ html {
     height: 100%;
     margin: 0;
     padding: 0;
+    bottom: 0;
 }
 
 body {
@@ -63,7 +64,7 @@ a:hover {
 }
 
 #header {
-    background: #f5f5f5;
+    background: #f0f0f0;
     box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.3);
     height: 135px;
 }
@@ -78,7 +79,7 @@ a:hover {
     float: right;
     position: absolute;
     right: 13%;
-    top: 3em;
+    top: 53px;
 
     list-style-type: none;
     margin: 0;
@@ -97,7 +98,7 @@ a:hover {
     padding: 9px 27px 9px 27px;
     margin: 0;
 
-    background: white;
+    background: #fafafa;
 }
 
 #menu li:first-child a {
@@ -150,14 +151,21 @@ a:hover {
 #content {
     margin: 4em auto 4em auto;
     max-width: 900px;
+    height: 100%;
 }
 
 #footer {
-    border-top: 1px dotted #aaa;
+    border-top: 1px dotted #ddd;
     text-align: center;
     font-size: 10pt;
     color: #555;
+    background: #f0f0f0;
     padding: 3em;
+
+    position: relative;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
 }
 
 #footer a {
