@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-08-28 16:22+0300\n"
-"PO-Revision-Date: 2011-08-28 16:24+0300\n"
+"PO-Revision-Date: 2011-08-28 16:29+0300\n"
 "Last-Translator: Kiprianas Spiridonovas <k.spiridonovas@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -91,11 +91,11 @@ msgstr "Markdown formatu."
 
 #: search/models.py:19
 msgid "This number is used for sorting institutions in the location view."
-msgstr ""
+msgstr "Skaičius, naudojamas institucijų tvarkai nustatyti."
 
 #: search/models.py:67
 msgid "This number is used for sorting representatives in the institution view."
-msgstr ""
+msgstr "Skaičius, naudojamas atstovų tvarkai institucijoje nustatyti."
 
 #: search/models.py:128
 #: search/models.py:170
@@ -112,7 +112,7 @@ msgstr "Puslapis nerastas"
 
 #: templates/500.html:10
 msgid "Internal server error"
-msgstr "PPrograminė klaida"
+msgstr "Programinė klaida"
 
 #: templates/base.html:19
 msgid ""
