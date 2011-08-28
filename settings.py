@@ -121,15 +121,22 @@ LOGGING = {
     },
     'handlers': {
         'debug': {
-            'class': 'logging.FileHandler',
+            'class': 'logging.handlers.RotatingFileHandler',
             'level': 'DEBUG',
             'formatter': 'verbose',
             'filename': 'logs/debug.log',
-        }
+            'maxBytes': 1000000,
+        },
+        'warnings': {
+            'class': 'logging.handlers.RotatingFileHandler',
+            'level': 'WARNING',
+            'formatter': 'verbose',
+            'filename': 'logs/warnings.log',
+        },
     },
     'root': {
         'level': 'DEBUG',
-        'handlers': ['debug'],
+        'handlers': ['debug', 'warnings'],
     },
 }
 
