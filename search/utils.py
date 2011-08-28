@@ -1,5 +1,8 @@
 import re
-from unidecode import unidecode
+from django.http import QueryDict
+
+from models import Location, Representative, Institution
+
 
 _REMOVE_PUNCTUATION_RE = re.compile(ur'[^\w/ -]', flags=re.UNICODE)
 _NORMALISE_SPACES_RE = re.compile(ur'(\s)\s+')
@@ -36,3 +39,61 @@ def remove_house_number(q):
 
 
 _REMOVE_DASHES_RE = re.compile(ur'-')
+
+
+class ChoiceState:
+    """Represents the user's choice of location (possibly with house
+    number), institution and/or representative.
+
+    Allows easily converting to and from query strings.
+    """
+    def __init__(self,
+                 query=None,
+                 loc=None, n=None,
+                 inst=None, rep=None):
+        self.loc = loc
+        self.n = n
+        self.inst = inst
+        self.rep = rep
+        if query:
+            if isinstance(query, basestring):
+                query = QueryDict(query)
+            if not loc and 'loc' in query:
+                self.loc = Location.objects.get(
+                    id=int(query['loc']))
+                self.n = query.get('n', None)
+            if not inst and 'inst' in query:
+                self.inst = Institution.objects.get(
+                    id=int(query['inst']))
+            if not rep and 'rep' in query:
+                self.rep = Representative.objects.get(
+                    id=int(query['rep']))
+
+    def add_recipient(self, recipient):
+        if isinstance(recipient, Representative):
+            self.rep = recipient
+        else:
+            self.inst = recipient
+
+    def choose_url(self):
+        if self.loc:
+            url = self.loc.get_absolute_url()
+            url += self.n + '/'
+            return url
+        else:
+            return (self.inst or self.rep).get_absolute_url()
+
+    def write_url(self):
+        return '/write' + (self.inst or self.rep).get_absolute_url()
+
+    def query_string(self):
+        q = QueryDict('').copy()
+        if self.loc:
+            q['loc'] = self.loc.id
+            if self.n:
+                q['n'] = self.n
+        if self.inst:
+            q['inst'] = self.inst.id
+        if self.rep:
+            q['rep'] = self.rep.id
+        return q.urlencode()

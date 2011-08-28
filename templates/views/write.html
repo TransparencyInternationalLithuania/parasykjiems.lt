@@ -17,6 +17,7 @@
 
 <form method="POST">
   {% csrf_token %}
+  {% for field in form.hidden_fields %}{{ field }}{% endfor %}
   <table>
     <tr>
       <th>Gavėjas:</th>
@@ -26,7 +27,7 @@
         </a>
       </td>
     </tr>
-    {% for field in form %}
+    {% for field in form.visible_fields %}
     <tr>
       {% if field.html_name == 'is_open' %}
       <td colspan="2">

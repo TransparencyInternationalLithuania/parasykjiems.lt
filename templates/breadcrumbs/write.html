@@ -1,2 +1,13 @@
 {% load i18n %}
-<li>{% trans "Write a letter" %}</li>
+<li>
+  {% if not active %}
+  <a href="{{ write_url }}">
+  {% endif %}
+
+  {% trans "Write a letter" %}
+
+  {% if not active %}
+  </a>
+  {% endif %}
+</li>
+{% include "breadcrumbs/separator.html" with active=active %}
