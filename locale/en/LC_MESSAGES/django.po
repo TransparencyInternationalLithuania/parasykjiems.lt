@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-24 13:09+0300\n"
+"POT-Creation-Date: 2011-08-28 16:22+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,37 +25,37 @@ msgstr ""
 msgid "Lithuanian"
 msgstr ""
 
-#: mail/forms.py:11
+#: mail/forms.py:12
 msgid "You shouldn't abbreviate your name."
 msgstr ""
 
-#: mail/forms.py:15
+#: mail/forms.py:16
 msgid ""
 "You should enter both your first name and your surname, separated by spaces."
 msgstr ""
 
-#: mail/forms.py:20
+#: mail/forms.py:21
 msgid "Your full name"
 msgstr ""
 
-#: mail/forms.py:24 web/forms.py:8
+#: mail/forms.py:25 web/forms.py:8
 msgid "Your e-mail address"
 msgstr ""
 
-#: mail/forms.py:30
+#: mail/forms.py:31
 msgid "Subject"
 msgstr ""
 
-#: mail/forms.py:35
+#: mail/forms.py:36
 msgid "Open letter"
 msgstr ""
 
-#: mail/forms.py:37
+#: mail/forms.py:38
 msgid ""
 "An open letter is visible to everyone in the letter list in the website."
 msgstr ""
 
-#: mail/forms.py:40 web/forms.py:10
+#: mail/forms.py:41 web/forms.py:10
 msgid "Message"
 msgstr ""
 
@@ -192,7 +192,7 @@ msgstr ""
 msgid "Find a representative"
 msgstr ""
 
-#: templates/breadcrumbs/write.html:2
+#: templates/breadcrumbs/write.html:7
 msgid "Write a letter"
 msgstr ""
 
@@ -310,15 +310,23 @@ msgid ""
 "  "
 msgstr ""
 
-#: templates/views/write.html:64
+#: templates/views/write.html:65
 msgid "Submit"
 msgstr ""
 
 #: templates/views/write_confirm.html:17
 msgid ""
-"\n"
-"  Check your email. You should receive a confirmation link from\n"
-"  us. You must confirm your letter before it will be sent.\n"
+"Check your email. You should receive a confirmation\n"
+"  link from us. You must confirm your letter before it will be sent.\n"
+"  "
+msgstr ""
+
+#: templates/views/write_confirm.html:23
+#, python-format
+msgid ""
+"If you don't receive\n"
+"  a letter, check your spam folder. If it doesn't arrive at all, send us a\n"
+"  note using the <a href=\"%(feedback_url)s\">feedback page</a>.\n"
 "  "
 msgstr ""
 

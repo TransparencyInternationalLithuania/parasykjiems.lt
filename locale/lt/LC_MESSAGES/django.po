@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-24 13:08+0300\n"
-"PO-Revision-Date: 2011-08-24 13:10+0300\n"
+"POT-Creation-Date: 2011-08-28 16:22+0300\n"
+"PO-Revision-Date: 2011-08-28 16:24+0300\n"
 "Last-Translator: Kiprianas Spiridonovas <k.spiridonovas@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -25,36 +25,36 @@ msgstr "Anglų"
 msgid "Lithuanian"
 msgstr "Lietuvių"
 
-#: mail/forms.py:11
+#: mail/forms.py:12
 msgid "You shouldn't abbreviate your name."
 msgstr "Nenaudokite sutrumpinimų."
 
-#: mail/forms.py:15
+#: mail/forms.py:16
 msgid "You should enter both your first name and your surname, separated by spaces."
 msgstr "Įveskite savo vardą ir pavardę, atskirtus tarpais."
 
-#: mail/forms.py:20
+#: mail/forms.py:21
 msgid "Your full name"
 msgstr "Jūsų vardas ir pavardė"
 
-#: mail/forms.py:24
+#: mail/forms.py:25
 #: web/forms.py:8
 msgid "Your e-mail address"
 msgstr "Jūsų el. pašto adresas"
 
-#: mail/forms.py:30
+#: mail/forms.py:31
 msgid "Subject"
 msgstr "Tema"
 
-#: mail/forms.py:35
+#: mail/forms.py:36
 msgid "Open letter"
 msgstr "Atviras laiškas"
 
-#: mail/forms.py:37
+#: mail/forms.py:38
 msgid "An open letter is visible to everyone in the letter list in the website."
 msgstr "Atvirus laiškus ir atsakymus į juos gali matyti visi svetainės lankytojai."
 
-#: mail/forms.py:40
+#: mail/forms.py:41
 #: web/forms.py:10
 msgid "Message"
 msgstr "Turinys"
@@ -198,7 +198,7 @@ msgstr "Laiško peržiūra"
 msgid "Find a representative"
 msgstr "Raskite atstovą"
 
-#: templates/breadcrumbs/write.html:2
+#: templates/breadcrumbs/write.html:7
 msgid "Write a letter"
 msgstr "Parašykite laišką"
 
@@ -324,19 +324,25 @@ msgstr ""
 "\n"
 "Galite jį peržiūrėti <a href=\"%(url)s\">čia</a>."
 
-#: templates/views/write.html:64
+#: templates/views/write.html:65
 msgid "Submit"
 msgstr "Pateikti"
 
 #: templates/views/write_confirm.html:17
 msgid ""
-"\n"
-"  Check your email. You should receive a confirmation link from\n"
-"  us. You must confirm your letter before it will be sent.\n"
+"Check your email. You should receive a confirmation\n"
+"  link from us. You must confirm your letter before it will be sent.\n"
 "  "
-msgstr ""
-"\n"
-"Pasitikrinkite savo elektroninį paštą. Mes Jums išsiuntėme patvirtinimo nuorodą. Jūs turite patvirtinti savo laišką prieš tai, kaip jis bus išsiųstas."
+msgstr "Pasitikrinkite savo elektroninį paštą. Mes Jums išsiuntėme patvirtinimo nuorodą. Jūs turite patvirtinti savo laišką prieš tai, kai jis bus išsiųstas."
+
+#: templates/views/write_confirm.html:23
+#, python-format
+msgid ""
+"If you don't receive\n"
+"  a letter, check your spam folder. If it doesn't arrive at all, send us a\n"
+"  note using the <a href=\"%(feedback_url)s\">feedback page</a>.\n"
+"  "
+msgstr "Jeigu negaunate laiško, pasitikrinkite brukalo (spam) katalogą. Jei ir ten jo nėra, <a href=\"%(feedback_url)s\">palikite mums atsiliepimą</a> apie tai."
 
 #: web/forms.py:6
 msgid "Your name"
