@@ -22,8 +22,13 @@ class WriteLetterForm(forms.Form):
                            required=True,
                            validators=[validate_full_name])
 
-    email = forms.EmailField(label=_("Your e-mail address"),
-                             required=True)
+    email = forms.EmailField(
+        label=_("Your e-mail address"),
+        required=True,
+        error_messages={
+            'required': _("An e-mail address is required."),
+            'invalid': _("Enter a valid e-mail address."),
+        })
     if settings.DEBUG:
         # Allow entering @localhost emails when debugging.
         email.validators = []
