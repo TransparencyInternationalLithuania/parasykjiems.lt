@@ -39,7 +39,8 @@ def write(request, recipient):
     else:
         choice_state = ChoiceState(request.GET)
         choice_state.add_recipient(recipient)
-        form = WriteLetterForm({'choice_state': choice_state.query_string()})
+        form = WriteLetterForm(
+            initial={'choice_state': choice_state.query_string()})
         # TODO: add letter template
 
     return render(request, 'views/write.html', {
