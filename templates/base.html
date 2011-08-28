@@ -34,11 +34,11 @@
           {% endblock %}
         </ul>
       </div>
-      <ul id="breadcrumbs">
-        {% block breadcrumbs %}
-        {% endblock %}
-      </ul>
       <div id="content">
+        <ul id="breadcrumbs">
+          {% block breadcrumbs %}
+          {% endblock %}
+        </ul>
         {% block content %}{% endblock %}
       </div>
     </div>
