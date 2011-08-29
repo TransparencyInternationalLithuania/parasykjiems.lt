@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-28 18:56+0300\n"
+"POT-Creation-Date: 2011-08-29 13:52+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -50,7 +50,7 @@ msgstr ""
 msgid "Enter a valid e-mail address."
 msgstr ""
 
-#: mail/forms.py:36
+#: mail/forms.py:36 templates/items/letters.html:8
 msgid "Subject"
 msgstr ""
 
@@ -128,28 +128,28 @@ msgid ""
 "      "
 msgstr ""
 
-#: templates/base.html:28
+#: templates/base.html:29
 msgid "ParašykJiems"
 msgstr ""
 
-#: templates/base.html:44
+#: templates/base.html:46
 msgid "Have any notes, suggestions?"
 msgstr ""
 
-#: templates/base.html:44
+#: templates/base.html:46
 msgid "Write to us."
 msgstr ""
 
-#: templates/menu.html:5
-msgid "Help"
+#: templates/menu.html:6
+msgid "Representative search"
 msgstr ""
 
-#: templates/menu.html:11 templates/breadcrumbs/letters.html:7
+#: templates/menu.html:12 templates/breadcrumbs/letters.html:7
 msgid "Open letters"
 msgstr ""
 
-#: templates/menu.html:17
-msgid "Representative search"
+#: templates/menu.html:18
+msgid "Help"
 msgstr ""
 
 #: templates/results.html:15
@@ -240,20 +240,20 @@ msgstr ""
 msgid "Date:"
 msgstr ""
 
-#: templates/items/letters.html:8
-msgid "Answered"
+#: templates/items/letters.html:6
+msgid "Sender"
 msgstr ""
 
-#: templates/items/letters.html:19
-msgid "Sender: "
+#: templates/items/letters.html:7
+msgid "Recipient"
 msgstr ""
 
-#: templates/items/letters.html:20
-msgid ", recipient: "
-msgstr ""
-
-#: templates/items/letters.html:23
+#: templates/items/letters.html:9
 msgid "Sent at"
+msgstr ""
+
+#: templates/items/letters.html:10
+msgid "Answered"
 msgstr ""
 
 #: templates/items/representative.html:18

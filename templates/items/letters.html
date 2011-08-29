@@ -1,30 +1,25 @@
 {% load i18n %}
 {% load nobreaks %}
 
-<ul class="letters">
+<table class="letters">
+  <tr>
+    <th>{% trans "Subject" %}</th>
+    <th>{% trans "Sender" %}</th>
+    <th>{% trans "Recipient" %}</th>
+    <th>{% trans "Sent at" %}</th>
+    <th>{% trans "Answered" %}</th>
+  </tr>
   {% for letter in letters %}
   {% if letter.is_open and letter.is_sent %}
-  <li>
-      {% if letter.has_answer %}<div class="answered">{% trans "Answered" %}</div>{% endif %}
-    <p class="subject">
-      <a href="{{ letter.get_absolute_url }}{% if page.number != 1 %}?p={{ page.number }}{% endif %}">
-        {{ letter.subject }}
-      </a>
-      {% if representative or institution %}
-      ({{ letter.date|date:'Y-m-d' }})
-      {% endif %}
-    </p>
-    {% if not representative and not institution %}
-    <p>
-      {% trans "Sender: " %}
-      {{ letter.sender_name|nobreaks }}{% trans ", recipient: " %}
-      <a href="{{ letter.recipient.get_absolute_url }}">
-        {{ letter.recipient.kind }} {{ letter.recipient.name|nobreaks }}</a>.
-      {% trans "Sent at" %}
-      {{ letter.date|date:'Y-m-d' }}.
-    </p>
-    {% endif %}
-  </li>
+  <tr>
+    <td><a href="{{ letter.get_absolute_url }}">{{ letter.subject }}</a></td>
+    <td>{{ letter.sender_name|nobreaks }}</td>
+    <td><a href="{{ letter.recipient.get_absolute_url }}">
+        {{ letter.recipient.kind }} {{ letter.recipient.name|nobreaks }}
+    </a></td>
+    <td>{{ letter.date|date:'Y-m-d' }}</td>
+    <td>{{ letter.has_answer|yesno|title }}</td>
+  </tr>
   {% endif %}
   {% endfor %}
-</ul>
+</table>

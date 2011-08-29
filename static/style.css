@@ -37,9 +37,13 @@ blockquote {
 }
 
 #testing-version {
-    border-bottom: solid 1px #ffa;
-    padding: 1em;
-    background: #ffc;
+    position: absolute;
+    right: 3px;
+    top: 100px;
+    padding: 0.3em 1em 0.3em 1em;
+    background: rgba(255, 255, 200, 0.9);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
 }
 
 #main-block {
@@ -57,6 +61,8 @@ blockquote {
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
+    -webkit-box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
 }
 
@@ -74,10 +80,21 @@ a:hover {
     color: #0053FA;
 }
 
+#logo {
+    height: 100px;
+}
+
 #header {
     background: #f0f0f0;
+    background: -webkit-gradient(linear, 0 0, 0 bottom, from(#f5f5f5), to(#eaeaea));
+    background: -webkit-linear-gradient(#f5f5f5, #eaeaea);
+    background: -moz-linear-gradient(#f5f5f5, #eaeaea);
+    background: -ms-linear-gradient(#f5f5f5, #eaeaea);
+    background: -o-linear-gradient(#f5f5f5, #eaeaea);
+    background: linear-gradient(#f5f5f5, #eaeaea);
+    -webkit-box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.3);
     box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.3);
-    height: 135px;
 }
 
 #inner-header {
@@ -89,7 +106,7 @@ a:hover {
 #menu {
     float: right;
     line-height: 100px;
-    list-style-type: none;
+    list-style: none;
     margin: 0;
 }
 
@@ -110,10 +127,14 @@ a:hover {
 }
 
 #menu li:first-child a {
+    -webkit-border-radius: 10px 0 0 10px;
+    -moz-border-radius: 10px 0 0 10px;
     border-radius: 10px 0 0 10px;
 }
 
 #menu li:last-child a {
+    -webkit-border-radius: 0 10px 10px 0;
+    -moz-border-radius: 0 10px 10px 0;
     border-radius: 0 10px 10px 0;
 }
 
@@ -156,7 +177,7 @@ a:hover {
 }
 
 #content {
-    margin: 0 auto 4em auto;
+    margin: 0 auto 2em auto;
     max-width: 900px;
 }
 
@@ -181,6 +202,8 @@ form input[type=text], textarea {
     padding: 5px;
     width: 100%;
     border: solid 1px #aaa;
+    -webkit-box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.3);
     box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.3);
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
@@ -196,6 +219,8 @@ form input[name=q] {
     width: 70%;
     padding: 5px;
     border: solid 1px #aaa;
+    -webkit-box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.3);
     box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.3);
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
@@ -243,8 +268,6 @@ form input[type=submit] {
     border-radius: 7px;
     color: #333;
     border: solid 1px #eee;
-    box-shadow: none;
-
     background: #f2f2f2; /* Old browsers */
     background: -moz-linear-gradient(top, #f2f2f2 0%, #cecece 100%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f2f2f2), color-stop(100%,#cecece)); /* Chrome,Safari4+ */
@@ -315,7 +338,6 @@ h1 {
 
 .institution {
     margin-bottom: 3em;
-    clear: both;
 }
 
 .institution h2 {
@@ -359,17 +381,18 @@ h5 {
     margin-top: 0;
 }
 
-table {
+.letters {
     border-collapse: collapse;
+    width: 100%;
 }
 
-tr {
-    margin: 0;
+.letters th {
+    background: #f0f0f0;
 }
 
-td {
-    padding: 10px;
-    margin: 0;
+.letters th, td {
+    padding: 6px 12px 6px 12px;
+    text-align: left;
 }
 
 .letter {
@@ -397,44 +420,6 @@ td {
 
 .response .body {
     background: #efefff;
-}
-
-.letters {
-    list-style: none;
-    padding: 0;
-}
-
-.letters li {
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
-    margin: 0 1em 1em 1em;
-}
-
-.letters p {
-    font-size: 11pt;
-    margin-top: 0.5em;
-    margin-bottom: 0;
-}
-
-.letters .subject {
-    font-size: 14pt;
-}
-
-.right li {
-    padding: 0;
-}
-
-.right .answered {
-    margin: 0;
-    padding: 1px 7px 1px 7px;
-}
-
-.right .subject {
-    font-size: 11pt;
-}
-
-.right .subject {
-    font-size: 11pt;
 }
 
 .right {
@@ -469,7 +454,7 @@ hr {
 }
 
 .answered {
-    float: right;
+    display: inline;
     font-size: 10pt;
     background: #bfb;
     color: #363;
@@ -481,10 +466,6 @@ hr {
 }
 
 .pager {
-    font-size: 10pt;
-    border-radius: 3px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
     line-height: 300%;
     margin: 2em 0 0 0;
     text-align: center;

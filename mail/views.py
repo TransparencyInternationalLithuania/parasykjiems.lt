@@ -96,7 +96,7 @@ def thread(request, slug):
 
 
 def letters(request):
-    MAX_LETTERS = 5
+    MAX_LETTERS = 10
     all_letters = (Enquiry.objects
                    .filter(is_open=True, is_sent=True)
                    .order_by('-sent_at'))
