@@ -24,7 +24,7 @@ class InstitutionKind(models.Model):
 
 
 class Institution(models.Model):
-    name = models.CharField(max_length=_NAME_LEN)
+    name = models.CharField(max_length=_NAME_LEN, unique=True)
     kind = models.ForeignKey(InstitutionKind)
 
     email = models.CharField(max_length=_NAME_LEN, blank=True)
