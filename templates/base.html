@@ -15,24 +15,24 @@
   </head>
   <body>
     {% if SETTINGS.TESTING_VERSION %}
-    <div id="testing-version"><p>
+    <div id="testing-version">
       {% blocktrans %}
       <strong>Note:</strong> this is the testing version of ParašykJiems.
       Letters aren't actually sent to representatives.
       {% endblocktrans %}
-    </p></div>
+    </div>
     {% endif %}
 
     <div id="main-block">
       <div id="header">
-        <div id="logo-holder">
+        <div id="inner-header">
           <a href="/"><img id="logo" src="/static/img/logo.png" alt="{% trans "ParašykJiems" %}"></a>
+          <ul id="menu">
+            {% block menu %}
+            {% include "menu.html" %}
+            {% endblock %}
+          </ul>
         </div>
-        <ul id="menu">
-          {% block menu %}
-          {% include "menu.html" %}
-          {% endblock %}
-        </ul>
       </div>
       <div id="content">
         <ul id="breadcrumbs">
