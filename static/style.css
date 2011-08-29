@@ -37,6 +37,8 @@ blockquote {
 }
 
 #testing-version {
+    font-size: 11pt;
+    color: #333;
     position: absolute;
     right: 3px;
     top: 100px;
@@ -100,14 +102,6 @@ a:hover {
 #inner-header {
     max-width: 900px;
     margin: 0 auto 0 auto;
-    padding: 1em;
-}
-
-#menu {
-    float: right;
-    line-height: 100px;
-    list-style: none;
-    margin: 0;
 }
 
 #menu li {

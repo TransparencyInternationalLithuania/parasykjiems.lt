@@ -25,14 +25,19 @@
 
     <div id="main-block">
       <div id="header">
-        <div id="inner-header">
-          <a href="/"><img id="logo" src="/static/img/logo.png" alt="{% trans "ParašykJiems" %}"></a>
-          <ul id="menu">
-            {% block menu %}
-            {% include "menu.html" %}
-            {% endblock %}
-          </ul>
-        </div>
+        <table id="inner-header">
+          <tr>
+            <td>
+              <a href="/"><img id="logo" src="/static/img/logo.png" alt="{% trans "ParašykJiems" %}"></a>
+            </td><td>
+              <ul id="menu">
+                {% block menu %}
+                {% include "menu.html" %}
+                {% endblock %}
+              </ul>
+            </td>
+          </tr>
+        </table>
       </div>
       <div id="content">
         <ul id="breadcrumbs">
