@@ -128,18 +128,17 @@ a:hover {
 }
 
 #breadcrumbs {
-    margin: 1em auto 2em auto;
+    margin: 1.5em 0 1.5em 0;
     padding: 0;
-    max-width: 900px;
-    height: 24px;
     font-size: 14pt;
     font-weight: bold;
 }
 
 #breadcrumbs li {
     margin: 0 5px 0 5px;
+    margin: 0;
+    padding: 0;
     display: inline;
-    line-height: 24px;
     color: #333;
 }
 
@@ -157,7 +156,7 @@ a:hover {
 }
 
 #content {
-    margin: 2em auto 4em auto;
+    margin: 0 auto 4em auto;
     max-width: 900px;
 }
 
@@ -279,7 +278,7 @@ form[name=search] input {
 }
 
 #result-list {
-    list-style-type: none;
+    list-style: none;
     margin: 0 0 0 0;
     padding: 0 0 0 0;
 }
@@ -401,7 +400,7 @@ td {
 }
 
 .letters {
-    list-style-type: none;
+    list-style: none;
     padding: 0;
 }
 
