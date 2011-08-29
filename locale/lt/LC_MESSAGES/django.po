@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-28 18:56+0300\n"
-"PO-Revision-Date: 2011-08-28 18:56+0300\n"
+"POT-Creation-Date: 2011-08-29 13:52+0300\n"
+"PO-Revision-Date: 2011-08-29 13:52+0300\n"
 "Last-Translator: Kiprianas Spiridonovas <k.spiridonovas@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -51,6 +51,7 @@ msgid "Enter a valid e-mail address."
 msgstr "Įveskite tinkamą el. pašto adresą."
 
 #: mail/forms.py:36
+#: templates/items/letters.html:8
 msgid "Subject"
 msgstr "Tema"
 
@@ -133,30 +134,30 @@ msgstr ""
 "<strong>Pastaba:</strong> čia yra ParašykJiems versija, skirta testavimui.\n"
 "Laiškai atstovams nėra siunčiami, nors yra rodomi tinklalapyje."
 
-#: templates/base.html:28
+#: templates/base.html:29
 msgid "ParašykJiems"
 msgstr ""
 
-#: templates/base.html:44
+#: templates/base.html:46
 msgid "Have any notes, suggestions?"
 msgstr "Turite pastabų, pasiūlymų?"
 
-#: templates/base.html:44
+#: templates/base.html:46
 msgid "Write to us."
 msgstr "Parašykite mums."
 
-#: templates/menu.html:5
-msgid "Help"
-msgstr "Pagalba"
+#: templates/menu.html:6
+msgid "Representative search"
+msgstr "Atstovo paieška"
 
-#: templates/menu.html:11
+#: templates/menu.html:12
 #: templates/breadcrumbs/letters.html:7
 msgid "Open letters"
 msgstr "Atviri laiškai"
 
-#: templates/menu.html:17
-msgid "Representative search"
-msgstr "Atstovo paieška"
+#: templates/menu.html:18
+msgid "Help"
+msgstr "Pagalba"
 
 #: templates/results.html:15
 msgid "There are more results matching your query. Try narrowing your search."
@@ -250,21 +251,21 @@ msgstr "Tema:"
 msgid "Date:"
 msgstr "Data: "
 
-#: templates/items/letters.html:8
-msgid "Answered"
-msgstr "Yra atsakymas"
+#: templates/items/letters.html:6
+msgid "Sender"
+msgstr "Siuntėjas"
 
-#: templates/items/letters.html:19
-msgid "Sender: "
-msgstr "Siuntėjas: "
+#: templates/items/letters.html:7
+msgid "Recipient"
+msgstr "Gavėjas"
 
-#: templates/items/letters.html:20
-msgid ", recipient: "
-msgstr ", gavėjas: "
-
-#: templates/items/letters.html:23
+#: templates/items/letters.html:9
 msgid "Sent at"
 msgstr "Išsiųsta"
+
+#: templates/items/letters.html:10
+msgid "Answered"
+msgstr "Atsakyta"
 
 #: templates/items/representative.html:18
 msgid "Institution: "

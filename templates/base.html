@@ -15,7 +15,7 @@
   </head>
   <body>
     {% if SETTINGS.TESTING_VERSION %}
-    <div id="testing-version">
+    <div id="testing-version" onclick="$(this).hide()">
       {% blocktrans %}
       <strong>Note:</strong> this is the testing version of ParašykJiems.
       Letters aren't actually sent to representatives.
