@@ -17,6 +17,6 @@
 <form name="ask" method="POST">
   {% csrf_token %}
   {{ form.as_p }}
-  <input label="{% trans "Continue" %}" type="submit"></input>
+  <input value="{% trans "Continue" %}" type="submit"></input>
 </form>
 {% endblock %}
