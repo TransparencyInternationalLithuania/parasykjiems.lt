@@ -4,23 +4,10 @@ from django.utils.translation import ugettext as _
 import settings
 
 
-def validate_full_name(string):
-    string = string.strip()
-
-    if '.' in string:
-        raise forms.ValidationError(
-            _("You shouldn't abbreviate your name."))
-
-    if ' ' not in string:
-        raise forms.ValidationError(
-            _("You should enter both your first name and your surname, "
-              "separated by spaces."))
-
-
 class WriteLetterForm(forms.Form):
     name = forms.CharField(label=_("Your full name"),
-                           required=True,
-                           validators=[validate_full_name])
+                           help_text=_("You should enter your full name without abbreviations."),
+                           required=True)
 
     email = forms.EmailField(
         label=_("Your e-mail address"),
