@@ -10,5 +10,5 @@
 {% endblock %}
 
 {% block content %}
-{{ article.body|markdown }}
+{{ article.body|markdown:"toc" }}
 {% endblock %}
