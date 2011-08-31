@@ -44,4 +44,3 @@ class Command(BaseCommand):
                                 'email': e(i.email),
                                 'phone': e(i.phone),
                                 'address': e(i.address)})
-
