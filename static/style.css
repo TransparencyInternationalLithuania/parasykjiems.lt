@@ -532,3 +532,11 @@ ul.errorlist {
     color: white;
     background: #888;
 }
+
+.toc ul {
+    list-style: none;
+}
+
+.toc a {
+    font-weight: bold;
+}
