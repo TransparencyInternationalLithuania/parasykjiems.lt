@@ -16,7 +16,10 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         def d(s):
-            return s.decode('utf-8').strip()
+            if s:
+                return s.decode('utf-8').strip()
+            else:
+                return u''
 
         def countlines(filename):
             with open(filename) as f:
