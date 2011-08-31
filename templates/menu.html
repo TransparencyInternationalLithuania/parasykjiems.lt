@@ -14,7 +14,7 @@
 </li>
 
 <li>
-  <a href="{% url article "help" %}" {% if request.path == "/help/" %}class="selected"{% endif %}>
+  <a href="{% url article "help" %}" {% if request.path == "/help/" or request.path == "/help/institutions/" %}class="selected"{% endif %}>
     {% trans "Help" %}
   </a>
 </li>

@@ -254,7 +254,6 @@ label {
 
 form input[type=submit] {
     width: 25%;
-    display: block;
     margin: 0 0 0 auto;
     font-size: 120%;
     padding: 0.2em 0.2em 0.2em 0.2em;
@@ -508,4 +507,28 @@ ul.errorlist {
     color: #444;
     margin: 0.5em;
     padding: 0.5em;
+}
+
+.tabs {
+    text-align: center;
+    padding: 0 0 7px 0;
+    border-bottom: 2px solid #888;
+}
+
+.tabs * {
+    margin: 5px;
+    padding: 10px 30px 7px 30px;
+    background: #eee;
+    color: #444;
+    border-radius: 20px 20px 0 0;
+}
+
+.tabs *:hover {
+    background: #ccc;
+    color: #444;
+}
+
+.tabs .selected {
+    color: white;
+    background: #888;
 }
