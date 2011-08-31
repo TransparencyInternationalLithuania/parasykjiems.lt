@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-29 13:52+0300\n"
+"POT-Creation-Date: 2011-08-31 14:55+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,45 +25,40 @@ msgstr ""
 msgid "Lithuanian"
 msgstr ""
 
-#: mail/forms.py:12
-msgid "You shouldn't abbreviate your name."
-msgstr ""
-
-#: mail/forms.py:16
-msgid ""
-"You should enter both your first name and your surname, separated by spaces."
-msgstr ""
-
-#: mail/forms.py:21
+#: mail/forms.py:8
 msgid "Your full name"
 msgstr ""
 
-#: mail/forms.py:26 web/forms.py:8
+#: mail/forms.py:9
+msgid "You should enter your full name without abbreviations."
+msgstr ""
+
+#: mail/forms.py:13 web/forms.py:8
 msgid "Your e-mail address"
 msgstr ""
 
-#: mail/forms.py:29
+#: mail/forms.py:16
 msgid "An e-mail address is required."
 msgstr ""
 
-#: mail/forms.py:30
+#: mail/forms.py:17
 msgid "Enter a valid e-mail address."
 msgstr ""
 
-#: mail/forms.py:36 templates/items/letters.html:8
+#: mail/forms.py:23 templates/items/letters.html:6
 msgid "Subject"
 msgstr ""
 
-#: mail/forms.py:41
+#: mail/forms.py:28
 msgid "Open letter"
 msgstr ""
 
-#: mail/forms.py:43
+#: mail/forms.py:30
 msgid ""
 "An open letter is visible to everyone in the letter list in the website."
 msgstr ""
 
-#: mail/forms.py:46 web/forms.py:10
+#: mail/forms.py:33 web/forms.py:10
 msgid "Message"
 msgstr ""
 
@@ -128,15 +123,15 @@ msgid ""
 "      "
 msgstr ""
 
-#: templates/base.html:29
+#: templates/base.html:31
 msgid "ParašykJiems"
 msgstr ""
 
-#: templates/base.html:46
+#: templates/base.html:51
 msgid "Have any notes, suggestions?"
 msgstr ""
 
-#: templates/base.html:46
+#: templates/base.html:51
 msgid "Write to us."
 msgstr ""
 
@@ -240,11 +235,11 @@ msgstr ""
 msgid "Date:"
 msgstr ""
 
-#: templates/items/letters.html:6
+#: templates/items/letters.html:7
 msgid "Sender"
 msgstr ""
 
-#: templates/items/letters.html:7
+#: templates/items/letters.html:8
 msgid "Recipient"
 msgstr ""
 
