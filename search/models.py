@@ -96,11 +96,10 @@ class Representative(models.Model):
             self.kind,
             self.institution)
 
-    @models.permalink
     def get_absolute_url(self):
-        if self.slug == '':
+        if self.institution.slug == '':
             raise Exception('Tried to get address of object missing a slug.')
-        return ('representative', [self.slug])
+        return self.institution.get_absolute_url() + '#' + self.slug
 
     @property
     def recent_letters(self):
