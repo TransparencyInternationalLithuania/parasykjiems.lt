@@ -6,8 +6,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponse, Http404
 from haystack.query import SearchQuerySet, SQ
 
-from search.models import \
-     Representative, Institution, Location, Territory, InstitutionKind
+from search.models import Institution, Location, Territory, InstitutionKind
 from search.forms import HouseNumberForm
 from search import house_numbers
 from search import utils
@@ -82,16 +81,6 @@ def search(request):
             'search_query': request.GET.get('q', ''),
             'results_html': results_html,
         })
-
-
-def representative(request, slug):
-    rep = get_object_or_404(Representative, slug=slug)
-    if not rep.kind.active:
-        raise Http404()
-    return render(request, 'views/representative.html', {
-        'choose_query': '?rep={}'.format(rep.id),
-        'representative': rep,
-    })
 
 
 def institution(request, slug):

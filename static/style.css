@@ -351,12 +351,11 @@ h1 {
 
 .representative h4 {
     margin-bottom: 0;
-    font-size: 16pt;
+    font-size: 12pt;
 }
 
-.institution-representative h4 {
-    margin-bottom: 0;
-    font-size: 12pt;
+.active-representative {
+    background: #eee;
 }
 
 h5 {

@@ -10,5 +10,5 @@
 {% endblock %}
 
 {% block content %}
-{% include "items/representative.html" %}
+{% include "items/institution.html" with institution=representative.institution active=representative %}
 {% endblock %}

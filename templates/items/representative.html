@@ -1,52 +1,45 @@
 {% load i18n markup %}
 
-{% if not institution %}
-<table class="container">
-{% endif %}
+<tr class="representative{% if active == representative %} active-representative{% endif %}">
+  <td>
+    <a name="{{ representative.slug }}"></a>
+    <h4>{{ representative.name }}</h4>
+    <p class="subtitle">{{ representative.kind.name }}</p>
 
-  <tr class="representative{% if institution %} institution-representative{% endif %}">
-    <td>
-      <h4>{{ representative.name }}</h4>
-      <p class="subtitle">{{ representative.kind.name }}</p>
-
-      {% if representative.kind.description %}
-      <div class="description">{{ representative.kind.description|markdown }}</div>
-      {% endif %}
-
-      {% if not institution %}
-      <p>
-        {% trans "Institution: " %}
-        <a href="{{ representative.institution.get_absolute_url }}">
-          {{ representative.institution.name }}
-        </a>
-      </p>
-      {% endif %}
-
-      {% if representative.email and representative.email != institution.email %}
-      <p>
-        {% trans "Email: " %} {{ representative.email }}
-        <a class="write" href="{% url write-representative representative.slug %}{{ choose_query }}">
-          {% trans "Write&nbsp;letter" %}
-        </a>
-      </p>
-      {% endif %}
-
-      {% if representative.phone and representative.phone != institution.phone %}
-      <p>{% trans "Phone number: " %} {{ representative.phone }}</p>
-      {% endif %}
-
-      {% if representative.other_contacts %}
-      <p>{{ representative.other_contacts }}</p>
-      {% endif %}
-    </td>
-    {% if representative.recent_letters %}
-    <td class="right">
-      <h5>{% trans "Recent letters" %}</h5>
-      {% include "items/letters.html" with letters=representative.recent_letters %}
-    </td>
+    {% if representative.kind.description %}
+    <div class="description">{{ representative.kind.description|markdown }}</div>
     {% endif %}
-  </tr>
 
-{% if not institution %}
-</table>
-{% endif %}
+    {% if not institution %}
+    <p>
+      {% trans "Institution: " %}
+      <a href="{{ representative.institution.get_absolute_url }}">
+        {{ representative.institution.name }}
+      </a>
+    </p>
+    {% endif %}
+
+    {% if representative.email and representative.email != institution.email %}
+    <p>
+      {% trans "Email: " %} {{ representative.email }}
+      <a class="write" href="{% url write-representative representative.slug %}{{ choose_query }}">
+        {% trans "Write&nbsp;letter" %}
+      </a>
+    </p>
+    {% endif %}
+
+    {% if representative.phone and representative.phone != institution.phone %}
+    <p>{% trans "Phone number: " %} {{ representative.phone }}</p>
+    {% endif %}
+
+    {% if representative.other_contacts %}
+    <p>{{ representative.other_contacts }}</p>
+    {% endif %}
+  </td>
+  {% if representative.recent_letters %}
+  <td class="right">
+    <h5>{% trans "Recent letters" %}</h5>
+    {% include "items/letters.html" with letters=representative.recent_letters %}
+  </td>
+  {% endif %}
+</tr>

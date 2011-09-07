@@ -5,8 +5,6 @@ urlpatterns = patterns('search.views',
 
     url(r'^institution/(?P<slug>[\w-]+)/$', 'institution',
         name='institution'),
-    url(r'^representative/(?P<slug>[\w-]+)/$', 'representative',
-        name='representative'),
 
     url(r'^location/(?P<slug>[\w-]+)/$', 'location', name='location'),
     url(r'^location/(?P<slug>[\w-]+)/ask/$', 'location_ask'),
