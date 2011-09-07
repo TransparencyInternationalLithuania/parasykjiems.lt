@@ -24,14 +24,6 @@
 </div>
 {% endif %}
 
-<div class="note">
-  <strong>Pastaba:</strong> Valstybinėse institucijose veikia vieno
-  langelio principas, kuris reiškia, jog prašymai, skundai, pasiūlymai
-  ir kiti dokumentai yra priimami ir į juos atsakoma vienoje darbo
-  vietoje. Dokumentus, esant poreikiui, persiunčia patys valstybinių
-  institucijų darbuotojai.
-</div>
-
 {% for institution in institutions %}
 {% include "items/institution.html" %}
 {% if not forloop.last %}
