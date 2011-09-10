@@ -41,6 +41,9 @@
     <td colspan="2" class="recent-letters">
       <h5>{% trans "Recent letters" %}</h5>
       {% include "items/letters.html" with letters=institution.recent_letters %}
+      {% if institution.more_letters %}
+      <a href="{% url letters institution.slug %}">{% trans "All letters sent to this institution" %}</a>
+      {% endif %}
     </td>
   </tr>
   {% endif %}

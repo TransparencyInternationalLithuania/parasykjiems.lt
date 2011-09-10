@@ -14,7 +14,6 @@ import time
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-import search.models
 from parasykjiems.slug import SLUG_LEN
 from parasykjiems.mail import utils
 import settings
@@ -41,9 +40,9 @@ class Enquiry(models.Model):
 
     # These link to the institution or representative that this
     # enquiry was sent to. Exactly one of them should be non-null.
-    institution = models.ForeignKey(search.models.Institution,
+    institution = models.ForeignKey('search.Institution',
                                     null=True)
-    representative = models.ForeignKey(search.models.Representative,
+    representative = models.ForeignKey('search.Representative',
                                        null=True)
 
     sender_name = models.CharField(max_length=_NAME_LEN)
