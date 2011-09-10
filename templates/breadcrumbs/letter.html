@@ -1,3 +1,4 @@
+{% extends "breadcrumb.html" %}
 {% load i18n %}
-<li>{% trans "View letter" %}</li>
-{% include "breadcrumbs/separator.html" with active=active %}
+{% block content %}{% trans "View letter" %}{% endblock %}
+

@@ -145,21 +145,18 @@ a:hover {
 
 #breadcrumbs {
     margin: 1.5em 0 1.5em 0;
-    padding: 0;
     font-size: 14pt;
     font-weight: bold;
 }
 
 #breadcrumbs li {
-    margin: 0 5px 0 5px;
-    margin: 0;
     padding: 0;
     display: inline;
     color: #333;
 }
 
-#breadcrumbs li:first-child {
-    margin-left: 0;
+#breadcrumbs img {
+    margin: 0 13px 0 13px;
 }
 
 #breadcrumbs a {

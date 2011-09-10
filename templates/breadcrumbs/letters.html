@@ -1,13 +1,4 @@
+{% extends "breadcrumb.html" %}
 {% load i18n %}
-<li>
-  {% if not active %}
-  <a href="{% url letters %}{% if page %}?p={{ page }}{% endif %}">
-  {% endif %}
-
-  {% trans "Open letters" %}
-
-  {% if not active %}
-  </a>
-  {% endif %}
-</li>
-{% include "breadcrumbs/separator.html" with active=active %}
+{% block url %}{% url letters %}{% if page %}?p={{ page }}{% endif %}{% endblock %}
+{% block content %}{% trans "Open letters" %}{% endblock %}

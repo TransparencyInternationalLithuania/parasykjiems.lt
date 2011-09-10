@@ -1,13 +1,5 @@
+{% extends "breadcrumb.html" %}
 {% load i18n %}
-<li>
-  {% if not active %}
-  <a href="{{ choose_url }}">
-  {% endif %}
+{% block url %}{{ choose_url }}{% endblock %}
+{% block content %}{% trans "Choose a representative" %}{% endblock %}
 
-  {% trans "Choose a representative" %}
-
-  {% if not active %}
-  </a>
-  {% endif %}
-</li>
-{% include "breadcrumbs/separator.html" with active=active %}
