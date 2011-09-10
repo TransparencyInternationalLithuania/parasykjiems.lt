@@ -196,8 +196,8 @@ a:hover {
     border-top: 1px dotted #ddd;
     text-align: center;
     font-size: 10pt;
-    color: #555;
-    padding: 3em;
+    color: #444;
+    padding: 2em;
 
     position: relative;
     left: 0px;
@@ -210,7 +210,7 @@ a:hover {
 }
 
 #footer a {
-    color: #66f;
+    color: #4d6685;
 }
 
 form input[type=text], textarea {
