@@ -98,11 +98,15 @@ def thread(request, slug):
     })
 
 
-def letters(request):
+def letters(request, institution_slug=None):
     MAX_LETTERS = 10
-    all_letters = (Enquiry.objects
-                   .filter(is_open=True, is_sent=True)
-                   .order_by('-sent_at'))
+    if institution_slug:
+        institution = get_object_or_404(Institution, slug=institution_slug)
+        all_letters = institution.letters
+    else:
+        all_letters = (Enquiry.objects
+                       .filter(is_open=True, is_sent=True)
+                       .order_by('-sent_at'))
     pages = Paginator(all_letters, MAX_LETTERS)
     try:
         page_num = int(request.GET.get('p', '1'))

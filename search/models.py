@@ -1,11 +1,57 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from parasykjiems.slug import SLUG_LEN
+from parasykjiems.mail.models import Enquiry
 
 
 _NAME_LEN = 200
 
-RECENT_LETTERS = 3
+
+class RepresentativeKind(models.Model):
+    """Kind of position of representative in institution."""
+    name = models.CharField(max_length=_NAME_LEN)
+    description = models.TextField(
+        blank=True,
+        help_text=_("In Markdown format."))
+    active = models.BooleanField()
+
+    ordinal = models.IntegerField(
+        help_text=_("This number is used for sorting representatives "
+                    "in the institution view."))
+
+    def __unicode__(self):
+        return self.name
+
+
+class Representative(models.Model):
+    """A person working in an institution.
+
+    Contains all the related contact information.
+    """
+
+    name = models.CharField(max_length=_NAME_LEN)
+    kind = models.ForeignKey(RepresentativeKind)
+
+    institution = models.ForeignKey('Institution')
+
+    email = models.CharField(max_length=_NAME_LEN, blank=True)
+    phone = models.CharField(max_length=_NAME_LEN, blank=True)
+    other_contacts = models.TextField(blank=True)
+
+    slug = models.CharField(max_length=SLUG_LEN,
+                            blank=True,
+                            db_index=True)
+
+    def __unicode__(self):
+        return u'{}, {} in {}'.format(
+            self.name,
+            self.kind,
+            self.institution)
+
+    def get_absolute_url(self):
+        if self.institution.slug == '':
+            raise Exception('Tried to get address of object missing a slug.')
+        return self.institution.get_absolute_url() + '#' + self.slug
 
 
 class InstitutionKind(models.Model):
@@ -48,65 +94,25 @@ class Institution(models.Model):
         return ('institution', [self.slug])
 
     @property
-    def recent_letters(self):
-        return (self.enquiry_set
+    def letters(self):
+        """All letters sent to this institution or any of its
+        representatives.
+        """
+        query = models.Q(institution=self)
+        for rep in Representative.objects.filter(institution=self):
+            query = query | models.Q(representative=rep)
+        return (Enquiry.objects
+                .filter(query)
                 .filter(is_open=True, is_sent=True)
-                .order_by('-sent_at')
-                [:RECENT_LETTERS])
-
-
-class RepresentativeKind(models.Model):
-    """Kind of position of representative in institution."""
-    name = models.CharField(max_length=_NAME_LEN)
-    description = models.TextField(
-        blank=True,
-        help_text=_("In Markdown format."))
-    active = models.BooleanField()
-
-    ordinal = models.IntegerField(
-        help_text=_("This number is used for sorting representatives "
-                    "in the institution view."))
-
-    def __unicode__(self):
-        return self.name
-
-
-class Representative(models.Model):
-    """A person working in an institution.
-
-    Contains all the related contact information.
-    """
-
-    name = models.CharField(max_length=_NAME_LEN)
-    kind = models.ForeignKey(RepresentativeKind)
-
-    institution = models.ForeignKey(Institution)
-
-    email = models.CharField(max_length=_NAME_LEN, blank=True)
-    phone = models.CharField(max_length=_NAME_LEN, blank=True)
-    other_contacts = models.TextField(blank=True)
-
-    slug = models.CharField(max_length=SLUG_LEN,
-                            blank=True,
-                            db_index=True)
-
-    def __unicode__(self):
-        return u'{}, {} in {}'.format(
-            self.name,
-            self.kind,
-            self.institution)
-
-    def get_absolute_url(self):
-        if self.institution.slug == '':
-            raise Exception('Tried to get address of object missing a slug.')
-        return self.institution.get_absolute_url() + '#' + self.slug
+                .order_by('-sent_at'))
 
     @property
-    def recent_letters(self):
-        return (self.enquiry_set
-                .filter(is_open=True, is_sent=True)
-                .order_by('-sent_at')
-                [:RECENT_LETTERS])
+    def recent_letters(self, count=4):
+        return self.letters[:count]
+
+    @property
+    def more_letters(self, count=4):
+        return self.letters.count() > count
 
 
 class Location(models.Model):

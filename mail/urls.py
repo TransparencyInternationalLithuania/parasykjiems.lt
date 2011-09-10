@@ -14,4 +14,5 @@ urlpatterns = patterns('mail.views',
     url(r'^thread/(?P<slug>[\w-]+)/$', 'thread', name='thread'),
 
     url(r'^letters/$', 'letters', name='letters'),
+    url(r'^letters/(?P<institution_slug>[\w-]+)/$', 'letters', name='letters'),
 )
