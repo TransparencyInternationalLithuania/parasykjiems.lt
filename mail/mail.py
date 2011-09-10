@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 
 import datetime
-import re
 from django.template.loader import render_to_string
 from django.core.mail import send_mail, EmailMessage
 from django.utils.translation import ugettext as _
 
 import settings
-from parasykjiems.mail.utils import decode_header_unicode
+from parasykjiems.mail import utils
 from parasykjiems.mail.models import Enquiry, Response
 from parasykjiems.slug import generate_slug
 from parasykjiems.search.models import Representative
@@ -123,10 +122,10 @@ def send_enquiry(enquiry):
         from_email=settings.SERVER_EMAIL,
         subject=_("Copy of the letter you sent."),
         body=render_to_string('mail/copy.txt', {
-            'from': decode_header_unicode(msg['from']),
-            'to': decode_header_unicode(msg['to']),
-            'date': decode_header_unicode(msg['date']),
-            'subject': decode_header_unicode(msg['subject']),
+            'from': utils.decode_header_unicode(msg['from']),
+            'to': utils.decode_header_unicode(msg['to']),
+            'date': utils.decode_header_unicode(msg['date']),
+            'subject': utils.decode_header_unicode(msg['subject']),
             'body': message.message().get_payload(decode=True),
         }),
         to=[u'{} <{}>'.format(enquiry.sender_name, enquiry.sender_email)])
@@ -144,16 +143,7 @@ def process_incoming(message):
     parent = None
     try:
         # First, try matching by 'To'.
-        # By using some not-very-general hackery, we turn
-        # ENQUIRY_EMAIL_FORMAT into a regexp. To be specific, we
-        # escape pluses.
-        r = (settings.ENQUIRY_EMAIL_FORMAT
-             .replace('+', r'\+')
-             .replace('.', r'\.')
-             .format(
-                 id='(?P<id>\d+)',
-                 hash='(?P<hash>\d+)'))
-        m = re.match(r, message['to'])
+        m = utils.ENQUIRY_EMAIL_REGEXP.match(message['to'])
         if m:
             id = int(m.group('id'))
             hash = int(m.group('hash'))

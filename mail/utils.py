@@ -2,8 +2,9 @@
 """
 
 import re
-
 from email.header import decode_header
+
+import settings
 
 import logging
 logger = logging.getLogger(__name__)
@@ -36,3 +37,15 @@ def decode_header_unicode(h):
     """
     unicodes = [s.decode(enc or 'ascii') for s, enc in decode_header(h)]
     return u' '.join(unicodes)
+
+
+# By using some not-very-general hackery, we turn
+# ENQUIRY_EMAIL_FORMAT into a regexp. To be specific, we
+# escape plusses and periods.
+ENQUIRY_EMAIL_REGEXP = re.compile(
+    settings.ENQUIRY_EMAIL_FORMAT
+    .replace('+', r'\+')
+    .replace('.', r'\.')
+    .format(
+        id='(?P<id>\d+)',
+        hash='(?P<hash>\d+)'))
