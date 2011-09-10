@@ -15,6 +15,7 @@ def export_models(query, filename, fields):
         os.makedirs(destdir)
 
     print 'Exporting to "{}".'.format(filename)
+    exported = 0
     with open(filename, 'wb') as f:
         w = csv.DictWriter(f, fields)
         w.writeheader()
@@ -23,6 +24,8 @@ def export_models(query, filename, fields):
             for field in fields:
                 row[field] = unicode(obj.__dict__[field]).encode('utf-8')
             w.writerow(row)
+            exported += 1
+    print 'Exported {} objects.'.format(exported)
 
 
 def import_models(filename, model, key, fields, additional_filter=None):
@@ -55,6 +58,7 @@ def import_models(filename, model, key, fields, additional_filter=None):
         return ProgressBar(widgets=widgets, maxval=count)(reader)
 
     new_objects = 0
+    modified_objects = 0
     for row in progressreader(filename):
         filterdict = {key: d(row[key])}
         if additional_filter:
@@ -63,7 +67,10 @@ def import_models(filename, model, key, fields, additional_filter=None):
         obj, created = model.objects.get_or_create(**filterdict)
         if created:
             new_objects += 1
+        else:
+            modified_objects += 1
         for field in fields:
             obj.__dict__[field] = d(row[field])
         obj.save()
-    print "Created {} new objects.".format(new_objects)
+    print "Created {} and modified {} objects.".format(
+        new_objects, modified_objects)
