@@ -1,11 +1,13 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n message %}
 
 {% block breadcrumbs %}
 {% include "breadcrumbs/feedback.html" with active=1 %}
 {% endblock %}
 
 {% block content %}
+
+{% message "contacts" %}
 
 <form method="POST">
   {% csrf_token %}

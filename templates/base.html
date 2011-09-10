@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n message %}
 {% spaceless %}
 <!DOCTYPE html>
 <html>
@@ -16,10 +16,7 @@
   <body>
     {% if SETTINGS.TESTING_VERSION %}
     <div id="testing-version" onclick="$(this).hide()">
-      {% blocktrans %}
-      <strong>Note:</strong> this is the testing version of ParašykJiems.
-      Letters aren't actually sent to representatives.
-      {% endblocktrans %}
+      {% message "testing-version" %}
     </div>
     {% endif %}
 
@@ -27,9 +24,14 @@
       <div id="header">
         <table id="inner-header">
           <tr>
-            <td>
+            <td rowspan="2">
               <a href="/"><img id="logo" src="/static/img/logo.png" alt="{% trans "ParašykJiems" %}"></a>
-            </td><td>
+            </td><td id="slogan">
+              {% message "slogan" %}
+            </td>
+          </tr>
+          <tr>
+            <td>
               <ul id="menu">
                 {% block menu %}
                 {% include "menu.html" %}
@@ -48,7 +50,7 @@
       </div>
     </div>
     <div id="footer">
-      {% trans "Have any notes, suggestions?" %} <a href="{% url feedback %}" >{% trans "Write to us." %}</a>
+      {% message "footer" %}
     </div>
   </body>
 </html>

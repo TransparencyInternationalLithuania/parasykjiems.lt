@@ -15,7 +15,7 @@ class MessageNode(template.Node):
 
 
 @register.tag
-def do_message(parser, token):
+def message(parser, token):
     try:
         # split_contents() knows not to split quoted strings.
         tag_name, message_name = token.split_contents()
