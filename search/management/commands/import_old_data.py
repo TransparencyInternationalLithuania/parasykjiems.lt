@@ -87,7 +87,7 @@ class Command(BaseCommand):
 
         old_id_to_new_inst = {}
 
-        for row in progressreader('data/institutiontypes.csv'):
+        for row in progressreader('data/old/institutiontypes.csv'):
             old_id = int(row['id'])
             old_name = d(row['name'])
             if old_name in old_name_to_new_inst:
@@ -97,7 +97,7 @@ class Command(BaseCommand):
 
         skips = 0
         imports = 0
-        for row in progressreader('data/institutions.csv'):
+        for row in progressreader('data/old/institutions.csv'):
             type_id = int(row['type_id'])
             if type_id in old_id_to_new_inst:
                 inst = models.Institution(
@@ -116,7 +116,7 @@ class Command(BaseCommand):
 
         skips = 0
         imports = 0
-        for row in progressreader('data/personpositions.csv'):
+        for row in progressreader('data/old/personpositions.csv'):
             try:
                 inst = models.Institution.objects.get(
                     id=int(row['institution_id']))
@@ -148,7 +148,7 @@ class Command(BaseCommand):
         imports = 0
         merges = 0
         large_numbers = set()
-        for row in progressreader('data/institutionterritories.csv'):
+        for row in progressreader('data/old/institutionterritories.csv'):
             num_from, num_from_letter = \
                 separate_number(d(row['number_from']))
             num_to, num_to_letter = \
