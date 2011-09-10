@@ -48,6 +48,10 @@ blockquote {
     border-radius: 3px;
 }
 
+#testing-version * {
+    margin: 0;
+}
+
 #main-block {
     background: white;
     margin: 0 auto 0 auto;
@@ -83,8 +87,8 @@ a:hover {
 }
 
 #logo {
-    width: 325px;
-    height: 100px;
+    width: 310px;
+    height: 95px;
 }
 
 #header {
@@ -110,6 +114,14 @@ a:hover {
     padding: 0;
 }
 
+#slogan p {
+    color: #5d6675;
+    font-size: 12pt;
+    font-weight: bold;
+    text-align: right;
+    margin: 15px 0 0 0;
+}
+
 #menu {
     text-align: right;
     margin: 0;
@@ -124,9 +136,7 @@ a:hover {
 #menu a {
     font-size: 14pt;
     color: #666;
-
-    padding: 9px 27px 9px 27px;
-
+    padding: 7px 27px 7px 27px;
     background: #fafafa;
 }
 
@@ -195,13 +205,18 @@ a:hover {
     bottom: 0px;
 }
 
+#footer * {
+    text-align: center;
+}
+
 #footer a {
     color: #66f;
 }
 
 form input[type=text], textarea {
     font-size: 14pt;
-    padding: 5px;
+    margin: 5px;
+    padding: 3px;
     width: 100%;
     border: solid 1px #aaa;
     -webkit-box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.3);
@@ -234,12 +249,14 @@ form[name=search] {
 }
 
 form table {
+    margin: 0;
     width: 100%;
 }
 
 form table td, th {
+    padding: 0;
+    margin: 0;
     vertical-align: middle;
-    padding: 5px 5px 5px 5px;
 }
 
 form table th {
