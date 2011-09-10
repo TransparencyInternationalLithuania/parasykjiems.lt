@@ -1,11 +1,13 @@
 {% load i18n markup %}
 
-<table class="container">
-  <tr class="institution">
-    <td>
+<table class="institution">
+  <tr>
+    <td colspan="2">
       <h2>{{ institution.name }}</h2>
-      <p class="subtitle">{{ institution.kind.name }}</p>
-
+    </td>
+  </tr>
+  <tr>
+    <td>
       {% if institution.email %}
       <p>
         {% trans "Email: " %} {{ institution.email }}
@@ -23,20 +25,23 @@
       <p>{% trans "Address: " %} {{ institution.address }}</p>
       {% endif %}
     </td>
-    <td class="right">
-      {% if institution.kind.description %}
+    <td class="description" rowspan="{{ institution.representatives.count|add:1 }}">
       {{ institution.kind.description|markdown }}
-      {% endif %}
-
-      {% if institution.recent_letters %}
-      <div class="recent-letters">
-        <h5>{% trans "Recent letters" %}</h5>
-        {% include "items/letters.html" with letters=institution.recent_letters %}
-      </div>
-      {% endif %}
     </td>
   </tr>
+
   {% for representative in institution.representatives %}
-  {% include "items/representative.html" %}
+  <tr><td class="representative">
+      {% include "items/representative.html" %}
+  </td></tr>
   {% endfor %}
+
+  {% if institution.recent_letters %}
+  <tr>
+    <td colspan="2" class="recent-letters">
+      <h5>{% trans "Recent letters" %}</h5>
+      {% include "items/letters.html" with letters=institution.recent_letters %}
+    </td>
+  </tr>
+  {% endif %}
 </table>
