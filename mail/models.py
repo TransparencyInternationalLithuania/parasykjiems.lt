@@ -17,6 +17,7 @@ from django.utils.translation import ugettext_lazy as _
 import search.models
 from parasykjiems.slug import SLUG_LEN
 from parasykjiems.mail import utils
+import settings
 
 
 _NAME_LEN = 200
@@ -154,7 +155,10 @@ class Response(models.Model):
 
     @property
     def body(self):
-        return self.message.get_payload(decode=True)
+        body = self.message.get_payload(decode=True)
+        body = utils.ENQUIRY_EMAIL_REGEXP.sub("...@" + settings.MAIL_DOMAIN,
+                                              body)
+        return body
 
     @property
     def kind(self):
