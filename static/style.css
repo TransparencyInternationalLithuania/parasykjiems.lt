@@ -101,13 +101,23 @@ a:hover {
 }
 
 #inner-header {
-    max-width: 900px;
+    width: 900px;
     margin: 0 auto 0 auto;
+}
+
+#inner-header td, tr {
+    margin: 0;
+    padding: 0;
+}
+
+#menu {
+    text-align: right;
+    margin: 0;
+    padding: 0;
 }
 
 #menu li {
     display: inline;
-    margin: 0;
     padding: 0;
 }
 
@@ -116,7 +126,6 @@ a:hover {
     color: #666;
 
     padding: 9px 27px 9px 27px;
-    margin: 0;
 
     background: #fafafa;
 }
@@ -134,12 +143,12 @@ a:hover {
 }
 
 #menu a:hover {
-    background: #bbb;
+    background: #959dab;
     color: white;
 }
 
 #menu a.selected {
-    background: #777;
+    background: #5d6675;
     color: white;
 }
 
@@ -191,6 +200,7 @@ a:hover {
 }
 
 form input[type=text], textarea {
+    font-size: 14pt;
     padding: 5px;
     width: 100%;
     border: solid 1px #aaa;
@@ -220,7 +230,7 @@ form input[name=q] {
 }
 
 form[name=search] {
-    width: 100%;
+    width: 870px;
 }
 
 form table {
@@ -516,13 +526,13 @@ ul.errorlist {
 }
 
 .tabs *:hover {
-    background: #ccc;
+    background: #959dab;
     color: #444;
 }
 
 .tabs .selected {
     color: white;
-    background: #888;
+    background: #5d6675;
 }
 
 .toc ul {
