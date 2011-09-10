@@ -1,4 +1,4 @@
-LOCAL_SETTINGS_VERSION = 5
+LOCAL_SETTINGS_VERSION = 6
 
 
 DEBUG = True
@@ -28,8 +28,9 @@ FEEDBACK_EMAIL = 'feedback@' + MAIL_DOMAIN
 SERVER_EMAIL = 'parasykjiems@' + MAIL_DOMAIN
 ABUSE_EMAIL = 'abuse@' + MAIL_DOMAIN
 
-# Should contain {reply_hash} somewhere.
-ENQUIRY_EMAIL_FORMAT = 'reply+{reply_hash}@' + MAIL_DOMAIN
+# Should contain {id} and {hash} somewhere, which will be replaced by
+# numbers.
+ENQUIRY_EMAIL_FORMAT = 'reply+{id}.{hash}@' + MAIL_DOMAIN
 
 # Used for absolute URLs. Shouldn't include trailing slash, but should
 # include URL scheme.
