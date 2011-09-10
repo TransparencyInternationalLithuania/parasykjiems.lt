@@ -6,7 +6,8 @@ import settings
 
 class WriteLetterForm(forms.Form):
     name = forms.CharField(label=_("Your full name"),
-                           help_text=_("You should enter your full name without abbreviations."),
+                           help_text=_("You should enter your full name "
+                                       "without abbreviations."),
                            required=True)
 
     email = forms.EmailField(
@@ -25,10 +26,9 @@ class WriteLetterForm(forms.Form):
                               required=True)
 
     is_open = forms.BooleanField(
-        label=_("Open letter"),
-        required=False,
-        help_text=_("An open letter is visible to everyone in the "
-                    "letter list in the website."))
+        label=_("Open letter, which is visible to all visitors of the "
+                "web site"),
+        required=False)
 
     body = forms.CharField(label=_("Message"),
                            widget=forms.widgets.Textarea(),

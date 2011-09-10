@@ -219,19 +219,12 @@ form input[name=q] {
     border-radius: 2px;
 }
 
-form {
-    display: block;
-    width: 80%;
-    margin: 0 auto 3em auto;
-}
-
 form[name=search] {
     width: 100%;
 }
 
 form table {
     width: 100%;
-    margin: 0 auto 0 auto;
 }
 
 form table td, th {
@@ -240,13 +233,16 @@ form table td, th {
 }
 
 form table th {
-    text-align: right;
+    text-align: left;
     font-weight: normal;
-    width: 30%;
 }
 
 label {
     font-weight: light;
+}
+
+form input[type=checkbox] {
+    margin: 10px;
 }
 
 form input[type=submit] {

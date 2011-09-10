@@ -21,30 +21,18 @@
   <table>
     <tr>
       <th>Gavėjas:</th>
-      <td>
-        <a href="{{ recipient.get_absolute_url }}">
-        {{ recipient.kind }} {{ recipient.name }}
-        </a>
-      </td>
+      <td>{{ recipient.kind }} {{ recipient.name }}, {{ recipient.institution.name }}</td>
     </tr>
     {% for field in form.visible_fields %}
     <tr>
       {% if field.html_name == 'is_open' %}
-      <td colspan="2">
-        {{ field }} {{ field.label_tag }}
-      </td>
+      <td colspan="2">{{ field }} {{ field.label_tag }}</td>
       {% else %}
       {% if field.html_name == 'body' %}
-      <td colspan="2">
-        {{ field }}
-      </td>
+      <td colspan="2">{{ field }}</td>
       {% else %}
-      <th>
-        {{ field.label_tag }}:
-      </th>
-      <td>
-        {{ field }}
-      </td>
+      <th>{{ field.label_tag }}:</th>
+      <td>{{ field }}</td>
       {% endif %}
       {% endif %}
     </tr>
@@ -55,9 +43,8 @@
 
     {% if field.help_text %}
     <tr>
-      <td colspan="2" class="helptext">
-        {{ field.help_text }}
-      </td>
+      <td>
+      <td class="helptext">{{ field.help_text }}</td>
     </tr>
     {% endif %}
     {% endfor %}
