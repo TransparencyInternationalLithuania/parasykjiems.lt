@@ -1,7 +1,6 @@
 import os
 import csv
 from progressbar import ProgressBar, Bar, ETA
-from django.db.models import Q
 
 
 def export_models(query, filename, fields):
