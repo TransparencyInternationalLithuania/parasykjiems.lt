@@ -351,7 +351,14 @@ h1 {
 }
 
 .institution {
+    width: 100%;
+    font-size: 11pt;
     margin-bottom: 3em;
+}
+
+.institution td {
+    vertical-align: top;
+    padding: 0 1em 0.5em 1em;
 }
 
 .institution h2 {
@@ -435,35 +442,18 @@ h5 {
     background: #efefff;
 }
 
-.right {
-    width: 50%;
+.description {
+    background: #ddf;
+    color: #223;
+    border-radius: 10px;
+    width: 45%;
     padding-left: 1em;
-}
-
-.container {
-    width: 100%;
-    font-size: 11pt;
 }
 
 hr {
     margin: 2em 0 2em 0;
     border: none;
     border-bottom: 1px dotted #aaa;
-}
-
-.container td {
-    vertical-align: top;
-    padding: 0 1em 0 1em;
-}
-
-.description {
-    background: #ffc;
-    padding: 0 1em 1em 1em;
-    border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    border: 1px solid #eec;
-    overflow: hidden;
 }
 
 .answered {
@@ -508,7 +498,9 @@ a.write {
     border-radius: 1em;
     -moz-border-radius: 1em;
     -webkit-border-radius: 1em;
-    padding: 0 0.5em 0 0.5em;
+    padding: 0.5em 1em 0.5em 1em;
+    position: relative;
+    top: -0.5em;
 }
 
 a.write:hover {
