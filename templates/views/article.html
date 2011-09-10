@@ -5,6 +5,8 @@
 {% include "menu.html" with active="about" %}
 {% endblock %}
 
+{% block title %}{{ article.title }} &ndash; {% endblock %}
+
 {% block breadcrumbs %}
 <li>{{ article.title }}</li>
 {% endblock %}

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n message %}
 
 {% block menu %}
 {% with ACTIVE_MENU_ITEM="search" %}
@@ -14,6 +14,8 @@
 {% endblock %}
 
 {% block content %}
+
+{% message "write" %}
 
 <form method="POST">
   {% csrf_token %}

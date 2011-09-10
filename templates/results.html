@@ -1,7 +1,11 @@
-{% load i18n %}
+{% load i18n message %}
 {% if search_query %}
 
 {% if results %}
+
+{% if more_results %}
+{% message "more-results" %}
+{% endif %}
 
 <ul id="result-list">
   {% for result in results %}
@@ -11,24 +15,11 @@
   {% endfor %}
 </ul>
 
-{% if more_results %}
-<p>{% trans "There are more results matching your query. Try narrowing your search." %}</p>
+
+{% else %}
+{% message "nothing-found" %}
 {% endif %}
 
 {% else %}
-
-<p>{% trans "Nothing found." %}</p>
-
-{% endif %}
-
-{% else %}
-
-<p>{% trans "You can search by entering:" %}</p>
-<ul>
-    <li>{% trans "part of an address," %}
-    <li>{% trans "a full address (including the house number)," %}
-    <li>{% trans "a representative's name," %}
-    <li>{% trans "an institution's name." %}
-</ul>
-
+{% message "search-advice" %}
 {% endif %}

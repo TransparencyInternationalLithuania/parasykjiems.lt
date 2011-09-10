@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n message %}
 
 {% block menu %}
 {% include "menu.html" %}
@@ -13,16 +13,5 @@
 {% endblock %}
 
 {% block content %}
-<p>
-  {% blocktrans %}Check your email. You should receive a confirmation
-  link from us. You must confirm your letter before it will be sent.
-  {% endblocktrans %}
-</p>
-
-<p>
-  {% blocktrans with feedback_url="/feedback/" %}If you don't receive
-  a letter, check your spam folder. If it doesn't arrive at all, send us a
-  note using the <a href="{{ feedback_url }}">feedback page</a>.
-  {% endblocktrans %}
-</p>
+{% message "write-confirm" %}
 {% endblock %}
