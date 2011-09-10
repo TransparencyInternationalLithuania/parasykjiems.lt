@@ -121,10 +121,10 @@ def location(request, slug, house_number=None):
     repeated_kinds = [InstitutionKind.objects.get(id=kid)
                       for kid, count in kind_id_counts
                       if count > 1]
-    if len(repeated_kinds) != []:
-        logger.warning('More than one institution of same kind at {}, '
+    if repeated_kinds != []:
+        logger.warning('More than one institution of same kind {} at {}, '
                        'house number {}.'
-                       .format(loc, house_number))
+                       .format(repeated_kinds, loc, house_number))
 
     num_q = '&n={}'.format(house_number) if house_number else ''
     return render(request, 'views/location.html', {
