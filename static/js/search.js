@@ -63,13 +63,20 @@ $(function() {
 
           resultsTerms = trim(q.val());
 
-          q.keyup(
-              function(e) {
-                  // Key pressed, so maybe we should update the
-                  // search results.
-                  var terms = q.val();
+          function setq(e) {
+              // Key pressed, so maybe we should update the
+              // search results.
+              var terms = q.val();
+              if (terms == "") {
+                  q.addClass("q-empty");
+              } else {
+                  q.removeClass("q-empty");
                   startUpdate(600, terms);
-              });
+              }
+          }
+
+          setq();
+          q.keyup(setq);
 
           $('body').keypress(
               function(e) {
