@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-31 14:55+0300\n"
+"POT-Creation-Date: 2011-09-10 10:29+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,36 +33,31 @@ msgstr ""
 msgid "You should enter your full name without abbreviations."
 msgstr ""
 
-#: mail/forms.py:13 web/forms.py:8
+#: mail/forms.py:14 web/forms.py:8
 msgid "Your e-mail address"
 msgstr ""
 
-#: mail/forms.py:16
+#: mail/forms.py:17
 msgid "An e-mail address is required."
 msgstr ""
 
-#: mail/forms.py:17
+#: mail/forms.py:18
 msgid "Enter a valid e-mail address."
 msgstr ""
 
-#: mail/forms.py:23 templates/items/letters.html:6
+#: mail/forms.py:24 templates/items/letters.html:6
 msgid "Subject"
 msgstr ""
 
-#: mail/forms.py:28
-msgid "Open letter"
-msgstr ""
-
-#: mail/forms.py:30
-msgid ""
-"An open letter is visible to everyone in the letter list in the website."
+#: mail/forms.py:29
+msgid "Open letter, which is visible to all visitors of the web site"
 msgstr ""
 
 #: mail/forms.py:33 web/forms.py:10
 msgid "Message"
 msgstr ""
 
-#: mail/mail.py:54
+#: mail/mail.py:53
 msgid "Confirm your letter"
 msgstr ""
 
@@ -70,11 +65,11 @@ msgstr ""
 msgid "Copy of the letter you sent."
 msgstr ""
 
-#: mail/mail.py:190
+#: mail/mail.py:186
 msgid "Your enquiry has been responded to"
 msgstr ""
 
-#: mail/models.py:134
+#: mail/models.py:123
 msgid "The unprocessed e-mail message."
 msgstr ""
 
@@ -99,11 +94,11 @@ msgid ""
 "This number is used for sorting representatives in the institution view."
 msgstr ""
 
-#: search/models.py:128 search/models.py:170
+#: search/models.py:127 search/models.py:169
 msgid "Name of city, town or village."
 msgstr ""
 
-#: search/models.py:195
+#: search/models.py:194
 msgid "territories"
 msgstr ""
 
@@ -139,7 +134,7 @@ msgstr ""
 msgid "Representative search"
 msgstr ""
 
-#: templates/menu.html:12 templates/breadcrumbs/letters.html:7
+#: templates/menu.html:12 templates/breadcrumbs/letters.html:4
 msgid "Open letters"
 msgstr ""
 
@@ -175,39 +170,39 @@ msgstr ""
 msgid "an institution's name."
 msgstr ""
 
-#: templates/breadcrumbs/choose.html:7
+#: templates/breadcrumbs/choose.html:4
 msgid "Choose a representative"
 msgstr ""
 
-#: templates/breadcrumbs/confirm.html:2
+#: templates/breadcrumbs/confirm.html:3
 msgid "Confirm letter"
 msgstr ""
 
-#: templates/breadcrumbs/feedback.html:7
+#: templates/breadcrumbs/feedback.html:4
 msgid "Leave feedback"
 msgstr ""
 
-#: templates/breadcrumbs/letter.html:2
+#: templates/breadcrumbs/letter.html:3
 msgid "View letter"
 msgstr ""
 
-#: templates/breadcrumbs/search.html:8
+#: templates/breadcrumbs/search.html:4
 msgid "Find a representative"
 msgstr ""
 
-#: templates/breadcrumbs/write.html:7
+#: templates/breadcrumbs/write.html:4
 msgid "Write a letter"
 msgstr ""
 
-#: templates/items/institution.html:11 templates/items/representative.html:27
+#: templates/items/institution.html:11 templates/items/representative.html:24
 msgid "Email: "
 msgstr ""
 
-#: templates/items/institution.html:13 templates/items/representative.html:29
+#: templates/items/institution.html:13 templates/items/representative.html:26
 msgid "Write&nbsp;letter"
 msgstr ""
 
-#: templates/items/institution.html:19 templates/items/representative.html:35
+#: templates/items/institution.html:19 templates/items/representative.html:32
 msgid "Phone number: "
 msgstr ""
 
@@ -215,7 +210,7 @@ msgstr ""
 msgid "Address: "
 msgstr ""
 
-#: templates/items/institution.html:33 templates/items/representative.html:44
+#: templates/items/institution.html:33 templates/items/representative.html:41
 msgid "Recent letters"
 msgstr ""
 
@@ -251,7 +246,7 @@ msgstr ""
 msgid "Answered"
 msgstr ""
 
-#: templates/items/representative.html:18
+#: templates/items/representative.html:15
 msgid "Institution: "
 msgstr ""
 
@@ -321,7 +316,7 @@ msgid ""
 "  "
 msgstr ""
 
-#: templates/views/write.html:65
+#: templates/views/write.html:66
 msgid "Submit"
 msgstr ""
 

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-31 14:55+0300\n"
-"PO-Revision-Date: 2011-08-31 14:56+0300\n"
+"POT-Creation-Date: 2011-09-10 10:29+0300\n"
+"PO-Revision-Date: 2011-09-10 10:32+0300\n"
 "Last-Translator: Kiprianas Spiridonovas <k.spiridonovas@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -33,38 +33,34 @@ msgstr "Jūsų vardas ir pavardė"
 msgid "You should enter your full name without abbreviations."
 msgstr "Įveskite savo vardą ir pavardę be sutrumpinimų."
 
-#: mail/forms.py:13
+#: mail/forms.py:14
 #: web/forms.py:8
 msgid "Your e-mail address"
 msgstr "Jūsų el. pašto adresas"
 
-#: mail/forms.py:16
+#: mail/forms.py:17
 msgid "An e-mail address is required."
 msgstr "Įveskite el. pašto adresą."
 
-#: mail/forms.py:17
+#: mail/forms.py:18
 msgid "Enter a valid e-mail address."
 msgstr "Įveskite tinkamą el. pašto adresą."
 
-#: mail/forms.py:23
+#: mail/forms.py:24
 #: templates/items/letters.html:6
 msgid "Subject"
 msgstr "Tema"
 
-#: mail/forms.py:28
-msgid "Open letter"
-msgstr "Atviras laiškas"
-
-#: mail/forms.py:30
-msgid "An open letter is visible to everyone in the letter list in the website."
-msgstr "Atvirus laiškus ir atsakymus į juos gali matyti visi svetainės lankytojai."
+#: mail/forms.py:29
+msgid "Open letter, which is visible to all visitors of the web site"
+msgstr "Atviras laiškas, kurį galės matyti visi svetainės lankytojai"
 
 #: mail/forms.py:33
 #: web/forms.py:10
 msgid "Message"
 msgstr "Turinys"
 
-#: mail/mail.py:54
+#: mail/mail.py:53
 msgid "Confirm your letter"
 msgstr "Patvirtinkite savo laišką"
 
@@ -72,11 +68,11 @@ msgstr "Patvirtinkite savo laišką"
 msgid "Copy of the letter you sent."
 msgstr "Laiško, kurį išsiuntėte, kopija"
 
-#: mail/mail.py:190
+#: mail/mail.py:186
 msgid "Your enquiry has been responded to"
 msgstr "Į jūsų laišką buvo atsakyta"
 
-#: mail/models.py:134
+#: mail/models.py:123
 msgid "The unprocessed e-mail message."
 msgstr ""
 
@@ -102,12 +98,12 @@ msgstr "Skaičius, naudojamas institucijų tvarkai nustatyti."
 msgid "This number is used for sorting representatives in the institution view."
 msgstr "Skaičius, naudojamas atstovų tvarkai institucijoje nustatyti."
 
-#: search/models.py:128
-#: search/models.py:170
+#: search/models.py:127
+#: search/models.py:169
 msgid "Name of city, town or village."
 msgstr "Miesto, miestelio arba kaimo pavadinimas"
 
-#: search/models.py:195
+#: search/models.py:194
 msgid "territories"
 msgstr ""
 
@@ -147,7 +143,7 @@ msgid "Representative search"
 msgstr "Atstovo paieška"
 
 #: templates/menu.html:12
-#: templates/breadcrumbs/letters.html:7
+#: templates/breadcrumbs/letters.html:4
 msgid "Open letters"
 msgstr "Atviri laiškai"
 
@@ -183,42 +179,42 @@ msgstr "atstovo vardą,"
 msgid "an institution's name."
 msgstr "institucijos pavadinimą,"
 
-#: templates/breadcrumbs/choose.html:7
+#: templates/breadcrumbs/choose.html:4
 msgid "Choose a representative"
 msgstr "Pasirinkite atstovą"
 
-#: templates/breadcrumbs/confirm.html:2
+#: templates/breadcrumbs/confirm.html:3
 msgid "Confirm letter"
 msgstr "Patvirtinkite laišką"
 
-#: templates/breadcrumbs/feedback.html:7
+#: templates/breadcrumbs/feedback.html:4
 msgid "Leave feedback"
 msgstr "Palikti atsiliepimą"
 
-#: templates/breadcrumbs/letter.html:2
+#: templates/breadcrumbs/letter.html:3
 msgid "View letter"
 msgstr "Laiško peržiūra"
 
-#: templates/breadcrumbs/search.html:8
+#: templates/breadcrumbs/search.html:4
 msgid "Find a representative"
 msgstr "Raskite atstovą"
 
-#: templates/breadcrumbs/write.html:7
+#: templates/breadcrumbs/write.html:4
 msgid "Write a letter"
 msgstr "Parašykite laišką"
 
 #: templates/items/institution.html:11
-#: templates/items/representative.html:27
+#: templates/items/representative.html:24
 msgid "Email: "
 msgstr "El. paštas:"
 
 #: templates/items/institution.html:13
-#: templates/items/representative.html:29
+#: templates/items/representative.html:26
 msgid "Write&nbsp;letter"
 msgstr "Rašyti laišką"
 
 #: templates/items/institution.html:19
-#: templates/items/representative.html:35
+#: templates/items/representative.html:32
 msgid "Phone number: "
 msgstr "Telefono numeris: "
 
@@ -227,7 +223,7 @@ msgid "Address: "
 msgstr "Adresas: "
 
 #: templates/items/institution.html:33
-#: templates/items/representative.html:44
+#: templates/items/representative.html:41
 msgid "Recent letters"
 msgstr "Naujausi laiškai"
 
@@ -263,7 +259,7 @@ msgstr "Išsiųsta"
 msgid "Answered"
 msgstr "Atsakyta"
 
-#: templates/items/representative.html:18
+#: templates/items/representative.html:15
 msgid "Institution: "
 msgstr "Institucija: "
 
@@ -339,7 +335,7 @@ msgstr ""
 "\n"
 "Galite jį peržiūrėti <a href=\"%(url)s\">čia</a>."
 
-#: templates/views/write.html:65
+#: templates/views/write.html:66
 msgid "Submit"
 msgstr "Pateikti"
 
@@ -366,6 +362,9 @@ msgstr "Jūsų vardas"
 #: web/views.py:29
 msgid "Feedback from {}"
 msgstr "Atsiliepimas iš"
+
+#~ msgid "Open letter"
+#~ msgstr "Atviras laiškas"
 
 #~ msgid "You shouldn't abbreviate your name."
 #~ msgstr "Nenaudokite sutrumpinimų."
