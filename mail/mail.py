@@ -89,7 +89,8 @@ def send_enquiry(enquiry):
                                         enquiry.recipient.email)]
 
     reply_to = settings.ENQUIRY_EMAIL_FORMAT.format(
-        reply_hash=enquiry.reply_hash)
+        id=enquiry.id,
+        hash=enquiry.reply_hash)
     message = EmailMessage(
         from_email=settings.SERVER_EMAIL,
         subject=u'[ParašykJiems] {}'.format(enquiry.subject),
@@ -148,11 +149,15 @@ def process_incoming(message):
         # escape pluses.
         r = (settings.ENQUIRY_EMAIL_FORMAT
              .replace('+', r'\+')
-             .format(reply_hash='(\d+)'))
+             .replace('.', r'\.')
+             .format(
+                 id='(?P<id>\d+)',
+                 hash='(?P<hash>\d+)'))
         m = re.match(r, message['to'])
         if m:
-            h = int(m.group(1))
-            maybe_enquiry = Enquiry.objects.filter(reply_hash=h)
+            id = int(m.group('id'))
+            hash = int(m.group('hash'))
+            maybe_enquiry = Enquiry.objects.filter(id=id, reply_hash=hash)
             if maybe_enquiry.exists():
                 logger.info('Determined parent of response {} from To.')
                 parent = maybe_enquiry.get()
@@ -170,7 +175,8 @@ def process_incoming(message):
                 maybe_enquiry = Enquiry.objects.filter(
                     message_id=ref.decode('utf-8').strip())
                 if maybe_enquiry.exists():
-                    logger.info('Determined parent of response {} from references.')
+                    logger.info(
+                        'Determined parent of response {} from references.')
                     parent = maybe_enquiry.get()
                     break
     except Exception as e:

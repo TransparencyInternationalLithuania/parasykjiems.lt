@@ -81,7 +81,10 @@ def sent(request, id):
 
 
 def thread(request, slug):
-    enquiry = get_object_or_404(Enquiry, slug=slug)
+    enquiry = get_object_or_404(Enquiry,
+                                slug=slug,
+                                is_sent=True,
+                                is_open=True)
     if not enquiry.is_open or not enquiry.is_sent:
         raise Http404()
 

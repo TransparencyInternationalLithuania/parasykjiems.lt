@@ -28,7 +28,7 @@ class Enquiry(models.Model):
 
     # Secret hashes are separate for confirmation and replies, so that
     # a sender can't reply to himself.
-    reply_hash = models.IntegerField(db_index=True, unique=True)
+    reply_hash = models.IntegerField(db_index=True)
 
     # The confirm hash needn't be unique, because it's passed together
     # with the slug.
@@ -62,28 +62,16 @@ class Enquiry(models.Model):
     # This can be used for threading. Should be set after sending.
     message_id = models.CharField(max_length=100, null=True, db_index=True)
 
-    _hash_tries = 30
     _hash_max = 9999999
 
     def __init__(self, *args, **kwargs):
         super(Enquiry, self).__init__(*args, **kwargs)
-
-        # Ensure unique confirm and reply hashes.
-
+        # Generate confirm and reply hashes, if they aren't set.
         rand = random.SystemRandom()
-
         if not self.confirm_hash:
             self.confirm_hash = rand.randint(1, Enquiry._hash_max)
-
         if not self.reply_hash:
             self.reply_hash = rand.randint(1, Enquiry._hash_max)
-            tries = 0
-            while Enquiry.objects.filter(reply_hash=self.reply_hash).exists():
-                self.reply_hash = rand.randint(1, Enquiry._hash_max)
-                tries += 1
-                if tries > Enquiry._hash_tries:
-                    raise Exception(
-                        "Probably out of reply hashes for Enquiry.")
 
     @property
     def recipient(self):
