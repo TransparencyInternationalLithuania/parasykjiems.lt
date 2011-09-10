@@ -1,3 +1,4 @@
+import itertools
 from collections import Counter
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template import RequestContext
@@ -44,8 +45,21 @@ def search(request):
         if num != '':
             sq = sq & SQ(numbered=True)
 
-        all_results = sqs.filter(sq)
-        more_results = all_results.count() > _RESULT_LIMIT
+        # Separate results by type
+        insts = sqs.filter(sq & SQ(django_ct='search.institution'))
+        reps = sqs.filter(sq & SQ(django_ct='search.representative'))
+        locs = sqs.filter(sq & SQ(django_ct='search.location'))
+
+        # Show single reps only when no institutions are found. In
+        # either case, show them before locations.
+        if insts.count() > 0:
+            top_results = insts
+        else:
+            top_results = reps
+
+        all_results = (list(top_results[:_RESULT_LIMIT + 1]) +
+                       list(locs[:_RESULT_LIMIT + 1]))
+        more_results = len(all_results) > _RESULT_LIMIT
 
         results = all_results[:_RESULT_LIMIT]
     else:
