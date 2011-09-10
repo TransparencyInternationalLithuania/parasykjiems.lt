@@ -13,6 +13,7 @@
 
 {% include "items/letters.html" with letters=letters %}
 
+{% if pages > 1 %}
 <div class="pager">
   {% if page.has_previous %}
   <a href="?p={{ page.previous_page_number }}">{% trans "Previous page" %}</a>
@@ -26,5 +27,6 @@
   <a href="?p={{ page.next_page_number }}">{% trans "Next page" %}</a>
   {% endif %}
 </div>
+{% endif %}
 
 {% endblock %}
