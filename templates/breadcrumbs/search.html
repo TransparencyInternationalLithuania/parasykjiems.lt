@@ -1,15 +1,4 @@
+{% extends "breadcrumb.html" %}
 {% load i18n %}
-
-<li>
-  {% if not active %}
-  <a href="/">
-  {% endif %}
-
-  {% trans "Find a representative" %}
-
-  {% if not active %}
-  </a>
-  {% endif %}
-</li>
-
-{% include "breadcrumbs/separator.html" with active=active %}
+{% block url %}/{% endblock %}
+{% block content %}{% trans "Find a representative" %}{% endblock %}
