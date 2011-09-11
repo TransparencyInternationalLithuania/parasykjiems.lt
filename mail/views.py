@@ -97,6 +97,7 @@ def thread(request, slug):
 
     return render(request, 'views/thread.html', {
         'page': request.GET.get('p', ''),
+        'title': enquiry.subject,
         'letters': letters,
     })
 

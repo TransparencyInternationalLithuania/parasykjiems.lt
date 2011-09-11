@@ -148,10 +148,11 @@ class Location(models.Model):
             street=self.street)
 
     def __unicode__(self):
-        s = u'{}, {}'.format(self.municipality, self.city)
-        if self.street != u'':
-            s += u', {}'.format(self.street)
-        return s
+        return ', '.join([x for x in
+                          [self.municipality,
+                           self.city,
+                           self.street]
+                          if x])
 
     @models.permalink
     def get_absolute_url(self):

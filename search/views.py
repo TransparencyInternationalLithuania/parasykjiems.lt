@@ -140,8 +140,22 @@ def location(request, slug, house_number=None):
                        .format(repeated_kinds, loc, house_number))
 
     num_q = '&n={}'.format(house_number) if house_number else ''
+
+    if loc.street:
+        title = loc.street
+        if house_number and house_number != '':
+            title += ' ' + house_number
+        title += ', ' + loc.city
+    else:
+        title = ', '.join([x for x in
+                           [loc.city,
+                           loc.elderate,
+                           loc.municipality]
+                           if x])
+
     return render(request, 'views/location.html', {
         'choose_query': '?loc={}{}'.format(loc.id, num_q),
+        'title': title,
         'institutions': institutions,
         'repeated_kinds': repeated_kinds,
     })

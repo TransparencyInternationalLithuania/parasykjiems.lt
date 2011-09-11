@@ -1,11 +1,7 @@
 {% extends "base.html" %}
 {% load i18n message %}
 
-{% block menu %}
-{% with ACTIVE_MENU_ITEM="search" %}
-{% include "menu.html" %}
-{% endwith %}
-{% endblock %}
+{% block title %}{% trans "Write letter" %} &ndash; {{ recipient }} &ndash; {% endblock %}
 
 {% block breadcrumbs %}
 {% include "breadcrumbs/search.html" %}
@@ -23,7 +19,11 @@
   <table>
     <tr>
       <th>Gavėjas:</th>
+      {% if recipient.representatives %}
+      <td>{{ recipient.name }}</td>
+      {% else %}
       <td>{{ recipient.kind }} {{ recipient.name }}, {{ recipient.institution.name }}</td>
+      {% endif %}
     </tr>
     {% for field in form.visible_fields %}
     <tr>
