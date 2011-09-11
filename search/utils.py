@@ -62,7 +62,6 @@ class ChoiceState:
         if query:
             if isinstance(query, basestring):
                 query = QueryDict(query)
-            raise Exception()
             try:
                 if not rep and 'rep' in query:
                     self.rep = Representative.objects.get(
