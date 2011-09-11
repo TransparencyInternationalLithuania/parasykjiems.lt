@@ -360,7 +360,7 @@ h1 {
     margin-bottom: 3em;
 }
 
-.institution td {
+.institution > table > tr > td {
     vertical-align: top;
     padding: 0 1em 0.5em 1em;
 }
@@ -410,11 +410,32 @@ h5 {
     width: 100%;
 }
 
+.letters .answered {
+    width: 16px;
+    height: 16px;
+    padding: 0 0 0 10px;
+    margin: 0;
+}
+
+.letters .answered img {
+    width: 16px;
+    height: 16px;
+    padding: 0;
+    margin: 0;
+}
+
 .letters th, td {
     padding: 6px 12px 6px 12px;
     text-align: left;
     vertical-align: middle;
-    height: 2em;
+}
+
+.small-letters {
+    width: 60%;
+}
+
+.small-letters th, td {
+    height: 0;
 }
 
 .letters th {
@@ -436,8 +457,9 @@ h5 {
 }
 
 .letters .subject {
-    width: 40%;
+    min-width: 330px;
     font-weight: bold;
+    height: 3em;
 }
 
 .letters tr:hover {
@@ -500,18 +522,6 @@ hr {
     margin: 2em 0 2em 0;
     border: none;
     border-bottom: 1px dotted #aaa;
-}
-
-.answered {
-    display: inline;
-    font-size: 10pt;
-    background: #bfb;
-    color: #363;
-    border-radius: 30px;
-    -moz-border-radius: 30px;
-    -webkit-border-radius: 30px;
-    margin-top: 0.5em;
-    padding: 7px;
 }
 
 .pager {

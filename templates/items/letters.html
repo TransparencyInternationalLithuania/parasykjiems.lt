@@ -1,6 +1,7 @@
 {% load i18n nobreaks humanize %}
 
-<table class="letters">
+<table class="letters{% if small %} small-letters{% endif %}">
+  {% if not small %}
   <tr class="header">
     <th></th>
     <th>{% trans "Subject" %}</th>
@@ -8,17 +9,20 @@
     <th>{% trans "Recipient" %}</th>
     <th>{% trans "Sent at" %}</th>
   </tr>
+  {% endif %}
   {% for letter in letters %}
   {% if letter.is_open and letter.is_sent %}
   <tr>
-    <td>{% if letter.has_answer %}<img src="/static/img/answered.png" title="{% trans "Answered" %}">{% endif %}</td>
+    <td class="answered">{% if letter.has_answer %}<img src="/static/img/answered.png" title="{% trans "Answered" %}">{% else %}&nbsp;{% endif %}</td>
     <td class="subject">
       <a href="{{ letter.get_absolute_url }}">
         {{ letter.subject }}
       </a>
     </td>
     <td>{{ letter.sender_name }}</td>
+    {% if not small %}
     <td>{{ letter.recipient.name }}</td>
+    {% endif %}
     <td>{{ letter.date|naturalday:'Y-m-d' }}</td>
   </tr>
   {% endif %}
