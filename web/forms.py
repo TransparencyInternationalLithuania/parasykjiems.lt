@@ -2,7 +2,7 @@ from django import forms
 from django.utils.translation import ugettext as _
 
 
-class FeedbackForm(forms.Form):
+class ContactForm(forms.Form):
     name = forms.CharField(label=_("Your name"),
                            required=True)
     email = forms.EmailField(label=_("Your e-mail address"),

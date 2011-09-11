@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 {% load i18n message %}
 
+{% block title %}{% trans "Contact us" %} &ndash; {% endblock %}
+
 {% block breadcrumbs %}
-{% include "breadcrumbs/feedback.html" with active=1 %}
+{% include "breadcrumbs/contact.html" with active=1 %}
 {% endblock %}
 
 {% block content %}

@@ -6,16 +6,16 @@ from django.core.mail import EmailMessage
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 
-from forms import FeedbackForm
+from forms import ContactForm
 from models import Article
 import settings
 
 
-def feedback(request):
+def contact(request):
     if request.method == 'POST':
-        form = FeedbackForm(request.POST)
+        form = ContactForm(request.POST)
         if form.is_valid():
-            body = render_to_string('mail/feedback.txt', {
+            body = render_to_string('mail/contact.txt', {
                 'form_data': form.cleaned_data,
                 'ip': request.META['REMOTE_ADDR'],
             })
@@ -30,17 +30,17 @@ def feedback(request):
                 body=body,
                 headers={'Reply-To': user_address},
             ).send()
-            return redirect(reverse(feedback_thanks))
+            return redirect(reverse(contact_thanks))
     else:
-        form = FeedbackForm()
+        form = ContactForm()
 
-    return render(request, 'views/feedback.html', {
+    return render(request, 'views/contact.html', {
         'form': form,
     })
 
 
-def feedback_thanks(request):
-    return render(request, 'views/feedback_thanks.html')
+def contact_thanks(request):
+    return render(request, 'views/contact_thanks.html')
 
 
 def setlang(request, language):

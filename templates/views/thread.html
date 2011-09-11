@@ -4,6 +4,8 @@
 {% include "menu.html" %}
 {% endblock %}
 
+{% block title %}{{ title }} &ndash; {% endblock %}
+
 {% block breadcrumbs %}
 {% include "breadcrumbs/letters.html" %}
 {% include "breadcrumbs/letter.html" with active=1 %}
