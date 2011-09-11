@@ -90,26 +90,29 @@ def import_models(filename, model, keys, fields, additional_filter=None):
         if additional_filter:
             filterdict.update(additional_filter)
 
-        obj, created = model.objects.get_or_create(**filterdict)
-        if created:
-            new_objects += 1
-            for key in keys:
-                if isinstance(key, tuple):
-                    header, field = key
-                    if '__' in field:
-                        o, f = field.split('__')
-                        omodel = getattr(type(obj), o).field.rel.to
-                        setattr(obj, o,
-                                omodel.objects.get(
-                                    **{f: d(row[header])}))
-        else:
-            modified_objects += 1
-        for field in fields:
+        values = {}
+        for field in keys + fields:
             if isinstance(field, tuple):
                 header, field = field
             else:
                 header = field
-            setattr(obj, field, d(row[header]))
+            if '__' in field:
+                field, subfield = field.split('__')
+                fmodel = getattr(model, field).field.rel.to
+                values[field] = fmodel.objects.get(
+                    **{subfield: d(row[header])})
+            else:
+                values[field] = d(row[header])
+
+        filterdict['defaults'] = values
+
+        obj, created = model.objects.get_or_create(**filterdict)
+        if created:
+            new_objects += 1
+        else:
+            modified_objects += 1
+            for f, v in values.items():
+                setattr(obj, f, v)
         obj.save()
     print "Created {} and modified {} objects.".format(
         new_objects, modified_objects)
