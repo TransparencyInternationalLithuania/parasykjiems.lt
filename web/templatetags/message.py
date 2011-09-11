@@ -15,7 +15,7 @@ class MessageNode(template.Node):
 
     def render(self, context):
         try:
-            message = Message.objects.filter(name=self.name)
+            message = Message.objects.get(name=self.name)
             return markdown.markdown(message.body)
         except Exception as e:
             logger.error("Can't display message {}: {}".format(
