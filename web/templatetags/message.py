@@ -2,16 +2,25 @@ from django import template
 from web.models import Message
 import markdown
 
+import logging
+logger = logging.getLogger(__name__)
+
 
 register = template.Library()
 
 
 class MessageNode(template.Node):
     def __init__(self, name):
-        self.message = Message.objects.get(name=name)
+        self.name = name
 
     def render(self, context):
-        return markdown.markdown(self.message.body)
+        try:
+            message = Message.objects.filter(name=self.name)
+            return markdown.markdown(message.body)
+        except Exception as e:
+            logger.error("Can't display message {}: {}".format(
+                repr(self.name), e))
+            return ''
 
 
 @register.tag
