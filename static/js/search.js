@@ -6,6 +6,28 @@ function encodeQuery(q) {
     return encodeURI(q.replace(/ /g, '+'));
 }
 
+function decodeQuery(q) {
+    return decodeURI(q).replace(/\+/g, ' ');
+}
+
+function setLocationTerms(terms) {
+    if (browserSupportsHistory()) {
+        var url;
+        if (terms == '') {
+            url = '/';
+        } else {
+            url = '/?q=' + encodeQuery(terms);
+        }
+        history.replaceState(null, '', url);
+    } else {
+        if (terms == '') {
+            window.location.replace('');
+        } else {
+            window.location.replace('#' + encodeQuery(terms));
+        }
+    }
+}
+
 function fetchResults(terms) {
     var results = $('#results');
     $.ajax({
@@ -14,14 +36,8 @@ function fetchResults(terms) {
                data: { q: terms },
                success: function(newResults) {
                    results.html(newResults);
-                   var url;
-                   if (terms == '') {
-                       url = '/';
-                   } else {
-                       url = '/?q=' + encodeQuery(terms);
-                   }
-                   history.replaceState(null, '', url);
                    results.fadeTo(0, 1);
+                   setLocationTerms(terms);
                    resultsTerms = terms;
                    resultsTimeout = null;
                }
@@ -56,49 +72,53 @@ $(function() {
       var q = $(document.search.q);
       q.focus();
 
-      if (browserSupportsHistory()) {
-          // Hide search button
-          $("form input[type=submit]").hide();
-          q.css({width: '100%'});
+      if (!browserSupportsHistory()) {
+          var terms = decodeQuery(window.location.hash.slice(1));
+          q.val(terms);
+          startUpdate(1, terms);
+      }
 
-          resultsTerms = trim(q.val());
+      // Hide search button
+      $("form input[type=submit]").hide();
+      q.css({width: '100%'});
 
-          function setq(e) {
-              // Key pressed, so maybe we should update the
-              // search results.
-              var terms = q.val();
-              if (terms == "") {
-                  q.addClass("q-empty");
+      resultsTerms = trim(q.val());
+
+      function setq(e) {
+          // Key pressed, so maybe we should update the
+          // search results.
+          var terms = q.val();
+          if (terms == "") {
+              q.addClass("q-empty");
+          } else {
+              q.removeClass("q-empty");
+              startUpdate(600, terms);
+          }
+      }
+
+      setq();
+      q.keyup(setq);
+
+      $('body').keypress(
+          function(e) {
+              if (e.which == 13) {
+                  // Enter key pressed. If there is exactly one search
+                  // result, follow it.
+                  var resultItems = $('#result-list li');
+                  if (resultsTimeout == null && resultItems.size() == 1) {
+                      var href = resultItems.children('a').attr('href');
+                      window.location.href = href;
+                  } else {
+                      // Otherwise, start AJAX update immediately to
+                      // imitate submitting the search form.
+                      startUpdate(1, q.val());
+                  }
+                  return false;
               } else {
-                  q.removeClass("q-empty");
-                  startUpdate(600, terms);
+                  return true;
               }
           }
-
-          setq();
-          q.keyup(setq);
-
-          $('body').keypress(
-              function(e) {
-                  if (e.which == 13) {
-                      // Enter key pressed. If there is exactly one search
-                      // result, follow it.
-                      var resultItems = $('#result-list li');
-                      if (resultsTimeout == null && resultItems.size() == 1) {
-                          var href = resultItems.children('a').attr('href');
-                          window.location.href = href;
-                      } else {
-                          // Otherwise, start AJAX update immediately to
-                          // imitate submitting the search form.
-                          startUpdate(1, q.val());
-                      }
-                      return false;
-                  } else {
-                      return true;
-                  }
-              }
-          );
-      }
+      );
 
   }
  );
