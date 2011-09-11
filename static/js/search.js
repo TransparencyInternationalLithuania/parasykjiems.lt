@@ -92,8 +92,8 @@ $(function() {
               q.addClass("q-empty");
           } else {
               q.removeClass("q-empty");
-              startUpdate(600, terms);
           }
+          startUpdate(600, terms);
       }
 
       setq();
