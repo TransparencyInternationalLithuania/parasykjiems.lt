@@ -70,7 +70,7 @@ def import_models(filename, model, keys, fields, additional_filter=None):
             return i + 1
 
     def progressreader(filename):
-        print 'Importing from "{}":'.format(filename)
+        print 'Importing from "{}".'.format(filename)
         count = countlines(filename)
         f = open(filename, 'rb')
         reader = csv.DictReader(f)
@@ -90,6 +90,8 @@ def import_models(filename, model, keys, fields, additional_filter=None):
         if additional_filter:
             filterdict.update(additional_filter)
 
+        # This dict is used to set all values on object creation in
+        # case there are any non-null constraints on fields.
         values = {}
         for field in keys + fields:
             if isinstance(field, tuple):
@@ -97,6 +99,9 @@ def import_models(filename, model, keys, fields, additional_filter=None):
             else:
                 header = field
             if '__' in field:
+                # If the field has a subfield, find it's type from the
+                # parent model's attributes and try to get an instance
+                # of it.
                 field, subfield = field.split('__')
                 fmodel = getattr(model, field).field.rel.to
                 values[field] = fmodel.objects.get(
@@ -111,6 +116,8 @@ def import_models(filename, model, keys, fields, additional_filter=None):
             new_objects += 1
         else:
             modified_objects += 1
+            # If an object is not created, it's not updated to the
+            # 'defaults' values, so we have to do it ourselves.
             for f, v in values.items():
                 setattr(obj, f, v)
         obj.save()
