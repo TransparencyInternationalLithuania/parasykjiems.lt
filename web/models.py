@@ -22,7 +22,8 @@ class Message(models.Model):
                             unique=True,
                             db_index=True)
     body = models.TextField(
-        help_text=_('In Markdown format.'))
+        help_text=_('In Markdown format.'),
+        blank=True)
 
     def __unicode__(self):
         return self.name
