@@ -1,5 +1,4 @@
-{% load i18n %}
-{% load nobreaks %}
+{% load i18n nobreaks humanize %}
 
 <table class="letters">
   <tr>
@@ -17,7 +16,7 @@
     <td><a href="{{ letter.recipient.get_absolute_url }}">
         {{ letter.recipient.name|nobreaks }}
     </a></td>
-    <td>{{ letter.date|date:'Y-m-d' }}</td>
+    <td>{{ letter.date|naturalday:'Y-m-d' }}</td>
     <td>{{ letter.has_answer|yesno|title }}</td>
   </tr>
   {% endif %}
