@@ -10,7 +10,7 @@ class Command(BaseCommand):
     help = '''Exports messages to "data/messages.csv"'''
 
     def handle(self, *args, **options):
-        export_models(models.Message.objects
+        export_models('data/messages.csv',
+                      models.Message.objects
                       .order_by('name'),
-                      'data/messages.csv',
                       ['name', 'body'])
