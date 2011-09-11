@@ -10,7 +10,7 @@
     <td>
       {% if institution.email %}
       <p>
-        {% trans "Email: " %} {{ institution.email }}
+        {% trans "Email: " %} <strong>{{ institution.email }}</strong>
         <a class="write" href="{% url write-institution institution.slug %}{{ choose_query }}">
           {% trans "Write&nbsp;letter" %}
         </a>
@@ -25,8 +25,11 @@
       <p>{% trans "Address: " %} {{ institution.address }}</p>
       {% endif %}
     </td>
-    <td class="description" rowspan="{{ institution.representatives.count|add:1 }}">
-      {{ institution.kind.description|markdown }}
+    <td style="width: 45%"
+        rowspan="{{ institution.representatives.count|add:1 }}">
+      <div class="description">
+        {{ institution.kind.description|markdown }}
+      </div>
     </td>
   </tr>
 

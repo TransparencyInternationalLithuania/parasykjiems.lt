@@ -19,7 +19,7 @@
 
 {% if representative.email and representative.email != institution.email %}
 <p>
-  {% trans "Email: " %} {{ representative.email }}
+  {% trans "Email: " %} <strong>{{ representative.email }}</strong>
   <a class="write" href="{% url write-representative representative.slug %}{{ choose_query }}">
     {% trans "Write&nbsp;letter" %}
   </a>
