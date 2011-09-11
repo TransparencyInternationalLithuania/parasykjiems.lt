@@ -352,6 +352,8 @@ form[name=search] input {
 #result-list img {
     float: left;
     padding: 5px 10px 5px 5px;
+    behavior: url(/static/PIE.htc);
+    position: relative;
 }
 
 h1, h2, h3, h4, h5 {
