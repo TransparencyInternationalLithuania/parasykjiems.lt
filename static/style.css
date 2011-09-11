@@ -13,7 +13,7 @@ body {
     font-family: 'Droid Sans', sans-serif;
     font-size: 12pt;
     height: 100%;
-    background: #f0f0f0;
+    background: #e3e3e6;
 }
 
 p {
@@ -46,6 +46,8 @@ blockquote {
     background: rgba(255, 255, 200, 0.9);
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
     border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
 }
 
 #testing-version * {
@@ -73,17 +75,17 @@ blockquote {
 }
 
 a {
-    color: #0036A3;
+    color: #204683;
     text-decoration: none;
     border: none;
 }
 
-img {
-    border: none;
+a:hover {
+    color: #4076C3;
 }
 
-a:hover {
-    color: #0053FA;
+img {
+    border: none;
 }
 
 #logo {
@@ -93,12 +95,12 @@ a:hover {
 
 #header {
     background: #f0f0f0;
-    background: -webkit-gradient(linear, 0 0, 0 bottom, from(#f5f5f5), to(#eaeaea));
-    background: -webkit-linear-gradient(#f5f5f5, #eaeaea);
-    background: -moz-linear-gradient(#f5f5f5, #eaeaea);
-    background: -ms-linear-gradient(#f5f5f5, #eaeaea);
-    background: -o-linear-gradient(#f5f5f5, #eaeaea);
-    background: linear-gradient(#f5f5f5, #eaeaea);
+    background: -webkit-gradient(linear, 0 0, 0 bottom, from(#f5f5f5), to(#e3e3e6));
+    background: -webkit-linear-gradient(#f5f5f5, #e3e3e6);
+    background: -moz-linear-gradient(#f5f5f5, #e3e3e6);
+    background: -ms-linear-gradient(#f5f5f5, #e3e3e6);
+    background: -o-linear-gradient(#f5f5f5, #e3e3e6);
+    background: linear-gradient(#f5f5f5, #e3e3e6);
     -webkit-box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.3);
     -moz-box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.3);
     box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.3);
@@ -106,25 +108,27 @@ a:hover {
 
 #inner-header {
     width: 900px;
+    padding-top: 5px;
     margin: 0 auto 0 auto;
+    border-spacing: 0;
 }
 
 #inner-header td, tr {
     margin: 0;
     padding: 0;
+    vertical-align: middle;
 }
 
 #slogan p {
-    color: #5d6675;
-    font-size: 12pt;
-    font-weight: bold;
-    text-align: right;
-    margin: 15px 0 0 0;
+    color: #2d3645;
+    font-size: 13pt;
+    text-align: center;
+    margin: 10px 0 0 0;
 }
 
 #menu {
-    text-align: right;
-    margin: 0;
+    text-align: center;
+    margin: 0 0 10px 0;
     padding: 0;
 }
 
@@ -193,7 +197,7 @@ a:hover {
 }
 
 #footer {
-    border-top: 1px dotted #ddd;
+    border-top: 1px dotted #ccc;
     text-align: center;
     font-size: 10pt;
     color: #444;
@@ -443,11 +447,17 @@ h5 {
 }
 
 .description {
-    background: #e6e6ff;
-    color: #335;
+    background: #e0e6ff;
+    color: #345;
     border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
     width: 45%;
     padding-left: 1em;
+}
+
+.description a {
+    text-decoration: underline;
 }
 
 hr {
@@ -493,18 +503,18 @@ hr {
 
 a.write {
     float: right;
-    background: #0036A3;
+    background: #204683;
     color: white;
     border-radius: 1em;
     -moz-border-radius: 1em;
     -webkit-border-radius: 1em;
-    padding: 0.5em 1em 0.5em 1em;
+    padding: 0.4em 0.8em 0.4em 0.8em;
     position: relative;
-    top: -0.5em;
+    top: -0.4em;
 }
 
 a.write:hover {
-    background: #2056D3;
+    background: #4076C3;
 }
 
 ul.errorlist {
@@ -522,20 +532,23 @@ ul.errorlist {
 
 .tabs {
     text-align: center;
-    padding: 0 0 7px 0;
     margin: 0;
+    padding: 11px 0 5px 0;
     border-bottom: 2px solid #5d6675;
+    overflow: hidden;
 }
 
 .tabs * {
-    margin: 5px;
-    padding: 10px 30px 7px 30px;
-    background: #eee;
+    margin: 0 5px 0 5px;
+    padding: 8px 30px 7px 30px;
+    background: #c0c6d0;
     color: #444;
     border-radius: 20px 20px 0 0;
+    -moz-border-radius: 20px 20px 0 0;
+    -webkit-border-radius: 20px 20px 0 0;
 }
 
-.tabs *:hover {
+.tabs a:hover {
     background: #959dab;
     color: #fff;
 }
