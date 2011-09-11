@@ -23,7 +23,7 @@
     {% if not small %}
     <td>{{ letter.recipient.name }}</td>
     {% endif %}
-    <td>{{ letter.date|naturalday:'Y-m-d' }}</td>
+    <td style="white-space: nowrap">{{ letter.date|naturalday:'Y-m-d' }}</td>
   </tr>
   {% endif %}
   {% endfor %}
