@@ -12,12 +12,14 @@ class Command(BaseCommand):
     help = 'Imports institution data from "data/institutions/[kind].csv".'
 
     def handle(self, *args, **options):
-        for kind in models.InstitutionKind.objects.filter(active=True):
+        for kind in (models.InstitutionKind.objects
+                     .filter(active=True)
+                     .order_by('ordinal')):
             filename = os.path.join('data',
                                     'institutions',
                                     kind.name.encode('utf-8') + '.csv')
             import_models(filename,
                           models.Institution,
-                          'name',
+                          ['name'],
                           ['email', 'phone', 'address'],
                           {'kind': kind})
