@@ -12,7 +12,7 @@ import doctest
 
 # Modules to load tests from.
 TEST_MODULES = (
-    'search.multisub',
+    'multisub',
     'search.lithuanian',
     'search.house_numbers',
 )

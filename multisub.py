@@ -34,7 +34,7 @@ def multisub_all_separate(string, re_repl_pairs):
 
 
 def multisub_one(string, re_repl_pairs):
-    """Replaces all matches of the first matching regex with its repl.
+    """Substitutes the first matching regex.
 
     >>> multisub_one('abbc', (('a', '1b'), ('b', '2')))
     '1bbbc'
