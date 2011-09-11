@@ -1,7 +1,6 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from parasykjiems.slug import SLUG_LEN
-from parasykjiems.mail.models import Enquiry
 
 
 _NAME_LEN = 200
@@ -103,6 +102,7 @@ class Institution(models.Model):
         query = models.Q(institution=self)
         for rep in Representative.objects.filter(institution=self):
             query = query | models.Q(representative=rep)
+        from mail.models import Enquiry
         return (Enquiry.objects
                 .filter(query)
                 .filter(is_open=True, is_sent=True)
