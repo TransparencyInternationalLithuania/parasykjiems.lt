@@ -8,6 +8,7 @@ from parasykjiems.search.models import Representative, Institution
 from parasykjiems.search.utils import ChoiceState
 from parasykjiems.mail.models import Enquiry, Response
 import parasykjiems.mail.mail as mail
+from parasykjiems.mail import utils
 
 
 def write_representative(request, slug):
@@ -32,7 +33,6 @@ def write(request, recipient):
                 subject=form.cleaned_data['subject'],
                 body=form.cleaned_data['body'],
                 is_open=form.cleaned_data['is_open'])
-            # TODO: detect errors in mail sending
 
             return redirect(reverse(write_confirm) +
                             '?' + choice_state.query_string())
@@ -40,8 +40,11 @@ def write(request, recipient):
         choice_state = ChoiceState(request.GET)
         choice_state.add_recipient(recipient)
         form = WriteLetterForm(
-            initial={'choice_state': choice_state.query_string()})
-        # TODO: add letter template
+            initial={
+                'choice_state': choice_state.query_string(),
+                'body': utils.letter_body_template(recipient),
+            }
+        )
 
     return render(request, 'views/write.html', {
         'recipient': recipient,

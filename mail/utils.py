@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Email-related utility functions.
 """
 
@@ -5,6 +6,8 @@ import re
 from email.header import decode_header
 
 import settings
+from multisub import multisub_one
+import search.models
 
 import logging
 logger = logging.getLogger(__name__)
@@ -49,3 +52,25 @@ ENQUIRY_EMAIL_REGEXP = re.compile(
     .format(
         id='(?P<id>\d+)',
         hash='(?P<hash>\d+)'))
+
+
+def letter_body_template(obj):
+    if isinstance(obj, search.models.Representative):
+        name = obj.name.split(' ')[-1]
+        pref = 'p. '
+    else:
+        name = obj.name
+        pref = ''
+
+    last_name_vocative = multisub_one(
+        name,
+        (
+            (ur'as$', u'ai'),
+            (ur'ys$', u'y'),
+            (ur'is$', u'i'),
+            (ur'us$', u'au'),
+            (ur'ė$', u'e'),
+        )
+    )
+
+    return u"Gerb. {}{},\n\n".format(pref, last_name_vocative)
