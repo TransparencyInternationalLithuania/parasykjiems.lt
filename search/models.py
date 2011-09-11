@@ -28,7 +28,6 @@ class Representative(models.Model):
 
     Contains all the related contact information.
     """
-
     name = models.CharField(max_length=_NAME_LEN)
     kind = models.ForeignKey(RepresentativeKind)
 
@@ -41,6 +40,9 @@ class Representative(models.Model):
     slug = models.CharField(max_length=SLUG_LEN,
                             blank=True,
                             db_index=True)
+
+    class Meta:
+        unique_together = (('institution', 'name', 'kind'))
 
     def __unicode__(self):
         return u'{}, {} in {}'.format(
