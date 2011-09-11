@@ -10,7 +10,7 @@ class Command(BaseCommand):
     help = '''Exports articles to "data/articles.csv"'''
 
     def handle(self, *args, **options):
-        export_models(models.Article.objects
+        export_models('data/articles.csv',
+                      models.Article.objects
                       .order_by('location'),
-                      'data/articles.csv',
                       ['location', 'title', 'body'])

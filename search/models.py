@@ -200,3 +200,8 @@ class Territory(models.Model):
 
     class Meta:
         verbose_name_plural = _("territories")
+        unique_together = (('institution',
+                            'municipality',
+                            'elderate',
+                            'city',
+                            'street'))

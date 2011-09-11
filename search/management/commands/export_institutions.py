@@ -18,8 +18,8 @@ class Command(BaseCommand):
         for kind in models.InstitutionKind.objects.filter(active=True):
             filename = os.path.join('data', 'institutions',
                                     kind.name.encode('utf-8') + '.csv')
-            export_models(models.Institution.objects
+            export_models(filename,
+                          models.Institution.objects
                           .filter(kind=kind)
                           .order_by('name'),
-                          filename,
                           ['name', 'email', 'phone', 'address'])
