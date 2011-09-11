@@ -410,13 +410,43 @@ h5 {
     width: 100%;
 }
 
-.letters th {
-    background: #f0f0f0;
-}
-
 .letters th, td {
     padding: 6px 12px 6px 12px;
     text-align: left;
+    vertical-align: middle;
+    height: 2em;
+}
+
+.letters th {
+    color: #444;
+    font-weight: bold;
+    border-bottom: 1px solid #ccd;
+    padding-bottom: 2px;
+    background: #fff;
+    background: -webkit-gradient(linear, 0 0, 0 bottom, from(#fff), to(#eaecef));
+    background: -webkit-linear-gradient(#fff, #eaecef);
+    background: -moz-linear-gradient(#fff, #eaecef);
+    background: -ms-linear-gradient(#fff, #eaecef);
+    background: -o-linear-gradient(#fff, #eaecef);
+    background: linear-gradient(#fff, #eaecef);
+}
+
+.letters a {
+    color: #000;
+}
+
+.letters .subject {
+    width: 40%;
+    font-weight: bold;
+}
+
+.letters tr:hover {
+    background: #e0e3ef;
+    color: #046;
+}
+
+.letters tr:hover a {
+    color: #046;
 }
 
 .letter {
