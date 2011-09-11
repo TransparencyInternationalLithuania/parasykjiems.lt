@@ -4,6 +4,9 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from models import Location, Representative, Institution
 
+import logging
+logger = logging.getLogger(__name__)
+
 
 _REMOVE_PUNCTUATION_RE = re.compile(ur'[^\w/ -]', flags=re.UNICODE)
 _NORMALISE_SPACES_RE = re.compile(ur'(\s)\s+')
@@ -59,16 +62,24 @@ class ChoiceState:
         if query:
             if isinstance(query, basestring):
                 query = QueryDict(query)
-            if not loc and 'loc' in query:
-                self.loc = Location.objects.get(
-                    id=int(query['loc']))
-                self.n = query.get('n', None)
-            if not inst and 'inst' in query:
-                self.inst = Institution.objects.get(
-                    id=int(query['inst']))
-            if not rep and 'rep' in query:
-                self.rep = Representative.objects.get(
-                    id=int(query['rep']))
+            raise Exception()
+            try:
+                if not rep and 'rep' in query:
+                    self.rep = Representative.objects.get(
+                        id=int(query['rep']))
+                if not inst and 'inst' in query:
+                    self.inst = Institution.objects.get(
+                        id=int(query['inst']))
+                if not loc and 'loc' in query:
+                    self.loc = Location.objects.get(
+                        id=int(query['loc']))
+                    self.n = query.get('n', None)
+            except Exception as e:
+                logger.warning("Can't make ChoiceState({}, {}, {}, {}, {}): {}"
+                               .format(
+                                   repr(query), repr(loc), repr(n),
+                                   repr(inst), repr(rep),
+                                   e))
 
     def add_recipient(self, recipient):
         if isinstance(recipient, Representative):
@@ -81,11 +92,16 @@ class ChoiceState:
             url = self.loc.get_absolute_url()
             url += self.n + '/'
             return url
-        else:
+        elif self.inst or self.rep:
             return (self.inst or self.rep).get_absolute_url()
+        else:
+            return '#'
 
     def write_url(self):
-        return '/write' + (self.inst or self.rep).get_absolute_url()
+        if self.inst or self.rep:
+            return '/write' + (self.inst or self.rep).get_absolute_url()
+        else:
+            return '#'
 
     def query_string(self):
         q = QueryDict('').copy()
