@@ -9,7 +9,7 @@ _NAME_LEN = 200
 
 class RepresentativeKind(models.Model):
     """Kind of position of representative in institution."""
-    name = models.CharField(max_length=_NAME_LEN)
+    name = models.CharField(max_length=_NAME_LEN, unique=True)
     description = models.TextField(
         blank=True,
         help_text=_("In Markdown format."))
@@ -57,7 +57,7 @@ class Representative(models.Model):
 
 
 class InstitutionKind(models.Model):
-    name = models.CharField(max_length=_NAME_LEN)
+    name = models.CharField(max_length=_NAME_LEN, unique=True)
     description = models.TextField(
         blank=True,
         help_text=_("In Markdown format."))
