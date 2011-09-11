@@ -83,8 +83,7 @@ class Enquiry(models.Model):
 
     @property
     def recipient_name(self):
-        return u'{} {}'.format(self.recipient.kind.name,
-                               self.recipient.name)
+        return u'{}'.format(self.recipient.name)
 
     @property
     def date(self):

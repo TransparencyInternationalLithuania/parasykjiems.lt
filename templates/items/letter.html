@@ -6,7 +6,6 @@
       <th>{% trans "From:" %}</th>
       <td>{{ letter.sender_name }}</td>
     <tr>
-
     <tr>
       <th>{% trans "To:" %}</th>
       <td>
@@ -19,12 +18,10 @@
         {% endif %}
       </td>
     </tr>
-
     <tr>
       <th>{% trans "Subject:" %}</th>
       <td>{{ letter.subject }}</td>
     </tr>
-
     {% if letter.date %}
     <tr>
       <th>{% trans "Date:" %}</th>
@@ -32,7 +29,6 @@
     </tr>
     {% endif %}
   </table>
-
   <div class="body">
     {{ letter.body|linebreaks }}
   </div>

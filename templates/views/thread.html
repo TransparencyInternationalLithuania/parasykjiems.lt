@@ -11,9 +11,6 @@
 
 {% block content %}
 {% for letter in letters %}
-{% include "items/letter.html" %}
-{% if not forloop.last %}
-<hr>
-{% endif %}
+{% include "items/letter.html" with class=letter.kind %}
 {% endfor %}
 {% endblock %}
