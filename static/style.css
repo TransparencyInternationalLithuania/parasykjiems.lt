@@ -421,29 +421,35 @@ h5 {
 
 .letter {
     font-size: 11pt;
-    margin-bottom: 3em;
+    margin-bottom: 1em;
+    background: #d6e0f3;
+    padding: 0.5em 1em 0.5em 1em;
+    border-radius: 1em;
+    -moz-border-radius: 1em;
+    -webkit-border-radius: 1em;
+}
+
+.response {
+    background: #f3f0b6;
+}
+
+.letter a {
+    text-decoration: underline;
 }
 
 .letter th {
     font-weight: bold;
-    text-align: right;
+    text-align: left;
+    padding-right: 10px;
 }
 
 .letter td {
-    padding: 3px;
+    padding: 0;
 }
 
 .letter .body {
-    background: #fafafa;
-    border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
     margin: 3px 10px 3px 10px;
     padding: 3px 10px 3px 10px;
-}
-
-.response .body {
-    background: #efefff;
 }
 
 .description {

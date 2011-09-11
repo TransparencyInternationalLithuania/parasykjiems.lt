@@ -15,7 +15,7 @@
     <td><a href="{{ letter.get_absolute_url }}">{{ letter.subject }}</a></td>
     <td>{{ letter.sender_name|nobreaks }}</td>
     <td><a href="{{ letter.recipient.get_absolute_url }}">
-        {{ letter.recipient.kind }} {{ letter.recipient.name|nobreaks }}
+        {{ letter.recipient.name|nobreaks }}
     </a></td>
     <td>{{ letter.date|date:'Y-m-d' }}</td>
     <td>{{ letter.has_answer|yesno|title }}</td>
