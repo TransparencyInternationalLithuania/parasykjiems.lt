@@ -12,5 +12,5 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         import_models('data/articles.csv',
                       models.Article,
-                      'location',
+                      ['location'],
                       ['title', 'body'])

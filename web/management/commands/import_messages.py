@@ -12,5 +12,5 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         import_models('data/messages.csv',
                       models.Message,
-                      'name',
+                      ['name'],
                       ['body'])
