@@ -22,6 +22,7 @@ p {
 }
 
 ul {
+    list-style-type: none;
     list-style-image: url(/static/img/bullet.png);
     margin-left: 2em;
 }
@@ -39,11 +40,12 @@ blockquote {
 #testing-version {
     font-size: 11pt;
     color: #333;
+    z-index: 100;
     position: absolute;
     right: 3px;
     top: 100px;
     padding: 0.3em 1em 0.3em 1em;
-    background: rgba(255, 255, 200, 0.9);
+    background: rgb(255, 255, 200);
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
     border-radius: 3px;
     -moz-border-radius: 3px;
@@ -94,16 +96,20 @@ img {
 }
 
 #header {
-    background: #f0f0f0;
+    background: #e7e7e8;
     background: -webkit-gradient(linear, 0 0, 0 bottom, from(#f5f5f5), to(#e3e3e6));
     background: -webkit-linear-gradient(#f5f5f5, #e3e3e6);
     background: -moz-linear-gradient(#f5f5f5, #e3e3e6);
     background: -ms-linear-gradient(#f5f5f5, #e3e3e6);
     background: -o-linear-gradient(#f5f5f5, #e3e3e6);
     background: linear-gradient(#f5f5f5, #e3e3e6);
+    -pie-background: linear-gradient(#f5f5f5, #e3e3e6);
+    -pie-box-shadow: 0px 1px 8px #999;
     -webkit-box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.3);
     -moz-box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.3);
     box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.3);
+    behavior: url(/static/PIE.htc);
+    position: relative;
 }
 
 #inner-header {
@@ -113,7 +119,7 @@ img {
     border-spacing: 0;
 }
 
-#inner-header td, tr {
+#inner-header tr {
     margin: 0;
     padding: 0;
     vertical-align: middle;
@@ -142,18 +148,24 @@ img {
     color: #666;
     padding: 7px 27px 7px 27px;
     background: #fafafa;
+    behavior: url(/static/PIE.htc);
+    position: relative;
 }
 
 #menu li:first-child a {
     -webkit-border-radius: 10px 0 0 10px;
     -moz-border-radius: 10px 0 0 10px;
     border-radius: 10px 0 0 10px;
+    behavior: url(/static/PIE.htc);
+    position: relative;
 }
 
 #menu li:last-child a {
     -webkit-border-radius: 0 10px 10px 0;
     -moz-border-radius: 0 10px 10px 0;
     border-radius: 0 10px 10px 0;
+    behavior: url(/static/PIE.htc);
+    position: relative;
 }
 
 #menu a:hover {
@@ -217,7 +229,7 @@ img {
     color: #4d6685;
 }
 
-form input[type=text], textarea {
+form input[type=text], form textarea {
     font-size: 14pt;
     margin: 5px;
     padding: 3px;
@@ -257,7 +269,7 @@ form table {
     width: 100%;
 }
 
-form table td, th {
+form table td, form table th {
     padding: 0;
     margin: 0;
     vertical-align: middle;
@@ -320,8 +332,8 @@ form[name=search] input {
 
 #result-list {
     list-style: none;
-    margin: 0 0 0 0;
-    padding: 0 0 0 0;
+    margin: 0;
+    padding: 0;
 }
 
 #result-list a {
@@ -360,7 +372,7 @@ h1 {
     margin-bottom: 3em;
 }
 
-.institution > table > tr > td {
+.institution td {
     vertical-align: top;
     padding: 0 1em 0.5em 1em;
 }
@@ -417,25 +429,11 @@ h5 {
     margin: 0;
 }
 
-.letters .answered img {
-    width: 16px;
-    height: 16px;
-    padding: 0;
-    margin: 0;
-}
-
-.letters th, td {
+.letters td, .letters th {
     padding: 6px 12px 6px 12px;
     text-align: left;
     vertical-align: middle;
-}
-
-.small-letters {
-    width: 60%;
-}
-
-.small-letters th, td {
-    height: 0;
+    height: 40px;
 }
 
 .letters th {
@@ -453,13 +451,16 @@ h5 {
 }
 
 .letters a {
-    color: #000;
+    color: #333;
 }
 
 .letters .subject {
     min-width: 330px;
     font-weight: bold;
-    height: 3em;
+}
+
+.letters tr {
+    cursor: pointer;
 }
 
 .letters tr:hover {
@@ -471,6 +472,18 @@ h5 {
     color: #046;
 }
 
+.small-letters {
+    width: 55%;
+}
+
+.small-letters td {
+    height: 1em;
+}
+
+.small-letters .subject {
+    min-width: 100px;
+}
+
 .letter {
     font-size: 11pt;
     margin-bottom: 1em;
@@ -479,6 +492,8 @@ h5 {
     border-radius: 1em;
     -moz-border-radius: 1em;
     -webkit-border-radius: 1em;
+    behavior: url(/static/PIE.htc);
+    position: relative;
 }
 
 .response {
@@ -510,8 +525,9 @@ h5 {
     border-radius: 10px;
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
-    width: 45%;
-    padding-left: 1em;
+    padding: 0.3em 2em 0.3em 2em;
+    behavior: url(/static/PIE.htc);
+    position: relative;
 }
 
 .description a {
@@ -557,6 +573,7 @@ a.write {
     padding: 0.4em 0.8em 0.4em 0.8em;
     position: relative;
     top: -0.4em;
+    behavior: url(/static/PIE.htc);
 }
 
 a.write:hover {
@@ -579,12 +596,14 @@ ul.errorlist {
 .tabs {
     text-align: center;
     margin: 0;
-    padding: 11px 0 5px 0;
+    padding: 11px 0 6px 0;
     border-bottom: 2px solid #5d6675;
     overflow: hidden;
+    behavior: url(/static/PIE.htc);
+    position: relative;
 }
 
-.tabs * {
+.tabs span, .tabs a {
     margin: 0 5px 0 5px;
     padding: 8px 30px 7px 30px;
     background: #c0c6d0;
@@ -592,6 +611,8 @@ ul.errorlist {
     border-radius: 20px 20px 0 0;
     -moz-border-radius: 20px 20px 0 0;
     -webkit-border-radius: 20px 20px 0 0;
+    behavior: url(/static/PIE.htc);
+    position: relative;
 }
 
 .tabs a:hover {
@@ -614,4 +635,8 @@ ul.errorlist {
 
 .q-empty {
     background: url("/static/img/q.png") no-repeat 0.4em;
+}
+
+strong {
+    color: #333;
 }
