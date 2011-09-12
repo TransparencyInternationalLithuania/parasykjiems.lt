@@ -6,8 +6,7 @@ import settings
 
 class WriteLetterForm(forms.Form):
     name = forms.CharField(label=_("Your full name"),
-                           help_text=_("You should enter your full name "
-                                       "without abbreviations."),
+                           help_text=_("Don't use abbreviations."),
                            required=True)
 
     email = forms.EmailField(

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-12 07:44+0300\n"
+"POT-Creation-Date: 2011-09-12 19:15+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,30 +30,30 @@ msgid "Your full name"
 msgstr ""
 
 #: mail/forms.py:9
-msgid "You should enter your full name without abbreviations."
+msgid "Don't use abbreviations."
 msgstr ""
 
-#: mail/forms.py:14 web/forms.py:8
+#: mail/forms.py:13 web/forms.py:8
 msgid "Your e-mail address"
 msgstr ""
 
-#: mail/forms.py:17
+#: mail/forms.py:16
 msgid "An e-mail address is required."
 msgstr ""
 
-#: mail/forms.py:18
+#: mail/forms.py:17
 msgid "Enter a valid e-mail address."
 msgstr ""
 
-#: mail/forms.py:24 templates/items/letters.html:7
+#: mail/forms.py:23 templates/items/letters.html:7
 msgid "Subject"
 msgstr ""
 
-#: mail/forms.py:29
+#: mail/forms.py:28
 msgid "Open letter, which is visible to all visitors of the web site"
 msgstr ""
 
-#: mail/forms.py:33 web/forms.py:10
+#: mail/forms.py:32 web/forms.py:10
 msgid "Message"
 msgstr ""
 
