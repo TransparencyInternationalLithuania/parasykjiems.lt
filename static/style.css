@@ -432,7 +432,6 @@ h5 {
 }
 
 .letters .subject {
-    width: 40%;
     font-weight: bold;
 }
 
@@ -445,9 +444,8 @@ h5 {
 }
 
 .letters .date {
+    width: 130px;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 .letters td, .letters th {
@@ -456,6 +454,8 @@ h5 {
     vertical-align: middle;
     height: 40px;
     overflow-y: hidden;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .letters th {
@@ -498,15 +498,18 @@ h5 {
 }
 
 .small-letters {
-    width: 55%;
+    width: 70%;
+}
+
+.letters .sender {
+    width: 20%;
 }
 
 .small-letters td {
     height: 1em;
-}
-
-.small-letters .subject {
-    min-width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .letter {
