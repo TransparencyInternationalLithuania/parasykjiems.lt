@@ -441,11 +441,13 @@ h5 {
 }
 
 .letters .recipient {
-    width: 30%;
+    width: 27%;
 }
 
 .letters .date {
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .letters td, .letters th {
@@ -483,7 +485,7 @@ h5 {
 }
 
 .letters tr.even {
-    background: #f6f6f6;
+    background: #f1f1f1;
 }
 
 .letters tr:hover {
