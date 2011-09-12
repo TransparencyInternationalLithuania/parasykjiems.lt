@@ -117,6 +117,9 @@ LOGGING = {
         'verbose': {
             'format': '%(asctime)s %(levelname)s %(module)s %(message)s'
         },
+        'search': {
+            'format': '%(asctime)s %(message)s'
+        },
     },
     'handlers': {
         'debug': {
@@ -124,13 +127,15 @@ LOGGING = {
             'level': 'DEBUG',
             'formatter': 'verbose',
             'filename': 'logs/debug.log',
-            'maxBytes': 1000000,
+            'maxBytes': 1024 * 1024 * 5,
         },
         'info': {
-            'class': 'logging.FileHandler',
+            'class': 'logging.handlers.RotatingFileHandler',
             'level': 'INFO',
             'formatter': 'verbose',
             'filename': 'logs/info.log',
+            'backupCount': 5,
+            'maxBytes': 1024 * 1024 * 5,
         },
         'warning': {
             'class': 'logging.FileHandler',
@@ -138,10 +143,35 @@ LOGGING = {
             'formatter': 'verbose',
             'filename': 'logs/warning.log',
         },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+        },
+        'search': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'formatter': 'search',
+            'filename': 'logs/search.log',
+        },
+        'null': {
+            'level': 'DEBUG',
+            'class': 'logging.NullHandler',
+        },
     },
-    'root': {
-        'level': 'DEBUG',
-        'handlers': ['debug', 'info', 'warning'],
+    'loggers': {
+        '': {
+            'level': 'DEBUG',
+            'handlers': ['mail_admins', 'warning', 'info', 'debug'],
+        },
+        'search': {
+            'level': 'INFO',
+            'handlers': ['search'],
+        },
+        'pysolr': {
+            'level': 'DEBUG',
+            'handlers': ['null'],
+            'propagate': False,
+        },
     },
 }
 
