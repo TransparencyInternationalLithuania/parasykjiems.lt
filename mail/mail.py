@@ -149,7 +149,8 @@ def process_incoming(message):
             hash = int(m.group('hash'))
             maybe_enquiry = Enquiry.objects.filter(id=id, reply_hash=hash)
             if maybe_enquiry.exists():
-                logger.info('Determined parent of response {} from To.')
+                logger.info('Determined parent of response {} from To.'
+                            .format(response))
                 parent = maybe_enquiry.get()
 
         # If matching by 'To' fails, try threading, though it's
@@ -166,17 +167,18 @@ def process_incoming(message):
                     message_id=ref.decode('utf-8').strip())
                 if maybe_enquiry.exists():
                     logger.info(
-                        'Determined parent of response {} from references.')
+                        'Determined parent of response {} from references.'
+                        .format(response))
                     parent = maybe_enquiry.get()
                     break
     except Exception as e:
         logger.error(
             'Exception {} while trying to determine parent of response {}.'
-            .format(e, response.id))
+            .format(e, response))
 
     if not parent:
         logger.warning('Failed to determine parent of response {}.'
-                       .format(response.id))
+                       .format(response))
     else:
         response.parent = parent
         send_mail(
