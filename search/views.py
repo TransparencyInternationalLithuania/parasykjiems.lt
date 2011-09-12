@@ -23,7 +23,7 @@ def search(request):
     if 'q' in request.GET and request.GET['q'] != '':
         q = request.GET['q']
 
-        logger.info('SEARCH "{}"'.format(q))
+        logger.info('SEARCH {}'.format(q))
 
         q, num = utils.remove_house_number(q)
 
