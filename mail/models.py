@@ -104,7 +104,8 @@ class Enquiry(models.Model):
             sent_msg = u'confirmed'
         else:
             sent_msg = u'unconfirmed'
-        return u'{name} <{email}> to {to} ({sent})'.format(
+        return u'{id}: {name} <{email}> to {to} ({sent})'.format(
+            id=self.id,
             name=self.sender_name,
             email=self.sender_email,
             to=self.recipient,
@@ -167,6 +168,7 @@ class Response(models.Model):
         self._message = None
 
     def __unicode__(self):
-        return u'{sender} ({received_time})'.format(
+        return u'{id}:{sender} ({received_time})'.format(
+            id=self.id,
             sender=self.message['from'],
             received_time=self.received_time)

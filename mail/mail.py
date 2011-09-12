@@ -54,10 +54,13 @@ def submit_enquiry(sender_name,
         message=confirm_msg,
     )
 
+    logger.info("Enquiry submitted: {}".format(enquiry))
+
     return enquiry
 
 
 def confirm_enquiry(enquiry):
+    logger.info("Enquiry confirmed: {}".format(enquiry))
     enquiry.is_confirmed = True
     enquiry.save()
 
@@ -116,6 +119,8 @@ def send_enquiry(enquiry):
     enquiry.sent_at = datetime.datetime.now()
 
     enquiry.save()
+
+    logger.info("Enquiry sent: {}".format(enquiry))
 
     msg = message.message()
     user_copy = EmailMessage(
