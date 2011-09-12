@@ -45,7 +45,7 @@
       <h5>{% trans "Recent letters" %}</h5>
       {% include "items/letters.html" with letters=institution.recent_letters small=1 %}
       {% if institution.more_letters %}
-      <a href="{% url letters institution.slug %}">{% trans "All letters sent to this institution" %}</a>
+      <p><a href="{% url letters institution.slug %}">{% trans "All letters sent to this institution" %}</a></p>
       {% endif %}
     </td>
   </tr>

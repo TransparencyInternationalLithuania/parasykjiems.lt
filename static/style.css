@@ -498,7 +498,8 @@ h5 {
 }
 
 .small-letters {
-    width: 70%;
+    margin-left: 1em;
+    width: 80%;
 }
 
 .letters .sender {
