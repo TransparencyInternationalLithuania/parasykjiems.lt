@@ -13,7 +13,7 @@ body {
     font-family: 'Droid Sans', sans-serif;
     font-size: 12pt;
     height: 100%;
-    background: #e3e3e6;
+    background: #f0f0f2;
 }
 
 p {
@@ -60,7 +60,7 @@ blockquote {
     background: white;
     margin: 0 auto 0 auto;
     padding: 0 0 1em 0;
-    min-height: 80%;
+    min-height: 77%;
 }
 
 .note {
@@ -209,7 +209,7 @@ img {
 }
 
 #footer {
-    border-top: 1px dotted #ccc;
+    border-top: 1px solid #dfdfdf;
     text-align: center;
     font-size: 10pt;
     color: #444;
@@ -422,13 +422,30 @@ h5 {
 .letters {
     border-collapse: collapse;
     width: 100%;
+    table-layout: fixed;
 }
 
 .letters .answered {
-    width: 16px;
-    height: 16px;
-    padding: 0 0 0 10px;
-    margin: 0;
+    width: 32px;
+    padding: 0;
+    text-align: right;
+}
+
+.letters .subject {
+    width: 40%;
+    font-weight: bold;
+}
+
+.letters .sender {
+    width: 15%;
+}
+
+.letters .recipient {
+    width: 30%;
+}
+
+.letters .date {
+    white-space: nowrap;
 }
 
 .letters td, .letters th {
@@ -436,6 +453,7 @@ h5 {
     text-align: left;
     vertical-align: middle;
     height: 40px;
+    overflow-y: hidden;
 }
 
 .letters th {
@@ -456,13 +474,16 @@ h5 {
     color: #333;
 }
 
-.letters .subject {
-    min-width: 330px;
-    font-weight: bold;
+.letters td {
+    cursor: pointer;
 }
 
-.letters tr {
-    cursor: pointer;
+.letters tr.odd {
+    background: #fafafa;
+}
+
+.letters tr.even {
+    background: #f6f6f6;
 }
 
 .letters tr:hover {
