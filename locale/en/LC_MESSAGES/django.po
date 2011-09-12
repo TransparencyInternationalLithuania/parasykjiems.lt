@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-10 10:29+0300\n"
+"POT-Creation-Date: 2011-09-12 07:44+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,7 +45,7 @@ msgstr ""
 msgid "Enter a valid e-mail address."
 msgstr ""
 
-#: mail/forms.py:24 templates/items/letters.html:6
+#: mail/forms.py:24 templates/items/letters.html:7
 msgid "Subject"
 msgstr ""
 
@@ -69,7 +69,7 @@ msgstr ""
 msgid "Your enquiry has been responded to"
 msgstr ""
 
-#: mail/models.py:123
+#: mail/models.py:121
 msgid "The unprocessed e-mail message."
 msgstr ""
 
@@ -81,53 +81,37 @@ msgstr ""
 msgid "House number"
 msgstr ""
 
-#: search/models.py:15 search/models.py:63 web/models.py:12
+#: search/models.py:14 search/models.py:62 web/models.py:14 web/models.py:25
 msgid "In Markdown format."
 msgstr ""
 
-#: search/models.py:19
-msgid "This number is used for sorting institutions in the location view."
-msgstr ""
-
-#: search/models.py:67
+#: search/models.py:18
 msgid ""
 "This number is used for sorting representatives in the institution view."
 msgstr ""
 
-#: search/models.py:127 search/models.py:169
+#: search/models.py:66
+msgid "This number is used for sorting institutions in the location view."
+msgstr ""
+
+#: search/models.py:135 search/models.py:178
 msgid "Name of city, town or village."
 msgstr ""
 
-#: search/models.py:194
+#: search/models.py:203
 msgid "territories"
 msgstr ""
 
-#: templates/404.html:9
+#: templates/404.html:8
 msgid "Page not found"
 msgstr ""
 
-#: templates/500.html:10
+#: templates/500.html:8
 msgid "Internal server error"
 msgstr ""
 
-#: templates/base.html:19
-msgid ""
-"\n"
-"      <strong>Note:</strong> this is the testing version of ParašykJiems.\n"
-"      Letters aren't actually sent to representatives.\n"
-"      "
-msgstr ""
-
-#: templates/base.html:31
+#: templates/base.html:27
 msgid "ParašykJiems"
-msgstr ""
-
-#: templates/base.html:51
-msgid "Have any notes, suggestions?"
-msgstr ""
-
-#: templates/base.html:51
-msgid "Write to us."
 msgstr ""
 
 #: templates/menu.html:6
@@ -135,6 +119,7 @@ msgid "Representative search"
 msgstr ""
 
 #: templates/menu.html:12 templates/breadcrumbs/letters.html:4
+#: templates/views/letters.html:8
 msgid "Open letters"
 msgstr ""
 
@@ -142,44 +127,17 @@ msgstr ""
 msgid "Help"
 msgstr ""
 
-#: templates/results.html:15
-msgid "There are more results matching your query. Try narrowing your search."
-msgstr ""
-
-#: templates/results.html:20
-msgid "Nothing found."
-msgstr ""
-
-#: templates/results.html:26
-msgid "You can search by entering:"
-msgstr ""
-
-#: templates/results.html:28
-msgid "part of an address,"
-msgstr ""
-
-#: templates/results.html:29
-msgid "a full address (including the house number),"
-msgstr ""
-
-#: templates/results.html:30
-msgid "a representative's name,"
-msgstr ""
-
-#: templates/results.html:31
-msgid "an institution's name."
-msgstr ""
-
 #: templates/breadcrumbs/choose.html:4
 msgid "Choose a representative"
 msgstr ""
 
-#: templates/breadcrumbs/confirm.html:3
+#: templates/breadcrumbs/confirm.html:3 templates/views/confirm.html:8
+#: templates/views/write_confirm.html:4
 msgid "Confirm letter"
 msgstr ""
 
-#: templates/breadcrumbs/feedback.html:4
-msgid "Leave feedback"
+#: templates/breadcrumbs/contact.html:4 templates/views/contact.html:4
+msgid "Contact us"
 msgstr ""
 
 #: templates/breadcrumbs/letter.html:3
@@ -194,79 +152,79 @@ msgstr ""
 msgid "Write a letter"
 msgstr ""
 
-#: templates/items/institution.html:11 templates/items/representative.html:24
+#: templates/items/institution.html:13 templates/items/representative.html:22
 msgid "Email: "
 msgstr ""
 
-#: templates/items/institution.html:13 templates/items/representative.html:26
+#: templates/items/institution.html:15 templates/items/representative.html:24
 msgid "Write&nbsp;letter"
 msgstr ""
 
-#: templates/items/institution.html:19 templates/items/representative.html:32
+#: templates/items/institution.html:21 templates/items/representative.html:30
 msgid "Phone number: "
 msgstr ""
 
-#: templates/items/institution.html:23
+#: templates/items/institution.html:25
 msgid "Address: "
 msgstr ""
 
-#: templates/items/institution.html:33 templates/items/representative.html:41
+#: templates/items/institution.html:45
 msgid "Recent letters"
+msgstr ""
+
+#: templates/items/institution.html:48
+msgid "All letters sent to this institution"
 msgstr ""
 
 #: templates/items/letter.html:6
 msgid "From:"
 msgstr ""
 
-#: templates/items/letter.html:11
+#: templates/items/letter.html:10
 msgid "To:"
 msgstr ""
 
-#: templates/items/letter.html:24
+#: templates/items/letter.html:22
 msgid "Subject:"
 msgstr ""
 
-#: templates/items/letter.html:30
+#: templates/items/letter.html:27
 msgid "Date:"
 msgstr ""
 
-#: templates/items/letters.html:7
+#: templates/items/letters.html:8
 msgid "Sender"
 msgstr ""
 
-#: templates/items/letters.html:8
+#: templates/items/letters.html:9
 msgid "Recipient"
 msgstr ""
 
-#: templates/items/letters.html:9
+#: templates/items/letters.html:10
 msgid "Sent at"
 msgstr ""
 
-#: templates/items/letters.html:10
+#: templates/items/letters.html:16
 msgid "Answered"
 msgstr ""
 
-#: templates/items/representative.html:15
+#: templates/items/representative.html:13
 msgid "Institution: "
 msgstr ""
 
-#: templates/views/confirm.html:21 templates/views/feedback.html:40
+#: templates/views/confirm.html:23 templates/views/contact.html:44
 msgid "Send"
 msgstr ""
 
-#: templates/views/feedback_thanks.html:6
+#: templates/views/contact_thanks.html:4 templates/views/contact_thanks.html:8
 msgid "Thank you"
 msgstr ""
 
-#: templates/views/feedback_thanks.html:11
-msgid "Thank you for your feedback."
-msgstr ""
-
-#: templates/views/letters.html:18
+#: templates/views/letters.html:25
 msgid "Previous page"
 msgstr ""
 
-#: templates/views/letters.html:21
+#: templates/views/letters.html:28
 #, python-format
 msgid ""
 "\n"
@@ -274,11 +232,11 @@ msgid ""
 "  "
 msgstr ""
 
-#: templates/views/letters.html:26
+#: templates/views/letters.html:33
 msgid "Next page"
 msgstr ""
 
-#: templates/views/location.html:21
+#: templates/views/location.html:23
 #, python-format
 msgid ""
 "\n"
@@ -290,25 +248,19 @@ msgstr ""
 msgid "Continue"
 msgstr ""
 
-#: templates/views/search.html:17
-msgid ""
-"Use the search box to find a representative. You can read more about the "
-"project <a href=\"/about\">here</a>."
-msgstr ""
-
-#: templates/views/search.html:22
+#: templates/views/search.html:8 templates/views/search.html.py:22
 msgid "Search"
 msgstr ""
 
-#: templates/views/sent.html:9
+#: templates/views/sent.html:4 templates/views/sent.html.py:7
 msgid "Letter sent"
 msgstr ""
 
-#: templates/views/sent.html:14
+#: templates/views/sent.html:12
 msgid "Your letter has been sent successfully."
 msgstr ""
 
-#: templates/views/sent.html:18
+#: templates/views/sent.html:16
 #, python-format
 msgid ""
 "\n"
@@ -316,24 +268,12 @@ msgid ""
 "  "
 msgstr ""
 
-#: templates/views/write.html:66
+#: templates/views/write.html:4
+msgid "Write letter"
+msgstr ""
+
+#: templates/views/write.html:54
 msgid "Submit"
-msgstr ""
-
-#: templates/views/write_confirm.html:17
-msgid ""
-"Check your email. You should receive a confirmation\n"
-"  link from us. You must confirm your letter before it will be sent.\n"
-"  "
-msgstr ""
-
-#: templates/views/write_confirm.html:23
-#, python-format
-msgid ""
-"If you don't receive\n"
-"  a letter, check your spam folder. If it doesn't arrive at all, send us a\n"
-"  note using the <a href=\"%(feedback_url)s\">feedback page</a>.\n"
-"  "
 msgstr ""
 
 #: web/forms.py:6
