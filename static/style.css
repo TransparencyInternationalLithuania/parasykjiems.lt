@@ -564,9 +564,9 @@ h5 {
 }
 
 hr {
-    margin: 2em 0 2em 0;
+    margin: 3em 0 2em 0;
     border: none;
-    border-bottom: 1px dotted #aaa;
+    border-bottom: 1px solid #dddddd;
 }
 
 .pager {
