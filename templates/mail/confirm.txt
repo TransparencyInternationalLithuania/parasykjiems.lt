@@ -3,7 +3,7 @@ Gerb. p. {{ enquiry.sender_name }},
 Svetainėje ParašykJiems.lt iš Jūsų adreso buvo parašytas laiškas
 valdžios atstovui.
 
-Laiško gavėjas: {{ enquiry.recipient.kind }} {{ enquiry.recipient.name }}
+Laiško gavėjas: {{ enquiry.recipient_name }}
 Laiško tema: {{ enquiry.subject }}
 
 Jeigu norite peržiūrėti laišką ir patvirtinti jo siuntimą, naršyklėje
