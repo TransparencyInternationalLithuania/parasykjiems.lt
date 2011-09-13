@@ -21,6 +21,11 @@ class RepresentativeKind(models.Model):
     def __unicode__(self):
         return self.name
 
+    class Meta:
+        verbose_name = _('representative kind')
+        verbose_name_plural = _('representative kinds')
+        ordering = ['ordinal', 'name']
+
 
 class Representative(models.Model):
     """A person working in an institution.
@@ -41,6 +46,8 @@ class Representative(models.Model):
                             db_index=True)
 
     class Meta:
+        verbose_name = _('representative')
+        verbose_name_plural = _('representatives')
         unique_together = (('institution', 'name', 'kind'))
 
     def __unicode__(self):
@@ -68,6 +75,11 @@ class InstitutionKind(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    class Meta:
+        verbose_name = _('institution kind')
+        verbose_name_plural = _('institution kinds')
+        ordering = ['ordinal', 'name']
 
 
 class Institution(models.Model):
@@ -115,6 +127,10 @@ class Institution(models.Model):
     @property
     def more_letters(self, count=4):
         return self.letters.count() > count
+
+    class Meta:
+        verbose_name = _('institution')
+        verbose_name_plural = _('institutions')
 
 
 class Location(models.Model):
@@ -200,6 +216,7 @@ class Territory(models.Model):
             self.institution)
 
     class Meta:
+        verbose_name_plural = _("territory")
         verbose_name_plural = _("territories")
         unique_together = (('institution',
                             'municipality',
