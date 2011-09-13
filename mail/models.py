@@ -190,7 +190,8 @@ class Response(models.Model):
     def __unicode__(self):
         return u'{id}:{sender} ({received_time})'.format(
             id=self.id,
-            sender=self.message['from'],
+            sender=utils.decode_header_unicode(
+                self.message['from']),
             received_time=self.received_time)
 
     class Meta:

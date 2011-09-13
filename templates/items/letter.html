@@ -18,10 +18,12 @@
         {% endif %}
       </td>
     </tr>
+    {% if letter.subject %}
     <tr>
       <th>{% trans "Subject:" %}</th>
       <td>{{ letter.subject }}</td>
     </tr>
+    {% endif %}
     {% if letter.date %}
     <tr>
       <th>{% trans "Date:" %}</th>
