@@ -38,7 +38,7 @@ def decode_header_unicode(h):
     """Turns a possibly encoded email header string into a unicode
     string.
     """
-    unicodes = [s.decode(enc or 'ascii') for s, enc in decode_header(h)]
+    unicodes = [s.decode(enc or 'utf-8') for s, enc in decode_header(h)]
     return u' '.join(unicodes)
 
 
