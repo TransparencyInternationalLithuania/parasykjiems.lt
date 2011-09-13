@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-12 19:15+0300\n"
-"PO-Revision-Date: 2011-09-12 19:15+0300\n"
+"POT-Creation-Date: 2011-09-13 20:23+0300\n"
+"PO-Revision-Date: 2011-09-13 20:26+0300\n"
 "Last-Translator: Kiprianas Spiridonovas <k.spiridonovas@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -64,17 +64,33 @@ msgstr "Turinys"
 msgid "Confirm your letter"
 msgstr "Patvirtinkite savo laišką"
 
-#: mail/mail.py:123
+#: mail/mail.py:128
 msgid "Copy of the letter you sent."
 msgstr "Laiško, kurį išsiuntėte, kopija"
 
-#: mail/mail.py:186
+#: mail/mail.py:193
 msgid "Your enquiry has been responded to"
 msgstr "Į jūsų laišką buvo atsakyta"
 
-#: mail/models.py:121
+#: mail/models.py:115
+msgid "enquiry"
+msgstr "užklausa"
+
+#: mail/models.py:116
+msgid "enquiries"
+msgstr "užklausos"
+
+#: mail/models.py:126
 msgid "The unprocessed e-mail message."
-msgstr ""
+msgstr "Neapdorotas elektroninis laiškas."
+
+#: mail/models.py:181
+msgid "response"
+msgstr "atsakymas"
+
+#: mail/models.py:182
+msgid "responses"
+msgstr "atsakymai"
 
 #: search/forms.py:13
 msgid "A house number must be numeric and can contain at most one letter."
@@ -85,9 +101,9 @@ msgid "House number"
 msgstr "Pastato numeris"
 
 #: search/models.py:14
-#: search/models.py:62
-#: web/models.py:14
-#: web/models.py:25
+#: search/models.py:69
+#: web/models.py:16
+#: web/models.py:33
 msgid "In Markdown format."
 msgstr "Markdown formatu."
 
@@ -95,18 +111,54 @@ msgstr "Markdown formatu."
 msgid "This number is used for sorting representatives in the institution view."
 msgstr "Skaičius, naudojamas atstovų tvarkai institucijoje nustatyti."
 
-#: search/models.py:66
+#: search/models.py:25
+msgid "representative kind"
+msgstr "atstovo rūšis"
+
+#: search/models.py:26
+msgid "representative kinds"
+msgstr "atstovų rūšys"
+
+#: search/models.py:49
+msgid "representative"
+msgstr "atstovas"
+
+#: search/models.py:50
+msgid "representatives"
+msgstr "atstovai"
+
+#: search/models.py:73
 msgid "This number is used for sorting institutions in the location view."
 msgstr "Skaičius, naudojamas institucijų tvarkai nustatyti."
 
-#: search/models.py:135
-#: search/models.py:178
+#: search/models.py:80
+msgid "institution kind"
+msgstr "institucijos rūšis"
+
+#: search/models.py:81
+msgid "institution kinds"
+msgstr "institucijų rūšys"
+
+#: search/models.py:132
+msgid "institution"
+msgstr "institucija"
+
+#: search/models.py:133
+msgid "institutions"
+msgstr "institucijos"
+
+#: search/models.py:151
+#: search/models.py:194
 msgid "Name of city, town or village."
 msgstr "Miesto, miestelio arba kaimo pavadinimas"
 
-#: search/models.py:203
+#: search/models.py:219
+msgid "territory"
+msgstr "teritorija"
+
+#: search/models.py:220
 msgid "territories"
-msgstr ""
+msgstr "teritorijos"
 
 #: templates/404.html:8
 msgid "Page not found"
@@ -118,7 +170,7 @@ msgstr "Programinė klaida"
 
 #: templates/base.html:27
 msgid "ParašykJiems"
-msgstr ""
+msgstr "ParašykJiems"
 
 #: templates/menu.html:6
 msgid "Representative search"
@@ -224,7 +276,7 @@ msgstr "Atsakyta"
 msgid "Institution: "
 msgstr "Institucija: "
 
-#: templates/views/confirm.html:23
+#: templates/views/confirm.html:20
 #: templates/views/contact.html:44
 msgid "Send"
 msgstr "Siųsti"
@@ -302,6 +354,39 @@ msgstr "Pateikti"
 #: web/forms.py:6
 msgid "Your name"
 msgstr "Jūsų vardas"
+
+#: web/models.py:10
+msgid "title"
+msgstr "pavadinimas"
+
+#: web/models.py:14
+msgid "article location"
+msgstr "straipsnio adresas puslapyje"
+
+#: web/models.py:17
+#: web/models.py:35
+msgid "content"
+msgstr "turinys"
+
+#: web/models.py:23
+msgid "article"
+msgstr "straipsnis"
+
+#: web/models.py:24
+msgid "articles"
+msgstr "straipsniai"
+
+#: web/models.py:31
+msgid "message identifier"
+msgstr "žinutės identifikatorius"
+
+#: web/models.py:41
+msgid "message"
+msgstr "žinutė"
+
+#: web/models.py:42
+msgid "messages"
+msgstr "žinutės"
 
 #: web/views.py:29
 msgid "Feedback from {}"
@@ -395,12 +480,3 @@ msgstr "Atsiliepimas iš"
 #~ "You should enter both your first name and your surname, separated by "
 #~ "spaces."
 #~ msgstr "Įveskite savo vardą ir pavardę, atskirtus tarpais."
-
-#~ msgid "Representatives"
-#~ msgstr "Atstovai"
-
-#~ msgid "Representative"
-#~ msgstr "Atstovas"
-
-#~ msgid "Institution"
-#~ msgstr "Institucija"

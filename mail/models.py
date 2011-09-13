@@ -111,6 +111,10 @@ class Enquiry(models.Model):
             to=self.recipient,
             sent=sent_msg)
 
+    class Meta:
+        verbose_name = _('enquiry')
+        verbose_name_plural = _('enquiries')
+
 
 class Response(models.Model):
     # A null parent means that it's unresolved. All responses should
@@ -172,3 +176,7 @@ class Response(models.Model):
             id=self.id,
             sender=self.message['from'],
             received_time=self.received_time)
+
+    class Meta:
+        verbose_name = _('response')
+        verbose_name_plural = _('responses')
