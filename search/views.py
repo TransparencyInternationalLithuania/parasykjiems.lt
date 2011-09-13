@@ -20,10 +20,10 @@ _RESULT_LIMIT = 10
 
 
 def search(request):
-    if 'q' in request.GET and request.GET['q'] != '':
+    if 'q' in request.GET and request.GET['q'].strip() != '':
         q = request.GET['q']
 
-        logger.info('SEARCH {}'.format(q))
+        logger.info(u'SEARCH {}'.format(q))
 
         q, num = utils.remove_house_number(q)
 
@@ -35,11 +35,13 @@ def search(request):
 
         # Match the last word from the auto field, so that it can be
         # matched partially.
-        sq = SQ(auto=q_last) | SQ(text=q_last)
+        if q_last != '':
+            sq = SQ(auto=q_last) | SQ(text=q_last)
 
         # AND the rest of the words.
         for w in q_butlast:
-            sq = sq & SQ(text=w)
+            if w != '':
+                sq = sq & SQ(text=w)
 
         # If a house number is given, only show results, where a
         # number is relevant.

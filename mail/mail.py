@@ -54,13 +54,13 @@ def submit_enquiry(sender_name,
         message=confirm_msg,
     )
 
-    logger.info("Enquiry submitted: {}".format(enquiry))
+    logger.info(u"Enquiry submitted: {}".format(enquiry))
 
     return enquiry
 
 
 def confirm_enquiry(enquiry):
-    logger.info("Enquiry confirmed: {}".format(enquiry))
+    logger.info(u"Enquiry confirmed: {}".format(enquiry))
     enquiry.is_confirmed = True
     enquiry.save()
 
@@ -120,7 +120,7 @@ def send_enquiry(enquiry):
 
     enquiry.save()
 
-    logger.info("Enquiry sent: {}".format(enquiry))
+    logger.info(u"Enquiry sent: {}".format(enquiry))
 
     msg = message.message()
     user_copy = EmailMessage(
@@ -154,7 +154,7 @@ def process_incoming(message):
             hash = int(m.group('hash'))
             maybe_enquiry = Enquiry.objects.filter(id=id, reply_hash=hash)
             if maybe_enquiry.exists():
-                logger.info('Determined parent of response {} from To.'
+                logger.info(u'Determined parent of response {} from To.'
                             .format(response))
                 parent = maybe_enquiry.get()
 
@@ -172,17 +172,17 @@ def process_incoming(message):
                     message_id=ref.decode('utf-8').strip())
                 if maybe_enquiry.exists():
                     logger.info(
-                        'Determined parent of response {} from references.'
+                        u'Determined parent of response {} from references.'
                         .format(response))
                     parent = maybe_enquiry.get()
                     break
     except Exception as e:
         logger.error(
-            'Exception {} while trying to determine parent of response {}.'
+            u'Exception {} while trying to determine parent of response {}.'
             .format(e, response))
 
     if not parent:
-        logger.warning('Failed to determine parent of response {}.'
+        logger.warning(u'Failed to determine parent of response {}.'
                        .format(response))
     else:
         response.parent = parent
