@@ -2,19 +2,19 @@
 
 
 <li>
-  <a href="{% url search %}" {% if active == "search" %}class="selected"{% endif %}>
+  <a href="{% url search %}" class="first {% if active == "search" %}selected{% endif %}">
     {% trans "Representative search" %}
   </a>
 </li>
 
 <li>
-  <a href="{% url letters %}" {% if active == "letters" %}class="selected"{% endif %}>
+  <a href="{% url letters %}" class="{% if active == "letters" %}selected{% endif %}">
     {% trans "Open letters" %}
   </a>
 </li>
 
 <li>
-  <a href="{% url article "help" %}" {% if request.path == "/help/" or request.path == "/help/writing/" %}class="selected"{% endif %}>
+  <a href="{% url article "help" %}" class="last {% if request.path == "/help/" or request.path == "/help/writing/" %}selected{% endif %}">
     {% trans "Help" %}
   </a>
 </li>
