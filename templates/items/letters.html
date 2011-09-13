@@ -21,7 +21,7 @@
     </td>
     <td class="sender">{{ letter.sender_name }}</td>
     {% if not small %}
-    <td class="recipient">{{ letter.recipient.name }}</td>
+    <td class="recipient">{{ letter.recipient_name }}</td>
     {% endif %}
     <td class="date">{{ letter.date|naturalday:'Y-m-d' }}</td>
   </tr>

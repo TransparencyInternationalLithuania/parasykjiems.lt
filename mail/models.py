@@ -24,15 +24,17 @@ _NAME_LEN = 200
 
 class Enquiry(models.Model):
     # Should be set if this message is a continuation of a discussion.
-    parent = models.ForeignKey('Response', null=True)
+    parent = models.ForeignKey('Response', null=True, blank=True)
 
     # Secret hashes are separate for confirmation and replies, so that
     # a sender can't reply to himself.
-    reply_hash = models.IntegerField(db_index=True)
+    reply_hash = models.IntegerField(db_index=True,
+                                     null=True, blank=True)
 
     # The confirm hash needn't be unique, because it's passed together
     # with the slug.
-    confirm_hash = models.IntegerField(db_index=True)
+    confirm_hash = models.IntegerField(db_index=True,
+                                       null=True, blank=True)
 
     slug = models.CharField(max_length=SLUG_LEN,
                             blank=True,
@@ -41,9 +43,16 @@ class Enquiry(models.Model):
     # These link to the institution or representative that this
     # enquiry was sent to. Exactly one of them should be non-null.
     institution = models.ForeignKey('search.Institution',
-                                    null=True)
+                                    null=True, blank=True)
     representative = models.ForeignKey('search.Representative',
-                                       null=True)
+                                       null=True, blank=True)
+
+    # This should be set to the name and email of the institution or
+    # representative on creation. In case, the representative's name
+    # changes in the database, we still know to whom the letter was
+    # sent.
+    recipient_name = models.CharField(max_length=_NAME_LEN)
+    recipient_email = models.CharField(max_length=_NAME_LEN)
 
     sender_name = models.CharField(max_length=_NAME_LEN)
     sender_email = models.EmailField(max_length=_NAME_LEN)
@@ -57,10 +66,12 @@ class Enquiry(models.Model):
     is_confirmed = models.BooleanField()
 
     is_sent = models.BooleanField()
-    sent_at = models.DateTimeField(null=True)
+    sent_at = models.DateTimeField(null=True, blank=True)
 
     # This can be used for threading. Should be set after sending.
-    message_id = models.CharField(max_length=100, null=True, db_index=True)
+    message_id = models.CharField(max_length=100,
+                                  null=True, blank=True,
+                                  db_index=True)
 
     _hash_max = 9999999
 
@@ -78,12 +89,17 @@ class Enquiry(models.Model):
         return self.representative or self.institution
 
     @property
-    def has_answer(self):
-        return Response.objects.filter(parent=self.id).exists()
+    def is_recipient_current(self):
+        '''True if the recipient to whom this message was sent
+        (determined by recipient_name) is the one returned by the
+        recipient property.
+        '''
+        return (self.recipient and
+                (self.recipient_name == self.recipient.name))
 
     @property
-    def recipient_name(self):
-        return u'{}'.format(self.recipient.name)
+    def has_answer(self):
+        return Response.objects.filter(parent=self.id).exists()
 
     @property
     def date(self):

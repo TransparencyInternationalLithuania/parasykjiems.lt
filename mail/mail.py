@@ -27,6 +27,8 @@ def submit_enquiry(sender_name,
     """
 
     enquiry = Enquiry(
+        recipient_name=recipient.name,
+        recipient_email=recipient.email,
         sender_name=sender_name,
         sender_email=sender_email,
         subject=subject,
@@ -84,11 +86,11 @@ def send_enquiry(enquiry):
                       lambda e: [e.subject])
 
     if settings.TESTING_VERSION:
-        recipients = [u'{} <{}>'.format(enquiry.recipient.name,
+        recipients = [u'{} <{}>'.format(enquiry.recipient_name,
                                         settings.REDIRECT_ENQUIRIES_TO)]
     else:
-        recipients = [u'{} <{}>'.format(enquiry.recipient.name,
-                                        enquiry.recipient.email)]
+        recipients = [u'{} <{}>'.format(enquiry.recipient_name,
+                                        enquiry.recipient_email)]
 
     reply_to = settings.ENQUIRY_EMAIL_FORMAT.format(
         id=enquiry.id,

@@ -1,7 +1,7 @@
 {{ enquiry.body }}
 
 --
-Šį laišką per ParašykJiems.lt sistemą jums išsiuntė
+Šį laišką per http://ParašykJiems.lt sistemą jums išsiuntė
 {{ enquiry.sender_name }}.
 {% if enquiry.is_open %}
 Šis laiškas yra atviras ir jį taip pat galite peržiūrėti adresu:
@@ -9,5 +9,4 @@
 
 Kai parašysite atsakymą, jį irgi galima bus matyti tuo adresu. Jeigu
 atsakėte į laišką, bet jūsų atsakymas neatsiranda tinklalapyje, tai
-praneškite mums el. paštu feedback@parasykjiems.lt
-{% endif %}
+praneškite mums el. paštu feedback@parasykjiems.lt{% endif %}
