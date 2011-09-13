@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.translation import ugettext_lazy as _
 import models
 
 
@@ -11,19 +12,21 @@ def summary(s):
 
 class ArticleAdmin(admin.ModelAdmin):
     list_display = ('location', 'title', 'body_summary')
-    list_display_links = list_display
+    ordering = ('location', 'title')
 
     def body_summary(self, obj):
         return summary(obj.body)
+    body_summary.short_description = _('content')
 
 admin.site.register(models.Article, ArticleAdmin)
 
 
 class MessageAdmin(admin.ModelAdmin):
     list_display = ('name', 'body_summary')
-    list_display_links = list_display
+    ordering = ('name',)
 
     def body_summary(self, obj):
         return summary(obj.body)
+    body_summary.short_description = _('content')
 
 admin.site.register(models.Message, MessageAdmin)
