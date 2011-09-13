@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.db.models import TextField
+from django.forms.widgets import Textarea
 from django.utils.translation import ugettext_lazy as _
 import models
 
@@ -11,6 +13,13 @@ def summary(s):
 
 
 class ArticleAdmin(admin.ModelAdmin):
+    formfield_overrides = {
+        TextField: {
+            'widget': Textarea(
+                attrs={
+                    'rows': '30',
+                    'cols': '90'})}}
+
     list_display = ('location', 'title', 'body_summary')
     ordering = ('location', 'title')
 
