@@ -666,7 +666,7 @@ ul.errorlist {
 }
 
 .q-empty {
-    background: url("/static/img/q.png") no-repeat 0.4em;
+    /* background: url("/static/img/q.png") no-repeat 0.4em; */
 }
 
 strong {
