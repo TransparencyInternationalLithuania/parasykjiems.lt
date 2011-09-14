@@ -21,6 +21,13 @@ import settings
 
 _NAME_LEN = 200
 
+_RANDOM_GENERATOR = random.SystemRandom()
+_HASH_MAX = 999999
+
+
+def generate_hash():
+    return _RANDOM_GENERATOR.randint(1, _HASH_MAX)
+
 
 class Enquiry(models.Model):
     # Should be set if this message is a continuation of a discussion.
@@ -28,13 +35,12 @@ class Enquiry(models.Model):
 
     # Secret hashes are separate for confirmation and replies, so that
     # a sender can't reply to himself.
-    reply_hash = models.IntegerField(db_index=True,
-                                     null=True, blank=True)
-
-    # The confirm hash needn't be unique, because it's passed together
-    # with the slug.
-    confirm_hash = models.IntegerField(db_index=True,
-                                       null=True, blank=True)
+    reply_hash = models.IntegerField(default=generate_hash,
+                                     db_index=True,
+                                     null=False, blank=True)
+    confirm_hash = models.IntegerField(default=generate_hash,
+                                       db_index=True,
+                                       null=False, blank=True)
 
     slug = models.CharField(max_length=SLUG_LEN,
                             blank=True,
@@ -72,17 +78,6 @@ class Enquiry(models.Model):
     message_id = models.CharField(max_length=100,
                                   null=True, blank=True,
                                   db_index=True)
-
-    _hash_max = 9999999
-
-    def __init__(self, *args, **kwargs):
-        super(Enquiry, self).__init__(*args, **kwargs)
-        # Generate confirm and reply hashes, if they aren't set.
-        rand = random.SystemRandom()
-        if not self.confirm_hash:
-            self.confirm_hash = rand.randint(1, Enquiry._hash_max)
-        if not self.reply_hash:
-            self.reply_hash = rand.randint(1, Enquiry._hash_max)
 
     @property
     def recipient(self):
