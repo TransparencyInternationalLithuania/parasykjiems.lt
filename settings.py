@@ -86,6 +86,7 @@ MIDDLEWARE_CLASSES = (
 )
 
 APPEND_SLASH = True
+USE_ETAGS = True
 
 ROOT_URLCONF = 'parasykjiems.urls'
 
