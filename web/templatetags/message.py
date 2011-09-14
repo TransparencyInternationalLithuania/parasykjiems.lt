@@ -1,6 +1,5 @@
 from django import template
 from web.models import Message
-import markdown
 
 import logging
 logger = logging.getLogger(__name__)
@@ -16,7 +15,7 @@ class MessageNode(template.Node):
     def render(self, context):
         try:
             message = Message.objects.get(name=self.name)
-            return markdown.markdown(message.body)
+            return message.body_rendered
         except Exception as e:
             logger.error("Can't display message {}: {}".format(
                 repr(self.name), e))

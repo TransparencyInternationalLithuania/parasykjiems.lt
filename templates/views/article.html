@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% load markup %}
 
 {% block menu %}
 {% include "menu.html" with active="about" %}
@@ -12,5 +11,5 @@
 {% endblock %}
 
 {% block content %}
-{{ article.body|markdown:"toc" }}
+{{ article.body_rendered|safe }}
 {% endblock %}
