@@ -32,6 +32,6 @@
     {% endif %}
   </table>
   <div class="body">
-    {{ letter.body|urlize|linebreaks }}
+    {{ letter.body|urlizetrunc:60|linebreaks }}
   </div>
 </div>
