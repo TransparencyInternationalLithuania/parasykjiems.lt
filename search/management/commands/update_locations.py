@@ -40,6 +40,7 @@ class Command(BaseCommand):
                AND upper(search_location.city) = upper(search_territory.city)
                AND upper(search_location.street) = upper(search_territory.street));
         ''')
+        transaction.commit_unless_managed()
 
         print 'Deleting old ones.'
         cursor.execute('''
