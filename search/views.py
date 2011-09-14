@@ -23,8 +23,6 @@ def search(request):
     if 'q' in request.GET and request.GET['q'].strip() != '':
         q = request.GET['q']
 
-        logger.info(u'SEARCH {}'.format(q))
-
         q, num = utils.remove_house_number(q)
 
         sqs = SearchQuerySet()
@@ -63,6 +61,9 @@ def search(request):
         all_results = (list(top_results[:_RESULT_LIMIT + 1]) +
                        list(locs[:_RESULT_LIMIT + 1]))
         more_results = len(all_results) > _RESULT_LIMIT
+
+        logger.info(u'SEARCH ({} results): {}'.format(
+            len(all_results), q))
 
         results = all_results[:_RESULT_LIMIT]
     else:
