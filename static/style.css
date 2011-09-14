@@ -443,11 +443,11 @@ h5 {
 }
 
 .letters .sender {
-    width: 15%;
+    width: 18%;
 }
 
 .letters .recipient {
-    width: 27%;
+    width: 18%;
 }
 
 .letters .date {
@@ -510,8 +510,8 @@ h5 {
     width: 80%;
 }
 
-.letters .sender {
-    width: 20%;
+.small-letters .sender {
+    width: 22%;
 }
 
 .small-letters td {
