@@ -63,7 +63,7 @@ def search(request):
         more_results = len(all_results) > _RESULT_LIMIT
 
         logger.info(u'SEARCH ({} results): {}'.format(
-            len(all_results), q))
+            len(all_results), request.GET['q']))
 
         results = all_results[:_RESULT_LIMIT]
     else:
