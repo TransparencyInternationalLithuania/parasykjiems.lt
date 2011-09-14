@@ -13,6 +13,7 @@ def summary(s):
 
 
 class ArticleAdmin(admin.ModelAdmin):
+    exclude = ('body_rendered',)
     formfield_overrides = {
         TextField: {
             'widget': Textarea(
@@ -31,6 +32,7 @@ admin.site.register(models.Article, ArticleAdmin)
 
 
 class MessageAdmin(admin.ModelAdmin):
+    exclude = ('body_rendered',)
     list_display = ('name', 'body_summary')
     ordering = ('name',)
 
