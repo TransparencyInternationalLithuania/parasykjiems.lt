@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import re
 from django.core.management.base import BaseCommand
 from progressbar import ProgressBar, Bar, ETA
 
@@ -26,12 +27,18 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         print 'Generating slugs for:'
+
         print ' - Institution'
+
+        def split_institution_name(name):
+            m = re.match(ur'(.+savivaldybė) (.+)', name)
+            if m:
+                return [m.group(2), m.group(1)]
+            else:
+                return [name]
+
         generate_slugs(Institution.objects.all(),
-                       lambda i: [i.name
-                                  .replace(u'savivaldybė', '')
-                                  .replace(u'seniūnija', ''),
-                                  i.kind.name])
+                       lambda i: split_institution_name(i.name))
 
         print ' - Representative'
         generate_slugs(Representative.objects.all(),
