@@ -4,6 +4,7 @@ from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
+from django.views.decorators.cache import cache_control
 from haystack.query import SearchQuerySet, SQ
 
 from search.models import Institution, Location, Territory, InstitutionKind
@@ -19,6 +20,7 @@ logger = logging.getLogger(__name__)
 _RESULT_LIMIT = 10
 
 
+@cache_control(max_age=60 * 60, public=True)
 def search(request):
     if 'q' in request.GET:
         q = request.GET['q']
@@ -102,6 +104,7 @@ def search(request):
         })
 
 
+@cache_control(max_age=60 * 60, public=True)
 def institution(request, slug):
     inst = get_object_or_404(Institution, slug=slug)
     return render(request, 'views/institution.html', {
@@ -110,6 +113,7 @@ def institution(request, slug):
     })
 
 
+@cache_control(max_age=60 * 60, public=True)
 def location(request, slug, house_number=None):
     loc = get_object_or_404(Location, slug=slug)
     all_territories = Territory.objects.filter(
@@ -164,6 +168,7 @@ def location(request, slug, house_number=None):
     })
 
 
+@cache_control(public=False)
 def location_ask(request, slug):
     if request.method == 'POST':
         form = HouseNumberForm(request.POST)

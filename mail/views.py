@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator
 from django.http import Http404
+from django.views.decorators.cache import cache_control
 
 from forms import WriteLetterForm
 from parasykjiems.search.models import Representative, Institution
@@ -21,6 +22,7 @@ def write_institution(request, slug):
     return write(request, inst)
 
 
+@cache_control(public=False)
 def write(request, recipient):
     if request.method == 'POST':
         form = WriteLetterForm(request.POST)
@@ -53,6 +55,7 @@ def write(request, recipient):
     })
 
 
+@cache_control(max_age=60 * 60, public=True)
 def write_confirm(request):
     choice_state = ChoiceState(request.GET)
     return render(request, 'views/write_confirm.html', {
@@ -61,15 +64,15 @@ def write_confirm(request):
     })
 
 
+@cache_control(public=False)
 def confirm(request, id, confirm_hash):
     enquiry = get_object_or_404(Enquiry,
                                 id=int(id),
                                 confirm_hash=int(confirm_hash),
                                 is_sent=False)
 
-    mail.confirm_enquiry(enquiry)
-
     if request.method == 'POST':
+        mail.confirm_enquiry(enquiry)
         mail.send_enquiry(enquiry)
         return redirect(reverse(sent, kwargs={'id': enquiry.id}))
     else:
@@ -78,11 +81,13 @@ def confirm(request, id, confirm_hash):
         })
 
 
+@cache_control(max_age=60 * 60, public=True)
 def sent(request, id):
     enquiry = get_object_or_404(Enquiry, id=id)
     return render(request, 'views/sent.html', {'enquiry': enquiry})
 
 
+@cache_control(max_age=60 * 60, public=True)
 def thread(request, slug):
     enquiry = get_object_or_404(Enquiry,
                                 slug=slug,
@@ -102,6 +107,7 @@ def thread(request, slug):
     })
 
 
+@cache_control(max_age=60 * 60, public=True)
 def letters(request, institution_slug=None):
     MAX_LETTERS = 10
     if institution_slug:
