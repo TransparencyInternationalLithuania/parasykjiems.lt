@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.core.urlresolvers import reverse
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse
 from haystack.query import SearchQuerySet, SQ
 
 from search.models import Institution, Location, Territory, InstitutionKind
@@ -21,24 +21,26 @@ _RESULT_LIMIT = 10
 
 def search(request):
     if 'q' in request.GET:
-        q, num = utils.remove_house_number(request.GET['q'])
+        q = request.GET['q']
+        terms, num = utils.remove_house_number(q)
     else:
         q = ''
+        terms = ''
         num = ''
 
-    if q.strip() != '':
+    if terms.strip() != '':
         sqs = SearchQuerySet()
-        clean_q = sqs.query.clean(q)
-        q_words = clean_q.split(u' ')
-        q_butlast = q_words[:-1]
-        q_last = q_words[-1]
+        clean_terms = sqs.query.clean(terms)
+        terms_words = clean_terms.split(u' ')
+        terms_butlast = terms_words[:-1]
+        terms_last = terms_words[-1]
 
         # Match the last word from the auto field, so that it can be
         # matched partially.
-        sq = SQ(auto=q_last) | SQ(text=q_last)
+        sq = SQ(auto=terms_last) | SQ(text=terms_last)
 
         # AND the rest of the words.
-        for w in q_butlast:
+        for w in terms_butlast:
             if w != '':
                 sq = sq & SQ(text=w)
 
@@ -64,17 +66,15 @@ def search(request):
         more_results = len(all_results) > _RESULT_LIMIT
 
         logger.info(u'SEARCH ({} results): {}'.format(
-            len(all_results), request.GET['q']))
+            len(all_results), q))
 
         results = all_results[:_RESULT_LIMIT]
     else:
-        q = ''
-        num = ''
         results = []
         more_results = False
 
     results_context = RequestContext(request, {
-        'search_query': request.GET.get('q', ''),
+        'search_query': q,
         'house_number': num,
         'results': results,
         'more_results': more_results,
@@ -97,7 +97,7 @@ def search(request):
         return redirect(url)
     else:
         return render(request, 'views/search.html', {
-            'search_query': request.GET.get('q', ''),
+            'search_query': q,
             'results_html': results_html,
         })
 
