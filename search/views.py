@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 _RESULT_LIMIT = 10
 
 
-@cache_control(max_age=60 * 60, public=True)
+@cache_control(max_age=60 * 60 * 24, public=True)
 def search(request):
     if 'q' in request.GET:
         q = request.GET['q']

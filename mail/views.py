@@ -3,6 +3,7 @@ from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator
 from django.http import Http404
 from django.views.decorators.cache import cache_control
+from django.views.decorators.http import last_modified
 
 from forms import WriteLetterForm
 from parasykjiems.search.models import Representative, Institution
@@ -107,7 +108,15 @@ def thread(request, slug):
     })
 
 
-@cache_control(max_age=60 * 60, public=True)
+def _latest_letter(request, inst=None):
+    return (Enquiry.objects
+            .filter(is_open=True, is_sent=True)
+            .latest('sent_at')
+            .sent_at)
+
+
+@last_modified(_latest_letter)
+@cache_control(max_age=60 * 60 * 24, public=True)
 def letters(request, institution_slug=None):
     MAX_LETTERS = 10
     if institution_slug:
