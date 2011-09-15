@@ -23,4 +23,4 @@ class Command(BaseCommand):
                           models.Institution.objects
                           .filter(kind=kind)
                           .order_by('name'),
-                          ['name', 'email', 'phone', 'address'])
+                          ['name', 'email', 'phone', 'address', 'other_info'])

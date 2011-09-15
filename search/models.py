@@ -38,7 +38,7 @@ class Representative(models.Model):
 
     email = models.CharField(max_length=_NAME_LEN, blank=True)
     phone = models.CharField(max_length=_NAME_LEN, blank=True)
-    other_contacts = models.TextField(blank=True)
+    other_info = models.TextField(blank=True)
 
     slug = models.CharField(max_length=SLUG_LEN,
                             blank=True,
@@ -87,6 +87,7 @@ class Institution(models.Model):
     email = models.CharField(max_length=_NAME_LEN, blank=True)
     phone = models.CharField(max_length=_NAME_LEN, blank=True)
     address = models.TextField(blank=True)
+    other_info = models.TextField(blank=True)
 
     slug = models.CharField(max_length=SLUG_LEN,
                             blank=True,
