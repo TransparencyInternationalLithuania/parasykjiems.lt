@@ -9,9 +9,27 @@ class InstitutionKindAdmin(admin.ModelAdmin):
 admin.site.register(models.InstitutionKind, InstitutionKindAdmin)
 
 
-admin.site.register(models.Institution)
-admin.site.register(models.RepresentativeKind)
-admin.site.register(models.Representative)
+class InstitutionAdmin(admin.ModelAdmin):
+    search_fields = ('name',)
+    list_display = ('name', 'kind', 'email', 'phone')
+    list_filter = ('kind',)
+
+admin.site.register(models.Institution, InstitutionAdmin)
+
+
+class RepresentativeKindAdmin(admin.ModelAdmin):
+    list_display = ('name', 'ordinal')
+    list_editable = ('ordinal',)
+
+admin.site.register(models.RepresentativeKind, RepresentativeKindAdmin)
+
+
+class RepresentativeAdmin(admin.ModelAdmin):
+    search_fields = ('name',)
+    list_display = ('name', 'kind', 'email', 'phone')
+    list_filter = ('kind',)
+
+admin.site.register(models.Representative, RepresentativeAdmin)
 
 
 class TerritoryAdmin(admin.ModelAdmin):
@@ -20,20 +38,10 @@ class TerritoryAdmin(admin.ModelAdmin):
                     'elderate',
                     'city',
                     'street',
-                    'numbers',
-                    )
+                    'numbers',)
+    ordering = list_display
     list_display_links = ('institution',)
-    list_editable = ('municipality',
-                    'elderate',
-                    'city',
-                    'street',
-                     )
-
-    search_fields = ('municipality',
-                     'elderate',
-                     'city',
-                     'street',
-                     )
+    search_fields = ('institution__name',)
 
 
 admin.site.register(models.Territory, TerritoryAdmin)
