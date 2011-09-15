@@ -12,7 +12,6 @@ class RepresentativeKind(models.Model):
     description = models.TextField(
         blank=True,
         help_text=_("In Markdown format."))
-    active = models.BooleanField()
 
     ordinal = models.IntegerField(
         help_text=_("This number is used for sorting representatives "
@@ -67,7 +66,6 @@ class InstitutionKind(models.Model):
     description = models.TextField(
         blank=True,
         help_text=_("In Markdown format."))
-    active = models.BooleanField()
 
     ordinal = models.IntegerField(
         help_text=_("This number is used for sorting institutions "

@@ -13,11 +13,9 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         export_models('data/kinds/representative.csv',
                       models.RepresentativeKind.objects
-                      .filter(active=True)
                       .order_by('ordinal'),
                       ['ordinal', 'name', 'description'])
         export_models('data/kinds/institution.csv',
                       models.InstitutionKind.objects
-                      .filter(active=True)
                       .order_by('ordinal'),
                       ['ordinal', 'name', 'description'])

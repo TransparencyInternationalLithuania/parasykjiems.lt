@@ -25,12 +25,12 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         print 'Generating slugs for:'
         print ' - Institution'
-        generate_slugs(Institution.objects.filter(kind__active=True),
+        generate_slugs(Institution.objects.all(),
                        lambda i: [i.name,
                                   i.kind.name])
 
         print ' - Representative'
-        generate_slugs(Representative.objects.filter(kind__active=True),
+        generate_slugs(Representative.objects.all(),
                        lambda r: [r.name,
                                   r.kind.name,
                                   r.institution.name])

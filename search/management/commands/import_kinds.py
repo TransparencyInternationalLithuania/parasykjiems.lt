@@ -14,10 +14,8 @@ class Command(BaseCommand):
         import_models('data/kinds/representative.csv',
                       models.RepresentativeKind,
                       ['name'],
-                      ['ordinal', 'description'],
-                      {'active': True})
+                      ['ordinal', 'description'])
         import_models('data/kinds/institution.csv',
                       models.InstitutionKind,
                       ['name'],
-                      ['ordinal', 'description'],
-                      {'active': True})
+                      ['ordinal', 'description'])

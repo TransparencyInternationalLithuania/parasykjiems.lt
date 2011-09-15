@@ -16,7 +16,6 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         for kind in (models.InstitutionKind.objects
-                     .filter(active=True)
                      .order_by('ordinal')):
             filename = os.path.join('data', 'institutions',
                                     kind.name.encode('utf-8') + '.csv')

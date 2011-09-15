@@ -13,7 +13,6 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         for kind in (models.InstitutionKind.objects
-                     .filter(active=True)
                      .order_by('ordinal')):
             filename = os.path.join('data',
                                     'institutions',
