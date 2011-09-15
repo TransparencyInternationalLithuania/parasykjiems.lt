@@ -31,7 +31,6 @@ class Command(BaseCommand):
               ON (search_territory.institution_id = search_institution.id)
             INNER JOIN search_institutionkind
               ON (search_institution.kind_id = search_institutionkind.id)
-          WHERE search_institutionkind.active = true
           AND NOT EXISTS
             (SELECT *
              FROM search_location

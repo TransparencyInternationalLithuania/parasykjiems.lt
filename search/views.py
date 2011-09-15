@@ -104,8 +104,6 @@ def search(request):
 
 def institution(request, slug):
     inst = get_object_or_404(Institution, slug=slug)
-    if not inst.kind.active:
-        raise Http404()
     return render(request, 'views/institution.html', {
         'choose_query': '?inst={}'.format(inst.id),
         'institution': inst,
@@ -129,8 +127,7 @@ def location(request, slug, house_number=None):
         else:
             return redirect(reverse(location_ask, args=[slug]))
     institutions = ([t.institution
-                     for t in territories
-                     if t.institution.kind.active]
+                     for t in territories]
                     + list(Institution.objects.filter(
                         name__iexact=loc.municipality)))
     institutions.sort(key=lambda i: i.kind.ordinal)

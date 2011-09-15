@@ -19,8 +19,7 @@ class Command(BaseCommand):
                                     municipality.encode('utf-8') + '.csv')
             export_models(filename,
                           models.Territory.objects
-                          .filter(municipality=municipality,
-                                  institution__kind__active=True)
+                          .filter(municipality=municipality)
                           .order_by('institution__name',
                                     'elderate', 'city', 'street'),
                           [('institution', 'institution__name'),
