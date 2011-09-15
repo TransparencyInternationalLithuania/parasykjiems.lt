@@ -20,11 +20,13 @@ _RESULT_LIMIT = 10
 
 
 def search(request):
-    if 'q' in request.GET and request.GET['q'].strip() != '':
-        q = request.GET['q']
+    if 'q' in request.GET:
+        q, num = utils.remove_house_number(request.GET['q'])
+    else:
+        q = ''
+        num = ''
 
-        q, num = utils.remove_house_number(q)
-
+    if q.strip() != '':
         sqs = SearchQuerySet()
         clean_q = sqs.query.clean(q)
         q_words = clean_q.split(u' ')
@@ -33,8 +35,7 @@ def search(request):
 
         # Match the last word from the auto field, so that it can be
         # matched partially.
-        if q_last != '':
-            sq = SQ(auto=q_last) | SQ(text=q_last)
+        sq = SQ(auto=q_last) | SQ(text=q_last)
 
         # AND the rest of the words.
         for w in q_butlast:
