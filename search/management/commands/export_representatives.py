@@ -21,4 +21,4 @@ class Command(BaseCommand):
                            'name',
                            'email',
                            'phone',
-                           'other_contacts'])
+                           'other_info'])

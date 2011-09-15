@@ -20,5 +20,5 @@ class Command(BaseCommand):
             import_models(filename,
                           models.Institution,
                           ['name'],
-                          ['email', 'phone', 'address'],
+                          ['email', 'phone', 'address', 'other_info'],
                           {'kind': kind})
