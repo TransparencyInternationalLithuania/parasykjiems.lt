@@ -5,12 +5,14 @@ from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
+from django.views.decorators.cache import cache_control
 
 from forms import ContactForm
 from models import Article
 import settings
 
 
+@cache_control(public=False)
 def contact(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
@@ -39,15 +41,12 @@ def contact(request):
     })
 
 
+@cache_control(max_age=60 * 60, public=True)
 def contact_thanks(request):
     return render(request, 'views/contact_thanks.html')
 
 
-def setlang(request, language):
-    request.session['django_language'] = language
-    return redirect(request.META.get('HTTP_REFERER', '/'))
-
-
+@cache_control(max_age=60 * 60, public=True)
 def article(request, location):
     art = get_object_or_404(Article, location=location)
     return render(request, 'views/article.html', {
