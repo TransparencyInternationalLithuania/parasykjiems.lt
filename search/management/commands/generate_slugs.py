@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django.core.management.base import BaseCommand
 from progressbar import ProgressBar, Bar, ETA
 
@@ -26,7 +28,9 @@ class Command(BaseCommand):
         print 'Generating slugs for:'
         print ' - Institution'
         generate_slugs(Institution.objects.all(),
-                       lambda i: [i.name,
+                       lambda i: [i.name
+                                  .replace(u'savivaldybė', '')
+                                  .replace(u'seniūnija', ''),
                                   i.kind.name])
 
         print ' - Representative'
