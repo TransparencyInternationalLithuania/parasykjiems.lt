@@ -46,6 +46,13 @@ def contact_thanks(request):
     return render(request, 'views/contact_thanks.html')
 
 
+@cache_control(max_age=60 * 60 * 24, public=True)
+def robots_txt(request):
+    # The actual content of robots.txt depends on
+    # settings.TESTING_VERSION. The testing version disallows /.
+    return render(request, 'robots.txt', content_type='text/plain')
+
+
 @cache_control(max_age=60 * 60, public=True)
 def article(request, location):
     art = get_object_or_404(Article, location=location)
