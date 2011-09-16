@@ -1,7 +1,6 @@
 {% load i18n markup %}
 
-<a name="{{ representative.slug }}"></a>
-<h4>{{ representative.name }}</h4>
+<h4 id="{{ representative.slug }}">{{ representative.name }}</h4>
 <p class="subtitle">{{ representative.kind.name }}</p>
 
 {% if representative.kind.description %}
