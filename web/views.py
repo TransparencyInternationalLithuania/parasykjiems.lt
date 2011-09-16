@@ -17,19 +17,14 @@ def contact(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
-            body = render_to_string('mail/contact.txt', {
-                'form_data': form.cleaned_data,
-                'ip': request.META['REMOTE_ADDR'],
-            })
-
             user_address = u'{name} <{email}>'.format(**form.cleaned_data)
 
             EmailMessage(
                 from_email=settings.SERVER_EMAIL,
                 to=[settings.FEEDBACK_EMAIL],
                 subject=(u'[ParašykJiems] ' +
-                         _(u'Feedback from {}'.format(user_address))),
-                body=body,
+                         _(u'Feedback from {}').format(user_address)),
+                body=form.cleaned_data['message'],
                 headers={'Reply-To': user_address},
             ).send()
             return redirect(reverse(contact_thanks))

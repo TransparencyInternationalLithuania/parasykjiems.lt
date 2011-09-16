@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-13 20:23+0300\n"
+"POT-Creation-Date: 2011-09-16 22:59+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -57,35 +57,35 @@ msgstr ""
 msgid "Message"
 msgstr ""
 
-#: mail/mail.py:53
+#: mail/mail.py:55
 msgid "Confirm your letter"
 msgstr ""
 
-#: mail/mail.py:128
+#: mail/mail.py:130
 msgid "Copy of the letter you sent."
 msgstr ""
 
-#: mail/mail.py:193
+#: mail/mail.py:195
 msgid "Your enquiry has been responded to"
 msgstr ""
 
-#: mail/models.py:115
+#: mail/models.py:126
 msgid "enquiry"
 msgstr ""
 
-#: mail/models.py:116
+#: mail/models.py:127
 msgid "enquiries"
 msgstr ""
 
-#: mail/models.py:126
+#: mail/models.py:137
 msgid "The unprocessed e-mail message."
 msgstr ""
 
-#: mail/models.py:181
+#: mail/models.py:193
 msgid "response"
 msgstr ""
 
-#: mail/models.py:182
+#: mail/models.py:194
 msgid "responses"
 msgstr ""
 
@@ -97,60 +97,60 @@ msgstr ""
 msgid "House number"
 msgstr ""
 
-#: search/models.py:14 search/models.py:69 web/models.py:16 web/models.py:33
+#: search/models.py:14 search/models.py:68 web/models.py:17 web/models.py:42
 msgid "In Markdown format."
 msgstr ""
 
-#: search/models.py:18
+#: search/models.py:17
 msgid ""
 "This number is used for sorting representatives in the institution view."
 msgstr ""
 
-#: search/models.py:25
+#: search/models.py:24
 msgid "representative kind"
 msgstr ""
 
-#: search/models.py:26
+#: search/models.py:25
 msgid "representative kinds"
 msgstr ""
 
-#: search/models.py:49
+#: search/models.py:48
 msgid "representative"
 msgstr ""
 
-#: search/models.py:50
+#: search/models.py:49
 msgid "representatives"
 msgstr ""
 
-#: search/models.py:73
+#: search/models.py:71
 msgid "This number is used for sorting institutions in the location view."
 msgstr ""
 
-#: search/models.py:80
+#: search/models.py:78
 msgid "institution kind"
 msgstr ""
 
-#: search/models.py:81
+#: search/models.py:79
 msgid "institution kinds"
 msgstr ""
 
-#: search/models.py:132
+#: search/models.py:131
 msgid "institution"
 msgstr ""
 
-#: search/models.py:133
+#: search/models.py:132
 msgid "institutions"
 msgstr ""
 
-#: search/models.py:151 search/models.py:194
+#: search/models.py:150 search/models.py:193
 msgid "Name of city, town or village."
 msgstr ""
 
-#: search/models.py:219
+#: search/models.py:218
 msgid "territory"
 msgstr ""
 
-#: search/models.py:220
+#: search/models.py:219
 msgid "territories"
 msgstr ""
 
@@ -204,15 +204,15 @@ msgstr ""
 msgid "Write a letter"
 msgstr ""
 
-#: templates/items/institution.html:13 templates/items/representative.html:22
+#: templates/items/institution.html:13 templates/items/representative.html:21
 msgid "Email: "
 msgstr ""
 
-#: templates/items/institution.html:15 templates/items/representative.html:24
+#: templates/items/institution.html:15 templates/items/representative.html:23
 msgid "Write&nbsp;letter"
 msgstr ""
 
-#: templates/items/institution.html:21 templates/items/representative.html:30
+#: templates/items/institution.html:21 templates/items/representative.html:29
 msgid "Phone number: "
 msgstr ""
 
@@ -236,11 +236,11 @@ msgstr ""
 msgid "To:"
 msgstr ""
 
-#: templates/items/letter.html:22
+#: templates/items/letter.html:23
 msgid "Subject:"
 msgstr ""
 
-#: templates/items/letter.html:27
+#: templates/items/letter.html:29
 msgid "Date:"
 msgstr ""
 
@@ -260,7 +260,7 @@ msgstr ""
 msgid "Answered"
 msgstr ""
 
-#: templates/items/representative.html:13
+#: templates/items/representative.html:12
 msgid "Institution: "
 msgstr ""
 
@@ -328,42 +328,42 @@ msgstr ""
 msgid "Submit"
 msgstr ""
 
+#: web/admin.py:29 web/admin.py:41 web/models.py:18 web/models.py:44
+msgid "content"
+msgstr ""
+
 #: web/forms.py:6
 msgid "Your name"
 msgstr ""
 
-#: web/models.py:10
+#: web/models.py:11
 msgid "title"
 msgstr ""
 
-#: web/models.py:14
+#: web/models.py:15
 msgid "article location"
 msgstr ""
 
-#: web/models.py:17 web/models.py:35
-msgid "content"
-msgstr ""
-
-#: web/models.py:23
+#: web/models.py:26
 msgid "article"
 msgstr ""
 
-#: web/models.py:24
+#: web/models.py:27
 msgid "articles"
 msgstr ""
 
-#: web/models.py:31
+#: web/models.py:40
 msgid "message identifier"
 msgstr ""
 
-#: web/models.py:41
+#: web/models.py:52
 msgid "message"
 msgstr ""
 
-#: web/models.py:42
+#: web/models.py:53
 msgid "messages"
 msgstr ""
 
-#: web/views.py:29
+#: web/views.py:26
 msgid "Feedback from {}"
 msgstr ""

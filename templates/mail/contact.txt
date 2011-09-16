@@ -1,4 +1,0 @@
-{{ form_data.message|safe }}
-
---
-This message was sent through the contact form from IP {{ ip }}.
