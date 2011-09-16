@@ -85,7 +85,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
 )
 
-APPEND_SLASH = True
+APPEND_SLASH = False
 USE_ETAGS = True
 
 ROOT_URLCONF = 'parasykjiems.urls'
