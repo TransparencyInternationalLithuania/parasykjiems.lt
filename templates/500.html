@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n message %}
+{% load i18n snippet %}
 
 {% block menu %}
 {% include "menu.html" %}
@@ -8,5 +8,5 @@
 {% block breadcrumbs %}<li>{% trans "Internal server error" %}</li>{% endblock %}
 
 {% block content %}
-{% message "error-internal" %}
+{% snippet "error-internal" %}
 {% endblock %}

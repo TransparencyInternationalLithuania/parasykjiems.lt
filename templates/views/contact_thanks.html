@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n message %}
+{% load i18n snippet %}
 
 {% block title %}{% trans "Thank you" %} &ndash; {% endblock %}
 
@@ -10,6 +10,6 @@
 
 {% block content %}
 
-{% message "contact-thanks" %}
+{% snippet "contact-thanks" %}
 
 {% endblock %}

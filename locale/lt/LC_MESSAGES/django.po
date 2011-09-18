@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-16 22:59+0300\n"
-"PO-Revision-Date: 2011-09-16 22:59+0300\n"
+"POT-Creation-Date: 2011-09-18 17:02+0300\n"
+"PO-Revision-Date: 2011-09-18 17:02+0300\n"
 "Last-Translator: Kiprianas Spiridonovas <k.spiridonovas@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -103,7 +103,6 @@ msgstr "Pastato numeris"
 #: search/models.py:14
 #: search/models.py:68
 #: web/models.py:17
-#: web/models.py:42
 msgid "In Markdown format."
 msgstr "Markdown formatu."
 
@@ -379,20 +378,26 @@ msgid "articles"
 msgstr "straipsniai"
 
 #: web/models.py:40
-msgid "message identifier"
-msgstr "žinutės identifikatorius"
+msgid "snippet identifier"
+msgstr "iškarpėlės identifikatorius"
 
 #: web/models.py:52
-msgid "message"
-msgstr "žinutė"
+msgid "snippet"
+msgstr "iškarpėlė"
 
 #: web/models.py:53
-msgid "messages"
-msgstr "žinutės"
+msgid "snippets"
+msgstr "iškarpėlės"
 
 #: web/views.py:26
 msgid "Feedback from {}"
 msgstr "Atsiliepimas iš {}"
+
+#~ msgid "message"
+#~ msgstr "žinutė"
+
+#~ msgid "messages"
+#~ msgstr "žinutės"
 
 #~ msgid "You should enter your full name without abbreviations."
 #~ msgstr "Įveskite savo vardą ir pavardę be sutrumpinimų."

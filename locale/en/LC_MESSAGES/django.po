@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-16 22:59+0300\n"
+"POT-Creation-Date: 2011-09-18 17:02+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -97,7 +97,7 @@ msgstr ""
 msgid "House number"
 msgstr ""
 
-#: search/models.py:14 search/models.py:68 web/models.py:17 web/models.py:42
+#: search/models.py:14 search/models.py:68 web/models.py:17
 msgid "In Markdown format."
 msgstr ""
 
@@ -353,15 +353,15 @@ msgid "articles"
 msgstr ""
 
 #: web/models.py:40
-msgid "message identifier"
+msgid "snippet identifier"
 msgstr ""
 
 #: web/models.py:52
-msgid "message"
+msgid "snippet"
 msgstr ""
 
 #: web/models.py:53
-msgid "messages"
+msgid "snippets"
 msgstr ""
 
 #: web/views.py:26
