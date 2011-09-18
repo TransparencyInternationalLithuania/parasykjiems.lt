@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n message %}
+{% load i18n snippet %}
 
 {% block title %}{% trans "Confirm letter" %} &ndash; {% endblock %}
 
@@ -11,5 +11,5 @@
 {% endblock %}
 
 {% block content %}
-{% message "write-confirm" %}
+{% snippet "write-confirm" %}
 {% endblock %}

@@ -33,13 +33,13 @@ class Article(models.Model):
         super(Article, self).save(*args, **kwargs)
 
 
-class Message(models.Model):
+class Snippet(models.Model):
     name = models.CharField(max_length=_NAME_LEN,
                             unique=True,
                             db_index=True,
-                            verbose_name=_('message identifier'))
+                            verbose_name=_('snippet identifier'))
+
     body = models.TextField(
-        help_text=_('In Markdown format.'),
         blank=True,
         verbose_name=_('content'))
 
@@ -49,9 +49,9 @@ class Message(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = _('message')
-        verbose_name_plural = _('messages')
+        verbose_name = _('snippet')
+        verbose_name_plural = _('snippets')
 
     def save(self, *args, **kwargs):
         self.body_rendered = markdown.markdown(self.body)
-        super(Message, self).save(*args, **kwargs)
+        super(Snippet, self).save(*args, **kwargs)

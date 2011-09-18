@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n message %}
+{% load i18n snippet %}
 
 {% block menu %}
 {% include "menu.html" %}
@@ -8,5 +8,5 @@
 {% block breadcrumbs %}<li>{% trans "Page not found" %}</li>{% endblock %}
 
 {% block content %}
-{% message "error-not-found" %}
+{% snippet "error-not-found" %}
 {% endblock %}

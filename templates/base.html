@@ -1,4 +1,4 @@
-{% load i18n message %}
+{% load i18n snippet %}
 {% spaceless %}
 <!DOCTYPE html>
 <html>
@@ -15,7 +15,7 @@
   <body>
     {% if SETTINGS.TESTING_VERSION %}
     <div id="testing-version" onclick="$(this).hide()">
-      {% message "testing-version" %}
+      {% snippet "testing-version" %}
     </div>
     {% endif %}
 
@@ -26,7 +26,7 @@
             <td rowspan="2">
               <a href="/"><img id="logo" src="/static/img/logo.png" alt="{% trans "ParašykJiems" %}"></a>
             </td><td id="slogan">
-              {% message "slogan" %}
+              {% snippet "slogan" %}
             </td>
           </tr>
           <tr>
@@ -49,7 +49,7 @@
       </div>
     </div>
     <div id="footer">
-      {% message "footer" %}
+      {% snippet "footer" %}
     </div>
   </body>
 </html>

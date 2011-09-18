@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n message %}
+{% load i18n snippet %}
 
 {% block title %}{% trans "Contact us" %} &ndash; {% endblock %}
 
@@ -9,7 +9,7 @@
 
 {% block content %}
 
-{% message "contacts" %}
+{% snippet "contacts" %}
 
 <form method="POST">
   {% csrf_token %}

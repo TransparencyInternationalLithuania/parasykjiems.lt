@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n message %}
+{% load i18n snippet %}
 
 {% block title %}{% trans "Write letter" %} &ndash; {{ recipient }} &ndash; {% endblock %}
 
@@ -11,7 +11,7 @@
 
 {% block content %}
 
-{% message "write" %}
+{% snippet "write" %}
 
 <form method="POST">
   {% csrf_token %}
