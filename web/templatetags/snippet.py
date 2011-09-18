@@ -9,13 +9,17 @@ register = template.Library()
 
 
 class SnippetNode(template.Node):
-    def __init__(self, name):
+    def __init__(self, name, plain):
         self.name = name
+        self.plain = plain
 
     def render(self, context):
         try:
             snippet = Snippet.objects.get(name=self.name)
-            return snippet.body_rendered
+            if self.plain:
+                return snippet.body
+            else:
+                return snippet.body_rendered
         except Exception as e:
             logger.error("Can't display snippet {}: {}".format(
                 repr(self.name), e))
@@ -24,14 +28,24 @@ class SnippetNode(template.Node):
 
 @register.tag
 def snippet(parser, token):
+    """Usage: {% snippet "snippet-identifier" [plain] %}
+
+    If the plain parameter is given, don't markdown the snippet.
+    """
     try:
         # split_contents() knows not to split quoted strings.
-        tag_name, snippet_name = token.split_contents()
+        tokens = token.split_contents()
+        tag_name = tokens[0]
+        snippet_name = tokens[1]
+        if len(tokens) >= 3 and 'plain' in tokens[2:]:
+            plain = True
+        else:
+            plain = False
     except ValueError:
         raise template.TemplateSyntaxError(
-            "%r tag requires a single argument" % token.contents.split()[0])
+            "%r tag requires one or two arguments" % token.contents.split()[0])
     if not (snippet_name[0] == snippet_name[-1] and
             snippet_name[0] in ('"', "'")):
         raise template.TemplateSyntaxError(
             "%r tag's argument should be in quotes" % tag_name)
-    return SnippetNode(snippet_name[1:-1])
+    return SnippetNode(snippet_name[1:-1], plain)
