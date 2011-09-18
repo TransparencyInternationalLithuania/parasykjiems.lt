@@ -10,3 +10,8 @@ class ThreadSitemap(Sitemap):
         return Enquiry.objects.filter(parent=None,
                                       is_sent=True,
                                       is_open=True)
+
+    def lastmod(self, obj):
+        # TODO: Should return date of last message in thread, not
+        # first.
+        return obj.date
