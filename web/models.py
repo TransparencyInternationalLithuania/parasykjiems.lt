@@ -22,6 +22,9 @@ class Article(models.Model):
     def __unicode__(self):
         return u'{}: {}'.format(self.location, self.title)
 
+    def get_absolute_url(self):
+        return '/{}/'.format(self.location)
+
     class Meta:
         verbose_name = _('article')
         verbose_name_plural = _('articles')
