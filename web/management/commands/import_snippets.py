@@ -7,10 +7,10 @@ from web import models
 
 class Command(BaseCommand):
     args = '<>'
-    help = '''Imports messages from "data/messages.csv"'''
+    help = '''Imports snippets from "data/snippets.csv"'''
 
     def handle(self, *args, **options):
-        import_models('data/messages.csv',
-                      models.Message,
+        import_models('data/snippets.csv',
+                      models.Snippet,
                       ['name'],
                       ['body'])

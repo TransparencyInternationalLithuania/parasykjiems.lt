@@ -7,10 +7,10 @@ from web import models
 
 class Command(BaseCommand):
     args = '<>'
-    help = '''Exports messages to "data/messages.csv"'''
+    help = '''Exports snippets to "data/snippets.csv"'''
 
     def handle(self, *args, **options):
-        export_models('data/messages.csv',
-                      models.Message.objects
+        export_models('data/snippets.csv',
+                      models.Snippet.objects
                       .order_by('name'),
                       ['name', 'body'])
