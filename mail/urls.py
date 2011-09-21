@@ -1,5 +1,6 @@
 from django.conf.urls.defaults import patterns, url
 from django.views.generic.simple import redirect_to
+import feeds
 
 urlpatterns = patterns('mail.views',
     url(r'^write/representative/(?P<slug>[\w-]+)/$', 'write_representative',
@@ -17,5 +18,7 @@ urlpatterns = patterns('mail.views',
     url(r'^letters/$', redirect_to, {'url': '/threads/'}, name='letters'),
 
     url(r'^threads/$', 'threads', name='threads'),
+    url(r'^threads/rss/$', feeds.ThreadsFeed()),
+
     url(r'^threads/(?P<institution_slug>[\w-]+)/$', 'threads', name='threads'),
 )

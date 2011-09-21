@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-18 17:02+0300\n"
+"POT-Creation-Date: 2011-09-21 20:34+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,6 +23,14 @@ msgstr ""
 
 #: settings.py:23
 msgid "Lithuanian"
+msgstr ""
+
+#: mail/feeds.py:9
+msgid "ParašykJiems threads"
+msgstr ""
+
+#: mail/feeds.py:21
+msgid "Sent from {} to {}"
 msgstr ""
 
 #: mail/forms.py:8
@@ -46,6 +54,7 @@ msgid "Enter a valid e-mail address."
 msgstr ""
 
 #: mail/forms.py:23 templates/items/letters.html:7
+#: templates/items/threads.html:7
 msgid "Subject"
 msgstr ""
 
@@ -134,23 +143,23 @@ msgstr ""
 msgid "institution kinds"
 msgstr ""
 
-#: search/models.py:131
+#: search/models.py:129
 msgid "institution"
 msgstr ""
 
-#: search/models.py:132
+#: search/models.py:130
 msgid "institutions"
 msgstr ""
 
-#: search/models.py:150 search/models.py:193
+#: search/models.py:148 search/models.py:191
 msgid "Name of city, town or village."
 msgstr ""
 
-#: search/models.py:218
+#: search/models.py:216
 msgid "territory"
 msgstr ""
 
-#: search/models.py:219
+#: search/models.py:217
 msgid "territories"
 msgstr ""
 
@@ -170,8 +179,8 @@ msgstr ""
 msgid "Representative search"
 msgstr ""
 
-#: templates/menu.html:12 templates/breadcrumbs/letters.html:4
-#: templates/views/letters.html:8
+#: templates/menu.html:12 templates/breadcrumbs/threads.html:4
+#: templates/views/threads.html:8
 msgid "Open letters"
 msgstr ""
 
@@ -192,12 +201,12 @@ msgstr ""
 msgid "Contact us"
 msgstr ""
 
-#: templates/breadcrumbs/letter.html:3
-msgid "View letter"
-msgstr ""
-
 #: templates/breadcrumbs/search.html:4
 msgid "Find a representative"
+msgstr ""
+
+#: templates/breadcrumbs/thread.html:3
+msgid "View letter"
 msgstr ""
 
 #: templates/breadcrumbs/write.html:4
@@ -244,19 +253,19 @@ msgstr ""
 msgid "Date:"
 msgstr ""
 
-#: templates/items/letters.html:8
+#: templates/items/letters.html:8 templates/items/threads.html:8
 msgid "Sender"
 msgstr ""
 
-#: templates/items/letters.html:9
+#: templates/items/letters.html:9 templates/items/threads.html:9
 msgid "Recipient"
 msgstr ""
 
-#: templates/items/letters.html:10
+#: templates/items/letters.html:10 templates/items/threads.html:10
 msgid "Sent at"
 msgstr ""
 
-#: templates/items/letters.html:16
+#: templates/items/letters.html:16 templates/items/threads.html:16
 msgid "Answered"
 msgstr ""
 
@@ -270,22 +279,6 @@ msgstr ""
 
 #: templates/views/contact_thanks.html:4 templates/views/contact_thanks.html:8
 msgid "Thank you"
-msgstr ""
-
-#: templates/views/letters.html:25
-msgid "Previous page"
-msgstr ""
-
-#: templates/views/letters.html:28
-#, python-format
-msgid ""
-"\n"
-"  Page %(page)s out of %(pages)s\n"
-"  "
-msgstr ""
-
-#: templates/views/letters.html:33
-msgid "Next page"
 msgstr ""
 
 #: templates/views/location.html:23
@@ -320,6 +313,22 @@ msgid ""
 "  "
 msgstr ""
 
+#: templates/views/threads.html:25
+msgid "Previous page"
+msgstr ""
+
+#: templates/views/threads.html:28
+#, python-format
+msgid ""
+"\n"
+"  Page %(page)s out of %(pages)s\n"
+"  "
+msgstr ""
+
+#: templates/views/threads.html:33
+msgid "Next page"
+msgstr ""
+
 #: templates/views/write.html:4
 msgid "Write letter"
 msgstr ""
@@ -328,7 +337,7 @@ msgstr ""
 msgid "Submit"
 msgstr ""
 
-#: web/admin.py:29 web/admin.py:41 web/models.py:18 web/models.py:44
+#: web/admin.py:29 web/admin.py:41 web/models.py:18 web/models.py:47
 msgid "content"
 msgstr ""
 
@@ -344,23 +353,23 @@ msgstr ""
 msgid "article location"
 msgstr ""
 
-#: web/models.py:26
+#: web/models.py:29
 msgid "article"
 msgstr ""
 
-#: web/models.py:27
+#: web/models.py:30
 msgid "articles"
 msgstr ""
 
-#: web/models.py:40
+#: web/models.py:43
 msgid "snippet identifier"
 msgstr ""
 
-#: web/models.py:52
+#: web/models.py:55
 msgid "snippet"
 msgstr ""
 
-#: web/models.py:53
+#: web/models.py:56
 msgid "snippets"
 msgstr ""
 
