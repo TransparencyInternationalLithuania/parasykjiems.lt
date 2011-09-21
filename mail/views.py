@@ -117,16 +117,16 @@ def _latest_letter(request, inst=None):
 
 @last_modified(_latest_letter)
 @cache_control(max_age=60 * 60 * 24, public=True)
-def letters(request, institution_slug=None):
-    MAX_LETTERS = 10
+def threads(request, institution_slug=None):
+    MAX_THREADS = 10
     if institution_slug:
         institution = get_object_or_404(Institution, slug=institution_slug)
-        all_letters = institution.letters
+        all_threads = institution.threads
     else:
-        all_letters = (Enquiry.objects
+        all_threads = (Enquiry.objects
                        .filter(is_open=True, is_sent=True)
                        .order_by('-sent_at'))
-    pages = Paginator(all_letters, MAX_LETTERS)
+    pages = Paginator(all_threads, MAX_THREADS)
     try:
         page_num = int(request.GET.get('p', '1'))
     except ValueError:
@@ -136,9 +136,9 @@ def letters(request, institution_slug=None):
     if page_num > pages.num_pages:
         page_num = pages.num_pages
     page = pages.page(page_num)
-    letters = page.object_list
+    threads = page.object_list
 
-    return render(request, 'views/letters.html', {
+    return render(request, 'views/threads.html', {
         'page': page,
-        'letters': letters,
+        'threads': threads,
     })

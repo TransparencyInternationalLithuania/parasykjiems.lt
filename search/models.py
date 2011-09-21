@@ -106,26 +106,24 @@ class Institution(models.Model):
         return ('institution', [self.slug])
 
     @property
-    def letters(self):
-        """All letters sent to this institution or any of its
-        representatives.
-        """
+    def threads(self):
+        """All threads related to this institution."""
         query = models.Q(institution=self)
         for rep in Representative.objects.filter(institution=self):
             query = query | models.Q(representative=rep)
         from mail.models import Enquiry
         return (Enquiry.objects
                 .filter(query)
-                .filter(is_open=True, is_sent=True)
+                .filter(is_open=True, is_sent=True, parent=None)
                 .order_by('-sent_at'))
 
     @property
-    def recent_letters(self, count=4):
-        return self.letters[:count]
+    def recent_threads(self, count=4):
+        return self.threads[:count]
 
     @property
-    def more_letters(self, count=4):
-        return self.letters.count() > count
+    def more_threads(self, count=4):
+        return self.threads.count() > count
 
     class Meta:
         verbose_name = _('institution')

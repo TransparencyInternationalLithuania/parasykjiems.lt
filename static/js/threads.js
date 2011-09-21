@@ -1,5 +1,5 @@
 $(function(){
-      $('.letters tr a').each(
+      $('.threads tr a').each(
           function(i, a){
               var $a = $(a);
               $a.parent().parent().click(
