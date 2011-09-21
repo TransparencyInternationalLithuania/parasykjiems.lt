@@ -93,7 +93,8 @@ def thread(request, slug):
     enquiry = get_object_or_404(Enquiry,
                                 slug=slug,
                                 is_sent=True,
-                                is_open=True)
+                                is_open=True,
+                                parent=None)
     if not enquiry.is_open or not enquiry.is_sent:
         raise Http404()
 
@@ -124,7 +125,7 @@ def threads(request, institution_slug=None):
         all_threads = institution.threads
     else:
         all_threads = (Enquiry.objects
-                       .filter(is_open=True, is_sent=True)
+                       .filter(is_open=True, is_sent=True, parent=None)
                        .order_by('-sent_at'))
     pages = Paginator(all_threads, MAX_THREADS)
     try:

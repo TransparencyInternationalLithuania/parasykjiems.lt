@@ -54,5 +54,6 @@ class Command(BaseCommand):
                                     loc.municipality])
 
         print ' - Enquiry'
-        generate_slugs(Enquiry.objects.filter(is_open=True, is_sent=True),
+        generate_slugs(Enquiry.objects
+                       .filter(is_open=True, is_sent=True, parent=None),
                        lambda e: [e.subject])
