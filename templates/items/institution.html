@@ -39,13 +39,13 @@
   </td></tr>
   {% endfor %}
 
-  {% if institution.recent_letters %}
+  {% if institution.recent_threads %}
   <tr>
-    <td colspan="2" class="recent-letters">
+    <td colspan="2" class="recent-threads">
       <h5>{% trans "Recent letters" %}</h5>
-      {% include "items/letters.html" with letters=institution.recent_letters small=1 %}
-      {% if institution.more_letters %}
-      <p><a href="{% url letters institution.slug %}">{% trans "All letters sent to this institution" %}</a></p>
+      {% include "items/threads.html" with threads=institution.recent_threads small=1 %}
+      {% if institution.more_threads %}
+      <p><a href="{% url threads institution.slug %}">{% trans "All letters sent to this institution" %}</a></p>
       {% endif %}
     </td>
   </tr>

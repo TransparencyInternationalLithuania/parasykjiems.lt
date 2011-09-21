@@ -426,36 +426,36 @@ h5 {
     margin-top: 0;
 }
 
-.letters {
+.threads {
     border-collapse: collapse;
     width: 100%;
     table-layout: fixed;
 }
 
-.letters .answered {
+.threads .answered {
     width: 32px;
     padding: 0;
     text-align: right;
 }
 
-.letters .subject {
+.threads .subject {
     font-weight: bold;
 }
 
-.letters .sender {
+.threads .sender {
     width: 18%;
 }
 
-.letters .recipient {
+.threads .recipient {
     width: 18%;
 }
 
-.letters .date {
+.threads .date {
     width: 130px;
     white-space: nowrap;
 }
 
-.letters td, .letters th {
+.threads td, .threads th {
     padding: 6px 12px 6px 12px;
     text-align: left;
     vertical-align: middle;
@@ -465,7 +465,7 @@ h5 {
     text-overflow: ellipsis;
 }
 
-.letters th {
+.threads th {
     color: #444;
     font-weight: bold;
     border-bottom: 1px solid #ccd;
@@ -480,41 +480,41 @@ h5 {
     behavior: url(/static/PIE.htc);
 }
 
-.letters a {
+.threads a {
     color: #333;
 }
 
-.letters td {
+.threads td {
     cursor: pointer;
 }
 
-.letters tr.odd {
+.threads tr.odd {
     background: #fafafa;
 }
 
-.letters tr.even {
+.threads tr.even {
     background: #f1f1f1;
 }
 
-.letters tr:hover {
+.threads tr:hover {
     background: #e0e3ef;
     color: #046;
 }
 
-.letters tr:hover a {
+.threads tr:hover a {
     color: #046;
 }
 
-.small-letters {
+.small-threads {
     margin-left: 1em;
     width: 80%;
 }
 
-.small-letters .sender {
+.small-threads .sender {
     width: 22%;
 }
 
-.small-letters td {
+.small-threads td {
     height: 1em;
     white-space: nowrap;
     overflow: hidden;
