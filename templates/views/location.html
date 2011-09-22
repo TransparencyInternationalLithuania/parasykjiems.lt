@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n snippet %}
 
 {% block title %}{{ title }} &ndash; {% endblock %}
 
@@ -28,8 +28,10 @@
 
 {% for institution in institutions %}
 {% include "items/institution.html" %}
-{% if not forloop.last %}
+
 <hr>
-{% endif %}
 {% endfor %}
+
+{% snippet "location-footer" %}
+
 {% endblock %}
