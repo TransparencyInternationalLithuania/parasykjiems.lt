@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n snippet %}
 
 {% block head %}
 <script type="text/javascript" src="/static/js/search.js"></script>
@@ -16,6 +16,9 @@
 {% endblock %}
 
 {% block content %}
+
+{% snippet "search-description" %}
+
 <form name="search">
   <input name="q" value="{{ search_query }}">
   <input type="hidden" name="nohist">
