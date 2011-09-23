@@ -89,7 +89,8 @@ class ChoiceState:
     def choose_url(self):
         if self.loc:
             url = self.loc.get_absolute_url()
-            url += self.n + '/'
+            if self.n:
+                url += self.n + '/'
             return url
         elif self.inst or self.rep:
             return (self.inst or self.rep).get_absolute_url()
