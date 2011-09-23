@@ -41,7 +41,7 @@ def contact_thanks(request):
     return render(request, 'views/contact_thanks.html')
 
 
-@cache_control(max_age=60 * 60 * 24, public=True)
+@cache_control(max_age=60 * 60 * 24 * 7, public=True)
 def robots_txt(request):
     # The actual content of robots.txt depends on
     # settings.TESTING_VERSION. The testing version disallows /.

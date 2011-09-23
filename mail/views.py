@@ -117,7 +117,7 @@ def _latest_letter(request, inst=None):
 
 
 @last_modified(_latest_letter)
-@cache_control(max_age=60 * 60 * 24, public=True)
+@cache_control(max_age=60 * 60, public=True)
 def threads(request, institution_slug=None):
     MAX_THREADS = 10
     if institution_slug:
