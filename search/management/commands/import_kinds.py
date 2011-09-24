@@ -11,11 +11,11 @@ class Command(BaseCommand):
     "data/kinds/institution.csv"'''
 
     def handle(self, *args, **options):
-        import_models('data/kinds/representative.csv',
-                      models.RepresentativeKind,
-                      ['name'],
-                      ['ordinal', 'description'])
         import_models('data/kinds/institution.csv',
                       models.InstitutionKind,
+                      ['name'],
+                      ['ordinal', 'description'])
+        import_models('data/kinds/representative.csv',
+                      models.RepresentativeKind,
                       ['name'],
                       ['ordinal', 'description'])
