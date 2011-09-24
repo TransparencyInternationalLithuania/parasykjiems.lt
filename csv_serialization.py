@@ -27,17 +27,19 @@ def export_models(filename, query, fields):
     with open(filename, 'wb') as f:
         w = csv.DictWriter(f, fieldnames)
         w.writeheader()
-        for obj in ProgressBar(widgets=[ETA(), ' ', Bar()])(query):
-            row = {}
-            for field in fields:
-                if isinstance(field, tuple):
-                    header, field = field
-                else:
-                    header = field
-                row[header] = unicode(deep_getattr(obj, field)).encode('utf-8')
-            w.writerow(row)
-            exported += 1
-    print 'Exported {} objects.'.format(exported)
+        if query.exists():
+            for obj in ProgressBar(widgets=[ETA(), ' ', Bar()])(query):
+                row = {}
+                for field in fields:
+                    if isinstance(field, tuple):
+                        header, field = field
+                    else:
+                        header = field
+                    row[header] = (unicode(deep_getattr(obj, field))
+                                   .encode('utf-8'))
+                w.writerow(row)
+                exported += 1
+        print 'Exported {} objects.'.format(exported)
 
 
 def import_models(filename, model, keys, fields, additional_filter=None):
