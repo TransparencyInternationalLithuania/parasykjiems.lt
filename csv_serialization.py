@@ -63,19 +63,16 @@ def import_models(filename, model, keys, fields, additional_filter=None):
         else:
             return u''
 
-    def countlines(filename):
-        with open(filename) as f:
-            for i, l in enumerate(f):
-                pass
-            return i + 1
-
     def progressreader(filename):
         print 'Importing from "{}".'.format(filename)
-        count = countlines(filename)
         f = open(filename, 'rb')
         reader = csv.DictReader(f)
         widgets = [ETA(), ' ', Bar()]
-        return ProgressBar(widgets=widgets, maxval=count)(reader)
+        items = list(reader)
+        if items == []:
+            return []
+        else:
+            return ProgressBar(widgets=widgets)(items)
 
     new_objects = 0
     modified_objects = 0
