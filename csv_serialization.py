@@ -1,6 +1,7 @@
 import os
 import csv
 from progressbar import ProgressBar, Bar, ETA
+from django.core.exceptions import ObjectDoesNotExist
 
 
 def export_models(filename, query, fields):
@@ -103,8 +104,12 @@ def import_models(filename, model, keys, fields, additional_filter=None):
                 # of it.
                 field, subfield = field.split('__')
                 fmodel = getattr(model, field).field.rel.to
-                values[field] = fmodel.objects.get(
-                    **{subfield: d(row[header])})
+                try:
+                    values[field] = fmodel.objects.get(
+                        **{subfield: d(row[header])})
+                except ObjectDoesNotExist:
+                    print "Can't find {} with {} = {}".format(
+                        fmodel, subfield, d(row[header]))
             else:
                 values[field] = d(row[header])
 
