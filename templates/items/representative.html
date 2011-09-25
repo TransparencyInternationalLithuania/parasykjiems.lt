@@ -21,7 +21,7 @@
 {% endif %}
 
 {% if representative.other_info %}
-<p>{{ representative.other_info }}</p>
+<p>{{ representative.other_info|urlizetrunc:40 }}</p>
 {% endif %}
 
 {% if representative.email and representative.email != institution.email %}
