@@ -2,6 +2,8 @@ function browserSupportsHistory() {
     return !!(window.history && history.replaceState);
 }
 
+var useHistory = browserSupportsHistory();
+
 function encodeQuery(q) {
     return encodeURI(q.replace(/ /g, '+'));
 }
@@ -11,7 +13,7 @@ function decodeQuery(q) {
 }
 
 function setLocationTerms(terms) {
-    if (browserSupportsHistory()) {
+    if (useHistory) {
         var url;
         if (terms == '') {
             url = '/';
@@ -72,7 +74,7 @@ $(function() {
       var q = $(document.search.q);
       q.focus();
 
-      if (!browserSupportsHistory()) {
+      if ((window.location.hash != "") || !useHistory) {
           var terms = decodeQuery(window.location.hash.slice(1));
           q.val(terms);
           startUpdate(1, terms);
