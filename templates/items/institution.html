@@ -8,6 +8,18 @@
   </tr>
   <tr>
     <td>
+      {% if institution.phone %}
+      <p>{% trans "Phone number: " %} {{ institution.phone }}</p>
+      {% endif %}
+
+      {% if institution.address %}
+      <p>{% trans "Address: " %} {{ institution.address }}</p>
+      {% endif %}
+
+      {% if institution.other_contacts %}
+      <p>{{ institution.other_contacts }}</p>
+      {% endif %}
+
       {% if institution.email %}
       <p>
         {% trans "Email: " %} <strong>{{ institution.email }}</strong>
@@ -16,20 +28,14 @@
         </a>
       </p>
       {% endif %}
-
-      {% if institution.phone %}
-      <p>{% trans "Phone number: " %} {{ institution.phone }}</p>
-      {% endif %}
-
-      {% if institution.address %}
-      <p>{% trans "Address: " %} {{ institution.address }}</p>
-      {% endif %}
     </td>
     <td style="width: 45%"
         rowspan="{{ institution.representatives.count|add:1 }}">
+      {% if institution.kind.description %}
       <div class="description">
         {{ institution.kind.description|markdown }}
       </div>
+      {% endif %}
     </td>
   </tr>
 
