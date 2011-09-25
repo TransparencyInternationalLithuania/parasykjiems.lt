@@ -20,8 +20,8 @@
 <p>{% trans "Phone number: " %} {{ representative.phone }}</p>
 {% endif %}
 
-{% if representative.other_contacts %}
-<p>{{ representative.other_contacts }}</p>
+{% if representative.other_info %}
+<p>{{ representative.other_info }}</p>
 {% endif %}
 
 {% if representative.email and representative.email != institution.email %}
