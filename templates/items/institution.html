@@ -17,7 +17,7 @@
       {% endif %}
 
       {% if institution.other_info %}
-      <p>{{ institution.other_info }}</p>
+      <p>{{ institution.other_info|urlizetrunc:40 }}</p>
       {% endif %}
 
       {% if institution.email %}
