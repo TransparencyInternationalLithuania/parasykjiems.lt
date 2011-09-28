@@ -39,9 +39,11 @@ def search(request):
         terms_last = terms_words[-1]
 
         # Match the last word from the auto field, so that it can be
-        # matched partially.
-        sq = (SQ(auto=terms_last) | SQ(text=terms_last) |
-              SQ(auto=unidecode(terms_last)) | SQ(text=unidecode(terms_last)))
+        # matched partially. Also match transliterated version of the word.
+        sq = (SQ(auto=terms_last) |
+              SQ(text=terms_last) |
+              SQ(auto=unidecode(terms_last)) |
+              SQ(text=unidecode(terms_last)))
 
         # AND the rest of the words.
         for w in terms_butlast:
