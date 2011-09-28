@@ -23,6 +23,25 @@ def join_text(xs):
     return u' '.join(words)
 
 
+CITY_BOOSTS = [
+    (u'Vilniaus', 2),
+    (u'Kauno', 1.7),
+    (u'Klaipėdos', 1.4),
+    (u'Šiaulių', 1.3),
+]
+
+
+def get_boost(city, municipality):
+    for c, boost in CITY_BOOSTS:
+        if c in city:
+            return boost
+    if u'miestas' in city:
+        return 1.2
+    if u'miesto' in municipality:
+        return 1.1
+    return 1
+
+
 class InstitutionIndex(indexes.SearchIndex):
     text = indexes.CharField(document=True)
     auto = indexes.EdgeNgramField(model_attr='name')
@@ -40,6 +59,11 @@ class InstitutionIndex(indexes.SearchIndex):
 
     def prepare_subtitle(self, obj):
         return obj.kind.name
+
+    def prepare(self, obj):
+        data = super(InstitutionIndex, self).prepare(obj)
+        data['boost'] = get_boost(obj.name, obj.name)
+        return data
 
     def index_queryset(self):
         return Institution.objects.exclude(slug='')
@@ -67,6 +91,12 @@ class RepresentativeIndex(indexes.SearchIndex):
 
     def prepare_subtitle(self, obj):
         return u'{}, {}'.format(obj.kind.name, obj.institution.name)
+
+    def prepare(self, obj):
+        data = super(RepresentativeIndex, self).prepare(obj)
+        data['boost'] = get_boost(obj.institution.name,
+                                  obj.institution.name)
+        return data
 
     def index_queryset(self):
         return Representative.objects.exclude(slug='')
@@ -116,6 +146,11 @@ class LocationIndex(indexes.SearchIndex):
         return ', '.join(x
                          for x in [obj.elderate, obj.municipality]
                          if x)
+
+    def prepare(self, obj):
+        data = super(LocationIndex, self).prepare(obj)
+        data['boost'] = get_boost(obj.city, obj.municipality)
+        return data
 
     def index_queryset(self):
         return Location.objects.exclude(slug='').exclude(
