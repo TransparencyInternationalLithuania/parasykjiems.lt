@@ -3,10 +3,6 @@
 
 {% if results %}
 
-{% if more_results %}
-{% snippet "more-results" %}
-{% endif %}
-
 <ul id="result-list">
   {% for result in results %}
   <li>
@@ -15,6 +11,9 @@
   {% endfor %}
 </ul>
 
+{% if more_results %}
+{% snippet "more-results" %}
+{% endif %}
 
 {% else %}
 {% snippet "nothing-found" %}
