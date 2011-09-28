@@ -7,6 +7,7 @@ from django.http import HttpResponse
 from django.views.decorators.cache import cache_control
 from haystack.query import SearchQuerySet, SQ
 
+from unidecode import unidecode
 from search.models import Institution, Location, Territory, InstitutionKind
 from search.forms import HouseNumberForm
 from search import house_numbers
@@ -39,12 +40,13 @@ def search(request):
 
         # Match the last word from the auto field, so that it can be
         # matched partially.
-        sq = SQ(auto=terms_last) | SQ(text=terms_last)
+        sq = (SQ(auto=terms_last) | SQ(text=terms_last) |
+              SQ(auto=unidecode(terms_last)) | SQ(text=unidecode(terms_last)))
 
         # AND the rest of the words.
         for w in terms_butlast:
             if w != '':
-                sq = sq & SQ(text=w)
+                sq = sq & (SQ(text=w) | SQ(text=unidecode(w)))
 
         # If a house number is given, only show results, where a
         # number is relevant.
