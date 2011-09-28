@@ -3,6 +3,7 @@
 import haystack.indexes as indexes
 from haystack import site
 from unidecode import unidecode
+from django.db.models import Q
 
 from search.models import Institution, Representative, Location
 from search import lithuanian
@@ -117,6 +118,7 @@ class LocationIndex(indexes.SearchIndex):
                          if x)
 
     def index_queryset(self):
-        return Location.objects.exclude(slug='')
+        return Location.objects.exclude(slug='').exclude(
+            Q(street='') & Q(city=''))
 
 site.register(Location, LocationIndex)
