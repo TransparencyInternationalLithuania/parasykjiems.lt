@@ -17,7 +17,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-_RESULT_LIMIT = 10
+_RESULT_LIMIT = 16
 
 
 @cache_control(max_age=60 * 60, public=True)
