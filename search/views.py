@@ -5,6 +5,7 @@ from django.template.loader import render_to_string
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.views.decorators.cache import cache_control
+from django.db.models import Q
 from haystack.query import SearchQuerySet, SQ
 
 from unidecode import unidecode
@@ -120,11 +121,27 @@ def institution(request, slug):
 @cache_control(max_age=60 * 60, public=True)
 def location(request, slug, house_number=None):
     loc = get_object_or_404(Location, slug=slug)
+
+    # Query not only territories matching the location exactly, but
+    # also ones encompassing whole streets and
+    # municipalities.
     all_territories = Territory.objects.filter(
-        municipality__iexact=loc.municipality,
-        elderate__iexact=loc.elderate,
-        city__iexact=loc.city,
-        street__iexact=loc.street)
+        Q(municipality__iexact=loc.municipality,
+          elderate__iexact=loc.elderate,
+          city__iexact=loc.city,
+          street__iexact=loc.street) |
+        Q(municipality__iexact=loc.municipality,
+          elderate__iexact=loc.elderate,
+          city__iexact=loc.city,
+          street='') |
+        Q(municipality__iexact=loc.municipality,
+          elderate__iexact=loc.elderate,
+          city='',
+          street='') |
+        Q(municipality__iexact=loc.municipality,
+          elderate='',
+          city='',
+          street=''))
     territories = list(all_territories.filter(numbers=''))
     restricted_territories = all_territories.exclude(numbers='')
     if restricted_territories.exists():
