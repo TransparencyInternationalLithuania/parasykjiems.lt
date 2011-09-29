@@ -151,10 +151,7 @@ def location(request, slug, house_number=None):
                     territories.append(rt)
         else:
             return redirect(reverse(location_ask, args=[slug]))
-    institutions = ([t.institution
-                     for t in territories]
-                    + list(Institution.objects.filter(
-                        name__iexact=loc.municipality)))
+    institutions = [t.institution for t in territories]
     institutions.sort(key=lambda i: i.kind.ordinal)
 
     kind_id_counts = Counter(i.kind.id
