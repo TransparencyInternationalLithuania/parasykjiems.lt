@@ -3,7 +3,6 @@
 import haystack.indexes as indexes
 from haystack import site
 from unidecode import unidecode
-from django.db.models import Q
 
 from search.models import Institution, Representative, Location
 from search import lithuanian
@@ -23,22 +22,83 @@ def join_text(xs):
     return u' '.join(words)
 
 
-CITY_BOOSTS = [
-    (u'Vilniaus', 2),
-    (u'Kauno', 1.7),
-    (u'Klaipėdos', 1.4),
-    (u'Šiaulių', 1.3),
-]
+MUNICIPALITY_POPULATIONS = {
+    u'Vilniaus miesto savivaldybė': 554409,
+    u'Kauno miesto savivaldybė': 358111,
+    u'Klaipėdos miesto savivaldybė': 185936,
+    u'Šiaulių miesto savivaldybė': 128397,
+    u'Panevėžio miesto savivaldybė': 114582,
+    u'Vilniaus rajono savivaldybė': 94171,
+    u'Kauno rajono savivaldybė': 85721,
+    u'Marijampolės savivaldybė': 69297,
+    u'Alytaus miesto savivaldybė': 68835,
+    u'Mažeikių rajono savivaldybė': 65554,
+    u'Kėdainių rajono savivaldybė': 63563,
+    u'Telšių rajono savivaldybė': 55231,
+    u'Šilutės rajono savivaldybė': 53373,
+    u'Jonavos rajono savivaldybė': 51941,
+    u'Tauragės rajono savivaldybė': 51049,
+    u'Šiaulių rajono savivaldybė': 50480,
+    u'Radviliškio rajono savivaldybė': 49705,
+    u'Klaipėdos rajono savivaldybė': 49295,
+    u'Vilkaviškio rajono savivaldybė': 48380,
+    u'Utenos rajono savivaldybė': 48378,
+    u'Ukmergės rajono savivaldybė': 46303,
+    u'Kretingos rajono savivaldybė': 45956,
+    u'Plungės rajono savivaldybė': 43580,
+    u'Panevėžio rajono savivaldybė': 43190,
+    u'Raseinių rajono savivaldybė': 42377,
+    u'Rokiškio rajono savivaldybė': 39451,
+    u'Kelmės rajono savivaldybė': 38615,
+    u'Šalčininkų rajono savivaldybė': 37852,
+    u'Šakių rajono savivaldybė': 36805,
+    u'Trakų rajono savivaldybė': 36429,
+    u'Kaišiadorių rajono savivaldybė': 36290,
+    u'Jurbarko rajono savivaldybė': 35622,
+    u'Prienų rajono savivaldybė': 34025,
+    u'Biržų rajono savivaldybė': 33491,
+    u'Pasvalio rajono savivaldybė': 32961,
+    u'Anykščių rajono savivaldybė': 32629,
+    u'Alytaus rajono savivaldybė': 31420,
+    u'Švenčionių rajono savivaldybė': 31130,
+    u'Šilalės rajono savivaldybė': 30431,
+    u'Joniškio rajono savivaldybė': 30429,
+    u'Varėnos rajono savivaldybė': 28960,
+    u'Visagino savivaldybė': 28576,
+    u'Akmenės rajono savivaldybė': 28204,
+    u'Elektrėnų savivaldybė': 28093,
+    u'Pakruojo rajono savivaldybė': 27883,
+    u'Lazdijų rajono savivaldybė': 25233,
+    u'Druskininkų savivaldybė': 24507,
+    u'Skuodo rajono savivaldybė': 24148,
+    u'Molėtų rajono savivaldybė': 23539,
+    u'Kupiškio rajono savivaldybė': 23444,
+    u'Zarasų rajono savivaldybė': 20997,
+    u'Ignalinos rajono savivaldybė': 20624,
+    u'Širvintų rajono savivaldybė': 19367,
+    u'Palangos miesto savivaldybė': 17632,
+    u'Kazlų Rūdos savivaldybė': 14615,
+    u'Kalvarijos savivaldybė': 13490,
+    u'Pagėgių savivaldybė': 11577,
+    u'Rietavo savivaldybė': 10208,
+    u'Birštono savivaldybė': 5256,
+    u'Neringos savivaldybė': 3132,
+}
+
+MUNICIPALITY_MAX_POPULATION = max(MUNICIPALITY_POPULATIONS.values())
+MUNICIPALITY_MIN_POPULATION = min(MUNICIPALITY_POPULATIONS.values())
 
 
-def get_boost(city, municipality):
-    for c, boost in CITY_BOOSTS:
-        if c in city:
-            return boost
-    if u'miestas' in city:
-        return 1.2
-    if u'miesto' in municipality:
-        return 1.1
+def get_municipality_boost(municipality):
+    return (float(MUNICIPALITY_POPULATIONS[municipality] -
+                  MUNICIPALITY_MIN_POPULATION) /
+            (MUNICIPALITY_MAX_POPULATION - MUNICIPALITY_MIN_POPULATION))
+
+
+def get_institution_boost(name):
+    for municipality, pop in MUNICIPALITY_POPULATIONS.items():
+        if municipality in name:
+            return get_municipality_boost(municipality)
     return 1
 
 
@@ -62,7 +122,7 @@ class InstitutionIndex(indexes.SearchIndex):
 
     def prepare(self, obj):
         data = super(InstitutionIndex, self).prepare(obj)
-        data['boost'] = get_boost(obj.name, obj.name)
+        data['boost'] = 1 + get_institution_boost(obj.name)
         return data
 
     def index_queryset(self):
@@ -94,8 +154,7 @@ class RepresentativeIndex(indexes.SearchIndex):
 
     def prepare(self, obj):
         data = super(RepresentativeIndex, self).prepare(obj)
-        data['boost'] = get_boost(obj.institution.name,
-                                  obj.institution.name)
+        data['boost'] = 1 + get_institution_boost(obj.institution.name)
         return data
 
     def index_queryset(self):
@@ -149,11 +208,9 @@ class LocationIndex(indexes.SearchIndex):
 
     def prepare(self, obj):
         data = super(LocationIndex, self).prepare(obj)
-        data['boost'] = get_boost(obj.city, obj.municipality)
+        data['boost'] = 1 + get_municipality_boost(obj.municipality)
+        if obj.street == None:
+            data['boost'] -= 0.1
         return data
-
-    def index_queryset(self):
-        return Location.objects.exclude(slug='').exclude(
-            Q(street='') & Q(city=''))
 
 site.register(Location, LocationIndex)
