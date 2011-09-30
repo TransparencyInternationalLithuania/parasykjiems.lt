@@ -170,7 +170,7 @@ class Response(models.Model):
     @property
     def body(self):
         body = self.message.get_payload(decode=True)
-        body = utils.ENQUIRY_EMAIL_REGEXP.sub("...@" + settings.MAIL_DOMAIN,
+        body = utils.ENQUIRY_EMAIL_REGEXP.sub("...@" + settings.SITE_DOMAIN,
                                               body)
         return body
 
