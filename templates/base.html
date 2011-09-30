@@ -9,8 +9,9 @@
     <title>{% block title %}{% endblock %}ParašykJiems</title>
     <script type="text/javascript" src="/static/js/jquery-1.6.2.min.js">
     </script>
-    {% block head %}{% endblock %}
-    {% snippet "head" plain %}
+    {% block head %}
+    {% endblock %}
+    {% snippet "head" %}
   </head>
   <body>
     {% if SETTINGS.TESTING_VERSION %}
