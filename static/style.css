@@ -571,6 +571,11 @@ h5 {
     text-decoration: underline;
 }
 
+.description h4 {
+    margin-top: 1em;
+    color: #456;
+}
+
 hr {
     margin: 3em 0 2em 0;
     border: none;
