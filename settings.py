@@ -27,8 +27,6 @@ LOCALE_PATHS = (
     project_relative('locale'),
 )
 
-SITE_ID = 1
-
 USE_I18N = True
 USE_L10N = True
 
@@ -76,6 +74,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 MIDDLEWARE_CLASSES = (
     'parasykjiems.middleware.SetRemoteAddrMiddleware',
+    'parasykjiems.middleware.SetHostBehindProxyMiddleware',
     'django.middleware.gzip.GZipMiddleware',
     'django.middleware.http.ConditionalGetMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -99,7 +98,6 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.markup',
     'django.contrib.humanize',
-    'django.contrib.sites',
     'django.contrib.sitemaps',
 
     'haystack',
