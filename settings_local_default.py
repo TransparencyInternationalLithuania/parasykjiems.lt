@@ -1,4 +1,4 @@
-LOCAL_SETTINGS_VERSION = 6
+LOCAL_SETTINGS_VERSION = 7
 
 
 DEBUG = True
@@ -35,6 +35,10 @@ ENQUIRY_EMAIL_FORMAT = 'reply+{id}.{hash}@' + MAIL_DOMAIN
 # Used for absolute URLs. Shouldn't include trailing slash, but should
 # include URL scheme.
 SITE_ADDRESS = 'http://localhost:8000'
+
+# Additional content to put into every page's head tag. Useful for
+# Google Analytics script tags.
+ADDITIONAL_HTML_HEAD = ''
 
 DATABASES = {
     'default': {
