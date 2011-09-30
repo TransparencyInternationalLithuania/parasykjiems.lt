@@ -1,4 +1,4 @@
-LOCAL_SETTINGS_VERSION = 8
+LOCAL_SETTINGS_VERSION = 9
 
 
 DEBUG = True
@@ -21,6 +21,13 @@ REDIRECT_ENQUIRIES_TO = 'feedback@localhost'
 
 SITE_DOMAIN = 'localhost'
 
+# Like SITE_DOMAIN, but may include the HTTP port if it's not 80.
+SITE_HOST = SITE_DOMAIN + ':8000'
+
+# Used for absolute URLs. Shouldn't include trailing slash, but should
+# include URL scheme.
+SITE_ADDRESS = 'http://' + SITE_HOST
+
 # Feedback is sent here
 FEEDBACK_EMAIL = 'feedback@' + SITE_DOMAIN
 
@@ -31,10 +38,6 @@ ABUSE_EMAIL = 'abuse@' + SITE_DOMAIN
 # Should contain {id} and {hash} somewhere, which will be replaced by
 # numbers.
 ENQUIRY_EMAIL_FORMAT = 'reply+{id}.{hash}@' + SITE_DOMAIN
-
-# Used for absolute URLs. Shouldn't include trailing slash, but should
-# include URL scheme.
-SITE_ADDRESS = 'http://{}:8000'.format(SITE_DOMAIN)
 
 # Additional content to put into every page's head tag. Useful for
 # Google Analytics script tags.
