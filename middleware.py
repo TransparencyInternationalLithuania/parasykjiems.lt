@@ -1,5 +1,6 @@
 import settings
 
+
 class SetRemoteAddrMiddleware(object):
     """Set REMOTE_ADDR behind proxy.
 
@@ -11,6 +12,7 @@ class SetRemoteAddrMiddleware(object):
         elif 'HTTP_X_REAL_IP' in request.META:
             request.META['REMOTE_ADDR'] = request.META['HTTP_X_REAL_IP']
 
+
 class SetHostBehindProxyMiddleware(object):
     """Sets the META HTTP_HOST to the one given in settings if it's localhost.
 
@@ -19,5 +21,6 @@ class SetHostBehindProxyMiddleware(object):
     site is behind a reverse proxy, so HTTP_HOST is always localhost.
     """
     def process_request(self, request):
-        if request.META['HTTP_HOST'] in ['localhost', '127.0.0.1', '[::1]']:
-            request.META['HTTP_HOST'] = settings.SITE_DOMAIN
+        if (request.META['HTTP_HOST'].startswith('localhost') or
+            request.META['HTTP_HOST'].startswith('127.0.0.1')):
+            request.META['HTTP_HOST'] = settings.SITE_HOST
