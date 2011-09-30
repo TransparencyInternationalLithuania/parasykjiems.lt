@@ -27,18 +27,14 @@ class Command(BaseCommand):
             municipality, elderate, city, street, ''
           FROM
             search_territory
-            INNER JOIN search_institution
-              ON (search_territory.institution_id = search_institution.id)
-            INNER JOIN search_institutionkind
-              ON (search_institution.kind_id = search_institutionkind.id)
-          WHERE (street IS NOT NULL) OR (city IS NOT NULL)
-          AND NOT EXISTS
-            (SELECT *
-             FROM search_location
-             WHERE upper(search_location.municipality) = upper(search_territory.municipality)
-               AND upper(search_location.elderate) = upper(search_territory.elderate)
-               AND upper(search_location.city) = upper(search_territory.city)
-               AND upper(search_location.street) = upper(search_territory.street));
+          WHERE (street != '') OR (city != '')
+            AND NOT EXISTS
+              (SELECT 1
+               FROM search_location
+               WHERE upper(search_location.municipality) = upper(search_territory.municipality)
+                 AND upper(search_location.elderate) = upper(search_territory.elderate)
+                 AND upper(search_location.city) = upper(search_territory.city)
+                 AND upper(search_location.street) = upper(search_territory.street));
         ''')
         transaction.commit_unless_managed()
 
@@ -46,7 +42,7 @@ class Command(BaseCommand):
         cursor.execute('''
         DELETE FROM search_location
         WHERE NOT EXISTS
-          (SELECT *
+          (SELECT 1
            FROM search_territory
            WHERE upper(search_location.municipality) = upper(search_territory.municipality)
              AND upper(search_location.elderate) = upper(search_territory.elderate)
