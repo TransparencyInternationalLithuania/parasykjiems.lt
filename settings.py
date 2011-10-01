@@ -107,6 +107,7 @@ INSTALLED_APPS = (
     'web',
     'search',
     'mail',
+    'scrape',
 )
 
 HAYSTACK_SITECONF = 'parasykjiems.search_sites'
