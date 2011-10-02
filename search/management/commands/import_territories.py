@@ -17,6 +17,7 @@ class Command(BaseCommand):
             print '({:2}/{:2})'.format(i + 1, len(MUNICIPALITIES)),
             filename = os.path.join('data', 'territories',
                                     municipality.encode('utf-8') + '.csv')
+            models.Territory.objects.filter(municipality=municipality).delete()
             import_models(filename,
                           models.Territory,
                           [('institution', 'institution__name'),
