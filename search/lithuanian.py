@@ -92,7 +92,7 @@ def name_abbreviations(name):
     True
     """
     def abbr(w):
-        return u'{}.'.format(w[0])
+        return w[0] + u'.'
 
     def sub(namewords):
         if len(namewords) <= 1:
