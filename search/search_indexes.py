@@ -15,11 +15,9 @@ def join_text(xs):
 
     Useful for preparing context for indexing.
     """
-    words = set()
-    for x in xs:
-        words.update(x.split(' '))
-        words.update(unidecode(x).split(' '))
-    return u' '.join(words)
+    lines = set(xs)
+    lines.update(unidecode(x) for x in xs)
+    return u'\n'.join(lines)
 
 
 MUNICIPALITY_POPULATIONS = {
