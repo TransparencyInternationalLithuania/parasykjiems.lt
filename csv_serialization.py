@@ -108,7 +108,7 @@ def import_models(filename, model, keys, fields, additional_filter=None):
                     values[field] = fmodel.objects.get(
                         **{subfield: d(row[header])})
                 except ObjectDoesNotExist as e:
-                    print "Can't find {} with {} = {}".format(
+                    print u"Can't find {} with {} = {}".format(
                         fmodel, subfield, d(row[header]))
                     raise e
             else:
