@@ -16,18 +16,18 @@ class Command(BaseCommand):
         # The complicated joins are meant to filter out territories of
         # inactive institutions.
 
-        print 'Before: {} locations.'.format(Location.objects.count())
+        print '{} locations.'.format(Location.objects.count())
 
         cursor = connection.cursor()
 
-        print 'Inserting new ones.'
+        print 'Inserting new locations.'
         cursor.execute('''
         INSERT INTO search_location (municipality, elderate, city, street, slug)
           SELECT DISTINCT ON (upper(municipality), upper(elderate), upper(city), upper(street))
             municipality, elderate, city, street, ''
           FROM
             search_territory
-          WHERE (street != '') OR (city != '')
+          WHERE ((street != '') OR (city != ''))
             AND NOT EXISTS
               (SELECT 1
                FROM search_location
@@ -37,8 +37,9 @@ class Command(BaseCommand):
                  AND upper(search_location.street) = upper(search_territory.street));
         ''')
         transaction.commit_unless_managed()
+        print '{} locations.'.format(Location.objects.count())
 
-        print 'Deleting old ones.'
+        print 'Deleting old locations.'
         cursor.execute('''
         DELETE FROM search_location
         WHERE NOT EXISTS
@@ -49,7 +50,5 @@ class Command(BaseCommand):
              AND upper(search_location.city) = upper(search_territory.city)
              AND upper(search_location.street) = upper(search_territory.street));
         ''')
-
         transaction.commit_unless_managed()
-
-        print 'After: {} locations.'.format(Location.objects.count())
+        print '{} locations.'.format(Location.objects.count())
