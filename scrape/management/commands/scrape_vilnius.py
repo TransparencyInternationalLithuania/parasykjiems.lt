@@ -6,6 +6,7 @@ from scrape import models
 from urllib2 import urlopen
 from BeautifulSoup import BeautifulSoup
 import re
+import time
 
 
 _MULTIPLE_SPACES = re.compile(r'\s\s+')
@@ -41,21 +42,24 @@ def get_rep(url, canonic_kind, scrape_kinds, institution):
         tr = kind_tds[0].findParent('tr')
         a = tr.find('a')
 
-        rep = models.RepresentativeChange.objects.get_or_create(
+        rep, created = models.RepresentativeChange.objects.get_or_create(
             institution=institution,
             kind_name=canonic_kind)
         rep.name = normalise(a.text)
         rep.email = email(a.get('href'))
         rep.phone = normalise(tr.find('td', attrs={'class': 'r'}).text)
     else:
-        print u"Failed to find {} in {}".format(canonic_kind, institution)
-        rep = models.RepresentativeChange.objects.get_or_create(
+        rep, created = models.RepresentativeChange.objects.get_or_create(
             institution=institution,
             kind_name=canonic_kind)
         rep.delete = True
 
     rep.save()
     return rep
+
+
+def delay():
+    time.sleep(1)
 
 
 class Command(BaseCommand):
@@ -69,6 +73,7 @@ class Command(BaseCommand):
                         u'Vilniaus miesto savivaldybė')
         print mayor
 
+        delay()
         elderate_soup = get_soup(
             'http://www.vilnius.lt/newvilniusweb/index.php/49/')
         staff_table = elderate_soup.find('table', attrs={'class': 'staff'})
@@ -77,10 +82,11 @@ class Command(BaseCommand):
             if a:
                 inst = normalise(a.text)
                 url = a.get('href')
+                delay()
                 rep = get_rep(url,
                               u'seniūnas',
                               [u'Seniūnas',
                                u'Seniūnė',
                                u'L. e. seniūno pareigas'],
-                              mayor['institution'] + u' ' + inst)
+                              mayor.institution + u' ' + inst)
                 print rep
