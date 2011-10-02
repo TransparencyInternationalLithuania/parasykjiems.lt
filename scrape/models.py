@@ -21,3 +21,9 @@ class RepresentativeChange(models.Model):
     other_info = models.CharField(max_length=_NAME_LEN,
                                   null=True,
                                   default=None)
+
+    def __unicode__(self):
+        return u'{} [{}, {}] {!r}, {!r}, {!r}, {!r}, {!r}'.format(
+            '-' if self.delete else '+',
+            self.institution, self.kind_name,
+            self.name, self.email, self.phone, self.address, self.other_info)
