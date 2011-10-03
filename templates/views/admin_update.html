@@ -31,7 +31,7 @@
   {% for change in changes %}
   {% with rep=change.rep %}
   {% if rep %}
-  <tr>
+  <tr{% if change.delete %} class="delete"{% endif %}>
     <td{% if not change.delete %} rowspan="2"{% endif %}>
       {{ rep.institution.name }}</td>
     <td{% if not change.delete %} rowspan="2"{% endif %}>
