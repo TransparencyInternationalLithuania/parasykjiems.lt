@@ -10,12 +10,17 @@
 </div>{% endblock %}
 
 {% block extrahead %}
+<style>
+  td { vertical-align: middle; border: thin solid #c0c0c0; }
+  .delete { background: #faa; color: #400; }
+  .add { background: #afa; color: #040; }
+  .spacer { height: 1em; }
+</style>
 {% endblock %}
 
 {% block content %}
 <table>
   <tr>
-    <td></td>
     <td>{% trans "Institution" %}</td>
     <td>{% trans "Kind" %}</td>
     <td>{% trans "Name" %}</td>
@@ -24,15 +29,68 @@
     <td>{% trans "Other information" %}</td>
   </tr>
   {% for change in changes %}
+  {% with rep=change.rep %}
+  {% if rep %}
   <tr>
-    <td>{% if change.delete %}DELETE{% else %}ADD{% endif %}</td>
+    <td{% if not change.delete %} rowspan="2"{% endif %}>
+      {{ rep.institution.name }}</td>
+    <td{% if not change.delete %} rowspan="2"{% endif %}>
+      {{ rep.kind.name }}
+    </td>
+
+    <td{% if change.name_changed %} class="delete"{% else %} rowspan="2"{% endif %}>
+      {{ rep.name|default:"&nbsp;" }}
+    </td>
+
+    <td{% if change.email_changed %} class="delete"{% else %} rowspan="2"{% endif %}>
+      {{ rep.email|default:"&nbsp;" }}
+    </td>
+
+    <td{% if change.phone_changed %} class="delete"{% else %} rowspan="2"{% endif %}>
+      {{ rep.phone|default:"&nbsp;" }}
+    </td>
+
+    <td{% if change.other_info_changed %} class="delete"{% else %} rowspan="2"{% endif %}>
+      {{ rep.other_info|default:"&nbsp;" }}
+    </td>
+  </tr>
+  {% endif %}
+
+  {% if not change.delete %}
+  <tr>
+    {% if not rep %}
     <td>{{ change.institution }}</td>
     <td>{{ change.kind_name }}</td>
-    <td>{{ change.name }}</td>
-    <td>{{ change.email }}</td>
-    <td>{{ change.phone }}</td>
-    <td>{{ change.other_info }}</td>
+    {% endif %}
+
+    {% if change.name_changed %}
+    <td class="add">
+      {{ change.name|default:rep.name }}
+    </td>
+    {% endif %}
+
+    {% if change.email_changed %}
+    <td class="add">
+      {{ change.email|default:rep.email }}
+    </td>
+    {% endif %}
+
+    {% if change.phone_changed %}
+    <td class="add">
+      {{ change.phone|default:rep.phone }}
+    </td>
+    {% endif %}
+
+    {% if change.other_info_changed %}
+    <td class="add">
+      {{ change.other_info|default:rep.other_info }}
+    </td>
+    {% endif %}
+
   </tr>
+  {% endif %}
+  {% endwith %}
+  <tr class="spacer"></tr>
   {% endfor %}
 </table>
 {% endblock %}
