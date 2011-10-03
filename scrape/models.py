@@ -53,7 +53,7 @@ class RepresentativeChange(models.Model):
                 (self.other_info and (self.rep.other_info != self.other_info)))
 
     def __unicode__(self):
-        return u'{} [{}, {}] {!r}, {!r}, {!r}, {!r}, {!r}'.format(
-            '-' if self.delete else '+',
-            self.institution, self.kind_name,
-            self.name, self.email, self.phone, self.address, self.other_info)
+        return (u'{0} [{1.institution}, {1.kind_name}] '
+                u'{1.name!r}, {1.email!r}, {1.phone!r}, {1.other_info!r}'
+                .format('-' if self.delete else '+',
+                        self))
