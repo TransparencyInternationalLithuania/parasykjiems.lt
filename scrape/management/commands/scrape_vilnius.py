@@ -2,6 +2,42 @@
 
 from django.core.management.base import BaseCommand
 from scrape import utils
+import re
+from scrape import models
+
+
+def get_phone(s):
+    m = re.search(r'(\(.+\))?(\s+\d+)?\s+\d+', s)
+    if m:
+        return m.group(0)
+    else:
+        return u''
+
+
+def get_rep(url, canonic_kind, scrape_kinds, institution):
+    soup = utils.get_soup(url)
+
+    tds = soup.find('table', attrs={'class': 'staff'}).findAll('td')
+    kind_tds = [td for td in tds if utils.contains_any(td, scrape_kinds)]
+    if len(kind_tds):
+        tr = kind_tds[0].findParent('tr')
+        a = tr.find('a')
+
+        rep, created = models.RepresentativeChange.objects.get_or_create(
+            institution=institution,
+            kind_name=canonic_kind)
+        rep.name = utils.normalise(a.text)
+        rep.email = utils.email(a.get('href'))
+        rep.phone = get_phone(utils.normalise(
+            unicode(tr.find('td', attrs={'class': 'r'}))))
+    else:
+        rep, created = models.RepresentativeChange.objects.get_or_create(
+            institution=institution,
+            kind_name=canonic_kind)
+        rep.delete = True
+
+    rep.save()
+    return rep
 
 
 class Command(BaseCommand):
@@ -9,7 +45,7 @@ class Command(BaseCommand):
     help = '''Scrape municipality and elderate data from vilnius.lt.'''
 
     def handle(self, *args, **options):
-        mayor = utils.get_rep(
+        mayor = get_rep(
             'http://www.vilnius.lt/newvilniusweb/index.php/15/',
             u'meras',
             [u'Meras'],
@@ -26,7 +62,7 @@ class Command(BaseCommand):
                 inst = utils.normalise(a.text)
                 url = a.get('href')
                 utils.delay()
-                rep = utils.get_rep(url,
+                rep = get_rep(url,
                               u'seniūnas',
                               [u'Seniūnas',
                                u'Seniūnė',
