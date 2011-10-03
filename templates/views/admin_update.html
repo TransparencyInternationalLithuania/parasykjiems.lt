@@ -1,0 +1,38 @@
+{% extends "admin/base_site.html" %}
+{% load i18n snippet %}
+
+{% block title %}{% trans "Data update" %}{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+  <a href="/admin/">{% trans 'Home' %}</a> &rsaquo;
+  {% trans "Data update" %}
+</div>{% endblock %}
+
+{% block extrahead %}
+{% endblock %}
+
+{% block content %}
+<table>
+  <tr>
+    <td></td>
+    <td>{% trans "Institution" %}</td>
+    <td>{% trans "Kind" %}</td>
+    <td>{% trans "Name" %}</td>
+    <td>{% trans "Email" %}</td>
+    <td>{% trans "Phone" %}</td>
+    <td>{% trans "Other information" %}</td>
+  </tr>
+  {% for change in changes %}
+  <tr>
+    <td>{% if change.delete %}DELETE{% else %}ADD{% endif %}</td>
+    <td>{{ change.institution }}</td>
+    <td>{{ change.kind_name }}</td>
+    <td>{{ change.name }}</td>
+    <td>{{ change.email }}</td>
+    <td>{{ change.phone }}</td>
+    <td>{{ change.other_info }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

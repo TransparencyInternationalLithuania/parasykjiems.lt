@@ -17,7 +17,6 @@ class RepresentativeChange(models.Model):
     name = models.CharField(max_length=_NAME_LEN, null=True, default=None)
     email = models.CharField(max_length=_NAME_LEN, null=True, default=None)
     phone = models.CharField(max_length=_NAME_LEN, null=True, default=None)
-    address = models.CharField(max_length=_NAME_LEN, null=True, default=None)
     other_info = models.CharField(max_length=_NAME_LEN,
                                   null=True,
                                   default=None)

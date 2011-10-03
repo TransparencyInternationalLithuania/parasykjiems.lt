@@ -19,6 +19,7 @@ urlpatterns = patterns('',
     url(r'', include('search.urls')),
     url(r'', include('mail.urls')),
 
+    url(r'', include('scrape.urls')),
     url(r'^admin/', include(admin.site.urls)),
 
     url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap',
