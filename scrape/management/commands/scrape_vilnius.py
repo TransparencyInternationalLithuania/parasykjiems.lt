@@ -34,9 +34,11 @@ def get_rep(url, canonic_kind, scrape_kinds, institution):
         rep, created = models.RepresentativeChange.objects.get_or_create(
             institution=institution,
             kind_name=canonic_kind)
-        rep.delete = True
+        rep.delete_rep = True
 
-    rep.save()
+    if rep.changed():
+        rep.save()
+        print rep
     return rep
 
 
@@ -50,7 +52,6 @@ class Command(BaseCommand):
             u'meras',
             [u'Meras'],
             u'Vilniaus miesto savivaldybė')
-        print mayor
 
         utils.delay()
         elderate_soup = utils.get_soup(
@@ -68,4 +69,3 @@ class Command(BaseCommand):
                                u'Seniūnė',
                                u'L. e. seniūno pareigas'],
                               mayor.institution + u' ' + inst)
-                print rep
