@@ -682,3 +682,24 @@ ul.errorlist {
 strong {
     color: #333;
 }
+
+.search-advice {
+    width: 100%;
+}
+
+.search-advice div {
+    width: 40%;
+    vertical-align: top;
+    float: left;
+
+    background: #eee;
+    color: #333;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    behavior: url(/static/PIE.htc);
+    position: relative;
+
+    padding: 0.1em 1em 1em 1em;
+    margin: 1em;
+}
