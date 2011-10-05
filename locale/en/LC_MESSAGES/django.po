@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-21 20:34+0300\n"
+"POT-Creation-Date: 2011-10-05 19:25+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -53,8 +53,7 @@ msgstr ""
 msgid "Enter a valid e-mail address."
 msgstr ""
 
-#: mail/forms.py:23 templates/items/letters.html:7
-#: templates/items/threads.html:7
+#: mail/forms.py:23 templates/items/threads.html:7
 msgid "Subject"
 msgstr ""
 
@@ -180,7 +179,7 @@ msgid "Representative search"
 msgstr ""
 
 #: templates/menu.html:12 templates/breadcrumbs/threads.html:4
-#: templates/views/threads.html:8
+#: templates/views/threads.html:9
 msgid "Open letters"
 msgstr ""
 
@@ -213,27 +212,27 @@ msgstr ""
 msgid "Write a letter"
 msgstr ""
 
-#: templates/items/institution.html:13 templates/items/representative.html:21
-msgid "Email: "
-msgstr ""
-
-#: templates/items/institution.html:15 templates/items/representative.html:23
-msgid "Write&nbsp;letter"
-msgstr ""
-
-#: templates/items/institution.html:21 templates/items/representative.html:29
+#: templates/items/institution.html:12 templates/items/representative.html:20
 msgid "Phone number: "
 msgstr ""
 
-#: templates/items/institution.html:25
+#: templates/items/institution.html:16
 msgid "Address: "
 msgstr ""
 
-#: templates/items/institution.html:45
+#: templates/items/institution.html:25 templates/items/representative.html:29
+msgid "Email: "
+msgstr ""
+
+#: templates/items/institution.html:27 templates/items/representative.html:31
+msgid "Write&nbsp;letter"
+msgstr ""
+
+#: templates/items/institution.html:51
 msgid "Recent letters"
 msgstr ""
 
-#: templates/items/institution.html:48
+#: templates/items/institution.html:54
 msgid "All letters sent to this institution"
 msgstr ""
 
@@ -253,24 +252,60 @@ msgstr ""
 msgid "Date:"
 msgstr ""
 
-#: templates/items/letters.html:8 templates/items/threads.html:8
+#: templates/items/representative.html:12
+msgid "Institution: "
+msgstr ""
+
+#: templates/items/threads.html:8
 msgid "Sender"
 msgstr ""
 
-#: templates/items/letters.html:9 templates/items/threads.html:9
+#: templates/items/threads.html:9
 msgid "Recipient"
 msgstr ""
 
-#: templates/items/letters.html:10 templates/items/threads.html:10
+#: templates/items/threads.html:10
 msgid "Sent at"
 msgstr ""
 
-#: templates/items/letters.html:16 templates/items/threads.html:16
+#: templates/items/threads.html:16
 msgid "Answered"
 msgstr ""
 
-#: templates/items/representative.html:12
-msgid "Institution: "
+#: templates/views/admin_update.html:4 templates/views/admin_update.html:9
+msgid "Data update"
+msgstr ""
+
+#: templates/views/admin_update.html:8
+msgid "Home"
+msgstr ""
+
+#: templates/views/admin_update.html:28
+msgid "Apply"
+msgstr ""
+
+#: templates/views/admin_update.html:29
+msgid "Institution"
+msgstr ""
+
+#: templates/views/admin_update.html:30
+msgid "Kind"
+msgstr ""
+
+#: templates/views/admin_update.html:31
+msgid "Name"
+msgstr ""
+
+#: templates/views/admin_update.html:32
+msgid "Email"
+msgstr ""
+
+#: templates/views/admin_update.html:33
+msgid "Phone"
+msgstr ""
+
+#: templates/views/admin_update.html:34
+msgid "Other information"
 msgstr ""
 
 #: templates/views/confirm.html:20 templates/views/contact.html:44
@@ -281,7 +316,7 @@ msgstr ""
 msgid "Thank you"
 msgstr ""
 
-#: templates/views/location.html:23
+#: templates/views/location.html:24
 #, python-format
 msgid ""
 "\n"
@@ -293,7 +328,7 @@ msgstr ""
 msgid "Continue"
 msgstr ""
 
-#: templates/views/search.html:8 templates/views/search.html.py:22
+#: templates/views/search.html:8 templates/views/search.html.py:25
 msgid "Search"
 msgstr ""
 
@@ -313,11 +348,11 @@ msgid ""
 "  "
 msgstr ""
 
-#: templates/views/threads.html:25
+#: templates/views/threads.html:26
 msgid "Previous page"
 msgstr ""
 
-#: templates/views/threads.html:28
+#: templates/views/threads.html:29
 #, python-format
 msgid ""
 "\n"
@@ -325,7 +360,7 @@ msgid ""
 "  "
 msgstr ""
 
-#: templates/views/threads.html:33
+#: templates/views/threads.html:34
 msgid "Next page"
 msgstr ""
 
@@ -373,6 +408,6 @@ msgstr ""
 msgid "snippets"
 msgstr ""
 
-#: web/views.py:26
+#: web/views.py:25
 msgid "Feedback from {}"
 msgstr ""
