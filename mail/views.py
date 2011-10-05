@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404
 from django.views.decorators.cache import cache_control
 from django.views.decorators.http import last_modified
+import datetime
 
 from forms import WriteLetterForm
 from parasykjiems.search.models import Representative, Institution
@@ -110,10 +112,13 @@ def thread(request, slug):
 
 
 def _latest_letter(request, inst=None):
-    return (Enquiry.objects
-            .filter(is_open=True, is_sent=True)
-            .latest('sent_at')
-            .sent_at)
+    try:
+        return (Enquiry.objects
+                .filter(is_open=True, is_sent=True)
+                .latest('sent_at')
+                .sent_at)
+    except ObjectDoesNotExist:
+        return datetime.datetime.now()
 
 
 @last_modified(_latest_letter)
