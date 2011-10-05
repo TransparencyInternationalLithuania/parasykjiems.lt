@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-21 20:34+0300\n"
-"PO-Revision-Date: 2011-09-21 20:35+0300\n"
+"POT-Creation-Date: 2011-10-05 19:25+0300\n"
+"PO-Revision-Date: 2011-10-05 19:27+0300\n"
 "Last-Translator: Kiprianas Spiridonovas <k.spiridonovas@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -55,7 +55,6 @@ msgid "Enter a valid e-mail address."
 msgstr "Įveskite tinkamą el. pašto adresą."
 
 #: mail/forms.py:23
-#: templates/items/letters.html:7
 #: templates/items/threads.html:7
 msgid "Subject"
 msgstr "Tema"
@@ -186,9 +185,9 @@ msgstr "Atstovo paieška"
 
 #: templates/menu.html:12
 #: templates/breadcrumbs/threads.html:4
-#: templates/views/threads.html:8
+#: templates/views/threads.html:9
 msgid "Open letters"
-msgstr "Atviri laiškai"
+msgstr "Išsiųsti laiškai"
 
 #: templates/menu.html:18
 msgid "Help"
@@ -221,30 +220,30 @@ msgstr "Laiško peržiūra"
 msgid "Write a letter"
 msgstr "Parašykite laišką"
 
-#: templates/items/institution.html:13
-#: templates/items/representative.html:21
-msgid "Email: "
-msgstr "El. paštas:"
-
-#: templates/items/institution.html:15
-#: templates/items/representative.html:23
-msgid "Write&nbsp;letter"
-msgstr "Rašyti laišką"
-
-#: templates/items/institution.html:21
-#: templates/items/representative.html:29
+#: templates/items/institution.html:12
+#: templates/items/representative.html:20
 msgid "Phone number: "
 msgstr "Telefono numeris: "
 
-#: templates/items/institution.html:25
+#: templates/items/institution.html:16
 msgid "Address: "
 msgstr "Adresas: "
 
-#: templates/items/institution.html:45
+#: templates/items/institution.html:25
+#: templates/items/representative.html:29
+msgid "Email: "
+msgstr "El. paštas:"
+
+#: templates/items/institution.html:27
+#: templates/items/representative.html:31
+msgid "Write&nbsp;letter"
+msgstr "Rašyti laišką"
+
+#: templates/items/institution.html:51
 msgid "Recent letters"
 msgstr "Naujausi laiškai"
 
-#: templates/items/institution.html:48
+#: templates/items/institution.html:54
 msgid "All letters sent to this institution"
 msgstr "Visi laiškai, siųsti šiai institucijai"
 
@@ -264,29 +263,62 @@ msgstr "Tema:"
 msgid "Date:"
 msgstr "Data: "
 
-#: templates/items/letters.html:8
+#: templates/items/representative.html:12
+msgid "Institution: "
+msgstr "Institucija: "
+
 #: templates/items/threads.html:8
 msgid "Sender"
 msgstr "Siuntėjas"
 
-#: templates/items/letters.html:9
 #: templates/items/threads.html:9
 msgid "Recipient"
 msgstr "Gavėjas"
 
-#: templates/items/letters.html:10
 #: templates/items/threads.html:10
 msgid "Sent at"
 msgstr "Išsiųsta"
 
-#: templates/items/letters.html:16
 #: templates/items/threads.html:16
 msgid "Answered"
 msgstr "Atsakyta"
 
-#: templates/items/representative.html:12
-msgid "Institution: "
-msgstr "Institucija: "
+#: templates/views/admin_update.html:4
+#: templates/views/admin_update.html:9
+msgid "Data update"
+msgstr "Duomenų atnaujinimas"
+
+#: templates/views/admin_update.html:8
+msgid "Home"
+msgstr "Pradžia"
+
+#: templates/views/admin_update.html:28
+msgid "Apply"
+msgstr "Pritaikyti"
+
+#: templates/views/admin_update.html:29
+msgid "Institution"
+msgstr "Institucija "
+
+#: templates/views/admin_update.html:30
+msgid "Kind"
+msgstr "Rūšis"
+
+#: templates/views/admin_update.html:31
+msgid "Name"
+msgstr "Vardas"
+
+#: templates/views/admin_update.html:32
+msgid "Email"
+msgstr "El. paštas"
+
+#: templates/views/admin_update.html:33
+msgid "Phone"
+msgstr "Telefonas"
+
+#: templates/views/admin_update.html:34
+msgid "Other information"
+msgstr "Kita informacija"
 
 #: templates/views/confirm.html:20
 #: templates/views/contact.html:44
@@ -298,7 +330,7 @@ msgstr "Siųsti"
 msgid "Thank you"
 msgstr "Ačiū"
 
-#: templates/views/location.html:23
+#: templates/views/location.html:24
 #, python-format
 msgid ""
 "\n"
@@ -313,7 +345,7 @@ msgid "Continue"
 msgstr "Tęsti"
 
 #: templates/views/search.html:8
-#: templates/views/search.html.py:22
+#: templates/views/search.html.py:25
 msgid "Search"
 msgstr "Paieška"
 
@@ -336,11 +368,11 @@ msgstr ""
 "\n"
 "Galite jį peržiūrėti <a href=\"%(url)s\">čia</a>."
 
-#: templates/views/threads.html:25
+#: templates/views/threads.html:26
 msgid "Previous page"
 msgstr "Ankstesnis puslapis"
 
-#: templates/views/threads.html:28
+#: templates/views/threads.html:29
 #, python-format
 msgid ""
 "\n"
@@ -351,7 +383,7 @@ msgstr ""
 "Puslapis %(page)s iš %(pages)s\n"
 "  "
 
-#: templates/views/threads.html:33
+#: templates/views/threads.html:34
 msgid "Next page"
 msgstr "Kitas puslapis"
 
@@ -402,7 +434,7 @@ msgstr "iškarpėlė"
 msgid "snippets"
 msgstr "iškarpėlės"
 
-#: web/views.py:26
+#: web/views.py:25
 msgid "Feedback from {}"
 msgstr "Atsiliepimas iš {}"
 
