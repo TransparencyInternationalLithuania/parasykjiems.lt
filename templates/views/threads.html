@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block head %}
+<script type="text/javascript" src="/static/js/threads.js"></script>
+<link rel="alternate" type="application/rss+xml" title="RSS" href="rss/">
+{% endblock %}
+
+{% block title %}{% trans "Open letters" %} &ndash; {% endblock %}
+
+{% block menu %}
+{% include "menu.html" with active="threads" %}
+{% endblock %}
+
+{% block breadcrumbs %}
+{% include "breadcrumbs/threads.html" with active=1 %}
+{% endblock %}
+
+{% block content %}
+
+{% include "items/threads.html" with threads=threads %}
+
+{% if pages > 1 %}
+<div class="pager">
+  {% if page.has_previous %}
+  <a href="?p={{ page.previous_page_number }}">{% trans "Previous page" %}</a>
+  {% endif %}
+
+  {% blocktrans with page=page.number pages=page.paginator.num_pages %}
+  Page {{ page }} out of {{ pages }}
+  {% endblocktrans %}
+
+  {% if page.has_next %}
+  <a href="?p={{ page.next_page_number }}">{% trans "Next page" %}</a>
+  {% endif %}
+</div>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,24 @@
+{% load i18n snippet %}
+{% if search_query %}
+
+{% if results %}
+
+<ul id="result-list">
+  {% for result in results %}
+  <li>
+    {% include "items/result.html" %}
+  </li>
+  {% endfor %}
+</ul>
+
+{% if more_results %}
+{% snippet "more-results" %}
+{% endif %}
+
+{% else %}
+{% snippet "nothing-found" %}
+{% endif %}
+
+{% else %}
+{% snippet "search-advice" %}
+{% endif %}

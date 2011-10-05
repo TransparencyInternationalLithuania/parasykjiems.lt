@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-17 15:11+0300\n"
+"POT-Creation-Date: 2011-09-21 20:34+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,468 +17,362 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: settings_local.py:131
-msgid "Lithuanian"
-msgstr ""
-
-#: settings_local.py:132
+#: settings.py:22
 msgid "English"
 msgstr ""
 
-#: contactdb/models.py:10
-msgid "Phone field"
+#: settings.py:23
+msgid "Lithuanian"
 msgstr ""
 
-#: contactdb/models.py:17 contactdb/models.py:24 contactdb/models.py:50
-msgid "A person name field"
+#: mail/feeds.py:9
+msgid "ParašykJiems threads"
 msgstr ""
 
-#: contactdb/models.py:31
-msgid "A house number field, capable of storing house letter"
+#: mail/feeds.py:21
+msgid "Sent from {} to {}"
 msgstr ""
 
-#: contactdb/models.py:41
-msgid "Tells whether a house number is odd or even"
+#: mail/forms.py:8
+msgid "Your full name"
 msgstr ""
 
-#: pjweb/admin.py:7
-msgid "Recipient"
+#: mail/forms.py:9
+msgid "Don't use abbreviations."
 msgstr ""
 
-#: pjweb/admin.py:8
-msgid "Sender Information"
+#: mail/forms.py:13 web/forms.py:8
+msgid "Your e-mail address"
 msgstr ""
 
-#: pjweb/admin.py:9
-msgid "Message"
+#: mail/forms.py:16
+msgid "An e-mail address is required."
 msgstr ""
 
-#: pjweb/admin.py:21
-msgid "Recipients"
+#: mail/forms.py:17
+msgid "Enter a valid e-mail address."
 msgstr ""
 
-#: pjweb/admin.py:22
-msgid "States"
-msgstr ""
-
-#: pjweb/forms.py:30
-msgid "Private"
-msgstr ""
-
-#: pjweb/forms.py:31
-msgid "Public"
-msgstr ""
-
-#: pjweb/views.py:83
-msgid ""
-"No addressess were found. Please refine your search. Or use feedback form to "
-"inform us about missing address"
-msgstr ""
-
-#: pjweb/views.py:193
-#, python-format
-msgid "%(name)s %(surname)s email cannot be found in database."
-msgstr ""
-
-#: pjweb/views.py:231
-msgid "No"
-msgstr ""
-
-#: pjweb/views.py:232
-msgid "Yes"
-msgstr ""
-
-#: pjweb/views.py:318
-#, python-format
-msgid ""
-"Problem occurred. Your Email to %(name)s %(surname)s has not been sent. "
-"Please try again later."
-msgstr ""
-
-#: pjweb/views.py:345
-msgid "January"
-msgstr ""
-
-#: pjweb/views.py:346
-msgid "February"
-msgstr ""
-
-#: pjweb/views.py:347
-msgid "March"
-msgstr ""
-
-#: pjweb/views.py:348
-msgid "April"
-msgstr ""
-
-#: pjweb/views.py:349
-msgid "May"
-msgstr ""
-
-#: pjweb/views.py:350
-msgid "June"
-msgstr ""
-
-#: pjweb/views.py:351
-msgid "July"
-msgstr ""
-
-#: pjweb/views.py:352
-msgid "August"
-msgstr ""
-
-#: pjweb/views.py:353
-msgid "September"
-msgstr ""
-
-#: pjweb/views.py:354
-msgid "October"
-msgstr ""
-
-#: pjweb/views.py:355
-msgid "November"
-msgstr ""
-
-#: pjweb/views.py:356
-msgid "December"
-msgstr ""
-
-#: pjweb/views.py:414
-#, python-format
-msgid "Confirm your message %s"
-msgstr ""
-
-#: pjweb/views.py:418
-msgid "Thank you. This message must be confirmed. Please check your email."
-msgstr ""
-
-#: pjweb/views.py:444
-#, python-format
-msgid ""
-"Dear. Mr. %s, \n"
-"\n"
-"\n"
-"\n"
-"Have a nice day."
-msgstr ""
-
-#: pjweb/views.py:521
-msgid "Thank you. Your message has been sent."
-msgstr ""
-
-#: pjweb/views.py:524
-msgid "Sorry, but your message could not be confirmed."
-msgstr ""
-
-#: pjweb/views.py:527
-msgid "Your message was already confirmed"
-msgstr ""
-
-#: pjweb/views.py:553
-msgid "Thank you for your feedback. You will be contacted shortly."
-msgstr ""
-
-#: pjweb/views.py:592
-#, python-format
-msgid "In selected period (from %(from)s to %(to)s):"
-msgstr ""
-
-#: pjweb/views.py:594
-#, python-format
-msgid "Questions sent: %s"
-msgstr ""
-
-#: pjweb/views.py:595
-#, python-format
-msgid "Answers got: %s"
-msgstr ""
-
-#: pjweb/views.py:596
-#, python-format
-msgid "New users: %s"
-msgstr ""
-
-#: pjweb/views.py:641
-msgid "Thank you. Your response has been posted."
-msgstr ""
-
-#: pjweb/widgets.py:35
-#, python-format
-msgid "Please be polite! Letter with %s in it will not be sent."
-msgstr ""
-
-#: pjweb/widgets.py:36
-msgid "and"
-msgstr ""
-
-#: pjweb/widgets.py:43
-msgid "There should be numbers in phone number."
-msgstr ""
-
-#: pjweb/widgets.py:49
-#, python-format
-msgid ""
-"Dear. Mr. %s \n"
-"\n"
-"\n"
-"\n"
-"Have a nice day."
-msgstr ""
-
-#: pjweb/widgets.py:51
-msgid "Message should not only be greeting."
-msgstr ""
-
-#: pjweb/email/backends.py:22 pjweb/email/backends.py:69
-#, python-format
-msgid "You got a letter from %(sender_name)s"
-msgstr ""
-
-#: templates/base-base.html:31
-msgid "Have any notes, suggestions?"
-msgstr ""
-
-#: templates/base-base.html:31
-msgid "Write to us"
-msgstr ""
-
-#: templates/errorpage.html:18 templates/pjweb/headers/header.html:8
-msgid "ParašykJiems - Fast method to find representatives and contact them."
-msgstr ""
-
-#: templates/errorpage.html:21 templates/pjweb/headers/header.html:11
-msgid "List of all public mails"
-msgstr ""
-
-#: templates/errorpage.html:22 templates/pjweb/confirm.html:12
-#: templates/pjweb/thanks.html:10
-#: templates/pjweb/feedback/feedback_sent.html:10
-#: templates/pjweb/headers/header.html:12
-msgid "About project"
-msgstr ""
-
-#: templates/admin/base_site.html:4
-msgid "Django site admin"
-msgstr ""
-
-#: templates/admin/base_site.html:7
-msgid "Parašyk jiems lt administration"
-msgstr ""
-
-#: templates/pjweb/check.html:16 templates/pjweb/contact.html:65
-msgid "Next Step"
-msgstr ""
-
-#: templates/pjweb/confirm.html:6 templates/pjweb/thanks.html:6
-#: templates/pjweb/feedback/feedback_sent.html:6
-msgid "Letter was successfuly sent."
-msgstr ""
-
-#: templates/pjweb/confirm.html:9
-msgid "View your public message"
-msgstr ""
-
-#: templates/pjweb/confirm.html:11 templates/pjweb/thanks.html:9
-#: templates/pjweb/feedback/feedback_sent.html:9
-msgid "Go back to home page"
-msgstr ""
-
-#: templates/pjweb/const.html:5
-msgid "Choose a representative, You want to write."
-msgstr ""
-
-#: templates/pjweb/const.html:6
-msgid "If You are not sure, read "
-msgstr ""
-
-#: templates/pjweb/const.html:6
-msgid "tips"
-msgstr ""
-
-#: templates/pjweb/const.html:29
-msgid "Write"
-msgstr ""
-
-#: templates/pjweb/contact.html:6
-msgid "You are writing a letter to your representative. Be polite."
-msgstr ""
-
-#: templates/pjweb/contact.html:12
-msgid "Receiver:"
-msgstr ""
-
-#: templates/pjweb/contact.html:14
-msgid "Sender "
-msgstr ""
-
-#: templates/pjweb/contact.html:15
-msgid "(fields marked with asterisk are required)"
-msgstr ""
-
-#: templates/pjweb/contact.html:27
-msgid "Mail type:"
-msgstr ""
-
-#: templates/pjweb/contact.html:34
-msgid "Sender Name:"
-msgstr ""
-
-#: templates/pjweb/contact.html:41 templates/pjweb/feedback/feedback.html:17
-msgid "Your Email:"
-msgstr ""
-
-#: templates/pjweb/contact.html:48 templates/pjweb/feedback/feedback.html:26
-msgid "Subject:"
-msgstr ""
-
-#: templates/pjweb/error.html:5 templates/pjweb/no_email.html:5
-msgid "Go back"
-msgstr ""
-
-#: templates/pjweb/preview.html:6
-msgid ""
-"You are writing public mail. It will be sent to addressee and displayed on "
-"site."
-msgstr ""
-
-#: templates/pjweb/preview.html:8
-msgid "You are writing private mail. It will be sent directly to addressee."
-msgstr ""
-
-#: templates/pjweb/preview.html:45
-msgid "Back to editing"
-msgstr ""
-
-#: templates/pjweb/preview.html:46 templates/pjweb/response.html:25
-#: templates/pjweb/feedback/feedback.html:43
-msgid "Send"
-msgstr ""
-
-#: templates/pjweb/private.html:5
-msgid "Click here, if you want to send private email"
-msgstr ""
-
-#: templates/pjweb/private.html:6
-msgid "Click here, if you want to send public email"
-msgstr ""
-
-#: templates/pjweb/public.html:12 templates/pjweb/public.html.py:20
-msgid "sent to"
-msgstr ""
-
-#: templates/pjweb/public.html:37
-msgid "Attached file"
-msgstr ""
-
-#: templates/pjweb/public_mails.html:5
-msgid "Here you can see all public emails"
-msgstr ""
-
-#: templates/pjweb/public_mails.html:10
-msgid "Get feed of all public mails"
-msgstr ""
-
-#: templates/pjweb/public_mails.html:17
-msgid "Receiver"
-msgstr ""
-
-#: templates/pjweb/public_mails.html:18
+#: mail/forms.py:23 templates/items/letters.html:7
+#: templates/items/threads.html:7
 msgid "Subject"
 msgstr ""
 
-#: templates/pjweb/public_mails.html:19
+#: mail/forms.py:28
+msgid "Open letter, which is visible to all visitors of the web site"
+msgstr ""
+
+#: mail/forms.py:32 web/forms.py:10
+msgid "Message"
+msgstr ""
+
+#: mail/mail.py:55
+msgid "Confirm your letter"
+msgstr ""
+
+#: mail/mail.py:130
+msgid "Copy of the letter you sent."
+msgstr ""
+
+#: mail/mail.py:195
+msgid "Your enquiry has been responded to"
+msgstr ""
+
+#: mail/models.py:126
+msgid "enquiry"
+msgstr ""
+
+#: mail/models.py:127
+msgid "enquiries"
+msgstr ""
+
+#: mail/models.py:137
+msgid "The unprocessed e-mail message."
+msgstr ""
+
+#: mail/models.py:193
+msgid "response"
+msgstr ""
+
+#: mail/models.py:194
+msgid "responses"
+msgstr ""
+
+#: search/forms.py:13
+msgid "A house number must be numeric and can contain at most one letter."
+msgstr ""
+
+#: search/forms.py:17
+msgid "House number"
+msgstr ""
+
+#: search/models.py:14 search/models.py:68 web/models.py:17
+msgid "In Markdown format."
+msgstr ""
+
+#: search/models.py:17
+msgid ""
+"This number is used for sorting representatives in the institution view."
+msgstr ""
+
+#: search/models.py:24
+msgid "representative kind"
+msgstr ""
+
+#: search/models.py:25
+msgid "representative kinds"
+msgstr ""
+
+#: search/models.py:48
+msgid "representative"
+msgstr ""
+
+#: search/models.py:49
+msgid "representatives"
+msgstr ""
+
+#: search/models.py:71
+msgid "This number is used for sorting institutions in the location view."
+msgstr ""
+
+#: search/models.py:78
+msgid "institution kind"
+msgstr ""
+
+#: search/models.py:79
+msgid "institution kinds"
+msgstr ""
+
+#: search/models.py:129
+msgid "institution"
+msgstr ""
+
+#: search/models.py:130
+msgid "institutions"
+msgstr ""
+
+#: search/models.py:148 search/models.py:191
+msgid "Name of city, town or village."
+msgstr ""
+
+#: search/models.py:216
+msgid "territory"
+msgstr ""
+
+#: search/models.py:217
+msgid "territories"
+msgstr ""
+
+#: templates/404.html:8
+msgid "Page not found"
+msgstr ""
+
+#: templates/500.html:8
+msgid "Internal server error"
+msgstr ""
+
+#: templates/base.html:27
+msgid "ParašykJiems"
+msgstr ""
+
+#: templates/menu.html:6
+msgid "Representative search"
+msgstr ""
+
+#: templates/menu.html:12 templates/breadcrumbs/threads.html:4
+#: templates/views/threads.html:8
+msgid "Open letters"
+msgstr ""
+
+#: templates/menu.html:18
+msgid "Help"
+msgstr ""
+
+#: templates/breadcrumbs/choose.html:4
+msgid "Choose a representative"
+msgstr ""
+
+#: templates/breadcrumbs/confirm.html:3 templates/views/confirm.html:8
+#: templates/views/write_confirm.html:4
+msgid "Confirm letter"
+msgstr ""
+
+#: templates/breadcrumbs/contact.html:4 templates/views/contact.html:4
+msgid "Contact us"
+msgstr ""
+
+#: templates/breadcrumbs/search.html:4
+msgid "Find a representative"
+msgstr ""
+
+#: templates/breadcrumbs/thread.html:3
+msgid "View letter"
+msgstr ""
+
+#: templates/breadcrumbs/write.html:4
+msgid "Write a letter"
+msgstr ""
+
+#: templates/items/institution.html:13 templates/items/representative.html:21
+msgid "Email: "
+msgstr ""
+
+#: templates/items/institution.html:15 templates/items/representative.html:23
+msgid "Write&nbsp;letter"
+msgstr ""
+
+#: templates/items/institution.html:21 templates/items/representative.html:29
+msgid "Phone number: "
+msgstr ""
+
+#: templates/items/institution.html:25
+msgid "Address: "
+msgstr ""
+
+#: templates/items/institution.html:45
+msgid "Recent letters"
+msgstr ""
+
+#: templates/items/institution.html:48
+msgid "All letters sent to this institution"
+msgstr ""
+
+#: templates/items/letter.html:6
+msgid "From:"
+msgstr ""
+
+#: templates/items/letter.html:10
+msgid "To:"
+msgstr ""
+
+#: templates/items/letter.html:23
+msgid "Subject:"
+msgstr ""
+
+#: templates/items/letter.html:29
+msgid "Date:"
+msgstr ""
+
+#: templates/items/letters.html:8 templates/items/threads.html:8
 msgid "Sender"
 msgstr ""
 
-#: templates/pjweb/public_mails.html:20
-msgid "Was sent on"
+#: templates/items/letters.html:9 templates/items/threads.html:9
+msgid "Recipient"
 msgstr ""
 
-#: templates/pjweb/public_mails.html:21
+#: templates/items/letters.html:10 templates/items/threads.html:10
+msgid "Sent at"
+msgstr ""
+
+#: templates/items/letters.html:16 templates/items/threads.html:16
 msgid "Answered"
 msgstr ""
 
-#: templates/pjweb/response.html:6
-msgid "You are writing an answer to "
+#: templates/items/representative.html:12
+msgid "Institution: "
 msgstr ""
 
-#: templates/pjweb/stats.html:6
-msgid "From"
+#: templates/views/confirm.html:20 templates/views/contact.html:44
+msgid "Send"
 msgstr ""
 
-#: templates/pjweb/stats.html:6
-msgid "to"
+#: templates/views/contact_thanks.html:4 templates/views/contact_thanks.html:8
+msgid "Thank you"
 msgstr ""
 
-#: templates/pjweb/stats.html:7
-msgid "Filter"
-msgstr ""
-
-#: templates/pjweb/thanks.html:8 templates/pjweb/feedback/feedback_sent.html:8
-msgid "View list of all public messages"
-msgstr ""
-
-#: templates/pjweb/feedback/feedback.html:5
-msgid "Have any notes? Write to us!"
-msgstr ""
-
-#: templates/pjweb/feedback/feedback.html:8
+#: templates/views/location.html:23
+#, python-format
 msgid ""
-"If address wasn't found in database, but you know, that it exists, write "
-"exact address, to which civil parish, polling district and municipality it "
-"belongs, and, if you can, specify polling district."
+"\n"
+"  <strong>Note:</strong> more than one %(kinds)s was found.\n"
+"  "
 msgstr ""
 
-#: templates/pjweb/feedback/feedback.html:9
-msgid ""
-"If your member of municipality, civil parish wasn't found, write his data: "
-"name, surname, phone, email, work address."
+#: templates/views/location_ask.html:20
+msgid "Continue"
 msgstr ""
 
-#: templates/pjweb/headers/steps.html:3
-msgid "Find desired representative"
-msgstr ""
-
-#: templates/pjweb/headers/steps.html:4
-msgid "Will be found by address"
-msgstr ""
-
-#: templates/pjweb/headers/steps.html:7
-msgid "Body of the message"
-msgstr ""
-
-#: templates/pjweb/headers/steps.html:8
-msgid "You can write public or private mail"
-msgstr ""
-
-#: templates/pjweb/headers/steps.html:10
-msgid "Preview and send"
-msgstr ""
-
-#: templates/pjweb/headers/steps.html:11
-msgid "Check your spelling ;-)"
-msgstr ""
-
-#: templates/pjweb/searchPlugins/territory/index.html:6
-msgid "Enter Your Address for search:"
-msgstr ""
-
-#: templates/pjweb/searchPlugins/territory/index.html:8
+#: templates/views/search.html:8 templates/views/search.html.py:22
 msgid "Search"
 msgstr ""
 
-#: templates/pjweb/searchPlugins/territory/index.html:9
-msgid "Eg.: Gedimino pr. 9, Vilnius"
+#: templates/views/sent.html:4 templates/views/sent.html.py:7
+msgid "Letter sent"
 msgstr ""
 
-#: templates/pjweb/searchPlugins/territory/index.html:14
-msgid "Several addresses were found. Choose:"
+#: templates/views/sent.html:12
+msgid "Your letter has been sent successfully."
 msgstr ""
 
-#: templates/pjweb/searchPlugins/territory/index.html:17
-msgid "Found Addresses for constituency"
+#: templates/views/sent.html:16
+#, python-format
+msgid ""
+"\n"
+"  You can view it <a href=\"%(url)s\">here</a>.\n"
+"  "
 msgstr ""
 
-#: templates/pjweb/searchPlugins/territory/index.html:42
-msgid "here"
+#: templates/views/threads.html:25
+msgid "Previous page"
+msgstr ""
+
+#: templates/views/threads.html:28
+#, python-format
+msgid ""
+"\n"
+"  Page %(page)s out of %(pages)s\n"
+"  "
+msgstr ""
+
+#: templates/views/threads.html:33
+msgid "Next page"
+msgstr ""
+
+#: templates/views/write.html:4
+msgid "Write letter"
+msgstr ""
+
+#: templates/views/write.html:54
+msgid "Submit"
+msgstr ""
+
+#: web/admin.py:29 web/admin.py:41 web/models.py:18 web/models.py:47
+msgid "content"
+msgstr ""
+
+#: web/forms.py:6
+msgid "Your name"
+msgstr ""
+
+#: web/models.py:11
+msgid "title"
+msgstr ""
+
+#: web/models.py:15
+msgid "article location"
+msgstr ""
+
+#: web/models.py:29
+msgid "article"
+msgstr ""
+
+#: web/models.py:30
+msgid "articles"
+msgstr ""
+
+#: web/models.py:43
+msgid "snippet identifier"
+msgstr ""
+
+#: web/models.py:55
+msgid "snippet"
+msgstr ""
+
+#: web/models.py:56
+msgid "snippets"
+msgstr ""
+
+#: web/views.py:26
+msgid "Feedback from {}"
 msgstr ""

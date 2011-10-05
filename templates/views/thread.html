@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block menu %}
+{% include "menu.html" %}
+{% endblock %}
+
+{% block title %}{{ title }} &ndash; {% endblock %}
+
+{% block breadcrumbs %}
+{% include "breadcrumbs/threads.html" %}
+{% include "breadcrumbs/thread.html" with active=1 %}
+{% endblock %}
+
+{% block content %}
+{% for letter in letters %}
+{% include "items/letter.html" with class=letter.kind %}
+{% endfor %}
+{% endblock %}

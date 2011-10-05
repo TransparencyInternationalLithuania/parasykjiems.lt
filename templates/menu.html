@@ -1,0 +1,20 @@
+{% load i18n %}
+
+
+<li>
+  <a href="{% url search %}" class="first {% if active == "search" %}selected{% endif %}">
+    {% trans "Representative search" %}
+  </a>
+</li>
+
+<li>
+  <a href="{% url threads %}" class="{% if active == "threads" %}selected{% endif %}">
+    {% trans "Open letters" %}
+  </a>
+</li>
+
+<li>
+  <a href="{% url article "help" %}" class="last {% if request.path == "/help/" or request.path == "/help/writing/" %}selected{% endif %}">
+    {% trans "Help" %}
+  </a>
+</li>

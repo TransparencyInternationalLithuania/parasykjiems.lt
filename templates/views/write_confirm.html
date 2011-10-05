@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load i18n snippet %}
+
+{% block title %}{% trans "Confirm letter" %} &ndash; {% endblock %}
+
+{% block breadcrumbs %}
+{% include "breadcrumbs/search.html" %}
+{% include "breadcrumbs/choose.html" %}
+{% include "breadcrumbs/write.html" %}
+{% include "breadcrumbs/confirm.html" with active=1 %}
+{% endblock %}
+
+{% block content %}
+{% snippet "write-confirm" %}
+{% endblock %}

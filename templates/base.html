@@ -1,11 +1,56 @@
-{% extends "base-base.html" %}
+{% load i18n snippet %}
+{% spaceless %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <link rel="icon" type="image/png" href="/static/img/favicon.png">
+    <title>{% block title %}{% endblock %}ParašykJiems</title>
+    <script type="text/javascript" src="/static/js/jquery-1.6.2.min.js">
+    </script>
+    {% block head %}{% endblock %}
+    {{ SETTINGS.ADDITIONAL_HTML_HEAD|safe }}
+  </head>
+  <body>
+    {% if SETTINGS.TESTING_VERSION %}
+    <div id="testing-version" onclick="$(this).hide()">
+      {% snippet "testing-version" %}
+    </div>
+    {% endif %}
 
-{% block body %}
-<div id="content">
-  <div id="c-head">
-    {% include 'pjweb/headers/steps.html' %}
-  </div>
-  
-  {% block content %}{% endblock %}
-</div>
-{% endblock %}
+    <div id="main-block">
+      <div id="header">
+        <table id="inner-header">
+          <tr>
+            <td rowspan="2">
+              <a href="/"><img id="logo" src="/static/img/logo.png" alt="{% trans "ParašykJiems" %}"></a>
+            </td><td id="slogan">
+              {% snippet "slogan" %}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <ul id="menu">
+                {% block menu %}
+                {% include "menu.html" %}
+                {% endblock %}
+              </ul>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="content">
+        <ul id="breadcrumbs">
+          {% block breadcrumbs %}
+          {% endblock %}
+        </ul>
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+    <div id="footer">
+      {% snippet "footer" %}
+    </div>
+  </body>
+</html>
+{% endspaceless %}

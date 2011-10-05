@@ -1,3 +1,0 @@
-{{ object.street }}
-{{ object.city }}
-{{ object.district }}

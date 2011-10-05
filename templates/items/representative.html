@@ -1,0 +1,34 @@
+{% load i18n markup %}
+
+<h4 id="{{ representative.slug }}">{{ representative.name }}</h4>
+<p class="subtitle">{{ representative.kind.name }}</p>
+
+{% if representative.kind.description %}
+<div class="description">{{ representative.kind.description|markdown }}</div>
+{% endif %}
+
+{% if not institution %}
+<p>
+  {% trans "Institution: " %}
+  <a href="{{ representative.institution.get_absolute_url }}">
+    {{ representative.institution.name }}
+  </a>
+</p>
+{% endif %}
+
+{% if representative.phone and representative.phone != institution.phone %}
+<p>{% trans "Phone number: " %} {{ representative.phone }}</p>
+{% endif %}
+
+{% if representative.other_info %}
+<p>{{ representative.other_info|urlizetrunc:40 }}</p>
+{% endif %}
+
+{% if representative.email and representative.email != institution.email %}
+<p>
+  {% trans "Email: " %} <strong>{{ representative.email }}</strong>
+  <a class="write" href="{% url write-representative representative.slug %}{{ choose_query }}">
+    {% trans "Write&nbsp;letter" %}
+  </a>
+</p>
+{% endif %}
