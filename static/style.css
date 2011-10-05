@@ -1,3 +1,5 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,600,700&subset=latin,latin-ext);
+
 * {
     margin: 0;
     padding: 0;
@@ -10,7 +12,7 @@ html {
 
 body {
     color: #222;
-    font-family: 'Droid Sans', sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-size: 12pt;
     height: 100%;
     background: #f0f0f2;
@@ -71,7 +73,7 @@ blockquote {
 }
 
 a {
-    color: #103673;
+    color: #305693;
     text-decoration: none;
     border: none;
 }
@@ -144,7 +146,8 @@ img {
 
 #menu a {
     text-decoration: none;
-    font-size: 14pt;
+    font-size: 13pt;
+    font-weight: 600;
     padding: 12px 20px 8px 20px;
     margin: 0 10px 0 10px;
     behavior: url(/static/PIE.htc);
@@ -192,7 +195,7 @@ img {
 #breadcrumbs {
     margin: 1.5em 0 1.5em 0;
     font-size: 14pt;
-    font-weight: bold;
+    font-weight: 700;
 }
 
 #breadcrumbs li {
@@ -292,11 +295,11 @@ form table td, form table th {
 
 form table th {
     text-align: left;
-    font-weight: normal;
+    font-weight: 400;
 }
 
 label {
-    font-weight: light;
+    font-weight: 400;
 }
 
 form input[type=checkbox] {
@@ -354,26 +357,25 @@ form[name=search] input {
 }
 
 #result-list a {
-    font-weight: bold;
+    font-weight: 600;
     text-decoration: none;
     display: block;
-    padding: 0.5em 0.5em 0.5em 0.5em;
-    margin: 0.5em 0.5em 0.5em 0.5em;
+    padding: 0.3em 0.5em 0.3em 0.5em;
+    margin: 0.4em 0.5em 0.4em 0.5em;
     border: solid 1px white;
 }
 
 #result-list a .subtitle {
-    font-weight: normal;
+    font-weight: 400;
 }
 
 #result-list a:hover {
-    border: solid 1px #eee;
-    background: #fafafa;
+    background: #eee;
 }
 
 #result-list img {
     float: left;
-    padding: 5px 10px 5px 5px;
+    padding: 10px 20px 5px 13px;
     behavior: url(/static/PIE.htc);
     position: relative;
 }
@@ -381,7 +383,7 @@ form[name=search] input {
 h1, h2, h3, h4, h5 {
     color: #444;
     font-size: 12pt;
-    font-weight: bold;
+    font-weight: 700;
     margin-bottom: 0.5em;
     margin-top: 1.5em;
 }
@@ -436,7 +438,7 @@ h5 {
 }
 
 .subtitle {
-    color: #555;
+    color: #444;
     font-size: 12pt;
     margin-top: 0;
 }
@@ -453,8 +455,8 @@ h5 {
     text-align: right;
 }
 
-.threads .subject {
-    font-weight: bold;
+.threads td.subject {
+    font-weight: 600;
 }
 
 .threads .sender {
@@ -482,7 +484,7 @@ h5 {
 
 .threads th {
     color: #444;
-    font-weight: bold;
+    font-weight: 700;
     border-bottom: 1px solid #ccd;
     background: #fff;
     background: -webkit-gradient(linear, 0 0, 0 bottom, from(#fff), to(#eaecef));
@@ -497,6 +499,7 @@ h5 {
 
 .threads a {
     color: #333;
+    text-decoration: none;
 }
 
 .threads td {
@@ -557,7 +560,7 @@ h5 {
 }
 
 .letter th {
-    font-weight: bold;
+    font-weight: 600;
     text-align: left;
     padding-right: 10px;
 }
@@ -622,6 +625,7 @@ hr {
 
 a.write {
     float: right;
+    text-decoration: none;
     background: #204683;
     color: white;
     border-radius: 1em;
