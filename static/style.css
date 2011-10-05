@@ -39,20 +39,14 @@ blockquote {
 
 #testing-version {
     font-size: 11pt;
-    color: #333;
-    z-index: 100;
-    position: absolute;
-    right: 3px;
-    top: 100px;
+    color: white;
     padding: 0.3em 1em 0.3em 1em;
-    background: rgb(255, 255, 200);
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 3px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
+    background: #666;
 }
 
 #testing-version * {
+    text-align: center;
+    color: white;
     margin: 0;
 }
 
@@ -60,7 +54,7 @@ blockquote {
     background: white;
     margin: 0 auto 0 auto;
     padding: 0 0 1em 0;
-    min-height: 77%;
+    min-height: 480px;
 }
 
 .note {
@@ -77,13 +71,13 @@ blockquote {
 }
 
 a {
-    color: #204683;
+    color: #103673;
     text-decoration: none;
     border: none;
 }
 
 a:hover {
-    color: #4076C3;
+    text-decoration: underline;
 }
 
 img {
@@ -91,20 +85,21 @@ img {
 }
 
 #logo {
-    width: 310px;
-    height: 95px;
+    width: 300px;
+    height: 75px;
+    margin: 5px 0 5px 40px;
 }
 
 #header {
-    background: #e7e7e8;
-    background: -webkit-gradient(linear, 0 0, 0 bottom, from(#f5f5f5), to(#e3e4e6));
-    background: -webkit-linear-gradient(#f5f5f5, #e3e4e6);
-    background: -moz-linear-gradient(#f5f5f5, #e3e4e6);
-    background: -ms-linear-gradient(#f5f5f5, #e3e4e6);
-    background: -o-linear-gradient(#f5f5f5, #e3e4e6);
-    background: linear-gradient(#f5f5f5, #e3e4e6);
-    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#F5F5F5FF, endColorstr=#E3E4E6FF)";
-    -pie-background: linear-gradient(#f5f5f5, #e3e4e6);
+    background: #e7e7e7;
+    background: -webkit-gradient(linear, 0 0, 0 bottom, from(#f5f5f5), to(#e5e5e5));
+    background: -webkit-linear-gradient(#f5f5f5, #e5e5e5);
+    background: -moz-linear-gradient(#f5f5f5, #e5e5e5);
+    background: -ms-linear-gradient(#f5f5f5, #e5e5e5);
+    background: -o-linear-gradient(#f5f5f5, #e5e5e5);
+    background: linear-gradient(#f5f5f5, #e5e5e5);
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#F5F5F5FF, endColorstr=#E5E5E5FF)";
+    -pie-background: linear-gradient(#f5f5f5, #e5e5e5);
     -pie-box-shadow: 0px 1px 8px #999;
     -webkit-box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.3);
     -moz-box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.3);
@@ -133,10 +128,13 @@ img {
     margin: 10px 0 0 0;
 }
 
+#menu-td {
+    vertical-align: bottom;
+    padding-bottom: 7px;
+}
+
 #menu {
     text-align: center;
-    margin: 0 0 10px 0;
-    padding: 0;
 }
 
 #menu li {
@@ -145,37 +143,49 @@ img {
 }
 
 #menu a {
+    text-decoration: none;
     font-size: 14pt;
-    color: #666;
-    padding: 7px 27px 7px 27px;
-    background: #fafafa;
+    padding: 12px 20px 8px 20px;
+    margin: 0 10px 0 10px;
     behavior: url(/static/PIE.htc);
     position: relative;
-}
-
-#menu li a.first {
-    -webkit-border-radius: 10px 0 0 10px;
-    -moz-border-radius: 10px 0 0 10px;
-    border-radius: 10px 0 0 10px;
-    behavior: url(/static/PIE.htc);
-    position: relative;
-}
-
-#menu li a.last {
-    -webkit-border-radius: 0 10px 10px 0;
-    -moz-border-radius: 0 10px 10px 0;
-    border-radius: 0 10px 10px 0;
-    behavior: url(/static/PIE.htc);
-    position: relative;
+    color: #444;
+    text-shadow: #aaa 0px 1px 5px;
+    -webkit-border-radius: 20px 20px 0 0;
+    -moz-border-radius: 20px 0 0 20px;
+    background: #cfcfcf;
+    background: -webkit-gradient(linear, 0 0, 0 bottom, from(#dfdfdf), to(#cacaca));
+    background: -webkit-linear-gradient(#dfdfdf, #cacaca);
+    background: -moz-linear-gradient(#dfdfdf, #cacaca);
+    background: -ms-linear-gradient(#dfdfdf, #cacaca);
+    background: -o-linear-gradient(#dfdfdf, #cacaca);
+    background: linear-gradient(#dfdfdf, #cacaca);
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#DFDFDFFF, endColorstr=#CACACAFF)";
+    -pie-background: linear-gradient(#dfdfdf, #cacaca);
 }
 
 #menu a:hover {
-    background: #959dab;
-    color: white;
+    background: #cfcfcf;
+    background: -webkit-gradient(linear, 0 0, 0 bottom, from(#cfcfcf), to(#bfbfbf));
+    background: -webkit-linear-gradient(#cfcfcf, #bfbfbf);
+    background: -moz-linear-gradient(#cfcfcf, #bfbfbf);
+    background: -ms-linear-gradient(#cfcfcf, #bfbfbf);
+    background: -o-linear-gradient(#cfcfcf, #bfbfbf);
+    background: linear-gradient(#cfcfcf, #bfbfbf);
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#CFCFCFFF, endColorstr=#BFBFBFFF)";
+    -pie-background: linear-gradient(#cfcfcf, #bfbfbf);
 }
 
 #menu a.selected {
-    background: #5d6675;
+    background: #cfcfcf;
+    background: -webkit-gradient(linear, 0 0, 0 bottom, from(#777777), to(#848484));
+    background: -webkit-linear-gradient(#777777, #848484);
+    background: -moz-linear-gradient(#777777, #848484);
+    background: -ms-linear-gradient(#777777, #848484);
+    background: -o-linear-gradient(#777777, #848484);
+    background: linear-gradient(#777777, #848484);
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#777777FF, endColorstr=#848484FF)";
+    -pie-background: linear-gradient(#777777, #848484);
     color: white;
 }
 
@@ -344,11 +354,16 @@ form[name=search] input {
 }
 
 #result-list a {
+    font-weight: bold;
     text-decoration: none;
     display: block;
     padding: 0.5em 0.5em 0.5em 0.5em;
     margin: 0.5em 0.5em 0.5em 0.5em;
     border: solid 1px white;
+}
+
+#result-list a .subtitle {
+    font-weight: normal;
 }
 
 #result-list a:hover {
@@ -675,10 +690,6 @@ ul.errorlist {
     font-weight: bold;
 }
 
-.q-empty {
-    /* background: url("/static/img/q.png") no-repeat 0.4em; */
-}
-
 strong {
     color: #333;
 }
@@ -688,18 +699,14 @@ strong {
 }
 
 .search-advice div {
-    width: 40%;
+    margin-top: 1em;
     vertical-align: top;
     float: left;
+    padding-left: 3em;
+}
 
-    background: #eee;
-    color: #333;
-    border-radius: 10px;
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
-    behavior: url(/static/PIE.htc);
-    position: relative;
-
-    padding: 0.1em 1em 1em 1em;
-    margin: 1em;
+.search-advice div:first-child {
+    padding-left: 0;
+    border-right: 1px solid #ccc;
+    width: 50%;
 }
