@@ -1,5 +1,12 @@
-{% extends "errorpage.html" %}
+{% extends "base.html" %}
+{% load i18n snippet %}
+
+{% block menu %}
+{% include "menu.html" %}
+{% endblock %}
+
+{% block breadcrumbs %}<li>{% trans "Page not found" %}</li>{% endblock %}
 
 {% block content %}
-Error 404: Page not found.
+{% snippet "error-not-found" %}
 {% endblock %}

@@ -1,0 +1,6 @@
+User-agent: *
+{% if SETTINGS.TESTING_VERSION %}
+Disallow: /
+{% else %}
+Disallow: /admin
+{% endif %}

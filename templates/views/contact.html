@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load i18n snippet %}
+
+{% block title %}{% trans "Contact us" %} &ndash; {% endblock %}
+
+{% block breadcrumbs %}
+{% include "breadcrumbs/contact.html" with active=1 %}
+{% endblock %}
+
+{% block content %}
+
+{% snippet "contacts" %}
+
+<form method="POST">
+  {% csrf_token %}
+  <table>
+    {% for field in form %}
+    <tr>
+      {% if field.html_name == 'message' %}
+      <td colspan="2">
+        {{ field }}
+      </td>
+      {% else %}
+      <th>
+        {{ field.label_tag }}:
+      </th>
+      <td>
+        {{ field }}
+      </td>
+      {% endif %}
+    </tr>
+
+    {% if field.errors %}
+    <tr><td></td><td>{{ field.errors }}</td></tr>
+    {% endif %}
+
+    {% if field.help_text %}
+    <tr><td colspan="2" class="helptext">
+        {{ field.help_text }}
+    </td></tr>
+    {% endif %}
+    {% endfor %}
+  </table>
+  <input value="{% trans "Send" %}" type="submit">
+</form>
+
+{% endblock %}

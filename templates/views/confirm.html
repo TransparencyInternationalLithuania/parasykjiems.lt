@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block menu %}
+{% include "menu.html" %}
+{% endblock %}
+
+{% block title %}{% trans "Confirm letter" %} &ndash; {% endblock %}
+
+{% block breadcrumbs %}
+{% include "breadcrumbs/confirm.html" with active=1 %}
+{% endblock %}
+
+{% block content %}
+
+{% include "items/letter.html" with letter=enquiry %}
+
+<form method="POST">
+  {% csrf_token %}
+  <input value="{% trans "Send" %}" type="Submit">
+</form>
+
+{% endblock %}

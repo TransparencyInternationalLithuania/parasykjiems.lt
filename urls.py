@@ -1,24 +1,31 @@
-from django.conf.urls.defaults import *
-from django.conf import settings
-
-# Uncomment the next two lines to enable the admin:
+from django.conf.urls.defaults import patterns, include, url
 from django.contrib import admin
+import web.sitemaps
+import search.sitemaps
+import mail.sitemaps
+
+
 admin.autodiscover()
 
+
+sitemaps = {
+    'articles': web.sitemaps.ArticleSitemap,
+    'institutions': search.sitemaps.InstitutionSitemap,
+    'threads': mail.sitemaps.ThreadSitemap,
+}
+
+
 urlpatterns = patterns('',
-    # Example:
-    # (r'^parasykjiems/', include('parasykjiems.foo.urls')),
+    url(r'', include('search.urls')),
+    url(r'', include('mail.urls')),
 
-    # Uncomment the admin/doc line below and add 'django.contrib.admindocs'
-    # to INSTALLED_APPS to enable admin documentation:
-    # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
-    (r'^', include('pjweb.urls')),
-    (r'^', include('cdb_lt.urls')),
-    (r'^', include('territories.urls')),
+    url(r'', include('scrape.urls')),
+    url(r'^admin/', include(admin.site.urls)),
 
-    # Uncomment the next line to enable the admin:
-    (r'^admin/', include(admin.site.urls)),
-#   (r'^search/', include('haystack.urls')),
-    (r'^static/(?P<path>.*)$', 'django.views.static.serve',
-    {'document_root': settings.STATIC_DOC_ROOT}),
+    url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap',
+        {'sitemaps': sitemaps}),
+
+    # This should be the last in the list, because the
+    # web.views.article's URL is sort of catch-all.
+    url(r'', include('web.urls')),
 )

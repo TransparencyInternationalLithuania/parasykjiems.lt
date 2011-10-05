@@ -1,0 +1,37 @@
+{% load i18n %}
+
+<div class="letter {{ class }}">
+  <table>
+    <tr>
+      <th>{% trans "From:" %}</th>
+      <td>{{ letter.sender_name }}</td>
+    <tr>
+    <tr>
+      <th>{% trans "To:" %}</th>
+      <td>
+        {% if letter.is_recipient_current %}
+        <a href="{{ letter.recipient.get_absolute_url }}">
+          {{ letter.recipient_name }}
+        </a>
+        {% else %}
+        {{ letter.recipient_name }}
+        {% endif %}
+      </td>
+    </tr>
+    {% if letter.subject %}
+    <tr>
+      <th>{% trans "Subject:" %}</th>
+      <td>{{ letter.subject }}</td>
+    </tr>
+    {% endif %}
+    {% if letter.date %}
+    <tr>
+      <th>{% trans "Date:" %}</th>
+      <td>{{ letter.date|date:'Y-m-d' }}</td>
+    </tr>
+    {% endif %}
+  </table>
+  <div class="body">
+    {{ letter.body|urlizetrunc:60|linebreaks }}
+  </div>
+</div>
