@@ -150,12 +150,11 @@ img {
     font-weight: 600;
     padding: 12px 20px 8px 20px;
     margin: 0 10px 0 10px;
-    behavior: url(/static/PIE.htc);
-    position: relative;
     color: #444;
     text-shadow: #aaa 0px 1px 5px;
     -webkit-border-radius: 20px 20px 0 0;
-    -moz-border-radius: 20px 0 0 20px;
+    -moz-border-radius: 20px 20px 0 0;
+    border-radius: 20px 20px 0 0;
     background: #cfcfcf;
     background: -webkit-gradient(linear, 0 0, 0 bottom, from(#dfdfdf), to(#cacaca));
     background: -webkit-linear-gradient(#dfdfdf, #cacaca);
@@ -165,6 +164,8 @@ img {
     background: linear-gradient(#dfdfdf, #cacaca);
     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#DFDFDFFF, endColorstr=#CACACAFF)";
     -pie-background: linear-gradient(#dfdfdf, #cacaca);
+    behavior: url(/static/PIE.htc);
+    position: relative;
 }
 
 #menu a:hover {
