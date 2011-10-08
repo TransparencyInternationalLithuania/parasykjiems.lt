@@ -36,13 +36,13 @@ def decode_header_unicode(h):
     return u' '.join(unicodes)
 
 
-def decode_date_header(msg):
+def decode_date_header(header):
     """Returns the given email message's Date header as a datetime object.
 
     The time is of the local timezone.
     """
-    string = decode_header_unicode(msg['date'])
-    timestamp = email.utils.mktime_tz(email.utils.parsedate_tz(string))
+    uni = decode_header_unicode(header)
+    timestamp = email.utils.mktime_tz(email.utils.parsedate_tz(uni))
     return datetime.datetime.fromtimestamp(timestamp)
 
 
