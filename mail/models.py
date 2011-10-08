@@ -35,12 +35,12 @@ class Enquiry(models.Model):
 
     # Secret hashes are separate for confirmation and replies, so that
     # a sender can't reply to himself.
-    reply_hash = models.IntegerField(default=generate_hash,
-                                     db_index=True,
-                                     null=False, blank=True)
-    confirm_hash = models.IntegerField(default=generate_hash,
-                                       db_index=True,
-                                       null=False, blank=True)
+    reply_hash = models.BigIntegerField(default=generate_hash,
+                                        db_index=True,
+                                        null=False, blank=True)
+    confirm_hash = models.BigIntegerField(default=generate_hash,
+                                          db_index=True,
+                                          null=False, blank=True)
 
     slug = models.CharField(max_length=SLUG_LEN,
                             blank=True,
