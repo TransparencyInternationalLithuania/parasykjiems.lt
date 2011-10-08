@@ -96,7 +96,7 @@ def send_enquiry(enquiry):
         id=enquiry.id,
         hash=enquiry.reply_hash)
     message = EmailMessage(
-        from_email=settings.SERVER_EMAIL,
+        from_email=reply_to,
         subject=u'[ParašykJiems] {}'.format(enquiry.subject),
         body=render_to_string('mail/enquiry.txt', {
             'SETTINGS': settings,
@@ -129,7 +129,6 @@ def send_enquiry(enquiry):
         from_email=settings.SERVER_EMAIL,
         subject=_("Copy of the letter you sent."),
         body=render_to_string('mail/copy.txt', {
-            'from': utils.decode_header_unicode(msg['from']),
             'to': utils.decode_header_unicode(msg['to']),
             'date': utils.decode_header_unicode(msg['date']),
             'subject': utils.decode_header_unicode(msg['subject']),
