@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n snippet %}
 
 {% block title %}{% trans "Letter sent" %} &ndash; {% endblock %}
 
@@ -9,7 +9,7 @@
 
 {% block content %}
 
-<p>{% trans "Your letter has been sent successfully." %}</p>
+{% snippet "sent" %}
 
 {% if enquiry.is_open %}
 <p>
