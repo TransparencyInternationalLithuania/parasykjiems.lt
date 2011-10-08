@@ -1,4 +1,4 @@
-{{ enquiry.body }}
+{% autoescape off %}{{ enquiry.body }}
 
 --
 Šį laiškas buvo išsiųstas naudojant http://parašykjiems.lt sistemą.
@@ -8,4 +8,4 @@
 
 Jūsų atsakymas irgi bus matomas tuo adresu. Jeigu atsakėte į laišką,
 bet jūsų atsakymas neatsiranda tinklalapyje, tai praneškite mums
-el. paštu feedback@parasykjiems.lt{% endif %}
+el. paštu feedback@parasykjiems.lt{% endif %}{% endautoescape %}

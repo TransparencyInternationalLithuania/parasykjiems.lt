@@ -11,6 +11,4 @@ Gavėjas: {{ response.recipient_name }}
 Tema: {{ response.subject }}
 Data: {{ response.date|date:'Y-m-d' }}
 
-{{ response.body }}
-------------------------------------------------------------------------
-{% endautoescape %}
+{{ response.body }}------------------------------------------------------------------------{% endautoescape %}
