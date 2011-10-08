@@ -1,4 +1,4 @@
-LOCAL_SETTINGS_VERSION = 9
+LOCAL_SETTINGS_VERSION = 10
 
 
 DEBUG = True
@@ -28,12 +28,11 @@ SITE_HOST = SITE_DOMAIN + ':8000'
 # include URL scheme.
 SITE_ADDRESS = 'http://' + SITE_HOST
 
-# Feedback is sent here
+# Feedback is sent here.
 FEEDBACK_EMAIL = 'feedback@' + SITE_DOMAIN
 
-# Various email addresses used by the system:
+# Used as From adress for emails sent by the service, except enquiries.
 SERVER_EMAIL = 'parasykjiems@' + SITE_DOMAIN
-ABUSE_EMAIL = 'abuse@' + SITE_DOMAIN
 
 # Should contain {id} and {hash} somewhere, which will be replaced by
 # numbers.
