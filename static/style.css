@@ -7,20 +7,22 @@
 
 html {
     overflow-y: scroll;
-    height: 100%;
+    overflow-x: auto;
 }
 
 body {
     color: #222;
     font-family: 'Open Sans', sans-serif;
-    font-size: 12pt;
-    height: 100%;
     background: #f0f0f2;
 }
 
 p {
     text-align: justify;
     margin: 1em 0 1em 0;
+}
+
+p, li {
+    line-height: 150%;
 }
 
 ul {
@@ -40,7 +42,7 @@ blockquote {
 }
 
 #testing-version {
-    font-size: 11pt;
+    font-size: 0.8em;
     color: white;
     padding: 0.3em 1em 0.3em 1em;
     background: #666;
@@ -56,7 +58,7 @@ blockquote {
     background: white;
     margin: 0 auto 0 auto;
     padding: 0 0 1em 0;
-    min-height: 480px;
+    min-height: 520px;
 }
 
 .note {
@@ -125,7 +127,6 @@ img {
 
 #slogan p {
     color: #4d5665;
-    font-size: 13pt;
     text-align: center;
     margin: 10px 0 0 0;
 }
@@ -146,7 +147,7 @@ img {
 
 #menu a {
     text-decoration: none;
-    font-size: 13pt;
+    font-size: 1.05em;
     font-weight: 600;
     padding: 12px 20px 8px 20px;
     margin: 0 10px 0 10px;
@@ -195,7 +196,7 @@ img {
 
 #breadcrumbs {
     margin: 1.5em 0 1.5em 0;
-    font-size: 14pt;
+    font-size: 1.1em;
     font-weight: 700;
 }
 
@@ -211,6 +212,7 @@ img {
 
 #breadcrumbs a {
     color: #666;
+    text-decoration: none;
 }
 
 #breadcrumbs a:hover {
@@ -225,18 +227,16 @@ img {
 #footer {
     border-top: 1px solid #dfdfdf;
     text-align: center;
-    font-size: 10pt;
     color: #444;
-    padding: 2em;
-
-    position: relative;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
+    padding: 1em 0 1.5em 0;
+    font-size: 0.8em;
 }
 
 #footer * {
     text-align: center;
+}
+
+#footer div * {
     vertical-align: middle;
 }
 
@@ -244,13 +244,9 @@ img {
     margin: 0 0.5em 0 0.5em;
 }
 
-#footer a {
-    color: #4d6685;
-}
-
-form input[type=text], form textarea {
-    font-size: 14pt;
-    margin: 5px;
+input[type=text], textarea {
+    font-size: 1.1em;
+    margin: 3px;
     padding: 3px;
     width: 100%;
     border: solid 1px #aaa;
@@ -262,12 +258,13 @@ form input[type=text], form textarea {
     border-radius: 2px;
 }
 
-textarea {
+form textarea {
+    font-size: 1em;
     height: 20em;
 }
 
 form input[name=q] {
-    font-size: 16pt;
+    font-size: 1.3em;
     width: 70%;
     padding: 5px;
     border: solid 1px #aaa;
@@ -308,10 +305,9 @@ form input[type=checkbox] {
 }
 
 form input[type=submit] {
-    width: 25%;
     margin: 0 0 0 auto;
-    font-size: 120%;
-    padding: 0.2em 0.2em 0.2em 0.2em;
+    font-size: 1.1em;
+    padding: 5px 15px 5px 15px;
     -webkit-border-radius: 7px;
     -moz-border-radius: 7px;
     border-radius: 7px;
@@ -347,8 +343,8 @@ form[name=search] input {
 
 #id_house_number {
     margin-left: 1em;
-    width: 3em;
-    font-size: 120%;
+    width: 4em;
+    font-size: 1.2em;
 }
 
 #result-list {
@@ -364,6 +360,7 @@ form[name=search] input {
     padding: 0.3em 0.5em 0.3em 0.5em;
     margin: 0.4em 0.5em 0.4em 0.5em;
     border: solid 1px white;
+    color: #222;
 }
 
 #result-list a .subtitle {
@@ -371,7 +368,21 @@ form[name=search] input {
 }
 
 #result-list a:hover {
-    background: #eee;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    background: #cfcfcf;
+    background: -webkit-gradient(linear, 0 0, 0 bottom, from(#d0d0d0), to(#e0e0e0));
+    background: -webkit-linear-gradient(#d0d0d0, #e0e0e0);
+    background: -moz-linear-gradient(#d0d0d0, #e0e0e0);
+    background: -ms-linear-gradient(#d0d0d0, #e0e0e0);
+    background: -o-linear-gradient(#d0d0d0, #e0e0e0);
+    background: linear-gradient(#d0d0d0, #e0e0e0);
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#d0d0d0FF, endColorstr=#e0e0e0FF)";
+    -pie-background: linear-gradient(#d0d0d0, #e0e0e0);
+    position: relative;
+    behavior: url(/static/PIE.htc);
+    color: black;
 }
 
 #result-list img {
@@ -383,10 +394,10 @@ form[name=search] input {
 
 h1, h2, h3, h4, h5 {
     color: #444;
-    font-size: 12pt;
+    font-size: 1.1em;
     font-weight: 700;
     margin-bottom: 0.5em;
-    margin-top: 1.5em;
+    margin-top: 0.5em;
 }
 
 h1 {
@@ -395,22 +406,24 @@ h1 {
 
 .institution {
     width: 100%;
-    font-size: 11pt;
-    margin-bottom: 3em;
+    margin-bottom: 1em;
+    font-size: 0.95em;
+}
+
+.institution p {
+    margin: 0.5em 0 0.5em 0;
+}
+
+.institution .subtitle {
+    margin: 0;
 }
 
 .institution td {
     vertical-align: top;
-    padding: 0 1em 0.5em 1em;
 }
 
 .institution h2 {
-    font-size: 16pt;
-    margin-bottom: 0;
-}
-
-.institution h3 {
-    font-size: 14pt;
+    font-size: 1.25em;
     margin-bottom: 0;
 }
 
@@ -420,8 +433,8 @@ h1 {
 }
 
 .representative h4 {
+    margin-top: 0.5em;
     margin-bottom: 0;
-    font-size: 12pt;
 }
 
 .active-representative {
@@ -429,18 +442,12 @@ h1 {
 }
 
 h5 {
-    font-size: 12pt;
     font-weight: bold;
-}
-
-.institution img {
-    float: left;
-    margin: 8px;
 }
 
 .subtitle {
     color: #444;
-    font-size: 12pt;
+    font-size: 1em;
     margin-top: 0;
 }
 
@@ -486,15 +493,15 @@ h5 {
 .threads th {
     color: #444;
     font-weight: 700;
-    border-bottom: 1px solid #ccd;
+    border-bottom: 1px solid #ddd;
     background: #fff;
-    background: -webkit-gradient(linear, 0 0, 0 bottom, from(#fff), to(#eaecef));
-    background: -webkit-linear-gradient(#fff, #eaecef);
-    background: -moz-linear-gradient(#fff, #eaecef);
-    background: -ms-linear-gradient(#fff, #eaecef);
-    background: -o-linear-gradient(#fff, #eaecef);
-    background: linear-gradient(#fff, #eaecef);
-    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#FFFFFFFF, endColorstr=#EAECEFFF)";
+    background: -webkit-gradient(linear, 0 0, 0 bottom, from(#fff), to(#ececec));
+    background: -webkit-linear-gradient(#fff, #ececec);
+    background: -moz-linear-gradient(#fff, #ececec);
+    background: -ms-linear-gradient(#fff, #ececec);
+    background: -o-linear-gradient(#fff, #ececec);
+    background: linear-gradient(#fff, #ececec);
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#FFFFFFFF, endColorstr=#ECECECFF)";
     behavior: url(/static/PIE.htc);
 }
 
@@ -541,7 +548,7 @@ h5 {
 }
 
 .letter {
-    font-size: 11pt;
+    font-size: 0.9em;
     margin-bottom: 1em;
     background: #d6e0f3;
     padding: 0.5em 1em 0.5em 1em;
@@ -550,14 +557,12 @@ h5 {
     -webkit-border-radius: 1em;
     behavior: url(/static/PIE.htc);
     position: relative;
+    max-width: 800px;
 }
 
 .response {
     background: #f3f0b6;
-}
-
-.letter a {
-    text-decoration: underline;
+    margin-left: 2em;
 }
 
 .letter th {
@@ -571,23 +576,29 @@ h5 {
 }
 
 .letter .body {
-    margin: 3px 10px 3px 10px;
+    margin: 3px 30px 3px 30px;
     padding: 3px 10px 3px 10px;
 }
 
 .description {
-    background: #e0e6ff;
+    background: #eaeaff;
+    border: 2px solid #e0e0ff;
     color: #345;
     border-radius: 10px;
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
-    padding: 0.3em 2em 0.3em 2em;
+    margin: 1em;
+    padding: 0 1.5em 0.1em 1.5em;
     behavior: url(/static/PIE.htc);
     position: relative;
 }
 
-.description a {
+.letter a, .description a {
     text-decoration: underline;
+}
+
+.letter a:hover, .description a:hover {
+    color: #002663;
 }
 
 .description h4 {
@@ -596,9 +607,9 @@ h5 {
 }
 
 hr {
-    margin: 3em 0 2em 0;
+    margin: 0 0 1.5em 0;
     border: none;
-    border-bottom: 1px solid #dddddd;
+    border-bottom: 1px solid #eee;
 }
 
 .pager {
@@ -625,21 +636,43 @@ hr {
 }
 
 a.write {
-    float: right;
-    text-decoration: none;
-    background: #204683;
+    display: block;
+    text-align: center;
+    width: 7em;
+    margin: 1em auto 1.5em auto;
     color: white;
-    border-radius: 1em;
-    -moz-border-radius: 1em;
-    -webkit-border-radius: 1em;
-    padding: 0.4em 0.8em 0.4em 0.8em;
+    text-decoration: none;
+    font-size: 1.05em;
+    font-weight: 600;
+    padding: 8px 12px 8px 12px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    background: #cfcfcf;
+    background: -webkit-gradient(linear, 0 0, 0 bottom, from(#666666), to(#747474));
+    background: -webkit-linear-gradient(#666666, #747474);
+    background: -moz-linear-gradient(#666666, #747474);
+    background: -ms-linear-gradient(#666666, #747474);
+    background: -o-linear-gradient(#666666, #747474);
+    background: linear-gradient(#666666, #747474);
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#666666FF, endColorstr=#747474FF)";
+    -pie-background: linear-gradient(#666666, #747474);
     position: relative;
-    top: -0.4em;
     behavior: url(/static/PIE.htc);
 }
 
 a.write:hover {
-    background: #4076C3;
+    background: #cfcfcf;
+    background: -webkit-gradient(linear, 0 0, 0 bottom, from(#555555), to(#646464));
+    background: -webkit-linear-gradient(#555555, #646464);
+    background: -moz-linear-gradient(#555555, #646464);
+    background: -ms-linear-gradient(#555555, #646464);
+    background: -o-linear-gradient(#555555, #646464);
+    background: linear-gradient(#555555, #646464);
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#555555FF, endColorstr=#646464FF)";
+    -pie-background: linear-gradient(#555555, #646464);
+    position: relative;
+    behavior: url(/static/PIE.htc);
 }
 
 ul.errorlist {
