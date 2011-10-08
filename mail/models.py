@@ -136,6 +136,8 @@ class Response(models.Model):
     raw_message = models.TextField(
         help_text=_("The unprocessed e-mail message."))
 
+    sent_reply_notification = models.BooleanField(default=False)
+
     @property
     def message(self):
         """Returns this Response as an email.message.Message object.
