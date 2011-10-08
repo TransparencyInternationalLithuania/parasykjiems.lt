@@ -131,7 +131,7 @@ def send_enquiry(enquiry):
         subject=_("Copy of the letter you sent."),
         body=render_to_string('mail/copy.txt', {
             'to': utils.decode_header_unicode(msg['to']),
-            'date': utils.decode_header_unicode(msg['date']),
+            'date': utils.decode_date_header(msg['date']),
             'subject': utils.decode_header_unicode(msg['subject']),
             'body': message.message().get_payload(decode=True),
         }),
