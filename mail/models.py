@@ -8,8 +8,6 @@ template passing the specific instance as the letter parameter.
 
 import random
 import email
-import datetime
-import time
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -164,10 +162,7 @@ class Response(models.Model):
 
     @property
     def date(self):
-        return datetime.datetime.fromtimestamp(
-            time.mktime(
-                email.utils.parsedate(
-                    self.message['date'])))
+        return utils.decode_date_header(self.message['date'])
 
     @property
     def body(self):
