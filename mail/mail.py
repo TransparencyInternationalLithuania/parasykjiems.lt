@@ -4,6 +4,7 @@ import datetime
 from django.template.loader import render_to_string
 from django.core.mail import send_mail, EmailMessage
 from django.utils.translation import ugettext as _
+from email.utils import formataddr
 
 import settings
 from parasykjiems.mail import utils
@@ -50,8 +51,8 @@ def submit_enquiry(sender_name,
     })
 
     send_mail(
-        from_email=settings.SERVER_EMAIL,
-        recipient_list=[u'{} <{}>'.format(sender_name, sender_email)],
+        from_email=formataddr((u'ParašykJiems', settings.SERVER_EMAIL)),
+        recipient_list=[formataddr((sender_name, sender_email))],
         subject=_('Confirm your letter'),
         message=confirm_msg,
     )
@@ -86,18 +87,18 @@ def send_enquiry(enquiry):
                       lambda e: [e.subject])
 
     if settings.TESTING_VERSION:
-        recipients = [u'{} <{}>'.format(enquiry.recipient_name,
-                                        settings.REDIRECT_ENQUIRIES_TO)]
+        recipients = [formataddr((enquiry.recipient_name,
+                                  settings.REDIRECT_ENQUIRIES_TO))]
     else:
-        recipients = [u'{} <{}>'.format(enquiry.recipient_name,
-                                        enquiry.recipient_email)]
+        recipients = [formataddr((enquiry.recipient_name,
+                                  enquiry.recipient_email))]
 
     reply_to = settings.ENQUIRY_EMAIL_FORMAT.format(
         id=enquiry.id,
         hash=enquiry.reply_hash)
     message = EmailMessage(
-        from_email=reply_to,
-        subject=u'[ParašykJiems] {}'.format(enquiry.subject),
+        from_email=formataddr((enquiry.sender_name, reply_to)),
+        subject=enquiry.subject,
         body=render_to_string('mail/enquiry.txt', {
             'SETTINGS': settings,
             'enquiry': enquiry,
@@ -126,7 +127,7 @@ def send_enquiry(enquiry):
 
     msg = message.message()
     user_copy = EmailMessage(
-        from_email=settings.SERVER_EMAIL,
+        from_email=formataddr((u'ParašykJiems', settings.SERVER_EMAIL)),
         subject=_("Copy of the letter you sent."),
         body=render_to_string('mail/copy.txt', {
             'to': utils.decode_header_unicode(msg['to']),
@@ -134,15 +135,15 @@ def send_enquiry(enquiry):
             'subject': utils.decode_header_unicode(msg['subject']),
             'body': message.message().get_payload(decode=True),
         }),
-        to=[u'{} <{}>'.format(enquiry.sender_name, enquiry.sender_email)])
+        to=[formataddr((enquiry.sender_name, enquiry.sender_email))])
     user_copy.send()
 
 
 def send_enquiry_reply_notification(response):
     send_mail(
-        from_email=settings.SERVER_EMAIL,
-        recipient_list=[u'{} <{}>'.format(response.parent.sender_name,
-                                          response.parent.sender_email)],
+        from_email=formataddr((u'ParašykJiems', settings.SERVER_EMAIL)),
+        recipient_list=[formataddr((response.parent.sender_name,
+                                    response.parent.sender_email))],
         subject=_('Your enquiry has been responded to'),
         message=render_to_string('mail/responded.txt', {
             'SETTINGS': settings,
