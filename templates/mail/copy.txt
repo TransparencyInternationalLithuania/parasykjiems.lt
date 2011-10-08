@@ -1,7 +1,6 @@
 Laiškas, kurį išsiuntėte per ParašykJiems.lt sistemą:
 
 ------------------------------------------------------------------------
-From: {{ from|safe }}
 To: {{ to|safe }}
 Date: {{ date|safe }}
 Subject: {{ subject }}
