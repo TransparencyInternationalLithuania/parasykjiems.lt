@@ -5,6 +5,7 @@ from django.core.mail import EmailMessage
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 from django.views.decorators.cache import cache_control
+from email.utils import formataddr
 
 from forms import ContactForm
 from models import Article
@@ -16,13 +17,15 @@ def contact(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
-            user_address = u'{name} <{email}>'.format(**form.cleaned_data)
+            user_address = formataddr((form.cleaned_data['name'],
+                                       form.cleaned_data['email']))
 
             EmailMessage(
-                from_email=settings.SERVER_EMAIL,
+                from_email=formataddr((u'ParašykJiems',
+                                       settings.SERVER_EMAIL)),
                 to=[settings.FEEDBACK_EMAIL],
-                subject=(u'[ParašykJiems] ' +
-                         _(u'Feedback from {}').format(user_address)),
+                subject=(_(u'Feedback from {}').format(
+                    form.cleaned_data['name'])),
                 body=form.cleaned_data['message'],
                 headers={'Reply-To': user_address},
             ).send()
