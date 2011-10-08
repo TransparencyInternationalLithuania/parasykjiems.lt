@@ -1,14 +1,14 @@
 {% load i18n snippet %}
 {% spaceless %}
 <!DOCTYPE html>
-<html>
+<html lang="lt">
   <head>
     <link rel="stylesheet" type="text/css" href="/static/style.css">
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <link rel="icon" type="image/png" href="/static/img/favicon.png">
     <title>{% block title %}{% endblock %}ParašykJiems</title>
-    <script type="text/javascript" src="/static/js/jquery-1.6.2.min.js">
-    </script>
+    <script type="text/javascript" src="/static/js/jquery-1.6.2.min.js"></script>
+    <script type="text/javascript" src="/static/js/hyphenator.js"></script>
     {% block head %}{% endblock %}
     {{ SETTINGS.ADDITIONAL_HTML_HEAD|safe }}
   </head>
@@ -40,7 +40,7 @@
           </tr>
         </table>
       </div>
-      <div id="content">
+      <div id="content" class="hyphenate">
         <ul id="breadcrumbs">
           {% block breadcrumbs %}
           {% endblock %}
