@@ -1,9 +1,8 @@
-Laiškas, kurį išsiuntėte per ParašykJiems.lt sistemą:
+{% autoescape off %}Laiškas, kurį išsiuntėte per ParašykJiems.lt sistemą:
 
 ------------------------------------------------------------------------
-To: {{ to|safe }}
-Date: {{ date|safe }}
-Subject: {{ subject }}
+Gavėjas: {{ to }}
+Tema: {{ subject }}
+Data: {{ date|date:'Y-m-d' }}
 
-{{ body }}
-------------------------------------------------------------------------
+{{ body }}------------------------------------------------------------------------{% endautoescape %}
