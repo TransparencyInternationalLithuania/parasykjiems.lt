@@ -1,4 +1,4 @@
-Gerb. p. {{ enquiry.sender_name }},
+{% autoescape off %}Gerb. p. {{ enquiry.sender_name }},
 
 Svetainėje ParašykJiems.lt iš naudojant Jūsų el. pašto adresą
 buvo parašytas laiškas valdžios atstovui.
@@ -12,4 +12,4 @@ nueikite šiuo adresu:
 {{ SETTINGS.SITE_ADDRESS }}{% url confirm enquiry.id enquiry.confirm_hash %}
 
 Jeigu ne Jūs parašėte šį laišką, o kažkas apsimetantis Jumis, prašome
-pranešti apie piktnaudžiavimą mūsų svetaine adresu {{ SETTINGS.FEEDBACK_EMAIL }}
+pranešti apie piktnaudžiavimą mūsų svetaine adresu {{ SETTINGS.FEEDBACK_EMAIL }}{% endautoescape %}
