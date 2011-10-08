@@ -17,11 +17,11 @@ body {
 }
 
 p {
-    text-align: justify;
     margin: 1em 0 1em 0;
 }
 
 p, li {
+    text-align: justify;
     line-height: 150%;
 }
 
@@ -747,4 +747,9 @@ strong {
     padding-left: 0;
     border-right: 1px solid #ccc;
     width: 50%;
+}
+
+.article {
+    font-size: 0.95em;
+    max-width: 770px;
 }
