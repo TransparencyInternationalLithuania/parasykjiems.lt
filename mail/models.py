@@ -22,7 +22,7 @@ import settings
 _NAME_LEN = 200
 
 _RANDOM_GENERATOR = random.SystemRandom()
-_HASH_MAX = 999999
+_HASH_MAX = int('9' * 10)
 
 
 def generate_hash():
