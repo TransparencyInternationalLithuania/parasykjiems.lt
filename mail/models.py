@@ -167,6 +167,15 @@ class Response(models.Model):
     @property
     def body(self):
         body = self.message.get_payload(decode=True)
+
+        if isinstance(body, list):
+            # Message is multipart, so the payload is a list of
+            # messages.
+            for subbody in body:
+                if subbody.get_content_type() == 'text/plain':
+                    body = subbody.get_payload(decode=True)
+                    break
+
         body = utils.ENQUIRY_EMAIL_REGEXP.sub("...@" + settings.SITE_DOMAIN,
                                               body)
         return body
