@@ -172,13 +172,15 @@ class Response(models.Model):
         if self.message.is_multipart():
             # Message is multipart, so the payload is a list of
             # messages.
+            body = None
             for submsg in self.message.get_payload():
                 if submsg.get_content_type() == 'text/plain':
                     body = submsg.get_payload(decode=True)
                     break
-            logging.warning("Couldn't extract body out of {}"
-                            .format(self))
-            body = ''
+            if not body:
+                logging.warning("Couldn't extract body out of {}"
+                                .format(self))
+                body = ''
         else:
             body = self.message.get_payload(decode=True)
 
