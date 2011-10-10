@@ -166,7 +166,6 @@ def process_incoming(message):
 
     parent = None
     try:
-        # First, try matching by 'To'.
         m = utils.ENQUIRY_EMAIL_REGEXP.match(message['to'])
         if m:
             id = int(m.group('id'))
@@ -176,25 +175,6 @@ def process_incoming(message):
                 logger.info(u'Determined parent of response {} from To.'
                             .format(response))
                 parent = maybe_enquiry.get()
-
-        # If matching by 'To' fails, try threading, though it's
-        # quite unlikely that a message has an unsuitable 'To',
-        # but suitable references.
-        if not parent:
-            refs = message['references'] or ''
-            in_reply_to = message['in-reply-to'] or ''
-            references = set(refs.split(' ') +
-                             in_reply_to.split(' ')[0:1])
-            for ref in references:
-                print repr(ref.decode('utf-8').strip())
-                maybe_enquiry = Enquiry.objects.filter(
-                    message_id=ref.decode('utf-8').strip())
-                if maybe_enquiry.exists():
-                    logger.info(
-                        u'Determined parent of response {} from references.'
-                        .format(response))
-                    parent = maybe_enquiry.get()
-                    break
     except Exception as e:
         logger.error(
             u'Exception {} while trying to determine parent of response {}.'
