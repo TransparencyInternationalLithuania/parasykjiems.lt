@@ -1,10 +1,10 @@
-{% autoescape off %}{{ enquiry.body }}
+{% autoescape off %}{{ message.body }}
 
 --
 Šį laiškas buvo išsiųstas naudojant http://parašykjiems.lt sistemą.
-{% if enquiry.is_open %}
+{% if thread.is_open %}
 Šis laiškas yra atviras ir jį taip pat galite peržiūrėti adresu:
-{{ SETTINGS.SITE_ADDRESS }}{{ enquiry.get_absolute_url }}
+{{ SETTINGS.SITE_ADDRESS }}{{ thread.get_absolute_url }}
 
 Jūsų atsakymas irgi bus matomas tuo adresu. Jeigu atsakėte į laišką,
 bet jūsų atsakymas neatsiranda tinklalapyje, tai praneškite mums
