@@ -8,7 +8,7 @@ from email.utils import formataddr
 
 import settings
 from parasykjiems.mail import utils
-from parasykjiems.mail.models import Enquiry, Response
+from parasykjiems.mail.models import UnconfirmedMessage, Thread, Message
 from parasykjiems.slug import generate_slug
 from parasykjiems.search.models import Representative
 
@@ -16,20 +16,18 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-def submit_enquiry(sender_name,
+def submit_message(sender_name,
                    sender_email,
                    recipient,
                    subject,
                    body,
                    is_open,
                    parent=None):
-    """Creates an enquiry with given parameters, but doesn't send
+    """Creates an message with given parameters, but doesn't send
     it. Instead, sends the user a confirmation email.
     """
 
-    enquiry = Enquiry(
-        recipient_name=recipient.name,
-        recipient_email=recipient.email,
+    message = UnconfirmedMessage(
         sender_name=sender_name,
         sender_email=sender_email,
         subject=subject,
@@ -39,15 +37,15 @@ def submit_enquiry(sender_name,
     )
 
     if isinstance(recipient, Representative):
-        enquiry.representative = recipient
+        message.representative = recipient
     else:
-        enquiry.institution = recipient
-    enquiry.save()
+        message.institution = recipient
+    message.save()
 
     # Send confirmation email.
     confirm_msg = render_to_string('mail/confirm.txt', {
         'SETTINGS': settings,
-        'enquiry': enquiry,
+        'message': message,
     })
 
     send_mail(
@@ -57,51 +55,47 @@ def submit_enquiry(sender_name,
         message=confirm_msg,
     )
 
-    logger.info(u"Enquiry submitted: {}".format(enquiry))
+    logger.info(u"SUBMIT: {}".format(message))
 
-    return enquiry
-
-
-def confirm_enquiry(enquiry):
-    logger.info(u"Enquiry confirmed: {}".format(enquiry))
-    enquiry.is_confirmed = True
-    enquiry.save()
+    return message
 
 
-def send_enquiry(enquiry):
-    """Sends the given enquiry to the representative.
+def send_message(unconfirmed_message):
+    """Sends the given message to the representative.
     """
 
-    if not enquiry.is_confirmed:
-        raise Exception("Tried to send unconfirmed enquiry {}."
-                        .format(enquiry.id))
-
-    if not enquiry.parent and enquiry.is_open:
-        # We only want to generate slugs for open toplevel enquiries,
-        # so that only they are accessible as threads from the letters
-        # view.
-        generate_slug(enquiry,
-                      Enquiry.objects.filter(parent=None,
-                                             is_open=True,
-                                             is_sent=True),
+    thread = Thread(is_open=unconfirmed_message.is_open,
+                    institution=unconfirmed_message.institution,
+                    representative=unconfirmed_message.representative,
+                    subject=unconfirmed_message.subject)
+    if thread.is_open:
+        generate_slug(thread,
+                      Thread.objects.filter(is_open=True),
                       lambda e: [e.subject])
+    thread.save()
 
     if settings.TESTING_VERSION:
-        recipients = [formataddr((enquiry.recipient_name,
+        recipients = [formataddr((unconfirmed_message.recipient_name,
                                   settings.REDIRECT_ENQUIRIES_TO))]
     else:
-        recipients = [formataddr((enquiry.recipient_name,
-                                  enquiry.recipient_email))]
+        recipients = [formataddr((unconfirmed_message.recipient_name,
+                                  unconfirmed_message.recipient_email))]
 
-    reply_to = settings.ENQUIRY_EMAIL_FORMAT.format(
-        id=enquiry.id,
-        hash=enquiry.reply_hash)
-    message = EmailMessage(
-        from_email=formataddr((enquiry.sender_name, reply_to)),
-        subject=enquiry.subject,
-        body=render_to_string('mail/enquiry.txt', {
+    message = Message(thread=thread)
+    message.save()
+
+    reply_addr = u'{prefix}+{id}.{hash}@{domain}'.format(
+        prefix=settings.REPLY_EMAIL_PREFIX,
+        id=message.id,
+        hash=message.reply_hash,
+        domain=settings.SITE_DOMAIN)
+    email_message = EmailMessage(
+        from_email=formataddr((unconfirmed_message.sender_name, reply_addr)),
+        subject=unconfirmed_message.subject,
+        body=render_to_string('mail/message.txt', {
             'SETTINGS': settings,
-            'enquiry': enquiry,
+            'message': unconfirmed_message,
+            'thread': thread,
         }),
         to=recipients,
     )
@@ -110,22 +104,19 @@ def send_enquiry(enquiry):
     # we ask for one. Here we actually set the message id in the
     # EmailMessage object, so that it is the same as the one in the
     # database when the message is sent.
-    enquiry.message_id = message.message()['Message-Id']
-    message.extra_headers = {
-        'Message-Id': enquiry.message_id,
-        'Reply-To': reply_to,
+    email_message.message_id = email_message.message()['Message-Id']
+    email_message.extra_headers = {
+        'Message-Id': message.message_id,
+        'Reply-To': reply_addr,
     }
 
-    message.send()
+    message.raw_message = str(email_message.message()).decode('utf-8')
+    message.save()
+    email_message.send()
 
-    enquiry.is_sent = True
-    enquiry.sent_at = datetime.datetime.now()
+    logger.info(u"SENT: {}".format(message))
 
-    enquiry.save()
-
-    logger.info(u"Enquiry sent: {}".format(enquiry))
-
-    msg = message.message()
+    msg = email_message.message()
     user_copy = EmailMessage(
         from_email=formataddr((u'ParašykJiems', settings.SERVER_EMAIL)),
         subject=_("Copy of the letter you sent."),
@@ -135,20 +126,22 @@ def send_enquiry(enquiry):
             'subject': utils.decode_header_unicode(msg['subject']),
             'body': message.message().get_payload(decode=True),
         }),
-        to=[formataddr((enquiry.sender_name, enquiry.sender_email))])
+        to=[formataddr((message.sender_name, message.sender_email))])
     user_copy.send()
 
+    # TODO: continue implementing new mail system
 
-def send_enquiry_reply_notification(response):
+
+def send_message_reply_notification(response):
     send_mail(
         from_email=formataddr((u'ParašykJiems', settings.SERVER_EMAIL)),
         recipient_list=[formataddr((response.parent.sender_name,
                                     response.parent.sender_email))],
-        subject=_('Your enquiry has been responded to'),
+        subject=_('Your message has been responded to'),
         message=render_to_string('mail/responded.txt', {
             'SETTINGS': settings,
             'response': response,
-            'enquiry': response.parent,
+            'message': response.parent,
         })
     )
     response.sent_reply_notification = True
@@ -167,15 +160,15 @@ def process_incoming(message):
     parent = None
     try:
         # First, try matching by 'To'.
-        m = utils.ENQUIRY_EMAIL_REGEXP.match(message['to'])
+        m = utils.MESSAGE_EMAIL_REGEXP.match(message['to'])
         if m:
             id = int(m.group('id'))
             hash = int(m.group('hash'))
-            maybe_enquiry = Enquiry.objects.filter(id=id, reply_hash=hash)
-            if maybe_enquiry.exists():
+            maybe_message = Message.objects.filter(id=id, reply_hash=hash)
+            if maybe_message.exists():
                 logger.info(u'Determined parent of response {} from To.'
                             .format(response))
-                parent = maybe_enquiry.get()
+                parent = maybe_message.get()
 
         # If matching by 'To' fails, try threading, though it's
         # quite unlikely that a message has an unsuitable 'To',
@@ -187,13 +180,13 @@ def process_incoming(message):
                              in_reply_to.split(' ')[0:1])
             for ref in references:
                 print repr(ref.decode('utf-8').strip())
-                maybe_enquiry = Enquiry.objects.filter(
+                maybe_message = Message.objects.filter(
                     message_id=ref.decode('utf-8').strip())
-                if maybe_enquiry.exists():
+                if maybe_message.exists():
                     logger.info(
                         u'Determined parent of response {} from references.'
                         .format(response))
-                    parent = maybe_enquiry.get()
+                    parent = maybe_message.get()
                     break
     except Exception as e:
         logger.error(
@@ -206,4 +199,4 @@ def process_incoming(message):
     else:
         response.parent = parent
         response.save()
-        send_enquiry_reply_notification(response)
+        send_message_reply_notification(response)

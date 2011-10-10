@@ -28,6 +28,11 @@ def extract_name(email_string):
     return realname
 
 
+def extract_email(email_string):
+    realname, email_addr = email.utils.parseaddr(email_string)
+    return email_addr
+
+
 def decode_header_unicode(h):
     """Turns a possibly encoded email header string into a unicode
     string.
