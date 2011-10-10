@@ -16,6 +16,9 @@ from parasykjiems.slug import SLUG_LEN
 from parasykjiems.mail import utils
 import settings
 
+import logging
+logger = logging.getLogger(__name__)
+
 
 _NAME_LEN = 200
 
@@ -166,15 +169,18 @@ class Response(models.Model):
 
     @property
     def body(self):
-        body = self.message.get_payload(decode=True)
-
-        if isinstance(body, list):
+        if self.message.is_multipart():
             # Message is multipart, so the payload is a list of
             # messages.
-            for subbody in body:
-                if subbody.get_content_type() == 'text/plain':
-                    body = subbody.get_payload(decode=True)
+            for submsg in self.message.get_payload():
+                if submsg.get_content_type() == 'text/plain':
+                    body = submsg.get_payload(decode=True)
                     break
+            logging.warning("Couldn't extract body out of {}"
+                            .format(self))
+            body = ''
+        else:
+            body = self.message.get_payload(decode=True)
 
         body = utils.ENQUIRY_EMAIL_REGEXP.sub("...@" + settings.SITE_DOMAIN,
                                               body)
