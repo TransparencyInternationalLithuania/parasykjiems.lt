@@ -188,6 +188,9 @@ class Thread(models.Model):
     representative = models.ForeignKey('search.Representative',
                                        null=True, blank=True)
 
+    creator_name = models.CharField(max_length=_NAME_LEN)
+    creator_email = models.CharField(max_length=_NAME_LEN)
+
     subject = models.CharField(max_length=400)
 
     @property
