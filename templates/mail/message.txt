@@ -1,11 +1,9 @@
-{% autoescape off %}{{ message.body }}
+{% autoescape off %}{{ body_text }}
 
 --
-Šį laiškas buvo išsiųstas naudojant http://parašykjiems.lt sistemą.
+Šis laiškas buvo išsiųstas naudojant ParašykJiems – http://parasykjiems.lt
 {% if thread.is_open %}
-Šis laiškas yra atviras ir jį taip pat galite peržiūrėti adresu:
+Šis laiškas yra atviras ir jį galima peržiūrėti adresu
 {{ SETTINGS.SITE_ADDRESS }}{{ thread.get_absolute_url }}
 
-Jūsų atsakymas irgi bus matomas tuo adresu. Jeigu atsakėte į laišką,
-bet jūsų atsakymas neatsiranda tinklalapyje, tai praneškite mums
-el. paštu feedback@parasykjiems.lt{% endif %}{% endautoescape %}
+Jūsų atsakymas taip pat bus matomas tuo adresu.{% endif %}{% endautoescape %}

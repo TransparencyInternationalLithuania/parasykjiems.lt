@@ -13,7 +13,7 @@
 
 {% if enquiry.is_open %}
 <p>
-  {% blocktrans with url=enquiry.get_absolute_url %}
+  {% blocktrans with url=message.get_absolute_url %}
   You can view it <a href="{{ url }}">here</a>.
   {% endblocktrans %}
 </p>
