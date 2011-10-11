@@ -55,6 +55,10 @@ class UnconfirmedMessage(models.Model):
     def recipient(self):
         return self.representative or self.institution
 
+    @property
+    def recipient_name(self):
+        return self.recipient.name
+
     def __unicode__(self):
         return (u'Unconfirmed {id}: {name} <{email}> to {to_name} {to_email}'
                 .format(
@@ -201,6 +205,12 @@ class Thread(models.Model):
     @property
     def references(self):
         return ' '.join([m.message_id for m in self.messages])
+
+    @models.permalink
+    def get_absolute_url(self):
+        if self.slug == '':
+            raise Exception('Tried to get address of object missing a slug.')
+        return ('thread', [self.slug])
 
     class Meta:
         verbose_name = _('thread')

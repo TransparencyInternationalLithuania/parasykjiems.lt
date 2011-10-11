@@ -119,7 +119,7 @@ def submit_message(sender_name,
 
 
 def send_message(unconfirmed_message):
-    """Confirms and sends the unconfirmed message.
+    """Confirms and sends the unconfirmed message. Returns the new thread.
 
     Creates a Thread and a Message (which contains the sent envelope).
     """
@@ -146,7 +146,7 @@ def send_message(unconfirmed_message):
 
     email = EmailMessage(
         from_email=formataddr((unconfirmed_message.sender_name,
-                               message.reply_addr)),
+                               message.reply_email)),
         to=recipients,
         subject=unconfirmed_message.subject,
         body=render_to_string('mail/message.txt', {
@@ -155,6 +155,8 @@ def send_message(unconfirmed_message):
             'thread': thread,
         }),
     )
+
+    unconfirmed_message.delete()
 
     message.raw_message = str(email.message()).decode('utf-8')
     message.save()
@@ -171,3 +173,5 @@ def send_message(unconfirmed_message):
         }),
     )
     user_copy.send()
+
+    return thread
