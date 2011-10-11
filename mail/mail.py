@@ -84,8 +84,7 @@ def submit_message(sender_name,
                    recipient,
                    subject,
                    body_text,
-                   is_open,
-                   parent=None):
+                   is_open):
     """Creates an unconfirmed message with given parameters, but
     doesn't send it. Instead, sends the user a confirmation email.
     """
@@ -96,7 +95,6 @@ def submit_message(sender_name,
         subject=subject,
         body_text=body_text,
         is_open=is_open,
-        parent=parent,
     )
 
     if isinstance(recipient, Representative):
