@@ -56,12 +56,13 @@ class UnconfirmedMessage(models.Model):
         return self.representative or self.institution
 
     def __unicode__(self):
-        return u'Unconfirmed {id}: {name} <{email}> to {to}'.format(
-            id=self.id,
-            name=self.sender_name,
-            email=self.sender_email,
-            to_name=self.recipient.name,
-            to_email=self.recipient.email)
+        return (u'Unconfirmed {id}: {name} <{email}> to {to_name} {to_email}'
+                .format(
+                    id=self.id,
+                    name=self.sender_name,
+                    email=self.sender_email,
+                    to_name=self.recipient.name,
+                    to_email=self.recipient.email))
 
     class Meta:
         verbose_name = _('unconfirmed message')

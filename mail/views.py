@@ -36,7 +36,7 @@ def write(request, recipient):
                 sender_email=form.cleaned_data['email'],
                 recipient=recipient,
                 subject=form.cleaned_data['subject'],
-                body=form.cleaned_data['body'],
+                body_text=form.cleaned_data['body'],
                 is_open=form.cleaned_data['is_open'])
 
             return redirect(reverse(write_confirm) +
