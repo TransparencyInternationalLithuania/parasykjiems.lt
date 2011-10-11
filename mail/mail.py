@@ -127,6 +127,8 @@ def send_message(unconfirmed_message):
     thread = Thread(is_open=unconfirmed_message.is_open,
                     institution=unconfirmed_message.institution,
                     representative=unconfirmed_message.representative,
+                    creator_name=unconfirmed_message.sender_name,
+                    creator_email=unconfirmed_message.sender_email,
                     subject=unconfirmed_message.subject)
     if thread.is_open:
         generate_slug(thread,
@@ -156,8 +158,6 @@ def send_message(unconfirmed_message):
         }),
     )
 
-    unconfirmed_message.delete()
-
     message.raw_message = str(email.message()).decode('utf-8')
     message.save()
     email.send()
@@ -166,7 +166,7 @@ def send_message(unconfirmed_message):
 
     user_copy = EmailMessage(
         from_email=formataddr((u'ParašykJiems', settings.SERVER_EMAIL)),
-        to=[formataddr((message.sender_name, message.sender_email))],
+        to=[formataddr((thread.creator_name, thread.creator_email))],
         subject=thread.subject,
         body=render_to_string('mail/copy.txt', {
             'message': message,
