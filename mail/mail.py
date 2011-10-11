@@ -166,7 +166,7 @@ def process_incoming(message):
 
     parent = None
     try:
-        m = utils.ENQUIRY_EMAIL_REGEXP.match(message['to'])
+        m = utils.ENQUIRY_EMAIL_REGEXP.search(message['to'])
         if m:
             id = int(m.group('id'))
             hash = int(m.group('hash'))
