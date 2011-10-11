@@ -9,13 +9,7 @@
     <tr>
       <th>{% trans "To:" %}</th>
       <td>
-        {% if letter.is_recipient_current %}
-        <a href="{{ letter.recipient.get_absolute_url }}">
-          {{ letter.recipient_name }}
-        </a>
-        {% else %}
         {{ letter.recipient_name }}
-        {% endif %}
       </td>
     </tr>
     {% if letter.subject %}

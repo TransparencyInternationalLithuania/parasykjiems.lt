@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import Http404
 from django.views.decorators.cache import cache_control
 from django.views.decorators.http import last_modified
 import datetime
@@ -10,7 +9,7 @@ import datetime
 from forms import WriteLetterForm
 from parasykjiems.search.models import Representative, Institution
 from parasykjiems.search.utils import ChoiceState
-from parasykjiems.mail.models import Message, Thread
+from parasykjiems.mail.models import Thread, UnconfirmedMessage
 import parasykjiems.mail.mail as mail
 from parasykjiems.mail import utils
 
@@ -69,23 +68,23 @@ def write_confirm(request):
 
 @cache_control(public=False)
 def confirm(request, id, confirm_hash):
-    message = get_object_or_404(Message,
-                                id=int(id),
-                                confirm_hash=int(confirm_hash))
+    unc_message = get_object_or_404(UnconfirmedMessage,
+                                    id=int(id),
+                                    confirm_hash=int(confirm_hash))
 
     if request.method == 'POST':
-        mail.send_message(message)
-        return redirect(reverse(sent, kwargs={'id': message.id}))
+        thread = mail.send_message(unc_message)
+        return redirect(reverse(sent, kwargs={'slug': thread.slug}))
     else:
         return render(request, 'views/confirm.html', {
-            'message': message,
+            'message': unc_message,
         })
 
 
 @cache_control(max_age=60 * 60, public=True)
-def sent(request, id):
-    message = get_object_or_404(Message, id=id)
-    return render(request, 'views/sent.html', {'message': message})
+def sent(request, slug):
+    thread = get_object_or_404(Thread, slug=slug, is_open=True)
+    return render(request, 'views/sent.html', {'thread': thread})
 
 
 @cache_control(max_age=60 * 60, public=True)
