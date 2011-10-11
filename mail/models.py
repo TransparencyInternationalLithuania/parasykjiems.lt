@@ -16,6 +16,9 @@ from parasykjiems.slug import SLUG_LEN
 from parasykjiems.mail import utils
 import settings
 
+import logging
+logger = logging.getLogger(__name__)
+
 
 _NAME_LEN = 200
 
@@ -35,7 +38,7 @@ class UnconfirmedMessage(models.Model):
     sender_name = models.CharField(max_length=_NAME_LEN)
     sender_email = models.EmailField(max_length=_NAME_LEN)
     subject = models.CharField(max_length=400)
-    body = models.TextField()
+    body_text = models.TextField()
 
     is_open = models.BooleanField()
 
@@ -92,6 +95,10 @@ class Message(models.Model):
         return self._message
 
     @property
+    def message_id(self):
+        return utils.decode_header_unicode(self.message['message-id'])
+
+    @property
     def sender_name(self):
         return utils.extract_name(
             utils.decode_header_unicode(self.message['from']))
@@ -120,19 +127,31 @@ class Message(models.Model):
         return utils.decode_date_header(self.message['date'])
 
     @property
-    def body(self):
-        body = self.message.get_payload(decode=True)
-        body = utils.ENQUIRY_EMAIL_REGEXP.sub("...@" + settings.SITE_DOMAIN,
-                                              body)
-        return body
+    def body_text(self):
+        body_text = None
+        for part in self.message.walk():
+            if part.get_content_type() == 'text/plain':
+                charset = part.get_content_charset()
+                body_text = part.get_payload(decode=True).decode(charset)
+                break
+        if not body_text:
+            logging.warning(u"Couldn't extract body text out of {}"
+                            .format(self))
+            body_text = u''
+        body_text = utils.remove_reply_email(body_text)
+        return body_text
+
+    @property
+    def reply_email(self):
+        return u'{prefix}+{id}.{hash}@{domain}'.format(
+            prefix=settings.REPLY_EMAIL_PREFIX,
+            id=self.id,
+            hash=self.reply_hash,
+            domain=settings.SITE_DOMAIN)
 
     def __init__(self, *args, **kwargs):
         super(Message, self).__init__(*args, **kwargs)
         self._message = None
-        if self.parent is None or self.parent.kind == u'response':
-            self.kind = u'enquiry'
-        else:
-            self.kind = u'response'
 
     def __unicode__(self):
         return u'{id}:{sender} -> {recipient} ({date})'.format(
@@ -152,7 +171,8 @@ class Thread(models.Model):
     slug = models.CharField(max_length=SLUG_LEN,
                             blank=True,
                             db_index=True)
-    modification_date = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now=True)
 
     is_open = models.BooleanField(default=False)
 
@@ -172,6 +192,14 @@ class Thread(models.Model):
     @property
     def messages(self):
         return Message.objects.filter(thread=self).order_by('date_received')
+
+    @property
+    def has_answer(self):
+        return self.messages.count() > 1
+
+    @property
+    def references(self):
+        return ' '.join([m.message_id for m in self.messages])
 
     class Meta:
         verbose_name = _('thread')

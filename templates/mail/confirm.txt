@@ -1,6 +1,6 @@
 {% autoescape off %}Gerb. p. {{ message.sender_name }},
 
-Svetainėje ParašykJiems.lt iš naudojant Jūsų el. pašto adresą
+Svetainėje ParašykJiems.lt naudojant Jūsų el. pašto adresą
 buvo parašytas laiškas valdžios atstovui.
 
 Laiško gavėjas: {{ message.recipient_name }}

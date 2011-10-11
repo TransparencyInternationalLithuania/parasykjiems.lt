@@ -12,7 +12,7 @@
 {% endblock %}
 
 {% block content %}
-{% for letter in letters %}
-{% include "items/letter.html" with class=letter.kind %}
+{% for message in thread.messages %}
+{% include "items/letter.html" with letter=message class=message.direction %}
 {% endfor %}
 {% endblock %}

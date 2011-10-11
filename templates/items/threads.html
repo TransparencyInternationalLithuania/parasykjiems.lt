@@ -27,7 +27,7 @@
     {% if not small %}
     <td class="recipient">{{ thread.recipient_name|truncatewords:"5" }}</td>
     {% endif %}
-    <td class="date">{{ thread.date|naturalday:'Y-m-d' }}</td>
+    <td class="date">{{ thread.created_at|naturalday:'Y-m-d' }}</td>
   </tr>
   {% endif %}
   {% endfor %}

@@ -10,7 +10,7 @@ import datetime
 from forms import WriteLetterForm
 from parasykjiems.search.models import Representative, Institution
 from parasykjiems.search.utils import ChoiceState
-from parasykjiems.mail.models import Enquiry, Response
+from parasykjiems.mail.models import Message, Thread
 import parasykjiems.mail.mail as mail
 from parasykjiems.mail import utils
 
@@ -31,7 +31,7 @@ def write(request, recipient):
         form = WriteLetterForm(request.POST)
         choice_state = ChoiceState(form['choice_state'].value())
         if form.is_valid():
-            mail.submit_enquiry(
+            mail.submit_message(
                 sender_name=form.cleaned_data['name'],
                 sender_email=form.cleaned_data['email'],
                 recipient=recipient,
@@ -69,59 +69,45 @@ def write_confirm(request):
 
 @cache_control(public=False)
 def confirm(request, id, confirm_hash):
-    enquiry = get_object_or_404(Enquiry,
+    message = get_object_or_404(Message,
                                 id=int(id),
-                                confirm_hash=int(confirm_hash),
-                                is_sent=False)
+                                confirm_hash=int(confirm_hash))
 
     if request.method == 'POST':
-        mail.confirm_enquiry(enquiry)
-        mail.send_enquiry(enquiry)
-        return redirect(reverse(sent, kwargs={'id': enquiry.id}))
+        mail.send_message(message)
+        return redirect(reverse(sent, kwargs={'id': message.id}))
     else:
         return render(request, 'views/confirm.html', {
-            'enquiry': enquiry,
+            'message': message,
         })
 
 
 @cache_control(max_age=60 * 60, public=True)
 def sent(request, id):
-    enquiry = get_object_or_404(Enquiry, id=id)
-    return render(request, 'views/sent.html', {'enquiry': enquiry})
+    message = get_object_or_404(Message, id=id)
+    return render(request, 'views/sent.html', {'message': message})
 
 
 @cache_control(max_age=60 * 60, public=True)
 def thread(request, slug):
-    enquiry = get_object_or_404(Enquiry,
-                                slug=slug,
-                                is_sent=True,
-                                is_open=True,
-                                parent=None)
-    if not enquiry.is_open or not enquiry.is_sent:
-        raise Http404()
-
-    responses = Response.objects.filter(parent=enquiry)
-
-    letters = [enquiry] + list(responses)
+    thread = get_object_or_404(Thread, slug=slug, is_open=True)
 
     return render(request, 'views/thread.html', {
-        'page': request.GET.get('p', ''),
-        'title': enquiry.subject,
-        'letters': letters,
+        'thread': thread,
     })
 
 
-def _latest_letter(request, inst=None):
+def _latest_thread(request, inst=None):
     try:
-        return (Enquiry.objects
-                .filter(is_open=True, is_sent=True)
-                .latest('sent_at')
-                .sent_at)
+        return (Thread.objects
+                .filter(is_open=True)
+                .latest('modified_at')
+                .modified_at)
     except ObjectDoesNotExist:
         return datetime.datetime.now()
 
 
-@last_modified(_latest_letter)
+@last_modified(_latest_thread)
 @cache_control(max_age=60 * 60, public=True)
 def threads(request, institution_slug=None):
     MAX_THREADS = 10
@@ -129,9 +115,9 @@ def threads(request, institution_slug=None):
         institution = get_object_or_404(Institution, slug=institution_slug)
         all_threads = institution.threads
     else:
-        all_threads = (Enquiry.objects
-                       .filter(is_open=True, is_sent=True, parent=None)
-                       .order_by('-sent_at'))
+        all_threads = (Thread.objects
+                       .filter(is_open=True)
+                       .order_by('-created_at'))
     pages = Paginator(all_threads, MAX_THREADS)
     try:
         page_num = int(request.GET.get('p', '1'))
