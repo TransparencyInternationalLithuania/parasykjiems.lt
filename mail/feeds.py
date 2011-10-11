@@ -2,7 +2,7 @@
 
 from django.contrib.syndication.views import Feed
 from django.utils.translation import ugettext as _
-from models import Enquiry
+from models import Thread
 
 
 class ThreadsFeed(Feed):
@@ -10,17 +10,15 @@ class ThreadsFeed(Feed):
     link = "/threads/"
 
     def items(self):
-        return (Enquiry.objects
-                .filter(is_open=True, is_sent=True, parent=None)
+        return (Thread.objects.filter(is_open=True)
                 .order_by('-sent_at')[:10])
 
     def item_title(self, item):
         return item.subject
 
     def item_description(self, item):
-        return _("Sent from {} to {}").format(
-            item.sender_name,
-            item.recipient_name)
+        # TODO: Improve description text.
+        return u''
 
     def item_pubdate(self, item):
-        return item.sent_at
+        return item.created_at

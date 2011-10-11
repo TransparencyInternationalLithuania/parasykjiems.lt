@@ -1,17 +1,13 @@
 from django.contrib.sitemaps import Sitemap
-from models import Enquiry
+from models import Thread
 
 
 class ThreadSitemap(Sitemap):
-    changefreq = "monthly"
+    changefreq = "weekly"
     priority = 0.9
 
     def items(self):
-        return Enquiry.objects.filter(parent=None,
-                                      is_sent=True,
-                                      is_open=True)
+        return Thread.objects.filter(is_open=True)
 
     def lastmod(self, obj):
-        # TODO: Should return date of last message in thread, not
-        # first.
-        return obj.date
+        return obj.modified_at
