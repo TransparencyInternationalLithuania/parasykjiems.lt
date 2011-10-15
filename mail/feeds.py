@@ -10,7 +10,7 @@ class ThreadsFeed(Feed):
     link = "/threads/"
 
     def items(self):
-        return (Thread.objects.filter(is_open=True)
+        return (Thread.objects.filter(is_public=True)
                 .order_by('-sent_at')[:10])
 
     def item_title(self, item):

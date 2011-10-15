@@ -36,7 +36,7 @@ def write(request, recipient):
                 recipient=recipient,
                 subject=form.cleaned_data['subject'],
                 body_text=form.cleaned_data['body'],
-                is_open=form.cleaned_data['is_open'])
+                is_public=form.cleaned_data['is_open'])
 
             return redirect(reverse(write_confirm) +
                             '?' + choice_state.query_string())
@@ -73,7 +73,7 @@ def confirm(request, id, confirm_hash):
                                     confirm_hash=int(confirm_hash))
 
     if request.method == 'POST':
-        thread = mail.send_message(unc_message)
+        thread = mail.confirm_and_send(unc_message)
         return redirect(reverse(sent, kwargs={'slug': thread.slug}))
     else:
         return render(request, 'views/confirm.html', {
@@ -83,13 +83,13 @@ def confirm(request, id, confirm_hash):
 
 @cache_control(max_age=60 * 60, public=True)
 def sent(request, slug):
-    thread = get_object_or_404(Thread, slug=slug, is_open=True)
+    thread = get_object_or_404(Thread, slug=slug, is_public=True)
     return render(request, 'views/sent.html', {'thread': thread})
 
 
 @cache_control(max_age=60 * 60, public=True)
 def thread(request, slug):
-    thread = get_object_or_404(Thread, slug=slug, is_open=True)
+    thread = get_object_or_404(Thread, slug=slug, is_public=True)
 
     return render(request, 'views/thread.html', {
         'thread': thread,
@@ -99,7 +99,7 @@ def thread(request, slug):
 def _latest_thread(request, inst=None):
     try:
         return (Thread.objects
-                .filter(is_open=True)
+                .filter(is_public=True)
                 .latest('modified_at')
                 .modified_at)
     except ObjectDoesNotExist:
@@ -115,7 +115,7 @@ def threads(request, institution_slug=None):
         all_threads = institution.threads
     else:
         all_threads = (Thread.objects
-                       .filter(is_open=True)
+                       .filter(is_public=True)
                        .order_by('-created_at'))
     pages = Paginator(all_threads, MAX_THREADS)
     try:
