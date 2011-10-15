@@ -807,3 +807,22 @@ strong {
     margin: 0 auto 0 auto;
     padding: 20px;
 }
+
+.foldable {
+    display: inline-block;
+    background: #eaeaff;
+    padding: 5px 20px 0 20px;
+    border-radius: 20px;
+    margin-bottom: 1.5em;
+    width: 100%;
+    cursor: pointer;
+}
+
+.foldable:hover {
+    background: #efefff;
+}
+
+.fold {
+    display: block;
+    margin-bottom: 1em;
+}
