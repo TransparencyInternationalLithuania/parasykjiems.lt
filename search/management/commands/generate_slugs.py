@@ -6,7 +6,7 @@ from progressbar import ProgressBar, Bar, ETA
 
 from parasykjiems.slug import generate_slug
 from search.models import Institution, Representative, Location
-from mail.models import Enquiry
+from mail.models import Thread
 
 
 def generate_slugs(query, part_getter):
@@ -53,7 +53,6 @@ class Command(BaseCommand):
                                     loc.elderate,
                                     loc.municipality])
 
-        print ' - Enquiry'
-        generate_slugs(Enquiry.objects
-                       .filter(is_open=True, is_sent=True, parent=None),
-                       lambda e: [e.subject])
+        print ' - Thread'
+        generate_slugs(Thread.objects.filter(is_public=True),
+                       lambda t: [t.subject])

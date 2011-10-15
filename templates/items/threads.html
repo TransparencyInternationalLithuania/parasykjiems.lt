@@ -11,7 +11,7 @@
   </tr>
   {% endif %}
   {% for thread in threads %}
-  {% if thread.is_open and thread.is_sent %}
+  {% if thread.is_public and thread.is_sent %}
   <tr class="{% cycle "odd" "even" %}">
     <td class="answered">{% if thread.has_answer %}<img src="/static/img/answered.png" title="{% trans "Answered" %}">{% else %}&nbsp;{% endif %}</td>
     <td class="subject">

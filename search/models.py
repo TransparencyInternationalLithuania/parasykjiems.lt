@@ -112,7 +112,7 @@ class Institution(models.Model):
         for rep in Representative.objects.filter(institution=self):
             query = query | models.Q(representative=rep)
         from mail.models import Thread
-        return (Thread.filter(query).filter(is_open=True)
+        return (Thread.filter(query).filter(is_public=True)
                 .order_by('-sent_at'))
 
     @property
