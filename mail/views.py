@@ -57,7 +57,6 @@ def write(request, recipient):
     })
 
 
-@cache_control(max_age=60 * 60, public=True)
 def write_confirm(request):
     choice_state = ChoiceState(request.GET)
     return render(request, 'views/write_confirm.html', {
@@ -81,13 +80,11 @@ def confirm(request, id, confirm_hash):
         })
 
 
-@cache_control(max_age=60 * 60, public=True)
 def sent(request, slug):
     thread = get_object_or_404(Thread, slug=slug, is_public=True)
     return render(request, 'views/sent.html', {'thread': thread})
 
 
-@cache_control(max_age=60 * 60, public=True)
 def thread(request, slug):
     thread = get_object_or_404(Thread, slug=slug, is_public=True)
 
@@ -107,7 +104,6 @@ def _latest_thread(request, inst=None):
 
 
 @last_modified(_latest_thread)
-@cache_control(max_age=60 * 60, public=True)
 def threads(request, institution_slug=None):
     MAX_THREADS = 10
     if institution_slug:

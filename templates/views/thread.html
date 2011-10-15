@@ -4,7 +4,7 @@
 {% include "menu.html" %}
 {% endblock %}
 
-{% block title %}{{ title }} &ndash; {% endblock %}
+{% block title %}{{ thread.subject }} &ndash; {% endblock %}
 
 {% block breadcrumbs %}
 {% include "breadcrumbs/threads.html" %}
@@ -13,6 +13,6 @@
 
 {% block content %}
 {% for message in thread.messages %}
-{% include "items/letter.html" with letter=message class=message.direction %}
+{% include "items/letter.html" with letter=message class=message.kind %}
 {% endfor %}
 {% endblock %}

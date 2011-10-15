@@ -43,10 +43,16 @@ def find_parent(message):
                 message.recipient_name = message.parent.sender_name
                 message.recipient_email = message.parent.sender_email
                 message.thread = message.parent.thread
+                if message.parent.kind == 'enquiry':
+                    message.kind = 'response'
+                else:
+                    message.kind = 'enquiry'
                 message.save()
+
                 # We also save the thread, so that its modification
                 # date is updated.
                 message.thread.save()
+
                 logger.info(u'PARENT of <{}> is <{}>'
                             .format(message, message.parent))
     except Exception as e:
@@ -143,6 +149,7 @@ def confirm_and_send(unconfirmed_message):
     thread.save()
 
     message = Message(
+        kind='enquiry',
         thread=thread,
         sender_name=unconfirmed_message.sender_name,
         sender_email=unconfirmed_message.sender_email,
