@@ -1,4 +1,4 @@
-{% load i18n nobreaks humanize %}
+{% load i18n humanize shorten_institution %}
 
 <table class="threads{% if small %} small-threads{% endif %}">
   {% if not small %}
@@ -11,7 +11,7 @@
   </tr>
   {% endif %}
   {% for thread in threads %}
-  {% if thread.is_public and thread.is_sent %}
+  {% if thread.is_public %}
   <tr class="{% cycle "odd" "even" %}">
     <td class="answered">{% if thread.has_answer %}<img src="/static/img/answered.png" title="{% trans "Answered" %}">{% else %}&nbsp;{% endif %}</td>
     <td class="subject">
@@ -23,9 +23,9 @@
         {% endif %}
       </a>
     </td>
-    <td class="sender">{{ thread.sender_name|truncatewords:"3" }}</td>
+    <td class="sender">{{ thread.creator_name|truncatewords:"3" }}</td>
     {% if not small %}
-    <td class="recipient">{{ thread.recipient_name|truncatewords:"5" }}</td>
+    <td class="recipient">{{ thread.recipient.name|shorten_institution|truncatewords:"4" }}</td>
     {% endif %}
     <td class="date">{{ thread.created_at|naturalday:'Y-m-d' }}</td>
   </tr>

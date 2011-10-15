@@ -14,6 +14,10 @@ import parasykjiems.mail.mail as mail
 from parasykjiems.mail import utils
 
 
+import logging
+logger = logging.getLogger(__name__)
+
+
 def write_representative(request, slug):
     rep = get_object_or_404(Representative, slug=slug)
     return write(request, rep)

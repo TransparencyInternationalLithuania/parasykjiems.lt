@@ -212,6 +212,13 @@ class Thread(models.Model):
             raise Exception('Tried to get address of object missing a slug.')
         return ('thread', [self.slug])
 
+    def __unicode__(self):
+        return u'{id}: "{subject}" by {creator} ({date})'.format(
+            id=self.id,
+            subject=self.subject,
+            creator=self.creator_name,
+            date=self.created_at)
+
     class Meta:
         verbose_name = _('thread')
         verbose_name_plural = _('threads')
