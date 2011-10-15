@@ -8,7 +8,7 @@
     <td style="width: 48%"
         rowspan="{{ institution.representatives.count|add:2 }}">
       {% if institution.kind.description %}
-      <div class="description">
+      <div class="description hyphenate">
         {{ institution.kind.description|markdown }}
       </div>
       {% endif %}
