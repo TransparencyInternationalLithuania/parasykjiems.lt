@@ -753,10 +753,6 @@ strong {
     width: 50%;
 }
 
-.article {
-    font-size: 0.95em;
-}
-
 #help-squares {
     display: block;
     overflow: hidden;
@@ -774,7 +770,7 @@ strong {
     width: 300px;
     margin: 5px;
     padding: 5px 20px 5px 20px;
-    font-size: 1.6em;
+    font-size: 1.4em;
     text-align: left;
     color: white;
     border-radius: 5px;
@@ -799,7 +795,7 @@ strong {
     float: left;
     font-size: 3.2em;
     font-weight: 700;
-    padding: 18px 20px 28px 10px;
+    padding: 16px 20px 28px 10px;
     opacity: 0.5;
 }
 
