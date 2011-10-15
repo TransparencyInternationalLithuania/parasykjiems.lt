@@ -111,10 +111,8 @@ class Institution(models.Model):
         query = models.Q(institution=self)
         for rep in Representative.objects.filter(institution=self):
             query = query | models.Q(representative=rep)
-        from mail.models import Enquiry
-        return (Enquiry.objects
-                .filter(query)
-                .filter(is_open=True, is_sent=True, parent=None)
+        from mail.models import Thread
+        return (Thread.filter(query).filter(is_public=True)
                 .order_by('-sent_at'))
 
     @property
