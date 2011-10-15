@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
-import re
 from django.core.management.base import BaseCommand
 from progressbar import ProgressBar, Bar, ETA
 
 from parasykjiems.slug import generate_slug
 from search.models import Institution, Representative, Location
-from mail.models import Enquiry
+from search import utils
+from mail.models import Thread
 
 
 def generate_slugs(query, part_getter):
@@ -30,15 +30,8 @@ class Command(BaseCommand):
 
         print ' - Institution'
 
-        def split_institution_name(name):
-            m = re.match(ur'(.+savivaldybė) (.+)', name)
-            if m:
-                return [m.group(2), m.group(1)]
-            else:
-                return [name]
-
         generate_slugs(Institution.objects.all(),
-                       lambda i: split_institution_name(i.name))
+                       lambda i: utils.split_institution_name(i.name))
 
         print ' - Representative'
         generate_slugs(Representative.objects.all(),
@@ -53,7 +46,6 @@ class Command(BaseCommand):
                                     loc.elderate,
                                     loc.municipality])
 
-        print ' - Enquiry'
-        generate_slugs(Enquiry.objects
-                       .filter(is_open=True, is_sent=True, parent=None),
-                       lambda e: [e.subject])
+        print ' - Thread'
+        generate_slugs(Thread.objects.filter(is_public=True),
+                       lambda t: [t.subject])
