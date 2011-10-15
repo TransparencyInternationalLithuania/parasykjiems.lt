@@ -208,6 +208,7 @@ img {
     padding: 0;
     display: inline;
     color: #333;
+    text-shadow: #ddd 0px 1px 5px;
 }
 
 #breadcrumbs img {
@@ -643,12 +644,12 @@ a.write {
     display: block;
     text-align: center;
     width: 7em;
-    margin: 1em auto 1.5em auto;
+    margin: 0.5em auto 1.5em auto;
     color: white;
     text-decoration: none;
     font-size: 1.05em;
     font-weight: 600;
-    padding: 8px 12px 8px 12px;
+    padding: 3px 12px 3px 12px;
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
     border-radius: 20px;
