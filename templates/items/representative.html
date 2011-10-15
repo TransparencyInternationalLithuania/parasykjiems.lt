@@ -24,11 +24,9 @@
 <p>{{ representative.other_info|urlizetrunc:40 }}</p>
 {% endif %}
 
-{% if representative.email and representative.email != institution.email %}
 <p>
   {% trans "Email: " %} <strong>{{ representative.email }}</strong>
   <a class="write" href="{% url write-representative representative.slug %}{{ choose_query }}">
     {% trans "Write&nbsp;letter" %}
   </a>
 </p>
-{% endif %}
