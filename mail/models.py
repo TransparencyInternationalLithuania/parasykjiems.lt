@@ -84,7 +84,9 @@ class Message(models.Model):
 
     date = models.DateTimeField(auto_now_add=True)
 
-    is_replied_to = models.BooleanField(default=False)
+    KIND_CHOICES = (('enquiry', _('Sent from user to representative')),
+                    ('response', _('Sent from representative to user')))
+    kind = models.CharField(max_length=8, choices=KIND_CHOICES)
 
     envelope = models.TextField(
         blank=True,
