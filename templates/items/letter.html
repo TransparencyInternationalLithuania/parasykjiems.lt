@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n email_blockquote %}
 
 <div class="letter {{ class }}">
   <table>
@@ -26,6 +26,6 @@
     {% endif %}
   </table>
   <div class="body hyphenate">
-    {{ letter.body_text|urlizetrunc:60|linebreaks }}
+    {{ letter.body_text|email_blockquote|urlizetrunc:60|linebreaks }}
   </div>
 </div>

@@ -38,12 +38,6 @@ li {
     padding-left: 0.5em;
 }
 
-blockquote {
-    margin-left: 1.5em;
-    border-left: 1px solid #999;
-    padding-left: 1em;
-}
-
 #testing-version {
     font-size: 0.8em;
     color: white;
@@ -565,9 +559,45 @@ h5 {
     max-width: 800px;
 }
 
+
+.letter blockquote {
+    margin: 0;
+    padding: 0 0 0 1em;
+    border-left: 2px solid #86a0b3;
+    color: #234;
+    cursor: pointer;
+}
+
+.letter blockquote:hover {
+    border-left: 2px solid #a6c0d3;
+}
+
 .response {
     background: #f3f0b6;
     margin-left: 2em;
+}
+
+.response blockquote {
+    border-left: 2px solid #c3b066;
+    color: #432;
+}
+
+.response blockquote:hover {
+    border-left: 2px solid #e3d088;
+}
+
+.collapsed {
+    overflow: hidden;
+    height: 1.5em;
+    width: 0;
+    clear: both;
+}
+
+.collapsed:before {
+    content: '...';
+    display: block;
+    float: right;
+    font-weight: 700;
 }
 
 .letter th {

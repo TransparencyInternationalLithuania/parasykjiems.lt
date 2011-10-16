@@ -17,4 +17,18 @@ $(function(){
       );
 
       $(window.location.hash).click();
+
+      $('.letter blockquote')
+          .click(
+              function() {
+                  $(this).toggleClass('collapsed');
+                  return false;
+              }
+          )
+          .addClass('collapsed');
+      $('.letter blockquote a').click(
+          function() {
+              window.location.href = this.href; return false;
+          }
+      );
   });
