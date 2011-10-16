@@ -117,7 +117,6 @@ def search(request):
         })
 
 
-@cache_control(max_age=60 * 60, public=True)
 def institution(request, slug):
     inst = get_object_or_404(Institution, slug=slug)
     return render(request, 'views/institution.html', {
@@ -126,7 +125,6 @@ def institution(request, slug):
     })
 
 
-@cache_control(max_age=60 * 60, public=True)
 def location(request, slug, house_number=None):
     loc = get_object_or_404(Location, slug=slug)
 
