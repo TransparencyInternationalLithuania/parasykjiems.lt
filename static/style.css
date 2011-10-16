@@ -589,15 +589,16 @@ h5 {
 .collapsed {
     overflow: hidden;
     height: 1.5em;
-    width: 0;
     clear: both;
 }
 
-.collapsed:before {
-    content: '...';
-    display: block;
-    float: right;
-    font-weight: 700;
+.letter .collapsed:before {
+    content: '…';
+    color: #456;
+}
+
+.response .collapsed:before {
+    color: #654;
 }
 
 .letter th {
@@ -862,9 +863,14 @@ a.help4:hover { background: #984e79; }
     background: #eaeaff;
     padding: 5px 20px 0 20px;
     border-radius: 20px;
-    margin-bottom: 1.5em;
+    margin: 0 0 1.5em -20px;
     width: 100%;
     cursor: pointer;
+}
+
+.foldable.collapsed:before {
+    content: '(rodyti)';
+    color: #456;
 }
 
 .foldable:hover {
