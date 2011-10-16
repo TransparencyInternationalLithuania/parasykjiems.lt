@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-05 19:25+0300\n"
-"PO-Revision-Date: 2011-10-05 19:27+0300\n"
+"POT-Creation-Date: 2011-10-16 15:52+0300\n"
+"PO-Revision-Date: 2011-10-16 15:54+0300\n"
 "Last-Translator: Kiprianas Spiridonovas <k.spiridonovas@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -25,13 +25,9 @@ msgstr "Anglų"
 msgid "Lithuanian"
 msgstr "Lietuvių"
 
-#: mail/feeds.py:9
+#: mail/feeds.py:10
 msgid "ParašykJiems threads"
 msgstr "ParašykJiems atviri laiškai"
-
-#: mail/feeds.py:21
-msgid "Sent from {} to {}"
-msgstr "Siuntėjas: {}, gavėjas: {}"
 
 #: mail/forms.py:8
 msgid "Your full name"
@@ -68,37 +64,45 @@ msgstr "Atviras laiškas, kurį galės matyti visi svetainės lankytojai"
 msgid "Message"
 msgstr "Turinys"
 
-#: mail/mail.py:55
+#: mail/mail.py:121
 msgid "Confirm your letter"
 msgstr "Patvirtinkite savo laišką"
 
-#: mail/mail.py:130
-msgid "Copy of the letter you sent."
-msgstr "Laiško, kurį išsiuntėte, kopija"
+#: mail/models.py:73
+msgid "unconfirmed message"
+msgstr "nepatvirtintas laiškas"
 
-#: mail/mail.py:195
-msgid "Your enquiry has been responded to"
-msgstr "Į jūsų laišką buvo atsakyta"
+#: mail/models.py:74
+msgid "unconfirmed messages"
+msgstr "nepatvirtinti laiškai"
 
-#: mail/models.py:126
-msgid "enquiry"
-msgstr "užklausa"
+#: mail/models.py:87
+msgid "Sent from user to representative"
+msgstr "Siųsta vartotojo atstovui"
 
-#: mail/models.py:127
-msgid "enquiries"
-msgstr "užklausos"
+#: mail/models.py:88
+msgid "Sent from representative to user"
+msgstr "Siųsta atstovo vartotojui"
 
-#: mail/models.py:137
-msgid "The unprocessed e-mail message."
-msgstr "Neapdorotas elektroninis laiškas."
+#: mail/models.py:93
+msgid "If the message was received through SMTP, the original email text."
+msgstr "Jeigu laiškas gautas per SMTP, pilnas neapdorotas laiško tekstas."
 
-#: mail/models.py:193
-msgid "response"
-msgstr "atsakymas"
+#: mail/models.py:168
+msgid "message"
+msgstr "žinutė"
 
-#: mail/models.py:194
-msgid "responses"
-msgstr "atsakymai"
+#: mail/models.py:169
+msgid "messages"
+msgstr "žinutės"
+
+#: mail/models.py:223
+msgid "thread"
+msgstr "gija"
+
+#: mail/models.py:224
+msgid "threads"
+msgstr "gijos"
 
 #: search/forms.py:13
 msgid "A house number must be numeric and can contain at most one letter."
@@ -146,24 +150,24 @@ msgstr "institucijos rūšis"
 msgid "institution kinds"
 msgstr "institucijų rūšys"
 
-#: search/models.py:129
+#: search/models.py:127
 msgid "institution"
 msgstr "institucija"
 
-#: search/models.py:130
+#: search/models.py:128
 msgid "institutions"
 msgstr "institucijos"
 
-#: search/models.py:148
-#: search/models.py:191
+#: search/models.py:146
+#: search/models.py:189
 msgid "Name of city, town or village."
 msgstr "Miesto, miestelio arba kaimo pavadinimas"
 
-#: search/models.py:216
+#: search/models.py:214
 msgid "territory"
 msgstr "teritorija"
 
-#: search/models.py:217
+#: search/models.py:215
 msgid "territories"
 msgstr "teritorijos"
 
@@ -175,7 +179,7 @@ msgstr "Puslapis nerastas"
 msgid "Internal server error"
 msgstr "Programinė klaida"
 
-#: templates/base.html:27
+#: templates/base.html:28
 msgid "ParašykJiems"
 msgstr "ParašykJiems"
 
@@ -220,22 +224,22 @@ msgstr "Laiško peržiūra"
 msgid "Write a letter"
 msgstr "Parašykite laišką"
 
-#: templates/items/institution.html:12
+#: templates/items/institution.html:20
 #: templates/items/representative.html:20
 msgid "Phone number: "
 msgstr "Telefono numeris: "
 
-#: templates/items/institution.html:16
+#: templates/items/institution.html:24
 msgid "Address: "
 msgstr "Adresas: "
 
-#: templates/items/institution.html:25
-#: templates/items/representative.html:29
+#: templates/items/institution.html:33
+#: templates/items/representative.html:28
 msgid "Email: "
 msgstr "El. paštas:"
 
-#: templates/items/institution.html:27
-#: templates/items/representative.html:31
+#: templates/items/institution.html:35
+#: templates/items/representative.html:30
 msgid "Write&nbsp;letter"
 msgstr "Rašyti laišką"
 
@@ -255,11 +259,11 @@ msgstr "Siuntėjas:"
 msgid "To:"
 msgstr "Gavėjas:"
 
-#: templates/items/letter.html:23
+#: templates/items/letter.html:17
 msgid "Subject:"
 msgstr "Tema:"
 
-#: templates/items/letter.html:29
+#: templates/items/letter.html:23
 msgid "Date:"
 msgstr "Data: "
 
@@ -320,7 +324,7 @@ msgstr "Telefonas"
 msgid "Other information"
 msgstr "Kita informacija"
 
-#: templates/views/confirm.html:20
+#: templates/views/confirm.html:24
 #: templates/views/contact.html:44
 msgid "Send"
 msgstr "Siųsti"
@@ -353,10 +357,6 @@ msgstr "Paieška"
 #: templates/views/sent.html.py:7
 msgid "Letter sent"
 msgstr "Laiškas išsiųstas"
-
-#: templates/views/sent.html:12
-msgid "Your letter has been sent successfully."
-msgstr "Jūsų laiškas išsiųstas sėkmingai."
 
 #: templates/views/sent.html:16
 #, python-format
@@ -395,8 +395,8 @@ msgstr "Rašyti laišką"
 msgid "Submit"
 msgstr "Pateikti"
 
-#: web/admin.py:29
-#: web/admin.py:41
+#: web/admin.py:23
+#: web/admin.py:35
 #: web/models.py:18
 #: web/models.py:47
 msgid "content"
@@ -434,15 +434,36 @@ msgstr "iškarpėlė"
 msgid "snippets"
 msgstr "iškarpėlės"
 
-#: web/views.py:25
+#: web/views.py:27
 msgid "Feedback from {}"
 msgstr "Atsiliepimas iš {}"
 
-#~ msgid "message"
-#~ msgstr "žinutė"
+#~ msgid "Sent from {} to {}"
+#~ msgstr "Siuntėjas: {}, gavėjas: {}"
 
-#~ msgid "messages"
-#~ msgstr "žinutės"
+#~ msgid "Copy of the letter you sent."
+#~ msgstr "Laiško, kurį išsiuntėte, kopija"
+
+#~ msgid "Your enquiry has been responded to"
+#~ msgstr "Į jūsų laišką buvo atsakyta"
+
+#~ msgid "enquiry"
+#~ msgstr "užklausa"
+
+#~ msgid "enquiries"
+#~ msgstr "užklausos"
+
+#~ msgid "The unprocessed e-mail message."
+#~ msgstr "Neapdorotas elektroninis laiškas."
+
+#~ msgid "response"
+#~ msgstr "atsakymas"
+
+#~ msgid "responses"
+#~ msgstr "atsakymai"
+
+#~ msgid "Your letter has been sent successfully."
+#~ msgstr "Jūsų laiškas išsiųstas sėkmingai."
 
 #~ msgid "You should enter your full name without abbreviations."
 #~ msgstr "Įveskite savo vardą ir pavardę be sutrumpinimų."
