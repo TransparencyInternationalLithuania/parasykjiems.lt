@@ -1,18 +1,14 @@
 $(function(){
-      $('.fold').hide();
+      $('.fold').addClass('collapsed');
 
       $('.foldable').click(
-          function() {
-              var foldable = $(this);
-              var fold = foldable.find('.fold');
-              fold.slideToggle('fast');
-          }
-      );
-
-      // When a link inside a foldable is clicked, go to its location.
-      $('.foldable a').click(
-          function() {
-              window.location.href = this.href; return false;
+          function(e) {
+              if (!$(e.target).is('a')) {
+                  var foldable = $(this);
+                  var fold = foldable.find('.fold');
+                  fold.toggleClass('collapsed');
+              }
+              return true;
           }
       );
 
@@ -20,15 +16,13 @@ $(function(){
 
       $('.letter blockquote')
           .click(
-              function() {
-                  $(this).toggleClass('collapsed');
-                  return false;
+              function(e) {
+                  if (!$(e.target).is('a')) {
+                      $(this).toggleClass('collapsed');
+                      return false;
+                  }
+                  return true;
               }
           )
           .addClass('collapsed');
-      $('.letter blockquote a').click(
-          function() {
-              window.location.href = this.href; return false;
-          }
-      );
   });
