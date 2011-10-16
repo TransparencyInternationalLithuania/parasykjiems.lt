@@ -868,7 +868,7 @@ a.help4:hover { background: #984e79; }
     cursor: pointer;
 }
 
-.foldable.collapsed:before {
+.foldable .collapsed:before {
     content: '(rodyti)';
     color: #456;
 }
