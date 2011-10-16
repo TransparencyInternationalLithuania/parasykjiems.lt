@@ -36,7 +36,6 @@ def email_blockquote(value, autoescape=None):
                 blockquote_level = angle_count
                 lines.append(quote_tags + clean_line)
         lines.append('</blockquote>' * blockquote_level)
-        print lines
         return '\n'.join(lines)
 
     if autoescape:
