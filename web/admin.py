@@ -2,14 +2,8 @@ from django.contrib import admin
 from django.db.models import TextField
 from django.forms.widgets import Textarea
 from django.utils.translation import ugettext_lazy as _
+from web.utils import summary
 import models
-
-
-def summary(s):
-    short = s[:80]
-    if short != s:
-        short += '...'
-    return short.replace('\n', '')
 
 
 class ArticleAdmin(admin.ModelAdmin):
