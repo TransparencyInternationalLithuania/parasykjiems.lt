@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n snippet %}
 
 {% block menu %}
 {% include "menu.html" %}
@@ -14,6 +14,10 @@
 {% block content %}
 
 {% include "items/letter.html" with letter=message %}
+
+{% if message.is_public %}
+{% snippet "confirm-open-letter" %}
+{% endif %}
 
 <form method="POST">
   {% csrf_token %}
