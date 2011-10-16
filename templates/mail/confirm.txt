@@ -6,6 +6,8 @@ buvo parašytas laiškas valdžios atstovui.
 Laiško gavėjas: {{ message.recipient_name }}
 Laiško tema: {{ message.subject }}
 
+{% if message.is_public %}Šitas laiškas yra atviras ir po patvirtinimo jis bus matomas svetainėje.
+{% endif %}
 Jeigu norite peržiūrėti laišką ir patvirtinti jo siuntimą, naršyklėje
 nueikite šiuo adresu:
 
