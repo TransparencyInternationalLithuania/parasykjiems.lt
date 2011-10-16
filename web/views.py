@@ -38,7 +38,6 @@ def contact(request):
     })
 
 
-@cache_control(max_age=60 * 60, public=True)
 def contact_thanks(request):
     return render(request, 'views/contact_thanks.html')
 
@@ -50,7 +49,6 @@ def robots_txt(request):
     return render(request, 'robots.txt', content_type='text/plain')
 
 
-@cache_control(max_age=60 * 60, public=True)
 def article(request, location):
     art = get_object_or_404(Article, location=location)
     return render(request, 'views/article.html', {
