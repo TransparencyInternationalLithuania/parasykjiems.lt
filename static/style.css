@@ -190,6 +190,7 @@ img {
     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#777777FF, endColorstr=#848484FF)";
     -pie-background: linear-gradient(#777777, #848484);
     color: white;
+    cursor: default;
 }
 
 #breadcrumbs {
@@ -395,8 +396,8 @@ h1, h2, h3, h4, h5 {
     color: #444;
     font-size: 1.1em;
     font-weight: 700;
-    margin-bottom: 0.5em;
-    margin-top: 0.5em;
+    margin-bottom: 1em;
+    margin-top: 2em;
 }
 
 h1 {
@@ -724,46 +725,6 @@ ul.errorlist {
     padding: 0.5em;
 }
 
-.tabs {
-    text-align: center;
-    margin: 0;
-    padding: 11px 0 6px 0;
-    border-bottom: 2px solid #5d6675;
-    overflow: hidden;
-    behavior: url(/static/PIE.htc);
-    position: relative;
-}
-
-.tabs span, .tabs a {
-    margin: 0 5px 0 5px;
-    padding: 8px 30px 7px 30px;
-    background: #c0c6d0;
-    color: #444;
-    border-radius: 20px 20px 0 0;
-    -moz-border-radius: 20px 20px 0 0;
-    -webkit-border-radius: 20px 20px 0 0;
-    behavior: url(/static/PIE.htc);
-    position: relative;
-}
-
-.tabs a:hover {
-    background: #959dab;
-    color: #fff;
-}
-
-.tabs .selected {
-    color: white;
-    background: #5d6675;
-}
-
-.toc ul {
-    list-style: none;
-}
-
-.toc a {
-    font-weight: bold;
-}
-
 strong {
     color: #333;
 }
@@ -859,13 +820,17 @@ a.help4:hover { background: #984e79; }
 }
 
 .foldable {
-    display: inline-block;
+    display: block;
     background: #eaeaff;
-    padding: 5px 20px 0 20px;
+    padding: 15px 20px 1px 20px;
     border-radius: 20px;
     margin: 0 0 1.5em -20px;
     width: 100%;
     cursor: pointer;
+}
+
+.foldable h2:first-child {
+    margin-top: 0;
 }
 
 .foldable .collapsed:before {
