@@ -12,34 +12,47 @@ def email_blockquote(value, autoescape=None):
     """Turn quotes in an email message into HTML blockquotes.
     """
     def process(text):
-        # The actual processing
-        lines = []
+        output = []
         blockquote_level = 0
         outlook_quote = False
-        QUOTE_LINE_RE = re.compile(r'^\s*((?:(?:&gt;|>)\s*)*)(.*)')
+
+        # This regexp captures two groups: the beginning of the line
+        # consisting only of spaces and '>' characters and the rest of
+        # the line.
+        QUOTE_LINE_RE = re.compile(r'((?:(?:&gt;|>)\s*)*)(.*)')
+
         for line in text.split('\n'):
             line = line.strip()
             if line == '-----Original Message-----':
+                # Outlook quotes are handled separately because they
+                # dont have '>'s.
                 outlook_quote = True
-                lines.append('<blockquote>')
+                output.append('<blockquote>')
             else:
                 m = QUOTE_LINE_RE.match(line)
                 assert(m)
                 angles, clean_line = m.group(1), m.group(2)
+
+                # Count the '>'s.
                 angle_count = angles.replace('&gt;', '>').count('>')
+
+                # Open or close blockquotes if the amount of '>'s
+                # changes with respect to the previous line.
                 diff = angle_count - blockquote_level
                 if diff > 0:
-                    quote_tags = '<blockquote>' * diff
+                    output.append('<blockquote>' * diff)
                 elif diff < 0:
-                    quote_tags = '</blockquote>' * (-diff)
-                else:
-                    quote_tags = ''
+                    output.append('</blockquote>' * (-diff))
                 blockquote_level = angle_count
-                lines.append(quote_tags + clean_line)
+
+                output.append(clean_line + '\n')
+
+        # Close any open blockquote tags including the outlook one.
+        output.append('</blockquote>' * blockquote_level)
         if outlook_quote:
-            blockquote_level += 1
-        lines.append('</blockquote>' * blockquote_level)
-        return '\n'.join(lines)
+            output.append('</blockquote>')
+
+        return ''.join(output)
 
     if autoescape:
         esc = conditional_escape
