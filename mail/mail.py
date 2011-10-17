@@ -36,8 +36,8 @@ def find_parent(message):
         m = utils.MESSAGE_EMAIL_REGEXP.match(to_email)
         if m:
             id = int(m.group('id'))
-            hash = int(m.group('hash'))
-            maybe_parent = Message.objects.filter(id=id, reply_hash=hash)
+            secret = m.group('secret')
+            maybe_parent = Message.objects.filter(id=id, reply_secret=secret)
             if maybe_parent.exists():
                 message.parent = maybe_parent.get()
                 message.recipient_name = message.parent.sender_name

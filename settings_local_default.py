@@ -35,7 +35,7 @@ FEEDBACK_EMAIL = 'feedback@' + SITE_DOMAIN
 SERVER_EMAIL = 'parasykjiems@' + SITE_DOMAIN
 
 # Reply emails are formatted like
-# {REPLY_EMAIL_PREFIX}+{id}.{hash}@{SITE_DOMAIN}
+# {REPLY_EMAIL_PREFIX}+{id}.{secret}@{SITE_DOMAIN}
 REPLY_EMAIL_PREFIX = 'reply'
 
 # Additional content to put into every page's head tag. Useful for
