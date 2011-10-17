@@ -5,7 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class UnconfirmedMessageAdmin(admin.ModelAdmin):
-    readonly_fields = ('id', 'confirm_hash', 'submitted_at')
+    readonly_fields = ('id', 'confirm_secret', 'submitted_at')
     list_display = ('submitted_at',
                     'sender_name',
                     'sender_email',
@@ -22,7 +22,7 @@ admin.site.register(models.UnconfirmedMessage, UnconfirmedMessageAdmin)
 
 
 class MessageAdmin(admin.ModelAdmin):
-    readonly_fields = ('date', 'reply_hash')
+    readonly_fields = ('date', 'reply_secret')
     list_display = ('date',
                     'kind',
                     'sender', 'recipient',

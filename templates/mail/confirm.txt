@@ -11,7 +11,7 @@ Laiško tema: {{ message.subject }}
 Jeigu norite peržiūrėti laišką ir patvirtinti jo siuntimą, naršyklėje
 nueikite šiuo adresu:
 
-{{ SETTINGS.SITE_ADDRESS }}{% url confirm message.id message.confirm_hash %}
+{{ SETTINGS.SITE_ADDRESS }}{% url confirm message.id message.confirm_secret %}
 
 Jeigu ne Jūs parašėte šį laišką, o kažkas apsimetantis Jumis, prašome
 pranešti apie piktnaudžiavimą mūsų svetaine adresu {{ SETTINGS.FEEDBACK_EMAIL }}{% endautoescape %}

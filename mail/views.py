@@ -70,10 +70,10 @@ def write_confirm(request):
 
 
 @cache_control(public=False)
-def confirm(request, id, confirm_hash):
+def confirm(request, id, confirm_secret):
     unc_message = get_object_or_404(UnconfirmedMessage,
                                     id=int(id),
-                                    confirm_hash=int(confirm_hash))
+                                    confirm_secret=int(confirm_secret))
 
     if request.method == 'POST':
         thread = mail.confirm_and_send(unc_message)

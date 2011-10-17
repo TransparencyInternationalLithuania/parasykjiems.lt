@@ -52,7 +52,7 @@ def decode_date_header(header):
 
 
 MESSAGE_EMAIL_REGEXP = re.compile(
-    ur'{prefix}\+(?P<id>\d+)\.(?P<hash>\d+)@{domain}'.format(
+    ur'{prefix}\+(?P<id>\d+)\.(?P<secret>\d+)@{domain}'.format(
         prefix=settings.REPLY_EMAIL_PREFIX.replace('.', r'\.'),
         domain=settings.SITE_DOMAIN.replace('.', r'\.')))
 

@@ -23,17 +23,19 @@ logger = logging.getLogger(__name__)
 _NAME_LEN = 200
 
 _RANDOM_GENERATOR = random.SystemRandom()
-_HASH_MAX = int('9' * 10)
+_SECRET_LEN = 10
+_SECRET_MAX = int('9' * _SECRET_LEN)
 
 
-def generate_hash():
-    return _RANDOM_GENERATOR.randint(1, _HASH_MAX)
+def generate_secret():
+    return str(_RANDOM_GENERATOR.randint(1, _SECRET_MAX))
 
 
 class UnconfirmedMessage(models.Model):
-    confirm_hash = models.BigIntegerField(default=generate_hash,
-                                          db_index=True,
-                                          null=False, blank=True)
+    confirm_secret = models.CharField(default=generate_secret,
+                                      max_length=_SECRET_LEN,
+                                      db_index=True,
+                                      null=False, blank=True)
 
     sender_name = models.CharField(max_length=_NAME_LEN)
     sender_email = models.EmailField(max_length=_NAME_LEN)
@@ -75,9 +77,10 @@ class UnconfirmedMessage(models.Model):
 
 
 class Message(models.Model):
-    reply_hash = models.BigIntegerField(default=generate_hash,
-                                        db_index=True,
-                                        null=False, blank=True)
+    reply_secret = models.CharField(default=generate_secret,
+                                    max_length=_SECRET_LEN,
+                                    db_index=True,
+                                    null=False, blank=True)
 
     parent = models.ForeignKey('Message', null=True)
     thread = models.ForeignKey('Thread', null=True)
@@ -151,10 +154,10 @@ class Message(models.Model):
     def reply_email(self):
         '''The email that replies to this message should be sent to.
         '''
-        return u'{prefix}+{id}.{hash}@{domain}'.format(
+        return u'{prefix}+{id}.{secret}@{domain}'.format(
             prefix=settings.REPLY_EMAIL_PREFIX,
             id=self.id,
-            hash=self.reply_hash,
+            secret=self.reply_secret,
             domain=settings.SITE_DOMAIN)
 
     def __unicode__(self):
