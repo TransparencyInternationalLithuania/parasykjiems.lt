@@ -15,11 +15,12 @@ def email_blockquote(value, autoescape=None):
         # The actual processing
         lines = []
         blockquote_level = 0
+        outlook_quote = False
         QUOTE_LINE_RE = re.compile(r'^\s*((?:(?:&gt;|>)\s*)*)(.*)')
         for line in text.split('\n'):
             line = line.strip()
             if line == '-----Original Message-----':
-                blockquote_level += 1
+                outlook_quote = True
                 lines.append('<blockquote>')
             else:
                 m = QUOTE_LINE_RE.match(line)
@@ -35,6 +36,8 @@ def email_blockquote(value, autoescape=None):
                     quote_tags = ''
                 blockquote_level = angle_count
                 lines.append(quote_tags + clean_line)
+        if outlook_quote:
+            blockquote_level += 1
         lines.append('</blockquote>' * blockquote_level)
         return '\n'.join(lines)
 
