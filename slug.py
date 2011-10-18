@@ -4,7 +4,7 @@
 import re
 from django.shortcuts import get_object_or_404
 from unidecode import unidecode
-from search.multisub import multisub_all_sequential
+from multisub import multisub_all_sequential
 
 
 SLUG_LEN = 40
