@@ -97,7 +97,7 @@ def thread(request, slug):
     })
 
 
-def _latest_thread(request, inst=None):
+def _latest_thread(request, institution_slug=None):
     try:
         return (Thread.objects
                 .filter(is_public=True)
