@@ -56,7 +56,6 @@ li {
     margin: 0 auto 0 auto;
     padding: 0 0 1em 0;
     overflow: hidden;
-    width: 100%;
 }
 
 .note {
@@ -100,7 +99,6 @@ img {
     background: -ms-linear-gradient(#f5f5f5, #e5e5e5);
     background: -o-linear-gradient(#f5f5f5, #e5e5e5);
     background: linear-gradient(#f5f5f5, #e5e5e5);
-    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#F5F5F5FF, endColorstr=#E5E5E5FF)";
     -pie-background: linear-gradient(#f5f5f5, #e5e5e5);
     -pie-box-shadow: 0px 1px 8px #999;
     -webkit-box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.3);
@@ -115,12 +113,15 @@ img {
     padding-top: 5px;
     margin: 0 auto 0 auto;
     border-spacing: 0;
+    position: relative;
+    overflow: auto;
 }
 
-#inner-header tr {
+#inner-header a {
     margin: 0;
     padding: 0;
-    vertical-align: middle;
+    vertical-align: bottom;
+    float: left;
 }
 
 #slogan p {
@@ -131,11 +132,16 @@ img {
 
 #menu-td {
     vertical-align: bottom;
-    padding-bottom: 7px;
+    padding-bottom: -30px;
 }
 
 #menu {
     text-align: center;
+    display: block;
+    float: right;
+    position: absolute;
+    bottom: 0;
+    right: 0;
 }
 
 #menu li {
@@ -161,7 +167,6 @@ img {
     background: -ms-linear-gradient(#dfdfdf, #cacaca);
     background: -o-linear-gradient(#dfdfdf, #cacaca);
     background: linear-gradient(#dfdfdf, #cacaca);
-    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#DFDFDFFF, endColorstr=#CACACAFF)";
     -pie-background: linear-gradient(#dfdfdf, #cacaca);
     behavior: url(/static/PIE.htc);
     position: relative;
@@ -175,7 +180,6 @@ img {
     background: -ms-linear-gradient(#cfcfcf, #bfbfbf);
     background: -o-linear-gradient(#cfcfcf, #bfbfbf);
     background: linear-gradient(#cfcfcf, #bfbfbf);
-    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#CFCFCFFF, endColorstr=#BFBFBFFF)";
     -pie-background: linear-gradient(#cfcfcf, #bfbfbf);
 }
 
@@ -187,7 +191,19 @@ img {
     background: -ms-linear-gradient(#777777, #848484);
     background: -o-linear-gradient(#777777, #848484);
     background: linear-gradient(#777777, #848484);
-    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#777777FF, endColorstr=#848484FF)";
+    -pie-background: linear-gradient(#777777, #848484);
+    color: white;
+    cursor: default;
+}
+
+#menu a.selected:hover {
+    background: #cfcfcf;
+    background: -webkit-gradient(linear, 0 0, 0 bottom, from(#777777), to(#848484));
+    background: -webkit-linear-gradient(#777777, #848484);
+    background: -moz-linear-gradient(#777777, #848484);
+    background: -ms-linear-gradient(#777777, #848484);
+    background: -o-linear-gradient(#777777, #848484);
+    background: linear-gradient(#777777, #848484);
     -pie-background: linear-gradient(#777777, #848484);
     color: white;
     cursor: default;
@@ -221,7 +237,7 @@ img {
 
 #content {
     margin: 0 auto 2em auto;
-    max-width: 900px;
+    width: 900px;
 }
 
 #footer {
@@ -312,14 +328,13 @@ form input[type=submit] {
     -moz-border-radius: 7px;
     border-radius: 7px;
     color: #333;
-    border: solid 1px #eee;
+    border: solid 1px #eeeeee;
     background: #f2f2f2; /* Old browsers */
     background: -moz-linear-gradient(top, #f2f2f2 0%, #cecece 100%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f2f2f2), color-stop(100%,#cecece)); /* Chrome,Safari4+ */
     background: -webkit-linear-gradient(top, #f2f2f2 0%,#cecece 100%); /* Chrome10+,Safari5.1+ */
     background: -o-linear-gradient(top, #f2f2f2 0%,#cecece 100%); /* Opera11.10+ */
     background: -ms-linear-gradient(top, #f2f2f2 0%,#cecece 100%); /* IE10+ */
-    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#F2F2F2FF, endColorstr=#CECECEFF)";
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f2f2', endColorstr='#cecece',GradientType=0 ); /* IE6-9 */
     background: linear-gradient(top, #f2f2f2 0%,#cecece 100%); /* W3C */
 }
@@ -332,7 +347,6 @@ form input[type=submit]:hover {
     background: -o-linear-gradient(top, #f9f9f9 0%,#eaeaea 100%); /* Opera11.10+ */
     background: -ms-linear-gradient(top, #f9f9f9 0%,#eaeaea 100%); /* IE10+ */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9f9f9', endColorstr='#eaeaea',GradientType=0 ); /* IE6-9 */
-    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#F9F9F9FF, endColorstr=#EAEAEAFF)";
     background: linear-gradient(top, #f9f9f9 0%,#eaeaea 100%); /* W3C */
 }
 
@@ -347,10 +361,20 @@ form[name=search] input {
     font-size: 1.2em;
 }
 
+#results {
+    background:as white;
+    behavior: url(/static/PIE.htc);
+    position: relative;
+}
+
 #result-list {
     list-style: none;
+    list-style-type: none;
+    list-style-image: none;
     margin: 0;
     padding: 0;
+    behavior: url(/static/PIE.htc);
+    position: relative;
 }
 
 #result-list a {
@@ -359,8 +383,13 @@ form[name=search] input {
     display: block;
     padding: 0.3em 0.5em 0.3em 0.5em;
     margin: 0.4em 0.5em 0.4em 0.5em;
-    border: solid 1px white;
     color: #222;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    background: white;
+    behavior: url(/static/PIE.htc);
+    position: relative;
 }
 
 #result-list a .subtitle {
@@ -378,18 +407,13 @@ form[name=search] input {
     background: -ms-linear-gradient(#d0d0d0, #e0e0e0);
     background: -o-linear-gradient(#d0d0d0, #e0e0e0);
     background: linear-gradient(#d0d0d0, #e0e0e0);
-    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#d0d0d0FF, endColorstr=#e0e0e0FF)";
     -pie-background: linear-gradient(#d0d0d0, #e0e0e0);
-    position: relative;
-    behavior: url(/static/PIE.htc);
     color: black;
 }
 
 #result-list img {
     float: left;
     padding: 10px 20px 5px 13px;
-    behavior: url(/static/PIE.htc);
-    position: relative;
 }
 
 h1, h2, h3, h4, h5 {
@@ -501,8 +525,6 @@ h5 {
     background: -ms-linear-gradient(#fff, #ececec);
     background: -o-linear-gradient(#fff, #ececec);
     background: linear-gradient(#fff, #ececec);
-    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#FFFFFFFF, endColorstr=#ECECECFF)";
-    behavior: url(/static/PIE.htc);
 }
 
 .threads a {
@@ -548,16 +570,16 @@ h5 {
 }
 
 .letter {
-    font-size: 0.9em;
+    font-size: 0.91em;
     margin-bottom: 1em;
-    background: #d6e0f3;
+    background: #caddf3;
     padding: 0.5em 1em 0.5em 1em;
     border-radius: 1em;
     -moz-border-radius: 1em;
     -webkit-border-radius: 1em;
     behavior: url(/static/PIE.htc);
     position: relative;
-    max-width: 800px;
+    width: 800px;
 }
 
 
@@ -574,8 +596,8 @@ h5 {
 }
 
 .response {
-    background: #f3f0b6;
-    margin-left: 2em;
+    background: #f6f0a6;
+    margin-left: 80px;
 }
 
 .response blockquote {
@@ -587,18 +609,11 @@ h5 {
     border-left: 2px solid #e3d088;
 }
 
-.collapsed {
-    overflow: hidden;
-    height: 1.5em;
-    clear: both;
-}
-
-.letter .collapsed:before {
-    content: '…';
+.letter blockquote .alternate {
     color: #456;
 }
 
-.response .collapsed:before {
+.response blockquote .alternate {
     color: #654;
 }
 
@@ -618,7 +633,7 @@ h5 {
 }
 
 .description {
-    background: #eaeaff;
+    background: #eaf0ff;
     border: 2px solid #e0e0ff;
     color: #345;
     border-radius: 10px;
@@ -685,31 +700,28 @@ a.write {
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
     border-radius: 20px;
-    background: #cfcfcf;
+    background: #707070;
     background: -webkit-gradient(linear, 0 0, 0 bottom, from(#666666), to(#747474));
     background: -webkit-linear-gradient(#666666, #747474);
     background: -moz-linear-gradient(#666666, #747474);
     background: -ms-linear-gradient(#666666, #747474);
     background: -o-linear-gradient(#666666, #747474);
     background: linear-gradient(#666666, #747474);
-    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#666666FF, endColorstr=#747474FF)";
     -pie-background: linear-gradient(#666666, #747474);
     position: relative;
     behavior: url(/static/PIE.htc);
 }
 
 a.write:hover {
-    background: #cfcfcf;
+    text-decoration: none;
+    background: #606060;
     background: -webkit-gradient(linear, 0 0, 0 bottom, from(#555555), to(#646464));
     background: -webkit-linear-gradient(#555555, #646464);
     background: -moz-linear-gradient(#555555, #646464);
     background: -ms-linear-gradient(#555555, #646464);
     background: -o-linear-gradient(#555555, #646464);
     background: linear-gradient(#555555, #646464);
-    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#555555FF, endColorstr=#646464FF)";
     -pie-background: linear-gradient(#555555, #646464);
-    position: relative;
-    behavior: url(/static/PIE.htc);
 }
 
 ul.errorlist {
@@ -749,26 +761,34 @@ strong {
 #help-squares {
     display: block;
     overflow: hidden;
-    width: 740px;
+    width: 630px;
+    height: 530px;
     margin: 0 auto 0 auto;
     list-style: none;
     list-style-type: none;
+    list-style-image: none;
+    position: relative;
 }
 
 #help-squares a {
     text-decoration: none;
     line-height: 150%;
-    float: left;
     font-size: 1.4em;
     text-align: left;
     font-weight: 500;
+    position: absolute;
+    height: 250px;
+    width: 280px;
 }
+
+#help-squares .help1 { top: 0; left: 0; }
+#help-squares .help2 { top: 0; right: 0; }
+#help-squares .help3 { bottom: 0; left: 0; }
+#help-squares .help4 { bottom: 0; right: 0; }
 
 .help1, .help2, .help3, .help4 {
     display: block;
     font-weight: 600;
-    width: 300px;
-    margin: 5px;
     padding: 5px 15px 5px 15px !important;
     color: white !important;
     text-shadow: none !important;
@@ -811,12 +831,14 @@ a.help4:hover { background: #984e79; }
 }
 
 #help-squares img {
-    width: 140px;
-    height: 140px;
+    width: 130px;
+    height: 130px;
     clear: both;
     display: block;
     margin: 0 auto 0 auto;
     padding: 20px;
+    behavior: url(/static/PIE.htc);
+    position: relative;
 }
 
 .foldable {
@@ -833,7 +855,7 @@ a.help4:hover { background: #984e79; }
     margin-top: 0;
 }
 
-.foldable .collapsed:before {
+.foldable .alternate {
     content: '(rodyti)';
     color: #456;
 }
