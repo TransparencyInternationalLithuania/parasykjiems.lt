@@ -2,7 +2,8 @@
 
 from django.contrib.syndication.views import Feed
 from django.utils.translation import ugettext as _
-from models import Enquiry
+from models import Thread
+from web.utils import summary
 
 
 class ThreadsFeed(Feed):
@@ -10,17 +11,17 @@ class ThreadsFeed(Feed):
     link = "/threads/"
 
     def items(self):
-        return (Enquiry.objects
-                .filter(is_open=True, is_sent=True, parent=None)
-                .order_by('-sent_at')[:10])
+        return (Thread.objects.filter(is_public=True)
+                .order_by('-created_at')[:10])
 
     def item_title(self, item):
         return item.subject
 
     def item_description(self, item):
-        return _("Sent from {} to {}").format(
-            item.sender_name,
-            item.recipient_name)
+        try:
+            return summary(item.messages[0].body_text)
+        except IndexError:
+            return u''
 
     def item_pubdate(self, item):
-        return item.sent_at
+        return item.created_at

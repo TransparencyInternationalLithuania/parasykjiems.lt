@@ -23,182 +23,210 @@ logger = logging.getLogger(__name__)
 _NAME_LEN = 200
 
 _RANDOM_GENERATOR = random.SystemRandom()
-_HASH_MAX = int('9' * 10)
+_SECRET_LEN = 10
+_SECRET_MAX = int('9' * _SECRET_LEN)
 
 
-def generate_hash():
-    return _RANDOM_GENERATOR.randint(1, _HASH_MAX)
+def generate_secret():
+    return str(_RANDOM_GENERATOR.randint(1, _SECRET_MAX))
 
 
-class Enquiry(models.Model):
-    # Should be set if this message is a continuation of a discussion.
-    parent = models.ForeignKey('Response', null=True, blank=True)
+class UnconfirmedMessage(models.Model):
+    confirm_secret = models.CharField(default=generate_secret,
+                                      max_length=_SECRET_LEN,
+                                      db_index=True,
+                                      null=False, blank=True)
 
-    # Secret hashes are separate for confirmation and replies, so that
-    # a sender can't reply to himself.
-    reply_hash = models.BigIntegerField(default=generate_hash,
-                                        db_index=True,
-                                        null=False, blank=True)
-    confirm_hash = models.BigIntegerField(default=generate_hash,
-                                          db_index=True,
-                                          null=False, blank=True)
+    sender_name = models.CharField(max_length=_NAME_LEN)
+    sender_email = models.EmailField(max_length=_NAME_LEN)
+    subject = models.CharField(max_length=400)
+    body_text = models.TextField()
 
-    slug = models.CharField(max_length=SLUG_LEN,
-                            blank=True,
-                            db_index=True)
+    is_public = models.BooleanField()
 
-    # These link to the institution or representative that this
-    # enquiry was sent to. Exactly one of them should be non-null.
+    submitted_at = models.DateTimeField(auto_now_add=True)
+
+    # These link to the institution or representative participating in
+    # this thread. At most one of them should be non-null.
     institution = models.ForeignKey('search.Institution',
                                     null=True, blank=True)
     representative = models.ForeignKey('search.Representative',
                                        null=True, blank=True)
 
-    # This should be set to the name and email of the institution or
-    # representative on creation. In case, the representative's name
-    # changes in the database, we still know to whom the letter was
-    # sent.
+    @property
+    def recipient(self):
+        return self.representative or self.institution
+
+    # We need recipient_name, so that we can display unconfirmed
+    # messages with the "items/letter.html" template.
+    @property
+    def recipient_name(self):
+        return self.recipient.name
+
+    def __unicode__(self):
+        return (u'{id}: {name} <{email}> to {to_name} (unconfirmed)'
+                .format(
+                    id=self.id,
+                    name=self.sender_name,
+                    email=self.sender_email,
+                    to_name=self.recipient.name))
+
+    class Meta:
+        verbose_name = _('unconfirmed message')
+        verbose_name_plural = _('unconfirmed messages')
+
+
+class Message(models.Model):
+    reply_secret = models.CharField(default=generate_secret,
+                                    max_length=_SECRET_LEN,
+                                    db_index=True,
+                                    null=False, blank=True)
+
+    parent = models.ForeignKey('Message', null=True)
+    thread = models.ForeignKey('Thread', null=True)
+
+    date = models.DateTimeField(auto_now_add=True)
+
+    KIND_CHOICES = (('enquiry', _('Sent from user to representative')),
+                    ('response', _('Sent from representative to user')))
+    kind = models.CharField(max_length=8, choices=KIND_CHOICES)
+
+    envelope = models.TextField(
+        blank=True,
+        help_text=_('If the message was received through SMTP, the '
+                    'original email text.'))
+
+    # The name and email of the *intended* recipient. This is not
+    # filled from the envelope.
+    recipient_name = models.CharField(max_length=_NAME_LEN, default=u'')
+    recipient_email = models.CharField(max_length=_NAME_LEN, default=u'')
+
+    # These fields can be filled automatically when the message has an
+    # envelope.
+    sender_name = models.CharField(max_length=_NAME_LEN)
+    sender_email = models.CharField(max_length=_NAME_LEN)
+    subject = models.CharField(max_length=_NAME_LEN)
+    body_text = models.TextField()
+
+    # This ID is used for filling References and In-Reply-To in
+    # outgoing messages for threading on the user's side. If the
+    # message is created from a web form, and therefore doesn't have a
+    # Message-ID itself, this should be set to the ID of the user's
+    # copy of the outgoing message.
+    message_id = models.CharField(max_length=_NAME_LEN, blank=True)
+
+    @property
+    def envelope_object(self):
+        """Return the corresponding email.message.Message object.
+        Caches the parsed object for subsequent requests.
+        """
+        if not hasattr(self, '_envelope_object'):
+            if self.envelope == u'':
+                self._envelope_object = None
+            else:
+                self._envelope_object = email.message_from_string(
+                    self.envelope.encode('utf-8'))
+        return self._envelope_object
+
+    def fill_from_envelope(self):
+        assert(self.envelope_object)
+        self.message_id = utils.decode_header_unicode(
+            self.envelope_object['message-id'])
+        self.sender_name = utils.extract_name(
+            utils.decode_header_unicode(self.envelope_object['from']))
+        self.sender_email = utils.extract_email(
+            utils.decode_header_unicode(self.envelope_object['from']))
+        self.subject = utils.decode_header_unicode(
+            self.envelope_object['subject'])
+
+        body_text = u''
+        for part in self.envelope_object.walk():
+            if part.get_content_type() == 'text/plain':
+                charset = part.get_content_charset()
+                body_text = part.get_payload(decode=True).decode(charset)
+                break
+        if body_text == u'':
+            logging.warning(u"Couldn't extract body text out of {}"
+                            .format(self))
+        self.body_text = utils.remove_reply_email(body_text)
+
+    @property
+    def reply_email(self):
+        '''The email that replies to this message should be sent to.
+        '''
+        return u'{prefix}+{id}.{secret}@{domain}'.format(
+            prefix=settings.REPLY_EMAIL_PREFIX,
+            id=self.id,
+            secret=self.reply_secret,
+            domain=settings.SITE_DOMAIN)
+
+    def __unicode__(self):
+        return u'{id}:{sender} -> {recipient} ({date})'.format(
+            id=self.id,
+            sender=self.sender_name,
+            recipient=self.recipient_name,
+            date=self.date)
+
+    class Meta:
+        verbose_name = _('message')
+        verbose_name_plural = _('messages')
+
+
+class Thread(models.Model):
+    slug = models.CharField(max_length=SLUG_LEN,
+                            blank=True,
+                            db_index=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now=True)
+
+    is_public = models.BooleanField(default=False)
+
+    # These link to the institution or representative participating in
+    # this thread. At most one of them should be non-null.
+    institution = models.ForeignKey('search.Institution',
+                                    null=True, blank=True)
+    representative = models.ForeignKey('search.Representative',
+                                       null=True, blank=True)
+
+    sender_name = models.CharField(max_length=_NAME_LEN)
+    sender_email = models.CharField(max_length=_NAME_LEN)
+
     recipient_name = models.CharField(max_length=_NAME_LEN)
     recipient_email = models.CharField(max_length=_NAME_LEN)
 
-    sender_name = models.CharField(max_length=_NAME_LEN)
-    sender_email = models.EmailField(max_length=_NAME_LEN)
     subject = models.CharField(max_length=400)
-    body = models.TextField()
-
-    is_open = models.BooleanField()
-
-    submitted_at = models.DateTimeField(auto_now_add=True)
-
-    is_confirmed = models.BooleanField()
-
-    is_sent = models.BooleanField()
-    sent_at = models.DateTimeField(null=True, blank=True)
-
-    # This can be used for threading. Should be set after sending.
-    message_id = models.CharField(max_length=100,
-                                  null=True, blank=True,
-                                  db_index=True)
 
     @property
     def recipient(self):
         return self.representative or self.institution
 
     @property
-    def is_recipient_current(self):
-        '''True if the recipient to whom this message was sent
-        (determined by recipient_name) is the one returned by the
-        recipient property.
-        '''
-        return (self.recipient and
-                (self.recipient_name == self.recipient.name))
+    def messages(self):
+        return Message.objects.filter(thread=self).order_by('date')
 
     @property
     def has_answer(self):
-        return Response.objects.filter(parent=self.id).exists()
+        return self.messages.count() > 1
 
     @property
-    def date(self):
-        return self.sent_at
-
-    @property
-    def kind(self):
-        return 'enquiry'
+    def references(self):
+        return ' '.join([m.message_id for m in self.messages])
 
     @models.permalink
     def get_absolute_url(self):
-        return ('thread', (), {'slug': self.slug})
+        if self.slug == '':
+            raise Exception('Tried to get address of object missing a slug.')
+        return ('thread', [self.slug])
 
     def __unicode__(self):
-        if self.is_sent:
-            sent_msg = u'sent at {}'.format(self.sent_at)
-        elif self.is_confirmed:
-            sent_msg = u'confirmed'
-        else:
-            sent_msg = u'unconfirmed'
-        return u'{id}: {name} <{email}> to {to} ({sent})'.format(
-            id=self.id,
-            name=self.sender_name,
-            email=self.sender_email,
-            to=self.recipient,
-            sent=sent_msg)
+        return (u'{id}: "{subject}" from {sender} to {recipient} ({date})'
+                .format(
+                    id=self.id,
+                    subject=self.subject,
+                    sender=self.sender_name,
+                    recipient=self.recipient_name,
+                    date=self.created_at))
 
     class Meta:
-        verbose_name = _('enquiry')
-        verbose_name_plural = _('enquiries')
-
-
-class Response(models.Model):
-    # A null parent means that it's unresolved. All responses should
-    # have parents, but we might fail to find one.
-    parent = models.ForeignKey(Enquiry, null=True)
-
-    received_time = models.DateTimeField(auto_now_add=True)
-    raw_message = models.TextField(
-        help_text=_("The unprocessed e-mail message."))
-
-    sent_reply_notification = models.BooleanField(default=False)
-
-    @property
-    def message(self):
-        """Returns this Response as an email.message.Message object.
-
-        Caches the parsed object for subsequent requests.
-        """
-        if not self._message:
-            self._message = email.message_from_string(
-                self.raw_message.encode('utf-8'))
-        return self._message
-
-    @property
-    def sender_name(self):
-        return utils.extract_name(
-            utils.decode_header_unicode(self.message['from']))
-
-    @property
-    def recipient_name(self):
-        return self.parent.sender_name
-
-    @property
-    def subject(self):
-        return utils.decode_header_unicode(self.message['subject'])
-
-    @property
-    def date(self):
-        return utils.decode_date_header(self.message['date'])
-
-    @property
-    def body(self):
-        body = None
-        for part in self.message.walk():
-            if part.get_content_type() == 'text/plain':
-                charset = part.get_content_charset()
-                body = part.get_payload(decode=True).decode(charset)
-                break
-        if not body:
-            logging.warning(u"Couldn't extract body out of {}"
-                            .format(self))
-            body = u''
-
-        body = utils.ENQUIRY_EMAIL_REGEXP.sub("...@" + settings.SITE_DOMAIN,
-                                              body)
-        return body
-
-    @property
-    def kind(self):
-        return 'response'
-
-    def __init__(self, *args, **kwargs):
-        super(Response, self).__init__(*args, **kwargs)
-        self._message = None
-
-    def __unicode__(self):
-        return u'{id}:{sender} ({received_time})'.format(
-            id=self.id,
-            sender=utils.decode_header_unicode(
-                self.message['from']),
-            received_time=self.received_time)
-
-    class Meta:
-        verbose_name = _('response')
-        verbose_name_plural = _('responses')
+        verbose_name = _('thread')
+        verbose_name_plural = _('threads')

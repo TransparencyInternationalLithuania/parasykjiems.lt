@@ -1,16 +1,21 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator
-from django.http import Http404
+from django.core.exceptions import ObjectDoesNotExist
 from django.views.decorators.cache import cache_control
 from django.views.decorators.http import last_modified
+import datetime
 
 from forms import WriteLetterForm
 from parasykjiems.search.models import Representative, Institution
 from parasykjiems.search.utils import ChoiceState
-from parasykjiems.mail.models import Enquiry, Response
+from parasykjiems.mail.models import Thread, UnconfirmedMessage
 import parasykjiems.mail.mail as mail
 from parasykjiems.mail import utils
+
+
+import logging
+logger = logging.getLogger(__name__)
 
 
 def write_representative(request, slug):
@@ -29,13 +34,13 @@ def write(request, recipient):
         form = WriteLetterForm(request.POST)
         choice_state = ChoiceState(form['choice_state'].value())
         if form.is_valid():
-            mail.submit_enquiry(
+            mail.submit_message(
                 sender_name=form.cleaned_data['name'],
                 sender_email=form.cleaned_data['email'],
                 recipient=recipient,
                 subject=form.cleaned_data['subject'],
-                body=form.cleaned_data['body'],
-                is_open=form.cleaned_data['is_open'])
+                body_text=form.cleaned_data['body'],
+                is_public=form.cleaned_data['is_open'])
 
             return redirect(reverse(write_confirm) +
                             '?' + choice_state.query_string())
@@ -56,7 +61,6 @@ def write(request, recipient):
     })
 
 
-@cache_control(public=True)
 def write_confirm(request):
     choice_state = ChoiceState(request.GET)
     return render(request, 'views/write_confirm.html', {
@@ -66,67 +70,53 @@ def write_confirm(request):
 
 
 @cache_control(public=False)
-def confirm(request, id, confirm_hash):
-    enquiry = get_object_or_404(Enquiry,
-                                id=int(id),
-                                confirm_hash=int(confirm_hash),
-                                is_sent=False)
+def confirm(request, id, confirm_secret):
+    unc_message = get_object_or_404(UnconfirmedMessage,
+                                    id=int(id),
+                                    confirm_secret=int(confirm_secret))
 
     if request.method == 'POST':
-        mail.confirm_enquiry(enquiry)
-        mail.send_enquiry(enquiry)
-        return redirect(reverse(sent, kwargs={'id': enquiry.id}))
+        thread = mail.confirm_and_send(unc_message)
+        return redirect(reverse(sent, kwargs={'slug': thread.slug}))
     else:
         return render(request, 'views/confirm.html', {
-            'enquiry': enquiry,
+            'message': unc_message,
         })
 
 
-@cache_control(public=True)
-def sent(request, id):
-    enquiry = get_object_or_404(Enquiry, id=id)
-    return render(request, 'views/sent.html', {'enquiry': enquiry})
+def sent(request, slug):
+    thread = get_object_or_404(Thread, slug=slug, is_public=True)
+    return render(request, 'views/sent.html', {'thread': thread})
 
 
-@cache_control(public=True)
 def thread(request, slug):
-    enquiry = get_object_or_404(Enquiry,
-                                slug=slug,
-                                is_sent=True,
-                                is_open=True,
-                                parent=None)
-    if not enquiry.is_open or not enquiry.is_sent:
-        raise Http404()
-
-    responses = Response.objects.filter(parent=enquiry)
-
-    letters = [enquiry] + list(responses)
+    thread = get_object_or_404(Thread, slug=slug, is_public=True)
 
     return render(request, 'views/thread.html', {
-        'page': request.GET.get('p', ''),
-        'title': enquiry.subject,
-        'letters': letters,
+        'thread': thread,
     })
 
 
-def _latest_letter(request, inst=None):
-    return (Enquiry.objects
-            .filter(is_open=True, is_sent=True)
-            .latest('sent_at')
-            .sent_at)
+def _latest_thread(request, institution_slug=None):
+    try:
+        return (Thread.objects
+                .filter(is_public=True)
+                .latest('modified_at')
+                .modified_at)
+    except ObjectDoesNotExist:
+        return datetime.datetime.now()
 
 
-@last_modified(_latest_letter)
-@cache_control(public=True)
+@last_modified(_latest_thread)
 def threads(request, institution_slug=None):
     MAX_THREADS = 10
     if institution_slug:
         institution = get_object_or_404(Institution, slug=institution_slug)
         all_threads = institution.threads
     else:
-        all_threads = (Enquiry.objects
-                       .filter(is_open=True, is_sent=True, parent=None)
-                       .order_by('-sent_at'))
+        all_threads = (Thread.objects
+                       .filter(is_public=True)
+                       .order_by('-created_at'))
     pages = Paginator(all_threads, MAX_THREADS)
     try:
         page_num = int(request.GET.get('p', '1'))

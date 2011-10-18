@@ -20,5 +20,12 @@
 {% endif %}
 
 {% else %}
-{% snippet "search-advice" %}
+<div class="search-advice">
+  <div>
+    {% snippet "search-advice" %}
+  </div>
+  <div>
+    {% snippet "search-advice-right" %}
+  </div>
+</div>
 {% endif %}

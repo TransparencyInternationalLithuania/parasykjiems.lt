@@ -1,6 +1,6 @@
+# -*- coding: utf-8 -*-
 import re
 from django.http import QueryDict
-from django.core.exceptions import ObjectDoesNotExist
 
 from models import Location, Representative, Institution
 
@@ -114,3 +114,17 @@ class ChoiceState:
         if self.rep:
             q['rep'] = self.rep.id
         return q.urlencode()
+
+
+def split_institution_name(name):
+    '''Tries to separate elderate name into municipality and elderate
+    name.
+
+    Returns a list with municipality as the second element, if
+    successful.
+    '''
+    m = re.match(ur'(.+savivaldybė) (.+)', name)
+    if m:
+        return [m.group(2), m.group(1)]
+    else:
+        return [name]

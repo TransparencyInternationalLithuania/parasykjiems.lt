@@ -1,14 +1,15 @@
 {% load i18n snippet %}
 {% spaceless %}
 <!DOCTYPE html>
-<html>
+<html lang="lt">
   <head>
     <link rel="stylesheet" type="text/css" href="/static/style.css">
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <link rel="icon" type="image/png" href="/static/img/favicon.png">
     <title>{% block title %}{% endblock %}ParašykJiems</title>
-    <script type="text/javascript" src="/static/js/jquery-1.6.2.min.js">
-    </script>
+    <script type="text/javascript" src="/static/js/jquery-1.6.2.min.js"></script>
+    <script type="text/javascript" src="/static/js/hyphenator.js"></script>
+    <script type="text/javascript" src="/static/js/folding.js"></script>
     {% block head %}{% endblock %}
     {{ SETTINGS.ADDITIONAL_HTML_HEAD|safe }}
   </head>
@@ -21,24 +22,16 @@
 
     <div id="main-block">
       <div id="header">
-        <table id="inner-header">
-          <tr>
-            <td rowspan="2">
-              <a href="/"><img id="logo" src="/static/img/logo.png" alt="{% trans "ParašykJiems" %}"></a>
-            </td><td id="slogan">
-              {% snippet "slogan" %}
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <ul id="menu">
-                {% block menu %}
-                {% include "menu.html" %}
-                {% endblock %}
-              </ul>
-            </td>
-          </tr>
-        </table>
+        <div id="inner-header">
+          <div>
+            <a href="/"><img id="logo" src="/static/img/logo.png" alt="{% trans "ParašykJiems" %}"></a>
+          </div>
+          <ul id="menu">
+            {% block menu %}
+            {% include "menu.html" %}
+            {% endblock %}
+          </ul>
+        </div>
       </div>
       <div id="content">
         <ul id="breadcrumbs">

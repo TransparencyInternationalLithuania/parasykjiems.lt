@@ -28,6 +28,11 @@ def extract_name(email_string):
     return realname
 
 
+def extract_email(email_string):
+    realname, email_addr = email.utils.parseaddr(email_string)
+    return email_addr
+
+
 def decode_header_unicode(h):
     """Turns a possibly encoded email header string into a unicode
     string.
@@ -46,16 +51,14 @@ def decode_date_header(header):
     return datetime.datetime.fromtimestamp(timestamp)
 
 
-# By using some not-very-general hackery, we turn
-# ENQUIRY_EMAIL_FORMAT into a regexp. To be specific, we
-# escape plusses and periods.
-ENQUIRY_EMAIL_REGEXP = re.compile(
-    settings.ENQUIRY_EMAIL_FORMAT
-    .replace('+', r'\+')
-    .replace('.', r'\.')
-    .format(
-        id='(?P<id>\d+)',
-        hash='(?P<hash>\d+)'))
+MESSAGE_EMAIL_REGEXP = re.compile(
+    ur'{prefix}\+(?P<id>\d+)\.(?P<secret>\d+)@{domain}'.format(
+        prefix=settings.REPLY_EMAIL_PREFIX.replace('.', r'\.'),
+        domain=settings.SITE_DOMAIN.replace('.', r'\.')))
+
+
+def remove_reply_email(text):
+    return MESSAGE_EMAIL_REGEXP.sub("...@" + settings.SITE_DOMAIN, text)
 
 
 def letter_body_template(obj):

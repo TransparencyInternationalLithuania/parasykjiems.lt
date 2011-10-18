@@ -1,4 +1,4 @@
-LOCAL_SETTINGS_VERSION = 10
+LOCAL_SETTINGS_VERSION = 11
 
 
 DEBUG = True
@@ -34,9 +34,9 @@ FEEDBACK_EMAIL = 'feedback@' + SITE_DOMAIN
 # Used as From adress for emails sent by the service, except enquiries.
 SERVER_EMAIL = 'parasykjiems@' + SITE_DOMAIN
 
-# Should contain {id} and {hash} somewhere, which will be replaced by
-# numbers.
-ENQUIRY_EMAIL_FORMAT = 'reply+{id}.{hash}@' + SITE_DOMAIN
+# Reply emails are formatted like
+# {REPLY_EMAIL_PREFIX}+{id}.{secret}@{SITE_DOMAIN}
+REPLY_EMAIL_PREFIX = 'reply'
 
 # Additional content to put into every page's head tag. Useful for
 # Google Analytics script tags.

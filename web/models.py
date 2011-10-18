@@ -31,8 +31,7 @@ class Article(models.Model):
 
     def save(self, *args, **kwargs):
         self.body_rendered = markdown.markdown(
-            self.body,
-            extensions=["toc"])
+            self.body)
         super(Article, self).save(*args, **kwargs)
 
 
