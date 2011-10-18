@@ -98,8 +98,8 @@ class Message(models.Model):
 
     # The name and email of the *intended* recipient. This is not
     # filled from the envelope.
-    recipient_name = models.CharField(max_length=_NAME_LEN, default=u'')
-    recipient_email = models.CharField(max_length=_NAME_LEN, default=u'')
+    recipient_name = models.CharField(max_length=_NAME_LEN, blank=True)
+    recipient_email = models.CharField(max_length=_NAME_LEN, blank=True)
 
     # These fields can be filled automatically when the message has an
     # envelope.
