@@ -22,24 +22,16 @@
 
     <div id="main-block">
       <div id="header">
-        <table id="inner-header">
-          <tr>
-            <td rowspan="2">
-              <a href="/"><img id="logo" src="/static/img/logo.png" alt="{% trans "ParašykJiems" %}"></a>
-            </td><td id="slogan">
-              {% snippet "slogan" %}
-            </td>
-          </tr>
-          <tr>
-            <td id="menu-td">
-              <ul id="menu">
-                {% block menu %}
-                {% include "menu.html" %}
-                {% endblock %}
-              </ul>
-            </td>
-          </tr>
-        </table>
+        <div id="inner-header">
+          <div>
+            <a href="/"><img id="logo" src="/static/img/logo.png" alt="{% trans "ParašykJiems" %}"></a>
+          </div>
+          <ul id="menu">
+            {% block menu %}
+            {% include "menu.html" %}
+            {% endblock %}
+          </ul>
+        </div>
       </div>
       <div id="content">
         <ul id="breadcrumbs">

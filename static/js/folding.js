@@ -1,28 +1,48 @@
-$(function(){
-      $('.fold').addClass('collapsed');
+function makeTogglable(elem, hiddenText, hiddenByDefault) {
+    var normal =
+        $('<div class="normal">')
+        .html($(elem).html());
+    var alternate =
+        $('<div class="alternate">')
+        .html(hiddenText);
 
-      $('.foldable').click(
-          function(e) {
-              if (!$(e.target).is('a')) {
-                  var foldable = $(this);
-                  var fold = foldable.find('.fold');
-                  fold.toggleClass('collapsed');
-              }
-              return true;
-          }
-      );
+    if (hiddenByDefault) {
+        normal.hide();
+    } else {
+        alternate.hide();
+    }
+
+    $(elem)
+        .html('')
+        .append(normal)
+        .append(alternate);
+}
+
+function toggle(elem) {
+    $(elem).find('.normal, .alternate')
+        .slideToggle(50);
+}
+
+$(function(){
+      $('.foldable')
+          .each(function (i, elem) {
+                    makeTogglable($(elem).find('.fold'), '(rodyti)', true);
+                })
+          .click(function (e) {
+                     if (!$(e.target).is('a')) {
+                         toggle(this);
+                     }
+                 });
 
       $(window.location.hash).click();
 
       $('.letter blockquote')
-          .click(
-              function(e) {
-                  if (!$(e.target).is('a')) {
-                      $(this).toggleClass('collapsed');
-                      return false;
-                  }
-                  return true;
-              }
-          )
-          .addClass('collapsed');
+          .each(function(idx, elem) {
+                  makeTogglable(elem, '...', true);
+              })
+          .click(function(e) {
+                     if (!$(e.target).is('a')) {
+                         toggle(this);
+                     }
+                 });
   });
