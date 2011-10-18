@@ -188,8 +188,11 @@ class Thread(models.Model):
     representative = models.ForeignKey('search.Representative',
                                        null=True, blank=True)
 
-    creator_name = models.CharField(max_length=_NAME_LEN)
-    creator_email = models.CharField(max_length=_NAME_LEN)
+    sender_name = models.CharField(max_length=_NAME_LEN)
+    sender_email = models.CharField(max_length=_NAME_LEN)
+
+    recipient_name = models.CharField(max_length=_NAME_LEN)
+    recipient_email = models.CharField(max_length=_NAME_LEN)
 
     subject = models.CharField(max_length=400)
 
@@ -216,11 +219,13 @@ class Thread(models.Model):
         return ('thread', [self.slug])
 
     def __unicode__(self):
-        return u'{id}: "{subject}" by {creator} ({date})'.format(
-            id=self.id,
-            subject=self.subject,
-            creator=self.creator_name,
-            date=self.created_at)
+        return (u'{id}: "{subject}" from {sender} to {recipient} ({date})'
+                .format(
+                    id=self.id,
+                    subject=self.subject,
+                    sender=self.sender_name,
+                    recipient=self.recipient_name,
+                    date=self.created_at))
 
     class Meta:
         verbose_name = _('thread')
