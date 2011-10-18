@@ -23,9 +23,9 @@
         {% endif %}
       </a>
     </td>
-    <td class="sender">{{ thread.creator_name|truncatewords:"3" }}</td>
+    <td class="sender">{{ thread.sender_name|truncatewords:"3" }}</td>
     {% if not small %}
-    <td class="recipient">{{ thread.recipient.name|shorten_institution|truncatewords:"4" }}</td>
+    <td class="recipient">{{ thread.recipient_name|shorten_institution|truncatewords:"4" }}</td>
     {% endif %}
     <td class="date">{{ thread.created_at|naturalday:'Y-m-d' }}</td>
   </tr>

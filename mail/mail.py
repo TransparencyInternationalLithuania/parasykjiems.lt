@@ -139,8 +139,10 @@ def confirm_and_send(unconfirmed_message):
     thread = Thread(is_public=unconfirmed_message.is_public,
                     institution=unconfirmed_message.institution,
                     representative=unconfirmed_message.representative,
-                    creator_name=unconfirmed_message.sender_name,
-                    creator_email=unconfirmed_message.sender_email,
+                    sender_name=unconfirmed_message.sender_name,
+                    sender_email=unconfirmed_message.sender_email,
+                    recipient_name=unconfirmed_message.recipient.name,
+                    recipient_email=unconfirmed_message.recipient.email,
                     subject=unconfirmed_message.subject)
     if thread.is_public:
         generate_slug(thread,
@@ -168,7 +170,7 @@ def confirm_and_send(unconfirmed_message):
 
     user_copy = EmailMessage(
         from_email=formataddr((u'ParašykJiems', settings.SERVER_EMAIL)),
-        to=[formataddr((thread.creator_name, thread.creator_email))],
+        to=[formataddr((thread.sender_name, thread.sender_email))],
         subject=thread.subject,
         body=render_to_string('mail/copy.txt', {
             'message': message,
