@@ -5,13 +5,15 @@
     <tr>
       <th>{% trans "From:" %}</th>
       <td>{{ letter.sender_name }}</td>
-    <tr>
+    </tr>
+    {% if letter.recipient_name %}
     <tr>
       <th>{% trans "To:" %}</th>
       <td>
         {{ letter.recipient_name }}
       </td>
     </tr>
+    {% endif %}
     {% if letter.subject %}
     <tr>
       <th>{% trans "Subject:" %}</th>
