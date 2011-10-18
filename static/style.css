@@ -579,7 +579,7 @@ h5 {
     -webkit-border-radius: 1em;
     behavior: url(/static/PIE.htc);
     position: relative;
-    width: 800px;
+    width: 760px;
 }
 
 
@@ -597,7 +597,7 @@ h5 {
 
 .response {
     background: #f6f0a6;
-    margin-left: 80px;
+    margin-left: 70px;
 }
 
 .response blockquote {
