@@ -77,15 +77,15 @@ def confirm(request, id, confirm_secret):
 
     if request.method == 'POST':
         thread = mail.confirm_and_send(unc_message)
-        return redirect(reverse(sent, kwargs={'slug': thread.slug}))
+        return redirect(reverse(sent, kwargs={'id': thread.id}))
     else:
         return render(request, 'views/confirm.html', {
             'message': unc_message,
         })
 
 
-def sent(request, slug):
-    thread = get_object_or_404(Thread, slug=slug, is_public=True)
+def sent(request, id):
+    thread = get_object_or_404(Thread, id=id, is_public=True)
     return render(request, 'views/sent.html', {'thread': thread})
 
 
