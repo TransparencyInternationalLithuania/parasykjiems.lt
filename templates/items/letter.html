@@ -10,7 +10,11 @@
     <tr>
       <th>{% trans "To:" %}</th>
       <td>
+        {% if letter.recipient_url %}
+        <a href="{{ letter.recipient_url }}">{{ letter.recipient_name }}</a>
+        {% else %}
         {{ letter.recipient_name }}
+        {% endif %}
       </td>
     </tr>
     {% endif %}
