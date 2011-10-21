@@ -65,6 +65,10 @@ class UnconfirmedMessage(models.Model):
     def recipient_name(self):
         return self.recipient.name
 
+    @property
+    def recipient_url(self):
+        return self.recipient.get_absolute_url()
+
     def __unicode__(self):
         return (u'{id}: {name} <{email}> to {to_name} (unconfirmed)'
                 .format(
@@ -129,6 +133,18 @@ class Message(models.Model):
                 self._envelope_object = email.message_from_string(
                     self.envelope.encode('utf-8'))
         return self._envelope_object
+
+    @property
+    def recipient_url(self):
+        if not self.thread or self.kind == 'enquiry':
+            return None
+        elif (self.thread.representative and
+            self.thread.representative.name == self.recipient_name):
+            return self.thread.representative.get_absolute_url()
+        elif self.thread.institution:
+            return self.thread.institution.get_absolute_url()
+        else:
+            return None
 
     def fill_from_envelope(self):
         assert(self.envelope_object)
