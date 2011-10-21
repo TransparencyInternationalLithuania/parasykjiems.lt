@@ -11,7 +11,7 @@
 
 {% snippet "sent" %}
 
-{% if thread.is_public %}
+{% if thread %}
 <p>
   {% blocktrans with url=thread.get_absolute_url %}
   You can view it <a href="{{ url }}">here</a>.
