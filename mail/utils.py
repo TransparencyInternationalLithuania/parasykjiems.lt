@@ -100,6 +100,5 @@ def remove_consequentive_empty_lines(string):
             i += 1
             last_nonempty = i
             was_empty = False
-    print out[:last_nonempty]
 
     return u'\n'.join(out[:last_nonempty])
