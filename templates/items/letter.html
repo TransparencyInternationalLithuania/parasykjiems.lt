@@ -27,7 +27,7 @@
     {% if letter.date %}
     <tr>
       <th>{% trans "Date:" %}</th>
-      <td>{{ letter.date|date:'Y-m-d' }}</td>
+      <td>{{ letter.date|date:'Y-m-d, l' }}</td>
     </tr>
     {% endif %}
   </table>
