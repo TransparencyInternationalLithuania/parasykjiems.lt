@@ -24,6 +24,9 @@ urlpatterns = patterns('',
 
     url(r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap',
         {'sitemaps': sitemaps}),
+    url(r'^sitemap-(?P<section>.+)\.xml$',
+        'django.contrib.sitemaps.views.sitemap',
+        {'sitemaps': sitemaps}),
 
     # This should be the last in the list, because the
     # web.views.article's URL is sort of catch-all.
