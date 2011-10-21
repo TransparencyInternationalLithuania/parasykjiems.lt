@@ -81,3 +81,25 @@ def letter_body_template(obj):
     )
 
     return u"Gerb. {}{},\n\n".format(pref, last_name_vocative)
+
+
+def remove_consequentive_empty_lines(string):
+    out = []
+    was_empty = True
+    last_nonempty = 0
+    i = 0
+    for line in string.split(u'\n'):
+        line = line.rstrip()
+        if line == u'':
+            if not was_empty:
+                out.append(line)
+                i += 1
+                was_empty = True
+        else:
+            out.append(line)
+            i += 1
+            last_nonempty = i
+            was_empty = False
+    print out[:last_nonempty]
+
+    return u'\n'.join(out[:last_nonempty])

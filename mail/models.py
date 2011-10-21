@@ -8,12 +8,14 @@ template passing the specific instance as the letter parameter.
 
 import random
 import email
+import re
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from parasykjiems.slug import SLUG_LEN
 from parasykjiems.mail import utils
+import antiword
 import settings
 
 import logging
@@ -139,16 +141,24 @@ class Message(models.Model):
         self.subject = utils.decode_header_unicode(
             self.envelope_object['subject'])
 
-        body_text = u''
+        plain_text = u''
+        word_texts = []
         for part in self.envelope_object.walk():
             if part.get_content_type() == 'text/plain':
                 charset = part.get_content_charset()
-                body_text = part.get_payload(decode=True).decode(charset)
-                break
-        if body_text == u'':
-            logging.warning(u"Couldn't extract body text out of {}"
+                plain_text = part.get_payload(decode=True).decode(charset)
+            elif part.get_content_type() == 'application/msword':
+                word_texts.append(
+                    antiword.antiword_string(
+                        part.get_payload(decode=True))
+                        .replace('[pic]', '')
+                        .replace('|', ''))
+        if plain_text == u'':
+            logging.warning(u"Couldn't extract plain text out of {}"
                             .format(self))
-        self.body_text = utils.remove_reply_email(body_text)
+        body_text = '\n***\n'.join([plain_text] + word_texts)
+        self.body_text = utils.remove_consequentive_empty_lines(
+            utils.remove_reply_email(body_text))
 
     @property
     def reply_email(self):
