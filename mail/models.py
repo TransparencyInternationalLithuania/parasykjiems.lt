@@ -157,22 +157,26 @@ class Message(models.Model):
         self.subject = utils.decode_header_unicode(
             self.envelope_object['subject'])
 
-        plain_text = u''
+        plain_texts = []
         word_texts = []
         for part in self.envelope_object.walk():
-            if part.get_content_type() == 'text/plain':
-                charset = part.get_content_charset()
-                plain_text = part.get_payload(decode=True).decode(charset)
-            elif part.get_content_type() == 'application/msword':
-                word_texts.append(
-                    antiword.antiword_string(
-                        part.get_payload(decode=True))
-                        .replace('[pic]', '')
-                        .replace('|', ''))
-        if plain_text == u'':
+            if not part.is_multipart():
+                if part.get_content_type() == 'text/plain':
+                    charset = part.get_content_charset()
+                    payload = part.get_payload(decode=True)
+                    if payload != '':
+                        plain_texts.append(
+                            payload.decode(charset))
+                elif part.get_content_type() == 'application/msword':
+                    word_texts.append(
+                        antiword.antiword_string(
+                            part.get_payload(decode=True))
+                            .replace('[pic]', '')
+                            .replace('|', ''))
+        if not plain_texts:
             logging.warning(u"Couldn't extract plain text out of {}"
                             .format(self))
-        body_text = '\n***\n'.join([plain_text] + word_texts)
+        body_text = '\n\n***\n\n'.join(plain_texts + word_texts)
         self.body_text = utils.remove_consequentive_empty_lines(
             utils.remove_reply_email(body_text))
 
