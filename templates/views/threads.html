@@ -20,19 +20,19 @@
 
 {% include "items/threads.html" with threads=threads %}
 
-{% if pages > 1 %}
+{% if page.paginator.num_pages > 1 %}
 <div class="pager">
-  {% if page.has_previous %}
-  <a href="?p={{ page.previous_page_number }}">{% trans "Previous page" %}</a>
-  {% endif %}
+  {% trans "Pages: " %}
 
-  {% blocktrans with page=page.number pages=page.paginator.num_pages %}
-  Page {{ page }} out of {{ pages }}
-  {% endblocktrans %}
-
-  {% if page.has_next %}
-  <a href="?p={{ page.next_page_number }}">{% trans "Next page" %}</a>
-  {% endif %}
+  <span class="pages">
+    {% for p in pages %}
+    {% if p.number == page.number %}
+    <span class="selected">{{ p.number }}</span>
+    {% else %}
+    <a href="?p={{ p.number }}">{{ p.number }}</a>
+    {% endif %}
+    {% endfor %}
+  </span>
 </div>
 {% endif %}
 
