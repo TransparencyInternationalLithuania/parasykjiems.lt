@@ -52,13 +52,15 @@ def decode_date_header(header):
 
 
 MESSAGE_EMAIL_REGEXP = re.compile(
-    ur'{prefix}\+(?P<id>\d+)\.(?P<secret>\d+)@{domain}'.format(
-        prefix=settings.REPLY_EMAIL_PREFIX.replace('.', r'\.'),
-        domain=settings.SITE_DOMAIN.replace('.', r'\.')))
+    ur'{prefix}\+(?P<id>\d+)\.(?P<secret>[\w-]+)@(?P<domain>[\w.-]+)'.format(
+        prefix=re.escape(settings.REPLY_EMAIL_PREFIX)))
 
 
 def remove_reply_email(text):
-    return MESSAGE_EMAIL_REGEXP.sub("...@" + settings.SITE_DOMAIN, text)
+    def cloak_email(match):
+        return u'...@{domain}'.format(
+            domain=match.group('domain'))
+    return MESSAGE_EMAIL_REGEXP.sub(cloak_email, text)
 
 
 def letter_body_template(obj):
