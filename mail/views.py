@@ -95,11 +95,20 @@ def sent(request, slug=None):
     return render(request, 'views/sent.html', {'thread': thread})
 
 
+MAX_THREADS = 10
+
+
 def thread(request, slug):
     thread = get_object_or_404(Thread, slug=slug, is_public=True)
+    all_threads = (Thread.objects
+                   .filter(is_public=True)
+                   .order_by('-created_at'))
+    position = list(all_threads).index(thread)
+    page_number = (position // MAX_THREADS) + 1
 
     return render(request, 'views/thread.html', {
         'thread': thread,
+        'page_number': page_number,
     })
 
 
@@ -115,7 +124,6 @@ def _latest_thread(request, institution_slug=None):
 
 @last_modified(_latest_thread)
 def threads(request, institution_slug=None):
-    MAX_THREADS = 10
     if institution_slug:
         institution = get_object_or_404(Institution, slug=institution_slug)
         all_threads = institution.threads
@@ -137,5 +145,6 @@ def threads(request, institution_slug=None):
 
     return render(request, 'views/threads.html', {
         'page': page,
+        'pages': [pages.page(p) for p in pages.page_range],
         'threads': threads,
     })

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-16 15:53+0300\n"
+"POT-Creation-Date: 2011-10-23 11:42+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,6 +23,11 @@ msgstr ""
 
 #: settings.py:23
 msgid "Lithuanian"
+msgstr ""
+
+#: mail/admin.py:19 mail/admin.py:40 web/admin.py:23 web/admin.py:35
+#: web/models.py:18 web/models.py:46
+msgid "content"
 msgstr ""
 
 #: mail/feeds.py:10
@@ -65,39 +70,39 @@ msgstr ""
 msgid "Confirm your letter"
 msgstr ""
 
-#: mail/models.py:73
+#: mail/models.py:81
 msgid "unconfirmed message"
 msgstr ""
 
-#: mail/models.py:74
+#: mail/models.py:82
 msgid "unconfirmed messages"
 msgstr ""
 
-#: mail/models.py:87
+#: mail/models.py:96
 msgid "Sent from user to representative"
 msgstr ""
 
-#: mail/models.py:88
+#: mail/models.py:97
 msgid "Sent from representative to user"
 msgstr ""
 
-#: mail/models.py:93
+#: mail/models.py:102
 msgid "If the message was received through SMTP, the original email text."
 msgstr ""
 
-#: mail/models.py:168
+#: mail/models.py:201
 msgid "message"
 msgstr ""
 
-#: mail/models.py:169
+#: mail/models.py:202
 msgid "messages"
 msgstr ""
 
-#: mail/models.py:223
+#: mail/models.py:261
 msgid "thread"
 msgstr ""
 
-#: mail/models.py:224
+#: mail/models.py:262
 msgid "threads"
 msgstr ""
 
@@ -174,7 +179,7 @@ msgstr ""
 msgid "Internal server error"
 msgstr ""
 
-#: templates/base.html:28
+#: templates/base.html:27
 msgid "ParašykJiems"
 msgstr ""
 
@@ -244,15 +249,15 @@ msgstr ""
 msgid "From:"
 msgstr ""
 
-#: templates/items/letter.html:10
+#: templates/items/letter.html:11
 msgid "To:"
 msgstr ""
 
-#: templates/items/letter.html:17
+#: templates/items/letter.html:23
 msgid "Subject:"
 msgstr ""
 
-#: templates/items/letter.html:23
+#: templates/items/letter.html:29
 msgid "Date:"
 msgstr ""
 
@@ -348,20 +353,8 @@ msgid ""
 "  "
 msgstr ""
 
-#: templates/views/threads.html:26
-msgid "Previous page"
-msgstr ""
-
-#: templates/views/threads.html:29
-#, python-format
-msgid ""
-"\n"
-"  Page %(page)s out of %(pages)s\n"
-"  "
-msgstr ""
-
-#: templates/views/threads.html:34
-msgid "Next page"
+#: templates/views/threads.html:25
+msgid "Pages: "
 msgstr ""
 
 #: templates/views/write.html:4
@@ -370,10 +363,6 @@ msgstr ""
 
 #: templates/views/write.html:54
 msgid "Submit"
-msgstr ""
-
-#: web/admin.py:23 web/admin.py:35 web/models.py:18 web/models.py:47
-msgid "content"
 msgstr ""
 
 #: web/forms.py:6
@@ -396,15 +385,15 @@ msgstr ""
 msgid "articles"
 msgstr ""
 
-#: web/models.py:43
+#: web/models.py:42
 msgid "snippet identifier"
 msgstr ""
 
-#: web/models.py:55
+#: web/models.py:54
 msgid "snippet"
 msgstr ""
 
-#: web/models.py:56
+#: web/models.py:55
 msgid "snippets"
 msgstr ""
 

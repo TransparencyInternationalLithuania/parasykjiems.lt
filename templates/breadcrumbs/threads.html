@@ -1,4 +1,4 @@
 {% extends "breadcrumb.html" %}
 {% load i18n %}
-{% block url %}{% url threads %}{% if page %}?p={{ page }}{% endif %}{% endblock %}
+{% block url %}{% url threads %}{% if page_number and page_number > 1 %}?p={{ page_number }}{% endif %}{% endblock %}
 {% block content %}{% trans "Open letters" %}{% endblock %}

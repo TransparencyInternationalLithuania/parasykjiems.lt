@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-16 15:52+0300\n"
-"PO-Revision-Date: 2011-10-16 15:54+0300\n"
+"POT-Creation-Date: 2011-10-23 11:42+0300\n"
+"PO-Revision-Date: 2011-10-23 11:42+0300\n"
 "Last-Translator: Kiprianas Spiridonovas <k.spiridonovas@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -24,6 +24,15 @@ msgstr "Anglų"
 #: settings.py:23
 msgid "Lithuanian"
 msgstr "Lietuvių"
+
+#: mail/admin.py:19
+#: mail/admin.py:40
+#: web/admin.py:23
+#: web/admin.py:35
+#: web/models.py:18
+#: web/models.py:46
+msgid "content"
+msgstr "turinys"
 
 #: mail/feeds.py:10
 msgid "ParašykJiems threads"
@@ -68,39 +77,39 @@ msgstr "Turinys"
 msgid "Confirm your letter"
 msgstr "Patvirtinkite savo laišką"
 
-#: mail/models.py:73
+#: mail/models.py:81
 msgid "unconfirmed message"
 msgstr "nepatvirtintas laiškas"
 
-#: mail/models.py:74
+#: mail/models.py:82
 msgid "unconfirmed messages"
 msgstr "nepatvirtinti laiškai"
 
-#: mail/models.py:87
+#: mail/models.py:96
 msgid "Sent from user to representative"
 msgstr "Siųsta vartotojo atstovui"
 
-#: mail/models.py:88
+#: mail/models.py:97
 msgid "Sent from representative to user"
 msgstr "Siųsta atstovo vartotojui"
 
-#: mail/models.py:93
+#: mail/models.py:102
 msgid "If the message was received through SMTP, the original email text."
 msgstr "Jeigu laiškas gautas per SMTP, pilnas neapdorotas laiško tekstas."
 
-#: mail/models.py:168
+#: mail/models.py:201
 msgid "message"
 msgstr "žinutė"
 
-#: mail/models.py:169
+#: mail/models.py:202
 msgid "messages"
 msgstr "žinutės"
 
-#: mail/models.py:223
+#: mail/models.py:261
 msgid "thread"
 msgstr "gija"
 
-#: mail/models.py:224
+#: mail/models.py:262
 msgid "threads"
 msgstr "gijos"
 
@@ -179,7 +188,7 @@ msgstr "Puslapis nerastas"
 msgid "Internal server error"
 msgstr "Programinė klaida"
 
-#: templates/base.html:28
+#: templates/base.html:27
 msgid "ParašykJiems"
 msgstr "ParašykJiems"
 
@@ -255,15 +264,15 @@ msgstr "Visi laiškai, siųsti šiai institucijai"
 msgid "From:"
 msgstr "Siuntėjas:"
 
-#: templates/items/letter.html:10
+#: templates/items/letter.html:11
 msgid "To:"
 msgstr "Gavėjas:"
 
-#: templates/items/letter.html:17
+#: templates/items/letter.html:23
 msgid "Subject:"
 msgstr "Tema:"
 
-#: templates/items/letter.html:23
+#: templates/items/letter.html:29
 msgid "Date:"
 msgstr "Data: "
 
@@ -368,24 +377,9 @@ msgstr ""
 "\n"
 "Galite jį peržiūrėti <a href=\"%(url)s\">čia</a>."
 
-#: templates/views/threads.html:26
-msgid "Previous page"
-msgstr "Ankstesnis puslapis"
-
-#: templates/views/threads.html:29
-#, python-format
-msgid ""
-"\n"
-"  Page %(page)s out of %(pages)s\n"
-"  "
-msgstr ""
-"\n"
-"Puslapis %(page)s iš %(pages)s\n"
-"  "
-
-#: templates/views/threads.html:34
-msgid "Next page"
-msgstr "Kitas puslapis"
+#: templates/views/threads.html:25
+msgid "Pages: "
+msgstr "Puslapiai:"
 
 #: templates/views/write.html:4
 msgid "Write letter"
@@ -394,13 +388,6 @@ msgstr "Rašyti laišką"
 #: templates/views/write.html:54
 msgid "Submit"
 msgstr "Pateikti"
-
-#: web/admin.py:23
-#: web/admin.py:35
-#: web/models.py:18
-#: web/models.py:47
-msgid "content"
-msgstr "turinys"
 
 #: web/forms.py:6
 msgid "Your name"
@@ -422,21 +409,36 @@ msgstr "straipsnis"
 msgid "articles"
 msgstr "straipsniai"
 
-#: web/models.py:43
+#: web/models.py:42
 msgid "snippet identifier"
 msgstr "iškarpėlės identifikatorius"
 
-#: web/models.py:55
+#: web/models.py:54
 msgid "snippet"
 msgstr "iškarpėlė"
 
-#: web/models.py:56
+#: web/models.py:55
 msgid "snippets"
 msgstr "iškarpėlės"
 
 #: web/views.py:27
 msgid "Feedback from {}"
 msgstr "Atsiliepimas iš {}"
+
+#~ msgid "Previous page"
+#~ msgstr "Ankstesnis puslapis"
+
+#~ msgid ""
+#~ "\n"
+#~ "  Page %(page)s out of %(pages)s\n"
+#~ "  "
+#~ msgstr ""
+#~ "\n"
+#~ "Puslapis %(page)s iš %(pages)s\n"
+#~ "  "
+
+#~ msgid "Next page"
+#~ msgstr "Kitas puslapis"
 
 #~ msgid "Sent from {} to {}"
 #~ msgstr "Siuntėjas: {}, gavėjas: {}"
