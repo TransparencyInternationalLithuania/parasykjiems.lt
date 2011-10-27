@@ -63,9 +63,9 @@ class Command(BaseCommand):
                 inst = utils.normalise(a.text)
                 url = a.get('href')
                 utils.delay()
-                rep = get_rep(url,
-                              u'seniūnas',
-                              [u'Seniūnas',
-                               u'Seniūnė',
-                               u'L. e. seniūno pareigas'],
-                              mayor.institution + u' ' + inst)
+                get_rep(url,
+                        u'seniūnas',
+                        [u'Seniūnas',
+                         u'Seniūnė',
+                         u'L. e. seniūno pareigas'],
+                         mayor.institution + u' ' + inst)
