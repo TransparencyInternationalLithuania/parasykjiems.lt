@@ -8,7 +8,6 @@ template passing the specific instance as the letter parameter.
 
 import random
 import email
-import re
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -133,6 +132,18 @@ class Message(models.Model):
                 self._envelope_object = email.message_from_string(
                     self.envelope.encode('utf-8'))
         return self._envelope_object
+
+    @property
+    def sender_url(self):
+        if not self.thread or self.kind == 'response':
+            return None
+        elif (self.thread.representative and
+            self.thread.representative.name == self.sender_name):
+            return self.thread.representative.get_absolute_url()
+        elif self.thread.institution:
+            return self.thread.institution.get_absolute_url()
+        else:
+            return None
 
     @property
     def recipient_url(self):
