@@ -1,13 +1,14 @@
 name,body
 confirm-open-letter,"<div class=""note"" style=""width: 85%""><strong>Pastaba:</strong> Šis laiškas yra atviras ir po išsiuntimo jis bus matomas svetainėje. Įsitikinkite, kad laiške nėra jokių asmeninių duomenų, kurių nenorite viešinti.</div>"
-contacts,"Su mumis susisiekti galite elektroniniu paštu [feedback@parasykjiems.lt](mailto:feedback@parasykjiems.lt), telefonu 8&nbsp;5&nbsp;212&nbsp;69&nbsp;51 arba naudodami žemiau esančią formą."
 contact-thanks,"Ačiū už Jūsų atsiliepimus.
 
 [Grįžti į pradinį puslapį.](/)"
+contacts,"Su mumis susisiekti galite elektroniniu paštu [feedback@parasykjiems.lt](mailto:feedback@parasykjiems.lt), telefonu 8&nbsp;5&nbsp;212&nbsp;69&nbsp;51 arba naudodami žemiau esančią formą."
 error-internal,"Svetainėje pasitaikė nenumatyta situacija. Mūsų programuotojai artimiausiu metu kibs į darbą ir ją ištaisys.
 
 Atsiprašome už nepatogumus."
-error-not-found,"Puslapis, kurio ieškojote, nerastas. Pasitikrinkite ar gerai įvedėte adresą. Jeigu manote, kad tai klaida, [praneškite mums](/contact/)."
+error-not-found,"Puslapis, kurio ieškojote, nerastas. Pasitikrinkite ar gerai įvedėte adresą. Jeigu manote, kad tai klaida, [praneškite mums](/contact/).
+"
 footer,"Turite pastabų, pasiūlymų? [Susisiekite su mumis](/contact/)
 
 [Apie projektą](/about/)
@@ -52,7 +53,7 @@ sent,"Jūsų laiškas buvo išsiųstas sėkmingai.
 Taip pat, į savo pašto dėžutę turėtumėte gauti laiško kopiją."
 slogan,&nbsp;
 testing-version,"**Pastaba:** čia yra ParašykJiems versija, skirta testavimui. Laiškai atstovams nėra siunčiami, nors yra rodomi tinklalapyje."
-write,Pagalba rašant elektroninį laišką: [Elektroninio laiško rašymas](/help/writing/).
+write,"Jeigu Jums reikia pagalbos rašant elektroninį laišką atstovui, paskaitykite straipsnį <a href=""/help/3/"" target=""_blank"">„Kaip rašyti laišką?“</a>"
 write-confirm,"Pasitikrinkite savo elektroninį paštą. Mes Jums išsiuntėme patvirtinimo nuorodą. Jūs turite patvirtinti savo laišką prieš tai, kai jis bus išsiųstas.
 
 Jeigu negaunate laiško, pasitikrinkite brukalo (spam) katalogą. Jei ir ten jo nėra, [praneškite mums](/contact/) apie tai."

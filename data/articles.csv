@@ -50,7 +50,7 @@ help,Pagalba,"<ul id=""help-squares"" class=""donthyphenate"">
 <li><a class=""help3"" href=""3/""><img src=""/static/img/help/3.png"" alt=""""><span class=""number"">3</span> Kaip rašyti laišką?</a></li>
 <li><a class=""help4"" href=""4/""><img src=""/static/img/help/4.png"" alt=""""><span class=""number"">4</span> Ko tiketis parašius laišką?</a></li>
 </ul>"
-help/1,Kaip ieškoti rūpimo atstovo?,"<div style=""float:right; text-align:center; width: 300px; margin-left: 1.5em;""><a href=""http://www.transparency.lt/new/images/tils_kaip_gauti_informacija_lankstinukas.pdf"" target=""_blank""><img src=""/static/img/pradziamokslis.png"" alt=""Kaip gauti informaciją iš valstybės ir savivaldybės įstaigų? (PDF)""></a></div>
+help/1,Kaip ieškoti rūpimo atstovo?,"<div style=""float:right; text-align:center; width: 300px; height: 346px; margin-left: 1.5em;""><a href=""http://www.transparency.lt/new/images/tils_kaip_gauti_informacija_lankstinukas.pdf"" target=""_blank""><img src=""/static/img/pradziamokslis.png"" alt=""Kaip gauti informaciją iš valstybės ir savivaldybės įstaigų? (PDF)""></a></div>
 
 <ul id=""breadcrumbs""><li><a href=""/help/"">Pagalba</a></li><li><img src=""/static/img/breadcrumb_arrow.png"" alt=""&gt;""></li><li class=""help1""><span class=""number"">1</span> Kaip ieškoti rūpimo atstovo?</li></ul>
 
@@ -181,8 +181,7 @@ Valstybinės institucijos priima laiškus tik su aiškiai nurodyta autoryste, to
 <p>Pagarbiai, Vardenytė Pavardenytė</p></div></div>"
 help/4,Ko tikėtis parašius laišką?,"<ul id=""breadcrumbs""><li><a href=""/help/"">Pagalba</a></li><li><img src=""/static/img/breadcrumb_arrow.png"" alt=""&gt;""></li><li class=""help4""><span class=""number"">4</span> Ko tikėtis parašius laišką?</li></ul>
 
-Primename, kad Lietuvos įstatymai neįpareigoja valstybės tarnautojų atsakyti į be elektroninio parašo jiems atsiųstus laiškus. Jei negavote atsakymo, siūlome atsispausdinti savo laiško kopiją ir išsiųsti paštu. Į adresuotus laiškus privaloma atsakyti per 20 dienų.
-"
+Primename, kad Lietuvos įstatymai neįpareigoja valstybės tarnautojų atsakyti į be elektroninio parašo jiems atsiųstus laiškus. Jei negavote atsakymo, siūlome atsispausdinti savo laiško kopiją ir išsiųsti paštu. Į adresuotus laiškus privaloma atsakyti per 20 dienų."
 privacy,Privatumo politika,"# Privatumo politika
 
 ParašykJiems.lt valdytojai/administratoriai siekdami išsaugoti gautą privačią informaciją laikosi privatumo 
