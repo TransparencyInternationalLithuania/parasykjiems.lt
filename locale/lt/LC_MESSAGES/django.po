@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-29 14:46+0300\n"
-"PO-Revision-Date: 2011-10-29 14:46+0300\n"
+"POT-Creation-Date: 2011-10-29 15:34+0300\n"
+"PO-Revision-Date: 2011-10-29 15:34+0300\n"
 "Last-Translator: Kiprianas Spiridonovas <k.spiridonovas@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -25,8 +25,7 @@ msgstr "Anglų"
 msgid "Lithuanian"
 msgstr "Lietuvių"
 
-#: mail/admin.py:19
-#: mail/admin.py:40
+#: mail/admin.py:22
 #: web/admin.py:23
 #: web/admin.py:35
 #: web/models.py:18
@@ -81,7 +80,7 @@ msgstr "Laiško rūšis"
 msgid "Message"
 msgstr "Turinys"
 
-#: mail/mail.py:121
+#: mail/mail.py:129
 msgid "Confirm your letter"
 msgstr "Patvirtinkite savo laišką"
 
@@ -94,30 +93,30 @@ msgid "unconfirmed messages"
 msgstr "nepatvirtinti laiškai"
 
 #: mail/models.py:95
-msgid "Sent from user to representative"
-msgstr "Siųsta vartotojo atstovui"
+msgid "Enquiry"
+msgstr "Užklausa"
 
 #: mail/models.py:96
-msgid "Sent from representative to user"
-msgstr "Siųsta atstovo vartotojui"
+msgid "Response"
+msgstr "Atsakymas"
 
-#: mail/models.py:101
+#: mail/models.py:107
 msgid "If the message was received through SMTP, the original email text."
 msgstr "Jeigu laiškas gautas per SMTP, pilnas neapdorotas laiško tekstas."
 
-#: mail/models.py:212
+#: mail/models.py:216
 msgid "message"
 msgstr "žinutė"
 
-#: mail/models.py:213
+#: mail/models.py:217
 msgid "messages"
 msgstr "žinutės"
 
-#: mail/models.py:272
+#: mail/models.py:280
 msgid "thread"
 msgstr "gija"
 
-#: mail/models.py:273
+#: mail/models.py:281
 msgid "threads"
 msgstr "gijos"
 
@@ -433,6 +432,12 @@ msgstr "iškarpėlės"
 msgid "Feedback from {}"
 msgstr "Atsiliepimas iš {}"
 
+#~ msgid "Sent from user to representative"
+#~ msgstr "Siųsta vartotojo atstovui"
+
+#~ msgid "Sent from representative to user"
+#~ msgstr "Siųsta atstovo vartotojui"
+
 #~ msgid "Previous page"
 #~ msgstr "Ankstesnis puslapis"
 
@@ -457,17 +462,11 @@ msgstr "Atsiliepimas iš {}"
 #~ msgid "Your enquiry has been responded to"
 #~ msgstr "Į jūsų laišką buvo atsakyta"
 
-#~ msgid "enquiry"
-#~ msgstr "užklausa"
-
 #~ msgid "enquiries"
 #~ msgstr "užklausos"
 
 #~ msgid "The unprocessed e-mail message."
 #~ msgstr "Neapdorotas elektroninis laiškas."
-
-#~ msgid "response"
-#~ msgstr "atsakymas"
 
 #~ msgid "responses"
 #~ msgstr "atsakymai"
