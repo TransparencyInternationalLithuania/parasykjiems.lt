@@ -115,7 +115,7 @@ class Institution(models.Model):
         return (Thread.objects
                 .filter(is_public=True)
                 .filter(query)
-                .order_by('-sent_at'))
+                .order_by('-created_at'))
 
     @property
     def recent_threads(self, count=4):
