@@ -748,6 +748,14 @@ a.write:hover {
     -pie-background: linear-gradient(#555555, #646464);
 }
 
+form ul {
+    list-style: none;
+    list-style-type: none;
+    list-style-image: none;
+    margin: 0;
+    padding: 0.5em 0 0.5em 0;
+}
+
 ul.errorlist {
     margin: 0 0 10px 0;
     color: #c33;

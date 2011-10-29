@@ -4,6 +4,11 @@ from django.utils.translation import ugettext as _
 import settings
 
 
+LETTER_KIND_CHOICES = (('public', _("Open letter, visible to all visitors "
+                                    "of the website.")),
+                       ('private', _("Private letter")))
+
+
 class WriteLetterForm(forms.Form):
     name = forms.CharField(label=_("Your full name"),
                            help_text=_("Don't use abbreviations."),
@@ -24,10 +29,9 @@ class WriteLetterForm(forms.Form):
                               max_length=100,
                               required=True)
 
-    is_open = forms.BooleanField(
-        label=_("Open letter, which is visible to all visitors of the "
-                "web site"),
-        required=False)
+    kind = forms.ChoiceField(label=_("Kind of letter"),
+                             widget=widgets.RadioSelect,
+                             choices=LETTER_KIND_CHOICES)
 
     body = forms.CharField(label=_("Message"),
                            widget=forms.widgets.Textarea(),

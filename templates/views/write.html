@@ -27,15 +27,11 @@
     </tr>
     {% for field in form.visible_fields %}
     <tr>
-      {% if field.html_name == 'is_open' %}
-      <td colspan="2">{{ field }} {{ field.label_tag }}</td>
-      {% else %}
       {% if field.html_name == 'body' %}
       <td colspan="2">{{ field }}</td>
       {% else %}
       <th>{{ field.label_tag }}:</th>
       <td>{{ field }}</td>
-      {% endif %}
       {% endif %}
     </tr>
 

@@ -40,7 +40,7 @@ def write(request, recipient):
                 recipient=recipient,
                 subject=form.cleaned_data['subject'],
                 body_text=form.cleaned_data['body'],
-                is_public=form.cleaned_data['is_open'])
+                is_public=(form.cleaned_data['kind'] == 'public'))
 
             return redirect(reverse(write_confirm) +
                             '?' + choice_state.query_string())
