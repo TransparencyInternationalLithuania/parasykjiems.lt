@@ -78,6 +78,10 @@ def proxy_send(message):
     special reply address in the From header.
     '''
     assert(message.recipient_email != u'')
+
+    if message.is_sent:
+        logger.warning(u'ALREADY SENT: {}'.format(message))
+
     email = EmailMessage(
         from_email=formataddr((message.sender_name, message.reply_email)),
         to=[formataddr((message.recipient_name, message.recipient_email))],
