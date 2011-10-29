@@ -135,7 +135,7 @@ class Message(models.Model):
 
     @property
     def sender_url(self):
-        if not self.thread or self.kind == 'response':
+        if not self.thread or self.kind == 'enquiry':
             return None
         elif (self.thread.representative and
             self.thread.representative.name == self.sender_name):
