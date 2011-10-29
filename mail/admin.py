@@ -25,9 +25,12 @@ class MessageAdmin(admin.ModelAdmin):
     readonly_fields = ('date', 'reply_secret')
     list_display = ('date',
                     'kind',
-                    'sender', 'recipient',
+                    'sender_name', 'recipient_name',
                     'subject',
+                    'is_error',
+                    'is_sent',
                     'body_summary')
+    list_filter = ('is_error', 'is_sent')
 
     def sender(self, obj):
         return u'{} <{}>'.format(obj.sender_name, obj.sender_email)
