@@ -33,8 +33,6 @@ def process_incoming(envelope):
         logger.error(u'BOUNCE: {}'.format(message))
     elif message.parent:
         proxy_send(message)
-        message.is_sent = True
-        message.save()
 
 
 def find_parent(message):
@@ -96,6 +94,8 @@ def proxy_send(message):
             'In-Reply-To': message.parent.message_id,
         }
     email.send()
+    message.is_sent = True
+    message.save()
     logger.info(u"SENT: {}".format(message))
 
 
