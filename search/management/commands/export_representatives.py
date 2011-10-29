@@ -16,7 +16,7 @@ class Command(BaseCommand):
                                        kind.name.encode('utf-8') + '.csv'),
                           models.Representative.objects
                           .filter(kind=kind)
-                          .order_by('institution__name'),
+                          .order_by('institution__name', 'name'),
                           [('institution', 'institution__name'),
                            'name',
                            'email',
