@@ -4,14 +4,20 @@
   <table>
     <tr>
       <th>{% trans "From:" %}</th>
-      <td>{{ letter.sender_name }}</td>
+      <td>
+        {% if letter.sender_url %}
+        <a href="{{ letter.sender_url }}">{{ letter.sender_name }}</a>
+        {% else %}
+        {{ letter.sender_name }}
+        {% endif %}
+      </td>
     </tr>
     {% if letter.recipient_name %}
     <tr>
       <th>{% trans "To:" %}</th>
       <td>
         {% if letter.recipient_url %}
-        <a href="{{ letter.recipient_url }}">{{ letter.recipient_name }}</a>
+        <a href="{{ letter.recipient_url }}">{{ letter.recipient_name }}{% if letter.thread.representative %}, {{ letter.thread.representative.institution.name }}{% endif %}</a>
         {% else %}
         {{ letter.recipient_name }}
         {% endif %}
