@@ -254,6 +254,10 @@ class Thread(models.Model):
         return self.messages.count() > 1
 
     @property
+    def has_errors(self):
+        return self.messages.filter(is_error=True).exists()
+
+    @property
     def references(self):
         return ' '.join([m.message_id for m in self.messages])
 

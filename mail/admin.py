@@ -44,8 +44,9 @@ admin.site.register(models.Message, MessageAdmin)
 
 
 class ThreadAdmin(admin.ModelAdmin):
-    list_display = ('created_at', 'modified_at', 'is_public',
-                    'recipient', 'subject', 'has_answer')
+    list_display = ('created_at', 'is_public', 'sender_name',
+                    'recipient', 'subject', 'has_answer', 'has_errors')
     readonly_fields = ('messages',)
+    list_filter = ('is_public',)
 
 admin.site.register(models.Thread, ThreadAdmin)
