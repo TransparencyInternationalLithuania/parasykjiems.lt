@@ -1,6 +1,6 @@
 """This module contains mail-related models.
 
-Both Enquiry and Response can be duck-typed as a letter. They both
+Both UnconfirmedMessage and Message can be duck-typed as a letter. They both
 have the properties sender_name, recipient_name, subject, date, body
 and kind, which allows them to be used with the items/letter.html
 template passing the specific instance as the letter parameter.
