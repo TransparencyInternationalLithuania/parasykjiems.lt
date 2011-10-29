@@ -96,6 +96,12 @@ class Message(models.Model):
                     ('response', _('Sent from representative to user')))
     kind = models.CharField(max_length=8, choices=KIND_CHOICES)
 
+    # True if this message is a bounce message.
+    is_error = models.BooleanField(default=False)
+
+    # True if this message has been proxied to the recipient.
+    is_sent = models.BooleanField(default=False)
+
     envelope = models.TextField(
         blank=True,
         help_text=_('If the message was received through SMTP, the '
