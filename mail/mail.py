@@ -25,8 +25,16 @@ def process_incoming(envelope):
     message.fill_from_envelope()
     message.save()
     find_parent(message)
-    if message.parent:
+
+    # Detect bounces.
+    if message.envelope_object['Return-Path'] == '<>':
+        message.is_error = True
+        message.save()
+        logger.error(u'BOUNCE: {}'.format(message))
+    elif message.parent:
         proxy_send(message)
+        message.is_sent = True
+        message.save()
 
 
 def find_parent(message):
