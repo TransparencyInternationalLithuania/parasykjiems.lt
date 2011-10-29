@@ -138,10 +138,8 @@ class Message(models.Model):
         if not self.thread or self.kind == 'enquiry':
             return None
         elif (self.thread.representative and
-            self.thread.representative.name == self.sender_name):
+              self.thread.representative.name == self.sender_name):
             return self.thread.representative.get_absolute_url()
-        elif self.thread.institution:
-            return self.thread.institution.get_absolute_url()
         else:
             return None
 
@@ -150,7 +148,7 @@ class Message(models.Model):
         if not self.thread or self.kind == 'response':
             return None
         elif (self.thread.representative and
-            self.thread.representative.name == self.recipient_name):
+              self.thread.representative.name == self.recipient_name):
             return self.thread.representative.get_absolute_url()
         elif self.thread.institution:
             return self.thread.institution.get_absolute_url()
