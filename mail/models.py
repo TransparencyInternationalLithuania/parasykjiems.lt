@@ -92,8 +92,8 @@ class Message(models.Model):
 
     date = models.DateTimeField(auto_now_add=True)
 
-    KIND_CHOICES = (('enquiry', _('Sent from user to representative')),
-                    ('response', _('Sent from representative to user')))
+    KIND_CHOICES = (('enquiry', _('Enquiry')),
+                    ('response', _('Response')))
     kind = models.CharField(max_length=8, choices=KIND_CHOICES)
 
     # True if this message is a bounce message.
