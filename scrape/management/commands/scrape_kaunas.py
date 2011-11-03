@@ -6,33 +6,34 @@ import re
 from scrape import models
 
 
-def get_phone(s):
-    m = re.search(r'(\(.+\))?(\s+\d+)?\s+\d+', s)
-    if m:
-        return m.group(0)
-    else:
-        return u''
+def get_phones(s):
+    return ', '.join(p.strip()
+                     for p in re.findall(r'[\s+\d+]+', s)
+                     if re.search(r'\d', p))
 
 
-def get_rep(url, canonic_kind, scrape_kinds, institution):
+def get_reps(url, canonic_kind, scrape_kinds, institution):
     soup = utils.get_soup(url)
 
-    middle_title = soup.find('td', attrs={'class': 'middle-title'})
+    rep_kinds = soup.findAll('td', text=lambda x: x in scrape_kinds)
+    rows = [rep_kind.findParent('tr') for rep_kind in rep_kinds]
 
-    for k in scrape_kinds:
-        m = re.match(ur'{} (.*)'.format(re.escape(k)), middle_title.text)
-        if m:
-            rep_name = m.group(1)
-            break
-    assert(m)
-    print rep_name
+    reps = []
+    for row in rows:
+        rep, created = models.RepresentativeChange.objects.get_or_create(
+            institution=institution,
+            kind_name=canonic_kind)
 
-    kontaktai = soup.find('p', attrs={'class': 'kontaktiniai_duomenys'})
-    rep_email = kontaktai.find('a',
-                               attrs={'href': re.compile(ur'^mailto:')}).text
-    print rep_email
+        kind, email_name, empty, room, phone = row.findAll('td')[:5]
 
-
+        a = email_name.find('a')
+        rep.name = utils.normalise(a.text)
+        rep.email = utils.email(a.get('href'))
+        print phone
+        rep.phone = get_phones(utils.normalise(unicode(phone)))
+        rep.save()
+        reps.append(rep)
+    return rep
 
 
 class Command(BaseCommand):
@@ -40,8 +41,9 @@ class Command(BaseCommand):
     help = '''Scrape municipality and elderate data from kaunas.lt.'''
 
     def handle(self, *args, **options):
-        mayor = get_rep(
-            'http://kaunas.lt/index.php?338403401',
+        mayor = get_reps(
+            'http://kaunas.lt/index.php?1807955888',
             u'meras',
             [u'Meras'],
             u'Kauno miesto savivaldybė')
+        print mayor
