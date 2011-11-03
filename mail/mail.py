@@ -22,7 +22,12 @@ def process_incoming(envelope):
     '''
     message = Message(
         envelope=str(envelope).decode('utf-8'))
-    message.fill_from_envelope()
+
+    try:
+        message.fill_from_envelope()
+    except:
+        message.is_error = True
+
     message.save()
     find_parent(message)
 
@@ -31,7 +36,8 @@ def process_incoming(envelope):
         message.is_error = True
         message.save()
         logger.error(u'BOUNCE: {}'.format(message))
-    elif message.parent:
+
+    if message.parent and not message.is_error:
         proxy_send(message)
 
 
