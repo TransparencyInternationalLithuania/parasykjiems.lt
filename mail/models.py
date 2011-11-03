@@ -247,7 +247,9 @@ class Thread(models.Model):
 
     @property
     def messages(self):
-        return Message.objects.filter(thread=self).order_by('date')
+        return (Message.objects
+                .filter(thread=self, is_error=False)
+                .order_by('date'))
 
     @property
     def has_answer(self):
