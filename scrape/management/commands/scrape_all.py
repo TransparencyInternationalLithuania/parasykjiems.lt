@@ -9,5 +9,5 @@ class Command(BaseCommand):
     help = 'Runs all available scrapers.'
 
     def handle(self, *args, **options):
-        call_command('import_vilnius')
-        call_command('import_kaunas')
+        call_command('scrape_vilnius')
+        call_command('scrape_kaunas')
