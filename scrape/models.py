@@ -35,22 +35,22 @@ class RepresentativeChange(models.Model):
 
     def name_changed(self):
         return ((self.rep and self.delete_rep) or
-                (not self.rep) or
+                (not self.rep and not self.delete_rep) or
                 ((self.name is not None) and (self.rep.name != self.name)))
 
     def phone_changed(self):
         return ((self.rep and self.delete_rep) or
-                (not self.rep) or
+                (not self.rep and not self.delete_rep) or
                 ((self.phone is not None) and (self.rep.phone != self.phone)))
 
     def email_changed(self):
         return ((self.rep and self.delete_rep) or
-                (not self.rep) or
+                (not self.rep and not self.delete_rep) or
                 ((self.email is not None) and (self.rep.email != self.email)))
 
     def other_info_changed(self):
         return ((self.rep and self.delete_rep) or
-                (not self.rep) or
+                (not self.rep and not self.delete_rep) or
                 ((self.other_info is not None) and
                  (self.rep.other_info != self.other_info)))
 
