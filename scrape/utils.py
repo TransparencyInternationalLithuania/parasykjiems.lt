@@ -52,4 +52,3 @@ def submit_rep_change(institution, kind,
         return rep
     else:
         return None
-
