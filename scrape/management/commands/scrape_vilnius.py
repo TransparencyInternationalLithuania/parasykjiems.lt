@@ -19,27 +19,22 @@ def get_rep(url, canonic_kind, scrape_kinds, institution):
 
     tds = soup.find('table', attrs={'class': 'staff'}).findAll('td')
     kind_tds = [td for td in tds if utils.contains_any(td, scrape_kinds)]
-    if len(kind_tds):
+    if kind_tds:
         tr = kind_tds[0].findParent('tr')
         a = tr.find('a')
 
-        rep, created = models.RepresentativeChange.objects.get_or_create(
+        utils.submit_rep_change(
             institution=institution,
-            kind_name=canonic_kind)
-        rep.name = utils.normalise(a.text)
-        rep.email = utils.email(a.get('href'))
-        rep.phone = get_phone(utils.normalise(
-            unicode(tr.find('td', attrs={'class': 'r'}))))
+            kind=canonic_kind,
+            name=utils.normalise(a.text),
+            email=utils.email(a.get('href')),
+            phone=get_phone(utils.normalise(
+                unicode(tr.find('td', attrs={'class': 'r'})))))
     else:
-        rep, created = models.RepresentativeChange.objects.get_or_create(
+        utils.submit_rep_change(
             institution=institution,
-            kind_name=canonic_kind)
-        rep.delete_rep = True
-
-    if rep.changed():
-        rep.save()
-        print rep
-    return rep
+            kind=canonic_kind,
+            delete=True)
 
 
 class Command(BaseCommand):
@@ -47,11 +42,13 @@ class Command(BaseCommand):
     help = '''Scrape municipality and elderate data from vilnius.lt.'''
 
     def handle(self, *args, **options):
-        mayor = get_rep(
+        municipality = u'Vilniaus miesto savivaldybė'
+
+        get_rep(
             'http://www.vilnius.lt/newvilniusweb/index.php/15/',
             u'meras',
             [u'Meras'],
-            u'Vilniaus miesto savivaldybė')
+            municipality)
 
         utils.delay()
         elderate_soup = utils.get_soup(
@@ -68,4 +65,4 @@ class Command(BaseCommand):
                         [u'Seniūnas',
                          u'Seniūnė',
                          u'L. e. seniūno pareigas'],
-                         mayor.institution + u' ' + inst)
+                         municipality + u' ' + inst)
