@@ -15,12 +15,13 @@ urlpatterns = patterns('mail.views',
     url(r'^sent/$', 'sent'),
     url(r'^sent/(?P<slug>[\w-]+)/$', 'sent'),
 
-    url(r'^thread/(?P<slug>[\w-]+)/$', 'thread', name='thread'),
-
     url(r'^letters/$', redirect_to, {'url': '/threads/'}, name='letters'),
 
     url(r'^threads/$', 'threads', name='threads'),
     url(r'^threads/rss/$', feeds.ThreadsFeed()),
+
+    url(r'^thread/(?P<slug>[\w-]+)/$', 'thread', name='thread'),
+    url(r'^thread/rss/(?P<thread_slug>[\w-]+)/$', feeds.ThreadFeed()),
 
     url(r'^threads/(?P<institution_slug>[\w-]+)/$', 'threads', name='threads'),
 )
