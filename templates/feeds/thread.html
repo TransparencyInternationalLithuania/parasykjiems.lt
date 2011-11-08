@@ -1,0 +1,6 @@
+{% include "feeds/message.html" with obj=obj.messages|first %}
+<br />
+
+<hr />
+
+<p>Sekti šią diskusiją ir pamatyti ar gautas atsakymas galite <a href="http://{{ site.domain }}{{ obj.get_absolute_url }}">čia</a>.</p>

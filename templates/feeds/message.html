@@ -1,0 +1,5 @@
+<strong>Siuntėjas:</strong> {{ obj.sender_name }}<br />
+<strong>Gavėjas:</strong> {{ obj.recipient_name }}<br />
+<strong>Tema:</strong> {{ obj.subject }}<br />
+<br/>
+{{ obj.body_text|urlizetrunc:60|linebreaks }}

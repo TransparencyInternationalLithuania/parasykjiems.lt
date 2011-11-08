@@ -10,6 +10,7 @@ from web.utils import summary
 class ThreadsFeed(Feed):
     title = _(u"ParašykJiems threads")
     link = "/threads/"
+    description_template = "feeds/thread.html"
 
     def items(self):
         return (Thread.objects.filter(is_public=True)
@@ -17,12 +18,6 @@ class ThreadsFeed(Feed):
 
     def item_title(self, item):
         return item.subject
-
-    def item_description(self, item):
-        try:
-            return summary(item.messages[0].body_text)
-        except IndexError:
-            return u''
 
     def item_pubdate(self, item):
         return item.created_at
@@ -38,9 +33,6 @@ class ThreadFeed(Feed):
     def title(self, obj):
         return u'ParašykJiems – {}'.format(obj.subject)
 
-    def description(self, obj):
-        return u''                        # TODO: fill.
-
     def items(self, obj):
         return Message.objects.filter(thread=obj).order_by('-date')
 
@@ -49,6 +41,3 @@ class ThreadFeed(Feed):
 
     def item_pubdate(self, item):
         return item.date
-
-    def item_description(self, item):
-        return u''                        # TODO: fill.
