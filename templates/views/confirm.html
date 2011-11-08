@@ -13,7 +13,7 @@
 
 {% block content %}
 
-{% include "items/letter.html" with letter=message %}
+{% include "items/message.html" with message=message %}
 
 {% if message.is_public %}
 {% snippet "confirm-open-letter" %}
