@@ -566,7 +566,7 @@ h5 {
     text-overflow: ellipsis;
 }
 
-.letter {
+.message {
     font-size: 0.91em;
     margin-bottom: 1em;
     background: #caddf3;
@@ -580,7 +580,7 @@ h5 {
 }
 
 
-.letter blockquote {
+.message blockquote {
     margin: 0;
     padding: 0 0 0 1em;
     border-left: 2px solid #86a0b3;
@@ -588,7 +588,7 @@ h5 {
     cursor: pointer;
 }
 
-.letter blockquote:hover {
+.message blockquote:hover {
     border-left: 2px solid #a6c0d3;
 }
 
@@ -606,7 +606,7 @@ h5 {
     border-left: 2px solid #e3d088;
 }
 
-.letter blockquote .alternate {
+.message blockquote .alternate {
     color: #456;
 }
 
@@ -614,17 +614,17 @@ h5 {
     color: #654;
 }
 
-.letter th {
+.message th {
     font-weight: 600;
     text-align: left;
     padding-right: 10px;
 }
 
-.letter td {
+.message td {
     padding: 0;
 }
 
-.letter .body {
+.message .body {
     margin: 3px 30px 3px 30px;
     padding: 3px 10px 3px 10px;
 }
@@ -642,11 +642,11 @@ h5 {
     position: relative;
 }
 
-.letter a, .description a {
+.message a, .description a {
     text-decoration: underline;
 }
 
-.letter a:hover, .description a:hover {
+.message a:hover, .description a:hover {
     color: #002663;
 }
 

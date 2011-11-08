@@ -36,7 +36,7 @@ $(function(){
 
       $(window.location.hash).click();
 
-      $('.letter blockquote')
+      $('.message blockquote')
           .each(function(idx, elem) {
                   makeTogglable(elem, '...', true);
               })

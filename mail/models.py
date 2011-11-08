@@ -1,9 +1,9 @@
 """This module contains mail-related models.
 
-Both UnconfirmedMessage and Message can be duck-typed as a letter. They both
-have the properties sender_name, recipient_name, subject, date, body
-and kind, which allows them to be used with the items/letter.html
-template passing the specific instance as the letter parameter.
+Both UnconfirmedMessage can be duck-typed as a Message. They both have
+the properties sender_name, recipient_name, subject, date, body and
+kind, which allows them to be used with the items/message.html template
+passing the specific instance as the message parameter.
 """
 
 import random
@@ -59,7 +59,7 @@ class UnconfirmedMessage(models.Model):
         return self.representative or self.institution
 
     # We need recipient_name, so that we can display unconfirmed
-    # messages with the "items/letter.html" template.
+    # messages with the "items/message.html" template.
     @property
     def recipient_name(self):
         return self.recipient.name
