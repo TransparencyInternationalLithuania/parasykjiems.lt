@@ -13,6 +13,6 @@
 
 {% block content %}
 {% for message in thread.messages %}
-{% include "items/letter.html" with letter=message class=message.kind %}
+{% include "items/letter.html" with letter=message class=message.kind id=message.id_in_thread %}
 {% endfor %}
 {% endblock %}

@@ -1,6 +1,6 @@
 {% load i18n email_blockquote %}
 
-<div class="letter {{ class }}">
+<div class="letter {{ class }}"{% if id %} id="message-{{ id }}"{% endif %}>
   <table>
     <tr>
       <th>{% trans "From:" %}</th>
