@@ -25,11 +25,11 @@ class ThreadsFeed(Feed):
 class ThreadFeed(Feed):
     description_template = "feeds/message.html"
 
-    def get_object(self, request, thread_slug):
+    def get_object(self, request, slug):
         return get_object_or_404(
             Thread,
             is_public=True,
-            slug=thread_slug)
+            slug=slug)
 
     def title(self, obj):
         return u'ParašykJiems – {}'.format(obj.subject)
