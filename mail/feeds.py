@@ -50,8 +50,5 @@ class ThreadFeed(Feed):
     def item_pubdate(self, item):
         return item.date
 
-    def item_link(self, item):
-        return item.thread.get_absolute_url()   # TODO: link to specific letter, not thread.
-
     def item_description(self, item):
         return u''                        # TODO: fill.

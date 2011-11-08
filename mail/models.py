@@ -205,6 +205,18 @@ class Message(models.Model):
             secret=self.reply_secret,
             domain=settings.SITE_DOMAIN)
 
+    @property
+    def id_in_thread(self):
+        return self.thread and (list(self.thread.messages).index(self) + 1)
+
+    def get_absolute_url(self):
+        if not self.id_in_thread:
+            raise Exception("Can't get URL of orphan message.")
+        return '{}#message-{}'.format(
+            self.thread.get_absolute_url(),
+            self.id_in_thread
+        )
+
     def __unicode__(self):
         return u'{id}:{sender} -> {recipient} ({date})'.format(
             id=self.id,
