@@ -1,7 +1,7 @@
 {% load i18n %}
 
 <div style="float: right">
-  <a href="rss.xml">
-    <img title="{% trans "Follow discussion by RSS" %}" alt="RSS" src="/static/img/rss.png">
+  <a href="{{ url|default:"rss.xml" }}">
+    <img title="{% trans "Follow using RSS" %}" alt="RSS" src="/static/img/rss.png">
   </a>
 </div>
