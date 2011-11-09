@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block menu %}
+{% include "menu.html" with active="about" %}
+{% endblock %}
+
+{% block title %}{{ article.title }} &ndash; {% endblock %}
+
+{% block content %}
+<div class="hyphenate">
+{{ article.body_rendered|safe }}
+</div>
+{% endblock %}

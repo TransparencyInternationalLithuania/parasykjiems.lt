@@ -1,0 +1,59 @@
+{% load i18n markup %}
+
+<table class="institution">
+  <tr>
+    <td>
+      <h2>{{ institution.name }}</h2>
+    </td>
+    <td style="width: 48%"
+        rowspan="{{ institution.representatives.count|add:2 }}">
+      {% if institution.kind.description %}
+      <div class="description hyphenate">
+        {{ institution.kind.description|markdown }}
+      </div>
+      {% endif %}
+    </td>
+  </tr>
+  <tr>
+    <td>
+      {% if institution.phone %}
+      <p>{% trans "Phone number: " %} {{ institution.phone }}</p>
+      {% endif %}
+
+      {% if institution.address %}
+      <p>{% trans "Address: " %} {{ institution.address }}</p>
+      {% endif %}
+
+      {% if institution.other_info %}
+      <p>{{ institution.other_info|urlizetrunc:40 }}</p>
+      {% endif %}
+
+      {% if institution.email %}
+      <p>
+        {% trans "Email: " %} <strong>{{ institution.email }}</strong>
+        <a class="write" href="{% url write-institution institution.slug %}{{ choose_query }}">
+          {% trans "Write&nbsp;letter" %}
+        </a>
+      </p>
+      {% endif %}
+    </td>
+  </tr>
+
+  {% for representative in institution.representatives %}
+  <tr><td class="representative">
+      {% include "items/representative.html" %}
+  </td></tr>
+  {% endfor %}
+
+  {% if institution.recent_threads %}
+  <tr>
+    <td colspan="2" class="recent-threads">
+      <h5>{% trans "Recent letters" %}</h5>
+      {% include "items/threads.html" with threads=institution.recent_threads small=1 %}
+      {% if institution.more_threads %}
+      <p><a href="{% url threads institution.slug %}">{% trans "All letters sent to this institution" %}</a></p>
+      {% endif %}
+    </td>
+  </tr>
+  {% endif %}
+</table>

@@ -1,0 +1,12 @@
+syntax:glob
+
+settings_local.py
+reply_fail.mbox
+
+*.pyc
+*.log
+*.db
+*~
+*.mo
+*.orig
+parasykjiems.index/*

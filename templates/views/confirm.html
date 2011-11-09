@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load i18n snippet %}
+
+{% block menu %}
+{% include "menu.html" %}
+{% endblock %}
+
+{% block title %}{% trans "Confirm letter" %} &ndash; {% endblock %}
+
+{% block breadcrumbs %}
+{% include "breadcrumbs/confirm.html" with active=1 %}
+{% endblock %}
+
+{% block content %}
+
+{% include "items/message.html" with message=message %}
+
+{% if message.is_public %}
+{% snippet "confirm-open-letter" %}
+{% endif %}
+
+<form method="POST">
+  {% csrf_token %}
+  <input value="{% trans "Send" %}" type="Submit">
+</form>
+
+{% endblock %}

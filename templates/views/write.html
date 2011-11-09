@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load i18n snippet %}
+
+{% block title %}{% trans "Write letter" %} &ndash; {{ recipient.name }} &ndash; {% endblock %}
+
+{% block breadcrumbs %}
+{% include "breadcrumbs/search.html" %}
+{% include "breadcrumbs/choose.html" %}
+{% include "breadcrumbs/write.html" with active=1%}
+{% endblock %}
+
+{% block content %}
+
+{% snippet "write" %}
+
+<form method="POST">
+  {% csrf_token %}
+  {% for field in form.hidden_fields %}{{ field }}{% endfor %}
+  <table>
+    <tr>
+      <th>Gavėjas:</th>
+      {% if recipient.representatives %}
+      <td>{{ recipient.name }}</td>
+      {% else %}
+      <td>{{ recipient.kind }} {{ recipient.name }}, {{ recipient.institution.name }}</td>
+      {% endif %}
+    </tr>
+    {% for field in form.visible_fields %}
+    <tr>
+      {% if field.html_name == 'body' %}
+      <td colspan="2">{{ field }}</td>
+      {% else %}
+      <th>{{ field.label_tag }}:</th>
+      <td>{{ field }}</td>
+      {% endif %}
+    </tr>
+
+    {% if field.errors %}
+    <tr><td></td><td>{{ field.errors }}</td></tr>
+    {% endif %}
+
+    {% if field.help_text %}
+    <tr>
+      <td>
+      <td class="helptext">{{ field.help_text }}</td>
+    </tr>
+    {% endif %}
+    {% endfor %}
+  </table>
+  <input value="{% trans "Submit" %}" type="submit">
+</form>
+
+{% endblock %}

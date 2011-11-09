@@ -1,0 +1,9 @@
+{% autoescape off %}Laiškas, kurį išsiuntėte per ParašykJiems.lt sistemą:
+
+------------------------------------------------------------------------
+Siuntėjas: {{ message.sender_name }}
+Gavėjas: {{ message.recipient_name }}
+Tema: {{ message.subject }}
+Data: {{ message.date|date:'Y-m-d' }}
+
+{{ message.body_text }}{% endautoescape %}

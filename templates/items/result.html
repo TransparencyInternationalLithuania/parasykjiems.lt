@@ -1,0 +1,19 @@
+<a href="{{ result.url }}{% if result.numbered and house_number %}{{ house_number }}/{% endif %}">
+  {% if result.content_type == 'search.representative' %}
+  <img src="/static/img/icons/representative.png">
+  {% endif %}
+  {% if result.content_type == 'search.institution' %}
+  <img src="/static/img/icons/institution.png">
+  {% endif %}
+  {% if result.content_type == 'search.location' %}
+  <img src="/static/img/icons/location.png">
+  {% endif %}
+  <div>{{ result.title }}</div>
+  <div class="subtitle">
+    {% if result.subtitle %}
+    {{ result.subtitle }}
+    {% else %}
+    &nbsp;
+    {% endif %}
+  </div>
+</a>

@@ -1,0 +1,107 @@
+{% extends "admin/base_site.html" %}
+{% load i18n snippet %}
+
+{% block title %}{% trans "Data update" %}{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+  <a href="/admin/">{% trans 'Home' %}</a> &rsaquo;
+  {% trans "Data update" %}
+</div>{% endblock %}
+
+{% block extrahead %}
+<script type="text/javascript" src="/static/js/jquery-1.6.2.min.js"></script>
+<style>
+  table { width: 100%; }
+  td { vertical-align: middle; }
+  .delete_rep { background: #faa; color: #400; }
+  .add { background: #afa; color: #040; }
+  .spacer { height: 0.3em; }
+</style>
+{% endblock %}
+
+{% block content %}
+<form method="POST">
+  {% csrf_token %}
+  <table>
+    <tr>
+      <th><a href="javascript:$('input[type=checkbox]').click()">{% trans "Apply" %}</a></th>
+      <th>{% trans "Institution" %}</th>
+      <th>{% trans "Kind" %}</th>
+      <th>{% trans "Name" %}</th>
+      <th>{% trans "Email" %}</th>
+      <th>{% trans "Phone" %}</th>
+      <th>{% trans "Other information" %}</th>
+    </tr>
+    {% for change in changes %}
+    <tr class="spacer"></tr>
+    {% with rep=change.rep %}
+    {% if rep %}
+    <tr{% if change.delete_rep %} class="delete_rep"{% endif %}>
+      <td{% if not change.delete_rep %} rowspan="2"{% endif %}>
+        <input name="apply_change" value="{{ change.id }}" type="checkbox" checked>
+      </td>
+      <td{% if not change.delete_rep %} rowspan="2"{% endif %}>
+        {{ rep.institution.name }}</td>
+      <td{% if not change.delete_rep %} rowspan="2"{% endif %}>
+        {{ rep.kind.name }}
+      </td>
+
+      <td{% if change.name_changed %} class="delete_rep"{% else %} rowspan="2"{% endif %}>
+        {{ rep.name|default:"&nbsp;" }}
+      </td>
+
+      <td{% if change.email_changed %} class="delete_rep"{% else %} rowspan="2"{% endif %}>
+        {{ rep.email|default:"&nbsp;" }}
+      </td>
+
+      <td{% if change.phone_changed %} class="delete_rep"{% else %} rowspan="2"{% endif %}>
+        {{ rep.phone|default:"&nbsp;" }}
+      </td>
+
+      <td{% if change.other_info_changed %} class="delete_rep"{% else %} rowspan="2"{% endif %}>
+        {{ rep.other_info|default:"&nbsp;" }}
+      </td>
+    </tr>
+    {% endif %}
+
+    {% if not change.delete_rep %}
+    <tr{% if not rep %} class="add"{% endif %}>
+      {% if not rep %}
+      <td><input name="apply_change" value="{{ change.id }}" type="checkbox" checked></td>
+      <td>{{ change.institution }}</td>
+      <td>{{ change.kind_name }}</td>
+      {% endif %}
+
+      {% if change.name_changed %}
+      <td class="add">
+        {{ change.name|default:"&nbsp;" }}
+      </td>
+      {% endif %}
+
+      {% if change.email_changed %}
+      <td class="add">
+        {{ change.email|default:"&nbsp;" }}
+      </td>
+      {% endif %}
+
+      {% if change.phone_changed %}
+      <td class="add">
+        {{ change.phone|default:"&nbsp;" }}
+      </td>
+      {% endif %}
+
+      {% if change.other_info_changed %}
+      <td class="add">
+        {{ change.other_info|default:"&nbsp;" }}
+      </td>
+      {% endif %}
+
+    </tr>
+    {% endif %}
+    {% endwith %}
+    {% endfor %}
+  </table>
+  <input type="submit">
+</form>
+{% endblock %}

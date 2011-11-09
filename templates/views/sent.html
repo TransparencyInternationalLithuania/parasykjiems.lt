@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load i18n snippet %}
+
+{% block title %}{% trans "Letter sent" %} &ndash; {% endblock %}
+
+{% block breadcrumbs %}
+<li>{% trans "Letter sent" %}</li>
+{% endblock %}
+
+{% block content %}
+
+{% snippet "sent" %}
+
+{% if thread %}
+<p>
+  {% blocktrans with url=thread.get_absolute_url %}
+  You can view it <a href="{{ url }}">here</a>.
+  {% endblocktrans %}
+</p>
+{% endif %}
+
+{% endblock %}

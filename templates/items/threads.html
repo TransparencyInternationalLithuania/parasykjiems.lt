@@ -1,0 +1,34 @@
+{% load i18n humanize shorten_institution %}
+
+<table class="threads{% if small %} small-threads{% endif %}">
+  {% if not small %}
+  <tr class="header">
+    <th class="answered"></th>
+    <th class="subject">{% trans "Subject" %}</th>
+    <th class="sender">{% trans "Sender" %}</th>
+    <th class="recipient">{% trans "Recipient" %}</th>
+    <th class="date">{% trans "Sent at" %}</th>
+  </tr>
+  {% endif %}
+  {% for thread in threads %}
+  {% if thread.is_public %}
+  <tr class="{% cycle "odd" "even" %}">
+    <td class="answered">{% if thread.has_answer %}<img src="/static/img/answered.png" title="{% trans "Answered" %}">{% else %}&nbsp;{% endif %}</td>
+    <td class="subject">
+      <a href="{{ thread.get_absolute_url }}">
+        {% if small %}
+        {{ thread.subject|truncatewords:"6" }}
+        {% else %}
+        {{ thread.subject|truncatewords:"10" }}
+        {% endif %}
+      </a>
+    </td>
+    <td class="sender">{{ thread.sender_name|truncatewords:"3" }}</td>
+    {% if not small %}
+    <td class="recipient">{{ thread.recipient_name|shorten_institution|truncatewords:"4" }}</td>
+    {% endif %}
+    <td class="date">{{ thread.created_at|naturalday:'Y-m-d' }}</td>
+  </tr>
+  {% endif %}
+  {% endfor %}
+</table>

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load i18n snippet %}
+
+{% block title %}{% trans "Thank you" %} &ndash; {% endblock %}
+
+{% block breadcrumbs %}
+{% include "breadcrumbs/contact.html" %}
+<li>{% trans "Thank you" %}</li>
+{% endblock %}
+
+{% block content %}
+
+{% snippet "contact-thanks" %}
+
+{% endblock %}

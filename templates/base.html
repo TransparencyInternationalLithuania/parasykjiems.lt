@@ -1,0 +1,49 @@
+{% load i18n snippet %}
+{% spaceless %}
+<!DOCTYPE html>
+<html lang="lt">
+  <head>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <link rel="icon" type="image/png" href="/static/img/favicon.png">
+    <title>{% block title %}{% endblock %}ParašykJiems</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/hyphenator.js"></script>
+    <script type="text/javascript" src="/static/js/folding.js"></script>
+    {% block head %}{% endblock %}
+    {{ SETTINGS.ADDITIONAL_HTML_HEAD|safe }}
+  </head>
+  <body>
+    {% if SETTINGS.TESTING_VERSION %}
+    <div id="testing-version" onclick="$(this).hide()">
+      {% snippet "testing-version" %}
+    </div>
+    {% endif %}
+
+    <div id="main-block">
+      <div id="header">
+        <div id="inner-header">
+          <div>
+            <a href="/"><img id="logo" src="/static/img/logo.png" alt="{% trans "ParašykJiems" %}"></a>
+          </div>
+          <ul id="menu">
+            {% block menu %}
+            {% include "menu.html" %}
+            {% endblock %}
+          </ul>
+        </div>
+      </div>
+      <div id="content">
+        <ul id="breadcrumbs">
+          {% block breadcrumbs %}
+          {% endblock %}
+        </ul>
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+    <div id="footer">
+      {% snippet "footer" %}
+    </div>
+  </body>
+</html>
+{% endspaceless %}
