@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-29 15:34+0300\n"
+"POT-Creation-Date: 2011-11-08 22:04+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -74,7 +74,7 @@ msgstr ""
 msgid "Message"
 msgstr ""
 
-#: mail/mail.py:129
+#: mail/mail.py:139
 msgid "Confirm your letter"
 msgstr ""
 
@@ -98,19 +98,19 @@ msgstr ""
 msgid "If the message was received through SMTP, the original email text."
 msgstr ""
 
-#: mail/models.py:216
+#: mail/models.py:228
 msgid "message"
 msgstr ""
 
-#: mail/models.py:217
+#: mail/models.py:229
 msgid "messages"
 msgstr ""
 
-#: mail/models.py:280
+#: mail/models.py:294
 msgid "thread"
 msgstr ""
 
-#: mail/models.py:281
+#: mail/models.py:295
 msgid "threads"
 msgstr ""
 
@@ -253,24 +253,28 @@ msgstr ""
 msgid "All letters sent to this institution"
 msgstr ""
 
-#: templates/items/letter.html:6
+#: templates/items/message.html:6
 msgid "From:"
 msgstr ""
 
-#: templates/items/letter.html:17
+#: templates/items/message.html:17
 msgid "To:"
 msgstr ""
 
-#: templates/items/letter.html:29
+#: templates/items/message.html:29
 msgid "Subject:"
 msgstr ""
 
-#: templates/items/letter.html:35
+#: templates/items/message.html:35
 msgid "Date:"
 msgstr ""
 
 #: templates/items/representative.html:12
 msgid "Institution: "
+msgstr ""
+
+#: templates/items/rss.html:5
+msgid "Follow using RSS"
 msgstr ""
 
 #: templates/items/threads.html:8
@@ -361,7 +365,7 @@ msgid ""
 "  "
 msgstr ""
 
-#: templates/views/threads.html:25
+#: templates/views/threads.html:26
 msgid "Pages: "
 msgstr ""
 
