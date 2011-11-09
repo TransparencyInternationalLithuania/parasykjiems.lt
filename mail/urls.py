@@ -8,7 +8,7 @@ urlpatterns = patterns('mail.views',
         name='write-institution'),
     url(r'^write/confirm/$', 'write_confirm'),
 
-    url(r'^confirm/(?P<id>\d+)/(?P<confirm_secret>\d+)/$', 'confirm',
+    url(r'^confirm/(?P<id>\d+)/(?P<confirm_secret>\w+)/$', 'confirm',
         name='confirm'),
 
     url(r'^sent/$', 'sent'),
@@ -22,4 +22,9 @@ urlpatterns = patterns('mail.views',
 
     url(r'^thread/(?P<slug>[\w-]+)/$', 'thread', name='thread'),
     url(r'^thread/(?P<slug>[\w-]+)/rss.xml$', feeds.ThreadFeed()),
+
+    url(r'^thread/(?P<slug>[\w-]+)/subscribe/$',
+        'subscribe', name='subscribe'),
+
+    url(r'^unsubscribe/(?P<id>\d+)/(?P<secret>\w+)/$', 'unsubscribe')
 )

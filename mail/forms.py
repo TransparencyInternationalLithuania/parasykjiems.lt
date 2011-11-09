@@ -38,3 +38,13 @@ class WriteLetterForm(forms.Form):
                            required=True)
 
     choice_state = forms.CharField(widget=widgets.HiddenInput())
+
+
+class SubscribeForm(forms.Form):
+    email = forms.EmailField(
+        label=_("Your e-mail address"),
+        required=True,
+        error_messages={
+            'required': _("An e-mail address is required."),
+            'invalid': _("Enter a valid e-mail address."),
+        })

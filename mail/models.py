@@ -293,3 +293,15 @@ class Thread(models.Model):
     class Meta:
         verbose_name = _('thread')
         verbose_name_plural = _('threads')
+
+
+class Subscription(models.Model):
+    thread = models.ForeignKey(Thread)
+    sender_email = models.EmailField(max_length=_NAME_LEN)
+    unsubscribe_secret = models.CharField(default=generate_secret,
+                                          max_length=_SECRET_LEN,
+                                          db_index=True,
+                                          null=False, blank=True)
+
+    class Meta:
+        unique_together = ('thread', 'sender_email')

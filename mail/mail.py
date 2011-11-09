@@ -6,8 +6,7 @@ from django.utils.translation import ugettext as _
 from email.utils import formataddr
 
 import settings
-from parasykjiems.mail import utils
-from parasykjiems.mail.models import UnconfirmedMessage, Thread, Message
+from parasykjiems.mail import utils, models
 from parasykjiems.slug import generate_slug
 from parasykjiems.search.models import Representative
 
@@ -20,7 +19,7 @@ def process_incoming(envelope):
     inserts it into the database, tries to find a parent and
     proxy-sends the message if the parent is found.
     '''
-    message = Message(
+    message = models.Message(
         envelope=str(envelope).decode('utf-8'))
 
     try:
@@ -49,7 +48,8 @@ def find_parent(message):
         if m:
             id = int(m.group('id'))
             secret = m.group('secret')
-            maybe_parent = Message.objects.filter(id=id, reply_secret=secret)
+            maybe_parent = models.Message.objects.filter(id=id,
+                                                         reply_secret=secret)
             if maybe_parent.exists():
                 message.parent = maybe_parent.get()
                 message.recipient_name = message.parent.sender_name
@@ -119,7 +119,7 @@ def submit_message(sender_name,
     doesn't send it. Instead, sends the user a confirmation email.
     """
 
-    message = UnconfirmedMessage(
+    message = models.UnconfirmedMessage(
         sender_name=sender_name,
         sender_email=sender_email,
         subject=subject,
@@ -154,7 +154,7 @@ def confirm_and_send(unconfirmed_message):
     Creates a Thread and a Message (which contains the sent envelope).
     """
 
-    thread = Thread(is_public=unconfirmed_message.is_public,
+    thread = models.Thread(is_public=unconfirmed_message.is_public,
                     institution=unconfirmed_message.institution,
                     representative=unconfirmed_message.representative,
                     sender_name=unconfirmed_message.sender_name,
@@ -164,11 +164,11 @@ def confirm_and_send(unconfirmed_message):
                     subject=unconfirmed_message.subject)
     if thread.is_public:
         generate_slug(thread,
-                      Thread.objects.filter(is_public=True),
+                      models.Thread.objects.filter(is_public=True),
                       lambda t: [t.subject])
     thread.save()
 
-    message = Message(
+    message = models.Message(
         kind='enquiry',
         thread=thread,
         sender_name=unconfirmed_message.sender_name,

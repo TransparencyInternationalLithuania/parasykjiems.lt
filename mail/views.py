@@ -6,10 +6,10 @@ from django.views.decorators.cache import cache_control
 from django.views.decorators.http import last_modified
 import datetime
 
-from forms import WriteLetterForm
+from forms import WriteLetterForm, SubscribeForm
 from parasykjiems.search.models import Representative, Institution
 from parasykjiems.search.utils import ChoiceState
-from parasykjiems.mail.models import Thread, UnconfirmedMessage
+from parasykjiems.mail.models import Thread, UnconfirmedMessage, Subscription
 import parasykjiems.mail.mail as mail
 from parasykjiems.mail import utils
 
@@ -147,4 +147,25 @@ def threads(request, institution_slug=None):
         'page': page,
         'pages': [pages.page(p) for p in pages.page_range],
         'threads': threads,
+    })
+
+
+def subscribe(request, slug):
+    thread = get_object_or_404(Thread, slug=slug, is_public=True)
+    if request.method == 'POST':
+        form = SubscribeForm(request.POST)
+        if form.is_valid():
+            Subscription(thread=thread,
+                         email=form['email']).save()
+            return redirect(reverse(thread))
+
+
+def unsubscribe(request, id, secret):
+    subscription = get_object_or_404(
+        Subscription,
+        id=id,
+        secret=secret)
+    subscription.delete()
+    return render(request, 'views/unsubscribe.html', {
+        'subscription': subscription,
     })
