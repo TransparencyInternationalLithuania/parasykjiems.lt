@@ -1,5 +1,6 @@
 from django.db import models
 from search.models import Representative, Institution, RepresentativeKind
+from search.search_indexes import RepresentativeIndex
 import slug
 
 
@@ -59,11 +60,14 @@ class RepresentativeChange(models.Model):
                 self.email_changed() or self.other_info_changed())
 
     def apply_change(self):
+        index = RepresentativeIndex(Representative)
         if self.delete_rep:
+            index.remove_object(self.rep)
             self.rep.delete()
         else:
             if self.rep:
                 rep = self.rep
+                index.remove_object(rep)
             else:
                 rep = Representative(
                     institution=Institution.objects.get(name=self.institution),
@@ -84,6 +88,7 @@ class RepresentativeChange(models.Model):
                                           r.kind.name,
                                           r.institution.name])
             rep.save()
+            index.update_object(rep)
         self.delete()
 
     def __unicode__(self):
