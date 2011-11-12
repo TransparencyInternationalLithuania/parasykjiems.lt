@@ -51,4 +51,5 @@ def submit_rep_change(institution, kind,
         print rep
         return rep
     else:
+        rep.delete()
         return None
