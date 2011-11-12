@@ -3,7 +3,7 @@
 --
 Šis laiškas buvo išsiųstas naudojant ParašykJiems – http://parasykjiems.lt
 
-Prašome atsakymą siųsti paprastu tekstu, o ne kaip prisegtą Word bylą.
+Prašome atsakymą siųsti paprastu tekstu, o ne kaip prisegtą Word ar PDF bylą.
 {% if thread.is_public %}
 Šis laiškas yra atviras ir jį galima peržiūrėti adresu
 {{ SETTINGS.SITE_ADDRESS }}{{ thread.get_absolute_url }}
