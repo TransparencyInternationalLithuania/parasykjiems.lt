@@ -53,3 +53,20 @@ def submit_rep_change(institution, kind,
     else:
         rep.delete()
         return None
+
+
+def submit_inst_change(name, email=None, phone=None, other_info=None):
+    inst, created = models.InstitutionChange.objects.get_or_create(
+        name=name)
+
+    inst.email = email
+    inst.phone = phone
+    inst.other_info = other_info
+
+    if inst.changed():
+        inst.save()
+        print inst
+        return inst
+    else:
+        inst.delete()
+        return inst

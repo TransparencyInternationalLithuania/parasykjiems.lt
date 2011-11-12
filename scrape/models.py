@@ -1,6 +1,6 @@
 from django.db import models
 from search.models import Representative, Institution, RepresentativeKind
-from search.search_indexes import RepresentativeIndex
+from search.search_indexes import RepresentativeIndex, InstitutionIndex
 import slug
 
 
@@ -96,3 +96,54 @@ class RepresentativeChange(models.Model):
                 u'{1.name!r}, {1.email!r}, {1.phone!r}, {1.other_info!r}'
                 .format('-' if self.delete_rep else '+',
                         self))
+
+
+class InstitutionChange(models.Model):
+    name = models.CharField(max_length=_NAME_LEN)
+
+    # These fields may be None if they should be left unchanged on update.
+    email = models.CharField(max_length=_NAME_LEN, null=True, default=None)
+    phone = models.CharField(max_length=_NAME_LEN, null=True, default=None)
+    other_info = models.CharField(max_length=_NAME_LEN,
+                                  null=True,
+                                  default=None)
+
+    def __init__(self, *args, **kwargs):
+        super(InstitutionChange, self).__init__(*args, **kwargs)
+        self.inst = Institution.objects.get(
+            name=self.name)
+
+    def phone_changed(self):
+        return (self.phone is not None) and (self.inst.phone != self.phone)
+
+    def email_changed(self):
+        return (self.email is not None) and (self.inst.email != self.email)
+
+    def other_info_changed(self):
+        return ((self.other_info is not None) and
+                (self.inst.other_info != self.other_info))
+
+    def changed(self):
+        return (self.phone_changed() or
+                self.email_changed() or
+                self.other_info_changed())
+
+    def apply_change(self):
+        if self.inst:
+            inst = self.inst
+        else:
+            inst = Institution(name=self.name)
+
+        if self.phone is not None:
+            inst.phone = self.phone
+        if self.email is not None:
+            inst.email = self.email
+        if self.other_info is not None:
+            inst.other_info = self.other_info
+        inst.save()
+
+        self.delete()
+
+    def __unicode__(self):
+        return (u'[{0.name}] {0.email!r}, {0.phone!r}, {0.other_info!r}'
+                .format(self))
