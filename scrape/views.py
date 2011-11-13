@@ -5,16 +5,18 @@ from django.contrib.auth.decorators import login_required
 import models
 
 
-_CHANGE_PARAM_RE = re.compile(r'change_(\d)')
+_CHANGE_ID_RE = re.compile(r'(?P<model>[^_]+)_(?P<id>\d+)')
+_MODELS = {'representative': models.RepresentativeChange,
+           'institution': models.InstitutionChange}
 
 
 @login_required(login_url='/admin/', redirect_field_name=None)
 def admin_update(request):
     if request.method == 'POST':
         for change_id in request.POST.getlist('apply_change'):
-            print change_id
-            change = models.RepresentativeChange.objects.get(
-                id=int(change_id))
+            m = _CHANGE_ID_RE.match(change_id)
+            model = _MODELS[m.group('model')]
+            change = model.objects.get(id=int(m.group('id')))
             change.apply_change()
         return redirect(reverse(admin_update))
     else:
