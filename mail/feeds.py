@@ -10,8 +10,11 @@ from models import Thread, Message
 class ThreadsFeed(Feed):
     description_template = "feeds/thread.html"
 
-    def get_object(self, request, institution_slug):
-        return get_object_or_404(Institution, slug=institution_slug)
+    def get_object(self, request, institution_slug=None):
+        if institution_slug:
+            return get_object_or_404(Institution, slug=institution_slug)
+        else:
+            return None
 
     def title(self, obj):
         if obj:
