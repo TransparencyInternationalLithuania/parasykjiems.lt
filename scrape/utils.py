@@ -1,8 +1,12 @@
+# -*- coding: utf-8 -*-
+
 import time
 import re
-from urllib2 import urlopen
+import random
+import urllib2
 from BeautifulSoup import BeautifulSoup
 import models
+from search.models import Institution, RepresentativeKind
 
 
 _MULTIPLE_SPACES = re.compile(r'\s\s+')
@@ -20,8 +24,13 @@ def email(s):
         return s
 
 
+USER_AGENT = 'ParasykJiems (http://parasykjiems.lt/contact/)'
+
+
 def get_soup(url):
-    response = urlopen(url)
+    headers = {'User-agent': USER_AGENT}
+    request = urllib2.Request(url, headers=headers)
+    response = urllib2.urlopen(request)
     return BeautifulSoup(response, convertEntities=BeautifulSoup.HTML_ENTITIES)
 
 
@@ -30,15 +39,15 @@ def contains_any(s, substrings):
 
 
 def delay():
-    time.sleep(1)
+    time.sleep(min(30, max(1, random.normalvariate(5, 5))))
 
 
 def submit_rep_change(institution, kind,
                       delete=False,
                       name=None, email=None, phone=None, other_info=None):
     rep, created = models.RepresentativeChange.objects.get_or_create(
-        institution=institution,
-        kind_name=kind)
+        institution=Institution.objects.get(name=institution),
+        kind=RepresentativeKind.objects.get(name=kind))
     if delete:
         rep.delete_rep = True
     else:
@@ -55,13 +64,15 @@ def submit_rep_change(institution, kind,
         return None
 
 
-def submit_inst_change(name, email=None, phone=None, other_info=None):
+def submit_inst_change(institution,
+                       email=None, phone=None, other_info=None, address=None):
     inst, created = models.InstitutionChange.objects.get_or_create(
-        name=name)
+        institution=Institution.objects.get(name=institution))
 
     inst.email = email
     inst.phone = phone
     inst.other_info = other_info
+    inst.address = address
 
     if inst.changed():
         inst.save()
