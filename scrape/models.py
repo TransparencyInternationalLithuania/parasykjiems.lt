@@ -1,6 +1,6 @@
 from django.db import models
 from search.models import Representative, Institution, RepresentativeKind
-from search.search_indexes import RepresentativeIndex, InstitutionIndex
+from search.search_indexes import RepresentativeIndex
 import slug
 
 
@@ -9,8 +9,8 @@ _NAME_LEN = 200
 
 class RepresentativeChange(models.Model):
     # These fields are used for lookup.
-    institution = models.CharField(max_length=_NAME_LEN)
-    kind_name = models.CharField(max_length=_NAME_LEN)
+    institution = models.ForeignKey(Institution)
+    kind = models.ForeignKey(RepresentativeKind)
 
     # If this field is true, the change represents a deletion istead
     # of an update.
@@ -27,10 +27,10 @@ class RepresentativeChange(models.Model):
     def __init__(self, *args, **kwargs):
         super(RepresentativeChange, self).__init__(*args, **kwargs)
         maybe_rep = Representative.objects.filter(
-            institution=Institution.objects.get(name=self.institution),
-            kind=RepresentativeKind.objects.get(name=self.kind_name))
+            institution=self.institution,
+            kind=self.kind)
         if maybe_rep.exists():
-            self.rep = maybe_rep[0]
+            self.rep = maybe_rep.get()
         else:
             self.rep = None
 
@@ -92,58 +92,58 @@ class RepresentativeChange(models.Model):
         self.delete()
 
     def __unicode__(self):
-        return (u'{0} [{1.institution}, {1.kind_name}] '
+        return (u'{0} [{1.institution.name}, {1.kind.name}] '
                 u'{1.name!r}, {1.email!r}, {1.phone!r}, {1.other_info!r}'
                 .format('-' if self.delete_rep else '+',
                         self))
 
 
 class InstitutionChange(models.Model):
-    name = models.CharField(max_length=_NAME_LEN)
+    institution = models.ForeignKey(Institution)
 
     # These fields may be None if they should be left unchanged on update.
     email = models.CharField(max_length=_NAME_LEN, null=True, default=None)
     phone = models.CharField(max_length=_NAME_LEN, null=True, default=None)
-    other_info = models.CharField(max_length=_NAME_LEN,
-                                  null=True,
+    other_info = models.TextField(null=True,
                                   default=None)
-
-    def __init__(self, *args, **kwargs):
-        super(InstitutionChange, self).__init__(*args, **kwargs)
-        self.inst = Institution.objects.get(
-            name=self.name)
+    address = models.TextField(null=True,
+                               default=None)
 
     def phone_changed(self):
-        return (self.phone is not None) and (self.inst.phone != self.phone)
+        return ((self.phone is not None) and
+                (self.institution.phone != self.phone))
 
     def email_changed(self):
-        return (self.email is not None) and (self.inst.email != self.email)
+        return ((self.email is not None) and
+                (self.institution.email != self.email))
 
     def other_info_changed(self):
         return ((self.other_info is not None) and
-                (self.inst.other_info != self.other_info))
+                (self.institution.other_info != self.other_info))
+
+    def address_changed(self):
+        return ((self.address is not None) and
+                (self.institution.address != self.address))
 
     def changed(self):
         return (self.phone_changed() or
                 self.email_changed() or
-                self.other_info_changed())
+                self.other_info_changed() or
+                self.address_changed())
 
     def apply_change(self):
-        if self.inst:
-            inst = self.inst
-        else:
-            inst = Institution(name=self.name)
-
         if self.phone is not None:
-            inst.phone = self.phone
+            self.institution.phone = self.phone
         if self.email is not None:
-            inst.email = self.email
+            self.institution.email = self.email
         if self.other_info is not None:
-            inst.other_info = self.other_info
-        inst.save()
-
+            self.institution.other_info = self.other_info
+        if self.address is not None:
+            self.institution.address = self.address
+        self.institution.save()
         self.delete()
 
     def __unicode__(self):
-        return (u'[{0.name}] {0.email!r}, {0.phone!r}, {0.other_info!r}'
+        return (u'[{0.institution.name}] '
+                u'{0.email!r}, {0.phone!r}, {0.other_info!r}'
                 .format(self))
