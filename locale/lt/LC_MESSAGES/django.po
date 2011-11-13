@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-08 22:04+0200\n"
-"PO-Revision-Date: 2011-11-08 22:04+0300\n"
+"POT-Creation-Date: 2011-11-13 14:53+0200\n"
+"PO-Revision-Date: 2011-11-13 14:54+0300\n"
 "Last-Translator: Kiprianas Spiridonovas <k.spiridonovas@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -33,9 +33,10 @@ msgstr "Lietuvių"
 msgid "content"
 msgstr "turinys"
 
-#: mail/feeds.py:10
+#: mail/feeds.py:18
+#: mail/feeds.py:20
 msgid "ParašykJiems threads"
-msgstr "ParašykJiems atviri laiškai"
+msgstr "ParašykJiems išsiųsti laiškai"
 
 #: mail/forms.py:7
 msgid "Open letter, visible to all visitors of the website."
@@ -166,24 +167,24 @@ msgstr "institucijos rūšis"
 msgid "institution kinds"
 msgstr "institucijų rūšys"
 
-#: search/models.py:129
+#: search/models.py:127
 msgid "institution"
 msgstr "institucija"
 
-#: search/models.py:130
+#: search/models.py:128
 msgid "institutions"
 msgstr "institucijos"
 
-#: search/models.py:148
-#: search/models.py:191
+#: search/models.py:146
+#: search/models.py:189
 msgid "Name of city, town or village."
 msgstr "Miesto, miestelio arba kaimo pavadinimas"
 
-#: search/models.py:216
+#: search/models.py:214
 msgid "territory"
 msgstr "teritorija"
 
-#: search/models.py:217
+#: search/models.py:215
 msgid "territories"
 msgstr "teritorijos"
 
@@ -267,18 +268,22 @@ msgstr "Naujausi laiškai"
 msgid "All letters sent to this institution"
 msgstr "Visi laiškai, siųsti šiai institucijai"
 
+#: templates/items/letter.html:6
 #: templates/items/message.html:6
 msgid "From:"
 msgstr "Siuntėjas:"
 
+#: templates/items/letter.html:17
 #: templates/items/message.html:17
 msgid "To:"
 msgstr "Gavėjas:"
 
+#: templates/items/letter.html:29
 #: templates/items/message.html:29
 msgid "Subject:"
 msgstr "Tema:"
 
+#: templates/items/letter.html:35
 #: templates/items/message.html:35
 msgid "Date:"
 msgstr "Data: "
@@ -344,7 +349,11 @@ msgstr "Telefonas"
 msgid "Other information"
 msgstr "Kita informacija"
 
-#: templates/views/confirm.html:24
+#: templates/views/admin_update.html:35
+msgid "Address"
+msgstr "Adresas"
+
+#: templates/views/confirm.html:26
 #: templates/views/contact.html:44
 msgid "Send"
 msgstr "Siųsti"
