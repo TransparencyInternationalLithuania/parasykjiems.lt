@@ -19,6 +19,8 @@ urlpatterns = patterns('mail.views',
 
     url(r'^threads/(?P<institution_slug>[\w-]+)/$',
         'threads', name='threads'),
+    url(r'^threads/(?P<institution_slug>[\w-]+)/rss.xml$',
+        feeds.ThreadsFeed()),
 
     url(r'^thread/(?P<slug>[\w-]+)/$', 'thread', name='thread'),
     url(r'^thread/(?P<slug>[\w-]+)/rss.xml$', feeds.ThreadFeed()),

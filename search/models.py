@@ -117,11 +117,9 @@ class Institution(models.Model):
                 .filter(query)
                 .order_by('-created_at'))
 
-    @property
     def recent_threads(self, count=4):
         return self.threads[:count]
 
-    @property
     def more_threads(self, count=4):
         return self.threads.count() > count
 
