@@ -15,7 +15,7 @@ class ThreadsFeed(Feed):
 
     def title(self, obj):
         if obj:
-            return obj.name + ' – ' + _(u"ParašykJiems threads")
+            return obj.name + u' – ' + _(u"ParašykJiems threads")
         else:
             return _(u"ParašykJiems threads")
 
