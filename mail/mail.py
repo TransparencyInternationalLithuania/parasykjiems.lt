@@ -24,21 +24,17 @@ def process_incoming(envelope):
         envelope=str(envelope).decode('utf-8'))
 
     try:
+        if message.envelope_object['Return-Path'] == '<>':
+            raise Exception(u'BOUNCE: {}'.format(message))
         message.fill_from_envelope()
-    except:
-        message.is_error = True
-
-    message.save()
-    find_parent(message)
-
-    # Detect bounces.
-    if message.envelope_object['Return-Path'] == '<>':
+        message.save()
+        find_parent(message)
+        if message.parent:
+            proxy_send(message)
+    except Exception as e:
         message.is_error = True
         message.save()
-        logger.error(u'BOUNCE: {}'.format(message))
-
-    if message.parent and not message.is_error:
-        proxy_send(message)
+        logger.error(e)
 
 
 def find_parent(message):
