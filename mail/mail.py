@@ -27,10 +27,11 @@ def process_incoming(envelope):
         if message.envelope_object['Return-Path'] == '<>':
             raise Exception(u'BOUNCE: {}'.format(message))
         message.fill_from_envelope()
-        message.save()
         find_parent(message)
-        if message.parent:
-            proxy_send(message)
+        if not message.parent:
+            raise Exception(u'Failed to determine parent of {}'
+                            .format(message))
+        proxy_send(message)
     except Exception as e:
         message.is_error = True
         message.save()
@@ -38,39 +39,30 @@ def process_incoming(envelope):
 
 
 def find_parent(message):
-    try:
-        to_email = utils.extract_email(
-            utils.decode_header_unicode(message.envelope_object['to']))
-        m = utils.MESSAGE_EMAIL_REGEXP.match(to_email)
-        if m:
-            id = int(m.group('id'))
-            secret = m.group('secret')
-            maybe_parent = Message.objects.filter(id=id, reply_secret=secret)
-            if maybe_parent.exists():
-                message.parent = maybe_parent.get()
-                message.recipient_name = message.parent.sender_name
-                message.recipient_email = message.parent.sender_email
-                message.thread = message.parent.thread
-                if message.parent.kind == 'enquiry':
-                    message.kind = 'response'
-                else:
-                    message.kind = 'enquiry'
-                message.save()
+    to_email = utils.extract_email(
+        utils.decode_header_unicode(message.envelope_object['to']))
+    m = utils.MESSAGE_EMAIL_REGEXP.match(to_email)
+    if m:
+        id = int(m.group('id'))
+        secret = m.group('secret')
+        maybe_parent = Message.objects.filter(id=id, reply_secret=secret)
+        if maybe_parent.exists():
+            message.parent = maybe_parent.get()
+            message.recipient_name = message.parent.sender_name
+            message.recipient_email = message.parent.sender_email
+            message.thread = message.parent.thread
+            if message.parent.kind == 'enquiry':
+                message.kind = 'response'
+            else:
+                message.kind = 'enquiry'
+            message.save()
 
-                # We also save the thread, so that its modification
-                # date is updated.
-                message.thread.save()
+            # We also save the thread, so that its modification
+            # date is updated.
+            message.thread.save()
 
-                logger.info(u'PARENT of <{}> is <{}>'
-                            .format(message, message.parent))
-    except Exception as e:
-        logger.error(
-            u'Exception {} while trying to determine parent of {}'
-            .format(e, message))
-
-    if not message.parent:
-        logger.warning(u'Failed to determine parent of {}'
-                       .format(message))
+            logger.info(u'PARENT of <{}> is <{}>'
+                        .format(message, message.parent))
 
 
 def proxy_send(message):
