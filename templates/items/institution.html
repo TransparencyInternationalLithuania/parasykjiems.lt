@@ -50,9 +50,7 @@
     <td colspan="2" class="recent-threads">
       <h5>{% trans "Recent letters" %}</h5>
       {% include "items/threads.html" with threads=institution.recent_threads small=1 %}
-      {% if institution.more_threads %}
-      <p><a href="{% url threads institution.slug %}">{% trans "All letters sent to this institution" %}</a></p>
-      {% endif %}
+      <a class="more-threads" href="{% url threads institution.slug %}">{% trans "All letters sent to this institution" %}</a>
     </td>
   </tr>
   {% endif %}
