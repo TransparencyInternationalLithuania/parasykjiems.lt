@@ -188,6 +188,8 @@ class Message(models.Model):
                             part.get_payload(decode=True))
                             .replace('[pic]', '')
                             .replace('|', ''))
+                elif part.get_content_type() == 'application/pdf':
+                    raise Exception('Message contains PDF, not processing.')
         if not plain_texts:
             logging.warning(u"Couldn't extract plain text out of {}"
                             .format(self))
