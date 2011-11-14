@@ -24,9 +24,9 @@ def process_incoming(envelope):
         envelope=str(envelope).decode('utf-8'))
 
     try:
+        message.fill_from_envelope()
         if message.envelope_object['Return-Path'] == '<>':
             raise Exception(u'BOUNCE: {}'.format(message))
-        message.fill_from_envelope()
         find_parent(message)
         if not message.parent:
             raise Exception(u'Failed to determine parent of {}'
