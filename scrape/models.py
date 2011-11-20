@@ -16,6 +16,8 @@ class RepresentativeChange(models.Model):
     # of an update.
     delete_rep = models.BooleanField(default=False)
 
+    multiple = models.BooleanField(default=False)
+
     # These fields may be None if they should be left unchanged on update.
     name = models.CharField(max_length=_NAME_LEN, null=True, default=None)
     email = models.CharField(max_length=_NAME_LEN, null=True, default=None)
@@ -26,9 +28,15 @@ class RepresentativeChange(models.Model):
 
     def __init__(self, *args, **kwargs):
         super(RepresentativeChange, self).__init__(*args, **kwargs)
-        maybe_rep = Representative.objects.filter(
-            institution=self.institution,
-            kind=self.kind)
+        if self.multiple:
+            maybe_rep = Representative.objects.filter(
+                institution=self.institution,
+                kind=self.kind,
+                name=self.name)
+        else:
+            maybe_rep = Representative.objects.filter(
+                institution=self.institution,
+                kind=self.kind)
         if maybe_rep.exists():
             self.rep = maybe_rep.get()
         else:
@@ -56,7 +64,8 @@ class RepresentativeChange(models.Model):
                  (self.rep.other_info != self.other_info)))
 
     def changed(self):
-        return (self.name_changed() or self.phone_changed() or
+        return ((self.multiple and not self.rep) or
+                self.name_changed() or self.phone_changed() or
                 self.email_changed() or self.other_info_changed())
 
     def apply_change(self):
