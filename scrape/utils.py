@@ -14,7 +14,9 @@ _NBSP = u'\xa0'
 
 
 def normalise(s):
-    return _MULTIPLE_SPACES.sub(' ', s.replace(_NBSP, ' ').strip())
+    return (_MULTIPLE_SPACES
+            .sub(' ', s.replace(_NBSP, ' ').strip())
+            .replace(' - ', '-'))
 
 
 def email(s):
@@ -43,24 +45,19 @@ def delay():
 
 
 def submit_rep_change(institution, kind,
-                      delete=False,
+                      delete=False, multiple=False,
                       name=None, email=None, phone=None, other_info=None):
-    rep, created = models.RepresentativeChange.objects.get_or_create(
+    change, created = models.RepresentativeChange.objects.get_or_create(
         institution=Institution.objects.get(name=institution),
-        kind=RepresentativeKind.objects.get(name=kind))
-    if delete:
-        rep.delete_rep = True
+        kind=RepresentativeKind.objects.get(name=kind),
+        name=name, email=email, phone=phone, other_info=other_info,
+        multiple=multiple, delete_rep=delete)
+    if change.changed():
+        change.save()
+        print change
+        return change
     else:
-        rep.name = name
-        rep.email = email
-        rep.phone = phone
-        rep.other_info = other_info
-    if rep.changed():
-        rep.save()
-        print rep
-        return rep
-    else:
-        rep.delete()
+        change.delete()
         return None
 
 
