@@ -33,6 +33,8 @@ def process_incoming(envelope):
                             .format(message))
         proxy_send(message)
     except Exception as e:
+        if not message.parent:
+            find_parent(message)
         message.is_error = True
         message.save()
         logger.error(e)
