@@ -29,11 +29,13 @@ def email(s):
 USER_AGENT = 'ParasykJiems (http://parasykjiems.lt/contact/)'
 
 
-def get_soup(url):
+def get_soup(url, encoding=None):
     headers = {'User-agent': USER_AGENT}
     request = urllib2.Request(url, headers=headers)
     response = urllib2.urlopen(request)
-    return BeautifulSoup(response, convertEntities=BeautifulSoup.HTML_ENTITIES)
+    return BeautifulSoup(response,
+                         convertEntities=BeautifulSoup.HTML_ENTITIES,
+                         fromEncoding=encoding)
 
 
 def contains_any(s, substrings):
@@ -54,7 +56,6 @@ def submit_rep_change(institution, kind,
         multiple=multiple, delete_rep=delete)
     if change.changed():
         change.save()
-        print change
         return change
     else:
         change.delete()
@@ -73,8 +74,14 @@ def submit_inst_change(institution,
 
     if inst.changed():
         inst.save()
-        print inst
         return inst
     else:
         inst.delete()
-        return inst
+        return None
+
+
+def flat_text(element):
+    """Returns a flat string of all the text contained in the lxml
+    document.
+    """
+    return ''.join(element.itertext())
