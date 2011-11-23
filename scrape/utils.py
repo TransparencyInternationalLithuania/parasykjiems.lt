@@ -49,11 +49,24 @@ def delay():
 def submit_rep_change(institution, kind,
                       delete=False, multiple=False,
                       name=None, email=None, phone=None, other_info=None):
-    change, created = models.RepresentativeChange.objects.get_or_create(
-        institution=Institution.objects.get(name=institution),
-        kind=RepresentativeKind.objects.get(name=kind),
-        name=name, email=email, phone=phone, other_info=other_info,
-        multiple=multiple, delete_rep=delete)
+    if multiple:
+        change, created = models.RepresentativeChange.objects.get_or_create(
+            institution=Institution.objects.get(name=institution),
+            kind=RepresentativeKind.objects.get(name=kind),
+            name=name,
+            multiple=multiple)
+    else:
+        change, created = models.RepresentativeChange.objects.get_or_create(
+            institution=Institution.objects.get(name=institution),
+            kind=RepresentativeKind.objects.get(name=kind),
+            multiple=multiple)
+        change.name = name
+
+    change.email = email
+    change.phone = phone
+    change.other_info = other_info
+    change.delete_rep = delete
+
     if change.changed():
         change.save()
         return change
