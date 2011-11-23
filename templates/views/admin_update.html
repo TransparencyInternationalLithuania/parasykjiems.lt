@@ -41,54 +41,64 @@
       <td>{{ change.kind }}</td>
 
       <td>
-        {% if change.name_changed %}
+        {% if change.name_changed and change.action == 'modify' %}
         <table>
           <tr class="delete"><td>{{ change.name_old|default:"&nbsp;" }}</td></tr>
           <tr class="add"><td>{{ change.name|default:"&nbsp;" }}</td></tr>
         </table>
+        {% else %}{% if change.action == 'add' %}
+        {{ change.name|default:"&nbsp;" }}
         {% else %}
         {{ change.name_old|default:"&nbsp;" }}
-        {% endif %}
+        {% endif %}{% endif %}
       </td>
       <td>
-        {% if change.email_changed %}
+        {% if change.email_changed and change.action == 'modify' %}
         <table>
           <tr class="delete"><td>{{ change.email_old|default:"&nbsp;" }}</td></tr>
           <tr class="add"><td>{{ change.email|default:"&nbsp;" }}</td></tr>
         </table>
+        {% else %}{% if change.action == 'add' %}
+        {{ change.email|default:"&nbsp;" }}
         {% else %}
         {{ change.email_old|default:"&nbsp;" }}
-        {% endif %}
+        {% endif %}{% endif %}
       </td>
       <td>
-        {% if change.phone_changed %}
+        {% if change.phone_changed and change.action == 'modify' %}
         <table>
           <tr class="delete"><td>{{ change.phone_old|default:"&nbsp;" }}</td></tr>
           <tr class="add"><td>{{ change.phone|default:"&nbsp;" }}</td></tr>
         </table>
+        {% else %}{% if change.action == 'add' %}
+        {{ change.phone|default:"&nbsp;" }}
         {% else %}
         {{ change.phone_old|default:"&nbsp;" }}
-        {% endif %}
+        {% endif %}{% endif %}
       </td>
       <td>
-        {% if change.other_info_changed %}
+        {% if change.other_info_changed and change.action == 'modify' %}
         <table>
           <tr class="delete"><td>{{ change.other_info_old|default:"&nbsp;" }}</td></tr>
           <tr class="add"><td>{{ change.other_info|default:"&nbsp;" }}</td></tr>
         </table>
+        {% else %}{% if change.action == 'add' %}
+        {{ change.other_info|default:"&nbsp;" }}
         {% else %}
         {{ change.other_info_old|default:"&nbsp;" }}
-        {% endif %}
+        {% endif %}{% endif %}
       </td>
       <td>
-        {% if change.address_changed %}
+        {% if change.address_changed and change.action == 'modify' %}
         <table>
           <tr class="delete"><td>{{ change.address_old|default:"&nbsp;" }}</td></tr>
           <tr class="add"><td>{{ change.address|default:"&nbsp;" }}</td></tr>
         </table>
+        {% else %}{% if change.action == 'add' %}
+        {{ change.address|default:"&nbsp;" }}
         {% else %}
         {{ change.address_old|default:"&nbsp;" }}
-        {% endif %}
+        {% endif %}{% endif %}
       </td>
     </tr>
     {% endfor %}

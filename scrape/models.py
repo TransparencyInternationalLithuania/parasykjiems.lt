@@ -43,28 +43,40 @@ class RepresentativeChange(models.Model):
             self.rep = None
 
     def name_changed(self):
-        return ((self.rep and self.delete_rep) or
-                (not self.rep and not self.delete_rep) or
-                ((self.name is not None) and (self.rep.name != self.name)))
+        if self.delete_rep:
+            return bool(self.rep)
+        elif not self.rep:
+            return True
+        else:
+            return self.rep.name is not None and self.rep.name != self.name
 
     def phone_changed(self):
-        return ((self.rep and self.delete_rep) or
-                (not self.rep and not self.delete_rep) or
-                ((self.phone is not None) and (self.rep.phone != self.phone)))
+        if self.delete_rep:
+            return bool(self.rep)
+        elif not self.rep:
+            return True
+        else:
+            return self.rep.phone is not None and self.rep.phone != self.phone
 
     def email_changed(self):
-        return ((self.rep and self.delete_rep) or
-                (not self.rep and not self.delete_rep) or
-                ((self.email is not None) and (self.rep.email != self.email)))
+        if self.delete_rep:
+            return bool(self.rep)
+        elif not self.rep:
+            return True
+        else:
+            return self.rep.email is not None and self.rep.email != self.email
 
     def other_info_changed(self):
-        return ((self.rep and self.delete_rep) or
-                (not self.rep and not self.delete_rep) or
-                ((self.other_info is not None) and
-                 (self.rep.other_info != self.other_info)))
+        if self.delete_rep:
+            return bool(self.rep)
+        elif not self.rep:
+            return True
+        else:
+            return (self.rep.other_info is not None and
+                    self.rep.other_info != self.other_info)
 
     def changed(self):
-        return ((self.multiple and not self.rep) or
+        return ((self.multiple and self.delete_rep and not self.rep) or
                 self.name_changed() or self.phone_changed() or
                 self.email_changed() or self.other_info_changed())
 
@@ -79,8 +91,8 @@ class RepresentativeChange(models.Model):
                 index.remove_object(rep)
             else:
                 rep = Representative(
-                    institution=Institution.objects.get(name=self.institution),
-                    kind=RepresentativeKind.objects.get(name=self.kind_name))
+                    institution=self.institution,
+                    kind=self.kind)
 
             if self.name is not None:
                 rep.name = self.name

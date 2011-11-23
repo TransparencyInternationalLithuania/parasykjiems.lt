@@ -45,6 +45,7 @@ def admin_update(request):
             change = {'id': 'representative_{}'.format(c.id),
                       'institution': c.institution.name,
                       'kind': c.kind.name,
+                      'address': '',
                       'address_old': '',
                       'address_changed': False}
             if c.delete_rep:
@@ -58,8 +59,9 @@ def admin_update(request):
                 change[field] = getattr(c, field)
                 change[field + '_changed'] = \
                     getattr(c, field + '_changed')()
-                change[field + '_old'] = \
-                    getattr(c.rep, field)
+                if c.rep:
+                    change[field + '_old'] = \
+                        getattr(c.rep, field)
 
             changes.append(change)
 
