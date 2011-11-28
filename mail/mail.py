@@ -48,8 +48,6 @@ def find_parent(message):
     resent_ccs = env.get_all('resent-cc', [])
     all_recipients = getaddresses(tos + ccs + resent_tos + resent_ccs)
     for to_name, to_email in all_recipients:
-        to_email = utils.extract_email(
-            utils.decode_header_unicode())
         m = utils.MESSAGE_EMAIL_REGEXP.match(to_email)
         if m:
             id = int(m.group('id'))
