@@ -13,7 +13,7 @@
     {% block head %}{% endblock %}
     {{ SETTINGS.ADDITIONAL_HTML_HEAD|safe }}
   </head>
-  <body>
+  <body itemscope itemtype="http://schema.org/WebPage">
     {% if SETTINGS.TESTING_VERSION %}
     <div id="testing-version" onclick="$(this).hide()">
       {% snippet "testing-version" %}
@@ -34,7 +34,7 @@
         </div>
       </div>
       <div id="content">
-        <ul id="breadcrumbs">
+        <ul itemprop="breadcrumb" id="breadcrumbs">
           {% block breadcrumbs %}
           {% endblock %}
         </ul>
