@@ -189,7 +189,11 @@ class Message(models.Model):
                             .replace('[pic]', '')
                             .replace('|', ''))
                 elif part.get_content_type() == 'application/pdf':
+                    self.save()
                     raise Exception('Message contains PDF, not processing.')
+                elif part.get_content_type() == 'message/delivery-status':
+                    self.save()
+                    raise Exception('BOUNCE: {}'.format(self))
         if not plain_texts:
             logging.warning(u"Couldn't extract plain text out of {}"
                             .format(self))
