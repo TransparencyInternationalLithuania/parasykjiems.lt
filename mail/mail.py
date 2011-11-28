@@ -3,7 +3,7 @@
 from django.template.loader import render_to_string
 from django.core.mail import send_mail, EmailMessage
 from django.utils.translation import ugettext as _
-from email.utils import formataddr
+from email.utils import formataddr, getaddresses
 
 import settings
 from parasykjiems.mail import utils
@@ -41,30 +41,39 @@ def process_incoming(envelope):
 
 
 def find_parent(message):
-    to_email = utils.extract_email(
-        utils.decode_header_unicode(message.envelope_object['to']))
-    m = utils.MESSAGE_EMAIL_REGEXP.match(to_email)
-    if m:
-        id = int(m.group('id'))
-        secret = m.group('secret')
-        maybe_parent = Message.objects.filter(id=id, reply_secret=secret)
-        if maybe_parent.exists():
-            message.parent = maybe_parent.get()
-            message.recipient_name = message.parent.sender_name
-            message.recipient_email = message.parent.sender_email
-            message.thread = message.parent.thread
-            if message.parent.kind == 'enquiry':
-                message.kind = 'response'
-            else:
-                message.kind = 'enquiry'
-            message.save()
+    env = message.envelope_object
+    tos = env.get_all('to', [])
+    ccs = env.get_all('cc', [])
+    resent_tos = env.get_all('resent-to', [])
+    resent_ccs = env.get_all('resent-cc', [])
+    all_recipients = getaddresses(tos + ccs + resent_tos + resent_ccs)
+    for to_name, to_email in all_recipients:
+        to_email = utils.extract_email(
+            utils.decode_header_unicode())
+        m = utils.MESSAGE_EMAIL_REGEXP.match(to_email)
+        if m:
+            id = int(m.group('id'))
+            secret = m.group('secret')
+            maybe_parent = Message.objects.filter(id=id, reply_secret=secret)
+            if maybe_parent.exists():
+                message.parent = maybe_parent.get()
+                message.recipient_name = message.parent.sender_name
+                message.recipient_email = message.parent.sender_email
+                message.thread = message.parent.thread
+                if message.parent.kind == 'enquiry':
+                    message.kind = 'response'
+                else:
+                    message.kind = 'enquiry'
+                message.save()
 
-            # We also save the thread, so that its modification
-            # date is updated.
-            message.thread.save()
+                # We also save the thread, so that its modification
+                # date is updated.
+                message.thread.save()
 
-            logger.info(u'PARENT of <{}> is <{}>'
-                        .format(message, message.parent))
+                logger.info(u'PARENT of <{}> is <{}>'
+                            .format(message, message.parent))
+
+                break
 
 
 def proxy_send(message):
