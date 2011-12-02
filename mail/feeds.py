@@ -58,7 +58,7 @@ class ThreadFeed(Feed):
         return Message.objects.filter(
             thread=obj,
             is_error=False,
-            sent=True).order_by('-date')
+            is_sent=True).order_by('-date')
 
     def link(self, obj):
         return obj.get_absolute_url()
