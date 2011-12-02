@@ -266,7 +266,7 @@ class Thread(models.Model):
     @property
     def messages(self):
         return (Message.objects
-                .filter(thread=self, is_error=False)
+                .filter(thread=self, is_error=False, is_sent=True)
                 .order_by('date'))
 
     @property
