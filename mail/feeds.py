@@ -55,7 +55,10 @@ class ThreadFeed(Feed):
         return u'ParašykJiems – {}'.format(obj.subject)
 
     def items(self, obj):
-        return Message.objects.filter(thread=obj).order_by('-date')
+        return Message.objects.filter(
+            thread=obj,
+            is_error=False,
+            sent=True).order_by('-date')
 
     def link(self, obj):
         return obj.get_absolute_url()
