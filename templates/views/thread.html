@@ -5,6 +5,9 @@
 {% endblock %}
 
 {% block head %}
+<meta property="og:name" content="{{ thread.subject }}">
+<meta property="og:image" content="{{ SETTINGS.SITE_ADDRESS }}/static/img/logo_small.png">
+<meta property="og:url" content="{{ SETTINGS.SITE_ADDRESS }}{{ thread.get_absolute_url }}">
 <link rel="alternate" type="application/rss+xml" title="RSS" href="rss.xml">
 {% endblock %}
 
@@ -14,7 +17,15 @@
 {% include "breadcrumbs/threads.html" %}
 {% include "breadcrumbs/thread.html" with active=1 %}
 {% include "items/rss.html" %}
-{% include "items/like.html" %}
+
+<div style="float: right">
+  <iframe
+    src="//www.facebook.com/plugins/like.php?href={{ SETTINGS.SITE_ADDRESS|add:thread.get_absolute_url|urlencode|iriencode }}&amp;send=false&amp;layout=button_count&amp;width=80&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;height=21"
+    scrolling="no"
+    frameborder="0"
+    style="border:none; overflow:hidden; width:80px; height:21px;"
+    allowTransparency="true"></iframe>
+</div>
 {% endblock %}
 
 {% block content %}
