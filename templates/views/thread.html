@@ -6,6 +6,7 @@
 
 {% block head %}
 <meta property="og:name" content="{{ thread.subject }}">
+<meta property="og:site_name" content="ParašykJiems">
 <meta property="og:image" content="{{ SETTINGS.SITE_ADDRESS }}/static/img/logo_small.png">
 <meta property="og:url" content="{{ SETTINGS.SITE_ADDRESS }}{{ thread.get_absolute_url }}">
 <link rel="alternate" type="application/rss+xml" title="RSS" href="rss.xml">
@@ -19,12 +20,21 @@
 {% include "items/rss.html" %}
 
 <div style="float: right">
-  <iframe
-    src="//www.facebook.com/plugins/like.php?href={{ SETTINGS.SITE_ADDRESS|add:thread.get_absolute_url|urlencode|iriencode }}&amp;send=false&amp;layout=button_count&amp;width=80&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;height=21"
-    scrolling="no"
-    frameborder="0"
-    style="border:none; overflow:hidden; width:80px; height:21px;"
-    allowTransparency="true"></iframe>
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+  <div
+    class="fb-like"
+    data-href="{{ SETTINGS.SITE_ADDRESS }}{{ thread.get_absolute_url }}"
+    data-send="false"
+    data-layout="button_count"
+    data-width="90"
+    data-show-faces="false"></div>
 </div>
 {% endblock %}
 
