@@ -175,7 +175,10 @@ class Message(models.Model):
         plain_texts = []
         word_texts = []
         for part in self.envelope_object.walk():
-            if not part.is_multipart():
+            if part.get_content_type() == 'message/delivery-status':
+                self.save()
+                raise Exception('BOUNCE: {}'.format(self))
+            elif not part.is_multipart():
                 if part.get_content_type() == 'text/plain':
                     charset = part.get_content_charset()
                     payload = part.get_payload(decode=True)
@@ -191,9 +194,6 @@ class Message(models.Model):
                 elif part.get_content_type() == 'application/pdf':
                     self.save()
                     raise Exception('Message contains PDF, not processing.')
-                elif part.get_content_type() == 'message/delivery-status':
-                    self.save()
-                    raise Exception('BOUNCE: {}'.format(self))
         if not plain_texts:
             logging.warning(u"Couldn't extract plain text out of {}"
                             .format(self))
