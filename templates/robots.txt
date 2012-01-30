@@ -1,7 +1,8 @@
-User-agent: *
 {% if SETTINGS.TESTING_VERSION %}
+User-agent: *
 Disallow: /
 {% else %}
+User-agent: *
 Disallow: /admin
 Disallow: /write
 {% endif %}
