@@ -87,8 +87,8 @@ class Message(models.Model):
                                     db_index=True,
                                     null=False, blank=True)
 
-    parent = models.ForeignKey('Message', null=True)
-    thread = models.ForeignKey('Thread', null=True)
+    parent = models.ForeignKey('Message', null=True, blank=True)
+    thread = models.ForeignKey('Thread', null=True, blank=True)
 
     date = models.DateTimeField(auto_now_add=True)
 
