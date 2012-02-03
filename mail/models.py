@@ -174,6 +174,7 @@ class Message(models.Model):
 
         plain_texts = []
         word_texts = []
+        has_pdf = False
         for part in self.envelope_object.walk():
             if part.get_content_type() == 'message/delivery-status':
                 self.save()
@@ -192,14 +193,15 @@ class Message(models.Model):
                             .replace('[pic]', '')
                             .replace('|', ''))
                 elif part.get_content_type() == 'application/pdf':
-                    self.save()
-                    raise Exception('Message contains PDF, not processing.')
+                    has_pdf = True
         if not plain_texts:
             logging.warning(u"Couldn't extract plain text out of {}"
                             .format(self))
         body_text = '\n\n***\n\n'.join(plain_texts + word_texts)
         self.body_text = utils.remove_consequentive_empty_lines(
             utils.remove_reply_email(body_text))
+        if has_pdf:
+            raise Exception('Message contains PDF, not sending.')
 
     @property
     def reply_email(self):
