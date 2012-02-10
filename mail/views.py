@@ -95,7 +95,7 @@ def sent(request, slug=None):
     return render(request, 'views/sent.html', {'thread': thread})
 
 
-MAX_THREADS = 20
+MAX_THREADS = 40
 
 
 def thread(request, slug):
