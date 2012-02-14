@@ -201,8 +201,8 @@ class Message(models.Model):
         self.body_text = utils.remove_consequentive_empty_lines(
             utils.remove_reply_email(body_text))
         if has_pdf:
-            raise Exception('Message {id} contains PDF, not sending.'
-                    .format(id=self.id))
+            raise Exception('Message {} contains PDF, not sending.'
+                            .format(self))
 
     @property
     def reply_email(self):

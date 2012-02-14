@@ -22,6 +22,7 @@ def process_incoming(envelope):
     '''
     message = Message(
         envelope=str(envelope).decode('utf-8'))
+    message.save()
 
     try:
         message.fill_from_envelope()
