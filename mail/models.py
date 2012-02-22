@@ -94,7 +94,7 @@ class Message(models.Model):
 
     KIND_CHOICES = (('enquiry', _('Enquiry')),
                     ('response', _('Response')))
-    kind = models.CharField(max_length=8, choices=KIND_CHOICES)
+    kind = models.CharField(max_length=8, choices=KIND_CHOICES, blank=True)
 
     # True if this message is a bounce message.
     is_error = models.BooleanField(default=False)
