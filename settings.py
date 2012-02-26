@@ -100,6 +100,7 @@ INSTALLED_APPS = (
     'haystack',
     'south',
     'gunicorn',
+    'cachebuster',
 
     'web',
     'search',
@@ -203,3 +204,8 @@ if len(sys.argv) > 1 and sys.argv[1] == 'test':
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': 'test',
     }
+
+# Allow usage of 'static' templatetag without explicitly loading cachebuster.
+from django.template.loader import add_to_builtins
+add_to_builtins('cachebuster.templatetags.cachebuster')
+
