@@ -30,13 +30,16 @@ class ThreadsFeed(Feed):
 
     def items(self, obj):
         if obj:
-            return obj.recent_threads(count=10)
+            return obj.recent_threads(count=20)
         else:
             return (Thread.objects.filter(is_public=True)
-                    .order_by('-created_at')[:10])
+                    .order_by('-created_at')[:20])
 
     def item_title(self, item):
         return item.subject
+
+    def item_author_name(self, item):
+        return item.sender_name
 
     def item_pubdate(self, item):
         return item.created_at
@@ -52,7 +55,7 @@ class ThreadFeed(Feed):
             slug=slug)
 
     def title(self, obj):
-        return u'ParašykJiems – {}'.format(obj.subject)
+        return u'{} – ParašykJiems'.format(obj.subject)
 
     def items(self, obj):
         return obj.messages.order_by('-date')
@@ -62,6 +65,9 @@ class ThreadFeed(Feed):
 
     def item_title(self, item):
         return item.subject
+
+    def item_author_name(self, item):
+        return item.sender_name
 
     def item_pubdate(self, item):
         return item.date
