@@ -13,7 +13,7 @@
   {% for thread in threads %}
   {% if thread.is_public %}
   <tr class="{% cycle "odd" "even" %}">
-    <td class="answered">{% if thread.has_answer %}<img src="/static/img/answered.png" title="{% trans "Answered" %}">{% else %}&nbsp;{% endif %}</td>
+    <td class="answered">{% if thread.has_answer %}<img src="{% static img/answered.png %}" title="{% trans "Answered" %}">{% else %}&nbsp;{% endif %}</td>
     <td class="subject">
       <a href="{{ thread.get_absolute_url }}">
         {% if small %}
