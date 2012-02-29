@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-13 14:53+0200\n"
-"PO-Revision-Date: 2011-11-13 14:54+0300\n"
+"POT-Creation-Date: 2012-02-29 09:53+0200\n"
+"PO-Revision-Date: 2012-02-29 09:53+0300\n"
 "Last-Translator: Kiprianas Spiridonovas <k.spiridonovas@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -33,8 +33,8 @@ msgstr "Lietuvių"
 msgid "content"
 msgstr "turinys"
 
-#: mail/feeds.py:18
-#: mail/feeds.py:20
+#: mail/feeds.py:21
+#: mail/feeds.py:23
 msgid "ParašykJiems threads"
 msgstr "ParašykJiems išsiųsti laiškai"
 
@@ -81,7 +81,7 @@ msgstr "Laiško rūšis"
 msgid "Message"
 msgstr "Turinys"
 
-#: mail/mail.py:139
+#: mail/mail.py:135
 msgid "Confirm your letter"
 msgstr "Patvirtinkite savo laišką"
 
@@ -105,19 +105,19 @@ msgstr "Atsakymas"
 msgid "If the message was received through SMTP, the original email text."
 msgstr "Jeigu laiškas gautas per SMTP, pilnas neapdorotas laiško tekstas."
 
-#: mail/models.py:228
+#: mail/models.py:237
 msgid "message"
 msgstr "žinutė"
 
-#: mail/models.py:229
+#: mail/models.py:238
 msgid "messages"
 msgstr "žinutės"
 
-#: mail/models.py:294
+#: mail/models.py:303
 msgid "thread"
 msgstr "gija"
 
-#: mail/models.py:295
+#: mail/models.py:304
 msgid "threads"
 msgstr "gijos"
 
@@ -129,62 +129,62 @@ msgstr "Pastato numeris turi būti skačius ir gali turėti vieną raidę gale."
 msgid "House number"
 msgstr "Pastato numeris"
 
-#: search/models.py:14
-#: search/models.py:68
+#: search/models.py:15
+#: search/models.py:69
 #: web/models.py:17
 msgid "In Markdown format."
 msgstr "Markdown formatu."
 
-#: search/models.py:17
+#: search/models.py:18
 msgid "This number is used for sorting representatives in the institution view."
 msgstr "Skaičius, naudojamas atstovų tvarkai institucijoje nustatyti."
 
-#: search/models.py:24
+#: search/models.py:25
 msgid "representative kind"
 msgstr "atstovo rūšis"
 
-#: search/models.py:25
+#: search/models.py:26
 msgid "representative kinds"
 msgstr "atstovų rūšys"
 
-#: search/models.py:48
+#: search/models.py:49
 msgid "representative"
 msgstr "atstovas"
 
-#: search/models.py:49
+#: search/models.py:50
 msgid "representatives"
 msgstr "atstovai"
 
-#: search/models.py:71
+#: search/models.py:72
 msgid "This number is used for sorting institutions in the location view."
 msgstr "Skaičius, naudojamas institucijų tvarkai nustatyti."
 
-#: search/models.py:78
+#: search/models.py:79
 msgid "institution kind"
 msgstr "institucijos rūšis"
 
-#: search/models.py:79
+#: search/models.py:80
 msgid "institution kinds"
 msgstr "institucijų rūšys"
 
-#: search/models.py:127
+#: search/models.py:134
 msgid "institution"
 msgstr "institucija"
 
-#: search/models.py:128
+#: search/models.py:135
 msgid "institutions"
 msgstr "institucijos"
 
-#: search/models.py:146
-#: search/models.py:189
+#: search/models.py:153
+#: search/models.py:196
 msgid "Name of city, town or village."
 msgstr "Miesto, miestelio arba kaimo pavadinimas"
 
-#: search/models.py:214
+#: search/models.py:221
 msgid "territory"
 msgstr "teritorija"
 
-#: search/models.py:215
+#: search/models.py:222
 msgid "territories"
 msgstr "teritorijos"
 
@@ -265,8 +265,8 @@ msgid "Recent letters"
 msgstr "Naujausi laiškai"
 
 #: templates/items/institution.html:54
-msgid "All letters sent to this institution"
-msgstr "Visi laiškai, siųsti šiai institucijai"
+msgid "More letters"
+msgstr "Daugiau laiškų"
 
 #: templates/items/letter.html:6
 #: templates/items/message.html:6
@@ -444,6 +444,9 @@ msgstr "iškarpėlės"
 #: web/views.py:27
 msgid "Feedback from {}"
 msgstr "Atsiliepimas iš {}"
+
+#~ msgid "All letters sent to this institution"
+#~ msgstr "Visi laiškai, siųsti šiai institucijai"
 
 #~ msgid "Sent from user to representative"
 #~ msgstr "Siųsta vartotojo atstovui"
