@@ -110,6 +110,24 @@ INSTALLED_APPS = (
 
 HAYSTACK_SITECONF = 'parasykjiems.search_sites'
 
+if not os.path.exists('settings_local.py'):
+    from shutil import copy
+    print 'Initializing local settings.'
+    copy('settings_local_default.py', 'settings_local.py')
+
+from settings_local import *
+
+from settings_local_default import \
+     LOCAL_SETTINGS_VERSION as SETTINGS_VERSION
+if LOCAL_SETTINGS_VERSION < SETTINGS_VERSION:
+    raise Exception(
+        'Local settings are version {} but should be updated to {}.'.format(
+            LOCAL_SETTINGS_VERSION,
+            SETTINGS_VERSION))
+
+TEMPLATE_DEBUG = DEBUG
+
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -161,7 +179,7 @@ LOGGING = {
     'loggers': {
         '': {
             'level': 'DEBUG',
-            'handlers': ['mail_admins', 'warning', 'info', 'debug'],
+            'handlers': ([] if TESTING_VERSION else ['mail_admins']) + ['warning', 'info', 'debug'],
         },
         'search': {
             'level': 'INFO',
@@ -174,24 +192,6 @@ LOGGING = {
         },
     },
 }
-
-
-if not os.path.exists('settings_local.py'):
-    from shutil import copy
-    print 'Initializing local settings.'
-    copy('settings_local_default.py', 'settings_local.py')
-
-from settings_local import *
-
-from settings_local_default import \
-     LOCAL_SETTINGS_VERSION as SETTINGS_VERSION
-if LOCAL_SETTINGS_VERSION < SETTINGS_VERSION:
-    raise Exception(
-        'Local settings are version {} but should be updated to {}.'.format(
-            LOCAL_SETTINGS_VERSION,
-            SETTINGS_VERSION))
-
-TEMPLATE_DEBUG = DEBUG
 
 
 # Use an SQLite database for testing to avoid having to grant
