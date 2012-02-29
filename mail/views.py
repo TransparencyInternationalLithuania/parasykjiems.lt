@@ -4,6 +4,7 @@ from django.core.paginator import Paginator
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.decorators.cache import cache_control
 from django.views.decorators.http import last_modified
+from haystack.query import SearchQuerySet, SQ
 import datetime
 
 from forms import WriteLetterForm
@@ -123,15 +124,18 @@ def _latest_thread(request, institution_slug=None):
 
 
 @last_modified(_latest_thread)
-def threads(request, institution_slug=None):
-    if institution_slug:
-        institution = get_object_or_404(Institution, slug=institution_slug)
-        all_threads = institution.threads
+def threads(request):
+    if 'q' in request.GET:
+        sqs = SearchQuerySet()
+        q = sqs.query.clean(request.GET['q'])
+        found_threads = sqs.filter(text=q, django_ct='mail.thread')
+        threads = [t.object for t in found_threads]
     else:
-        all_threads = (Thread.objects
+        threads = (Thread.objects
                        .filter(is_public=True)
                        .order_by('-created_at'))
-    pages = Paginator(all_threads, MAX_THREADS)
+
+    pages = Paginator(threads, MAX_THREADS)
     try:
         page_num = int(request.GET.get('p', '1'))
     except ValueError:
@@ -141,10 +145,15 @@ def threads(request, institution_slug=None):
     if page_num > pages.num_pages:
         page_num = pages.num_pages
     page = pages.page(page_num)
-    threads = page.object_list
+    paginated_threads = page.object_list
 
     return render(request, 'views/threads.html', {
         'page': page,
         'pages': [pages.page(p) for p in pages.page_range],
-        'threads': threads,
+        'threads': paginated_threads,
     })
+
+
+def threads_institution(request, institution_slug):
+    institution = get_object_or_404(Institution, slug=institution_slug)
+    return redirect(institution.threads_url())

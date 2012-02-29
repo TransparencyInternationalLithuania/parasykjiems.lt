@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-13 14:53+0200\n"
+"POT-Creation-Date: 2012-02-29 09:53+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,7 +30,7 @@ msgstr ""
 msgid "content"
 msgstr ""
 
-#: mail/feeds.py:18 mail/feeds.py:20
+#: mail/feeds.py:21 mail/feeds.py:23
 msgid "ParašykJiems threads"
 msgstr ""
 
@@ -74,7 +74,7 @@ msgstr ""
 msgid "Message"
 msgstr ""
 
-#: mail/mail.py:139
+#: mail/mail.py:135
 msgid "Confirm your letter"
 msgstr ""
 
@@ -98,19 +98,19 @@ msgstr ""
 msgid "If the message was received through SMTP, the original email text."
 msgstr ""
 
-#: mail/models.py:228
+#: mail/models.py:237
 msgid "message"
 msgstr ""
 
-#: mail/models.py:229
+#: mail/models.py:238
 msgid "messages"
 msgstr ""
 
-#: mail/models.py:294
+#: mail/models.py:303
 msgid "thread"
 msgstr ""
 
-#: mail/models.py:295
+#: mail/models.py:304
 msgid "threads"
 msgstr ""
 
@@ -122,60 +122,60 @@ msgstr ""
 msgid "House number"
 msgstr ""
 
-#: search/models.py:14 search/models.py:68 web/models.py:17
+#: search/models.py:15 search/models.py:69 web/models.py:17
 msgid "In Markdown format."
 msgstr ""
 
-#: search/models.py:17
+#: search/models.py:18
 msgid ""
 "This number is used for sorting representatives in the institution view."
 msgstr ""
 
-#: search/models.py:24
+#: search/models.py:25
 msgid "representative kind"
 msgstr ""
 
-#: search/models.py:25
+#: search/models.py:26
 msgid "representative kinds"
 msgstr ""
 
-#: search/models.py:48
+#: search/models.py:49
 msgid "representative"
 msgstr ""
 
-#: search/models.py:49
+#: search/models.py:50
 msgid "representatives"
 msgstr ""
 
-#: search/models.py:71
+#: search/models.py:72
 msgid "This number is used for sorting institutions in the location view."
 msgstr ""
 
-#: search/models.py:78
+#: search/models.py:79
 msgid "institution kind"
 msgstr ""
 
-#: search/models.py:79
+#: search/models.py:80
 msgid "institution kinds"
 msgstr ""
 
-#: search/models.py:127
+#: search/models.py:134
 msgid "institution"
 msgstr ""
 
-#: search/models.py:128
+#: search/models.py:135
 msgid "institutions"
 msgstr ""
 
-#: search/models.py:146 search/models.py:189
+#: search/models.py:153 search/models.py:196
 msgid "Name of city, town or village."
 msgstr ""
 
-#: search/models.py:214
+#: search/models.py:221
 msgid "territory"
 msgstr ""
 
-#: search/models.py:215
+#: search/models.py:222
 msgid "territories"
 msgstr ""
 
@@ -250,7 +250,7 @@ msgid "Recent letters"
 msgstr ""
 
 #: templates/items/institution.html:54
-msgid "All letters sent to this institution"
+msgid "More letters"
 msgstr ""
 
 #: templates/items/letter.html:6 templates/items/message.html:6

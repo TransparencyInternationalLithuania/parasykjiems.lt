@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 from parasykjiems.slug import SLUG_LEN
 
@@ -105,6 +106,12 @@ class Institution(models.Model):
             raise Exception('Tried to get address of object missing a slug.')
         return ('institution', [self.slug])
 
+    def threads_url(self):
+        return u'{url}?q={query}'.format(
+            url=reverse('threads'),
+            query=self.name.lower().replace(u' ', u'+'),
+        )
+
     @property
     def threads(self):
         """All threads related to this institution."""
@@ -117,10 +124,10 @@ class Institution(models.Model):
                 .filter(query)
                 .order_by('-created_at'))
 
-    def recent_threads(self, count=4):
+    def recent_threads(self, count=10):
         return self.threads[:count]
 
-    def more_threads(self, count=4):
+    def more_threads(self, count=10):
         return self.threads.count() > count
 
     class Meta:
