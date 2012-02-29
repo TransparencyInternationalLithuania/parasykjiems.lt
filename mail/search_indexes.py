@@ -16,5 +16,8 @@ class ThreadIndex(indexes.SearchIndex):
             strings.extend([m.sender_name, m.recipient_name, m.subject, m.body_text])
         return join_text(strings)
 
+    def index_queryset(self):
+        return models.Thread.objects.filter(is_public=True)
+
 
 site.register(models.Thread, ThreadIndex)
