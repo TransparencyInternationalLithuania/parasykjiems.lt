@@ -134,22 +134,25 @@ def threads(request):
                    .filter(is_public=True)
                    .order_by('-created_at'))
 
-    if 'q' in request.GET:
+    if 'q' in request.GET and request.GET['q'].strip() != '':
         words = _SPACES.split(request.GET['q'])
 
         # Build filter query. Words can be in any order.
-        q = Q()
+        qi = Q()
+        qe = Q()
         for field in _FILTER_FIELDS:
             f = field + '__icontains'
-            subq = Q()
+            incq = Q()
+            exq = Q()
             for w in words:
                 # Exclude words that start with a dash.
                 if w.startswith('-'):
-                    subq &= ~Q(**{f: w[1:]})
+                    exq |= Q(**{f: w[1:]})
                 else:
-                    subq &= Q(**{f: w})
-            q |= subq
-        threads = threads.filter(q)
+                    incq &= Q(**{f: w})
+            qi |= incq
+            qe |= exq
+        threads = threads.filter(qi & ~qe)
 
     pages = Paginator(threads, MAX_THREADS)
     try:
