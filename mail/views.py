@@ -4,7 +4,7 @@ from django.core.paginator import Paginator
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.decorators.cache import cache_control
 from django.views.decorators.http import last_modified
-from haystack.query import SearchQuerySet, SQ
+from django.db.models import Q
 import datetime
 
 from forms import WriteLetterForm
@@ -125,15 +125,16 @@ def _latest_thread(request, institution_slug=None):
 
 @last_modified(_latest_thread)
 def threads(request):
+    threads = (Thread.objects
+                   .filter(is_public=True)
+                   .order_by('-created_at'))
+
     if 'q' in request.GET:
-        sqs = SearchQuerySet()
-        q = sqs.query.clean(request.GET['q'])
-        found_threads = sqs.filter(text=q, django_ct='mail.thread')
-        threads = [t.object for t in found_threads]
-    else:
-        threads = (Thread.objects
-                       .filter(is_public=True)
-                       .order_by('-created_at'))
+        q = request.GET['q']
+        threads = threads.filter(
+            Q(subject__icontains=q) |
+            Q(sender_name__icontains=q) |
+            Q(recipient_name__icontains=q))
 
     pages = Paginator(threads, MAX_THREADS)
     try:
