@@ -15,6 +15,7 @@
 {% block breadcrumbs %}
 {% include "breadcrumbs/threads.html" with active=1 %}
 {% include "items/rss.html" %}
+<form method="GET" class="filter"><input name="q" value="{{ request.GET.q }}"></form>
 {% endblock %}
 
 {% block content %}
