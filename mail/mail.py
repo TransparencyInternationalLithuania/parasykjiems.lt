@@ -162,7 +162,7 @@ def confirm_and_send(unconfirmed_message):
         generate_slug(thread,
                       Thread.objects.filter(is_public=True),
                       lambda t: [t.subject])
-    thread.update_filter_keywords()
+        thread.update_filter_keywords()
     thread.save()
 
     message = Message(
