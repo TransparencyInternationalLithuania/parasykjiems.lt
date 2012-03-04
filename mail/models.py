@@ -273,8 +273,6 @@ class Thread(models.Model):
 
     def update_filter_keywords(self):
         sources = [self.subject, self.sender_name, self.recipient_name]
-        for message in self.message_set.all():
-            sources.extend([message.sender_name, message.body_text])
         words = frozenset(Thread._WORDS.findall('\n'.join(unidecode(x).lower() for x in sources)))
         self.filter_keywords = ' '.join(words)
 
