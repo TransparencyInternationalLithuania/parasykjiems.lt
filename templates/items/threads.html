@@ -1,4 +1,4 @@
-{% load i18n humanize shorten_institution %}
+{% load i18n humanize shorten_institution add_get_parameter %}
 
 <table class="threads{% if small %} small-threads{% endif %}">
   {% if not small %}
@@ -32,3 +32,19 @@
   {% endif %}
   {% endfor %}
 </table>
+
+{% if page and page.paginator.num_pages > 1 %}
+<div class="pager">
+  {% trans "Pages: " %}
+
+  <span class="pages">
+    {% for p in pages %}
+    {% if p.number == page.number %}
+    <span class="selected">{{ p.number }}</span>
+    {% else %}
+    <a href="{% add_get_parameter p=p.number %}">{{ p.number }}</a>
+    {% endif %}
+    {% endfor %}
+  </span>
+</div>
+{% endif %}
