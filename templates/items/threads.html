@@ -42,7 +42,7 @@
     {% if p.number == page.number %}
     <span class="selected">{{ p.number }}</span>
     {% else %}
-    <a href="{% add_get_parameter p=p.number %}">{{ p.number }}</a>
+    <a href="{% add_get_parameter p=p.number -bare %}">{{ p.number }}</a>
     {% endif %}
     {% endfor %}
   </span>
