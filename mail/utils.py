@@ -74,6 +74,7 @@ def letter_body_template(obj):
     last_name_vocative = multisub_one(
         name,
         (
+            (ur'ras$', u're'),
             (ur'as$', u'ai'),
             (ur'ys$', u'y'),
             (ur'is$', u'i'),
