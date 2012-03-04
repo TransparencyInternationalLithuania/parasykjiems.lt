@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-29 09:53+0200\n"
+"POT-Creation-Date: 2012-03-04 15:04+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,7 +30,7 @@ msgstr ""
 msgid "content"
 msgstr ""
 
-#: mail/feeds.py:21 mail/feeds.py:23
+#: mail/feeds.py:25 mail/feeds.py:27
 msgid "ParašykJiems threads"
 msgstr ""
 
@@ -78,39 +78,39 @@ msgstr ""
 msgid "Confirm your letter"
 msgstr ""
 
-#: mail/models.py:80
+#: mail/models.py:81
 msgid "unconfirmed message"
 msgstr ""
 
-#: mail/models.py:81
+#: mail/models.py:82
 msgid "unconfirmed messages"
 msgstr ""
 
-#: mail/models.py:95
+#: mail/models.py:96
 msgid "Enquiry"
 msgstr ""
 
-#: mail/models.py:96
+#: mail/models.py:97
 msgid "Response"
 msgstr ""
 
-#: mail/models.py:107
+#: mail/models.py:108
 msgid "If the message was received through SMTP, the original email text."
 msgstr ""
 
-#: mail/models.py:237
+#: mail/models.py:238
 msgid "message"
 msgstr ""
 
-#: mail/models.py:238
+#: mail/models.py:239
 msgid "messages"
 msgstr ""
 
-#: mail/models.py:303
+#: mail/models.py:329
 msgid "thread"
 msgstr ""
 
-#: mail/models.py:304
+#: mail/models.py:330
 msgid "threads"
 msgstr ""
 
@@ -369,7 +369,11 @@ msgid ""
 "  "
 msgstr ""
 
-#: templates/views/threads.html:26
+#: templates/views/threads.html:24
+msgid "Filter..."
+msgstr ""
+
+#: templates/views/threads.html:33
 msgid "Pages: "
 msgstr ""
 

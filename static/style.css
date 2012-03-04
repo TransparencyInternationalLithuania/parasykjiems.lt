@@ -310,6 +310,11 @@ form.filter input[name=q] {
     top: -2px;
 }
 
+form.filter input[name=q].empty {
+    color: #666;
+    font-style: italic;
+}
+
 form[name=search] {
     width: 870px;
 }

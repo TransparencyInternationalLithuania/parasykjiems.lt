@@ -19,7 +19,9 @@
 {% else %}
 {% include "items/rss.html" %}
 {% endif %}
+
 <form method="GET" class="filter"><input name="q" value="{{ request.GET.q }}"></form>
+<script type="text/javascript">window.EMPTY_FILTER = "{% trans "Filter..." %}";</script>
 {% endblock %}
 
 {% block content %}
