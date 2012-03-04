@@ -2,7 +2,7 @@ $(function() {
   var $q = $(document.search.q);
   $q.focus();
 
-  var typeahead = new Typeahead($q, '#results', '/?results');
+  var typeahead = new Typeahead($q, '#results', '/?results', null, true);
 
   // Hide search button
   $("form input[type=submit]").hide();
