@@ -88,4 +88,4 @@ Typeahead.prototype = {
 
     this.results.fadeTo(0, 0.5);
   },
-}
+};
