@@ -8,6 +8,7 @@ passing the specific instance as the message parameter.
 
 import random
 import email
+import re
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -298,6 +299,31 @@ class Thread(models.Model):
                     sender=self.sender_name,
                     recipient=self.recipient_name,
                     date=self.created_at))
+
+    _SPACES = re.compile(r'\s+')
+    _FILTER_FIELDS = ['subject', 'sender_name', 'recipient_name']
+
+    @classmethod
+    def make_filter_query(cls, q):
+        """Build filter query. Words can be in any order."""
+
+        words = Thread._SPACES.split(q)
+
+        qi = models.Q()
+        qe = models.Q()
+        for field in Thread._FILTER_FIELDS:
+            f = field + '__icontains'
+            incq = models.Q()
+            exq = models.Q()
+            for w in words:
+                # Exclude words that start with a dash.
+                if w.startswith('-'):
+                    exq |= models.Q(**{f: w[1:]})
+                else:
+                    incq &= models.Q(**{f: w})
+            qi |= incq
+            qe |= exq
+        return qi & ~qe
 
     class Meta:
         verbose_name = _('thread')

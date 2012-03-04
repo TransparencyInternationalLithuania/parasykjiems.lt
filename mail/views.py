@@ -6,7 +6,6 @@ from django.views.decorators.cache import cache_control
 from django.views.decorators.http import last_modified
 from django.db.models import Q
 import datetime
-import re
 
 from forms import WriteLetterForm
 from parasykjiems.search.models import Representative, Institution
@@ -124,10 +123,6 @@ def _latest_thread(request, institution_slug=None):
         return datetime.datetime.now()
 
 
-_SPACES = re.compile(r'\s+')
-_FILTER_FIELDS = ['subject', 'sender_name', 'recipient_name']
-
-
 @last_modified(_latest_thread)
 def threads(request):
     threads = (Thread.objects
@@ -135,24 +130,7 @@ def threads(request):
                    .order_by('-created_at'))
 
     if 'q' in request.GET and request.GET['q'].strip() != '':
-        words = _SPACES.split(request.GET['q'])
-
-        # Build filter query. Words can be in any order.
-        qi = Q()
-        qe = Q()
-        for field in _FILTER_FIELDS:
-            f = field + '__icontains'
-            incq = Q()
-            exq = Q()
-            for w in words:
-                # Exclude words that start with a dash.
-                if w.startswith('-'):
-                    exq |= Q(**{f: w[1:]})
-                else:
-                    incq &= Q(**{f: w})
-            qi |= incq
-            qe |= exq
-        threads = threads.filter(qi & ~qe)
+        threads = threads.filter(Thread.make_filter_query(request.GET['q']))
 
     pages = Paginator(threads, MAX_THREADS)
     try:

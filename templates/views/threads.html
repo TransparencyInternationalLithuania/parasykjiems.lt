@@ -14,7 +14,11 @@
 
 {% block breadcrumbs %}
 {% include "breadcrumbs/threads.html" with active=1 %}
+{% if request.GET.q %}
+{% include "items/rss.html" with url="rss.xml"|add:"?q="|add:request.GET.q %}
+{% else %}
 {% include "items/rss.html" %}
+{% endif %}
 <form method="GET" class="filter"><input name="q" value="{{ request.GET.q }}"></form>
 {% endblock %}
 

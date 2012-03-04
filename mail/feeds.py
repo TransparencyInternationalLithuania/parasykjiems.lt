@@ -10,39 +10,42 @@ from models import Thread, Message
 class ThreadsFeed(Feed):
     description_template = "feeds/thread.html"
 
-    def get_object(self, request, institution_slug=None):
-        if institution_slug:
-            return get_object_or_404(Institution, slug=institution_slug)
+    def get_object(self, request):
+        if 'q' in request.GET:
+            q = request.GET['q'].strip()
+            if q == '':
+                return None
+            else:
+                return q
         else:
             return None
 
-    def title(self, obj):
-        if obj:
-            return obj.name + u' – ' + _(u"ParašykJiems threads")
+    def title(self, q):
+        if q:
+            return q + u' – ' + _(u"ParašykJiems threads")
         else:
             return _(u"ParašykJiems threads")
 
-    def link(self, obj):
-        if obj:
-            return "/threads/" + obj.slug + "/"
+    def link(self, q):
+        if q:
+            return "/threads/?q=" + q.replace(' ', '+')
         else:
             return "/threads/"
 
-    def items(self, obj):
-        if obj:
-            return obj.recent_threads(count=20)
-        else:
-            return (Thread.objects.filter(is_public=True)
-                    .order_by('-created_at')[:20])
+    def items(self, q):
+        threads = Thread.objects.filter(is_public=True).order_by('-created_at')
+        if q:
+            threads = threads.filter(Thread.make_filter_query(q))
+        return threads[:20]
 
-    def item_title(self, item):
-        return item.subject
+    def item_title(self, thread):
+        return thread.subject
 
-    def item_author_name(self, item):
-        return item.sender_name
+    def item_author_name(self, thread):
+        return thread.sender_name
 
-    def item_pubdate(self, item):
-        return item.created_at
+    def item_pubdate(self, thread):
+        return thread.created_at
 
 
 class ThreadFeed(Feed):
@@ -54,20 +57,20 @@ class ThreadFeed(Feed):
             is_public=True,
             slug=slug)
 
-    def title(self, obj):
-        return u'{} – ParašykJiems'.format(obj.subject)
+    def title(self, thread):
+        return u'{} – ParašykJiems'.format(thread.subject)
 
-    def items(self, obj):
-        return obj.messages.order_by('-date')
+    def items(self, thread):
+        return thread.messages.order_by('-date')
 
-    def link(self, obj):
-        return obj.get_absolute_url()
+    def link(self, thread):
+        return thread.get_absolute_url()
 
-    def item_title(self, item):
-        return item.subject
+    def item_title(self, message):
+        return message.subject
 
-    def item_author_name(self, item):
-        return item.sender_name
+    def item_author_name(self, message):
+        return message.sender_name
 
-    def item_pubdate(self, item):
-        return item.date
+    def item_pubdate(self, message):
+        return message.date
