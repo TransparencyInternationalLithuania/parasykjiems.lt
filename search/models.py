@@ -109,7 +109,7 @@ class Institution(models.Model):
     def threads_url(self):
         return u'{url}?q={query}'.format(
             url=reverse('threads'),
-            query=self.name.lower().replace(u' ', u'+'),
+            query=self.name.replace(u' ', u'+'),
         )
 
     @property
