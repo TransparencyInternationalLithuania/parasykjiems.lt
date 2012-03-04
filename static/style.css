@@ -495,6 +495,12 @@ h5 {
     margin-top: 0;
 }
 
+#no-letters-found {
+    text-align: center;
+    font-size: 1.2em;
+    min-height: 50px;
+}
+
 .threads {
     border-collapse: collapse;
     width: 100%;

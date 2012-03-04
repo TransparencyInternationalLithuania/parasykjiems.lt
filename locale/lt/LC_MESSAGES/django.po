@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-04 15:04+0200\n"
-"PO-Revision-Date: 2012-03-04 15:04+0300\n"
+"POT-Creation-Date: 2012-03-04 18:33+0200\n"
+"PO-Revision-Date: 2012-03-04 18:35+0300\n"
 "Last-Translator: Kiprianas Spiridonovas <k.spiridonovas@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -85,39 +85,39 @@ msgstr "Turinys"
 msgid "Confirm your letter"
 msgstr "Patvirtinkite savo laišką"
 
-#: mail/models.py:81
+#: mail/models.py:83
 msgid "unconfirmed message"
 msgstr "nepatvirtintas laiškas"
 
-#: mail/models.py:82
+#: mail/models.py:84
 msgid "unconfirmed messages"
 msgstr "nepatvirtinti laiškai"
 
-#: mail/models.py:96
+#: mail/models.py:98
 msgid "Enquiry"
 msgstr "Užklausa"
 
-#: mail/models.py:97
+#: mail/models.py:99
 msgid "Response"
 msgstr "Atsakymas"
 
-#: mail/models.py:108
+#: mail/models.py:110
 msgid "If the message was received through SMTP, the original email text."
 msgstr "Jeigu laiškas gautas per SMTP, pilnas neapdorotas laiško tekstas."
 
-#: mail/models.py:238
+#: mail/models.py:240
 msgid "message"
 msgstr "žinutė"
 
-#: mail/models.py:239
+#: mail/models.py:241
 msgid "messages"
 msgstr "žinutės"
 
-#: mail/models.py:329
+#: mail/models.py:336
 msgid "thread"
 msgstr "gija"
 
-#: mail/models.py:330
+#: mail/models.py:337
 msgid "threads"
 msgstr "gijos"
 
@@ -206,7 +206,7 @@ msgstr "Atstovo paieška"
 
 #: templates/menu.html:12
 #: templates/breadcrumbs/threads.html:4
-#: templates/views/threads.html:9
+#: templates/views/threads.html:10
 msgid "Open letters"
 msgstr "Išsiųsti laiškai"
 
@@ -312,6 +312,14 @@ msgstr "Išsiųsta"
 msgid "Answered"
 msgstr "Atsakyta"
 
+#: templates/items/threads.html:37
+msgid "No letters found."
+msgstr "Laiškų nerasta."
+
+#: templates/items/threads.html:42
+msgid "Pages: "
+msgstr "Puslapiai:"
+
 #: templates/views/admin_update.html:4
 #: templates/views/admin_update.html:9
 msgid "Data update"
@@ -377,8 +385,8 @@ msgstr ""
 msgid "Continue"
 msgstr "Tęsti"
 
-#: templates/views/search.html:8
-#: templates/views/search.html.py:25
+#: templates/views/search.html:9
+#: templates/views/search.html.py:26
 msgid "Search"
 msgstr "Paieška"
 
@@ -397,13 +405,9 @@ msgstr ""
 "\n"
 "Galite jį peržiūrėti <a href=\"%(url)s\">čia</a>."
 
-#: templates/views/threads.html:24
+#: templates/views/threads.html:26
 msgid "Filter..."
 msgstr "Ieškoti..."
-
-#: templates/views/threads.html:33
-msgid "Pages: "
-msgstr "Puslapiai:"
 
 #: templates/views/write.html:4
 msgid "Write letter"
@@ -520,9 +524,6 @@ msgstr "Atsiliepimas iš {}"
 #~ msgstr ""
 #~ "Yra daugiau rezultatų atitinkančių jūsų užklausą. Pabandykite susiaurinti "
 #~ "savo paiešką panaudodami daugiau žodžių."
-
-#~ msgid "Nothing found."
-#~ msgstr "Nieko nerasta."
 
 #~ msgid "You can search by entering:"
 #~ msgstr "Galite ieškoti įvesdami:"

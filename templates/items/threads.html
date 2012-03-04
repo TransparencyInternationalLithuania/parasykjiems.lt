@@ -33,6 +33,10 @@
   {% endfor %}
 </table>
 
+{% if not threads %}
+<p id="no-letters-found">{% trans "No letters found." %}</p>
+{% endif %}
+
 {% if page and page.paginator.num_pages > 1 %}
 <div class="pager">
   {% trans "Pages: " %}
