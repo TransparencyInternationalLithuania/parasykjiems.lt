@@ -114,7 +114,7 @@ img {
     margin: 0 auto 0 auto;
     border-spacing: 0;
     position: relative;
-    overflow: auto;
+    overflow: hidden;
 }
 
 #inner-header a {
