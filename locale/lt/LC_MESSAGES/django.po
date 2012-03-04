@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-29 09:53+0200\n"
-"PO-Revision-Date: 2012-02-29 09:53+0300\n"
+"POT-Creation-Date: 2012-03-04 15:04+0200\n"
+"PO-Revision-Date: 2012-03-04 15:04+0300\n"
 "Last-Translator: Kiprianas Spiridonovas <k.spiridonovas@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -33,8 +33,8 @@ msgstr "Lietuvių"
 msgid "content"
 msgstr "turinys"
 
-#: mail/feeds.py:21
-#: mail/feeds.py:23
+#: mail/feeds.py:25
+#: mail/feeds.py:27
 msgid "ParašykJiems threads"
 msgstr "ParašykJiems išsiųsti laiškai"
 
@@ -85,39 +85,39 @@ msgstr "Turinys"
 msgid "Confirm your letter"
 msgstr "Patvirtinkite savo laišką"
 
-#: mail/models.py:80
+#: mail/models.py:81
 msgid "unconfirmed message"
 msgstr "nepatvirtintas laiškas"
 
-#: mail/models.py:81
+#: mail/models.py:82
 msgid "unconfirmed messages"
 msgstr "nepatvirtinti laiškai"
 
-#: mail/models.py:95
+#: mail/models.py:96
 msgid "Enquiry"
 msgstr "Užklausa"
 
-#: mail/models.py:96
+#: mail/models.py:97
 msgid "Response"
 msgstr "Atsakymas"
 
-#: mail/models.py:107
+#: mail/models.py:108
 msgid "If the message was received through SMTP, the original email text."
 msgstr "Jeigu laiškas gautas per SMTP, pilnas neapdorotas laiško tekstas."
 
-#: mail/models.py:237
+#: mail/models.py:238
 msgid "message"
 msgstr "žinutė"
 
-#: mail/models.py:238
+#: mail/models.py:239
 msgid "messages"
 msgstr "žinutės"
 
-#: mail/models.py:303
+#: mail/models.py:329
 msgid "thread"
 msgstr "gija"
 
-#: mail/models.py:304
+#: mail/models.py:330
 msgid "threads"
 msgstr "gijos"
 
@@ -397,7 +397,11 @@ msgstr ""
 "\n"
 "Galite jį peržiūrėti <a href=\"%(url)s\">čia</a>."
 
-#: templates/views/threads.html:26
+#: templates/views/threads.html:24
+msgid "Filter..."
+msgstr "Ieškoti..."
+
+#: templates/views/threads.html:33
 msgid "Pages: "
 msgstr "Puslapiai:"
 
