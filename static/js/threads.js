@@ -25,5 +25,14 @@ $(function() {
     }
   });
 
-  var typeahead = new Typeahead($q, '#content', '/threads/?bare', makeLinesClickable);
+  function setRSS(q) {
+    var url = 'rss.xml?q=' + q;
+    $('.rss-button a').attr('href', url);
+    $('link[rel="alternate"]').attr('href', url);
+  }
+
+  var typeahead = new Typeahead($q, '#content', '/threads/?bare', function() {
+    makeLinesClickable();
+    setRSS(this.encodeQuery(this.resultsTerms));
+  }, false);
 });
