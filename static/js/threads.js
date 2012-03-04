@@ -1,11 +1,13 @@
 $(function() {
-  // Make whole table lines clickable.
-  $('.threads tr a').each(function(i, a) {
-    var $a = $(a);
-    $a.parent().parent().click(function(e) {
-      window.location = $a.attr('href');
+  function makeLinesClickable() {
+    $('.threads tr a').each(function(i, a) {
+      var $a = $(a);
+      $a.parent().parent().click(function(e) {
+        window.location = $a.attr('href');
+      });
     });
-  });
+  };
+  makeLinesClickable();
 
   var $q = $('.filter input[name=q]');
   function resetq() {
@@ -22,4 +24,6 @@ $(function() {
       $q.removeClass('empty');
     }
   });
+
+  var typeahead = new Typeahead($q, '#content', '/threads/?bare', makeLinesClickable);
 });

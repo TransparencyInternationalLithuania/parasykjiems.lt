@@ -144,7 +144,12 @@ def threads(request):
     page = pages.page(page_num)
     paginated_threads = page.object_list
 
-    return render(request, 'views/threads.html', {
+    if 'bare' in request.GET:
+        template = 'items/threads.html'
+    else:
+        template = 'views/threads.html'
+
+    return render(request, template, {
         'page': page,
         'pages': [pages.page(p) for p in pages.page_range],
         'threads': paginated_threads,

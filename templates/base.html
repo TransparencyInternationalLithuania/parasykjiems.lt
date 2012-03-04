@@ -33,12 +33,14 @@
           </ul>
         </div>
       </div>
-      <div id="content">
+      <div id="container">
         <ul itemprop="breadcrumb" id="breadcrumbs">
           {% block breadcrumbs %}
           {% endblock %}
         </ul>
-        {% block content %}{% endblock %}
+        <div id="content">
+          {% block content %}{% endblock %}
+        </div>
       </div>
     </div>
     <div id="footer">
