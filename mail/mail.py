@@ -57,8 +57,6 @@ def find_parent(message):
                 message.recipient_name = message.parent.sender_name
                 message.recipient_email = message.parent.sender_email
                 message.thread = message.parent.thread
-                message.thread.update_filter_keywords()
-                message.thread.save()
                 if message.parent.kind == 'enquiry':
                     message.kind = 'response'
                 else:
@@ -179,9 +177,6 @@ def confirm_and_send(unconfirmed_message):
     else:
         message.recipient_email = unconfirmed_message.recipient.email
     message.save()
-
-    thread.update_filter_keywords()
-    thread.save()
 
     proxy_send(message)
 
