@@ -9,6 +9,8 @@ passing the specific instance as the message parameter.
 import random
 import email
 import re
+import operator
+from unidecode import unidecode
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -263,6 +265,38 @@ class Thread(models.Model):
 
     subject = models.CharField(max_length=400)
 
+    filter_keywords = models.TextField(db_index=True, blank=True)
+
+    _SPACES = re.compile(r'\s+')
+    _WORDS = re.compile(r'\w+')
+    _NONWORDS = re.compile(r'\W+')
+
+    def update_filter_keywords(self):
+        sources = [self.subject, self.sender_name, self.recipient_name]
+        for message in self.message_set.all():
+            sources.extend([message.sender_name, message.body_text])
+        words = frozenset(Thread._WORDS.findall('\n'.join(unidecode(x).lower() for x in sources)))
+        self.filter_keywords = ' '.join(words)
+
+    @classmethod
+    def make_filter_query(cls, q):
+        """Build filter query. Words can be in any order."""
+
+        words = Thread._SPACES.split(unidecode(q).lower())
+
+        q = models.Q()
+        print words
+        for w in words:
+            # Exclude words that start with a dash.
+            negate = w.startswith('-')
+            w = Thread._NONWORDS.sub('', w)
+            if w:
+                subq = models.Q(filter_keywords__contains=w)
+                if negate:
+                    subq = ~subq
+                q &= subq
+        return q
+
     @property
     def recipient(self):
         return self.representative or self.institution
@@ -299,31 +333,6 @@ class Thread(models.Model):
                     sender=self.sender_name,
                     recipient=self.recipient_name,
                     date=self.created_at))
-
-    _SPACES = re.compile(r'\s+')
-    _FILTER_FIELDS = ['subject', 'sender_name', 'recipient_name']
-
-    @classmethod
-    def make_filter_query(cls, q):
-        """Build filter query. Words can be in any order."""
-
-        words = Thread._SPACES.split(q)
-
-        qi = models.Q()
-        qe = models.Q()
-        for field in Thread._FILTER_FIELDS:
-            f = field + '__icontains'
-            incq = models.Q()
-            exq = models.Q()
-            for w in words:
-                # Exclude words that start with a dash.
-                if w.startswith('-'):
-                    exq |= models.Q(**{f: w[1:]})
-                else:
-                    incq &= models.Q(**{f: w})
-            qi |= incq
-            qe |= exq
-        return qi & ~qe
 
     class Meta:
         verbose_name = _('thread')
