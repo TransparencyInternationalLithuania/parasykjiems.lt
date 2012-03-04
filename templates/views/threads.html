@@ -4,7 +4,7 @@
 {% block head %}
 <script type="text/javascript" src="{% static js/typeahead.js %}"></script>
 <script type="text/javascript" src="{% static js/threads.js %}"></script>
-<link rel="alternate" type="application/rss+xml" title="RSS" href="rss.xml">
+<link rel="alternate" type="application/rss+xml" title="RSS" href="rss.xml{% if request.GET.q %}?q={{ request.GET.q|urlencode }}{% endif %}">
 {% endblock %}
 
 {% block title %}{% trans "Open letters" %} &ndash; {% endblock %}
@@ -15,8 +15,9 @@
 
 {% block breadcrumbs %}
 {% include "breadcrumbs/threads.html" with active=1 %}
+
 {% if request.GET.q %}
-{% include "items/rss.html" with url="rss.xml"|add:"?q="|add:request.GET.q %}
+{% include "items/rss.html" with url="rss.xml"|add:"?q="|add:request.GET.q|urlencode:'?=' %}
 {% else %}
 {% include "items/rss.html" %}
 {% endif %}

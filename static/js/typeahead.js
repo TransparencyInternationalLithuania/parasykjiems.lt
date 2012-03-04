@@ -1,24 +1,27 @@
-function Typeahead(q, results, url, resultsCallback, queryParam) {
+function Typeahead(q, results, url, resultsCallback, useHash, queryParam) {
   this.q = $(q);
   this.results = $(results);
   this.url = url;
   this.resultsCallback = resultsCallback || function(){};
+  this.useHash = useHash;
   this.queryParam = queryParam || 'q';
 
   this.useHistory = this.browserSupportsHistory();
   this.resultsTimeout = null;
   this.resultsTerms = this.trim(this.q.val());
 
-  if ((window.location.hash != "") || !this.useHistory) {
+  if (this.useHash && (window.location.hash != "") || !this.useHistory) {
     var terms = decodeQuery(window.location.hash.slice(1));
     this.q.val(terms);
     this.startUpdate(1, terms);
   }
 
   var self = this;
-  this.q.keyup(function() {
-    self.startUpdate(1, self.q.val());
-  });
+  if (this.useHash || this.useHistory) {
+    this.q.keyup(function() {
+      self.startUpdate(1, self.q.val());
+    });
+  }
 }
 
 Typeahead.prototype = {
