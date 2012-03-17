@@ -113,7 +113,7 @@ class InstitutionIndex(indexes.SearchIndex):
                          lithuanian.nominative_names(obj.name))
 
     def prepare_auto(self, obj):
-        return join_text([obj.name, obj.kind.name])
+        return self.prepare_text(obj)
 
     def prepare_subtitle(self, obj):
         return obj.kind.name
@@ -139,13 +139,13 @@ class RepresentativeIndex(indexes.SearchIndex):
     url = indexes.CharField(model_attr='get_absolute_url', indexed=False)
 
     def prepare_text(self, obj):
-        name_variants = lithuanian.name_abbreviations(obj.name)
+        name_variants = lithuanian.name_abbreviations(obj.name, abbr_last_name=True)
         return join_text([obj.kind.name,
                           obj.institution.name] +
                          name_variants)
 
     def prepare_auto(self, obj):
-        return join_text([obj.name, obj.kind.name])
+        return self.prepare_text(obj)
 
     def prepare_subtitle(self, obj):
         return u'{}, {}'.format(obj.kind.name, obj.institution.name)
@@ -189,7 +189,7 @@ class LocationIndex(indexes.SearchIndex):
         return join_text(items)
 
     def prepare_auto(self, obj):
-        return join_text([obj.street, obj.city, obj.elderate])
+        return self.prepare_text(obj)
 
     def prepare_numbered(self, obj):
         return obj.street != ''
