@@ -274,7 +274,7 @@ class Thread(models.Model):
     def update_filter_keywords(self):
         sources = [self.subject, self.sender_name, self.recipient_name]
         if self.institution:
-            for representative in self.institution.representative_set:
+            for representative in self.institution.representative_set.all():
                 sources.append(representative.name)
         if self.representative:
             sources.append(self.representative.institution.name)
