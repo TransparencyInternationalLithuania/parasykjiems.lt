@@ -79,7 +79,10 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
+
+INTERNAL_IPS = ('127.0.0.1',)
 
 APPEND_SLASH = False
 USE_ETAGS = True
@@ -101,6 +104,7 @@ INSTALLED_APPS = (
     'south',
     'gunicorn',
     'cachebuster',
+    'debug_toolbar',
 
     'web',
     'search',
