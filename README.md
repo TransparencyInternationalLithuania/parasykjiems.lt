@@ -12,6 +12,7 @@ Python packages are
  - markdown
  - unidecode (used for transliteration in search)
  - progressbar — for displaying progress in import commands
+ - django-debug-toolbar
  - gunicorn — for launching a production server
  - cachebuster
 
