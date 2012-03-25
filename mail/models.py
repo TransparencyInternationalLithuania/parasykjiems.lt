@@ -306,21 +306,19 @@ class Thread(models.Model):
 
     @property
     def messages(self):
-        return (Message.objects
-                .filter(thread=self, is_error=False, is_sent=True)
-                .order_by('date'))
+        return self.message_set.filter(is_error=False, is_sent=True).order_by('date')
 
     @property
     def has_answer(self):
-        return self.messages.count() > 1
+        return self.message_set.filter(is_error=False, is_sent=True, kind='response').exists()
 
     @property
     def has_errors(self):
-        return self.messages.filter(is_error=True).exists()
+        return self.message_set.filter(is_error=True).exists()
 
     @property
     def references(self):
-        return ' '.join([m.message_id for m in self.messages])
+        return ' '.join(self.messages.values_list('message_id', flat=True)).strip()
 
     @models.permalink
     def get_absolute_url(self):
