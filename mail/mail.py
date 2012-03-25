@@ -95,10 +95,10 @@ def proxy_send(message):
         })
     )
     if message.parent:
-        email.extra_headers = {
-            'References': message.thread.references,
-            'In-Reply-To': message.parent.message_id,
-        }
+        email.extra_headers['References'] = message.thread.references
+        email.extra_headers['In-Reply-To'] = message.parent.message_id
+    message.message_id = email.message()['Message-ID']
+    email.extra_headers['Message-Id'] = message.message_id
     email.send()
     message.is_sent = True
     message.save()
@@ -191,15 +191,7 @@ def confirm_and_send(unconfirmed_message):
             'message': message,
         }),
     )
-
-    # Set the message id of message and fix the copy's id (otherwise
-    # it's regenerated when sending.
-    message.message_id = user_copy.message()['Message-ID']
-    user_copy.headers = {
-        'Message-ID': message.message_id
-    }
-    message.save()
-
+    user_copy.extra_headers['Message-ID'] = message.message_id
     user_copy.send()
 
     return thread
