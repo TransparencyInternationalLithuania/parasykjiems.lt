@@ -122,11 +122,8 @@ class Message(models.Model):
     subject = models.CharField(max_length=_NAME_LEN)
     body_text = models.TextField()
 
-    # This ID is used for filling References and In-Reply-To in
-    # outgoing messages for threading on the user's side. If the
-    # message is created from a web form, and therefore doesn't have a
-    # Message-ID itself, this should be set to the ID of the user's
-    # copy of the outgoing message.
+    # The message ID of the outgoing (proxied) message. Used to set the
+    # in-reply-to and references headers.
     message_id = models.CharField(max_length=_NAME_LEN, blank=True)
 
     @property
@@ -166,8 +163,6 @@ class Message(models.Model):
 
     def fill_from_envelope(self):
         assert(self.envelope_object)
-        self.message_id = utils.decode_header_unicode(
-            self.envelope_object['message-id'])
         self.sender_name = utils.extract_name(
             utils.decode_header_unicode(self.envelope_object['from']))
         self.sender_email = utils.extract_email(
@@ -318,7 +313,7 @@ class Thread(models.Model):
 
     @property
     def references(self):
-        return ' '.join(self.messages.values_list('message_id', flat=True)).strip()
+        return ' '.join(self.messages.exclude(message_id='').values_list('message_id', flat=True))
 
     @models.permalink
     def get_absolute_url(self):
