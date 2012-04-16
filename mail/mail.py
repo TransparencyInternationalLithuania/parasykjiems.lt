@@ -191,7 +191,13 @@ def confirm_and_send(unconfirmed_message):
             'message': message,
         }),
     )
+
+    # Set the message ID of the user copy to be the same as that of the
+    # outgoing message, so that when an answer is received and proxied to the
+    # user, it references the user's copy for threading.
     user_copy.extra_headers['Message-ID'] = message.message_id
+
     user_copy.send()
 
     return thread
+
