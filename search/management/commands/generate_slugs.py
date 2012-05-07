@@ -47,5 +47,5 @@ class Command(BaseCommand):
                                     loc.municipality])
 
         print ' - Thread'
-        generate_slugs(Thread.objects.filter(is_public=True),
+        generate_slugs(Thread.objects.all(),
                        lambda t: [t.subject])

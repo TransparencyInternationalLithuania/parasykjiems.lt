@@ -46,8 +46,6 @@ class UnconfirmedMessage(models.Model):
     subject = models.CharField(max_length=400)
     body_text = models.TextField()
 
-    is_public = models.BooleanField()
-
     submitted_at = models.DateTimeField(auto_now_add=True)
 
     # These link to the institution or representative participating in
@@ -242,8 +240,6 @@ class Thread(models.Model):
                             db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
-
-    is_public = models.BooleanField(default=False)
 
     # These link to the institution or representative participating in
     # this thread. At most one of them should be non-null.
