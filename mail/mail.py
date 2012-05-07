@@ -105,12 +105,7 @@ def proxy_send(message):
     logger.info(u"SENT: {}".format(message))
 
 
-def submit_message(sender_name,
-                   sender_email,
-                   recipient,
-                   subject,
-                   body_text,
-                   is_public):
+def submit_message(sender_name, sender_email, recipient, subject, body_text):
     """Creates an unconfirmed message with given parameters, but
     doesn't send it. Instead, sends the user a confirmation email.
     """
@@ -120,7 +115,6 @@ def submit_message(sender_name,
         sender_email=sender_email,
         subject=subject,
         body_text=body_text,
-        is_public=is_public,
     )
 
     if isinstance(recipient, Representative):
@@ -150,19 +144,17 @@ def confirm_and_send(unconfirmed_message):
     Creates a Thread and a Message (which contains the sent envelope).
     """
 
-    thread = Thread(is_public=unconfirmed_message.is_public,
-                    institution=unconfirmed_message.institution,
+    thread = Thread(institution=unconfirmed_message.institution,
                     representative=unconfirmed_message.representative,
                     sender_name=unconfirmed_message.sender_name,
                     sender_email=unconfirmed_message.sender_email,
                     recipient_name=unconfirmed_message.recipient.name,
                     recipient_email=unconfirmed_message.recipient.email,
                     subject=unconfirmed_message.subject)
-    if thread.is_public:
-        generate_slug(thread,
-                      Thread.objects.filter(is_public=True),
-                      lambda t: [t.subject])
-        thread.update_filter_keywords()
+    generate_slug(thread,
+                  Thread.objects.all(),
+                  lambda t: [t.subject])
+    thread.update_filter_keywords()
     thread.save()
 
     message = Message(

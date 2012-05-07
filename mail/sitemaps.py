@@ -7,7 +7,7 @@ class ThreadSitemap(Sitemap):
     priority = 0.9
 
     def items(self):
-        return Thread.objects.filter(is_public=True)
+        return Thread.objects.all()
 
     def lastmod(self, obj):
         return obj.modified_at

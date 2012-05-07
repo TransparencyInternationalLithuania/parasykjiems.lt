@@ -33,7 +33,7 @@ class ThreadsFeed(Feed):
             return "/threads/"
 
     def items(self, q):
-        threads = Thread.objects.filter(is_public=True).order_by('-created_at')
+        threads = Thread.objects.order_by('-created_at')
         if q:
             threads = threads.filter(Thread.make_filter_query(q))
         return threads[:20]
@@ -52,10 +52,7 @@ class ThreadFeed(Feed):
     description_template = "feeds/message.html"
 
     def get_object(self, request, slug):
-        return get_object_or_404(
-            Thread,
-            is_public=True,
-            slug=slug)
+        return get_object_or_404(Thread, slug=slug)
 
     def title(self, thread):
         return u'{} – ParašykJiems'.format(thread.subject)
