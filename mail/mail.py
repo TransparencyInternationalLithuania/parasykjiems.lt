@@ -3,10 +3,11 @@
 from django.template.loader import render_to_string
 from django.core.mail import send_mail, EmailMessage
 from django.utils.translation import ugettext as _
-from email.utils import formataddr
+from email.utils import formataddr, getaddresses
 
 import settings
-from parasykjiems.mail import utils, models
+from parasykjiems.mail import utils
+from parasykjiems.mail.models import UnconfirmedMessage, Thread, Message
 from parasykjiems.slug import generate_slug
 from parasykjiems.search.models import Representative
 
@@ -19,37 +20,38 @@ def process_incoming(envelope):
     inserts it into the database, tries to find a parent and
     proxy-sends the message if the parent is found.
     '''
-    message = models.Message(
+    message = Message(
         envelope=str(envelope).decode('utf-8'))
+    message.save()
 
     try:
         message.fill_from_envelope()
-    except:
-        message.is_error = True
-
-    message.save()
-    find_parent(message)
-
-    # Detect bounces.
-    if message.envelope_object['Return-Path'] == '<>':
+        find_parent(message)
+        if not message.parent:
+            raise Exception(u'Failed to determine parent of {}'
+                            .format(message))
+        proxy_send(message)
+    except Exception as e:
+        if not message.parent:
+            find_parent(message)
         message.is_error = True
         message.save()
-        logger.error(u'BOUNCE: {}'.format(message))
-
-    if message.parent and not message.is_error:
-        proxy_send(message)
+        logger.error(e)
 
 
 def find_parent(message):
-    try:
-        to_email = utils.extract_email(
-            utils.decode_header_unicode(message.envelope_object['to']))
+    env = message.envelope_object
+    tos = env.get_all('to', [])
+    ccs = env.get_all('cc', [])
+    resent_tos = env.get_all('resent-to', [])
+    resent_ccs = env.get_all('resent-cc', [])
+    all_recipients = getaddresses(tos + ccs + resent_tos + resent_ccs)
+    for to_name, to_email in all_recipients:
         m = utils.MESSAGE_EMAIL_REGEXP.match(to_email)
         if m:
             id = int(m.group('id'))
             secret = m.group('secret')
-            maybe_parent = models.Message.objects.filter(id=id,
-                                                         reply_secret=secret)
+            maybe_parent = Message.objects.filter(id=id, reply_secret=secret)
             if maybe_parent.exists():
                 message.parent = maybe_parent.get()
                 message.recipient_name = message.parent.sender_name
@@ -67,14 +69,8 @@ def find_parent(message):
 
                 logger.info(u'PARENT of <{}> is <{}>'
                             .format(message, message.parent))
-    except Exception as e:
-        logger.error(
-            u'Exception {} while trying to determine parent of {}'
-            .format(e, message))
 
-    if not message.parent:
-        logger.warning(u'Failed to determine parent of {}'
-                       .format(message))
+                break
 
 
 def proxy_send(message):
@@ -99,10 +95,10 @@ def proxy_send(message):
         })
     )
     if message.parent:
-        email.extra_headers = {
-            'References': message.thread.references,
-            'In-Reply-To': message.parent.message_id,
-        }
+        email.extra_headers['References'] = message.thread.references
+        email.extra_headers['In-Reply-To'] = message.parent.message_id
+    message.message_id = email.message()['Message-ID']
+    email.extra_headers['Message-Id'] = message.message_id
     email.send()
     message.is_sent = True
     message.save()
@@ -119,7 +115,7 @@ def submit_message(sender_name,
     doesn't send it. Instead, sends the user a confirmation email.
     """
 
-    message = models.UnconfirmedMessage(
+    message = UnconfirmedMessage(
         sender_name=sender_name,
         sender_email=sender_email,
         subject=subject,
@@ -154,7 +150,7 @@ def confirm_and_send(unconfirmed_message):
     Creates a Thread and a Message (which contains the sent envelope).
     """
 
-    thread = models.Thread(is_public=unconfirmed_message.is_public,
+    thread = Thread(is_public=unconfirmed_message.is_public,
                     institution=unconfirmed_message.institution,
                     representative=unconfirmed_message.representative,
                     sender_name=unconfirmed_message.sender_name,
@@ -164,11 +160,12 @@ def confirm_and_send(unconfirmed_message):
                     subject=unconfirmed_message.subject)
     if thread.is_public:
         generate_slug(thread,
-                      models.Thread.objects.filter(is_public=True),
+                      Thread.objects.filter(is_public=True),
                       lambda t: [t.subject])
+        thread.update_filter_keywords()
     thread.save()
 
-    message = models.Message(
+    message = Message(
         kind='enquiry',
         thread=thread,
         sender_name=unconfirmed_message.sender_name,
@@ -195,14 +192,12 @@ def confirm_and_send(unconfirmed_message):
         }),
     )
 
-    # Set the message id of message and fix the copy's id (otherwise
-    # it's regenerated when sending.
-    message.message_id = user_copy.message()['Message-ID']
-    user_copy.headers = {
-        'Message-ID': message.message_id
-    }
-    message.save()
+    # Set the message ID of the user copy to be the same as that of the
+    # outgoing message, so that when an answer is received and proxied to the
+    # user, it references the user's copy for threading.
+    user_copy.extra_headers['Message-ID'] = message.message_id
 
     user_copy.send()
 
     return thread
+

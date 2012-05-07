@@ -51,7 +51,7 @@
       <h5>{% trans "Recent letters" %}</h5>
       {% include "items/threads.html" with threads=institution.recent_threads small=1 %}
       {% if institution.more_threads %}
-      <p><a href="{% url threads institution.slug %}">{% trans "All letters sent to this institution" %}</a></p>
+        <a class="more-threads" href="{{ institution.threads_url }}">{% trans "More letters" %}</a>
       {% endif %}
     </td>
   </tr>

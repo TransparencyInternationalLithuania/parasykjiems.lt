@@ -4,12 +4,13 @@ from django.core.paginator import Paginator
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.decorators.cache import cache_control
 from django.views.decorators.http import last_modified
+from django.db.models import Q
 import datetime
 
-from forms import WriteLetterForm, SubscribeForm
+from forms import WriteLetterForm
 from parasykjiems.search.models import Representative, Institution
 from parasykjiems.search.utils import ChoiceState
-from parasykjiems.mail.models import Thread, UnconfirmedMessage, Subscription
+from parasykjiems.mail.models import Thread, UnconfirmedMessage
 import parasykjiems.mail.mail as mail
 from parasykjiems.mail import utils
 
@@ -95,7 +96,7 @@ def sent(request, slug=None):
     return render(request, 'views/sent.html', {'thread': thread})
 
 
-MAX_THREADS = 10
+MAX_THREADS = 40
 
 
 def thread(request, slug):
@@ -123,15 +124,15 @@ def _latest_thread(request, institution_slug=None):
 
 
 @last_modified(_latest_thread)
-def threads(request, institution_slug=None):
-    if institution_slug:
-        institution = get_object_or_404(Institution, slug=institution_slug)
-        all_threads = institution.threads
-    else:
-        all_threads = (Thread.objects
-                       .filter(is_public=True)
-                       .order_by('-created_at'))
-    pages = Paginator(all_threads, MAX_THREADS)
+def threads(request):
+    threads = (Thread.objects
+                   .filter(is_public=True)
+                   .order_by('-created_at'))
+
+    if 'q' in request.GET and request.GET['q'].strip() != '':
+        threads = threads.filter(Thread.make_filter_query(request.GET['q']))
+
+    pages = Paginator(threads, MAX_THREADS)
     try:
         page_num = int(request.GET.get('p', '1'))
     except ValueError:
@@ -141,31 +142,20 @@ def threads(request, institution_slug=None):
     if page_num > pages.num_pages:
         page_num = pages.num_pages
     page = pages.page(page_num)
-    threads = page.object_list
+    paginated_threads = page.object_list
 
-    return render(request, 'views/threads.html', {
+    if 'bare' in request.GET:
+        template = 'items/threads.html'
+    else:
+        template = 'views/threads.html'
+
+    return render(request, template, {
         'page': page,
         'pages': [pages.page(p) for p in pages.page_range],
-        'threads': threads,
+        'threads': paginated_threads,
     })
 
 
-def subscribe(request, slug):
-    thread = get_object_or_404(Thread, slug=slug, is_public=True)
-    if request.method == 'POST':
-        form = SubscribeForm(request.POST)
-        if form.is_valid():
-            Subscription(thread=thread,
-                         email=form['email']).save()
-            return redirect(reverse(thread))
-
-
-def unsubscribe(request, id, secret):
-    subscription = get_object_or_404(
-        Subscription,
-        id=id,
-        secret=secret)
-    subscription.delete()
-    return render(request, 'views/unsubscribe.html', {
-        'subscription': subscription,
-    })
+def threads_institution(request, institution_slug):
+    institution = get_object_or_404(Institution, slug=institution_slug)
+    return redirect(institution.threads_url())

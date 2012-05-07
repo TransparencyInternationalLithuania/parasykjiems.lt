@@ -10,11 +10,11 @@
 </div>{% endblock %}
 
 {% block extrahead %}
-<script type="text/javascript" src="/static/js/jquery-1.6.2.min.js"></script>
+<script type="text/javascript" src="{% static js/jquery-1.6.2.min.js %}"></script>
 <style>
   table { width: 100%; }
   td { vertical-align: middle; }
-  .delete_rep { background: #faa; color: #400; }
+  .delete { background: #faa; color: #400; }
   .add { background: #afa; color: #040; }
   .spacer { height: 0.3em; }
 </style>
@@ -32,74 +32,75 @@
       <th>{% trans "Email" %}</th>
       <th>{% trans "Phone" %}</th>
       <th>{% trans "Other information" %}</th>
+      <th>{% trans "Address" %}</th>
     </tr>
     {% for change in changes %}
-    <tr class="spacer"></tr>
-    {% with rep=change.rep %}
-    {% if rep %}
-    <tr{% if change.delete_rep %} class="delete_rep"{% endif %}>
-      <td{% if not change.delete_rep %} rowspan="2"{% endif %}>
-        <input name="apply_change" value="{{ change.id }}" type="checkbox" checked>
-      </td>
-      <td{% if not change.delete_rep %} rowspan="2"{% endif %}>
-        {{ rep.institution.name }}</td>
-      <td{% if not change.delete_rep %} rowspan="2"{% endif %}>
-        {{ rep.kind.name }}
-      </td>
-
-      <td{% if change.name_changed %} class="delete_rep"{% else %} rowspan="2"{% endif %}>
-        {{ rep.name|default:"&nbsp;" }}
-      </td>
-
-      <td{% if change.email_changed %} class="delete_rep"{% else %} rowspan="2"{% endif %}>
-        {{ rep.email|default:"&nbsp;" }}
-      </td>
-
-      <td{% if change.phone_changed %} class="delete_rep"{% else %} rowspan="2"{% endif %}>
-        {{ rep.phone|default:"&nbsp;" }}
-      </td>
-
-      <td{% if change.other_info_changed %} class="delete_rep"{% else %} rowspan="2"{% endif %}>
-        {{ rep.other_info|default:"&nbsp;" }}
-      </td>
-    </tr>
-    {% endif %}
-
-    {% if not change.delete_rep %}
-    <tr{% if not rep %} class="add"{% endif %}>
-      {% if not rep %}
+    <tr class="{{ change.action }}">
       <td><input name="apply_change" value="{{ change.id }}" type="checkbox" checked></td>
       <td>{{ change.institution }}</td>
-      <td>{{ change.kind_name }}</td>
-      {% endif %}
+      <td>{{ change.kind }}</td>
 
-      {% if change.name_changed %}
-      <td class="add">
+      <td>
+        {% if change.name_changed and change.action == 'modify' %}
+        <table>
+          <tr class="delete"><td>{{ change.name_old|default:"&nbsp;" }}</td></tr>
+          <tr class="add"><td>{{ change.name|default:"&nbsp;" }}</td></tr>
+        </table>
+        {% else %}{% if change.action == 'add' %}
         {{ change.name|default:"&nbsp;" }}
+        {% else %}
+        {{ change.name_old|default:"&nbsp;" }}
+        {% endif %}{% endif %}
       </td>
-      {% endif %}
-
-      {% if change.email_changed %}
-      <td class="add">
+      <td>
+        {% if change.email_changed and change.action == 'modify' %}
+        <table>
+          <tr class="delete"><td>{{ change.email_old|default:"&nbsp;" }}</td></tr>
+          <tr class="add"><td>{{ change.email|default:"&nbsp;" }}</td></tr>
+        </table>
+        {% else %}{% if change.action == 'add' %}
         {{ change.email|default:"&nbsp;" }}
+        {% else %}
+        {{ change.email_old|default:"&nbsp;" }}
+        {% endif %}{% endif %}
       </td>
-      {% endif %}
-
-      {% if change.phone_changed %}
-      <td class="add">
+      <td>
+        {% if change.phone_changed and change.action == 'modify' %}
+        <table>
+          <tr class="delete"><td>{{ change.phone_old|default:"&nbsp;" }}</td></tr>
+          <tr class="add"><td>{{ change.phone|default:"&nbsp;" }}</td></tr>
+        </table>
+        {% else %}{% if change.action == 'add' %}
         {{ change.phone|default:"&nbsp;" }}
+        {% else %}
+        {{ change.phone_old|default:"&nbsp;" }}
+        {% endif %}{% endif %}
       </td>
-      {% endif %}
-
-      {% if change.other_info_changed %}
-      <td class="add">
+      <td>
+        {% if change.other_info_changed and change.action == 'modify' %}
+        <table>
+          <tr class="delete"><td>{{ change.other_info_old|default:"&nbsp;" }}</td></tr>
+          <tr class="add"><td>{{ change.other_info|default:"&nbsp;" }}</td></tr>
+        </table>
+        {% else %}{% if change.action == 'add' %}
         {{ change.other_info|default:"&nbsp;" }}
+        {% else %}
+        {{ change.other_info_old|default:"&nbsp;" }}
+        {% endif %}{% endif %}
       </td>
-      {% endif %}
-
+      <td>
+        {% if change.address_changed and change.action == 'modify' %}
+        <table>
+          <tr class="delete"><td>{{ change.address_old|default:"&nbsp;" }}</td></tr>
+          <tr class="add"><td>{{ change.address|default:"&nbsp;" }}</td></tr>
+        </table>
+        {% else %}{% if change.action == 'add' %}
+        {{ change.address|default:"&nbsp;" }}
+        {% else %}
+        {{ change.address_old|default:"&nbsp;" }}
+        {% endif %}{% endif %}
+      </td>
     </tr>
-    {% endif %}
-    {% endwith %}
     {% endfor %}
   </table>
   <input type="submit">

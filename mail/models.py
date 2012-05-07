@@ -8,6 +8,9 @@ passing the specific instance as the message parameter.
 
 import random
 import email
+import re
+import operator
+from unidecode import unidecode
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -87,14 +90,14 @@ class Message(models.Model):
                                     db_index=True,
                                     null=False, blank=True)
 
-    parent = models.ForeignKey('Message', null=True)
-    thread = models.ForeignKey('Thread', null=True)
+    parent = models.ForeignKey('Message', null=True, blank=True)
+    thread = models.ForeignKey('Thread', null=True, blank=True)
 
     date = models.DateTimeField(auto_now_add=True)
 
     KIND_CHOICES = (('enquiry', _('Enquiry')),
                     ('response', _('Response')))
-    kind = models.CharField(max_length=8, choices=KIND_CHOICES)
+    kind = models.CharField(max_length=8, choices=KIND_CHOICES, blank=True)
 
     # True if this message is a bounce message.
     is_error = models.BooleanField(default=False)
@@ -119,11 +122,8 @@ class Message(models.Model):
     subject = models.CharField(max_length=_NAME_LEN)
     body_text = models.TextField()
 
-    # This ID is used for filling References and In-Reply-To in
-    # outgoing messages for threading on the user's side. If the
-    # message is created from a web form, and therefore doesn't have a
-    # Message-ID itself, this should be set to the ID of the user's
-    # copy of the outgoing message.
+    # The message ID of the outgoing (proxied) message. Used to set the
+    # in-reply-to and references headers.
     message_id = models.CharField(max_length=_NAME_LEN, blank=True)
 
     @property
@@ -163,8 +163,6 @@ class Message(models.Model):
 
     def fill_from_envelope(self):
         assert(self.envelope_object)
-        self.message_id = utils.decode_header_unicode(
-            self.envelope_object['message-id'])
         self.sender_name = utils.extract_name(
             utils.decode_header_unicode(self.envelope_object['from']))
         self.sender_email = utils.extract_email(
@@ -174,8 +172,12 @@ class Message(models.Model):
 
         plain_texts = []
         word_texts = []
+        has_pdf = False
         for part in self.envelope_object.walk():
-            if not part.is_multipart():
+            if part.get_content_type() == 'message/delivery-status':
+                self.save()
+                raise Exception('BOUNCE: {}'.format(self))
+            elif not part.is_multipart():
                 if part.get_content_type() == 'text/plain':
                     charset = part.get_content_charset()
                     payload = part.get_payload(decode=True)
@@ -188,12 +190,17 @@ class Message(models.Model):
                             part.get_payload(decode=True))
                             .replace('[pic]', '')
                             .replace('|', ''))
+                elif part.get_content_type() == 'application/pdf':
+                    has_pdf = True
         if not plain_texts:
             logging.warning(u"Couldn't extract plain text out of {}"
                             .format(self))
         body_text = '\n\n***\n\n'.join(plain_texts + word_texts)
         self.body_text = utils.remove_consequentive_empty_lines(
             utils.remove_reply_email(body_text))
+        if has_pdf:
+            raise Exception('Message {} contains PDF, not sending.'
+                            .format(self))
 
     @property
     def reply_email(self):
@@ -253,27 +260,60 @@ class Thread(models.Model):
 
     subject = models.CharField(max_length=400)
 
+    filter_keywords = models.TextField(db_index=True, blank=True)
+
+    _SPACES = re.compile(r'\s+')
+    _WORDS = re.compile(r'\w+')
+    _NONWORDS = re.compile(r'\W+')
+
+    def update_filter_keywords(self):
+        sources = [self.subject, self.sender_name, self.recipient_name]
+        if self.institution:
+            for representative in self.institution.representative_set.all():
+                sources.append(representative.name)
+        if self.representative:
+            sources.append(self.representative.institution.name)
+        words = frozenset(Thread._WORDS.findall('\n'.join(unidecode(x).lower() for x in sources)))
+        self.filter_keywords = ' '.join(words)
+
+    @classmethod
+    def make_filter_query(cls, q):
+        """Build filter query. Words can be in any order."""
+
+        words = Thread._SPACES.split(unidecode(q).lower())
+
+        q = models.Q()
+        print words
+        for w in words:
+            # Exclude words that start with a dash.
+            negate = w.startswith('-')
+            w = Thread._NONWORDS.sub('', w)
+            if w:
+                subq = models.Q(filter_keywords__contains=w)
+                if negate:
+                    subq = ~subq
+                q &= subq
+        return q
+
     @property
     def recipient(self):
         return self.representative or self.institution
 
     @property
     def messages(self):
-        return (Message.objects
-                .filter(thread=self, is_error=False)
-                .order_by('date'))
+        return self.message_set.filter(is_error=False, is_sent=True).order_by('date')
 
     @property
     def has_answer(self):
-        return self.messages.count() > 1
+        return self.message_set.filter(is_error=False, is_sent=True, kind='response').exists()
 
     @property
     def has_errors(self):
-        return self.messages.filter(is_error=True).exists()
+        return self.message_set.filter(is_error=True).exists()
 
     @property
     def references(self):
-        return ' '.join([m.message_id for m in self.messages])
+        return ' '.join(self.messages.exclude(message_id='').values_list('message_id', flat=True))
 
     @models.permalink
     def get_absolute_url(self):
@@ -293,15 +333,3 @@ class Thread(models.Model):
     class Meta:
         verbose_name = _('thread')
         verbose_name_plural = _('threads')
-
-
-class Subscription(models.Model):
-    thread = models.ForeignKey(Thread)
-    sender_email = models.EmailField(max_length=_NAME_LEN)
-    unsubscribe_secret = models.CharField(default=generate_secret,
-                                          max_length=_SECRET_LEN,
-                                          db_index=True,
-                                          null=False, blank=True)
-
-    class Meta:
-        unique_together = ('thread', 'sender_email')

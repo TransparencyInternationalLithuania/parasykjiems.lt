@@ -3,17 +3,17 @@
 <!DOCTYPE html>
 <html lang="lt">
   <head>
-    <link rel="stylesheet" type="text/css" href="/static/style.css">
+    <link rel="stylesheet" type="text/css" href="{% static style.css %}">
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <link rel="icon" type="image/png" href="/static/img/favicon.png">
+    <link rel="icon" type="image/png" href="{% static img/favicon.png %}">
     <title>{% block title %}{% endblock %}ParašykJiems</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-    <script type="text/javascript" src="/static/js/hyphenator.js"></script>
-    <script type="text/javascript" src="/static/js/folding.js"></script>
+    <script type="text/javascript" src="{% static js/hyphenator.js %}"></script>
+    <script type="text/javascript" src="{% static js/folding.js %}"></script>
     {% block head %}{% endblock %}
     {{ SETTINGS.ADDITIONAL_HTML_HEAD|safe }}
   </head>
-  <body>
+  <body itemscope itemtype="http://schema.org/WebPage">
     {% if SETTINGS.TESTING_VERSION %}
     <div id="testing-version" onclick="$(this).hide()">
       {% snippet "testing-version" %}
@@ -24,7 +24,7 @@
       <div id="header">
         <div id="inner-header">
           <div>
-            <a href="/"><img id="logo" src="/static/img/logo.png" alt="{% trans "ParašykJiems" %}"></a>
+            <a href="/"><img id="logo" src="{% static img/logo.png %}" alt="{% trans "ParašykJiems" %}"></a>
           </div>
           <ul id="menu">
             {% block menu %}
@@ -33,12 +33,14 @@
           </ul>
         </div>
       </div>
-      <div id="content">
-        <ul id="breadcrumbs">
+      <div id="container">
+        <ul itemprop="breadcrumb" id="breadcrumbs">
           {% block breadcrumbs %}
           {% endblock %}
         </ul>
-        {% block content %}{% endblock %}
+        <div id="content">
+          {% block content %}{% endblock %}
+        </div>
       </div>
     </div>
     <div id="footer">

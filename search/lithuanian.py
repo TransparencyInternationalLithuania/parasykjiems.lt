@@ -76,11 +76,11 @@ def nominative_names(thing):
             for variant in thing_variants]
 
 
-def name_abbreviations(name):
+def name_abbreviations(name, abbr_last_name=False):
     u"""Find all possible abbreviations of a multi-word name.
 
     Ignores any lowercase suffix words. Doesn't abbreviate the last
-    name word.
+    name by default.
 
     >>> streetname = u'Simono Stanevičiaus gatvė'
     >>> r = name_abbreviations(streetname)
@@ -97,6 +97,8 @@ def name_abbreviations(name):
     def sub(namewords):
         if len(namewords) <= 1:
             yield namewords
+            if abbr_last_name:
+                yield [abbr(namewords[0])]
         else:
             for variant in sub(namewords[1:]):
                 yield [namewords[0]] + variant

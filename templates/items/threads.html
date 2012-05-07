@@ -1,4 +1,4 @@
-{% load i18n humanize shorten_institution %}
+{% load i18n humanize shorten_institution add_get_parameter %}
 
 <table class="threads{% if small %} small-threads{% endif %}">
   {% if not small %}
@@ -13,7 +13,7 @@
   {% for thread in threads %}
   {% if thread.is_public %}
   <tr class="{% cycle "odd" "even" %}">
-    <td class="answered">{% if thread.has_answer %}<img src="/static/img/answered.png" title="{% trans "Answered" %}">{% else %}&nbsp;{% endif %}</td>
+    <td class="answered">{% if thread.has_answer %}<img src="{% static img/answered.png %}" title="{% trans "Answered" %}">{% else %}&nbsp;{% endif %}</td>
     <td class="subject">
       <a href="{{ thread.get_absolute_url }}">
         {% if small %}
@@ -32,3 +32,23 @@
   {% endif %}
   {% endfor %}
 </table>
+
+{% if not threads %}
+<p id="no-letters-found">{% trans "No letters found." %}</p>
+{% endif %}
+
+{% if page and page.paginator.num_pages > 1 %}
+<div class="pager">
+  {% trans "Pages: " %}
+
+  <span class="pages">
+    {% for p in pages %}
+    {% if p.number == page.number %}
+    <span class="selected">{{ p.number }}</span>
+    {% else %}
+    <a href="{% add_get_parameter p=p.number -bare %}">{{ p.number }}</a>
+    {% endif %}
+    {% endfor %}
+  </span>
+</div>
+{% endif %}

@@ -47,9 +47,6 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
 
-# Make this unique, and don't share it with anybody.
-SECRET_KEY = 'ww7h#q+rru)mz=$e=gbyb(6n7cm0eb2!2bh+y5ahad)4iq-1vg'
-
 TEMPLATE_DIRS = (
     project_relative('templates'),
 )
@@ -82,7 +79,10 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
+
+INTERNAL_IPS = ('127.0.0.1',)
 
 APPEND_SLASH = False
 USE_ETAGS = True
@@ -103,6 +103,8 @@ INSTALLED_APPS = (
     'haystack',
     'south',
     'gunicorn',
+    'cachebuster',
+    'debug_toolbar',
 
     'web',
     'search',
@@ -111,6 +113,24 @@ INSTALLED_APPS = (
 )
 
 HAYSTACK_SITECONF = 'parasykjiems.search_sites'
+
+if not os.path.exists('settings_local.py'):
+    from shutil import copy
+    print 'Initializing local settings.'
+    copy('settings_local_default.py', 'settings_local.py')
+
+from settings_local import *
+
+from settings_local_default import \
+     LOCAL_SETTINGS_VERSION as SETTINGS_VERSION
+if LOCAL_SETTINGS_VERSION < SETTINGS_VERSION:
+    raise Exception(
+        'Local settings are version {} but should be updated to {}.'.format(
+            LOCAL_SETTINGS_VERSION,
+            SETTINGS_VERSION))
+
+TEMPLATE_DEBUG = DEBUG
+
 
 LOGGING = {
     'version': 1,
@@ -163,7 +183,7 @@ LOGGING = {
     'loggers': {
         '': {
             'level': 'DEBUG',
-            'handlers': ['mail_admins', 'warning', 'info', 'debug'],
+            'handlers': ([] if TESTING_VERSION else ['mail_admins']) + ['warning', 'info', 'debug'],
         },
         'search': {
             'level': 'INFO',
@@ -178,24 +198,6 @@ LOGGING = {
 }
 
 
-if not os.path.exists('settings_local.py'):
-    from shutil import copy
-    print 'Initializing local settings.'
-    copy('settings_local_default.py', 'settings_local.py')
-
-from settings_local import *
-
-from settings_local_default import \
-     LOCAL_SETTINGS_VERSION as SETTINGS_VERSION
-if LOCAL_SETTINGS_VERSION < SETTINGS_VERSION:
-    raise Exception(
-        'Local settings are version {} but should be updated to {}.'.format(
-            LOCAL_SETTINGS_VERSION,
-            SETTINGS_VERSION))
-
-TEMPLATE_DEBUG = DEBUG
-
-
 # Use an SQLite database for testing to avoid having to grant
 # privileges when using PostgreSQL. Also, database
 # creation/destruction is faster this way.
@@ -206,3 +208,8 @@ if len(sys.argv) > 1 and sys.argv[1] == 'test':
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': 'test',
     }
+
+# Allow usage of 'static' templatetag without explicitly loading cachebuster.
+from django.template.loader import add_to_builtins
+add_to_builtins('cachebuster.templatetags.cachebuster')
+

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-08 22:04+0200\n"
+"POT-Creation-Date: 2012-03-04 18:33+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,7 +30,7 @@ msgstr ""
 msgid "content"
 msgstr ""
 
-#: mail/feeds.py:10
+#: mail/feeds.py:25 mail/feeds.py:27
 msgid "ParašykJiems threads"
 msgstr ""
 
@@ -74,43 +74,43 @@ msgstr ""
 msgid "Message"
 msgstr ""
 
-#: mail/mail.py:139
+#: mail/mail.py:135
 msgid "Confirm your letter"
 msgstr ""
 
-#: mail/models.py:80
+#: mail/models.py:83
 msgid "unconfirmed message"
 msgstr ""
 
-#: mail/models.py:81
+#: mail/models.py:84
 msgid "unconfirmed messages"
 msgstr ""
 
-#: mail/models.py:95
+#: mail/models.py:98
 msgid "Enquiry"
 msgstr ""
 
-#: mail/models.py:96
+#: mail/models.py:99
 msgid "Response"
 msgstr ""
 
-#: mail/models.py:107
+#: mail/models.py:110
 msgid "If the message was received through SMTP, the original email text."
 msgstr ""
 
-#: mail/models.py:228
+#: mail/models.py:240
 msgid "message"
 msgstr ""
 
-#: mail/models.py:229
+#: mail/models.py:241
 msgid "messages"
 msgstr ""
 
-#: mail/models.py:294
+#: mail/models.py:336
 msgid "thread"
 msgstr ""
 
-#: mail/models.py:295
+#: mail/models.py:337
 msgid "threads"
 msgstr ""
 
@@ -122,60 +122,60 @@ msgstr ""
 msgid "House number"
 msgstr ""
 
-#: search/models.py:14 search/models.py:68 web/models.py:17
+#: search/models.py:15 search/models.py:69 web/models.py:17
 msgid "In Markdown format."
 msgstr ""
 
-#: search/models.py:17
+#: search/models.py:18
 msgid ""
 "This number is used for sorting representatives in the institution view."
 msgstr ""
 
-#: search/models.py:24
+#: search/models.py:25
 msgid "representative kind"
 msgstr ""
 
-#: search/models.py:25
+#: search/models.py:26
 msgid "representative kinds"
 msgstr ""
 
-#: search/models.py:48
+#: search/models.py:49
 msgid "representative"
 msgstr ""
 
-#: search/models.py:49
+#: search/models.py:50
 msgid "representatives"
 msgstr ""
 
-#: search/models.py:71
+#: search/models.py:72
 msgid "This number is used for sorting institutions in the location view."
 msgstr ""
 
-#: search/models.py:78
+#: search/models.py:79
 msgid "institution kind"
 msgstr ""
 
-#: search/models.py:79
+#: search/models.py:80
 msgid "institution kinds"
 msgstr ""
 
-#: search/models.py:129
+#: search/models.py:134
 msgid "institution"
 msgstr ""
 
-#: search/models.py:130
+#: search/models.py:135
 msgid "institutions"
 msgstr ""
 
-#: search/models.py:148 search/models.py:191
+#: search/models.py:153 search/models.py:196
 msgid "Name of city, town or village."
 msgstr ""
 
-#: search/models.py:216
+#: search/models.py:221
 msgid "territory"
 msgstr ""
 
-#: search/models.py:217
+#: search/models.py:222
 msgid "territories"
 msgstr ""
 
@@ -196,7 +196,7 @@ msgid "Representative search"
 msgstr ""
 
 #: templates/menu.html:12 templates/breadcrumbs/threads.html:4
-#: templates/views/threads.html:9
+#: templates/views/threads.html:10
 msgid "Open letters"
 msgstr ""
 
@@ -250,22 +250,22 @@ msgid "Recent letters"
 msgstr ""
 
 #: templates/items/institution.html:54
-msgid "All letters sent to this institution"
+msgid "More letters"
 msgstr ""
 
-#: templates/items/message.html:6
+#: templates/items/letter.html:6 templates/items/message.html:6
 msgid "From:"
 msgstr ""
 
-#: templates/items/message.html:17
+#: templates/items/letter.html:17 templates/items/message.html:17
 msgid "To:"
 msgstr ""
 
-#: templates/items/message.html:29
+#: templates/items/letter.html:29 templates/items/message.html:29
 msgid "Subject:"
 msgstr ""
 
-#: templates/items/message.html:35
+#: templates/items/letter.html:35 templates/items/message.html:35
 msgid "Date:"
 msgstr ""
 
@@ -291,6 +291,14 @@ msgstr ""
 
 #: templates/items/threads.html:16
 msgid "Answered"
+msgstr ""
+
+#: templates/items/threads.html:37
+msgid "No letters found."
+msgstr ""
+
+#: templates/items/threads.html:42
+msgid "Pages: "
 msgstr ""
 
 #: templates/views/admin_update.html:4 templates/views/admin_update.html:9
@@ -329,7 +337,11 @@ msgstr ""
 msgid "Other information"
 msgstr ""
 
-#: templates/views/confirm.html:24 templates/views/contact.html:44
+#: templates/views/admin_update.html:35
+msgid "Address"
+msgstr ""
+
+#: templates/views/confirm.html:26 templates/views/contact.html:44
 msgid "Send"
 msgstr ""
 
@@ -349,7 +361,7 @@ msgstr ""
 msgid "Continue"
 msgstr ""
 
-#: templates/views/search.html:8 templates/views/search.html.py:25
+#: templates/views/search.html:9 templates/views/search.html.py:26
 msgid "Search"
 msgstr ""
 
@@ -366,7 +378,7 @@ msgid ""
 msgstr ""
 
 #: templates/views/threads.html:26
-msgid "Pages: "
+msgid "Filter..."
 msgstr ""
 
 #: templates/views/write.html:4

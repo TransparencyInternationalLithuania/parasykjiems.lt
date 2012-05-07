@@ -1,4 +1,4 @@
-LOCAL_SETTINGS_VERSION = 11
+LOCAL_SETTINGS_VERSION = 12
 
 
 DEBUG = True
@@ -41,6 +41,10 @@ REPLY_EMAIL_PREFIX = 'reply'
 # Additional content to put into every page's head tag. Useful for
 # Google Analytics script tags.
 ADDITIONAL_HTML_HEAD = ''
+
+# Make this unique, and don't share it with anybody.
+SECRET_KEY = 'ww7h#q+rru)mz=$e=gbyb(6n7cm0eb2!2bh+y5ahad)4iq-1vg'
+
 
 DATABASES = {
     'default': {

@@ -2,8 +2,9 @@
 {% load i18n %}
 
 {% block head %}
-<script type="text/javascript" src="/static/js/threads.js"></script>
-<link rel="alternate" type="application/rss+xml" title="RSS" href="rss.xml">
+<script type="text/javascript" src="{% static js/typeahead.js %}"></script>
+<script type="text/javascript" src="{% static js/threads.js %}"></script>
+<link rel="alternate" type="application/rss+xml" title="RSS" href="rss.xml{% if request.GET.q %}?q={{ request.GET.q|urlencode }}{% endif %}">
 {% endblock %}
 
 {% block title %}{% trans "Open letters" %} &ndash; {% endblock %}
@@ -14,27 +15,19 @@
 
 {% block breadcrumbs %}
 {% include "breadcrumbs/threads.html" with active=1 %}
+
+{% if request.GET.q %}
+{% include "items/rss.html" with url="rss.xml"|add:"?q="|add:request.GET.q|urlencode:'?=' %}
+{% else %}
 {% include "items/rss.html" %}
+{% endif %}
+
+<form method="GET" class="filter"><input name="q" value="{{ request.GET.q }}"></form>
+<script type="text/javascript">window.EMPTY_FILTER = "{% trans "Filter..." %}";</script>
 {% endblock %}
 
 {% block content %}
 
 {% include "items/threads.html" with threads=threads %}
-
-{% if page.paginator.num_pages > 1 %}
-<div class="pager">
-  {% trans "Pages: " %}
-
-  <span class="pages">
-    {% for p in pages %}
-    {% if p.number == page.number %}
-    <span class="selected">{{ p.number }}</span>
-    {% else %}
-    <a href="?p={{ p.number }}">{{ p.number }}</a>
-    {% endif %}
-    {% endfor %}
-  </span>
-</div>
-{% endif %}
 
 {% endblock %}
