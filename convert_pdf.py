@@ -21,10 +21,8 @@ def to_png(pdf, png, resolution=96, oversampling=4):
         '-dSAFER',
         '-dBATCH',
         '-dNOPAUSE',
-        '-sDEVICE=pngalpha',
+        '-sDEVICE=pnggray',
         '-r{}'.format(resolution * oversampling),
-        '-dTextAlphaBits=4',
-        '-dGraphicsAlphaBits=4',
         '-sOutputFile={}'.format(png),
         pdf,
     )
@@ -35,8 +33,3 @@ def to_png(pdf, png, resolution=96, oversampling=4):
             '-resize', '{:.0%}'.format(1.0 / oversampling),       
             png
         )
-    
-
-import sys
-pdf, png = sys.argv[1:]
-to_png(pdf, png)
