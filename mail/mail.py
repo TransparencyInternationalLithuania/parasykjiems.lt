@@ -32,20 +32,16 @@ def process_incoming(envelope):
                             .format(message))
         proxy_send(message)
     except Exception as e:
-        if not message.parent:
-            find_parent(message)
         message.is_error = True
         message.save()
         logger.error(e)
 
 
 def find_parent(message):
-    env = message.envelope_object
-    tos = env.get_all('to', [])
-    ccs = env.get_all('cc', [])
-    resent_tos = env.get_all('resent-to', [])
-    resent_ccs = env.get_all('resent-cc', [])
-    all_recipients = getaddresses(tos + ccs + resent_tos + resent_ccs)
+    addresses = []
+    for header in ['to', 'delivered-to', 'cc', 'resent-to', 'resent-cc']:
+        addresses += message.envelope_object.get_all(header, [])
+    all_recipients = getaddresses(addresses)
     for to_name, to_email in all_recipients:
         m = utils.MESSAGE_EMAIL_REGEXP.match(to_email)
         if m:
