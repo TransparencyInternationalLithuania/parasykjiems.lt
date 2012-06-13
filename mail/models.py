@@ -162,10 +162,10 @@ class Message(models.Model):
 
     # These fields can be filled automatically when the message has an
     # envelope.
-    sender_name = models.CharField(max_length=_NAME_LEN)
-    sender_email = models.CharField(max_length=_NAME_LEN)
-    subject = models.CharField(max_length=_NAME_LEN)
-    body_text = models.TextField()
+    sender_name = models.CharField(max_length=_NAME_LEN, blank=True)
+    sender_email = models.CharField(max_length=_NAME_LEN, blank=True)
+    subject = models.CharField(max_length=_NAME_LEN, blank=True)
+    body_text = models.TextField(blank=True)
 
     # The message ID of the outgoing (proxied) message. Used to set the
     # in-reply-to and references headers.
