@@ -26,11 +26,12 @@ def process_incoming(envelope):
     message.save()
 
     try:
-        message.fill_from_envelope()
+        message.fill_headers()
         find_parent(message)
         if not message.parent:
             raise Exception(u'Failed to determine parent of {}'
                             .format(message))
+        message.fill_content()
         proxy_send(message)
     except Exception as e:
         message.is_error = True

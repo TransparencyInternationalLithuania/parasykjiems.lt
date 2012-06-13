@@ -110,6 +110,18 @@ class Attachment(models.Model):
         return self.file.name
 
 
+# Attachments with these mimetypes will be processed when received from a representative.
+ATTACHMENT_MIMETYPES = frozenset([
+    'application/pdf',
+    'application/msword',
+    'application/msexcel',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'application/vnd.ms-excel',
+    'application/vnd.oasis.opendocument.text',
+    'application/vnd.oasis.opendocument.spreadsheet',
+])
+
+
 class Message(models.Model):
     reply_secret = models.CharField(default=generate_secret,
                                     max_length=_SECRET_LEN,
@@ -187,7 +199,7 @@ class Message(models.Model):
         else:
             return None
 
-    def fill_from_envelope(self):
+    def fill_headers(self):
         assert(self.envelope_object)
         self.sender_name = utils.extract_name(
             utils.decode_header_unicode(self.envelope_object['from']))
@@ -196,6 +208,8 @@ class Message(models.Model):
         self.subject = utils.decode_header_unicode(
             self.envelope_object['subject'])
 
+    def fill_content(self):
+        assert(self.kind)
         plain_texts = []
         word_texts = []
         for part in self.envelope_object.walk():
@@ -209,20 +223,29 @@ class Message(models.Model):
                     if payload != '':
                         plain_texts.append(
                             payload.decode(charset))
-                elif part.get_content_type() == 'application/msword':
-                    word_texts.append(
-                        antiword.antiword_string(
-                            part.get_payload(decode=True))
-                        .replace('[pic]', '')
-                        .replace('|', ''))
-                elif part.get_content_type() == 'application/pdf':
-                    attachment = Attachment(
-                        mimetype=part.get_content_type(),
-                        original_filename=part.get_filename(),
-                        message=self,
-                    )
-                    attachment.set_content(part.get_payload(decode=True))
-                    attachment.save()
+                elif self.kind == 'response':
+                    # Only accept attachments from representatives.
+                    if part.get_content_type() == 'application/msword':
+                        word_texts.append(
+                            antiword.antiword_string(
+                                part.get_payload(decode=True))
+                            .replace('[pic]', '')
+                            .replace('|', ''))
+                    if part.get_content_type() in ATTACHMENT_MIMETYPES:
+                        attachment = Attachment(
+                            mimetype=part.get_content_type(),
+                            original_filename=part.get_filename(),
+                            message=self,
+                        )
+                        attachment.set_content(part.get_payload(decode=True))
+                        attachment.save()
+                else:
+                    logger.warning(u'Skipping attachment {} ({}) in {} {}'.format(
+                        part.get_filename(),
+                        part.get_content_type(),
+                        self.kind,
+                        self.id,
+                    ))
         if not plain_texts:
             logging.warning(u"Couldn't extract plain text out of {}"
                             .format(self))
