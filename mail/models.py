@@ -14,6 +14,7 @@ from unidecode import unidecode
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.core.files.base import ContentFile
 
 from parasykjiems.slug import SLUG_LEN
 from parasykjiems.mail import utils
@@ -80,6 +81,33 @@ class UnconfirmedMessage(models.Model):
     class Meta:
         verbose_name = _('unconfirmed message')
         verbose_name_plural = _('unconfirmed messages')
+
+
+def _attachment_filesystem_name(attachment, filename):
+    index = attachment.message.attachment_set.count() + 1
+    return 'attachment/{}-{}-{}'.format(
+        attachment.message.id,
+        index,
+        attachment.original_filename,
+    )
+
+class Attachment(models.Model):
+    message = models.ForeignKey('Message')
+    original_filename = models.CharField(max_length=200)
+    mimetype = models.CharField(max_length=200)
+    file = models.FileField(upload_to=_attachment_filesystem_name)
+
+    def get_content(self):
+        return self.file.read()
+
+    def set_content(self, content):
+        self.file.save(_attachment_filesystem_name(self, self.original_filename), ContentFile(content))
+
+    def get_absolute_url(self):
+        return self.file.url
+
+    def __unicode__(self):
+        return self.file.name
 
 
 class Message(models.Model):
@@ -170,7 +198,6 @@ class Message(models.Model):
 
         plain_texts = []
         word_texts = []
-        has_pdf = False
         for part in self.envelope_object.walk():
             if part.get_content_type() == 'message/delivery-status':
                 self.save()
@@ -186,19 +213,22 @@ class Message(models.Model):
                     word_texts.append(
                         antiword.antiword_string(
                             part.get_payload(decode=True))
-                            .replace('[pic]', '')
-                            .replace('|', ''))
+                        .replace('[pic]', '')
+                        .replace('|', ''))
                 elif part.get_content_type() == 'application/pdf':
-                    has_pdf = True
+                    attachment = Attachment(
+                        mimetype=part.get_content_type(),
+                        original_filename=part.get_filename(),
+                        message=self,
+                    )
+                    attachment.set_content(part.get_payload(decode=True))
+                    attachment.save()
         if not plain_texts:
             logging.warning(u"Couldn't extract plain text out of {}"
                             .format(self))
         body_text = '\n\n***\n\n'.join(plain_texts + word_texts)
         self.body_text = utils.remove_consequentive_empty_lines(
             utils.remove_reply_email(body_text))
-        if has_pdf:
-            raise Exception('Message {} contains PDF, not sending.'
-                            .format(self))
 
     @property
     def reply_email(self):

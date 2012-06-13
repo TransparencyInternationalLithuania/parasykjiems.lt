@@ -40,4 +40,9 @@
   <div class="body hyphenate">
     {{ message.body_text|email_blockquote|urlizetrunc:60|linebreaks }}
   </div>
+  {% for attachment in message.attachment_set.all %}
+  <div class="attachment">
+    {{ attachment.original_filename }} <a href="{{ attachment.get_absolute_url }}">Download</a> <a href="http://docs.google.com/viewer?url={{ SETTINGS.SITE_ADDRESS }}{{ attachment.get_absolute_url|urlencode }}">View</a>
+  </div>
+  {% endfor %}
 </div>

@@ -11,6 +11,7 @@ from parasykjiems.mail.models import UnconfirmedMessage, Thread, Message
 from parasykjiems.slug import generate_slug
 from parasykjiems.search.models import Representative
 
+import traceback
 import logging
 logger = logging.getLogger(__name__)
 
@@ -32,11 +33,9 @@ def process_incoming(envelope):
                             .format(message))
         proxy_send(message)
     except Exception as e:
-        if not message.parent:
-            find_parent(message)
         message.is_error = True
         message.save()
-        logger.error(e)
+        logger.error(traceback.format_exc(e))
 
 
 def find_parent(message):
@@ -92,7 +91,9 @@ def proxy_send(message):
             'SETTINGS': settings,
             'body_text': message.body_text,
             'thread': message.thread,
-        })
+        }),
+        attachments=[(a.original_filename, a.get_content(), a.mimetype)
+                     for a in message.attachment_set.all()],
     )
     if message.parent:
         email.extra_headers['References'] = message.thread.references

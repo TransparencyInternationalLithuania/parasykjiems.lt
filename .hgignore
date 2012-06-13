@@ -2,7 +2,9 @@ syntax:glob
 
 settings_local.py
 reply_fail.mbox
+gunicorn.pid
 
+*.swp
 *.pyc
 *.log
 *.db
