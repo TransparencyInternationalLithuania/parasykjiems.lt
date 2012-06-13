@@ -22,6 +22,12 @@ class UnconfirmedMessageAdmin(admin.ModelAdmin):
 admin.site.register(models.UnconfirmedMessage, UnconfirmedMessageAdmin)
 
 
+class AttachmentAdmin(admin.ModelAdmin):
+    pass
+
+admin.site.register(models.Attachment, AttachmentAdmin)
+
+
 class MessageAdmin(admin.ModelAdmin):
     readonly_fields = ('date', 'reply_secret')
     list_display = ('date',
