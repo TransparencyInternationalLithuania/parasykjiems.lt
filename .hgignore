@@ -1,3 +1,6 @@
+syntax:regexp
+^media/
+
 syntax:glob
 
 settings_local.py
@@ -5,11 +8,11 @@ reply_fail.mbox
 gunicorn.pid
 gunicorn_config.py
 
-*.swp
+.*.swp
+.*.swo
 *.pyc
 *.log
 *.db
 *~
 *.mo
 *.orig
-parasykjiems.index/*
