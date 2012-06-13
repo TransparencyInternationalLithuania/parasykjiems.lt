@@ -29,14 +29,20 @@ def process_incoming(envelope):
         message.fill_headers()
         find_parent(message)
         if not message.parent:
-            raise Exception(u'Failed to determine parent of {}'
-                            .format(message))
+            raise Exception(u'Failed to determine parent.')
+        if message.parent.is_locked:
+            raise Exception(u'Parent thread locked.')
         message.fill_content()
         proxy_send(message)
     except Exception as e:
+        trace = traceback.format_exc(e)
         message.is_error = True
+        message.error_reason = trace
         message.save()
-        logger.error(traceback.format_exc(e))
+        logger.error(u'Error processing message {}\n\n{}'.format(
+            message.get_admin_url(),
+            trace,
+        ))
 
 
 def find_parent(message):

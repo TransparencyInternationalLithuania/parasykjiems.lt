@@ -15,6 +15,7 @@ from unidecode import unidecode
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.core.files.base import ContentFile
+from django.core import urlresolvers
 
 from parasykjiems.slug import SLUG_LEN
 from parasykjiems.mail import utils
@@ -137,11 +138,17 @@ class Message(models.Model):
                     ('response', _('Response')))
     kind = models.CharField(max_length=8, choices=KIND_CHOICES, blank=True)
 
-    # True if this message is a bounce message.
+    # Set if there was a problem processing this message.
     is_error = models.BooleanField(default=False)
+    error_reason = models.TextField(blank=True)
 
-    # True if this message has been proxied to the recipient.
+    # Set when this message is proxied to the recipient.
     is_sent = models.BooleanField(default=False)
+
+    # Set when a reply with an attachment is received. The attachment may
+    # contain the reply secret, so any further replies are considered unsafe
+    # and are marked as errors for further review.
+    is_locked = models.BooleanField(default=False)
 
     envelope = models.TextField(
         blank=True,
@@ -215,7 +222,7 @@ class Message(models.Model):
         for part in self.envelope_object.walk():
             if part.get_content_type() == 'message/delivery-status':
                 self.save()
-                raise Exception('BOUNCE: {}'.format(self))
+                raise Exception('Bounce email.'.format(self))
             elif not part.is_multipart():
                 if part.get_content_type() == 'text/plain':
                     charset = part.get_content_charset()
@@ -239,6 +246,8 @@ class Message(models.Model):
                         )
                         attachment.set_content(part.get_payload(decode=True))
                         attachment.save()
+                        self.parent.is_locked = True
+                        self.parent.save()
                 else:
                     logger.warning(u'Skipping attachment {} ({}) in {} {}'.format(
                         part.get_filename(),
@@ -274,6 +283,9 @@ class Message(models.Model):
             self.thread.get_absolute_url(),
             self.id_in_thread
         )
+
+    def get_admin_url(self):
+        return settings.SITE_ADDRESS + urlresolvers.reverse('admin:mail_message_change', args=(self.id,))
 
     def __unicode__(self):
         return u'{id}:{sender} -> {recipient} ({date})'.format(
