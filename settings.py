@@ -114,10 +114,10 @@ INSTALLED_APPS = (
 
 HAYSTACK_SITECONF = 'parasykjiems.search_sites'
 
-if not os.path.exists('settings_local.py'):
+if not os.path.exists(project_relative('settings_local.py')):
     from shutil import copy
     print 'Initializing local settings.'
-    copy('settings_local_default.py', 'settings_local.py')
+    copy(project_relative('settings_local_default.py'), project_relative('settings_local.py'))
 
 from settings_local import *
 
@@ -148,14 +148,14 @@ LOGGING = {
             'class': 'logging.handlers.RotatingFileHandler',
             'level': 'DEBUG',
             'formatter': 'verbose',
-            'filename': 'logs/debug.log',
+            'filename': project_relative('logs/debug.log'),
             'maxBytes': 1024 * 1024 * 5,
         },
         'info': {
             'class': 'logging.handlers.RotatingFileHandler',
             'level': 'INFO',
             'formatter': 'verbose',
-            'filename': 'logs/info.log',
+            'filename': project_relative('logs/info.log'),
             'backupCount': 5,
             'maxBytes': 1024 * 1024 * 5,
         },
@@ -163,7 +163,7 @@ LOGGING = {
             'class': 'logging.FileHandler',
             'level': 'WARNING',
             'formatter': 'verbose',
-            'filename': 'logs/warning.log',
+            'filename': project_relative('logs/warning.log'),
         },
         'mail_admins': {
             'level': 'ERROR',
@@ -173,7 +173,7 @@ LOGGING = {
             'level': 'INFO',
             'class': 'logging.FileHandler',
             'formatter': 'search',
-            'filename': 'logs/search.log',
+            'filename': project_relative('logs/search.log'),
         },
         'null': {
             'level': 'DEBUG',
