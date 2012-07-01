@@ -16,7 +16,7 @@
   <body itemscope itemtype="http://schema.org/WebPage">
     {% if SETTINGS.TESTING_VERSION %}
     <div id="testing-version" onclick="$(this).hide()">
-      {% snippet "testing-version" %}
+      <p><strong>Pastaba:</strong> čia yra ParašykJiems versija, skirta testavimui. Laiškai atstovams nėra siunčiami, nors yra rodomi tinklalapyje.</p>
     </div>
     {% endif %}
 
@@ -44,7 +44,18 @@
       </div>
     </div>
     <div id="footer">
-      {% snippet "footer" %}
+      <p>Turite pastabų, pasiūlymų? <a href="/contact/">Susisiekite su mumis</a></p>
+      <p><a href="/about/">Apie projektą</a>
+      | <a href="/privacy/">Privatumo politika</a>
+      | <a href="/disclaimer/">Atsakomybės ribojimas</a>
+      | <a href="http://www.facebook.com/pages/Para%C5%A1ykJiemslt/240914715940379">ParašykJiems Facebooke</a></p>
+      <div>
+        ParašykJiems yra
+        <a href="http://www.transparency.lt" target="_blank">
+          <img src="/static/img/tils.png" title="Transparency International Lietuvos skyrius" alt="Transparency International Lietuvos skyriaus">
+        </a>
+        projektas.
+      </div>
     </div>
   </body>
 </html>

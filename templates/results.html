@@ -12,20 +12,39 @@
 </ul>
 
 {% if more_results %}
-{% snippet "more-results" %}
+<div class="note"><strong>Pastaba:</strong> yra daugiau rezultatų atitinkančių jūsų užklausą. Pabandykite susiaurinti savo paiešką panaudodami daugiau žodžių.</div>
 {% endif %}
 
 {% else %}
-{% snippet "nothing-found" %}
+<p>Pagal Jūsų įvestus kriterijus sistema nieko nerado.</p>
+<p>Patarimai:</p>
+<ul>
+  <li>Pasitikrinkite, ar nėra klaidų.</li>
+  <li>Jei Jūsų įvestas adresas yra naujas, pabandykite įvesti šalia esančio, senesnio pastato adresą.</li>
+  <li>Sistema yra nuolat atnaujinama, pastebėję klaidą <a href="/contact/">praneškite mums</a>.</li>
+</ul>
 {% endif %}
 
 {% else %}
 <div class="search-advice">
   <div>
-    {% snippet "search-advice" %}
+    <p><strong>Galite ieškoti įvesdami:</strong></p>
+    <ul>
+      <li>rūpimo adreso dalį,</li>
+      <li>visą adresą su namo numeriu,</li>
+      <li>atstovo pavardę,</li>
+      <li>institucijos pavadinimą.</li>
+    </ul>
+    <p>Pavyzdžiui: <em>Didžioji g. 5, Vilnius</em></p>
   </div>
   <div>
-    {% snippet "search-advice-right" %}
+    <p><strong>Atstovų galite ieškoti šiose institucijose:</strong></p>
+    <ul>
+      <li>seniūnijoje,</li>
+      <li>savivaldybėje,</li>
+      <li>ministerijoje,</li>
+      <li>Seime.</li>
+    </ul>
   </div>
 </div>
 {% endif %}
