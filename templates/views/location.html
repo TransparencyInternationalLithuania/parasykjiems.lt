@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n snippet %}
+{% load i18n %}
 
 {% block title %}{{ title }} &ndash; {% endblock %}
 
@@ -33,6 +33,9 @@
 <hr>
 {% endfor %}
 
-{% snippet "location-footer" %}
+<p>Jei nerandate savo atstovo ar duomenyse pastebėjote klaidų bei netikslumų,
+prašome mums apie juos pranešti el. paštu <a
+  href="mailto:feedback@parasykjiems.lt">feedback@parasykjiems.lt</a>, arba
+telefonu 8 5 212 69 51.</p>
 
 {% endblock %}

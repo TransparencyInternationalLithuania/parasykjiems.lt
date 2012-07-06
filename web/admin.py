@@ -24,14 +24,3 @@ class ArticleAdmin(admin.ModelAdmin):
 
 admin.site.register(models.Article, ArticleAdmin)
 
-
-class SnippetAdmin(admin.ModelAdmin):
-    exclude = ('body_rendered',)
-    list_display = ('name', 'body_summary')
-    ordering = ('name',)
-
-    def body_summary(self, obj):
-        return summary(obj.body)
-    body_summary.short_description = _('content')
-
-admin.site.register(models.Snippet, SnippetAdmin)

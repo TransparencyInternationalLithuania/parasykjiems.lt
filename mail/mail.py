@@ -11,6 +11,7 @@ from parasykjiems.mail.models import UnconfirmedMessage, Thread, Message
 from parasykjiems.slug import generate_slug
 from parasykjiems.search.models import Representative
 
+import traceback
 import logging
 logger = logging.getLogger(__name__)
 
@@ -25,16 +26,23 @@ def process_incoming(envelope):
     message.save()
 
     try:
-        message.fill_from_envelope()
+        message.fill_headers()
         find_parent(message)
         if not message.parent:
-            raise Exception(u'Failed to determine parent of {}'
-                            .format(message))
+            raise Exception(u'Failed to determine parent.')
+        if message.parent.is_locked:
+            raise Exception(u'Parent thread locked.')
+        message.fill_content()
         proxy_send(message)
     except Exception as e:
+        trace = traceback.format_exc(e)
         message.is_error = True
+        message.error_reason = trace
         message.save()
-        logger.error(e)
+        logger.error(u'Error processing message {}\n\n{}'.format(
+            message.get_admin_url(),
+            trace,
+        ))
 
 
 def find_parent(message):
@@ -88,7 +96,9 @@ def proxy_send(message):
             'SETTINGS': settings,
             'body_text': message.body_text,
             'thread': message.thread,
-        })
+        }),
+        attachments=[(a.original_filename, a.get_content(), a.mimetype)
+                     for a in message.attachment_set.all()],
     )
     if message.parent:
         email.extra_headers['References'] = message.thread.references
@@ -101,12 +111,7 @@ def proxy_send(message):
     logger.info(u"SENT: {}".format(message))
 
 
-def submit_message(sender_name,
-                   sender_email,
-                   recipient,
-                   subject,
-                   body_text,
-                   is_public):
+def submit_message(sender_name, sender_email, recipient, subject, body_text):
     """Creates an unconfirmed message with given parameters, but
     doesn't send it. Instead, sends the user a confirmation email.
     """
@@ -116,7 +121,6 @@ def submit_message(sender_name,
         sender_email=sender_email,
         subject=subject,
         body_text=body_text,
-        is_public=is_public,
     )
 
     if isinstance(recipient, Representative):
@@ -146,19 +150,17 @@ def confirm_and_send(unconfirmed_message):
     Creates a Thread and a Message (which contains the sent envelope).
     """
 
-    thread = Thread(is_public=unconfirmed_message.is_public,
-                    institution=unconfirmed_message.institution,
+    thread = Thread(institution=unconfirmed_message.institution,
                     representative=unconfirmed_message.representative,
                     sender_name=unconfirmed_message.sender_name,
                     sender_email=unconfirmed_message.sender_email,
                     recipient_name=unconfirmed_message.recipient.name,
                     recipient_email=unconfirmed_message.recipient.email,
                     subject=unconfirmed_message.subject)
-    if thread.is_public:
-        generate_slug(thread,
-                      Thread.objects.filter(is_public=True),
-                      lambda t: [t.subject])
-        thread.update_filter_keywords()
+    generate_slug(thread,
+                  Thread.objects.all(),
+                  lambda t: [t.subject])
+    thread.update_filter_keywords()
     thread.save()
 
     message = Message(

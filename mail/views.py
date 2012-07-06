@@ -40,8 +40,7 @@ def write(request, recipient):
                 sender_email=form.cleaned_data['email'],
                 recipient=recipient,
                 subject=form.cleaned_data['subject'],
-                body_text=form.cleaned_data['body'],
-                is_public=True)
+                body_text=form.cleaned_data['body'])
 
             return redirect(reverse(write_confirm) +
                             '?' + choice_state.query_string())
@@ -78,10 +77,7 @@ def confirm(request, id, confirm_secret):
 
     if request.method == 'POST':
         thread = mail.confirm_and_send(unc_message)
-        if thread.is_public:
-            return redirect(reverse(sent, kwargs={'slug': thread.slug}))
-        else:
-            return redirect(reverse(sent))
+        return redirect(reverse(sent, kwargs={'slug': thread.slug}))
     else:
         return render(request, 'views/confirm.html', {
             'message': unc_message,
@@ -89,10 +85,7 @@ def confirm(request, id, confirm_secret):
 
 
 def sent(request, slug=None):
-    if slug:
-        thread = get_object_or_404(Thread, slug=slug, is_public=True)
-    else:
-        thread = None
+    thread = get_object_or_404(Thread, slug=slug)
     return render(request, 'views/sent.html', {'thread': thread})
 
 
@@ -100,10 +93,8 @@ MAX_THREADS = 40
 
 
 def thread(request, slug):
-    thread = get_object_or_404(Thread, slug=slug, is_public=True)
-    all_threads = (Thread.objects
-                   .filter(is_public=True)
-                   .order_by('-created_at'))
+    thread = get_object_or_404(Thread, slug=slug)
+    all_threads = Thread.objects.order_by('-created_at')
     position = list(all_threads).index(thread)
     page_number = (position // MAX_THREADS) + 1
 
@@ -115,19 +106,14 @@ def thread(request, slug):
 
 def _latest_thread(request, institution_slug=None):
     try:
-        return (Thread.objects
-                .filter(is_public=True)
-                .latest('modified_at')
-                .modified_at)
+        return Thread.objects.latest('modified_at').modified_at
     except ObjectDoesNotExist:
         return datetime.datetime.now()
 
 
 @last_modified(_latest_thread)
 def threads(request):
-    threads = (Thread.objects
-                   .filter(is_public=True)
-                   .order_by('-created_at'))
+    threads = Thread.objects.order_by('-created_at')
 
     if 'q' in request.GET and request.GET['q'].strip() != '':
         threads = threads.filter(Thread.make_filter_query(request.GET['q']))

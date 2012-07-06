@@ -14,6 +14,8 @@ from unidecode import unidecode
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.core.files.base import ContentFile
+from django.core import urlresolvers
 
 from parasykjiems.slug import SLUG_LEN
 from parasykjiems.mail import utils
@@ -45,8 +47,6 @@ class UnconfirmedMessage(models.Model):
     sender_email = models.EmailField(max_length=_NAME_LEN)
     subject = models.CharField(max_length=400)
     body_text = models.TextField()
-
-    is_public = models.BooleanField()
 
     submitted_at = models.DateTimeField(auto_now_add=True)
 
@@ -84,6 +84,45 @@ class UnconfirmedMessage(models.Model):
         verbose_name_plural = _('unconfirmed messages')
 
 
+def _attachment_filesystem_name(attachment, filename):
+    index = attachment.message.attachment_set.count() + 1
+    return 'attachment/{}-{}-{}'.format(
+        attachment.message.id,
+        index,
+        attachment.original_filename,
+    )
+
+class Attachment(models.Model):
+    message = models.ForeignKey('Message')
+    original_filename = models.CharField(max_length=200)
+    mimetype = models.CharField(max_length=200)
+    file = models.FileField(upload_to=_attachment_filesystem_name)
+
+    def get_content(self):
+        return self.file.read()
+
+    def set_content(self, content):
+        self.file.save(_attachment_filesystem_name(self, self.original_filename), ContentFile(content))
+
+    def get_absolute_url(self):
+        return self.file.url
+
+    def __unicode__(self):
+        return self.file.name
+
+
+# Attachments with these mimetypes will be processed when received from a representative.
+ATTACHMENT_MIMETYPES = frozenset([
+    'application/pdf',
+    'application/msword',
+    'application/msexcel',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'application/vnd.ms-excel',
+    'application/vnd.oasis.opendocument.text',
+    'application/vnd.oasis.opendocument.spreadsheet',
+])
+
+
 class Message(models.Model):
     reply_secret = models.CharField(default=generate_secret,
                                     max_length=_SECRET_LEN,
@@ -99,11 +138,17 @@ class Message(models.Model):
                     ('response', _('Response')))
     kind = models.CharField(max_length=8, choices=KIND_CHOICES, blank=True)
 
-    # True if this message is a bounce message.
+    # Set if there was a problem processing this message.
     is_error = models.BooleanField(default=False)
+    error_reason = models.TextField(blank=True)
 
-    # True if this message has been proxied to the recipient.
+    # Set when this message is proxied to the recipient.
     is_sent = models.BooleanField(default=False)
+
+    # Set when a reply with an attachment is received. The attachment may
+    # contain the reply secret, so any further replies are considered unsafe
+    # and are marked as errors for further review.
+    is_locked = models.BooleanField(default=False)
 
     envelope = models.TextField(
         blank=True,
@@ -117,10 +162,10 @@ class Message(models.Model):
 
     # These fields can be filled automatically when the message has an
     # envelope.
-    sender_name = models.CharField(max_length=_NAME_LEN)
-    sender_email = models.CharField(max_length=_NAME_LEN)
-    subject = models.CharField(max_length=_NAME_LEN)
-    body_text = models.TextField()
+    sender_name = models.CharField(max_length=_NAME_LEN, blank=True)
+    sender_email = models.CharField(max_length=_NAME_LEN, blank=True)
+    subject = models.CharField(max_length=_NAME_LEN, blank=True)
+    body_text = models.TextField(blank=True)
 
     # The message ID of the outgoing (proxied) message. Used to set the
     # in-reply-to and references headers.
@@ -161,7 +206,7 @@ class Message(models.Model):
         else:
             return None
 
-    def fill_from_envelope(self):
+    def fill_headers(self):
         assert(self.envelope_object)
         self.sender_name = utils.extract_name(
             utils.decode_header_unicode(self.envelope_object['from']))
@@ -170,13 +215,14 @@ class Message(models.Model):
         self.subject = utils.decode_header_unicode(
             self.envelope_object['subject'])
 
+    def fill_content(self):
+        assert(self.kind)
         plain_texts = []
         word_texts = []
-        has_pdf = False
         for part in self.envelope_object.walk():
             if part.get_content_type() == 'message/delivery-status':
                 self.save()
-                raise Exception('BOUNCE: {}'.format(self))
+                raise Exception('Bounce email.'.format(self))
             elif not part.is_multipart():
                 if part.get_content_type() == 'text/plain':
                     charset = part.get_content_charset()
@@ -184,23 +230,37 @@ class Message(models.Model):
                     if payload != '':
                         plain_texts.append(
                             payload.decode(charset))
-                elif part.get_content_type() == 'application/msword':
-                    word_texts.append(
-                        antiword.antiword_string(
-                            part.get_payload(decode=True))
+                elif self.kind == 'response':
+                    # Only accept attachments from representatives.
+                    if part.get_content_type() == 'application/msword':
+                        word_texts.append(
+                            antiword.antiword_string(
+                                part.get_payload(decode=True))
                             .replace('[pic]', '')
                             .replace('|', ''))
-                elif part.get_content_type() == 'application/pdf':
-                    has_pdf = True
+                    if part.get_content_type() in ATTACHMENT_MIMETYPES:
+                        attachment = Attachment(
+                            mimetype=part.get_content_type(),
+                            original_filename=part.get_filename(),
+                            message=self,
+                        )
+                        attachment.set_content(part.get_payload(decode=True))
+                        attachment.save()
+                        self.parent.is_locked = True
+                        self.parent.save()
+                else:
+                    logger.warning(u'Skipping attachment {} ({}) in {} {}'.format(
+                        part.get_filename(),
+                        part.get_content_type(),
+                        self.kind,
+                        self.id,
+                    ))
         if not plain_texts:
             logging.warning(u"Couldn't extract plain text out of {}"
                             .format(self))
         body_text = '\n\n***\n\n'.join(plain_texts + word_texts)
         self.body_text = utils.remove_consequentive_empty_lines(
             utils.remove_reply_email(body_text))
-        if has_pdf:
-            raise Exception('Message {} contains PDF, not sending.'
-                            .format(self))
 
     @property
     def reply_email(self):
@@ -224,6 +284,9 @@ class Message(models.Model):
             self.id_in_thread
         )
 
+    def get_admin_url(self):
+        return settings.SITE_ADDRESS + urlresolvers.reverse('admin:mail_message_change', args=(self.id,))
+
     def __unicode__(self):
         return u'{id}:{sender} -> {recipient} ({date})'.format(
             id=self.id,
@@ -242,8 +305,6 @@ class Thread(models.Model):
                             db_index=True)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
-
-    is_public = models.BooleanField(default=False)
 
     # These link to the institution or representative participating in
     # this thread. At most one of them should be non-null.

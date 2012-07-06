@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n snippet %}
+{% load i18n %}
 
 {% block menu %}
 {% include "menu.html" %}
@@ -13,11 +13,12 @@
 
 {% block content %}
 
-{% snippet "confirm-letter" %}
+<p>Peržiūrėkite laišką ir, jeigu viskas gerai, paspauskite mygtuką
+„Siųsti“.</p>
 
-{% if message.is_public %}
-{% snippet "confirm-open-letter" %}
-{% endif %}
+<p><strong>Pastaba:</strong> Šis laiškas yra atviras ir po išsiuntimo jis bus
+matomas svetainėje. Įsitikinkite, kad laiške nėra jokių asmeninių duomenų,
+kurių nenorite viešinti.</p>
 
 {% include "items/message.html" with message=message %}
 

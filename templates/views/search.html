@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n snippet %}
+{% load i18n %}
 
 {% block head %}
 <script type="text/javascript" src="{% static js/typeahead.js %}/"></script>
@@ -18,7 +18,8 @@
 
 {% block content %}
 
-{% snippet "search-description" %}
+<p>„ParašykJiems.lt“ – tai lengvas būdas surasti savo atstovus valstybinėse
+institucijose ir su jais susisiekti.</p>
 
 <form name="search">
   <input name="q" value="{{ search_query }}">

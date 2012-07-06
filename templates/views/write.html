@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n snippet %}
+{% load i18n %}
 
 {% block title %}{% trans "Write letter" %} &ndash; {{ recipient.name }} &ndash; {% endblock %}
 
@@ -11,7 +11,8 @@
 
 {% block content %}
 
-{% snippet "write" %}
+<p>Jeigu Jums reikia pagalbos rašant elektroninį laišką atstovui, paskaitykite
+straipsnį <a href="/help/3/" target="_blank">„Kaip rašyti laišką?“</a></p>
 
 <form method="POST">
   {% csrf_token %}
