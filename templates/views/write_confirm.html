@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n snippet %}
+{% load i18n %}
 
 {% block title %}{% trans "Confirm letter" %} &ndash; {% endblock %}
 
@@ -11,5 +11,9 @@
 {% endblock %}
 
 {% block content %}
-{% snippet "write-confirm" %}
+<p>Pasitikrinkite savo elektroninį paštą. Mes Jums išsiuntėme patvirtinimo
+nuorodą. Jūs turite patvirtinti savo laišką prieš tai, kai jis bus
+išsiųstas.</p> <p>Jeigu negaunate laiško, pasitikrinkite brukalo (spam)
+katalogą. Jei ir ten jo nėra, <a href="/contact/">praneškite mums</a> apie
+tai.</p>
 {% endblock %}

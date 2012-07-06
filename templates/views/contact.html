@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n snippet %}
+{% load i18n %}
 
 {% block title %}{% trans "Contact us" %} &ndash; {% endblock %}
 
@@ -9,7 +9,9 @@
 
 {% block content %}
 
-{% snippet "contacts" %}
+<p>Su mumis susisiekti galite elektroniniu paštu <a
+  href="mailto:feedback@parasykjiems.lt">feedback@parasykjiems.lt</a>, telefonu
+8&nbsp;5&nbsp;212&nbsp;69&nbsp;51 arba naudodami žemiau esančią formą.</p>
 
 <form method="POST">
   {% csrf_token %}

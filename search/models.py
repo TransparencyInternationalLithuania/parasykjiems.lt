@@ -119,10 +119,7 @@ class Institution(models.Model):
         for rep in Representative.objects.filter(institution=self):
             query = query | models.Q(representative=rep)
         from mail.models import Thread
-        return (Thread.objects
-                .filter(is_public=True)
-                .filter(query)
-                .order_by('-created_at'))
+        return Thread.objects.filter(query).order_by('-created_at')
 
     def recent_threads(self, count=10):
         return self.threads[:count]

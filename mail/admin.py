@@ -7,7 +7,6 @@ from django.utils.translation import ugettext_lazy as _
 class UnconfirmedMessageAdmin(admin.ModelAdmin):
     readonly_fields = ('id', 'confirm_secret', 'submitted_at')
     list_display = ('submitted_at',
-                    'is_public',
                     'sender_name',
                     'sender_email',
                     'recipient_name',
@@ -15,13 +14,18 @@ class UnconfirmedMessageAdmin(admin.ModelAdmin):
                     'body_summary')
     ordering = ('-submitted_at',)
     search_fields = ('sender_name', 'recipient_name', 'subject')
-    list_filter = ('is_public',)
 
     def body_summary(self, obj):
         return summary(obj.body_text)
     body_summary.short_description = _('content')
 
 admin.site.register(models.UnconfirmedMessage, UnconfirmedMessageAdmin)
+
+
+class AttachmentAdmin(admin.ModelAdmin):
+    pass
+
+admin.site.register(models.Attachment, AttachmentAdmin)
 
 
 class MessageAdmin(admin.ModelAdmin):
@@ -47,10 +51,9 @@ admin.site.register(models.Message, MessageAdmin)
 
 
 class ThreadAdmin(admin.ModelAdmin):
-    list_display = ('created_at', 'is_public', 'sender_name',
+    list_display = ('created_at', 'sender_name',
                     'recipient', 'subject', 'has_answer', 'has_errors')
     readonly_fields = ('messages',)
-    list_filter = ('is_public',)
     ordering = ('-created_at',)
 
 admin.site.register(models.Thread, ThreadAdmin)
