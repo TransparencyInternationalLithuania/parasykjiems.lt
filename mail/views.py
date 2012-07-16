@@ -144,4 +144,4 @@ def threads(request):
 
 def threads_institution(request, institution_slug):
     institution = get_object_or_404(Institution, slug=institution_slug)
-    return redirect(institution.threads_url())
+    return redirect(institution.threads_url(), permanent=True)
