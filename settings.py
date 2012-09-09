@@ -112,8 +112,6 @@ INSTALLED_APPS = (
     'scrape',
 )
 
-HAYSTACK_SITECONF = 'parasykjiems.search_sites'
-
 if not os.path.exists(project_relative('settings_local.py')):
     from shutil import copy
     print 'Initializing local settings.'

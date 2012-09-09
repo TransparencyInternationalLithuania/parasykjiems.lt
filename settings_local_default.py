@@ -1,4 +1,4 @@
-LOCAL_SETTINGS_VERSION = 12
+LOCAL_SETTINGS_VERSION = 13
 
 
 DEBUG = True
@@ -57,5 +57,10 @@ DATABASES = {
     }
 }
 
-HAYSTACK_SEARCH_ENGINE = 'whoosh'
-HAYSTACK_WHOOSH_PATH = 'parasykjiems.index'
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+        'URL': 'http://127.0.0.1:9200/',
+        'INDEX_NAME': 'parasykjiems',
+    },
+}
