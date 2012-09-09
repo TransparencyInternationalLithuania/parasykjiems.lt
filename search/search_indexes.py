@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import haystack.indexes as indexes
-from haystack import site
+from haystack import indexes
 from unidecode import unidecode
 
 from search.models import Institution, Representative, Location
@@ -100,13 +99,16 @@ def get_institution_boost(name):
     return 1
 
 
-class InstitutionIndex(indexes.SearchIndex):
+class InstitutionIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True)
     auto = indexes.EdgeNgramField(model_attr='name')
 
     title = indexes.CharField(model_attr='name', indexed=False)
     subtitle = indexes.CharField(indexed=False)
     url = indexes.CharField(model_attr='get_absolute_url', indexed=False)
+
+    def get_model(self):
+        return Institution
 
     def prepare_text(self, obj):
         return join_text([obj.name] +
@@ -127,16 +129,16 @@ class InstitutionIndex(indexes.SearchIndex):
         return Institution.objects.exclude(slug='')
 
 
-site.register(Institution, InstitutionIndex)
-
-
-class RepresentativeIndex(indexes.SearchIndex):
+class RepresentativeIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True)
     auto = indexes.EdgeNgramField(model_attr='name')
 
     title = indexes.CharField(model_attr='name', indexed=False)
     subtitle = indexes.CharField(indexed=False)
     url = indexes.CharField(model_attr='get_absolute_url', indexed=False)
+
+    def get_model(self):
+        return Representative
 
     def prepare_text(self, obj):
         name_variants = lithuanian.name_abbreviations(obj.name, abbr_last_name=True)
@@ -159,10 +161,7 @@ class RepresentativeIndex(indexes.SearchIndex):
         return Representative.objects.exclude(slug='')
 
 
-site.register(Representative, RepresentativeIndex)
-
-
-class LocationIndex(indexes.SearchIndex):
+class LocationIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True)
     auto = indexes.EdgeNgramField()
     numbered = indexes.BooleanField(indexed=True)
@@ -170,6 +169,9 @@ class LocationIndex(indexes.SearchIndex):
     title = indexes.CharField(indexed=False)
     subtitle = indexes.CharField(indexed=False)
     url = indexes.CharField(model_attr='get_absolute_url', indexed=False)
+
+    def get_model(self):
+        return Location
 
     def prepare_text(self, obj):
         items = ([obj.elderate,
@@ -210,5 +212,3 @@ class LocationIndex(indexes.SearchIndex):
         if obj.street == None:
             data['boost'] -= 0.1
         return data
-
-site.register(Location, LocationIndex)
