@@ -19,8 +19,9 @@ from django.core import urlresolvers
 
 from parasykjiems.slug import SLUG_LEN
 from parasykjiems.mail import utils
-import antiword
 import settings
+import antiword
+from dehtml import dehtml
 
 import logging
 logger = logging.getLogger(__name__)
@@ -219,6 +220,8 @@ class Message(models.Model):
         assert(self.kind)
         plain_texts = []
         word_texts = []
+        html_texts = []
+        has_attachment = False
         for part in self.envelope_object.walk():
             if part.get_content_type() == 'message/delivery-status':
                 self.save()
@@ -230,6 +233,12 @@ class Message(models.Model):
                     if payload != '':
                         plain_texts.append(
                             payload.decode(charset))
+                elif part.get_content_type() == 'text/html':
+                    charset = part.get_content_charset()
+                    payload = part.get_payload(decode=True)
+                    if payload != '':
+                        html_texts.append(
+                            dehtml(payload.decode(charset)))
                 elif self.kind == 'response':
                     # Only accept attachments from representatives.
                     if part.get_content_type() == 'application/msword':
@@ -239,6 +248,7 @@ class Message(models.Model):
                             .replace('[pic]', '')
                             .replace('|', ''))
                     if part.get_content_type() in ATTACHMENT_MIMETYPES:
+                        has_attachment = True
                         attachment = Attachment(
                             mimetype=part.get_content_type(),
                             original_filename=part.get_filename(),
@@ -255,10 +265,9 @@ class Message(models.Model):
                         self.kind,
                         self.id,
                     ))
-        if not plain_texts:
-            logging.warning(u"Couldn't extract plain text out of {}"
-                            .format(self))
-        body_text = '\n\n***\n\n'.join(plain_texts + word_texts)
+        if not (plain_texts or html_texts or word_texts or has_attachment):
+            raise Exception("Couldn't extract any content")
+        body_text = '\n\n***\n\n'.join((plain_texts or html_texts) + word_texts)
         self.body_text = utils.remove_consequentive_empty_lines(
             utils.remove_reply_email(body_text))
 
