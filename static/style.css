@@ -949,3 +949,7 @@ a.help4:hover { background: #984e79; }
     display: block;
     margin-bottom: 1em;
 }
+
+.attachment a {
+    margin-left: 0.5em;
+}
