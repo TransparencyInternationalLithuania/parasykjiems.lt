@@ -1,48 +1,56 @@
-from django.shortcuts import render, redirect
-from django.template.loader import render_to_string
-from django.core.mail import send_mail
-from django.core.urlresolvers import reverse
+# -*- coding: utf-8 -*-
 
-from forms import FeedbackForm
+from django.shortcuts import render, redirect, get_object_or_404
+from django.core.mail import EmailMessage
+from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext as _
+from django.views.decorators.cache import cache_control
+from email.utils import formataddr
+
+from forms import ContactForm
+from models import Article
 import settings
 
 
-def about(request):
-    return render(request, 'views/about.html')
-
-
-def help_view(request):
-    return render(request, 'views/help.html')
-
-
-def feedback(request):
+@cache_control(public=False)
+def contact(request):
     if request.method == 'POST':
-        form = FeedbackForm(request.POST)
+        form = ContactForm(request.POST)
         if form.is_valid():
-            message = render_to_string('mail/feedback.txt', {
-                'form_data': form.cleaned_data,
-                'ip': request.META['REMOTE_ADDR'],
-            })
+            user_address = formataddr((form.cleaned_data['name'],
+                                       form.cleaned_data['email']))
 
-            send_mail(
-                from_email=u'{name} <{email}>'.format(**form.cleaned_data),
-                subject=form.cleaned_data['subject'],
-                message=message,
-                recipient_list=[settings.FEEDBACK_EMAIL],
-            )
-            return redirect(reverse(feedback_thanks))
+            EmailMessage(
+                from_email=formataddr((u'ParašykJiems',
+                                       settings.SERVER_EMAIL)),
+                to=[settings.FEEDBACK_EMAIL],
+                subject=(_(u'Feedback from {}').format(
+                    form.cleaned_data['name'])),
+                body=form.cleaned_data['message'],
+                headers={'Reply-To': user_address},
+            ).send()
+            return redirect(reverse(contact_thanks))
     else:
-        form = FeedbackForm()
+        form = ContactForm()
 
-    return render(request, 'views/feedback.html', {
+    return render(request, 'views/contact.html', {
         'form': form,
     })
 
 
-def feedback_thanks(request):
-    return render(request, 'views/feedback_thanks.html')
+def contact_thanks(request):
+    return render(request, 'views/contact_thanks.html')
 
 
-def setlang(request, language):
-    request.session['django_language'] = language
-    return redirect(request.META.get('HTTP_REFERER', '/'))
+@cache_control(max_age=60 * 60 * 24 * 7, public=True)
+def robots_txt(request):
+    # The actual content of robots.txt depends on
+    # settings.TESTING_VERSION. The testing version disallows /.
+    return render(request, 'robots.txt', content_type='text/plain')
+
+
+def article(request, location):
+    art = get_object_or_404(Article, location=location)
+    return render(request, 'views/article.html', {
+        'article': art,
+    })

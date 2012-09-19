@@ -1,9 +1,12 @@
+# -*- coding: utf-8 -*-
+
 from django.core.management.base import BaseCommand
 from progressbar import ProgressBar, Bar, ETA
 
 from parasykjiems.slug import generate_slug
 from search.models import Institution, Representative, Location
-from mail.models import Enquiry
+from search import utils
+from mail.models import Thread
 
 
 def generate_slugs(query, part_getter):
@@ -23,20 +26,26 @@ class Command(BaseCommand):
     help = """Generates slugs for models."""
 
     def handle(self, *args, **options):
-        generate_slugs(Institution.objects.filter(kind__active=True),
-                       lambda i: [i.name,
-                                  i.kind.name])
+        print 'Generating slugs for:'
 
-        generate_slugs(Representative.objects.filter(kind__active=True),
+        print ' - Institution'
+
+        generate_slugs(Institution.objects.all(),
+                       lambda i: utils.split_institution_name(i.name))
+
+        print ' - Representative'
+        generate_slugs(Representative.objects.all(),
                        lambda r: [r.name,
                                   r.kind.name,
                                   r.institution.name])
 
+        print ' - Location'
         generate_slugs(Location.objects.all(),
                        lambda loc: [loc.street,
                                     loc.city,
                                     loc.elderate,
                                     loc.municipality])
 
-        generate_slugs(Enquiry.objects.filter(is_open=True, is_sent=True),
-                       lambda e: [e.subject])
+        print ' - Thread'
+        generate_slugs(Thread.objects.all(),
+                       lambda t: [t.subject])

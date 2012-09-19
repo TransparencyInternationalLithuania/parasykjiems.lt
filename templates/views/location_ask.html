@@ -2,7 +2,7 @@
 {% load i18n %}
 
 {% block head %}
-<script type="text/javascript" src="/static/js/location_ask.js"></script>
+<script type="text/javascript" src="{% static js/location_ask.js %}"></script>
 {% endblock %}
 
 {% block menu %}
@@ -17,6 +17,6 @@
 <form name="ask" method="POST">
   {% csrf_token %}
   {{ form.as_p }}
-  <input label="{% trans "Continue" %}" type="submit"></input>
+  <input value="{% trans "Continue" %}" type="submit">
 </form>
 {% endblock %}

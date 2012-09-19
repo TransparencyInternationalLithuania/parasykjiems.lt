@@ -1,35 +1,62 @@
 {% load i18n %}
+{% spaceless %}
 <!DOCTYPE html>
-<html>
+<html lang="lt">
   <head>
+    <link rel="stylesheet" type="text/css" href="{% static style.css %}">
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <link rel="icon" type="image/png" href="/static/img/favicon.png" />
-    <link rel="stylesheet" href="/static/style.css" />
-    <title>{% block title %}ParašykJiems{% endblock %}</title>
-    <script type="text/javascript" src="/static/js/jquery.min.js"></script>
-    {% block head %}
-    {% endblock %}
+    <link rel="icon" type="image/png" href="{% static img/favicon.png %}">
+    <title>{% block title %}{% endblock %}ParašykJiems</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script type="text/javascript" src="{% static js/hyphenator.js %}"></script>
+    <script type="text/javascript" src="{% static js/folding.js %}"></script>
+    {% block head %}{% endblock %}
+    {{ SETTINGS.ADDITIONAL_HTML_HEAD|safe }}
   </head>
-  <body>
+  <body itemscope itemtype="http://schema.org/WebPage">
+    {% if SETTINGS.TESTING_VERSION %}
+    <div id="testing-version" onclick="$(this).hide()">
+      <p><strong>Pastaba:</strong> čia yra ParašykJiems versija, skirta testavimui. Laiškai atstovams nėra siunčiami, nors yra rodomi tinklalapyje.</p>
+    </div>
+    {% endif %}
+
     <div id="main-block">
       <div id="header">
-        <a href="/"><img id="logo" src="/static/img/logo.png" alt="{% trans "ParašykJiems" %}"></a>
-        <ul id="menu">
-          {% block menu %}
-          {% include "menu.html" %}
+        <div id="inner-header">
+          <div>
+            <a href="/"><img id="logo" src="{% static img/logo.png %}" alt="{% trans "ParašykJiems" %}"></a>
+          </div>
+          <ul id="menu">
+            {% block menu %}
+            {% include "menu.html" %}
+            {% endblock %}
+          </ul>
+        </div>
+      </div>
+      <div id="container">
+        <ul itemprop="breadcrumb" id="breadcrumbs">
+          {% block breadcrumbs %}
           {% endblock %}
         </ul>
-      </div>
-      <ul id="breadcrumbs">
-        {% block breadcrumbs %}
-        {% endblock %}
-      </ul>
-      <div id="content">
-        {% block content %}{% endblock %}
+        <div id="content">
+          {% block content %}{% endblock %}
+        </div>
       </div>
     </div>
     <div id="footer">
-      {% trans "Have any notes, suggestions?" %} <a href="{% url feedback %}" >{% trans "Write to us." %}</a>
+      <p>Turite pastabų, pasiūlymų? <a href="/contact/">Susisiekite su mumis</a></p>
+      <p><a href="/about/">Apie projektą</a>
+      | <a href="/privacy/">Privatumo politika</a>
+      | <a href="/disclaimer/">Atsakomybės ribojimas</a>
+      | <a href="http://www.facebook.com/pages/Para%C5%A1ykJiemslt/240914715940379">ParašykJiems Facebooke</a></p>
+      <div>
+        ParašykJiems yra
+        <a href="http://www.transparency.lt" target="_blank">
+          <img src="/static/img/tils.png" title="Transparency International Lietuvos skyrius" alt="Transparency International Lietuvos skyriaus">
+        </a>
+        projektas.
+      </div>
     </div>
   </body>
 </html>
+{% endspaceless %}

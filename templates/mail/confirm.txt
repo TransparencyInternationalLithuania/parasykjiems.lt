@@ -1,15 +1,15 @@
-Gerb. p. {{ enquiry.sender_name }},
+{% autoescape off %}Gerb. p. {{ message.sender_name }},
 
-Svetainėje ParašykJiems.lt iš Jūsų adreso buvo parašytas laiškas
-valdžios atstovui.
+Svetainėje ParašykJiems.lt naudojant Jūsų el. pašto adresą
+buvo parašytas laiškas valdžios atstovui.
 
-Laiško gavėjas: {{ enquiry.recipient.kind }} {{ enquiry.recipient.name }}
-Laiško tema: {{ enquiry.subject }}
+Laiško gavėjas: {{ message.recipient_name }}
+Laiško tema: {{ message.subject }}
 
-Jeigu norite peržiūrėti laišką ir patvirtinti jo siuntimą, naršyklėje
-nueikite šiuo adresu:
+Jeigu norite peržiūrėti laišką ir patvirtinti jo siuntimą, naršyklėje nueikite
+šiuo adresu:
 
-{{ site_address }}{% url confirm enquiry.confirm_hash %}
+{{ SETTINGS.SITE_ADDRESS }}{% url confirm message.id message.confirm_secret %}
 
 Jeigu ne Jūs parašėte šį laišką, o kažkas apsimetantis Jumis, prašome
-pranešti apie piktnaudžiavimą mūsų svetaine adresu abuse@parašykjiems.lt
+pranešti apie piktnaudžiavimą mūsų svetaine adresu {{ SETTINGS.FEEDBACK_EMAIL }}{% endautoescape %}

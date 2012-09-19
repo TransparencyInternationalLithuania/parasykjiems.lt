@@ -1,9 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block menu %}
-{% include "menu.html" %}
-{% endblock %}
+{% block title %}{% trans "Letter sent" %} &ndash; {% endblock %}
 
 {% block breadcrumbs %}
 <li>{% trans "Letter sent" %}</li>
@@ -11,11 +9,12 @@
 
 {% block content %}
 
-<p>{% trans "Your letter has been sent successfully." %}</p>
+<p>Jūsų laiškas buvo išsiųstas sėkmingai.</p> <p>Taip pat, į savo pašto dėžutę
+turėtumėte gauti laiško kopiją.</p>
 
-{% if enquiry.is_open %}
+{% if thread %}
 <p>
-  {% blocktrans with url=enquiry.get_absolute_url %}
+  {% blocktrans with url=thread.get_absolute_url %}
   You can view it <a href="{{ url }}">here</a>.
   {% endblocktrans %}
 </p>

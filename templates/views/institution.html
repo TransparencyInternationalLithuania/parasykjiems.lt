@@ -1,5 +1,11 @@
 {% extends "base.html" %}
 
+{% block head %}
+<script type="text/javascript" src="{% static js/threads.js %}"></script>
+{% endblock %}
+
+{% block title %}{{ institution.name }} &ndash; {% endblock %}
+
 {% block menu %}
 {% include "menu.html" %}
 {% endblock %}

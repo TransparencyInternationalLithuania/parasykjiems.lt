@@ -5,16 +5,22 @@
 {% include "menu.html" %}
 {% endblock %}
 
+{% block title %}{% trans "Confirm letter" %} &ndash; {% endblock %}
+
 {% block breadcrumbs %}
-{% include "breadcrumbs/search.html" %}
-{% include "breadcrumbs/choose.html" %}
-{% include "breadcrumbs/write.html" %}
 {% include "breadcrumbs/confirm.html" with active=1 %}
 {% endblock %}
 
 {% block content %}
 
-{% include "items/letter.html" with letter=enquiry %}
+<p>Peržiūrėkite laišką ir, jeigu viskas gerai, paspauskite mygtuką
+„Siųsti“.</p>
+
+<p><strong>Pastaba:</strong> Šis laiškas yra atviras ir po išsiuntimo jis bus
+matomas svetainėje. Įsitikinkite, kad laiške nėra jokių asmeninių duomenų,
+kurių nenorite viešinti.</p>
+
+{% include "items/message.html" with message=message %}
 
 <form method="POST">
   {% csrf_token %}

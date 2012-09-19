@@ -1,0 +1,7 @@
+{% autoescape off %}{{ body_text }}
+
+--
+Šis laiškas buvo išsiųstas naudojant ParašykJiems – http://parasykjiems.lt
+
+Laiškas ir atsakymai į jį yra atviri ir diskusiją galima peržiūrėti adresu
+{{ SETTINGS.SITE_ADDRESS }}{{ thread.get_absolute_url }}{% endautoescape %}
