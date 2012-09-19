@@ -102,7 +102,6 @@ INSTALLED_APPS = (
 
     'haystack',
     'south',
-    'gunicorn',
     'cachebuster',
     'debug_toolbar',
 
