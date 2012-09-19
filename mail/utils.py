@@ -53,7 +53,8 @@ def decode_date_header(header):
 
 MESSAGE_EMAIL_REGEXP = re.compile(
     ur'{prefix}\+(?P<id>\d+)\.(?P<secret>[\w-]+)@(?P<domain>[\w.-]+)'.format(
-        prefix=re.escape(settings.REPLY_EMAIL_PREFIX)))
+        prefix=re.escape(settings.REPLY_EMAIL_PREFIX)),
+    flags=re.IGNORECASE)
 
 
 def remove_reply_email(text):
