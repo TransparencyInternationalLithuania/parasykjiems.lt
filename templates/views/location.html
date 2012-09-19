@@ -1,4 +1,12 @@
 {% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{{ title }} &ndash; {% endblock %}
+
+{% block head %}
+<script type="text/javascript" src="{% static js/choose.js %}"></script>
+<script type="text/javascript" src="{% static js/threads.js %}"></script>
+{% endblock %}
 
 {% block menu %}
 {% include "menu.html" %}
@@ -10,7 +18,24 @@
 {% endblock %}
 
 {% block content %}
+
+{% if repeated_kinds %}
+<div class="note">
+  {% blocktrans with kinds=repeated_kinds|join:"," feedback_url="/feedback/" %}
+  <strong>Note:</strong> more than one {{ kinds }} was found.
+  {% endblocktrans %}
+</div>
+{% endif %}
+
 {% for institution in institutions %}
 {% include "items/institution.html" %}
+
+<hr>
 {% endfor %}
+
+<p>Jei nerandate savo atstovo ar duomenyse pastebėjote klaidų bei netikslumų,
+prašome mums apie juos pranešti el. paštu <a
+  href="mailto:feedback@parasykjiems.lt">feedback@parasykjiems.lt</a>, arba
+telefonu 8 5 212 69 51.</p>
+
 {% endblock %}

@@ -16,42 +16,39 @@ class Command(BaseCommand):
         # The complicated joins are meant to filter out territories of
         # inactive institutions.
 
-        print 'Before: {} locations.'.format(Location.objects.count())
+        print '{} locations.'.format(Location.objects.count())
 
         cursor = connection.cursor()
 
-        print 'Inserting new ones.'
+        print 'Inserting new locations.'
         cursor.execute('''
         INSERT INTO search_location (municipality, elderate, city, street, slug)
-          SELECT DISTINCT municipality, elderate, city, street, ''
+          SELECT DISTINCT ON (upper(municipality), upper(elderate), upper(city), upper(street))
+            municipality, elderate, city, street, ''
           FROM
             search_territory
-            INNER JOIN search_institution
-              ON (search_territory.institution_id = search_institution.id)
-            INNER JOIN search_institutionkind
-              ON (search_institution.kind_id = search_institutionkind.id)
-          WHERE search_institutionkind.active = true
-          AND NOT EXISTS
-            (SELECT *
-             FROM search_location
-             WHERE search_location.municipality = search_territory.municipality
-               AND search_location.elderate = search_territory.elderate
-               AND search_location.city = search_territory.city
-               AND search_location.street = search_territory.street);
+          WHERE ((street != '') OR (city != ''))
+            AND NOT EXISTS
+              (SELECT 1
+               FROM search_location
+               WHERE upper(search_location.municipality) = upper(search_territory.municipality)
+                 AND upper(search_location.elderate) = upper(search_territory.elderate)
+                 AND upper(search_location.city) = upper(search_territory.city)
+                 AND upper(search_location.street) = upper(search_territory.street));
         ''')
+        transaction.commit_unless_managed()
+        print '{} locations.'.format(Location.objects.count())
 
-        print 'Deleting old ones.'
+        print 'Deleting old locations.'
         cursor.execute('''
         DELETE FROM search_location
         WHERE NOT EXISTS
-          (SELECT *
+          (SELECT 1
            FROM search_territory
-           WHERE search_location.municipality = search_territory.municipality
-             AND search_location.elderate = search_territory.elderate
-             AND search_location.city = search_territory.city
-             AND search_location.street = search_territory.street);
+           WHERE upper(search_location.municipality) = upper(search_territory.municipality)
+             AND upper(search_location.elderate) = upper(search_territory.elderate)
+             AND upper(search_location.city) = upper(search_territory.city)
+             AND upper(search_location.street) = upper(search_territory.street));
         ''')
-
         transaction.commit_unless_managed()
-
-        print 'After: {} locations.'.format(Location.objects.count())
+        print '{} locations.'.format(Location.objects.count())

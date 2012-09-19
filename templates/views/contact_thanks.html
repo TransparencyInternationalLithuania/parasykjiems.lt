@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Thank you" %} &ndash; {% endblock %}
+
+{% block breadcrumbs %}
+{% include "breadcrumbs/contact.html" %}
+<li>{% trans "Thank you" %}</li>
+{% endblock %}
+
+{% block content %}
+
+<p>Ačiū už Jūsų atsiliepimus.</p> <p><a href="/">Grįžti į pradinį
+  puslapį.</a></p>
+
+{% endblock %}

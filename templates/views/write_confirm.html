@@ -1,9 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block menu %}
-{% include "menu.html" %}
-{% endblock %}
+{% block title %}{% trans "Confirm letter" %} &ndash; {% endblock %}
 
 {% block breadcrumbs %}
 {% include "breadcrumbs/search.html" %}
@@ -13,10 +11,9 @@
 {% endblock %}
 
 {% block content %}
-<p>
-  {% blocktrans %}
-  Check your email. You should receive a confirmation link from
-  us. You must confirm your letter before it will be sent.
-  {% endblocktrans %}
-</p>
+<p>Pasitikrinkite savo elektroninį paštą. Mes Jums išsiuntėme patvirtinimo
+nuorodą. Jūs turite patvirtinti savo laišką prieš tai, kai jis bus
+išsiųstas.</p> <p>Jeigu negaunate laiško, pasitikrinkite brukalo (spam)
+katalogą. Jei ir ten jo nėra, <a href="/contact/">praneškite mums</a> apie
+tai.</p>
 {% endblock %}

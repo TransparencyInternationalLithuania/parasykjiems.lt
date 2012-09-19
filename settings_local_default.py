@@ -1,3 +1,6 @@
+LOCAL_SETTINGS_VERSION = 13
+
+
 DEBUG = True
 
 ADMINS = (
@@ -7,29 +10,41 @@ ADMINS = (
 MANAGERS = ADMINS
 
 
-# Redirect all enquiries to this address. Useful for testing.
-REDIRECT_ENQUIRIES = True
-REDIRECT_ENQUIRIES_EMAIL = 'representative@localhost'
+# Show a warning on top of every page that this is a development version.
+TESTING_VERSION = True
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-# Print emails to console.
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# If this is the testing version, redirect all enquiries to this
+# address.
+REDIRECT_ENQUIRIES_TO = 'feedback@localhost'
 
-SERVER_EMAIL = 'parasykjiems@localhost'
+SITE_DOMAIN = 'localhost'
 
-# Send all enquiries and confirmation requests to this address if
-# DEBUG is True.
-DEBUG_EMAIL_RECIPIENT = 'parasykjiems@localhost'
-
-# Should contain {reply_hash} somewhere.
-ENQUIRY_EMAIL_FORMAT = 'reply+{reply_hash}@localhost'
-
-# This email receives user feedback messages.
-FEEDBACK_EMAIL = 'feedback@localhost'
+# Like SITE_DOMAIN, but may include the HTTP port if it's not 80.
+SITE_HOST = SITE_DOMAIN + ':8000'
 
 # Used for absolute URLs. Shouldn't include trailing slash, but should
 # include URL scheme.
-SITE_ADDRESS = 'http://localhost:8000'
+SITE_ADDRESS = 'http://' + SITE_HOST
+
+# Feedback is sent here.
+FEEDBACK_EMAIL = 'feedback@' + SITE_DOMAIN
+
+# Used as From adress for emails sent by the service, except enquiries.
+SERVER_EMAIL = 'parasykjiems@' + SITE_DOMAIN
+
+# Reply emails are formatted like
+# {REPLY_EMAIL_PREFIX}+{id}.{secret}@{SITE_DOMAIN}
+REPLY_EMAIL_PREFIX = 'reply'
+
+# Additional content to put into every page's head tag. Useful for
+# Google Analytics script tags.
+ADDITIONAL_HTML_HEAD = ''
+
+# Make this unique, and don't share it with anybody.
+SECRET_KEY = 'ww7h#q+rru)mz=$e=gbyb(6n7cm0eb2!2bh+y5ahad)4iq-1vg'
+
 
 DATABASES = {
     'default': {
@@ -42,5 +57,10 @@ DATABASES = {
     }
 }
 
-HAYSTACK_SEARCH_ENGINE = 'whoosh'
-HAYSTACK_WHOOSH_PATH = 'parasykjiems.index'
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+        'URL': 'http://127.0.0.1:9200/',
+        'INDEX_NAME': 'parasykjiems',
+    },
+}

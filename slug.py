@@ -4,7 +4,7 @@
 import re
 from django.shortcuts import get_object_or_404
 from unidecode import unidecode
-from search.multisub import multisub_all_sequential
+from multisub import multisub_all_sequential
 
 
 SLUG_LEN = 40
@@ -42,7 +42,7 @@ def generate_slug(obj, query, part_getter):
              for p in part_getter(obj)]
     parts = [p for p in parts if p != '']
     found = False
-    for l in range(1, 1 + len(parts)):
+    for l in xrange(1, 1 + len(parts)):
         slug = strip_dashes(u'-'.join(parts[:l])[:SLUG_LEN])
         if (not query.filter(slug=slug).exists() and
             not parses_as_int(slug)):
@@ -50,7 +50,7 @@ def generate_slug(obj, query, part_getter):
             break
     if not found:
         oldslug = slug
-        for i in range(1, 10000):
+        for i in xrange(1, 10000):
             s_len = SLUG_LEN - len(u'{}'.format(i)) - 1
             slug = strip_dashes(
                 u'{}-{}'.format(oldslug[:s_len], i))

@@ -2,8 +2,11 @@
 {% load i18n %}
 
 {% block head %}
-<script type="text/javascript" src="/static/js/search.js"></script>
+<script type="text/javascript" src="{% static js/typeahead.js %}/"></script>
+<script type="text/javascript" src="{% static js/search.js %}/"></script>
 {% endblock %}
+
+{% block title %}{% trans "Search" %} &ndash; {% endblock %}
 
 {% block menu %}
 {% include "menu.html" with active="search" %}
@@ -14,44 +17,14 @@
 {% endblock %}
 
 {% block content %}
+
+<p>„ParašykJiems.lt“ – tai lengvas būdas surasti savo atstovus valstybinėse
+institucijose ir su jais susisiekti.</p>
+
 <form name="search">
-  <input name="q" value="{{ search_query }}"></input>
-  <input value="{% trans "Search" %}" type="submit"></input>
+  <input name="q" value="{{ search_query }}">
+  <input type="hidden" name="nohist">
+  <input name="submit" value="{% trans "Search" %}" type="submit">
 </form>
-
-{% if search_query %}
-
-{% if results %}
-
-<ul id="results">
-  {% for result in results %}
-  <li>
-    {% include "items/result.html" %}
-  </li>
-  {% endfor %}
-</ul>
-{% if more_results %}
-<p>{% trans "There are more results matching your query. Try narrowing your search." %}</p>
-{% endif %}
-
-{% else %}
-<p>{% trans "Nothing found." %}</p>
-{% endif %}
-
-{% else %}
-
-<p>
-  {% blocktrans %}
-  You can search by entering:
-  <ul>
-    <li>part of an address,
-    <li>a full address (including the house number),
-    <li>a representative's name,
-    <li>an institution's name.
-  </ul>
-  {% endblocktrans %}
-</p>
-
-{% endif %}
-
+<div id="results">{{ results_html|safe }}</div>
 {% endblock %}

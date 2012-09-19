@@ -1,39 +1,43 @@
-{% load i18n %}
+{% load i18n email_blockquote %}
 
-<div class="letter {{ class }}">
+<div class="letter {{ class }}"{% if id %} id="message-{{ id }}"{% endif %}>
   <table>
     <tr>
       <th>{% trans "From:" %}</th>
-      <td>{{ letter.sender_name }}</td>
-    <tr>
-
+      <td>
+        {% if letter.sender_url %}
+        <a href="{{ letter.sender_url }}">{{ letter.sender_name }}</a>
+        {% else %}
+        {{ letter.sender_name }}
+        {% endif %}
+      </td>
+    </tr>
+    {% if letter.recipient_name %}
     <tr>
       <th>{% trans "To:" %}</th>
       <td>
-        {% if letter.recipient %}
-        <a href="{{ letter.recipient.get_absolute_url }}">
-          {{ letter.recipient_name }}
-        </a>
+        {% if letter.recipient_url %}
+        <a href="{{ letter.recipient_url }}">{{ letter.recipient_name }}{% if letter.thread.representative %}, {{ letter.thread.representative.institution.name }}{% endif %}</a>
         {% else %}
         {{ letter.recipient_name }}
         {% endif %}
       </td>
     </tr>
-
+    {% endif %}
+    {% if letter.subject %}
     <tr>
       <th>{% trans "Subject:" %}</th>
       <td>{{ letter.subject }}</td>
     </tr>
-
+    {% endif %}
     {% if letter.date %}
     <tr>
       <th>{% trans "Date:" %}</th>
-      <td>{{ letter.date|date:'Y-m-d' }}</td>
+      <td>{{ letter.date|date:'Y-m-d, l' }}</td>
     </tr>
     {% endif %}
   </table>
-
-  <div class="body">
-    {{ letter.body|linebreaks }}
+  <div class="body hyphenate">
+    {{ letter.body_text|email_blockquote|urlizetrunc:60|linebreaks }}
   </div>
 </div>

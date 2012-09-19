@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-04 12:39+0300\n"
+"POT-Creation-Date: 2012-09-09 22:13+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 
 #: settings.py:22
 msgid "English"
@@ -25,32 +25,80 @@ msgstr ""
 msgid "Lithuanian"
 msgstr ""
 
-#: mail/forms.py:7 web/forms.py:6
-msgid "Your name"
+#: mail/admin.py:20 web/admin.py:23 web/models.py:18
+msgid "content"
 msgstr ""
 
-#: mail/forms.py:10 web/forms.py:8
+#: mail/feeds.py:25 mail/feeds.py:27
+msgid "ParašykJiems threads"
+msgstr ""
+
+#: mail/forms.py:8
+msgid "Your full name"
+msgstr ""
+
+#: mail/forms.py:9
+msgid "Don't use abbreviations."
+msgstr ""
+
+#: mail/forms.py:13 web/forms.py:8
 msgid "Your e-mail address"
 msgstr ""
 
-#: mail/forms.py:16 web/forms.py:10
+#: mail/forms.py:16
+msgid "An e-mail address is required."
+msgstr ""
+
+#: mail/forms.py:17
+msgid "Enter a valid e-mail address."
+msgstr ""
+
+#: mail/forms.py:23 templates/items/threads.html:7
 msgid "Subject"
 msgstr ""
 
-#: mail/forms.py:19 web/forms.py:12
+#: mail/forms.py:27 web/forms.py:10
 msgid "Message"
 msgstr ""
 
-#: mail/forms.py:22
-msgid "Open letter"
-msgstr ""
-
-#: mail/mail.py:45
+#: mail/mail.py:135
 msgid "Confirm your letter"
 msgstr ""
 
-#: mail/models.py:106
-msgid "The unprocessed e-mail message."
+#: mail/models.py:84
+msgid "unconfirmed message"
+msgstr ""
+
+#: mail/models.py:85
+msgid "unconfirmed messages"
+msgstr ""
+
+#: mail/models.py:138
+msgid "Enquiry"
+msgstr ""
+
+#: mail/models.py:139
+msgid "Response"
+msgstr ""
+
+#: mail/models.py:156
+msgid "If the message was received through SMTP, the original email text."
+msgstr ""
+
+#: mail/models.py:307
+msgid "message"
+msgstr ""
+
+#: mail/models.py:308
+msgid "messages"
+msgstr ""
+
+#: mail/models.py:404
+msgid "thread"
+msgstr ""
+
+#: mail/models.py:405
+msgid "threads"
 msgstr ""
 
 #: search/forms.py:13
@@ -61,136 +109,266 @@ msgstr ""
 msgid "House number"
 msgstr ""
 
-#: search/models.py:85 search/models.py:112
+#: search/models.py:15 search/models.py:69 web/models.py:17
+msgid "In Markdown format."
+msgstr ""
+
+#: search/models.py:18
+msgid ""
+"This number is used for sorting representatives in the institution view."
+msgstr ""
+
+#: search/models.py:25
+msgid "representative kind"
+msgstr ""
+
+#: search/models.py:26
+msgid "representative kinds"
+msgstr ""
+
+#: search/models.py:49
+msgid "representative"
+msgstr ""
+
+#: search/models.py:50
+msgid "representatives"
+msgstr ""
+
+#: search/models.py:72
+msgid "This number is used for sorting institutions in the location view."
+msgstr ""
+
+#: search/models.py:79
+msgid "institution kind"
+msgstr ""
+
+#: search/models.py:80
+msgid "institution kinds"
+msgstr ""
+
+#: search/models.py:131
+msgid "institution"
+msgstr ""
+
+#: search/models.py:132
+msgid "institutions"
+msgstr ""
+
+#: search/models.py:150 search/models.py:193
 msgid "Name of city, town or village."
 msgstr ""
 
-#: search/models.py:129
+#: search/models.py:218
+msgid "territory"
+msgstr ""
+
+#: search/models.py:219
 msgid "territories"
 msgstr ""
 
-#: templates/base.html:14
+#: templates/404.html:8
+msgid "Page not found"
+msgstr ""
+
+#: templates/500.html:8
+msgid "Internal server error"
+msgstr ""
+
+#: templates/base.html:27
 msgid "ParašykJiems"
 msgstr ""
 
-#: templates/base.html:30
-msgid "Have any notes, suggestions?"
-msgstr ""
-
-#: templates/base.html:30
-msgid "Write to us."
-msgstr ""
-
-#: templates/menu.html:5 templates/views/help.html:9
-msgid "Help"
-msgstr ""
-
-#: templates/menu.html:11 templates/breadcrumbs/letters.html:7
-msgid "Open letters"
-msgstr ""
-
-#: templates/menu.html:17 templates/breadcrumbs/search.html:8
+#: templates/menu.html:6
 msgid "Representative search"
 msgstr ""
 
-#: templates/breadcrumbs/choose.html:7
+#: templates/menu.html:12 templates/breadcrumbs/threads.html:4
+#: templates/views/threads.html:10
+msgid "Open letters"
+msgstr ""
+
+#: templates/menu.html:18
+msgid "Help"
+msgstr ""
+
+#: templates/breadcrumbs/choose.html:4
 msgid "Choose a representative"
 msgstr ""
 
-#: templates/breadcrumbs/confirm.html:2
+#: templates/breadcrumbs/confirm.html:3 templates/views/confirm.html:8
+#: templates/views/write_confirm.html:4
 msgid "Confirm letter"
 msgstr ""
 
-#: templates/breadcrumbs/feedback.html:7
-msgid "Leave feedback"
+#: templates/breadcrumbs/contact.html:4 templates/views/contact.html:4
+msgid "Contact us"
 msgstr ""
 
-#: templates/breadcrumbs/letter.html:7
+#: templates/breadcrumbs/search.html:4
+msgid "Find a representative"
+msgstr ""
+
+#: templates/breadcrumbs/thread.html:3
 msgid "View letter"
 msgstr ""
 
-#: templates/breadcrumbs/write.html:8
+#: templates/breadcrumbs/write.html:4
 msgid "Write a letter"
 msgstr ""
 
-#: templates/items/institution.html:9 templates/items/representative.html:17
-msgid "Email: "
-msgstr ""
-
-#: templates/items/institution.html:15 templates/items/representative.html:23
+#: templates/items/institution.html:20 templates/items/representative.html:20
 msgid "Phone number: "
 msgstr ""
 
-#: templates/items/institution.html:19
+#: templates/items/institution.html:24
 msgid "Address: "
 msgstr ""
 
-#: templates/items/institution.html:23
-msgid "Representatives"
+#: templates/items/institution.html:33 templates/items/representative.html:29
+msgid "Email: "
 msgstr ""
 
-#: templates/items/letter.html:6
+#: templates/items/institution.html:35 templates/items/representative.html:31
+msgid "Write&nbsp;letter"
+msgstr ""
+
+#: templates/items/institution.html:51
+msgid "Recent letters"
+msgstr ""
+
+#: templates/items/institution.html:54
+msgid "More letters"
+msgstr ""
+
+#: templates/items/letter.html:6 templates/items/message.html:6
 msgid "From:"
 msgstr ""
 
-#: templates/items/letter.html:11
+#: templates/items/letter.html:17 templates/items/message.html:17
 msgid "To:"
 msgstr ""
 
-#: templates/items/letter.html:16
+#: templates/items/letter.html:29 templates/items/message.html:29
 msgid "Subject:"
 msgstr ""
 
-#: templates/items/representative.html:8
+#: templates/items/letter.html:35 templates/items/message.html:35
+msgid "Date:"
+msgstr ""
+
+#: templates/items/message.html:45
+msgid "Attached files:"
+msgstr ""
+
+#: templates/items/message.html:49
+msgid "View"
+msgstr ""
+
+#: templates/items/message.html:49
+msgid "Download"
+msgstr ""
+
+#: templates/items/representative.html:12
 msgid "Institution: "
 msgstr ""
 
-#: templates/views/confirm.html:21 templates/views/feedback.html:15
+#: templates/items/rss.html:5
+msgid "Follow using RSS"
+msgstr ""
+
+#: templates/items/threads.html:8
+msgid "Sender"
+msgstr ""
+
+#: templates/items/threads.html:9
+msgid "Recipient"
+msgstr ""
+
+#: templates/items/threads.html:10
+msgid "Sent at"
+msgstr ""
+
+#: templates/items/threads.html:15
+msgid "Answered"
+msgstr ""
+
+#: templates/items/threads.html:35
+msgid "No letters found."
+msgstr ""
+
+#: templates/items/threads.html:40
+msgid "Pages: "
+msgstr ""
+
+#: templates/views/admin_update.html:4 templates/views/admin_update.html:9
+msgid "Data update"
+msgstr ""
+
+#: templates/views/admin_update.html:8
+msgid "Home"
+msgstr ""
+
+#: templates/views/admin_update.html:28
+msgid "Apply"
+msgstr ""
+
+#: templates/views/admin_update.html:29
+msgid "Institution"
+msgstr ""
+
+#: templates/views/admin_update.html:30
+msgid "Kind"
+msgstr ""
+
+#: templates/views/admin_update.html:31
+msgid "Name"
+msgstr ""
+
+#: templates/views/admin_update.html:32
+msgid "Email"
+msgstr ""
+
+#: templates/views/admin_update.html:33
+msgid "Phone"
+msgstr ""
+
+#: templates/views/admin_update.html:34
+msgid "Other information"
+msgstr ""
+
+#: templates/views/admin_update.html:35
+msgid "Address"
+msgstr ""
+
+#: templates/views/confirm.html:27 templates/views/contact.html:46
 msgid "Send"
 msgstr ""
 
-#: templates/views/feedback_thanks.html:6
+#: templates/views/contact_thanks.html:4 templates/views/contact_thanks.html:8
 msgid "Thank you"
 msgstr ""
 
-#: templates/views/feedback_thanks.html:11
-msgid "Thank you for your feedback."
-msgstr ""
-
-#: templates/views/location_ask.html:16
-msgid "Continue"
-msgstr ""
-
-#: templates/views/search.html:15
-msgid "Search"
-msgstr ""
-
-#: templates/views/search.html:29
-msgid "Nothing found."
-msgstr ""
-
-#: templates/views/search.html:35
+#: templates/views/location.html:24
+#, python-format
 msgid ""
 "\n"
-"  You can search by entering:\n"
-"  <ul>\n"
-"    <li>part of an address,\n"
-"    <li>a full address (including the house number),\n"
-"    <li>a representative's name,\n"
-"    <li>an institution's name.\n"
-"  </ul>\n"
+"  <strong>Note:</strong> more than one %(kinds)s was found.\n"
 "  "
 msgstr ""
 
-#: templates/views/sent.html:9
+#: templates/views/location_ask.html:20
+msgid "Continue"
+msgstr ""
+
+#: templates/views/search.html:9 templates/views/search.html.py:27
+msgid "Search"
+msgstr ""
+
+#: templates/views/sent.html:4 templates/views/sent.html.py:7
 msgid "Letter sent"
 msgstr ""
 
-#: templates/views/sent.html:14
-msgid "Your letter has been sent successfully."
-msgstr ""
-
-#: templates/views/sent.html:18
+#: templates/views/sent.html:17
 #, python-format
 msgid ""
 "\n"
@@ -198,14 +376,38 @@ msgid ""
 "  "
 msgstr ""
 
-#: templates/views/write.html:23
+#: templates/views/threads.html:26
+msgid "Filter..."
+msgstr ""
+
+#: templates/views/write.html:4
+msgid "Write letter"
+msgstr ""
+
+#: templates/views/write.html:51
 msgid "Submit"
 msgstr ""
 
-#: templates/views/write_confirm.html:17
-msgid ""
-"\n"
-"  Check your email. You should receive a confirmation link from\n"
-"  us. You must confirm your letter before it will be sent.\n"
-"  "
+#: web/forms.py:6
+msgid "Your name"
+msgstr ""
+
+#: web/models.py:11
+msgid "title"
+msgstr ""
+
+#: web/models.py:15
+msgid "article location"
+msgstr ""
+
+#: web/models.py:29
+msgid "article"
+msgstr ""
+
+#: web/models.py:30
+msgid "articles"
+msgstr ""
+
+#: web/views.py:27
+msgid "Feedback from {}"
 msgstr ""

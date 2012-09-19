@@ -1,11 +1,10 @@
 from django.conf.urls.defaults import patterns, url
 
 urlpatterns = patterns('web.views',
-    url(r'^about$', 'about', name='about'),
-    url(r'^help$', 'help_view', name='help'),
+    url(r'^contact/$', 'contact', name='contact'),
+    url(r'^contact/thanks/$', 'contact_thanks'),
 
-    url(r'^feedback$', 'feedback', name='feedback'),
-    url(r'^feedback/thanks$', 'feedback_thanks'),
+    url(r'^robots.txt$', 'robots_txt'),
 
-    url(r'^setlang/(\w+)$', 'setlang'),
+    url(r'^(.+)/$', 'article', name='article'),
 )

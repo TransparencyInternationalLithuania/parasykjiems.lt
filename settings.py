@@ -27,13 +27,11 @@ LOCALE_PATHS = (
     project_relative('locale'),
 )
 
-SITE_ID = 1
-
 USE_I18N = True
 USE_L10N = True
 
-MEDIA_ROOT = ''
-MEDIA_URL = ''
+MEDIA_ROOT = project_relative('media/')
+MEDIA_URL = '/media/'
 
 STATIC_ROOT = ''
 STATIC_URL = '/static/'
@@ -48,9 +46,6 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
-
-# Make this unique, and don't share it with anybody.
-SECRET_KEY = 'ww7h#q+rru)mz=$e=gbyb(6n7cm0eb2!2bh+y5ahad)4iq-1vg'
 
 TEMPLATE_DIRS = (
     project_relative('templates'),
@@ -70,16 +65,27 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.static",
     "django.core.context_processors.request",
     "django.contrib.messages.context_processors.messages",
+
+    "parasykjiems.web.context_processors.expose_settings",
 )
 
 MIDDLEWARE_CLASSES = (
+    'parasykjiems.middleware.SetRemoteAddrMiddleware',
+    'parasykjiems.middleware.SetHostBehindProxyMiddleware',
+    'django.middleware.gzip.GZipMiddleware',
+    'django.middleware.http.ConditionalGetMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
+
+INTERNAL_IPS = ('127.0.0.1',)
+
+APPEND_SLASH = False
+USE_ETAGS = True
 
 ROOT_URLCONF = 'parasykjiems.urls'
 
@@ -87,21 +93,42 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
+    'django.contrib.markup',
+    'django.contrib.humanize',
+    'django.contrib.sitemaps',
 
     'haystack',
     'south',
     'gunicorn',
+    'cachebuster',
+    'debug_toolbar',
 
     'web',
     'search',
     'mail',
+    'scrape',
 )
 
-HAYSTACK_SITECONF = 'parasykjiems.search_sites'
+if not os.path.exists(project_relative('settings_local.py')):
+    from shutil import copy
+    print 'Initializing local settings.'
+    copy(project_relative('settings_local_default.py'), project_relative('settings_local.py'))
+
+from settings_local import *
+
+from settings_local_default import \
+     LOCAL_SETTINGS_VERSION as SETTINGS_VERSION
+if LOCAL_SETTINGS_VERSION < SETTINGS_VERSION:
+    raise Exception(
+        'Local settings are version {} but should be updated to {}.'.format(
+            LOCAL_SETTINGS_VERSION,
+            SETTINGS_VERSION))
+
+TEMPLATE_DEBUG = DEBUG
+
 
 LOGGING = {
     'version': 1,
@@ -110,33 +137,63 @@ LOGGING = {
         'verbose': {
             'format': '%(asctime)s %(levelname)s %(module)s %(message)s'
         },
+        'search': {
+            'format': '%(asctime)s %(message)s'
+        },
     },
     'handlers': {
-        'console': {
+        'debug': {
+            'class': 'logging.handlers.RotatingFileHandler',
             'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-            'formatter': 'verbose'
-        }
+            'formatter': 'verbose',
+            'filename': project_relative('logs/debug.log'),
+            'maxBytes': 1024 * 1024 * 5,
+        },
+        'info': {
+            'class': 'logging.handlers.RotatingFileHandler',
+            'level': 'INFO',
+            'formatter': 'verbose',
+            'filename': project_relative('logs/info.log'),
+            'backupCount': 5,
+            'maxBytes': 1024 * 1024 * 5,
+        },
+        'warning': {
+            'class': 'logging.FileHandler',
+            'level': 'WARNING',
+            'formatter': 'verbose',
+            'filename': project_relative('logs/warning.log'),
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+        },
+        'search': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'formatter': 'search',
+            'filename': project_relative('logs/search.log'),
+        },
+        'null': {
+            'level': 'DEBUG',
+            'class': 'logging.NullHandler',
+        },
     },
     'loggers': {
-        'django.request': {
-            'handlers': ['console'],
+        '': {
             'level': 'DEBUG',
-            'propagate': True,
+            'handlers': ([] if TESTING_VERSION else ['mail_admins']) + ['warning', 'info', 'debug'],
         },
-    }
+        'search': {
+            'level': 'INFO',
+            'handlers': ['search'],
+        },
+        'pysolr': {
+            'level': 'DEBUG',
+            'handlers': ['null'],
+            'propagate': False,
+        },
+    },
 }
-
-
-if os.path.exists('settings_local.py'):
-    from settings_local import *
-else:
-    from shutil import copy
-    print 'Initializing local settings.'
-    copy('settings_local_default.py', 'settings_local.py')
-
-
-TEMPLATE_DEBUG = DEBUG
 
 
 # Use an SQLite database for testing to avoid having to grant
@@ -149,3 +206,8 @@ if len(sys.argv) > 1 and sys.argv[1] == 'test':
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': 'test',
     }
+
+# Allow usage of 'static' templatetag without explicitly loading cachebuster.
+from django.template.loader import add_to_builtins
+add_to_builtins('cachebuster.templatetags.cachebuster')
+

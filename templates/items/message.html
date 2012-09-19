@@ -1,0 +1,54 @@
+{% load i18n email_blockquote %}
+
+<div class="message {{ class }}"{% if id %} id="message-{{ id }}"{% endif %}>
+  <table>
+    <tr>
+      <th>{% trans "From:" %}</th>
+      <td>
+        {% if message.sender_url %}
+        <a href="{{ message.sender_url }}">{{ message.sender_name }}</a>
+        {% else %}
+        {{ message.sender_name }}
+        {% endif %}
+      </td>
+    </tr>
+    {% if message.recipient_name %}
+    <tr>
+      <th>{% trans "To:" %}</th>
+      <td>
+        {% if message.recipient_url %}
+        <a href="{{ message.recipient_url }}">{{ message.recipient_name }}{% if message.thread.representative %}, {{ message.thread.representative.institution.name }}{% endif %}</a>
+        {% else %}
+        {{ message.recipient_name }}
+        {% endif %}
+      </td>
+    </tr>
+    {% endif %}
+    {% if message.subject %}
+    <tr>
+      <th>{% trans "Subject:" %}</th>
+      <td>{{ message.subject }}</td>
+    </tr>
+    {% endif %}
+    {% if message.date %}
+    <tr>
+      <th>{% trans "Date:" %}</th>
+      <td>{{ message.date|date:'Y-m-d, l' }}</td>
+    </tr>
+    {% endif %}
+  </table>
+  <div class="body hyphenate">
+    {{ message.body_text|email_blockquote|urlizetrunc:60|linebreaks }}
+  </div>
+
+  {% if message.attachment_set.count %}
+  <strong>{% trans "Attached files:" %}</strong>
+  <ul>
+    {% for attachment in message.attachment_set.all %}
+    <li class="attachment">
+      {{ attachment.original_filename }} <a href="http://docs.google.com/viewer?url={{ SETTINGS.SITE_ADDRESS }}{{ attachment.get_absolute_url|urlencode }}">{% trans "View" %}</a> <a href="{{ attachment.get_absolute_url }}">{% trans "Download" %}</a>
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+</div>
