@@ -2,9 +2,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator
 from django.core.exceptions import ObjectDoesNotExist
+from django.http import HttpResponsePermanentRedirect
 from django.views.decorators.cache import cache_control
 from django.views.decorators.http import last_modified
-from django.db.models import Q
 import datetime
 
 from forms import WriteLetterForm
@@ -144,4 +144,4 @@ def threads(request):
 
 def threads_institution(request, institution_slug):
     institution = get_object_or_404(Institution, slug=institution_slug)
-    return redirect(institution.threads_url(), permanent=True)
+    return HttpResponsePermanentRedirect(institution.threads_url())
