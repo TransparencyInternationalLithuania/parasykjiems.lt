@@ -9,7 +9,6 @@ passing the specific instance as the message parameter.
 import random
 import email
 import re
-import operator
 from unidecode import unidecode
 
 from django.db import models
@@ -92,6 +91,7 @@ def _attachment_filesystem_name(attachment, filename):
         index,
         attachment.original_filename,
     )
+
 
 class Attachment(models.Model):
     message = models.ForeignKey('Message')
@@ -332,9 +332,9 @@ class Thread(models.Model):
 
     filter_keywords = models.TextField(db_index=True, blank=True)
 
-    _SPACES = re.compile(r'\s+')
-    _WORDS = re.compile(r'\w+')
-    _NONWORDS = re.compile(r'\W+')
+    _WORD = re.compile(r'\w+')
+    _SEARCH_TERM = re.compile(r'-?\w+')
+    _NONWORD = re.compile(r'\W+')
 
     def update_filter_keywords(self):
         sources = [self.subject, self.sender_name, self.recipient_name]
@@ -343,21 +343,21 @@ class Thread(models.Model):
                 sources.append(representative.name)
         if self.representative:
             sources.append(self.representative.institution.name)
-        words = frozenset(Thread._WORDS.findall('\n'.join(unidecode(x).lower() for x in sources)))
+        words = frozenset(Thread._WORD.findall('\n'.join(unidecode(x).lower() for x in sources)))
         self.filter_keywords = ' '.join(words)
 
     @classmethod
     def make_filter_query(cls, q):
         """Build filter query. Words can be in any order."""
 
-        words = Thread._SPACES.split(unidecode(q).lower())
+        words = Thread._SEARCH_TERM.findall(unidecode(q).lower())
 
         q = models.Q()
         print words
         for w in words:
             # Exclude words that start with a dash.
             negate = w.startswith('-')
-            w = Thread._NONWORDS.sub('', w)
+            w = Thread._NONWORD.sub('', w)
             if w:
                 subq = models.Q(filter_keywords__contains=w)
                 if negate:
