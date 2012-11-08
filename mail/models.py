@@ -333,7 +333,7 @@ class Thread(models.Model):
     filter_keywords = models.TextField(db_index=True, blank=True)
 
     _WORD = re.compile(r'\w+')
-    _SEARCH_TERM = re.compile(r'-?\w+')
+    _SEARCH_TERM = re.compile(r'(?:\B-)?\w+')
     _NONWORD = re.compile(r'\W+')
 
     def update_filter_keywords(self):
