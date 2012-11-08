@@ -24,7 +24,10 @@ def process_incoming(envelope):
     message = Message(
         envelope=str(envelope).decode('utf-8'))
     message.save()
+    process_message(message)
 
+
+def process_message(message):
     try:
         message.fill_headers()
         find_parent(message)
@@ -34,6 +37,8 @@ def process_incoming(envelope):
             raise Exception(u'Parent thread locked.')
         message.fill_content()
         proxy_send(message)
+        message.is_error = False
+        message.error_reason = u''
     except Exception as e:
         trace = traceback.format_exc(e)
         message.is_error = True
