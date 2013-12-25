@@ -180,7 +180,7 @@ LOGGING = {
     'loggers': {
         '': {
             'level': 'DEBUG',
-            'handlers': ([] if TESTING_VERSION else ['mail_admins']) + ['warning', 'info', 'debug'],
+            'handlers': ['warning', 'info', 'debug'],
         },
         'search': {
             'level': 'INFO',
