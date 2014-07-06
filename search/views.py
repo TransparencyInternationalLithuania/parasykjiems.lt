@@ -65,18 +65,12 @@ def search(request):
             sq = sq & SQ(numbered=True)
 
         # Separate results by type
-        insts = sqs.filter(sq & SQ(django_ct='search.institution'))
         reps = sqs.filter(sq & SQ(django_ct='search.representative'))
+        insts = sqs.filter(sq & SQ(django_ct='search.institution'))
         locs = sqs.filter(sq & SQ(django_ct='search.location'))
 
-        # Show single reps only when no institutions are found. In
-        # either case, show them before locations.
-        if insts.count() > 0:
-            top_results = insts
-        else:
-            top_results = reps
-
-        all_results = (list(top_results[:_RESULT_LIMIT + 1]) +
+        all_results = (list(reps[:_RESULT_LIMIT + 1]) +
+                       list(insts[:_RESULT_LIMIT + 1]) +
                        list(locs[:_RESULT_LIMIT + 1]))
         more_results = len(all_results) > _RESULT_LIMIT
 
