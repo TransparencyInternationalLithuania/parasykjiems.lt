@@ -97,7 +97,7 @@ def name_abbreviations(name, abbr_last_name=False):
     def sub(namewords):
         if len(namewords) <= 1:
             yield namewords
-            if abbr_last_name:
+            if abbr_last_name and namewords:
                 yield [abbr(namewords[0])]
         else:
             for variant in sub(namewords[1:]):
@@ -111,7 +111,8 @@ def name_abbreviations(name, abbr_last_name=False):
     namewords = list(itertools.takewhile(istitle, words))
     endwords = list(itertools.dropwhile(istitle, words))
 
-    return [u' '.join(name + endwords) for name in sub(namewords)]
+    result = [u' '.join(name + endwords) for name in sub(namewords)]
+    return [x for x in result if x]
 
 
 def street_abbreviations(street):
