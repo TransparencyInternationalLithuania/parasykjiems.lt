@@ -93,10 +93,17 @@ def get_municipality_boost(municipality):
 
 
 def get_institution_boost(name):
-    for municipality, pop in MUNICIPALITY_POPULATIONS.items():
-        if municipality in name:
-            return get_municipality_boost(municipality)
-    return 1
+    boost = 2
+    if u'savivaldybė' in name:
+        boost -= 1
+        for municipality, pop in MUNICIPALITY_POPULATIONS.items():
+            if municipality in name:
+                boost += get_municipality_boost(municipality)
+        if u'seniūnija' in name:
+            boost -= 1
+        if u'kaimo' in name:
+            boost -= 1
+    return boost
 
 
 class InstitutionIndex(indexes.SearchIndex, indexes.Indexable):
@@ -122,10 +129,10 @@ class InstitutionIndex(indexes.SearchIndex, indexes.Indexable):
 
     def prepare(self, obj):
         data = super(InstitutionIndex, self).prepare(obj)
-        data['boost'] = 1 + get_institution_boost(obj.name)
+        data['boost'] = 10 + get_institution_boost(obj.name)
         return data
 
-    def index_queryset(self):
+    def index_queryset(self, using=None):
         return Institution.objects.exclude(slug='')
 
 
@@ -154,17 +161,17 @@ class RepresentativeIndex(indexes.SearchIndex, indexes.Indexable):
 
     def prepare(self, obj):
         data = super(RepresentativeIndex, self).prepare(obj)
-        data['boost'] = 1 + get_institution_boost(obj.institution.name)
+        data['boost'] = 5 + get_institution_boost(obj.institution.name)
         return data
 
-    def index_queryset(self):
+    def index_queryset(self, using=None):
         return Representative.objects.exclude(slug='')
 
 
 class LocationIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True)
     auto = indexes.EdgeNgramField()
-    numbered = indexes.BooleanField(indexed=True)
+    numbered = indexes.BooleanField(indexed=False)
 
     title = indexes.CharField(indexed=False)
     subtitle = indexes.CharField(indexed=False)
