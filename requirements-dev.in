@@ -1,4 +1,5 @@
 pip-tools
 pytest
 pytest-cov
-pytest-django
+pytest-django<3.0.0
+pytest-pythonpath

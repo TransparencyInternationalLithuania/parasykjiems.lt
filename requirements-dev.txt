@@ -10,6 +10,7 @@ first==2.0.1              # via pip-tools
 pip-tools==1.9.0
 py==1.4.34                # via pytest
 pytest-cov==2.5.1
-pytest-django==3.1.2
+pytest-django==2.9.1
+pytest-pythonpath==0.7.1
 pytest==3.2.1
 six==1.10.0               # via pip-tools
