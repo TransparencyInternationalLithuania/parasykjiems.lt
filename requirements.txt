@@ -26,7 +26,7 @@ django-polymorphic==0.2
 django-sekizai==0.6.1
 easy-thumbnails==1.1
 elasticsearch==1.9.0
-eventlet==0.17.4
+eventlet==0.31.0
 gdata==2.0.18
 greenlet==0.3.1
 gunicorn==0.13.1
