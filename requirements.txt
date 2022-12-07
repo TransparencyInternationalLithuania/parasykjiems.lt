@@ -9,7 +9,7 @@ South==0.7.3
 Unidecode==0.04.7
 amqplib==0.6.1
 argparse==1.2.1
-certifi==2015.11.20.1
+certifi==2022.12.7
 cmsplugin-filer==0.9.3
 django-admin-tools==0.4.1
 django-cachebuster==0.2.1
